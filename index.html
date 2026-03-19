@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fisica 1 — Study Guide</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
 </head>
 <body>
@@ -136,6 +138,13 @@ const LESSON_INDEX = [
     category: "dinamica",
     file: "lezioni/L08.html"
   },
+  {
+    id: "L09", num: "Lezione 9", date: "19 Mar 2026",
+    title: "Esercizi, Vincoli, Reazione Normale e Attrito",
+    abstract: "Esercizi su MCUA e teorema dell'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.",
+    category: "dinamica",
+    file: "lezioni/L09.html"
+},
 ];
 
 /* ─── Populate grids ─── */
@@ -163,6 +172,19 @@ function populateGrid(gridId, category) {
 populateGrid('cinematica-grid', 'cinematica');
 populateGrid('dinamica-grid', 'dinamica');
 populateGrid('termo-grid', 'termodinamica');
+
+/* ─── Render KaTeX in lesson cards ─── */
+document.querySelectorAll('.card-title, .card-abstract').forEach(el => {
+  const html = el.innerHTML;
+  if (!html.includes('$')) return;
+  let processed = html.replace(/(?<!\$)\$(?!\$)([^$]+?)\$(?!\$)/g, (_, tex) => {
+    const span = document.createElement('span');
+    try { katex.render(tex, span, { throwOnError: false }); }
+    catch (e) { span.textContent = tex; }
+    return span.outerHTML;
+  });
+  if (processed !== html) el.innerHTML = processed;
+});
 </script>
 
 </body>
