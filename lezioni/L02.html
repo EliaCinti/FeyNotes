@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L02 — Fisica 1 Study Guide</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="../index.html" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+    <span class="logo-sub">Study Guide</span>
+  </a>
+  <nav class="header-nav">
+    <a href="../index.html" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="../index.html" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="L01.html">← Prec.</a>
+      <a href="L03.html">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<script>
+const LESSON = {
+    id: "L02", date: "Lezione 2 — 4 Mar 2026",
+    title: "Vettori, Componenti Cartesiane e Cinematica del Punto Materiale",
+    abstract: "Rappresentazione cartesiana dei vettori tramite coseni direttori e versori fondamentali. Somma e differenza vettoriale. Spostamento, velocità media e istantanea. Il legame derivata–integrale tra posizione e velocità.",
+
+    sections: [
+      // ──────────────── SEZIONE 1: RICHIAMI VETTORIALI ────────────────
+      {
+        id: "s-richiami-vettori",
+        type: "section",
+        title: "Richiami: il Vettore e le sue Tre Informazioni",
+        icon: "🔁",
+        content: `<p>La lezione si apre con un richiamo forte: la cinematica è <strong>deterministica</strong> — data una posizione iniziale e le informazioni complete sullo spostamento, il punto di arrivo è unico. Ma per descrivere uno spostamento <strong>non basta un numero</strong>.</p>
+<p>Un vettore trasporta <strong>tre informazioni</strong>:</p>`,
+        steps: [
+          "<strong>Modulo</strong> $|\\vec{r}|$ — l'intensità (\"quanto è lungo\")",
+          "<strong>Direzione</strong> — la retta su cui giace il vettore (\"su quale retta\")",
+          "<strong>Verso</strong> — l'orientamento lungo quella retta (\"in che senso\")"
+        ],
+        extra_content: `<p>Queste tre informazioni insieme identificano univocamente il vettore nello spazio. Se ne manca anche solo una, il moto non è determinato.</p>`,
+
+        quote: {
+          text: "Se non avete gli arnesi necessari per capire e comprendere il formalismo necessario per esporre i concetti, dovete andare a reperire quegli attrezzi.",
+          src: "— Prof. Mercuri, Lezione 2"
+        }
+      },
+
+      // ──────────────── SEZIONE 2: COMPONENTI CARTESIANE ────────────────
+      {
+        id: "s-componenti-cartesiane",
+        type: "section",
+        title: "Componenti Cartesiane e Coseni Direttori",
+        icon: "📐",
+        content: `<p>Per lavorare quantitativamente con i vettori, scegliamo un <strong>sistema di riferimento cartesiano</strong> con assi $x$, $y$, $z$ ortogonali. Ogni vettore $\\vec{r}$ viene "proiettato" sugli assi tramite gli angoli che forma con ciascuno di essi — i cosiddetti <strong>coseni direttori</strong>.</p>
+<p>Dato un vettore $\\vec{r}$ che forma gli angoli $\\theta_x$, $\\theta_y$, $\\theta_z$ rispettivamente con gli assi $x$, $y$, $z$, le <strong>componenti scalari</strong> del vettore sono:</p>`,
+
+        formulas: [
+          { label: "Componente x",  latex: "x = |\\vec{r}|\\cos\\theta_x" },
+          { label: "Componente y",  latex: "y = |\\vec{r}|\\cos\\theta_y" },
+          { label: "Componente z",  latex: "z = |\\vec{r}|\\cos\\theta_z" },
+          { label: "Modulo (invariante)", latex: "|\\vec{r}| = \\sqrt{x^2 + y^2 + z^2}" }
+        ],
+
+        extra_content: `<p>Il modulo è un <strong>invariante</strong>: non dipende dal sistema di coordinate scelto. Cambiando assi, cambiano le componenti ma il modulo resta lo stesso.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Proprietà fondamentale: $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$",
+            content: `<p>Questa identità discende direttamente dalla definizione di modulo. Sostituendo le componenti nella formula del modulo:</p>
+<p>$$|\\vec{r}| = |\\vec{r}|\\sqrt{\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z}$$</p>
+<p>Perché l'uguaglianza valga, la somma dei quadrati dei coseni deve fare 1. <strong>Conseguenza cruciale</strong>: dei tre angoli, solo <strong>due sono indipendenti</strong> — il terzo è automaticamente determinato.</p>`,
+            equations: [
+              "\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1"
+            ]
+          },
+          {
+            subtitle: "Caso particolare 2D: se $\\theta_z = 90°$",
+            content: `<p>Quando il vettore giace nel piano $xy$ (cioè $\\theta_z = 90°$), allora $\\cos\\theta_z = 0$ e la proprietà si riduce a:</p>
+<p>$$\\cos^2\\theta_x + \\cos^2\\theta_y = 1$$</p>
+<p>Da cui si ottiene la relazione $\\cos\\theta_y = \\sin\\theta_x$, che è esattamente la trigonometria del triangolo rettangolo nel piano. Questo conferma che nel piano basta <strong>un solo angolo</strong> per determinare la direzione.</p>`,
+            equations: [
+              "\\cos\\theta_z = 0 \\;\\Rightarrow\\; \\cos^2\\theta_y = 1 - \\cos^2\\theta_x = \\sin^2\\theta_x \\;\\Rightarrow\\; \\cos\\theta_y = \\sin\\theta_x"
+            ]
+          },
+          {
+            subtitle: "Coseni direttori come rapporti",
+            content: `<p>I coseni direttori possono essere calcolati anche come <strong>rapporto tra la componente e il modulo</strong>:</p>`,
+            equations: [
+              "\\cos\\theta_x = \\frac{x}{|\\vec{r}|} = \\frac{x}{\\sqrt{x^2+y^2+z^2}}",
+              "\\cos\\theta_y = \\frac{y}{|\\vec{r}|} = \\frac{y}{\\sqrt{x^2+y^2+z^2}}",
+              "\\cos\\theta_z = \\frac{z}{|\\vec{r}|} = \\frac{z}{\\sqrt{x^2+y^2+z^2}}"
+            ]
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 3: VERSORI ────────────────
+      {
+        id: "s-versori",
+        type: "section",
+        title: "Versori Fondamentali $\\hat{i}$, $\\hat{j}$, $\\hat{k}$",
+        icon: "🎯",
+        content: `<p>Per passare dalle componenti <strong>scalari</strong> (numeri) ai vettori <strong>componenti</strong> (frecce lungo gli assi), si introducono i <strong>versori fondamentali</strong>: tre vettori di modulo 1 diretti lungo gli assi del sistema di riferimento.</p>
+<p>La distinzione è fondamentale:</p>`,
+
+        table_compare: {
+          headers: ["Concetto", "Tipo", "Esempio"],
+          rows: [
+            ["Componente scalare $x$", "Numero (scalare)", "$x = 3$ m"],
+            ["Versore $\\hat{i}$", "Vettore di modulo 1", "$|\\hat{i}| = 1$, direzione asse $x$"],
+            ["Vettore componente $\\vec{x}$", "Vettore = scalare × versore", "$\\vec{x} = x\\hat{i} = 3\\hat{i}$ m"]
+          ]
+        },
+
+        extra_content: `<p>Il vettore originale si ricostruisce come <strong>somma dei vettori componenti</strong>:</p>`,
+
+        formulas: [
+          { label: "Decomposizione vettoriale", latex: "\\vec{r} = x\\hat{i} + y\\hat{j} + z\\hat{k}" },
+          { label: "Notazione compatta", latex: "\\vec{r} = (x, \\, y, \\, z)" }
+        ],
+
+        subsections: [
+          {
+            subtitle: "Perché servono i versori?",
+            content: `<p>Senza versori, $x = 3$ è solo un numero: non ha direzione. Moltiplicando per $\\hat{i}$ otteniamo $\\vec{x} = 3\\hat{i}$, che è un <strong>vettore</strong> con modulo 3, direzione dell'asse $x$, verso positivo. Il versore "trasforma" lo scalare in vettore, assegnandogli la direzione mancante.</p>`
+          },
+          {
+            subtitle: "Tangente dell'angolo",
+            content: `<p>Dagli appunti emerge anche un modo alternativo per trovare l'angolo: la <strong>tangente</strong>.</p>`,
+            equations: [
+              "\\tan\\theta_x = \\frac{y}{x}, \\qquad \\tan\\theta_y = \\frac{x}{y}"
+            ]
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 4: SOMMA VETTORIALE ────────────────
+      {
+        id: "s-somma-vettori",
+        type: "section",
+        title: "Somma e Differenza di Vettori per Componenti",
+        icon: "➕",
+        content: `<p>La potenza della rappresentazione cartesiana è che le operazioni vettoriali si riducono a <strong>operazioni sulle componenti</strong>, asse per asse.</p>
+<p>Dati due vettori $\\vec{S}_1 = (S_{1x},\\, S_{1y},\\, S_{1z})$ e $\\vec{S}_2 = (S_{2x},\\, S_{2y},\\, S_{2z})$:</p>`,
+
+        formulas: [
+          { label: "Somma vettoriale", latex: "\\vec{S}_{\\text{tot}} = \\vec{S}_1 + \\vec{S}_2 = (S_{1x}+S_{2x},\\; S_{1y}+S_{2y},\\; S_{1z}+S_{2z})" },
+          { label: "Componente x totale", latex: "S_{\\text{tot},x} = S_{1x} + S_{2x}" },
+          { label: "Componente y totale", latex: "S_{\\text{tot},y} = S_{1y} + S_{2y}" },
+          { label: "Componente z totale", latex: "S_{\\text{tot},z} = S_{1z} + S_{2z}" }
+        ],
+
+        extra_content: `<p>Graficamente, la somma si ottiene con la <strong>regola del parallelogramma</strong>: si mettono i due vettori coda a coda e il vettore somma è la diagonale. Il disegno del professore (pagina 2 degli appunti) mostra chiaramente $\\vec{S}_1$ e $\\vec{S}_2$ nel piano $xy$ con il vettore risultante $\\vec{S}_{\\text{tot}}$.</p>`
+      },
+
+      // ──────────────── SEZIONE 5: SPOSTAMENTO ────────────────
+      {
+        id: "s-spostamento",
+        type: "section",
+        title: "Il Vettore Spostamento $\\Delta\\vec{r}_{12}$",
+        icon: "📏",
+        content: `<p>Uno stesso punto materiale si sposta nel tempo da una posizione $\\vec{r}_1 = (x_1, y_1, z_1)$ a una posizione $\\vec{r}_2 = (x_2, y_2, z_2)$. Lo <strong>spostamento</strong> è la differenza tra le posizioni:</p>`,
+
+        formulas: [
+          { label: "Spostamento", latex: "\\Delta\\vec{r}_{12} = \\vec{r}_2 - \\vec{r}_1 = \\vec{r}_2 + (-\\vec{r}_1)" },
+          { label: "In componenti", latex: "\\Delta\\vec{r}_{12} = (x_2 - x_1)\\hat{i} + (y_2 - y_1)\\hat{j} + (z_2 - z_1)\\hat{k}" },
+          { label: "Distanza (modulo)", latex: "d_{12} = |\\Delta\\vec{r}_{12}| = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}" }
+        ],
+
+        extra_content: `<p>Il disegno del professore (pagina 3 degli appunti) è illuminante: $\\vec{r}_1$ e $\\vec{r}_2$ partono entrambi dall'origine $O$, e lo spostamento $\\Delta\\vec{r}_{12}$ va <strong>dalla punta di $\\vec{r}_1$ alla punta di $\\vec{r}_2$</strong>. Per costruirlo graficamente si usa il trucco $\\vec{r}_2 + (-\\vec{r}_1)$: si inverte $\\vec{r}_1$ e lo si somma a $\\vec{r}_2$.</p>
+<p>Attenzione: la <strong>distanza</strong> $d_{12}$ è il <em>modulo</em> dello spostamento, quindi è uno <strong>scalare positivo</strong> — non un vettore.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Ogni componente dello spostamento è un numero",
+            content: `<p>Dagli appunti: $\\Delta\\vec{r}_{12,\\,x} = x_2 - x_1$ è un <strong>numero</strong> (scalare), non un vettore. Il vettore spostamento si ottiene solo quando lo moltiplichiamo per il versore: $(x_2 - x_1)\\hat{i}$. Il professore ha sottolineato questo punto con un'annotazione esplicita.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 6: POSIZIONE IN FUNZIONE DEL TEMPO ────────────────
+      {
+        id: "s-posizione-tempo",
+        type: "section",
+        title: "Posizione come Funzione del Tempo: $\\vec{r}(t)$",
+        icon: "⏱️",
+        content: `<p>Passiamo ora alla <strong>cinematica vera e propria</strong>. L'idea chiave è che la posizione di un punto materiale <strong>cambia nel tempo</strong>. Scriviamo:</p>`,
+
+        formulas: [
+          { label: "Posizione al tempo t", latex: "\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j} + z(t)\\hat{k}" },
+          { label: "Posizione iniziale (t₁)", latex: "\\vec{r}_1(t_1) = x_1\\hat{i} + y_1\\hat{j} + z_1\\hat{k}" },
+          { label: "Posizione finale (t₂)", latex: "\\vec{r}_2(t_2) = x_2\\hat{i} + y_2\\hat{j} + z_2\\hat{k}" },
+          { label: "Intervallo di tempo", latex: "\\Delta t = t_2 - t_1" }
+        ],
+
+        extra_content: `<p>Le coordinate $x(t)$, $y(t)$, $z(t)$ sono ora <strong>funzioni del tempo</strong> — non numeri fissi. La cinematica consiste nello studio di <strong>come evolvono queste funzioni</strong>.</p>
+<p>La strategia fondamentale è: <strong>analizzare separatamente</strong> l'evoluzione temporale di ogni componente, poi ricomporre vettorialmente. Questo rende i problemi tridimensionali gestibili — lavoriamo con tre problemi unidimensionali indipendenti.</p>`
+      },
+
+      // ──────────────── SEZIONE 7: VELOCITÀ MEDIA ────────────────
+      {
+        id: "s-velocita-media",
+        type: "section",
+        title: "Velocità Media $\\vec{v}_m$",
+        icon: "🏃",
+        content: `<p>La <strong>velocità media</strong> è il rapporto tra lo spostamento e l'intervallo di tempo impiegato per compierlo. In forma vettoriale è un'unica operazione; in forma scalare sono <strong>tre equazioni indipendenti</strong>, una per asse.</p>`,
+
+        formulas: [
+          { label: "Forma vettoriale", latex: "\\vec{v}_m \\triangleq \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}" },
+          { label: "Componente x", latex: "v_{x,m} = \\frac{x_2 - x_1}{t_2 - t_1} = \\frac{\\Delta x}{\\Delta t}" },
+          { label: "Componente y", latex: "v_{y,m} = \\frac{y_2 - y_1}{t_2 - t_1} = \\frac{\\Delta y}{\\Delta t}" },
+          { label: "Componente z", latex: "v_{z,m} = \\frac{z_2 - z_1}{t_2 - t_1} = \\frac{\\Delta z}{\\Delta t}" }
+        ],
+
+        extra_content: `<p>La notazione vettoriale è <strong>compatta</strong>: una sola equazione codifica tre operazioni scalari. Il professore ha sottolineato esplicitamente questo punto negli appunti (pagina 4): <em>"in vettoriale mi basta una sola operazione"</em>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Direzione della velocità media",
+            content: `<p>Poiché $\\vec{v}_m = \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}$ e $\\Delta t$ è uno scalare positivo, $\\vec{v}_m$ ha la <strong>stessa direzione e lo stesso verso</strong> del vettore spostamento $\\Delta\\vec{r}_{12}$. Nel grafico traiettoria (pagina 6), $\\vec{v}_m$ è parallelo a $\\Delta\\vec{r}_{12}$ — una secante alla curva.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 8: VELOCITÀ ISTANTANEA ────────────────
+      {
+        id: "s-velocita-istantanea",
+        type: "section",
+        title: "Velocità Istantanea $\\vec{v}(t)$ — Il Passaggio al Limite",
+        icon: "⚡",
+        content: `<p>La velocità media ci dice come il punto si muove <em>in media</em> tra $t_1$ e $t_2$. Ma se vogliamo sapere cosa succede <strong>in un istante preciso</strong>, dobbiamo far tendere $\\Delta t \\to 0$, cioè far avvicinare $t_2$ a $t_1$.</p>
+<p>Matematicamente, questo è un <strong>limite</strong> — e il limite di un rapporto incrementale è, per definizione, una <strong>derivata</strong>.</p>`,
+
+        formulas: [
+          { label: "Componente x", latex: "v_x(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta x}{\\Delta t} = \\frac{dx}{dt} = \\frac{dx(t)}{dt}" },
+          { label: "Componente y", latex: "v_y(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta y}{\\Delta t} = \\frac{dy}{dt} = \\frac{dy(t)}{dt}" },
+          { label: "Componente z", latex: "v_z(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta z}{\\Delta t} = \\frac{dz}{dt} = \\frac{dz(t)}{dt}" },
+          { label: "Forma vettoriale compatta", latex: "\\vec{v}(t) = \\frac{d\\vec{r}(t)}{dt} = \\left(\\frac{dx}{dt},\\; \\frac{dy}{dt},\\; \\frac{dz}{dt}\\right)" }
+        ],
+
+        extra_content: `<p>In sintesi: <strong>la velocità istantanea è la derivata del vettore posizione rispetto al tempo</strong>. Le sue componenti sono le derivate delle singole coordinate.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Notazione differenziale",
+            content: `<p>Quando $\\Delta t \\to 0$, le variazioni finite diventano <strong>differenziali</strong>:</p>
+<p>$$\\Delta\\vec{r} \\to d\\vec{r} = (dx,\\; dy,\\; dz)$$</p>
+<p>$$\\Delta t \\to dt$$</p>
+<p>E il vettore velocità diventa $\\vec{v}(t) = (v_x(t),\\; v_y(t),\\; v_z(t))$.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 9: TRAIETTORIA E TANGENZA ────────────────
+      {
+        id: "s-traiettoria",
+        type: "section",
+        title: "Traiettoria: la Velocità è Sempre Tangente",
+        icon: "🔀",
+        content: `<p>Il disegno chiave della lezione (pagina 6 degli appunti) mostra una <strong>traiettoria curva</strong> con due posizioni $\\vec{r}_1$ e $\\vec{r}_2$. Osserviamo cosa succede quando avviciniamo i due punti:</p>`,
+
+        steps: [
+          "$\\vec{v}_m$ è parallela a $\\Delta\\vec{r}_{12}$ — è una <strong>secante</strong> alla traiettoria che congiunge i due punti.",
+          "Quando $\\Delta t \\to 0$, i due punti si avvicinano e la secante diventa una <strong>tangente</strong>.",
+          "Quindi $\\vec{v}(t)$ è parallela a $d\\vec{r}$ — <strong>la velocità istantanea è sempre tangente alla traiettoria</strong>."
+        ],
+
+        extra_content: `<p>Questa è una proprietà <strong>geometrica fondamentale</strong>: non importa quanto sia complicata la traiettoria, in ogni istante la velocità punta nella direzione in cui il corpo sta effettivamente andando — lungo la tangente alla curva.</p>`,
+
+        quote: {
+          text: "La velocità media è parallela al vettore spostamento nel grafico. La velocità istantanea è parallela a dr nel grafico.",
+          src: "— Appunti Lezione 2, pagina 6"
+        }
+      },
+
+      // ──────────────── SEZIONE 10: DALL'INTEGRALE ALLA POSIZIONE ────────────────
+      {
+        id: "s-integrazione",
+        type: "section",
+        title: "Dall'Integrazione si Risale alla Posizione: \"Prevedere il Futuro\"",
+        icon: "🔮",
+        content: `<p>Abbiamo visto che la <strong>derivata</strong> porta dalla posizione alla velocità. L'operazione inversa — l'<strong>integrale</strong> — ci permette di fare il percorso opposto: conoscendo la velocità e la posizione iniziale, possiamo ricostruire la posizione in ogni istante futuro.</p>
+<p>Il ragionamento parte da $dx(t) = v_x(t)\\,dt'$. Integrando entrambi i membri tra $t_0$ e $t$:</p>`,
+
+        formulas: [
+          { label: "Componente x", latex: "x(t) = x(t_0) + \\int_{t_0}^{t} v_x(t')\\, dt'" },
+          { label: "Componente y", latex: "y(t) = y(t_0) + \\int_{t_0}^{t} v_y(t')\\, dt'" },
+          { label: "Componente z", latex: "z(t) = z(t_0) + \\int_{t_0}^{t} v_z(t')\\, dt'" },
+          { label: "Forma vettoriale", latex: "\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\, dt'" }
+        ],
+
+        extra_content: `<p>Ancora una volta, le tre equazioni scalari si condensano in <strong>una sola equazione vettoriale</strong>.</p>
+<p>Questo è il cuore della cinematica: se conosci <strong>dove sei</strong> al tempo $t_0$ e <strong>come ti muovi</strong> (la velocità in ogni istante), puoi <strong>determinare dove sarai</strong> in qualsiasi istante futuro. Il professore ha descritto questo come "prevedere il futuro".</p>`,
+
+        subsections: [
+          {
+            subtitle: "Dimostrazione: passaggio derivata → integrale",
+            content: `<p>Dal legame $\\frac{dx(t)}{dt} = v_x(t)$, moltiplichiamo entrambi i lati per $dt$:</p>
+<p>$$dx(t) = v_x(t)\\,dt'$$</p>
+<p>Integrando il lato sinistro tra $x(t_0)$ e $x(t)$ e il destro tra $t_0$ e $t$:</p>
+<p>$$\\int_{x(t_0)}^{x(t)} dx = \\int_{t_0}^{t} v_x(t')\\,dt'$$</p>
+<p>Il membro sinistro vale $x(t) - x(t_0)$, da cui:</p>
+<p>$$x(t) = x(t_0) + \\int_{t_0}^{t} v_x(t')\\,dt'$$</p>
+<p>Il procedimento è identico per $y$ e $z$. È esattamente ciò che il professore ha scritto alla pagina 7 degli appunti, con l'annotazione <em>"Cosa ottengo integrando? E perché lo faccio?"</em>.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── METHOD BOX: SCHEMA DERIVATA ↔ INTEGRALE ────────────────
+      {
+        id: "s-metodo-deriv-int",
+        type: "method_box",
+        title: "Schema Operativo: Derivata ↔ Integrale",
+        steps: [
+          "<strong>Posizione → Velocità</strong>: si <strong>deriva</strong> la posizione rispetto al tempo. $\\vec{v}(t) = \\frac{d\\vec{r}(t)}{dt}$",
+          "<strong>Velocità → Posizione</strong>: si <strong>integra</strong> la velocità rispetto al tempo, aggiungendo la condizione iniziale. $\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$",
+          "In entrambi i casi, l'operazione vettoriale si esegue <strong>componente per componente</strong>: $x(t)$, $y(t)$, $z(t)$ separatamente."
+        ]
+      },
+
+      // ──────────────── ALERT BOX ────────────────
+      {
+        id: "s-trap-scalare-vettore",
+        type: "alert_box",
+        title: "🚨 Trappola d'Esame: Scalare vs Vettore",
+        content: `<p>La componente $x$ di uno spostamento è un <strong>numero</strong> (scalare). Il <strong>vettore componente</strong> è $x\\hat{i}$. Scrivere $\\Delta\\vec{r}_x = x_2 - x_1$ <strong>senza il versore</strong> è formalmente sbagliato — quello è lo scalare. La forma corretta del vettore è $(x_2 - x_1)\\hat{i}$.</p>
+<p>Allo stesso modo: la distanza $d_{12} = |\\Delta\\vec{r}_{12}|$ è uno <strong>scalare positivo</strong>, non un vettore. Non confondere spostamento (vettore) e distanza (modulo dello spostamento).</p>`
+      },
+
+      // ──────────────── ALERT BOX 2 ────────────────
+      {
+        id: "s-trap-vm-direzione",
+        type: "alert_box",
+        title: "🚨 Trappola: Direzione della Velocità Media vs Istantanea",
+        content: `<p>La velocità <strong>media</strong> $\\vec{v}_m$ è parallela allo <strong>spostamento</strong> $\\Delta\\vec{r}$ (secante alla traiettoria).</p>
+<p>La velocità <strong>istantanea</strong> $\\vec{v}(t)$ è tangente alla <strong>traiettoria</strong> nel punto considerato.</p>
+<p>Le due cose <strong>non coincidono</strong> in generale! Coincidono solo nel limite $\\Delta t \\to 0$ (quando la secante diventa tangente), oppure nel caso banale di moto rettilineo uniforme.</p>`
+      },
+
+      // ──────────────── NOTE BOX: PREREQUISITI MATEMATICI ────────────────
+      {
+        id: "s-note-math",
+        type: "note_box",
+        title: "📚 Prerequisiti Matematici per questa Lezione",
+        content: `<p>Il professore ha ribadito con forza che servono tre strumenti, senza i quali la fisica diventa incomprensibile:</p>
+<p><strong>1. Trigonometria</strong> — seno, coseno, tangente: servono per scomporre i vettori in componenti e per i coseni direttori.</p>
+<p><strong>2. Derivate</strong> — necessarie per definire la velocità istantanea come $\\frac{d\\vec{r}}{dt}$.</p>
+<p><strong>3. Integrali</strong> — necessari per risalire dalla velocità alla posizione: $\\vec{r}(t) = \\vec{r}_0 + \\int \\vec{v}\\,dt$.</p>
+<p>Se questi argomenti non sono chiari, è <strong>prioritario</strong> recuperarli prima di proseguire con il corso.</p>`
+      },
+
+      // ──────────────── NOTE BOX: LOGISTICA ────────────────
+      {
+        id: "s-note-logistica",
+        type: "note_box",
+        title: "📚 Note Logistiche (menzionate a lezione)",
+        content: `<p><strong>Aule:</strong> Le aule 1 e 2 sono problematiche per visibilità e acustica — la fila centrale è il punto migliore. L'assenza di microfoni in aule grandi peggiora la situazione.</p>
+<p><strong>Comportamento in aula:</strong> Il professore ha chiesto silenzio e niente cellulari durante le spiegazioni, per mantenere l'interazione.</p>
+<p><strong>Flessibilità esami:</strong> Alcuni docenti (es. Prof. Quaglia) permettono l'uso del proprio PC per esami di laboratorio.</p>`
+      },
+
+      // ──────────────── GRAPH: VECTOR COMPONENTS ────────────────
+      {
+        type: "graph",
+        id: "graph-vector-components",
+        title: "Scomposizione di un Vettore nelle Componenti Cartesiane",
+        graphType: "vector_components",
+        caption: "Modifica angolo e modulo per vedere come cambiano le componenti Aₓ e Aᵧ"
+      },
+
+      // ──────────────── GRAPH: VETTORI SPOSTAMENTO 3D ────────────────
+      {
+        id: "s-graph-displacement",
+        type: "graph",
+        graphType: "vectors_kinematics",
+        title: "Vettori Posizione e Spostamento — Animazione Interattiva"
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Quali <strong>tre informazioni</strong> servono per identificare un vettore?",
+        back: "<strong>Modulo</strong> (intensità), <strong>direzione</strong> (la retta su cui giace) e <strong>verso</strong> (l'orientamento lungo quella retta). Senza anche solo una di queste, il vettore non è determinato."
+      },
+      {
+        type: "definizione",
+        front: "Cosa sono i <strong>coseni direttori</strong> e quale proprietà fondamentale soddisfano?",
+        back: "Sono i coseni degli angoli $\\theta_x$, $\\theta_y$, $\\theta_z$ che il vettore forma con gli assi. Danno le componenti: $x = |\\vec{r}|\\cos\\theta_x$, ecc. La proprietà chiave è: $$\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$$ Conseguenza: solo <strong>due angoli su tre</strong> sono indipendenti."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è un <strong>versore</strong> e a cosa serve? Scrivi la decomposizione di $\\vec{r}$ con i versori.",
+        back: "Un versore è un vettore di <strong>modulo 1</strong> che indica una direzione. I versori fondamentali sono $\\hat{i}$, $\\hat{j}$, $\\hat{k}$ (lungo $x$, $y$, $z$). Servono a trasformare componenti scalari in vettori: $$\\vec{r} = x\\hat{i} + y\\hat{j} + z\\hat{k}$$"
+      },
+      {
+        type: "definizione",
+        front: "Scrivi la definizione di <strong>velocità media</strong> in forma vettoriale e in componenti.",
+        back: "Forma vettoriale: $$\\vec{v}_m \\triangleq \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}$$ In componenti: $v_{x,m} = \\frac{\\Delta x}{\\Delta t}$, $v_{y,m} = \\frac{\\Delta y}{\\Delta t}$, $v_{z,m} = \\frac{\\Delta z}{\\Delta t}$. Ha la <strong>stessa direzione</strong> dello spostamento."
+      },
+      {
+        type: "definizione",
+        front: "Scrivi la definizione di <strong>velocità istantanea</strong> e spiega il suo significato geometrico.",
+        back: "$$\\vec{v}(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{r}}{\\Delta t} = \\frac{d\\vec{r}}{dt}$$ È la <strong>derivata del vettore posizione</strong> rispetto al tempo. Geometricamente è sempre <strong>tangente alla traiettoria</strong>: quando $\\Delta t \\to 0$ la secante (spostamento) diventa tangente."
+      },
+      {
+        type: "domanda",
+        front: "Come si passa dalla <strong>velocità</strong> alla <strong>posizione</strong>? Scrivi la formula e spiega.",
+        back: "Si <strong>integra</strong> la velocità e si aggiunge la posizione iniziale: $$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$$ Questo permette di \"prevedere il futuro\": conoscendo dove sei e come ti muovi, sai dove sarai."
+      },
+      {
+        type: "domanda",
+        front: "Perché il modulo $|\\vec{r}|$ è detto <strong>invariante</strong>?",
+        back: "Perché non dipende dal sistema di coordinate scelto. Se ruoti gli assi, le componenti $x$, $y$, $z$ cambiano, ma $|\\vec{r}| = \\sqrt{x^2+y^2+z^2}$ resta lo stesso. È una proprietà intrinseca del vettore."
+      },
+      {
+        type: "tranello",
+        front: "Qual è la differenza tra <strong>componente scalare</strong> $x$ e <strong>vettore componente</strong> $\\vec{x}$?",
+        back: "$x$ è un <strong>numero</strong> (scalare): es. $x = 3$ m. <br>$\\vec{x} = x\\hat{i}$ è un <strong>vettore</strong>: ha modulo, direzione (asse x) e verso. <br>Scrivere $\\Delta\\vec{r}_x = x_2 - x_1$ senza il versore $\\hat{i}$ è <strong>formalmente sbagliato</strong> per un vettore."
+      },
+      {
+        type: "tranello",
+        front: "La velocità media ha la stessa direzione della velocità istantanea?",
+        back: "<strong>No, in generale!</strong> $\\vec{v}_m$ è parallela a $\\Delta\\vec{r}$ (secante alla traiettoria). $\\vec{v}(t)$ è tangente alla traiettoria. Coincidono solo quando $\\Delta t \\to 0$ o nel moto rettilineo uniforme."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$.",
+        back: "Dalle definizioni: $x = |\\vec{r}|\\cos\\theta_x$, $y = |\\vec{r}|\\cos\\theta_y$, $z = |\\vec{r}|\\cos\\theta_z$. Sostituendo in $|\\vec{r}|^2 = x^2+y^2+z^2$: $$|\\vec{r}|^2 = |\\vec{r}|^2(\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z)$$ Dividendo per $|\\vec{r}|^2 \\neq 0$: $$\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1 \\quad \\blacksquare$$"
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra il passaggio dall'equazione differenziale $\\frac{dx}{dt} = v_x(t)$ alla formula integrale per $x(t)$.",
+        back: "Si moltiplica per $dt$: $dx = v_x(t)\\,dt'$. Si integra tra $t_0$ e $t$: $$\\int_{x(t_0)}^{x(t)} dx = \\int_{t_0}^{t} v_x(t')\\,dt'$$ Il membro sinistro è $x(t) - x(t_0)$. Quindi: $$x(t) = x(t_0) + \\int_{t_0}^{t} v_x(t')\\,dt' \\quad \\blacksquare$$"
+      }
+    ],
+
+    // ──────────────── QUIZ ────────────────
+    quiz: [
+      {
+        q: "Quanti angoli indipendenti servono per determinare la direzione di un vettore nello spazio 3D?",
+        options: [
+          "Uno",
+          "Due",
+          "Tre",
+          "Dipende dal sistema di riferimento"
+        ],
+        correct: 1,
+        explanation: "Poiché $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$, fissati due angoli il terzo è determinato. Quindi servono <strong>due</strong> angoli indipendenti."
+      },
+      {
+        q: "Se $\\vec{r} = (3, 4, 0)$ m, quanto vale $|\\vec{r}|$?",
+        options: [
+          "$5$ m",
+          "$7$ m",
+          "$\\sqrt{7}$ m",
+          "$25$ m"
+        ],
+        correct: 0,
+        explanation: "$|\\vec{r}| = \\sqrt{3^2 + 4^2 + 0^2} = \\sqrt{9+16} = \\sqrt{25} = 5$ m. È la terna pitagorica classica 3-4-5."
+      },
+      {
+        q: "Cosa rappresenta fisicamente l'operazione $\\frac{d\\vec{r}(t)}{dt}$?",
+        options: [
+          "L'accelerazione istantanea",
+          "La velocità media tra due istanti",
+          "La velocità istantanea al tempo $t$",
+          "Lo spostamento infinitesimo"
+        ],
+        correct: 2,
+        explanation: "La derivata del vettore posizione rispetto al tempo è la <strong>velocità istantanea</strong>: $\\vec{v}(t) = \\frac{d\\vec{r}(t)}{dt}$. L'accelerazione sarebbe la derivata <em>seconda</em>."
+      },
+      {
+        q: "La velocità istantanea $\\vec{v}(t)$ è geometricamente:",
+        options: [
+          "Parallela al vettore posizione $\\vec{r}(t)$",
+          "Perpendicolare alla traiettoria",
+          "Tangente alla traiettoria nel punto considerato",
+          "Diretta verso il centro della traiettoria"
+        ],
+        correct: 2,
+        explanation: "Quando $\\Delta t \\to 0$, lo spostamento $\\Delta\\vec{r}$ diventa $d\\vec{r}$, tangente alla curva. Poiché $\\vec{v} = d\\vec{r}/dt$ e $dt$ è scalare, $\\vec{v}$ ha la <strong>stessa direzione di $d\\vec{r}$</strong>, cioè è tangente alla traiettoria."
+      },
+      {
+        q: "Per ricostruire la posizione $\\vec{r}(t)$ a partire dalla velocità $\\vec{v}(t)$, serve anche:",
+        options: [
+          "La massa del corpo",
+          "L'accelerazione media",
+          "La posizione iniziale $\\vec{r}(t_0)$",
+          "La traiettoria esplicita"
+        ],
+        correct: 2,
+        explanation: "L'integrale $\\int_{t_0}^{t} \\vec{v}(t')\\,dt'$ fornisce lo <strong>spostamento</strong> rispetto a $t_0$, non la posizione assoluta. Per ottenere $\\vec{r}(t)$ bisogna aggiungere $\\vec{r}(t_0)$ — la <strong>condizione iniziale</strong>."
+      },
+      {
+        q: "Il prodotto $x \\cdot \\hat{i}$ (scalare per versore) produce:",
+        options: [
+          "Uno scalare",
+          "Un versore",
+          "Un vettore con direzione dell'asse $x$ e modulo $|x|$",
+          "Un angolo"
+        ],
+        correct: 2,
+        explanation: "Moltiplicare uno <strong>scalare</strong> ($x$) per un <strong>versore</strong> ($\\hat{i}$) produce un <strong>vettore</strong> con la direzione del versore e modulo pari al valore assoluto dello scalare: $\\vec{x} = x\\hat{i}$."
+      },
+      {
+        q: "Se $\\theta_z = 90°$ per un vettore nel piano $xy$, quale relazione vale?",
+        options: [
+          "$\\cos\\theta_x = \\cos\\theta_y$",
+          "$\\cos\\theta_y = \\sin\\theta_x$",
+          "$\\sin\\theta_y = \\sin\\theta_x$",
+          "$\\cos\\theta_y = \\cos\\theta_x$"
+        ],
+        correct: 1,
+        explanation: "Con $\\theta_z = 90°$, $\\cos\\theta_z = 0$. La proprietà diventa $\\cos^2\\theta_x + \\cos^2\\theta_y = 1$, cioè $\\cos^2\\theta_y = 1 - \\cos^2\\theta_x = \\sin^2\\theta_x$, da cui $\\cos\\theta_y = \\sin\\theta_x$."
+      },
+      {
+        q: "La velocità media $\\vec{v}_m$ è parallela a:",
+        options: [
+          "La traiettoria nel punto iniziale",
+          "Il vettore posizione $\\vec{r}_1$",
+          "Il vettore spostamento $\\Delta\\vec{r}_{12}$",
+          "Il versore $\\hat{i}$"
+        ],
+        correct: 2,
+        explanation: "$\\vec{v}_m = \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}$. Poiché $\\Delta t$ è uno scalare positivo, $\\vec{v}_m$ ha la stessa direzione e verso di $\\Delta\\vec{r}_{12}$ — è una <strong>secante</strong> alla traiettoria."
+      }
+    ]
+  };
+</script>
+<script src="../js/renderer.js?v=1773641082"></script>
+<script src="../js/graphs.js?v=1773641082"></script>
+
+<script>
+// ─── Graph utilities and functions ───
+// ─── Arrow Drawing Utility ───
+function drawArrow(ctx, x1, y1, x2, y2, color, width) {
+  const headLen = 10;
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+
+  // Shaft
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+
+  // Arrowhead
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+  ctx.closePath();
+  ctx.fill();
+}
+
+
+// ─── Graph: Vectors Kinematics ───
+function drawVectorsKinematics(ctx, canvas, controls) {
+  const W = canvas.width, H = canvas.height;
+  let animT = 0;
+  let animId = null;
+  let running = false;
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#252940';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    // Axes
+    ctx.strokeStyle = '#353a55';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(50, H-40); ctx.lineTo(W-30, H-40); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(50, H-40); ctx.lineTo(50, 30); ctx.stroke();
+    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif';
+    ctx.fillText('x', W-20, H-35);
+    ctx.fillText('y', 55, 25);
+
+    // Origin
+    const ox = 100, oy = H - 80;
+    ctx.fillStyle = '#6c8cff';
+    ctx.beginPath(); ctx.arc(ox, oy, 4, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
+    ctx.fillText('O', ox - 12, oy + 16);
+
+    // Trajectory (curved path)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(108,140,255,0.25)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    for (let i = 0; i <= 100; i++) {
+      const frac = i / 100;
+      const px = ox + frac * 450;
+      const py = oy - Math.sin(frac * Math.PI * 1.2) * 200 - frac * 40;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Points along trajectory
+    const tA = 0.2;
+    const tB = Math.min(0.2 + t * 0.6, 0.8);
+    const posA = { x: ox + tA * 450, y: oy - Math.sin(tA * Math.PI * 1.2) * 200 - tA * 40 };
+    const posB = { x: ox + tB * 450, y: oy - Math.sin(tB * Math.PI * 1.2) * 200 - tB * 40 };
+
+    // Position vectors r_i and r_f
+    drawArrow(ctx, ox, oy, posA.x, posA.y, '#74c0fc', 2);
+    ctx.fillStyle = '#74c0fc'; ctx.font = 'bold 13px sans-serif';
+    const rAMid = { x: (ox + posA.x)/2 - 15, y: (oy + posA.y)/2 + 5 };
+    ctx.fillText('r⃗ᵢ', rAMid.x, rAMid.y);
+
+    drawArrow(ctx, ox, oy, posB.x, posB.y, '#b197fc', 2);
+    ctx.fillStyle = '#b197fc'; ctx.font = 'bold 13px sans-serif';
+    const rBMid = { x: (ox + posB.x)/2 + 10, y: (oy + posB.y)/2 - 5 };
+    ctx.fillText('r⃗f', rBMid.x, rBMid.y);
+
+    // Displacement vector Δr
+    drawArrow(ctx, posA.x, posA.y, posB.x, posB.y, '#f0c050', 2.5);
+    const drMid = { x: (posA.x + posB.x)/2, y: (posA.y + posB.y)/2 - 15 };
+    ctx.fillStyle = '#f0c050'; ctx.font = 'bold 14px sans-serif';
+    ctx.fillText('Δr⃗', drMid.x, drMid.y);
+
+    // Points
+    ctx.fillStyle = '#ff6b6b';
+    ctx.beginPath(); ctx.arc(posA.x, posA.y, 5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e8eaf0'; ctx.font = '12px sans-serif';
+    ctx.fillText('P(tᵢ)', posA.x - 10, posA.y + 20);
+
+    ctx.fillStyle = '#51cf66';
+    ctx.beginPath(); ctx.arc(posB.x, posB.y, 5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e8eaf0'; ctx.font = '12px sans-serif';
+    ctx.fillText('P(tf)', posB.x + 8, posB.y + 18);
+  }
+
+  function animate() {
+    if (!running) return;
+    animT += 0.008;
+    if (animT > 1) { animT = 1; running = false; }
+    draw(animT);
+    if (running) animId = requestAnimationFrame(animate);
+  }
+
+  draw(1); // draw complete state initially
+
+  const playBtn = document.createElement('button');
+  playBtn.className = 'graph-btn';
+  playBtn.textContent = '▶ Anima';
+  playBtn.onclick = () => {
+    animT = 0; running = true;
+    animate();
+  };
+  controls.appendChild(playBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'graph-btn';
+  resetBtn.textContent = '↺ Reset';
+  resetBtn.onclick = () => {
+    running = false; if (animId) cancelAnimationFrame(animId);
+    animT = 1; draw(1);
+  };
+  controls.appendChild(resetBtn);
+}
+
+// ─── Graph: Parabolic Motion ───
+function drawParabolicMotion(ctx, canvas, controls) {
+  const W = canvas.width, H = canvas.height;
+  const g = 9.81;
+  let angle = 45, v0 = 30;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#252940'; ctx.lineWidth = 0.5;
+    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    const ox = 60, oy = H - 50;
+    // Axes
+    ctx.strokeStyle = '#353a55'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(W - 20, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, 20); ctx.stroke();
+    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif';
+    ctx.fillText('x', W - 15, oy + 16);
+    ctx.fillText('y', ox - 15, 25);
+
+    const rad = angle * Math.PI / 180;
+    const vx = v0 * Math.cos(rad), vy = v0 * Math.sin(rad);
+    const tFlight = 2 * vy / g;
+    const xMax = vx * tFlight;
+    const yMax = vy * vy / (2 * g);
+
+    // Scale to fit
+    const scaleX = (W - 100) / Math.max(xMax, 1);
+    const scaleY = (H - 100) / Math.max(yMax * 1.2, 1);
+    const scale = Math.min(scaleX, scaleY);
+
+    // Trajectory
+    ctx.beginPath();
+    ctx.strokeStyle = '#6c8cff'; ctx.lineWidth = 2.5;
+    const steps = 100;
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * tFlight;
+      const px = ox + vx * t * scale;
+      const py = oy - (vy * t - 0.5 * g * t * t) * scale;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // v0 arrow
+    const arrowLen = 60;
+    drawArrow(ctx, ox, oy, ox + arrowLen * Math.cos(rad), oy - arrowLen * Math.sin(rad), '#f0c050', 2.5);
+    ctx.fillStyle = '#f0c050'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('v⃗₀', ox + arrowLen * Math.cos(rad) + 5, oy - arrowLen * Math.sin(rad) - 5);
+
+    // Components
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(116,192,252,0.4)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + arrowLen * Math.cos(rad), oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox + arrowLen * Math.cos(rad), oy); ctx.lineTo(ox + arrowLen * Math.cos(rad), oy - arrowLen * Math.sin(rad)); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Apex marker
+    const tApex = vy / g;
+    const apexX = ox + vx * tApex * scale;
+    const apexY = oy - yMax * scale;
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = '#51cf66'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(apexX, apexY); ctx.lineTo(apexX, oy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#51cf66'; ctx.beginPath(); ctx.arc(apexX, apexY, 4, 0, Math.PI*2); ctx.fill();
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`h = ${yMax.toFixed(1)} m`, apexX + 8, apexY - 5);
+
+    // Range
+    const rangeX = ox + xMax * scale;
+    ctx.fillStyle = '#ff6b6b'; ctx.beginPath(); ctx.arc(rangeX, oy, 4, 0, Math.PI*2); ctx.fill();
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`R = ${xMax.toFixed(1)} m`, rangeX - 25, oy + 20);
+
+    // Info
+    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
+    ctx.fillText(`θ = ${angle}°  |  v₀ = ${v0} m/s  |  T = ${tFlight.toFixed(2)} s`, ox + 10, 30);
+  }
+
+  draw();
+
+  // Angle slider
+  const ag = document.createElement('div');
+  ag.className = 'graph-slider-group';
+  ag.innerHTML = `<span>θ:</span><input type="range" min="5" max="85" value="${angle}"><span class="slider-val">${angle}°</span>`;
+  ag.querySelector('input').oninput = function() {
+    angle = +this.value;
+    ag.querySelector('.slider-val').textContent = angle + '°';
+    draw();
+  };
+  controls.appendChild(ag);
+
+  // v0 slider
+  const vg = document.createElement('div');
+  vg.className = 'graph-slider-group';
+  vg.innerHTML = `<span>v₀:</span><input type="range" min="5" max="60" value="${v0}"><span class="slider-val">${v0} m/s</span>`;
+  vg.querySelector('input').oninput = function() {
+    v0 = +this.value;
+    vg.querySelector('.slider-val').textContent = v0 + ' m/s';
+    draw();
+  };
+  controls.appendChild(vg);
+}
+
+// ─── Graph: Circular Motion ───
+function drawCircularMotion(ctx, canvas, controls) {
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2, R = 140;
+  let theta = 0;
+  let running = false;
+  let animId = null;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#252940'; ctx.lineWidth = 0.5;
+    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    // Circle path
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(108,140,255,0.3)'; ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Center
+    ctx.fillStyle = '#6b7089';
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif'; ctx.fillText('O', cx - 12, cy + 16);
+
+    // Point on circle
+    const px = cx + R * Math.cos(theta);
+    const py = cy - R * Math.sin(theta);
+
+    // Radius vector
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(160,165,184,0.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Velocity vector (tangent)
+    const vLen = 70;
+    const vx = -Math.sin(theta), vy = -Math.cos(theta); // perpendicular to radius, flipped y
+    drawArrow(ctx, px, py, px + vx * vLen, py + vy * vLen, '#51cf66', 2.5);
+    ctx.fillStyle = '#51cf66'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('v⃗', px + vx * vLen + 8, py + vy * vLen);
+
+    // Centripetal acceleration (toward center)
+    const aLen = 50;
+    const ax = cx - px, ay = cy - py;
+    const aMag = Math.sqrt(ax * ax + ay * ay);
+    drawArrow(ctx, px, py, px + (ax / aMag) * aLen, py + (ay / aMag) * aLen, '#ff6b6b', 2.5);
+    ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('a⃗ₙ', px + (ax / aMag) * aLen + 8, py + (ay / aMag) * aLen - 5);
+
+    // Point
+    ctx.fillStyle = '#f0c050';
+    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Angle arc
+    ctx.beginPath();
+    ctx.arc(cx, cy, 30, 0, -theta, theta > 0);
+    ctx.strokeStyle = '#ffa94d'; ctx.lineWidth = 1.5;
+    ctx.stroke();
+    if (theta > 0.15) {
+      ctx.fillStyle = '#ffa94d'; ctx.font = '12px sans-serif';
+      ctx.fillText('θ', cx + 35 * Math.cos(theta / 2), cy - 35 * Math.sin(theta / 2) + 4);
+    }
+
+    // Labels
+    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
+    ctx.fillText(`R = const  |  |v⃗| = const  |  a⃗ₙ = v²/R`, 20, 25);
+  }
+
+  function animate() {
+    if (!running) return;
+    theta += 0.02;
+    if (theta > Math.PI * 2) theta -= Math.PI * 2;
+    draw();
+    animId = requestAnimationFrame(animate);
+  }
+
+  theta = Math.PI / 4;
+  draw();
+
+  const playBtn = document.createElement('button');
+  playBtn.className = 'graph-btn';
+  playBtn.textContent = '▶ Anima';
+  playBtn.onclick = () => {
+    if (running) { running = false; playBtn.textContent = '▶ Anima'; }
+    else { running = true; playBtn.textContent = '⏸ Pausa'; animate(); }
+  };
+  controls.appendChild(playBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'graph-btn';
+  resetBtn.textContent = '↺ Reset';
+  resetBtn.onclick = () => {
+    running = false; if (animId) cancelAnimationFrame(animId);
+    playBtn.textContent = '▶ Anima';
+    theta = Math.PI / 4; draw();
+  };
+  controls.appendChild(resetBtn);
+}
+
+// ─── Arrow Drawing Utility ───
+function drawArrow(ctx, x1, y1, x2, y2, color, width) {
+  const headLen = 10;
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+
+  // Shaft
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+
+  // Arrowhead
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+  ctx.closePath();
+  ctx.fill();
+}
+
+
+
+</script>
+
+<script>
+// Sidebar toggle (open by default)
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+</body>
+</html>

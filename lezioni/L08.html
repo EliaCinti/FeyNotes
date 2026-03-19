@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L08 — Fisica 1 Study Guide</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="../index.html" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+    <span class="logo-sub">Study Guide</span>
+  </a>
+  <nav class="header-nav">
+    <a href="../index.html" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="../index.html" class="sidebar-back">&larr; Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="L07.html">&larr; Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. &rarr;</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">&#9776;</button>
+  </main>
+</div>
+
+<script>
+const LESSON = {
+    id: "L08", date: "Lezione 8 — 18 Mar 2026",
+    title: "Terzo Principio, Risoluzione Vettoriale delle Forze e Forza Peso",
+    abstract: "Il Terzo Principio della Dinamica (azione e reazione). Il modello del punto materiale. Scomposizione vettoriale delle forze per l'equilibrio statico. Corpi a contatto e forze interne. La forza peso e la reazione normale.",
+
+    sections: [
+      // ──────────────── SEZIONE 1: TERZO PRINCIPIO ────────────────
+      {
+        id: "s8-terzo-principio",
+        type: "section",
+        title: "Il Terzo Principio della Dinamica (Azione e Reazione)",
+        icon: "↔️",
+        content: `<p>I primi due principi descrivono proprieta <strong>passive</strong> dei corpi: come reagiscono alle forze (inerzia) e come le forze producono accelerazione. Il terzo principio descrive una proprieta <strong>attiva</strong> delle interazioni: come i corpi agiscono l'uno sull'altro.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Il concetto di Principio in fisica",
+            content: `<p>Un principio in fisica e una verita osservata <strong>empiricamente</strong> e <strong>mai violata</strong> in natura. Non necessita di dimostrazione formale — si basa sull'esperienza universale. Il terzo principio e uno di questi pilastri fondamentali.</p>`
+          },
+          {
+            subtitle: "Enunciato: Azione e Reazione",
+            content: `<p>La forza che un corpo 1 esercita su un corpo 2 e <strong>uguale in modulo e direzione</strong>, ma di <strong>verso opposto</strong>, alla forza che il corpo 2 esercita sull'1:</p>
+<p>$$\\vec{F}_{12} = -\\vec{F}_{21}$$</p>
+<p>Le forze nascono <strong>sempre in coppie</strong>: non puo esistere un'azione senza la corrispondente reazione. I due corpi sono <strong>intercambiabili</strong>: 1 e 2 interagiscono reciprocamente.</p>`
+          },
+          {
+            subtitle: "Vale per TUTTE le interazioni",
+            content: `<p>Il terzo principio funziona sia per forze <strong>attrattive</strong> (es. gravita: la Terra attira la mela, la mela attira la Terra con la stessa forza!) sia per forze <strong>repulsive</strong> (es. due cariche elettriche uguali che si respingono).</p>
+<p>Dai tuoi appunti: <em>"vale sempre il 3° principio della dinamica, anche se la forza e di tipo repulsivo"</em>.</p>`
+          },
+          {
+            subtitle: "Attenzione: azione e reazione agiscono su corpi DIVERSI",
+            content: `<p>Un errore comune: pensare che azione e reazione si annullino. <strong>No!</strong> Le due forze agiscono su corpi diversi:</p>
+<p>• $\\vec{F}_{12}$ agisce su corpo 2 (e la forza che 1 esercita su 2)</p>
+<p>• $\\vec{F}_{21}$ agisce su corpo 1 (e la forza che 2 esercita su 1)</p>
+<p>Non si sommano mai nella stessa equazione $\\vec{F} = m\\vec{a}$ perche riguardano corpi diversi.</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Terzo Principio", latex: "\\vec{F}_{12} = -\\vec{F}_{21}" }
+        ]
+      },
+
+      // ──────────────── GRAPH: TERZO PRINCIPIO ────────────────
+      {
+        type: "graph",
+        id: "graph-third-law",
+        title: "Il Terzo Principio: Forze Attrattive e Repulsive",
+        graphType: "third_law",
+        caption: "Trascina i corpi per vedere come le forze di azione e reazione cambiano. Prova la modalita attrattiva e repulsiva."
+      },
+
+      // ──────────────── DESC GRAFICO TERZO PRINCIPIO ────────────────
+      {
+        id: "s8-desc-third-law",
+        type: "note_box",
+        title: "Cosa Mostra il Grafico del Terzo Principio",
+        content: `<p>Il grafico mostra due corpi che interagiscono. Le <strong>frecce rosse e blu</strong> rappresentano la coppia azione-reazione: hanno sempre lo <strong>stesso modulo</strong> (stessa lunghezza), la <strong>stessa direzione</strong> (lungo la linea che congiunge i corpi), ma <strong>verso opposto</strong>.</p>
+<p>Sposta i corpi con lo slider: la distanza cambia, ma $\\vec{F}_{12} = -\\vec{F}_{21}$ vale <strong>sempre</strong>. Passa dalla modalita attrattiva (gravita) a quella repulsiva (cariche uguali) per vedere come cambia il verso delle frecce, ma la simmetria resta identica.</p>
+<p><strong>Utilita</strong>: questo schema e essenziale per disegnare i diagrammi di corpo libero — devi sapere quali forze agiscono su <em>quale</em> corpo.</p>`
+      },
+
+      // ──────────────── SEZIONE 2: PUNTO MATERIALE ────────────────
+      {
+        id: "s8-punto-materiale",
+        type: "section",
+        title: "Il Modello del Punto Materiale",
+        icon: "⚫",
+        content: `<p>Mentre in cinematica si parlava di "punto geometrico", in dinamica lo stato di moto dipende dalla <strong>massa inerziale</strong> $m$. Quindi il punto diventa un <strong>punto materiale</strong>: un modello astratto in cui tutta la massa del sistema e concentrata in un punto geometrico.</p>
+<p>Se non diversamente specificato, si ragiona <strong>sempre per punti materiali</strong>. Questo semplifica enormemente i problemi: non ci sono rotazioni, non ci sono deformazioni, tutte le forze agiscono sullo stesso punto.</p>`,
+
+        extra_content: `<p>Dai tuoi appunti: <em>"il punto diventa un punto materiale, dove materiale deriva dalla massa $m$. Se non specificato il contrario, si considererà il punto materiale"</em>.</p>`
+      },
+
+      // ──────────────── SEZIONE 3: EQUILIBRIO STATICO ────────────────
+      {
+        id: "s8-equilibrio",
+        type: "section",
+        title: "Equilibrio Statico 2D: Scomposizione Vettoriale delle Forze",
+        icon: "⚖️",
+        content: `<p>Quando un punto materiale inizialmente fermo e soggetto a piu forze e vogliamo che <strong>resti fermo</strong>, la condizione e:</p>
+<p>$$\\vec{v} = \\text{cost} = \\vec{0} \\quad \\Rightarrow \\quad \\vec{a} = \\vec{0} \\quad \\Rightarrow \\quad \\sum_i \\vec{F}_i = \\vec{0}$$</p>
+<p>Per risolvere il problema, si <strong>scompongono</strong> tutti i vettori forza lungo assi ortogonali ($x$ e $y$) e si impone che la somma sia zero su <strong>ciascun asse</strong>:</p>
+<p>$$\\begin{cases} \\sum F_{x,i} = 0 \\\\ \\sum F_{y,i} = 0 \\end{cases}$$</p>
+<p>Questo trasforma un'equazione vettoriale in un sistema di <strong>due equazioni scalari</strong> risolvibili con la trigonometria.</p>`,
+
+        formulas: [
+          { label: "Condizione di equilibrio", latex: "\\sum_i \\vec{F}_i = \\vec{0}" },
+          { label: "Proiezione asse x", latex: "\\sum_i F_i\\cos\\theta_i = 0" },
+          { label: "Proiezione asse y", latex: "\\sum_i F_i\\sin\\theta_i = 0" }
+        ]
+      },
+
+      // ──────────────── ESERCIZIO 1: EQUILIBRIO ────────────────
+      {
+        id: "s8-es-equilibrio",
+        type: "section",
+        title: "Esercizio Svolto: Equilibrio con Tre Forze su Piano Orizzontale",
+        icon: "📝",
+        content: `<p>Dai tuoi appunti (pagina 2-3): un punto materiale su un piano orizzontale e soggetto a tre forze $\\vec{F}_1$, $\\vec{F}_2$ e $\\vec{F}$ (incognita). Il punto e fermo. Trovare modulo e direzione di $\\vec{F}$.</p>
+<p><strong>Dati</strong>: $\\theta = 60°$ (angolo tra $\\vec{F}_1$ e $\\vec{F}_2$), $|\\vec{F}_2| = 10$ N, $|\\vec{F}_1| = 7$ N.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Passo 1: Disegnare il diagramma di corpo libero",
+            content: `<p>Scegliamo un sistema di riferimento cartesiano con l'asse $x$ lungo la direzione positiva e l'asse $y$ perpendicolare. Posizioniamo $\\vec{F}_1$ nel secondo quadrante e $\\vec{F}_2$ nel quarto quadrante, con $\\theta = 60°$ tra di loro.</p>
+<p>La forza $\\vec{F}$ incognita deve essere tale che $\\vec{F}_1 + \\vec{F}_2 + \\vec{F} = \\vec{0}$, cioe $\\vec{F} = -(\\vec{F}_1 + \\vec{F}_2)$.</p>`
+          },
+          {
+            subtitle: "Passo 2: Scomporre lungo gli assi",
+            content: `<p>Proiettiamo le forze note su $x$ e $y$ (usando gli angoli rispetto agli assi del diagramma):</p>
+<p><strong>Asse $x$</strong>: $-F_1 + F_1\\cos\\theta + F\\cos\\phi = 0$</p>
+<p><strong>Asse $y$</strong>: $F_1\\sin\\theta - F_2\\sin\\theta = 0$</p>
+<p>Dove $\\phi$ e l'angolo che $\\vec{F}$ fa con l'asse $x$.</p>`
+          },
+          {
+            subtitle: "Passo 3: Risolvere il sistema",
+            content: `<p>Dalle due equazioni si ricava prima l'angolo $\\phi$:</p>
+<p>$$\\tan\\phi = \\frac{F_2\\sin\\theta}{F_1 - F_2\\cos\\theta} = \\frac{10 \\cdot \\sin 60°}{7 - 10 \\cdot \\cos 60°} = \\frac{10 \\cdot 0.866}{7 - 10 \\cdot 0.5} = \\frac{8.66}{2} \\approx 0.993$$</p>
+<p>$$\\phi \\approx 43°$$</p>
+<p>Il modulo di $\\vec{F}$:</p>
+<p>$$F = \\frac{F_2\\sin\\theta}{\\sin\\phi} = \\frac{8.66}{\\sin 43°} \\approx \\frac{8.66}{0.682} \\approx 8.9 \\;\\text{N}$$</p>`
+          },
+          {
+            subtitle: "Passo 4: Risultato finale",
+            content: `<p>Le componenti della forza $\\vec{F}$:</p>
+<p>$$F_x = F\\cos\\phi = 8.9 \\cdot \\cos 43° \\approx 6.5 \\;\\text{N}$$</p>
+<p>$$F_y = F\\sin\\phi = 8.9 \\cdot \\sin 43° \\approx 6.1 \\;\\text{N}$$</p>
+<p>In forma vettoriale: $\\vec{F} = F_x\\hat{u}_x + F_y\\hat{u}_y \\approx 6.5\\hat{u}_x + 6.1\\hat{u}_y$ N</p>
+<p>Hai incorniciato questo risultato nei tuoi appunti!</p>`
+          }
+        ]
+      },
+
+      // ──────────────── GRAPH: EQUILIBRIO VETTORIALE ────────────────
+      {
+        type: "graph",
+        id: "graph-vector-equilibrium",
+        title: "Scomposizione Vettoriale per l'Equilibrio",
+        graphType: "vector_equilibrium",
+        caption: "Tre forze su un punto materiale in equilibrio. La risultante e zero: F1 + F2 + F = 0. Trascina gli angoli per esplorare diverse configurazioni."
+      },
+
+      // ──────────────── DESC GRAFICO EQUILIBRIO ────────────────
+      {
+        id: "s8-desc-equilibrio",
+        type: "note_box",
+        title: "Cosa Mostra il Grafico dell'Equilibrio Vettoriale",
+        content: `<p>Questo grafico mostra un punto materiale in equilibrio sotto l'azione di tre forze. Le forze $\\vec{F}_1$ (blu) e $\\vec{F}_2$ (rossa) sono note e fisse; la forza $\\vec{F}$ (verde) e calcolata automaticamente come $\\vec{F} = -(\\vec{F}_1 + \\vec{F}_2)$ affinche la risultante sia nulla.</p>
+<p>Le <strong>linee tratteggiate</strong> mostrano le componenti $x$ e $y$ di ogni vettore — cioe la scomposizione trigonometrica. Puoi variare l'angolo $\\theta$ tra le forze note e i loro moduli per vedere come cambia $\\vec{F}$.</p>
+<p><strong>Utilita</strong>: e esattamente il metodo dell'esercizio svolto. Nota come la condizione $\\sum F_x = 0$ e $\\sum F_y = 0$ si traduce visivamente nel fatto che le proiezioni si compensano perfettamente su ciascun asse.</p>`
+      },
+
+      // ──────────────── SEZIONE 4: CORPI A CONTATTO ────────────────
+      {
+        id: "s8-contatto",
+        type: "section",
+        title: "Dinamica di Masse a Contatto",
+        icon: "📦",
+        content: `<p>Un caso classico: due blocchi di massa $m_1$ e $m_2$ a contatto vengono spinti da una forza esterna $\\vec{F}$. Si generano <strong>forze interne</strong> al punto di contatto.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Analisi del sistema intero",
+            content: `<p>Se consideriamo i due blocchi come un <strong>unico sistema</strong> di massa $m_1 + m_2$, le forze interne si annullano (per il terzo principio: $\\vec{F}_{12} + \\vec{F}_{21} = \\vec{0}$). L'accelerazione del sistema e:</p>
+<p>$$a = \\frac{F}{m_1 + m_2}$$</p>`
+          },
+          {
+            subtitle: "Analisi dei singoli blocchi",
+            content: `<p>Se analizziamo i blocchi <strong>separatamente</strong>, le forze interne non si annullano — sono essenziali!</p>
+<p><strong>Su $m_1$</strong> (quello spinto direttamente): agisce $\\vec{F}$ in avanti e $\\vec{F}_{21}$ all'indietro (reazione di $m_2$).</p>
+<p>$$F - F_{21} = m_1 a \\quad \\Rightarrow \\quad F_{21} = F - m_1 a$$</p>
+<p><strong>Su $m_2$</strong> (quello spinto da $m_1$): agisce solo $\\vec{F}_{12}$ in avanti.</p>
+<p>$$F_{12} = m_2 a$$</p>
+<p>Per il terzo principio: $F_{12} = F_{21}$ (in modulo). Sostituendo $a$:</p>`
+          },
+          {
+            subtitle: "Formule finali",
+            content: `<p>La forza che $m_1$ esercita su $m_2$ (e viceversa, in modulo):</p>
+<p>$$F_{12} = \\frac{m_2}{m_1 + m_2} \\cdot F$$</p>
+<p>La forza che $m_2$ esercita su $m_1$:</p>
+<p>$$F_{21} = \\frac{m_1}{m_1 + m_2} \\cdot F$$</p>
+<p>Nota: $F_{12} + F_{21}$ NON da $F$ — e una coincidenza solo se... no, in realta $m_2 a + m_1 a = (m_1+m_2)a = F$. Quindi la somma dei moduli delle forze interne e uguale alla forza esterna!</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Accelerazione sistema", latex: "a = \\frac{F}{m_1 + m_2}" },
+          { label: "Forza su m₂ (da m₁)", latex: "F_{12} = \\frac{m_2}{m_1 + m_2} \\cdot F" },
+          { label: "Forza su m₁ (da m₂)", latex: "F_{21} = \\frac{m_1}{m_1 + m_2} \\cdot F" }
+        ]
+      },
+
+      // ──────────────── ESERCIZIO 2: MASSE A CONTATTO ────────────────
+      {
+        id: "s8-es-contatto",
+        type: "section",
+        title: "Esercizio Svolto: Due Blocchi a Contatto ($F = 10$ N)",
+        icon: "📝",
+        content: `<p>Dai tuoi appunti (pagina 3-4): due blocchi a contatto su un piano orizzontale senza attrito. $m_1 = 3$ kg, $m_2 = 2$ kg, $F = 10$ N applicata su $m_1$.</p>
+<p><strong>Determinare</strong>: la forza $\\vec{F}_d$ che agisce su $m_2$ e la forza $\\vec{F}_s$ che agisce su $m_1$ al punto di contatto.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Passo 1: Accelerazione del sistema",
+            content: `<p>$$a = \\frac{F}{m_1 + m_2} = \\frac{10}{3 + 2} = \\frac{10}{5} = 2 \\;\\text{m/s}^2$$</p>`
+          },
+          {
+            subtitle: "Passo 2: Forza su $m_2$ (applicando $F = ma$ a $m_2$ da solo)",
+            content: `<p>L'unica forza orizzontale su $m_2$ e la forza di contatto $F_{12}$ esercitata da $m_1$:</p>
+<p>$$F_{12} = m_2 \\cdot a = 2 \\times 2 = 4 \\;\\text{N}$$</p>
+<p>Oppure con la formula diretta: $F_{12} = \\frac{m_2}{m_1 + m_2} \\cdot F = \\frac{2}{5} \\cdot 10 = 4$ N.</p>`
+          },
+          {
+            subtitle: "Passo 3: Forza su $m_1$ (reazione di $m_2$ su $m_1$)",
+            content: `<p>Per il <strong>terzo principio</strong>: $F_{21} = F_{12} = 4$ N, ma con verso opposto.</p>
+<p>Verifica: su $m_1$ agiscono $F = 10$ N in avanti e $F_{21} = 4$ N all'indietro:</p>
+<p>$$F - F_{21} = m_1 a \\quad \\Rightarrow \\quad 10 - 4 = 3 \\times 2 = 6 \\;\\checkmark$$</p>`
+          },
+          {
+            subtitle: "Risultato",
+            content: `<p>Le forze interne al contatto sono incorniciate nei tuoi appunti:</p>
+<p>• $|\\vec{F}_{12}|$ (forza su $m_2$) $= 4$ N (verso destra)</p>
+<p>• $|\\vec{F}_{21}|$ (forza su $m_1$) $= 4$ N (verso sinistra)</p>
+<p>Nota: $m_2$ riceve meno forza di $m_1$ perche ha meno massa da "trascinare" davanti a se.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── GRAPH: MASSE A CONTATTO ────────────────
+      {
+        type: "graph",
+        id: "graph-contact-masses",
+        title: "Dinamica di Due Masse a Contatto",
+        graphType: "contact_masses",
+        caption: "Visualizza le forze su due blocchi a contatto spinti da F. Varia le masse e la forza per vedere come cambiano le forze interne."
+      },
+
+      // ──────────────── DESC GRAFICO CONTATTO ────────────────
+      {
+        id: "s8-desc-contatto",
+        type: "note_box",
+        title: "Cosa Mostra il Grafico delle Masse a Contatto",
+        content: `<p>Il grafico mostra due blocchi ($m_1$ e $m_2$) su un piano senza attrito, spinti da una forza esterna $\\vec{F}$ applicata sul primo blocco. Le <strong>frecce</strong> mostrano:</p>
+<p>• $\\vec{F}$ (verde): la forza esterna che spinge $m_1$</p>
+<p>• $\\vec{F}_{12}$ (blu): la forza che $m_1$ esercita su $m_2$ (lo spinge in avanti)</p>
+<p>• $\\vec{F}_{21}$ (rossa): la reazione di $m_2$ su $m_1$ (uguale e opposta per il 3° principio)</p>
+<p>Usa gli slider per variare $m_1$, $m_2$ e $F$. Osserva come la forza di contatto $F_{12} = \\frac{m_2}{m_1+m_2}F$ dipende dal <strong>rapporto delle masse</strong>: se $m_2$ e molto piu piccola di $m_1$, la forza di contatto e piccola. Il pannello mostra anche l'accelerazione comune $a = F/(m_1+m_2)$.</p>`
+      },
+
+      // ──────────────── SEZIONE 5: FORZA PESO ────────────────
+      {
+        id: "s8-forza-peso",
+        type: "section",
+        title: "La Forza Peso $\\vec{P}$ e la Reazione Normale $\\vec{N}$",
+        icon: "🌍",
+        content: `<p>Sulla Terra, ogni corpo con massa $m$ e soggetto a un'interazione gravitazionale con il pianeta. L'effetto macroscopico di questa interazione e la <strong>forza peso</strong>:</p>
+<p>$$\\vec{P} = m\\vec{g}$$</p>`,
+
+        subsections: [
+          {
+            subtitle: "Il vettore $\\vec{g}$: accelerazione di gravita",
+            content: `<p>$\\vec{g}$ ha modulo $|\\vec{g}| \\approx 9.81$ m/s$^2$ (approssimazione), direzione <strong>radiale</strong> (verso il centro della Terra) e verso verso il basso.</p>
+<p>Il valore 9.81 <strong>non e costante</strong>:</p>
+<p>• La Terra non e una sfera perfetta — e <strong>schiacciata ai poli</strong>, dove $g$ e leggermente piu grande.</p>
+<p>• $g$ <strong>diminuisce</strong> allontanandosi dal centro della Terra (es. in quota).</p>`
+          },
+          {
+            subtitle: "\"Io peso 80 kg\" e SBAGLIATO!",
+            content: `<p>Dai tuoi appunti hai sottolineato con forza: <em>"Io peso 80 kg e sbagliato"</em>.</p>
+<p>I <strong>kg</strong> sono l'unita di misura della <strong>massa inerziale</strong> $m$. Il <strong>peso</strong> e una <strong>forza</strong> e si misura in <strong>newton</strong>:</p>
+<p>$$P = mg = 80 \\times 9.81 = 784.8 \\;\\text{N}$$</p>
+<p>Dire "peso 80 kg" e un abuso di linguaggio quotidiano — fisicamente scorretto.</p>`
+          },
+          {
+            subtitle: "La reazione normale $\\vec{N}$",
+            content: `<p>La reazione normale $\\vec{N}$ si manifesta <strong>solo al contatto</strong> con una superficie. Impedisce al corpo di "sprofondare" attraverso la superficie.</p>
+<p>Su un <strong>piano orizzontale</strong>, con il corpo fermo:</p>
+<p>$$\\vec{N} + \\vec{P} = \\vec{0} \\quad \\Rightarrow \\quad \\vec{N} = -\\vec{P} \\quad \\Rightarrow \\quad N = mg$$</p>
+<p>$\\vec{N}$ ha lo stesso modulo e direzione di $\\vec{P}$, ma <strong>verso opposto</strong> (verso l'alto). Attenzione: $\\vec{N}$ e $\\vec{P}$ <strong>non</strong> sono una coppia azione-reazione del terzo principio! Agiscono sullo stesso corpo. La vera reazione a $\\vec{P}$ e la forza gravitazionale che il corpo esercita sulla Terra.</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Forza peso", latex: "\\vec{P} = m\\vec{g}" },
+          { label: "Modulo del peso", latex: "P = mg \\approx m \\times 9.81 \\;\\text{N}" },
+          { label: "Equilibrio su piano orizzontale", latex: "N = mg" }
+        ]
+      },
+
+      // ──────────────── GRAPH: PESO E NORMALE ────────────────
+      {
+        type: "graph",
+        id: "graph-weight-normal",
+        title: "Forza Peso $\\vec{P}$ e Reazione Normale $\\vec{N}$",
+        graphType: "weight_normal",
+        caption: "Un corpo su una superficie: il peso punta verso il centro della Terra, la reazione normale e perpendicolare alla superficie. Varia la massa."
+      },
+
+      // ──────────────── DESC GRAFICO PESO/NORMALE ────────────────
+      {
+        id: "s8-desc-weight",
+        type: "note_box",
+        title: "Cosa Mostra il Grafico di Peso e Reazione Normale",
+        content: `<p>Il grafico mostra un corpo di massa $m$ appoggiato su una superficie orizzontale. La <strong>freccia rossa verso il basso</strong> e la forza peso $\\vec{P} = m\\vec{g}$ (attrazione gravitazionale verso il centro della Terra). La <strong>freccia blu verso l'alto</strong> e la reazione normale $\\vec{N}$.</p>
+<p>Quando il corpo e in equilibrio: $N = P = mg$. Nota dal disegno della Terra nei tuoi appunti: la forza peso punta <strong>radialmente</strong> verso il centro, e la reazione normale e perpendicolare alla superficie nel punto di contatto.</p>
+<p><strong>Utilita</strong>: varia la massa con lo slider per vedere come $P$ e $N$ cambiano proporzionalmente. Il pannello mostra i valori numerici in newton — fondamentale per prendere confidenza con il fatto che il peso non si misura in kg!</p>`
+      },
+
+      // ──────────────── ALERT: N NON E SEMPRE uguale a P ────────────────
+      {
+        id: "s8-alert-normale",
+        type: "alert_box",
+        title: "Attenzione: $N = mg$ vale SOLO su piano orizzontale con corpo fermo!",
+        content: `<p>Su un <strong>piano inclinato</strong>, $N \\neq mg$: la normale compensa solo la componente del peso perpendicolare al piano. Se il corpo sta <strong>accelerando verticalmente</strong> (es. in ascensore), $N \\neq mg$: pensa alla sensazione di "pesare di piu" quando l'ascensore parte verso l'alto. Queste situazioni le vedrai nelle prossime lezioni.</p>`
+      },
+
+      // ──────────────── METHOD BOX ────────────────
+      {
+        id: "s8-metodo-equilibrio",
+        type: "method_box",
+        title: "Come Risolvere un Problema di Equilibrio 2D con Scomposizione Vettoriale",
+        steps: [
+          "<strong>Disegna il diagramma di corpo libero</strong>: rappresenta il punto materiale e TUTTE le forze con le frecce.",
+          "<strong>Scegli gli assi</strong> $x$ e $y$ ortogonali (spesso uno orizzontale e l'altro verticale).",
+          "<strong>Scomponi ogni forza</strong> lungo $x$ e $y$ usando seno e coseno degli angoli: $F_x = F\\cos\\alpha$, $F_y = F\\sin\\alpha$.",
+          "<strong>Imponi equilibrio su ciascun asse</strong>: $\\sum F_x = 0$ e $\\sum F_y = 0$.",
+          "<strong>Risolvi il sistema</strong> di 2 equazioni in 2 incognite (modulo e direzione della forza incognita, oppure due moduli).",
+          "<strong>Verifica</strong>: controlla unita di misura e che i segni siano coerenti col diagramma."
+        ]
+      },
+
+      // ──────────────── ALERT: ERRORE COMUNE TERZO PRINCIPIO ────────────────
+      {
+        id: "s8-alert-terzo",
+        type: "alert_box",
+        title: "Trappola Orale: \"Peso e Normale sono azione e reazione?\"",
+        content: `<p><strong>No!</strong> $\\vec{P}$ (peso del corpo) e $\\vec{N}$ (reazione del tavolo) agiscono <strong>sullo stesso corpo</strong>. Non sono una coppia azione-reazione del terzo principio.</p>
+<p>Le vere coppie sono:</p>
+<p>• $\\vec{P}$ (Terra attira il corpo) e la forza con cui il corpo attira la Terra (agiscono su corpi <strong>diversi</strong>)</p>
+<p>• $\\vec{N}$ (tavolo spinge il corpo verso l'alto) e la forza con cui il corpo preme sul tavolo verso il basso</p>`
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Enuncia il <strong>Terzo Principio della Dinamica</strong>.",
+        back: "La forza che il corpo 1 esercita sul corpo 2 e uguale in modulo e direzione, ma opposta in verso, alla forza che 2 esercita su 1: $$\\vec{F}_{12} = -\\vec{F}_{21}$$ Le forze nascono sempre in coppie e agiscono su corpi <strong>diversi</strong>. Vale per forze attrattive e repulsive."
+      },
+      {
+        type: "definizione",
+        front: "Cos'e un <strong>punto materiale</strong>? Perche si usa in dinamica?",
+        back: "E un modello astratto in cui tutta la massa inerziale $m$ e concentrata in un punto geometrico. Si usa perche semplifica i problemi: tutte le forze agiscono sullo stesso punto, non ci sono rotazioni ne deformazioni. Se non specificato diversamente, si ragiona sempre per punti materiali."
+      },
+      {
+        type: "definizione",
+        front: "Cos'e la <strong>forza peso</strong>? Scrivi la formula e le unita.",
+        back: "$$\\vec{P} = m\\vec{g}$$<br>E l'espressione dell'interazione gravitazionale sulla Terra. $m$ e la massa (kg), $\\vec{g}$ e l'accelerazione di gravita ($\\approx 9.81$ m/s$^2$, verso il centro della Terra). Il peso si misura in <strong>newton</strong> (N), NON in kg!"
+      },
+      {
+        type: "definizione",
+        front: "Cos'e la <strong>reazione normale</strong> $\\vec{N}$? Quando esiste?",
+        back: "E la forza che una superficie esercita su un corpo a contatto, perpendicolare alla superficie. Esiste <strong>solo al contatto</strong> — se il corpo non tocca la superficie, $\\vec{N} = \\vec{0}$.<br><br>Su piano orizzontale con corpo fermo: $N = mg$. Ma attenzione: su piano inclinato o con accelerazione verticale, $N \\neq mg$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Due blocchi a contatto ($m_1$, $m_2$) vengono spinti da $\\vec{F}$ su $m_1$. Dimostra che $F_{12} = \\frac{m_2}{m_1+m_2}F$.",
+        back: "<strong>1)</strong> Sistema intero: $a = \\frac{F}{m_1+m_2}$.<br><strong>2)</strong> Su $m_2$ da solo: l'unica forza orizzontale e $F_{12}$ (da $m_1$): $$F_{12} = m_2 a = m_2 \\cdot \\frac{F}{m_1+m_2} = \\frac{m_2}{m_1+m_2}F \\quad \\blacksquare$$<br>Per il 3° principio: $F_{21} = F_{12}$ in modulo."
+      },
+      {
+        type: "domanda",
+        front: "Qual e la differenza tra i ruoli del 1°/2° e del 3° principio?",
+        back: "Il <strong>1°</strong> e il <strong>2° principio</strong> descrivono proprieta <strong>passive</strong> dei corpi: come un corpo reagisce alle forze (inerzia, $F = ma$).<br><br>Il <strong>3° principio</strong> descrive la proprieta <strong>attiva</strong> delle interazioni: ogni forza ha una reazione uguale e opposta. Ci da una caratteristica generale dell'interazione stessa."
+      },
+      {
+        type: "domanda",
+        front: "Come si risolve un problema di equilibrio 2D con 3 forze?",
+        back: "1) Disegna il diagramma di corpo libero<br>2) Scegli assi $x$, $y$ ortogonali<br>3) Scomponi ogni forza: $F_x = F\\cos\\theta$, $F_y = F\\sin\\theta$<br>4) Imponi $\\sum F_x = 0$ e $\\sum F_y = 0$<br>5) Risolvi il sistema di 2 equazioni in 2 incognite"
+      },
+      {
+        type: "tranello",
+        front: "$\\vec{P}$ e $\\vec{N}$ su un corpo appoggiato sono una coppia azione-reazione?",
+        back: "<strong>No!</strong> Agiscono sullo <strong>stesso corpo</strong> — non possono essere azione-reazione (il 3° principio riguarda forze su corpi <strong>diversi</strong>).<br><br>Le vere coppie:<br>• Peso del corpo / Forza che il corpo esercita sulla Terra<br>• Normale del tavolo sul corpo / Forza del corpo sul tavolo"
+      },
+      {
+        type: "tranello",
+        front: "Se $\\vec{F}_{12} = -\\vec{F}_{21}$, le due forze non si annullano?",
+        back: "<strong>No!</strong> Si annullerebbero solo se agissero sullo stesso corpo. Ma $\\vec{F}_{12}$ agisce su corpo 2 e $\\vec{F}_{21}$ agisce su corpo 1. Entrano in equazioni $F = ma$ <strong>diverse</strong>. Solo quando consideriamo il sistema intero le forze interne si annullano."
+      },
+      {
+        type: "tranello",
+        front: "Il valore $g = 9.81$ m/s$^2$ e una costante universale?",
+        back: "<strong>No!</strong> E un'approssimazione che vale sulla superficie terrestre. Varia perche:<br>• La Terra e schiacciata ai poli ($g$ leggermente piu grande ai poli)<br>• $g$ diminuisce con l'altitudine<br>• Sulla Luna $g \\approx 1.62$ m/s$^2$, su Giove $g \\approx 24.8$ m/s$^2$"
+      }
+    ],
+
+    // ──────────────── QUIZ ────────────────
+    quiz: [
+      {
+        q: "Il Terzo Principio afferma che:",
+        options: [
+          "Le forze che agiscono su un corpo si annullano sempre",
+          "$\\vec{F}_{12} = -\\vec{F}_{21}$ (forze uguali e opposte su corpi diversi)",
+          "Ogni corpo in equilibrio ha accelerazione nulla",
+          "La forza e proporzionale all'accelerazione"
+        ],
+        correct: 1,
+        explanation: "Il terzo principio riguarda coppie di forze tra <strong>due corpi diversi</strong>: la forza di 1 su 2 e uguale e opposta a quella di 2 su 1."
+      },
+      {
+        q: "Le forze di azione e reazione:",
+        options: [
+          "Si annullano sempre",
+          "Agiscono sullo stesso corpo",
+          "Agiscono su corpi diversi e hanno stesso modulo",
+          "Hanno modulo diverso se le masse sono diverse"
+        ],
+        correct: 2,
+        explanation: "Azione e reazione agiscono su corpi <strong>diversi</strong>, hanno lo stesso modulo e la stessa direzione, ma verso opposto. Il modulo e uguale <strong>indipendentemente</strong> dalle masse."
+      },
+      {
+        q: "Un corpo di 5 kg sulla Terra pesa circa:",
+        options: [
+          "5 N",
+          "49 N",
+          "50 kg",
+          "5 kg"
+        ],
+        correct: 1,
+        explanation: "$P = mg = 5 \\times 9.81 \\approx 49$ N. Il peso si misura in newton, non in kg."
+      },
+      {
+        q: "La reazione normale $\\vec{N}$ esiste:",
+        options: [
+          "Sempre, su ogni corpo",
+          "Solo quando il corpo e in contatto con una superficie",
+          "Solo quando il corpo e in moto",
+          "Solo su piani inclinati"
+        ],
+        correct: 1,
+        explanation: "$\\vec{N}$ si manifesta <strong>solo al contatto</strong> con una superficie. Se il corpo e in caduta libera (nessun contatto), $\\vec{N} = \\vec{0}$."
+      },
+      {
+        q: "Su un piano orizzontale, $\\vec{P}$ e $\\vec{N}$ sono una coppia azione-reazione?",
+        options: [
+          "Si, sono uguali e opposte",
+          "No, agiscono sullo stesso corpo",
+          "Si, ma solo se il corpo e fermo",
+          "No, perche hanno moduli diversi"
+        ],
+        correct: 1,
+        explanation: "Agiscono sullo <strong>stesso corpo</strong>! Non sono azione-reazione. Le vere coppie coinvolgono corpi diversi (corpo-Terra, corpo-tavolo)."
+      },
+      {
+        q: "Due blocchi ($m_1 = 4$ kg, $m_2 = 6$ kg) a contatto, spinti da $F = 20$ N. La forza di contatto su $m_2$ e:",
+        options: [
+          "$20$ N",
+          "$8$ N",
+          "$12$ N",
+          "$10$ N"
+        ],
+        correct: 2,
+        explanation: "$F_{12} = \\frac{m_2}{m_1+m_2}F = \\frac{6}{10} \\times 20 = 12$ N."
+      },
+      {
+        q: "Per l'equilibrio statico in 2D servono:",
+        options: [
+          "Una sola equazione: $\\sum F = 0$",
+          "Due equazioni: $\\sum F_x = 0$ e $\\sum F_y = 0$",
+          "Tre equazioni: una per ogni forza",
+          "Nessuna equazione, basta il diagramma"
+        ],
+        correct: 1,
+        explanation: "Un'equazione vettoriale $\\sum \\vec{F} = \\vec{0}$ in 2D si traduce in 2 equazioni scalari, una per ogni componente."
+      },
+      {
+        q: "Il 3° principio vale per:",
+        options: [
+          "Solo forze attrattive (gravita)",
+          "Solo forze repulsive (elettriche)",
+          "Sia forze attrattive che repulsive",
+          "Solo forze di contatto"
+        ],
+        correct: 2,
+        explanation: "Il 3° principio e universale: vale per tutte le interazioni — attrattive, repulsive, di contatto, a distanza."
+      },
+      {
+        q: "Il valore $g = 9.81$ m/s$^2$ e:",
+        options: [
+          "Una costante universale esatta",
+          "Un'approssimazione valida sulla superficie terrestre",
+          "Il valore sulla Luna",
+          "Il valore nello spazio profondo"
+        ],
+        correct: 1,
+        explanation: "E un'approssimazione. Varia con la latitudine (poli vs equatore) e con l'altitudine. Sulla Luna $g \\approx 1.62$ m/s$^2$."
+      },
+      {
+        q: "Nel problema dei blocchi a contatto, le forze interne $\\vec{F}_{12}$ e $\\vec{F}_{21}$:",
+        options: [
+          "Si sommano e danno la forza esterna",
+          "Si annullano quando si analizza il sistema intero",
+          "Hanno moduli diversi perche le masse sono diverse",
+          "Non rispettano il terzo principio"
+        ],
+        correct: 1,
+        explanation: "Per il 3° principio $\\vec{F}_{12} = -\\vec{F}_{21}$: quando si considera il sistema intero, le forze interne si cancellano. Ma analizzando i singoli blocchi, sono essenziali."
+      }
+    ]
+  };
+</script>
+<script src="../js/renderer.js?v=1773800000"></script>
+<script src="../js/graphs.js?v=1773800000"></script>
+
+<script>
+// Sidebar toggle (open by default)
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+</body>
+</html>

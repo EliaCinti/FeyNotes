@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L05 — Fisica 1 Study Guide</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="../index.html" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+    <span class="logo-sub">Study Guide</span>
+  </a>
+  <nav class="header-nav">
+    <a href="../index.html" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="../index.html" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="L04.html">← Prec.</a>
+      <a href="L06.html">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<script>
+const LESSON = {
+    id: "L05", date: "Lezione 5 — 11 Mar 2026",
+    title: "Equazione della Traiettoria, Scomposizione Intrinseca dell'Accelerazione e Moto Circolare",
+    abstract: "La traiettoria parabolica del proiettile come equazione y(x). La scomposizione dell'accelerazione in componente tangenziale e normale. Il raggio di curvatura e la circonferenza osculatrice. Classificazione completa dei moti. Introduzione alla cinematica angolare.",
+
+    sections: [
+      // ──────────────── SEZIONE 1: EQUAZIONE TRAIETTORIA ────────────────
+      {
+        id: "s5-traiettoria",
+        type: "section",
+        title: "L'Equazione della Traiettoria $y(x)$",
+        icon: "📐",
+        content: `<p>Le leggi orarie $x(t)$ e $y(t)$ descrivono <em>dove</em> si trova il corpo istante per istante. Ma se eliminiamo il tempo $t$, otteniamo la <strong>forma della curva</strong> disegnata nello spazio — l'equazione della <strong>traiettoria</strong>.</p>
+<p>Dalle leggi orarie del proiettile ($x_0 = 0$, $y_0 = 0$):</p>
+<p>$$x(t) = (v_0\\cos\\theta)\\,t \\qquad \\Rightarrow \\qquad t = \\frac{x}{v_0\\cos\\theta}$$</p>
+<p>Sostituendo nella $y(t)$:</p>`,
+
+        formulas: [
+          { label: "Equazione della traiettoria", latex: "y = \\tan(\\theta)\\,x - \\frac{g}{2\\,v_0^2\\cos^2\\theta}\\,x^2" }
+        ],
+
+        extra_content: `<p>Questa è una <strong>parabola</strong> con la concavità verso il basso (il coefficiente di $x^2$ è negativo). La traiettoria è <em>parametrica rispetto a $\\theta$</em>: cambiando l'angolo, cambia la parabola.</p>
+<p>Dai tuoi appunti: <em>"io ti do il valore di un asse e tu mi dai quello rispettivo dell'altro asse"</em>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Gittata dall'equazione della traiettoria",
+            content: `<p>Ponendo $y = 0$ e raccogliendo $x$:</p>
+<p>$$0 = x\\left(\\tan\\theta - \\frac{g}{2v_0^2\\cos^2\\theta}\\,x\\right)$$</p>
+<p>Le due soluzioni sono $x = 0$ (partenza) e il punto di caduta:</p>
+<p>$$x_c = \\frac{2v_0^2\\sin\\theta\\cos\\theta}{g} = \\frac{v_0^2\\sin(2\\theta)}{g}$$</p>`
+          },
+          {
+            subtitle: "Gittata massima: $\\theta = 45°$ — CHIEDE ALL'ORALE CON DIMOSTRAZIONE",
+            content: `<p>La gittata $x_c = \\frac{v_0^2}{g}\\sin(2\\theta)$ è massima quando $\\sin(2\\theta) = 1$, cioè $2\\theta = 90°$:</p>
+<p>$$\\theta = 45° = \\frac{\\pi}{4} \\qquad \\Rightarrow \\qquad x_c^{\\text{max}} = \\frac{v_0^2}{g}$$</p>
+<p>Hai scritto a caratteri enormi nei tuoi appunti: <strong>"QUESTA COSA LA CHIEDE ALL'ORALE E CHIEDE LA DIMOSTRAZIONE"</strong>.</p>`
+          },
+          {
+            subtitle: "Dipendenza dalle variabili",
+            content: `<p>La gittata dipende:</p>
+<p>• Dal <strong>quadrato</strong> di $v_0$: raddoppiare la velocità <strong>quadruplica</strong> la gittata.</p>
+<p>• Dall'<strong>inverso</strong> di $g$: sulla Luna ($g$ più piccolo) si lancia più lontano.</p>
+<p>• Da $\\sin(2\\theta)$: angoli complementari ($30°$ e $60°$) danno la stessa gittata.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── ALERT: DOMANDA ORALE ────────────────
+      {
+        id: "s5-alert-orale-scomp",
+        type: "alert_box",
+        title: "🚨 DOMANDA D'ESAME ORALE: Dimostrare che $\\vec{a} = \\vec{a}_T + \\vec{a}_N$",
+        content: `<p>Il professore chiede all'orale di <strong>dimostrare da zero</strong> la formula della scomposizione intrinseca dell'accelerazione e di spiegare come ci si arriva. Non basta saperla a memoria — devi saper <strong>riprodurre ogni passaggio</strong>. Hai scritto nei tuoi appunti: <em>"DA IMPARARE E CAPIRE"</em> e <em>"devo sapere bene come arrivare a questo"</em>.</p>
+<p>La dimostrazione completa è nella sezione seguente. Studiala passo per passo.</p>`
+      },
+
+      // ──────────────── SEZIONE 2: SCOMPOSIZIONE INTRINSECA ────────────────
+      {
+        id: "s5-scomp-intrinseca",
+        type: "section",
+        title: "Scomposizione Intrinseca dell'Accelerazione: Dimostrazione Completa",
+        icon: "🔀",
+        content: `<p>Finora abbiamo scomposto $\\vec{a}$ lungo gli assi cartesiani ($a_x$, $a_y$, $a_z$). Ma esiste un modo più fisico: scomporre $\\vec{a}$ lungo la <strong>direzione del moto</strong> (tangente) e la direzione <strong>perpendicolare</strong> (normale). Vediamo come arrivarci <strong>passo per passo</strong>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Passo 1: Riscrivere $\\vec{v}$ in termini del versore tangente",
+            content: `<p>La velocità istantanea è sempre tangente alla traiettoria. Possiamo scriverla come il prodotto del suo modulo per il versore tangente:</p>
+<p>$$\\vec{v} = v\\,\\hat{u}_T$$</p>
+<p>Dove $v = |\\vec{v}|$ è la rapidità (scalare positivo) e $\\hat{u}_T$ è il versore tangente alla traiettoria nel punto considerato (modulo 1, direzione della traiettoria, verso del moto).</p>`
+          },
+          {
+            subtitle: "Passo 2: Derivare $\\vec{v}$ usando la regola del prodotto",
+            content: `<p>L'accelerazione è la derivata della velocità. Siccome $\\vec{v} = v \\cdot \\hat{u}_T$ è un prodotto di due funzioni del tempo (sia $v$ che $\\hat{u}_T$ possono cambiare!), applichiamo la <strong>regola del prodotto</strong> (Leibniz):</p>
+<p>$$\\vec{a} = \\frac{d\\vec{v}}{dt} = \\frac{d(v\\,\\hat{u}_T)}{dt} = \\frac{dv}{dt}\\,\\hat{u}_T + v\\,\\frac{d\\hat{u}_T}{dt}$$</p>
+<p>Il primo termine è facile: $\\frac{dv}{dt}$ è la derivata del modulo, moltiplicata per $\\hat{u}_T$. Il secondo termine è il problema: <strong>qual è la derivata di un versore?</strong></p>`
+          },
+          {
+            subtitle: "Passo 3: La derivata del versore tangente $d\\hat{u}_T/dt$",
+            content: `<p>Questo è il <strong>passaggio chiave</strong> della dimostrazione. Il versore $\\hat{u}_T$ ha modulo costante ($|\\hat{u}_T| = 1$ sempre), ma <strong>cambia direzione</strong> quando la traiettoria curva.</p>
+<p><strong>Proprietà fondamentale</strong>: la derivata di un vettore di modulo costante è <strong>perpendicolare</strong> al vettore stesso. Quindi $d\\hat{u}_T$ è perpendicolare a $\\hat{u}_T$ — punta nella direzione <strong>normale</strong> $\\hat{u}_N$.</p>
+<p>Si può scrivere:</p>
+<p>$$d\\hat{u}_T = |d\\hat{u}_T|\\,\\hat{u}_N = d\\phi\\,\\hat{u}_N$$</p>
+<p>Dove $d\\phi$ è l'angolo infinitesimo di cui ruota la tangente alla traiettoria (lo vedi nel disegno dei tuoi appunti: la differenza tra $\\hat{u}_T(t)$ e $\\hat{u}_T(t+dt)$ tende ad essere ortogonale alla traiettoria quando $\\Delta t \\to 0$).</p>`
+          },
+          {
+            subtitle: "Passo 4: Collegare $d\\phi/dt$ alla velocità e al raggio di curvatura",
+            content: `<p>Ora serve esprimere $d\\phi/dt$ in termini di grandezze note. Dal disegno della circonferenza osculatrice (pagina 4 degli appunti):</p>
+<p>L'arco infinitesimo percorso è legato all'angolo dalla relazione geometrica:</p>
+<p>$$ds = \\rho\\,d\\phi \\qquad \\Rightarrow \\qquad d\\phi = \\frac{ds}{\\rho}$$</p>
+<p>Dividendo per $dt$:</p>
+<p>$$\\frac{d\\phi}{dt} = \\frac{1}{\\rho}\\,\\frac{ds}{dt} = \\frac{v}{\\rho}$$</p>
+<p>Dove abbiamo usato $v = ds/dt$ (la velocità è la derivata dell'arco percorso rispetto al tempo).</p>`
+          },
+          {
+            subtitle: "Passo 5: Mettere tutto insieme",
+            content: `<p>Sostituendo $\\frac{d\\hat{u}_T}{dt} = \\frac{d\\phi}{dt}\\hat{u}_N = \\frac{v}{\\rho}\\hat{u}_N$ nell'espressione del Passo 2:</p>
+<p>$$\\vec{a} = \\frac{dv}{dt}\\,\\hat{u}_T + v \\cdot \\frac{v}{\\rho}\\,\\hat{u}_N$$</p>
+<p>Cioè:</p>`,
+            equations: [
+              "\\boxed{\\vec{a} = \\underbrace{\\frac{dv}{dt}\\,\\hat{u}_T}_{\\vec{a}_T\\text{ (tangenziale)}} + \\underbrace{\\frac{v^2}{\\rho}\\,\\hat{u}_N}_{\\vec{a}_N\\text{ (normale)}}}"
+            ]
+          },
+          {
+            subtitle: "Riepilogo dei simboli",
+            content: `<p>• $v = |\\vec{v}|$ — modulo della velocità (rapidità)</p>
+<p>• $\\hat{u}_T$ — versore tangente alla traiettoria (nella direzione del moto)</p>
+<p>• $\\hat{u}_N$ — versore normale, perpendicolare a $\\hat{u}_T$, diretto verso il <strong>centro di curvatura</strong></p>
+<p>• $\\rho$ — raggio di curvatura (raggio della circonferenza osculatrice nel punto)</p>
+<p>• $d\\phi$ — angolo infinitesimo di rotazione della tangente</p>
+<p>• $ds$ — arco infinitesimo percorso ($ds = \\rho\\,d\\phi$, $v = ds/dt$)</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Accelerazione totale", latex: "\\vec{a} = \\vec{a}_T + \\vec{a}_N = \\frac{dv}{dt}\\,\\hat{u}_T + \\frac{v^2}{\\rho}\\,\\hat{u}_N" },
+          { label: "Componente tangenziale", latex: "a_T = \\frac{dv}{dt} \\quad \\text{(varia il modulo di } \\vec{v}\\text{)}" },
+          { label: "Componente normale", latex: "a_N = \\frac{v^2}{\\rho} \\quad \\text{(varia la direzione di } \\vec{v}\\text{)}" },
+          { label: "Perpendicolarità", latex: "\\vec{a}_T \\perp \\vec{a}_N \\quad \\Rightarrow \\quad |\\vec{a}| = \\sqrt{a_T^2 + a_N^2}" }
+        ]
+      },
+
+      // ──────────────── SEZIONE 3: SIGNIFICATO FISICO ────────────────
+      {
+        id: "s5-significato-at-an",
+        type: "section",
+        title: "Significato Fisico: Cosa fa $a_T$ e Cosa fa $a_N$",
+        icon: "💡",
+        content: `<p>La scomposizione intrinseca separa in modo netto i due <em>ruoli</em> dell'accelerazione:</p>`,
+
+        table_compare: {
+          headers: ["", "Componente Tangenziale $a_T$", "Componente Normale $a_N$"],
+          rows: [
+            ["Formula", "$\\frac{dv}{dt}$", "$\\frac{v^2}{\\rho}$"],
+            ["Cosa varia", "Il <strong>modulo</strong> (rapidità)", "La <strong>direzione</strong> (curvatura)"],
+            ["Analogia auto", "Pedali (acceleratore/freno)", "Volante (sterzo)"],
+            ["Direzione", "Tangente alla traiettoria", "Verso il centro di curvatura"],
+            ["Dipende da", "$dv/dt$ (come cambia la rapidità)", "$v^2$ e $\\rho$ (velocità e raggio di curvatura)"]
+          ]
+        },
+
+        extra_content: `<p>Dai tuoi appunti:</p>
+<p>• <em>"La comp. tang. di $\\vec{a}$ dipende dal modulo della velocità. Descrive la rapidità del moto."</em></p>
+<p>• <em>"La comp. normale di $\\vec{a}$ dipende dal modulo della velocità e dal raggio di curvatura. Descrive la curvatura del moto (direzione e verso)."</em></p>`
+      },
+
+      // ──────────────── SEZIONE 4: RAGGIO DI CURVATURA ────────────────
+      {
+        id: "s5-raggio-curvatura",
+        type: "section",
+        title: "Il Raggio di Curvatura $\\rho$ e la Circonferenza Osculatrice",
+        icon: "⭕",
+        content: `<p>In ogni punto di una traiettoria curva, si può costruire un cerchio che <strong>"bacia" la curva</strong> localmente — la <strong>circonferenza osculatrice</strong>. Il suo raggio è il <strong>raggio di curvatura</strong> $\\rho$.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Casi limite di $\\rho$",
+            content: `<p>• $\\rho$ <strong>piccolo</strong> → curva stretta → $a_N = v^2/\\rho$ è <strong>grande</strong> (serve molta accelerazione per curvare).</p>
+<p>• $\\rho \\to \\infty$ → traiettoria rettilinea → $a_N = 0$ (la circonferenza osculatrice diventa una retta). In questo caso la componente normale <strong>sparisce</strong> e $\\vec{a} = \\vec{a}_T$.</p>`
+          },
+          {
+            subtitle: "Direzione di $\\vec{a}_N$",
+            content: `<p>$\\vec{a}_N$ punta sempre <strong>verso il centro della circonferenza osculatrice</strong>. Hai annotato questa domanda nei tuoi appunti: <em>"Forse $\\vec{a}_N$ è la direzione dell'accelerazione verso il centro della circonferenza osculatrice?"</em> — la risposta è <strong>sì</strong>.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 5: CLASSIFICAZIONE MOTI ────────────────
+      {
+        id: "s5-classificazione",
+        type: "section",
+        title: "Classificazione Completa dei Moti",
+        icon: "📋",
+        content: `<p>Usando le componenti $a_T$ e $a_N$ si classificano tutti i tipi di moto in modo sistematico:</p>`,
+
+        table_compare: {
+          headers: ["Tipo di Moto", "Condizione", "$\\vec{a}_T$", "$\\vec{a}_N$"],
+          rows: [
+            ["<strong>Rettilineo uniforme</strong>", "$v = \\text{cost}$ e $\\rho \\to \\infty$", "$= 0$", "$= 0$ → $\\vec{a} = \\vec{0}$"],
+            ["<strong>Rettilineo vario</strong>", "$\\rho \\to \\infty$", "$\\neq 0$", "$= 0$ → $\\vec{a} = \\vec{a}_T$"],
+            ["<strong>Curvilineo uniforme</strong>", "$v = \\text{cost}$", "$= 0$", "$\\neq 0$ → $\\vec{a} = \\vec{a}_N$"],
+            ["<strong>Moto circolare</strong>", "$\\rho = R = \\text{cost}$", "qualsiasi", "$= v^2/R$"],
+            ["<strong>Circolare uniforme</strong>", "$\\rho = R$ e $v = \\text{cost}$", "$= 0$", "$= v^2/R$ (centripeta)"]
+          ]
+        },
+
+        extra_content: `<p>Osservazione fondamentale dal tuo quaderno: nel moto circolare uniforme <strong>l'accelerazione NON è costante</strong>. Il suo <strong>modulo</strong> è costante ($v^2/R$), ma <strong>direzione e verso</strong> cambiano continuamente (punta sempre verso il centro che "si sposta" rispetto a $\\vec{a}$).</p>`
+      },
+
+      // ──────────────── ALERT: a NEL MCU NON È COSTANTE ────────────────
+      {
+        id: "s5-alert-mcu",
+        type: "alert_box",
+        title: "🚨 Trappola Orale: \"Nel MCU l'accelerazione è costante?\"",
+        content: `<p><strong>No!</strong> Nel moto circolare uniforme $|\\vec{a}| = v^2/R = \\text{cost}$, ma il <strong>vettore</strong> $\\vec{a}$ cambia continuamente direzione (punta sempre verso il centro del cerchio, che ruota). Quindi $\\vec{a} \\neq \\text{cost}$ — non puoi usare le formule del MUA!</p>
+<p>È costante il modulo, non il vettore. Questo è esattamente il contrario del moto rettilineo uniformemente accelerato, dove $\\vec{a}$ è costante in modulo, direzione e verso.</p>`
+      },
+
+      // ──────────────── SEZIONE 6: CINEMATICA ANGOLARE ────────────────
+      {
+        id: "s5-cinem-angolare",
+        type: "section",
+        title: "Introduzione alla Cinematica Angolare",
+        icon: "🔄",
+        content: `<p>Per i moti circolari ($\\rho = R = \\text{cost}$) è più naturale usare <strong>variabili angolari</strong> anziché lineari. Conoscendo l'angolo $\\theta$ e il raggio $R$, la posizione è univocamente determinata.</p>`,
+
+        formulas: [
+          { label: "Velocità angolare", latex: "\\omega = \\frac{d\\theta}{dt}" },
+          { label: "Relazione v — ω", latex: "v = R\\,\\omega" },
+          { label: "Accelerazione centripeta (MCU)", latex: "a_N = \\frac{v^2}{R} = R\\,\\omega^2" }
+        ],
+
+        extra_content: `<p>Nel disegno dei tuoi appunti (pagina 5): la particella parte a $t_0 = 0$, percorre un angolo $d\\theta$ nel tempo $dt$, e la velocità angolare $\\omega = d\\theta/dt$ descrive quanto velocemente ruota.</p>
+<p>La velocità angolare $\\omega$ è in realtà un <strong>vettore</strong> (perpendicolare al piano del moto), ma per il moto piano con traiettoria nota può essere trattata come <strong>scalare</strong> — la sua direzione e verso sono fissati dalla scelta iniziale (orario/antiorario).</p>`
+      },
+
+      // ──────────────── NOTE BOX: UNITÀ DI MISURA ────────────────
+      {
+        id: "s5-note-unita",
+        type: "note_box",
+        title: "📚 Unità di Misura (Sistema Internazionale)",
+        content: `<p>Dai tuoi appunti (pagina 3), il riepilogo delle unità SI per la cinematica:</p>
+<p>• <strong>Tempo</strong>: secondi (s)</p>
+<p>• <strong>Spostamento / Gittata</strong>: metri (m)</p>
+<p>• <strong>Velocità</strong>: m/s</p>
+<p>• <strong>Accelerazione</strong>: m/s²</p>
+<p>• <strong>Velocità angolare</strong>: rad/s</p>`
+      },
+
+      // ──────────────── NOTE BOX: PUNTO MATERIALE ────────────────
+      {
+        id: "s5-note-punto-mat",
+        type: "note_box",
+        title: "📚 Quando un corpo è un \"punto materiale\"?",
+        content: `<p>Quando le sue dimensioni sono <strong>trascurabili</strong> rispetto alla scala del fenomeno. Un'auto su una tratta di 70 km è un punto. La stessa auto in un parcheggio non lo è più — le sue dimensioni contano.</p>
+<p>Questa semplificazione (corpo puntiforme) è ciò che rende possibile tutta la cinematica vista finora. Come hai annotato: <em>"il fatto che il corpo sia puntiforme semplifica tutto"</em>.</p>`
+      },
+
+      // ──────────────── METHOD BOX ────────────────
+      {
+        id: "s5-metodo-at-an",
+        type: "method_box",
+        title: "Come Determinare $a_T$ e $a_N$ in un Problema",
+        steps: [
+          "<strong>Calcola $\\vec{v}(t)$</strong> e il suo modulo $v = |\\vec{v}|$.",
+          "<strong>$a_T = dv/dt$</strong> — deriva il <em>modulo</em> della velocità rispetto al tempo.",
+          "<strong>Calcola $\\vec{a}(t)$</strong> e il suo modulo $a = |\\vec{a}|$.",
+          "<strong>$a_N = \\sqrt{a^2 - a_T^2}$</strong> — dal teorema di Pitagora (dato che $\\vec{a}_T \\perp \\vec{a}_N$).",
+          "<strong>Raggio di curvatura</strong>: $\\rho = v^2/a_N$ (si ricava invertendo la formula)."
+        ]
+      },
+
+      // ──────────────── GRAPH: INTRINSIC DECOMPOSITION ────────────────
+      {
+        type: "graph",
+        id: "graph-intrinsic-decomposition",
+        title: "Scomposizione Intrinseca dell'Accelerazione",
+        graphType: "intrinsic_decomposition",
+        caption: "a⃗_T cambia il modulo della velocità, a⃗_N ne cambia la direzione — con cerchio osculatore"
+      },
+
+      // ──────────────── GRAPH: CIRCULAR MOTION ────────────────
+      {
+        id: "s5-graph-mcu",
+        type: "graph",
+        graphType: "circular_motion",
+        title: "MCU: $\\vec{v}$ tangente, $\\vec{a}_N$ centripeta — Animazione"
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "dimostrazione",
+        front: "Deriva l'equazione della traiettoria $y(x)$ del proiettile ed esprimi la <strong>gittata</strong>. Dimostra per quale $\\theta$ è massima.",
+        back: "Da $x = (v_0\\cos\\theta)t$ si ricava $t = x/(v_0\\cos\\theta)$. Sostituendo in $y(t)$: $$y = \\tan\\theta\\,x - \\frac{g}{2v_0^2\\cos^2\\theta}x^2$$ Ponendo $y = 0$: $x_c = \\frac{v_0^2\\sin(2\\theta)}{g}$. Il max di $\\sin(2\\theta)$ è 1 per $2\\theta = 90°$, cioè $\\theta = 45°$: $$x_c^{\\max} = \\frac{v_0^2}{g} \\quad \\blacksquare$$"
+      },
+      {
+        type: "dimostrazione",
+        front: "🚨 <strong>DOMANDA ORALE</strong>: Dimostra la formula $\\vec{a} = \\frac{dv}{dt}\\hat{u}_T + \\frac{v^2}{\\rho}\\hat{u}_N$ partendo da $\\vec{v} = v\\hat{u}_T$. Spiega ogni passaggio.",
+        back: "<strong>1)</strong> Scrivo $\\vec{v} = v\\,\\hat{u}_T$. <strong>2)</strong> Derivo con Leibniz: $$\\vec{a} = \\frac{dv}{dt}\\hat{u}_T + v\\frac{d\\hat{u}_T}{dt}$$ <strong>3)</strong> Passo chiave: $\\hat{u}_T$ ha modulo 1 costante → la sua derivata è <strong>⊥</strong> a sé stesso → punta nella direzione normale: $d\\hat{u}_T = d\\phi\\,\\hat{u}_N$. <strong>4)</strong> Arco infinitesimo: $ds = \\rho\\,d\\phi$ → $\\frac{d\\phi}{dt} = \\frac{1}{\\rho}\\frac{ds}{dt} = \\frac{v}{\\rho}$. <strong>5)</strong> Sostituisco: $$\\vec{a} = \\frac{dv}{dt}\\hat{u}_T + \\frac{v^2}{\\rho}\\hat{u}_N \\quad \\blacksquare$$"
+      },
+      {
+        type: "definizione",
+        front: "Cosa sono l'<strong>accelerazione tangenziale</strong> e l'<strong>accelerazione normale</strong>? Scrivi le formule.",
+        back: "$a_T = \\frac{dv}{dt}$: varia il <strong>modulo</strong> della velocità (rapidità). È lungo la tangente alla traiettoria.<br>$a_N = \\frac{v^2}{\\rho}$: varia la <strong>direzione</strong> del moto. Punta verso il centro di curvatura.<br>$\\vec{a} = \\vec{a}_T + \\vec{a}_N$ con $\\vec{a}_T \\perp \\vec{a}_N$."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è la <strong>circonferenza osculatrice</strong> e il <strong>raggio di curvatura</strong> $\\rho$?",
+        back: "In ogni punto di una curva, la circonferenza osculatrice è il cerchio che meglio approssima la curva localmente (la \"bacia\"). Il suo raggio è $\\rho$.<br>• $\\rho$ piccolo → curva stretta → $a_N$ grande.<br>• $\\rho \\to \\infty$ → rettilineo → $a_N = 0$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la <strong>velocità angolare</strong> $\\omega$ e la relazione con la velocità lineare.",
+        back: "$$\\omega = \\frac{d\\theta}{dt}$$ Legame con la velocità lineare: $v = R\\omega$ (dove $R$ è il raggio della traiettoria circolare). L'accelerazione centripeta si riscrive: $a_N = R\\omega^2$."
+      },
+      {
+        type: "domanda",
+        front: "Come si classifica un moto in base a $a_T$ e $a_N$? Fai 4 esempi.",
+        back: "• <strong>Rettilineo uniforme</strong>: $a_T = 0$, $a_N = 0$ → $\\vec{a} = 0$.<br>• <strong>Rettilineo vario</strong>: $a_T \\neq 0$, $a_N = 0$ → $\\vec{a} = \\vec{a}_T$.<br>• <strong>Curvilineo uniforme</strong>: $a_T = 0$, $a_N \\neq 0$ → $\\vec{a} = \\vec{a}_N$.<br>• <strong>MCU</strong>: $a_T = 0$, $a_N = v^2/R = \\text{cost}$ → centripeta."
+      },
+      {
+        type: "domanda",
+        front: "Perché raddoppiando $v_0$ la gittata <strong>quadruplica</strong>?",
+        back: "Dalla formula $x_c = \\frac{v_0^2 \\sin(2\\theta)}{g}$, la gittata dipende dal <strong>quadrato</strong> di $v_0$. Se $v_0 \\to 2v_0$: $$x_c \\to \\frac{(2v_0)^2}{g}\\sin(2\\theta) = 4\\cdot\\frac{v_0^2}{g}\\sin(2\\theta)$$"
+      },
+      {
+        type: "tranello",
+        front: "Nel moto circolare uniforme, l'accelerazione è costante?",
+        back: "<strong>No!</strong> Il <strong>modulo</strong> $|\\vec{a}| = v^2/R$ è costante, ma il <strong>vettore</strong> $\\vec{a}$ cambia continuamente direzione (punta sempre verso il centro). Quindi $\\vec{a} \\neq \\text{cost}$ e NON puoi usare le formule del MUA."
+      },
+      {
+        type: "tranello",
+        front: "Se $a_T = 0$ il corpo è fermo?",
+        back: "<strong>No!</strong> $a_T = 0$ significa solo che il <strong>modulo</strong> della velocità non cambia ($dv/dt = 0$). Il corpo può muoversi a velocità costante e stare curvando ($a_N \\neq 0$). Esempio: MCU — velocità tachimetrica costante ma il corpo gira in cerchio."
+      },
+      {
+        type: "tranello",
+        front: "Come si ricava $a_N$ se conosci $\\vec{a}$ e $a_T$?",
+        back: "Poiché $\\vec{a}_T \\perp \\vec{a}_N$, il teorema di Pitagora dà: $$a^2 = a_T^2 + a_N^2 \\quad \\Rightarrow \\quad a_N = \\sqrt{a^2 - a_T^2}$$ E da questo si può ricavare il raggio di curvatura: $\\rho = v^2/a_N$."
+      }
+    ],
+
+    // ──────────────── QUIZ ────────────────
+    quiz: [
+      {
+        q: "L'equazione della traiettoria del proiettile $y(x)$ è:",
+        options: [
+          "Una retta",
+          "Un cerchio",
+          "Una parabola con concavità verso il basso",
+          "Un'iperbole"
+        ],
+        correct: 2,
+        explanation: "$y = \\tan\\theta\\,x - \\frac{g}{2v_0^2\\cos^2\\theta}x^2$ è un'equazione di secondo grado in $x$ con coefficiente negativo: <strong>parabola</strong> con concavità verso il basso."
+      },
+      {
+        q: "La componente tangenziale dell'accelerazione $a_T$ descrive:",
+        options: [
+          "La variazione della direzione del moto",
+          "La variazione del modulo della velocità",
+          "La curvatura della traiettoria",
+          "La posizione del corpo"
+        ],
+        correct: 1,
+        explanation: "$a_T = dv/dt$ è la derivata del <strong>modulo</strong> della velocità. Varia solo la rapidità, non la direzione."
+      },
+      {
+        q: "La componente normale dell'accelerazione $a_N$ è data da:",
+        options: [
+          "$\\frac{dv}{dt}$",
+          "$\\frac{v}{\\rho}$",
+          "$\\frac{v^2}{\\rho}$",
+          "$\\frac{\\rho}{v^2}$"
+        ],
+        correct: 2,
+        explanation: "$a_N = v^2/\\rho$. Dipende dal quadrato della velocità e inversamente dal raggio di curvatura."
+      },
+      {
+        q: "Se $\\rho \\to \\infty$, la traiettoria è:",
+        options: [
+          "Un cerchio molto grande",
+          "Una retta (moto rettilineo)",
+          "Una parabola",
+          "Un punto (corpo fermo)"
+        ],
+        correct: 1,
+        explanation: "$\\rho \\to \\infty$ significa curvatura nulla, cioè traiettoria <strong>rettilinea</strong>. La componente normale $a_N = v^2/\\rho$ si annulla."
+      },
+      {
+        q: "Nel moto circolare uniforme, quale affermazione è vera?",
+        options: [
+          "$\\vec{a} = \\vec{0}$ perché $v = \\text{cost}$",
+          "$\\vec{a} = \\text{cost}$ (vettore costante)",
+          "$|\\vec{a}| = \\text{cost}$ ma $\\vec{a}$ cambia direzione",
+          "$a_T = v^2/R$"
+        ],
+        correct: 2,
+        explanation: "Nel MCU: $a_T = 0$ (modulo di $v$ costante), $a_N = v^2/R$ (costante in modulo). Ma il <strong>vettore</strong> $\\vec{a}$ cambia continuamente direzione (punta verso il centro)."
+      },
+      {
+        q: "Se $v_0$ raddoppia, la gittata:",
+        options: [
+          "Raddoppia",
+          "Triplica",
+          "Quadruplica",
+          "Resta uguale"
+        ],
+        correct: 2,
+        explanation: "$x_c \\propto v_0^2$. Se $v_0 \\to 2v_0$, allora $x_c \\to 4x_c$. La gittata <strong>quadruplica</strong>."
+      },
+      {
+        q: "Quale formula permette di ricavare $\\rho$ noti $v$ e $a_N$?",
+        options: [
+          "$\\rho = a_N / v^2$",
+          "$\\rho = v^2 / a_N$",
+          "$\\rho = v / a_N$",
+          "$\\rho = a_N \\cdot v$"
+        ],
+        correct: 1,
+        explanation: "Da $a_N = v^2/\\rho$ si inverte: $\\rho = v^2/a_N$."
+      },
+      {
+        q: "In un moto <strong>rettilineo vario</strong>, quale componente dell'accelerazione è non nulla?",
+        options: [
+          "Solo $a_N$ (la direzione cambia)",
+          "Solo $a_T$ (il modulo cambia, traiettoria rettilinea)",
+          "Entrambe",
+          "Nessuna"
+        ],
+        correct: 1,
+        explanation: "Rettilineo → $\\rho \\to \\infty$ → $a_N = 0$. Vario → la velocità cambia modulo → $a_T \\neq 0$. Quindi solo $\\vec{a}_T$."
+      }
+    ]
+  };
+</script>
+<script src="../js/renderer.js?v=1773641082"></script>
+<script src="../js/graphs.js?v=1773641082"></script>
+
+<!-- Graph functions provided by graphs.js -->
+
+<script>
+// Sidebar toggle (open by default)
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+</body>
+</html>

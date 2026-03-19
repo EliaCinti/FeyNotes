@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L01 — Fisica 1 Study Guide</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="../index.html" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+    <span class="logo-sub">Study Guide</span>
+  </a>
+  <nav class="header-nav">
+    <a href="../index.html" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="../index.html" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="#" style="opacity:0.3">← Prec.</a>
+      <a href="L02.html">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<script>
+const LESSON = {
+    id: "L01", date: "Lezione 1 — 11 Mar 2026",
+    title: "Introduzione al Corso, Metodo Scientifico e Prime Grandezze Cinematiche",
+    abstract: "Organizzazione del corso, metodo galileiano, grandezze scalari vs vettoriali, e le prime definizioni fondamentali: posizione, spostamento, velocità media.",
+
+    sections: [
+      // ──────────────── INFO CORSO ────────────────
+      {
+        id: "s-info",
+        type: "info_corso",
+        title: "Informazioni sul Corso",
+        icon: "ℹ️",
+        data: {
+          rows: [
+            { label: "Docente",               val: "Prof. Mercuri",                                  hl: false },
+            { label: "Email",                  val: "mercuri@uniroma2.it",                            hl: true },
+            { label: "Ricevimento",            val: "Lunedì 14:00 – 16:00 (prenotare via email)",     hl: false },
+            { label: "Tutoraggio",             val: "Lunedì 16:00 – 18:00 (inizia il 9 maggio, Dott.ssa Letizia Ciscione)", hl: false },
+            { label: "Ora integrativa",        val: "Mercoledì — un'ora prima dell'orario regolare", hl: false },
+            { label: "Piattaforma",            val: "Microsoft Teams (avvisi, materiale, lezioni remote)", hl: false },
+            { label: "Materiale didattico",    val: "Appunti su Teams (con ~2 settimane di ritardo)", hl: false },
+            { label: "Testo consigliato",      val: "Mazzoldi, Nigro, Voci — Elementi di Fisica, Vol. 1 (Edises, ultima edizione)", hl: true },
+            { label: "Crediti (Informatica)",   val: "6 CFU — solo Meccanica (programma fino a metà maggio)", hl: true },
+            { label: "Crediti (Edilizia)",      val: "6 CFU (60 ore)",                                hl: false },
+            { label: "Crediti (Edile-Architettura)", val: "8–9 CFU (90 ore, include Termodinamica)",  hl: false },
+            { label: "1° Appello scritto",     val: "24 Giugno 2026",                                 hl: true },
+            { label: "2° Appello scritto",     val: "15 Luglio 2026",                                 hl: true },
+            { label: "Esoneri",                val: "NON previsti",                                    hl: false, red: true },
+            { label: "Soglia ammissione orale",val: "≥ 16/30 allo scritto",                           hl: true },
+            { label: "Scritto 6 CFU",          val: "2 problemi — 2 ore (⅔ del tempo e programma)",   hl: false },
+            { label: "Scritto 9 CFU",          val: "3 problemi — 3 ore (Cinematica + Sistemi + Termodinamica)", hl: false },
+            { label: "Nota",                   val: "Immatricolati prima di quest'anno: scrivere al prof", hl: false }
+          ]
+        }
+      },
+
+      // ──────────────── STRUTTURA ESAME ────────────────
+      {
+        id: "s-esame",
+        type: "section",
+        title: "Struttura dell'Esame Scritto",
+        icon: "📝",
+        content: `<p>L'esame scritto è articolato su <strong>problemi</strong>, non su domande teoriche. Il numero di problemi e il tempo dipendono dal piano di studi:</p>`,
+        table_compare: {
+          headers: ["Problema", "Argomento", "Chi lo svolge"],
+          rows: [
+            ["Problema 1", "Cinematica e Meccanica del punto", "Tutti"],
+            ["Problema 2", "Meccanica dei sistemi", "Tutti"],
+            ["Problema 3", "Termodinamica", "Solo 8–9 CFU (Edilizia/Architettura)"]
+          ]
+        },
+        extra_content: `<p>Per gli studenti di <strong>Informatica (6 CFU, nuovo ordinamento)</strong>: si svolgono solo i primi 2 problemi in <strong>⅔ del tempo totale</strong> (2 ore su 3). Il punteggio minimo per accedere alla prova orale è <strong>16/30</strong>.</p>
+        <p>L'orale è obbligatorio. Le domande orali tipiche riguardano <strong>definizioni formali</strong>, <strong>dimostrazioni</strong> e la <strong>comprensione concettuale</strong> — non la ripetizione mnemonica di formule.</p>`
+      },
+
+      // ──────────────── METODO SCIENTIFICO ────────────────
+      {
+        id: "s-metodo-scientifico",
+        type: "section",
+        title: "Il Metodo Scientifico Galileiano",
+        icon: "🔬",
+        content: `<p>La fisica è lo <strong>studio dei fenomeni naturali attraverso il metodo sperimentale galileiano</strong>. Non si tratta di opinioni o percezioni: la fisica richiede descrizioni <strong>oggettive, quantitative e riproducibili</strong>.</p>
+        <p>Il prof sottolinea un principio cardine fin dalla prima lezione: bisogna eliminare la soggettività dalla descrizione dei fenomeni.</p>`,
+        subsections: [
+          {
+            subtitle: "Soggettivo vs Oggettivo",
+            content: `<p>Un'affermazione come <em>"ho caldo"</em> o <em>"ho freddo"</em> <strong>non è scienza</strong>: è una percezione soggettiva che dipende dalla persona, dal contesto, dall'abitudine. Due persone nella stessa stanza possono avere percezioni opposte.</p>
+            <p>Invece, dire <em>"ci sono 28°C"</em> <strong>è scienza</strong>: è un dato oggettivo, misurabile, verificabile da chiunque con un termometro. Questo è il passaggio fondamentale dal <strong>qualitativo al quantitativo</strong>.</p>`
+          }
+        ],
+        quote: {
+          text: "\"Ho caldo\", \"ho freddo\" — questo non è scienza. \"Ci sono 28 gradi\" — questo è scienza. La differenza è tra percezione soggettiva e grandezza fisica misurabile.",
+          src: "— Prof. Mercuri, Lezione 1"
+        }
+      },
+
+      // ──────────────── GRANDEZZE FISICHE ────────────────
+      {
+        id: "s-grandezze",
+        type: "section",
+        title: "Le Grandezze Fisiche",
+        icon: "📏",
+        content: `<p>Una <strong>grandezza fisica</strong> è una proprietà di un fenomeno naturale che può essere <strong>quantificata</strong>, cioè espressa mediante un numero e un'unità di misura. Ogni grandezza fisica deve soddisfare tre requisiti fondamentali:</p>`,
+        steps: [
+          "<strong>Definizione</strong> — Deve essere chiaro <em>cosa</em> stiamo misurando. Una grandezza senza definizione precisa non è una grandezza fisica.",
+          "<strong>Unità di misura</strong> — Serve un'unità di riferimento (metro, secondo, kilogrammo…) che permetta di esprimere il valore numerico della grandezza.",
+          "<strong>Strumento di misura</strong> — Deve esistere uno strumento (reale o concettuale) capace di effettuare la misurazione di quella grandezza specifica."
+        ],
+        extra_content: `<p>Questi tre elementi sono inseparabili: non ha senso parlare di una grandezza se non si sa cosa sia, con che unità si misura e come la si misura concretamente.</p>
+        <p>Proprietà fondamentali delle grandezze fisiche:</p>
+        <p>• <strong>Oggettività</strong> — Il risultato della misura non deve dipendere da chi la esegue. Osservatori diversi, con lo stesso strumento, devono ottenere lo stesso valore (entro l'incertezza di misura).</p>
+        <p>• <strong>Riproducibilità</strong> — L'esperimento deve essere descritto in modo sufficientemente dettagliato da poter essere <strong>riprodotto</strong> da altri scienziati, in qualsiasi laboratorio del mondo.</p>
+        <p>• <strong>Confutabilità</strong> — Un risultato scientifico deve poter essere <strong>confutato</strong>: la comunità scientifica internazionale deve poterlo verificare, confermare o smentire. Se un'affermazione non è confutabile, non è scientifica.</p>`
+      },
+
+      // ──────────────── SCALARI vs VETTORI ────────────────
+      {
+        id: "s-scalari-vettori",
+        type: "section",
+        title: "Grandezze Scalari e Grandezze Vettoriali",
+        icon: "↗️",
+        content: `<p>Questa è una delle distinzioni più importanti di tutto il corso. Il prof avverte esplicitamente che <strong>sbagliare il formalismo</strong> (mettere la freccia dove non va, o non metterla dove serve) è considerato un <strong>errore grave</strong>, sia allo scritto che all'orale.</p>`,
+        subsections: [
+          {
+            subtitle: "Grandezze Scalari",
+            content: `<p>Una grandezza <strong>scalare</strong> è completamente descritta da un singolo numero (il suo <strong>modulo</strong>). Non ha direzione né verso. Esempi fondamentali:</p>
+            <p>• <strong>Tempo</strong> $t$ — misurato in secondi [s]</p>
+            <p>• <strong>Temperatura</strong> $T$ — misurata in kelvin [K] o gradi Celsius [°C]</p>
+            <p>• <strong>Massa</strong> $m$ — misurata in kilogrammi [kg]</p>
+            <p>• <strong>Intervallo di tempo</strong> $\\Delta t$ — è <strong>sempre scalare</strong>, mai vettoriale</p>
+            <p>Nota cruciale: $\\Delta t$ <strong>NON ha la freccia</strong>. Il tempo è uno scalare assoluto — non ha direzione nello spazio.</p>`
+          },
+          {
+            subtitle: "Grandezze Vettoriali",
+            content: `<p>Una grandezza <strong>vettoriale</strong> richiede <strong>tre informazioni</strong> per essere completamente descritta:</p>
+            <p>1. <strong>Modulo</strong> — "quanto è grande" (un numero ≥ 0)</p>
+            <p>2. <strong>Direzione</strong> — "lungo quale retta" (es. orizzontale, verticale, a 30° dall'asse x…)</p>
+            <p>3. <strong>Verso</strong> — "in quale dei due sensi" lungo quella retta (es. verso destra o verso sinistra)</p>
+            <p>Esempi fondamentali:</p>
+            <p>• <strong>Posizione</strong> $\\vec{r}$ — <strong>sempre con la freccia</strong></p>
+            <p>• <strong>Spostamento</strong> $\\Delta\\vec{r}$ — <strong>sempre con la freccia</strong></p>
+            <p>• <strong>Velocità</strong> $\\vec{v}$ — <strong>sempre con la freccia</strong></p>
+            <p>• <strong>Forza</strong> $\\vec{F}$ — <strong>sempre con la freccia</strong></p>
+            <p>• <strong>Accelerazione</strong> $\\vec{a}$ — <strong>sempre con la freccia</strong></p>`
+          }
+        ],
+        quote: {
+          text: "La freccia su delta t non ce la dovete mettere assolutamente mai perché è uno scalare. La freccia sulla posizione ce la dovete mettere assolutamente sempre perché è un vettore. Questa è la sintassi della rappresentazione fisica, è la grammatica del linguaggio fisico.",
+          src: "— Prof. Mercuri, Lezione 1"
+        },
+        table_compare: {
+          headers: ["Grandezza", "Tipo", "Simbolo", "Serve la freccia?"],
+          rows: [
+            ["Tempo", "Scalare", "$t$", "❌ Mai"],
+            ["Intervallo di tempo", "Scalare", "$\\Delta t$", "❌ Mai"],
+            ["Massa", "Scalare", "$m$", "❌ Mai"],
+            ["Temperatura", "Scalare", "$T$", "❌ Mai"],
+            ["Posizione", "Vettore", "$\\vec{r}$", "✅ Sempre"],
+            ["Spostamento", "Vettore", "$\\Delta\\vec{r}$", "✅ Sempre"],
+            ["Velocità", "Vettore", "$\\vec{v}$", "✅ Sempre"],
+            ["Forza", "Vettore", "$\\vec{F}$", "✅ Sempre"],
+            ["Accelerazione", "Vettore", "$\\vec{a}$", "✅ Sempre"]
+          ]
+        }
+      },
+
+      // ──────────────── TRAPPOLA FORMALISMO ────────────────
+      {
+        id: "s-trap-frecce",
+        type: "alert_box",
+        title: "🚨 Trappola d'Esame — Frecce sui Vettori",
+        content: `<p>All'orale e allo scritto, il prof controlla <strong>sistematicamente</strong> il formalismo. Scrivere $\\Delta r$ invece di $\\Delta\\vec{r}$ (dimenticando la freccia) oppure scrivere $\\vec{\\Delta t}$ invece di $\\Delta t$ (aggiungendo una freccia a uno scalare) è un <strong>errore concettuale grave</strong> che può compromettere l'esito dell'esame.</p>
+        <p><strong>Regola d'oro:</strong> prima di scrivere qualsiasi simbolo, chiediti: <em>"questa grandezza è uno scalare o un vettore?"</em> — e agisci di conseguenza.</p>`
+      },
+
+      // ──────────────── CINEMATICA vs DINAMICA ────────────────
+      {
+        id: "s-cin-din",
+        type: "section",
+        title: "Cinematica e Dinamica: le Due Anime della Meccanica",
+        icon: "⚙️",
+        content: `<p>La <strong>Meccanica</strong> è la branca della fisica che studia il moto dei corpi. Si divide in due grandi aree complementari:</p>`,
+        table_compare: {
+          headers: ["", "Cinematica", "Dinamica"],
+          rows: [
+            ["Domanda chiave", "COME si muove?", "PERCHÉ si muove?"],
+            ["Oggetto di studio", "Descrizione dei moti e delle loro variazioni nel tempo", "Cause delle variazioni del moto (forze) e leggi che le governano"],
+            ["Si occupa di", "Posizione, spostamento, velocità, accelerazione", "Forze, massa, leggi di Newton"],
+            ["Causa del moto", "Non la studia — la ignora completamente", "È il suo focus principale"],
+            ["Analogia", "Il cronista sportivo che descrive la partita", "L'allenatore che spiega perché la squadra ha fatto certe scelte"]
+          ]
+        },
+        extra_content: `<p>Il prof sottolinea: la cinematica <strong>descrive</strong> il moto senza chiedersi cosa lo causa. Descrivendo un moto si possono fare delle <strong>previsioni</strong>. Quando si passa a studiare le <strong>cause</strong> delle variazioni del moto (perché un oggetto accelera, rallenta, cambia direzione), si entra nel territorio della <strong>dinamica</strong>.</p>
+        <p>Nel corso si parte dalla cinematica perché bisogna prima saper <strong>descrivere</strong> un moto (linguaggio), e solo dopo si può ragionare sulle sue <strong>cause</strong> (fisica vera e propria).</p>`
+      },
+
+      // ──────────────── DEFINIZIONE DI MOTO ────────────────
+      {
+        id: "s-moto",
+        type: "section",
+        title: "Cos'è il Moto?",
+        icon: "🏃",
+        content: `<p>Il <strong>moto</strong> è definito come la <strong>variazione di collocazione spaziale nel tempo</strong>. In altre parole: un corpo è in moto quando la sua posizione cambia al passare del tempo.</p>
+        <p>Per descrivere un moto in modo completo, servono le risposte a due domande fondamentali:</p>
+        <p>1. <strong>"Di quanto si è spostato?"</strong> → Questo porta alla definizione di <strong>spostamento</strong> $\\Delta\\vec{r}$</p>
+        <p>2. <strong>"In quanto tempo?"</strong> → Questo porta alla definizione di <strong>intervallo di tempo</strong> $\\Delta t$ e, combinando le due, alla <strong>velocità media</strong> $\\vec{v}_M$</p>`
+      },
+
+      // ──────────────── POSIZIONE ────────────────
+      {
+        id: "s-posizione",
+        type: "section",
+        title: "Il Vettore Posizione $\\vec{r}(t)$",
+        icon: "📍",
+        content: `<p>La <strong>posizione</strong> è la grandezza fisica che descrive la <strong>collocazione spaziale</strong> di un oggetto rispetto a un sistema di riferimento. È la prima grandezza che si introduce in cinematica.</p>
+        <p>La posizione è un <strong>vettore</strong>: per specificarla completamente servono modulo, direzione e verso. Si indica con $\\vec{r}$ e, se il corpo è in moto, dipende dal tempo:</p>`,
+        formulas: [
+          { label: "Posizione iniziale", latex: "\\vec{r}_{in} = \\vec{r}(t)" },
+          { label: "Posizione finale",   latex: "\\vec{r}_f = \\vec{r}(t + \\Delta t)" }
+        ],
+        extra_content: `<p>La notazione $\\vec{r}(t)$ si legge: <em>"il vettore posizione in funzione del tempo"</em>. Significa che, per ogni istante $t$, il vettore $\\vec{r}$ assume un valore diverso — descrivendo così la traiettoria del corpo.</p>
+        <p>Se il corpo è <strong>fermo</strong>, $\\vec{r}$ non cambia nel tempo. Se il corpo è <strong>in moto</strong>, $\\vec{r}(t)$ varia e la sequenza di tutte le posizioni nel tempo disegna la <strong>traiettoria</strong>.</p>`
+      },
+
+      // ──────────────── SPOSTAMENTO ────────────────
+      {
+        id: "s-spostamento",
+        type: "section",
+        title: "Lo Spostamento $\\Delta\\vec{r}$",
+        icon: "➡️",
+        content: `<p>Lo <strong>spostamento</strong> è la variazione del vettore posizione. Risponde alla domanda: <em>"di quanto e in quale direzione si è mosso il corpo?"</em></p>
+        <p>Si definisce come la <strong>differenza tra la posizione finale e la posizione iniziale</strong>:</p>`,
+        formulas: [
+          { label: "Definizione di spostamento", latex: "\\Delta\\vec{r} \\triangleq \\vec{r}_f - \\vec{r}_{in} = \\vec{r}(t + \\Delta t) - \\vec{r}(t)" }
+        ],
+        extra_content: `<p>Punti cruciali da ricordare:</p>
+        <p>• Lo spostamento è un <strong>vettore</strong> — ha modulo, direzione e verso. Si scrive <strong>sempre</strong> con la freccia: $\\Delta\\vec{r}$.</p>
+        <p>• Lo spostamento <strong>non è</strong> la distanza percorsa (che è uno scalare). Lo spostamento collega il punto di partenza al punto di arrivo "in linea retta": non dipende dal percorso effettuato.</p>
+        <p>• Il simbolo $\\triangleq$ si legge <em>"uguale per definizione"</em>: indica che si tratta di una definizione, non di un risultato derivato.</p>
+        <p>• Il $\\Delta$ (delta maiuscolo) indica sempre una <strong>differenza</strong> tra il valore finale e il valore iniziale di una grandezza: $\\Delta(\\cdot) = (\\cdot)_f - (\\cdot)_{in}$.</p>`
+      },
+
+      // ──────────────── NOTA SPOSTAMENTO vs DISTANZA ────────────────
+      {
+        id: "s-note-spost",
+        type: "note_box",
+        title: "📚 Spostamento ≠ Distanza percorsa",
+        content: `<p>Immagina di camminare da casa tua (punto A) fino al bar (punto B), e poi di tornare indietro a casa (punto A).</p>
+        <p>• La <strong>distanza percorsa</strong> (scalare) è la somma di tutti i passi: andata + ritorno.</p>
+        <p>• Lo <strong>spostamento</strong> (vettore) è $\\Delta\\vec{r} = \\vec{r}_f - \\vec{r}_{in} = \\vec{0}$ perché sei tornato al punto di partenza!</p>
+        <p>Questa distinzione è fonte classica di errori all'esame.</p>`
+      },
+
+      // ──────────────── VELOCITÀ MEDIA ────────────────
+      {
+        id: "s-vel-media",
+        type: "section",
+        title: "La Velocità Media $\\vec{v}_M$",
+        icon: "⏱️",
+        content: `<p>La <strong>velocità media</strong> è la grandezza che misura la <strong>rapidità con cui avviene uno spostamento</strong>. Si definisce come il rapporto tra lo spostamento e l'intervallo di tempo in cui esso avviene:</p>`,
+        formulas: [
+          { label: "Velocità media (definizione)", latex: "\\vec{v}_M \\triangleq \\frac{\\Delta\\vec{r}}{\\Delta t}" }
+        ],
+        extra_content: `<p>Analisi dimensionale e concettuale:</p>
+        <p>• Al <strong>numeratore</strong> c'è $\\Delta\\vec{r}$, che è un <strong>vettore</strong>.</p>
+        <p>• Al <strong>denominatore</strong> c'è $\\Delta t$, che è uno <strong>scalare</strong> (il tempo è sempre scalare!).</p>
+        <p>• Un vettore diviso uno scalare dà un <strong>vettore</strong> → quindi $\\vec{v}_M$ è un <strong>vettore</strong> (con la freccia!).</p>
+        <p>• La velocità media ha la stessa <strong>direzione e verso</strong> dello spostamento $\\Delta\\vec{r}$, ma con un modulo "riscalato" dal fattore $1/\\Delta t$.</p>
+        <p>• Unità di misura: $[\\vec{v}_M] = \\frac{\\text{m}}{\\text{s}}$ (metri al secondo).</p>`,
+        quote: {
+          text: "La velocità media è la rapidità con cui uno spostamento avviene. Attenzione: al denominatore c'è delta t — tempo assoluto, NON è un vettore, è uno scalare.",
+          src: "— Prof. Mercuri, Lezione 1"
+        }
+      },
+
+      // ──────────────── GRAFICO VETTORI ────────────────
+      {
+        id: "s-graph-vectors",
+        type: "graph",
+        graphType: "vectors_kinematics",
+        title: "Vettori Posizione, Spostamento e Velocità Media — Animazione"
+      },
+
+      // ──────────────── METODO DI STUDIO ────────────────
+      {
+        id: "s-metodo-studio",
+        type: "section",
+        title: "Filosofia dello Studio: Teoria prima di tutto",
+        icon: "🧠",
+        content: `<p>Il prof dedica una parte significativa della prima lezione al <strong>metodo di studio</strong>. I punti chiave sono:</p>`,
+        steps: [
+          "<strong>La teoria viene prima della pratica.</strong> Non ha senso risolvere centinaia di esercizi se non si capiscono le definizioni e i concetti sottostanti. Lo studio mnemonico delle formule porta inevitabilmente al fallimento, soprattutto all'orale.",
+          "<strong>La fisica è un edificio progressivo.</strong> Ogni concetto si costruisce sopra quelli precedenti. Se non si capisce la definizione di posizione, non si può capire lo spostamento. Se non si capisce lo spostamento, non si può capire la velocità. Se le fondamenta sono incerte, l'intera struttura crolla.",
+          "<strong>\"Metabolizzare\" i concetti.</strong> Non basta leggere una definizione — bisogna farla propria, saperla riformulare con parole proprie, saperla applicare a casi concreti. Il prof chiama questo processo \"metabolizzazione\".",
+          "<strong>Frequentare le lezioni.</strong> Il materiale viene caricato con ~2 settimane di ritardo appositamente per incentivare la frequenza. I dati statistici mostrano che chi non frequenta tende ad avere esiti negativi agli appelli di giugno/luglio."
+        ],
+        quote: {
+          text: "La fisica è come un edificio: se le fondamenta sono incerte, l'intera struttura della comprensione crolla. Non potete risolvere meccanicamente migliaia di problemi senza comprensione teorica e sperare di passare l'orale.",
+          src: "— Prof. Mercuri, Lezione 1"
+        }
+      },
+
+      // ──────────────── RIEPILOGO FORMULE ────────────────
+      {
+        id: "s-riepilogo",
+        type: "section",
+        title: "Riepilogo Formule della Lezione",
+        icon: "📐",
+        content: `<p>Tutte le definizioni introdotte oggi, raccolte in un unico quadro sinottico:</p>`,
+        formulas: [
+          { label: "Posizione (vettore)",       latex: "\\vec{r} = \\vec{r}(t)" },
+          { label: "Posizione finale",          latex: "\\vec{r}_f = \\vec{r}(t + \\Delta t)" },
+          { label: "Spostamento (definizione)", latex: "\\Delta\\vec{r} \\triangleq \\vec{r}_f - \\vec{r}_{in}" },
+          { label: "Spostamento (esplicito)",   latex: "\\Delta\\vec{r} = \\vec{r}(t + \\Delta t) - \\vec{r}(t)" },
+          { label: "Velocità media",            latex: "\\vec{v}_M \\triangleq \\frac{\\Delta\\vec{r}}{\\Delta t}" }
+        ]
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Cos'è una <strong>grandezza fisica</strong>? Quali tre elementi la caratterizzano?",
+        back: "Una grandezza fisica è una proprietà di un fenomeno naturale che può essere <strong>quantificata</strong>. È caratterizzata da tre elementi inseparabili: (1) una <strong>definizione</strong> precisa, (2) un'<strong>unità di misura</strong>, (3) uno <strong>strumento di misura</strong> appropriato. Inoltre deve essere oggettiva, riproducibile e confutabile."
+      },
+      {
+        type: "definizione",
+        front: "Qual è la differenza tra una <strong>grandezza scalare</strong> e una <strong>grandezza vettoriale</strong>?",
+        back: "Una grandezza <strong>scalare</strong> è completamente descritta da un singolo numero (il modulo). Esempi: $t$, $m$, $T$.<br><br>Una grandezza <strong>vettoriale</strong> richiede tre informazioni: <strong>modulo</strong>, <strong>direzione</strong> e <strong>verso</strong>. Esempi: $\\vec{r}$, $\\Delta\\vec{r}$, $\\vec{v}$, $\\vec{F}$, $\\vec{a}$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci lo <strong>spostamento</strong> $\\Delta\\vec{r}$ di un punto materiale.",
+        back: "Lo spostamento è definito come la <strong>differenza tra il vettore posizione finale e il vettore posizione iniziale</strong>:<br><br>$$\\Delta\\vec{r} \\triangleq \\vec{r}_f - \\vec{r}_{in} = \\vec{r}(t+\\Delta t) - \\vec{r}(t)$$<br><br>È un vettore. Non coincide con la distanza percorsa (che è uno scalare e dipende dal percorso)."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la <strong>velocità media</strong> $\\vec{v}_M$.",
+        back: "La velocità media è il rapporto tra lo spostamento e l'intervallo di tempo:<br><br>$$\\vec{v}_M \\triangleq \\frac{\\Delta\\vec{r}}{\\Delta t}$$<br><br>È un <strong>vettore</strong> (vettore diviso scalare = vettore). Ha la stessa direzione e verso di $\\Delta\\vec{r}$. Unità: m/s."
+      },
+      {
+        type: "definizione",
+        front: "Qual è la differenza tra <strong>Cinematica</strong> e <strong>Dinamica</strong>?",
+        back: "La <strong>Cinematica</strong> studia la <strong>descrizione</strong> dei moti e delle loro variazioni nel tempo, senza indagarne le cause. Risponde a: <em>come si muove?</em><br><br>La <strong>Dinamica</strong> studia le <strong>cause</strong> delle variazioni del moto (forze) e le leggi che legano le azioni (forze) agli effetti (accelerazioni). Risponde a: <em>perché si muove?</em>"
+      },
+      {
+        type: "domanda",
+        front: "Il prof chiede: <em>\"$\\Delta t$ è uno scalare o un vettore? E perché?\"</em>",
+        back: "$\\Delta t$ è uno <strong>scalare</strong>. Il tempo è una grandezza che si descrive completamente con un solo numero — non ha né direzione né verso nello spazio. <strong>Non si mette mai la freccia su $\\Delta t$.</strong>"
+      },
+      {
+        type: "domanda",
+        front: "Il prof chiede: <em>\"La velocità media è uno scalare o un vettore? Dimostramelo dalla definizione.\"</em>",
+        back: "La velocità media è un <strong>vettore</strong>. Dalla definizione: $\\vec{v}_M = \\frac{\\Delta\\vec{r}}{\\Delta t}$. Al numeratore c'è $\\Delta\\vec{r}$ (vettore), al denominatore $\\Delta t$ (scalare). Un vettore diviso uno scalare è ancora un <strong>vettore</strong>."
+      },
+      {
+        type: "tranello",
+        front: "⚠️ Lo spostamento $\\Delta\\vec{r}$ coincide con la distanza percorsa?",
+        back: "<strong>No!</strong> Lo spostamento è un <strong>vettore</strong> che connette il punto iniziale al punto finale \"in linea retta\". La distanza percorsa è uno <strong>scalare</strong> che misura la lunghezza totale del percorso.<br><br>Esempio: se cammini 100m avanti e 100m indietro, la distanza percorsa è 200m ma $|\\Delta\\vec{r}| = 0$."
+      },
+      {
+        type: "tranello",
+        front: "⚠️ Cosa succede se scrivo $\\Delta r$ senza la freccia oppure $\\vec{\\Delta t}$ con la freccia?",
+        back: "È un <strong>errore di formalismo grave</strong> che il prof sanziona esplicitamente. $\\Delta\\vec{r}$ è un vettore → la freccia è obbligatoria. $\\Delta t$ è uno scalare → la freccia è vietata. Questo vale sempre, in ogni formula, in ogni esercizio."
+      },
+      {
+        type: "domanda",
+        front: "Il prof chiede: <em>\"Cos'è il moto?\"</em>",
+        back: "Il moto è la <strong>variazione di collocazione spaziale nel tempo</strong>. Un corpo è in moto quando la sua posizione $\\vec{r}(t)$ cambia al variare di $t$."
+      },
+      {
+        type: "definizione",
+        front: "Quali sono i tre pilastri del <strong>metodo scientifico galileiano</strong>?",
+        back: "1. <strong>Oggettività</strong>: la descrizione deve essere univoca e indipendente dal soggetto che la fa.<br>2. <strong>Riproducibilità</strong>: l'esperimento deve poter essere riprodotto da altri in qualsiasi laboratorio.<br>3. <strong>Confutabilità</strong>: il risultato deve poter essere verificato, confermato o smentito dalla comunità scientifica."
+      },
+      {
+        type: "domanda",
+        front: "Cosa intende il prof per <em>\"massa inerziale\"</em>?",
+        back: "La <strong>massa inerziale</strong> $m$ è una grandezza <strong>scalare</strong> che rappresenta la proprietà dei corpi di <strong>opporsi alle variazioni del moto</strong> (inerzia). Maggiore è la massa, maggiore è la resistenza del corpo a cambiare il proprio stato di moto."
+      }
+    ],
+
+    // ──────────────── QUIZ ────────────────
+    quiz: [
+      {
+        q: "Quale delle seguenti grandezze è un <strong>vettore</strong>?",
+        options: [
+          "Massa $m$",
+          "Temperatura $T$",
+          "Spostamento $\\Delta\\vec{r}$",
+          "Intervallo di tempo $\\Delta t$"
+        ],
+        correct: 2,
+        explanation: "Lo spostamento $\\Delta\\vec{r}$ è un vettore: richiede modulo, direzione e verso per essere completamente descritto. Le altre tre (massa, temperatura, intervallo di tempo) sono tutte grandezze scalari."
+      },
+      {
+        q: "$\\Delta t$ è uno scalare o un vettore?",
+        options: [
+          "È un vettore perché indica una variazione",
+          "È uno scalare perché il tempo non ha direzione nello spazio",
+          "Dipende dal sistema di riferimento",
+          "È un tensore di rango 1"
+        ],
+        correct: 1,
+        explanation: "$\\Delta t$ è <strong>sempre</strong> uno scalare. Il tempo è una grandezza completamente descritta da un numero: non ha direzione né verso. La freccia su $\\Delta t$ non va mai messa."
+      },
+      {
+        q: "Un corpo parte dal punto A, arriva al punto B, e torna al punto A. Cosa vale il suo spostamento $\\Delta\\vec{r}$?",
+        options: [
+          "Uguale alla distanza AB",
+          "Uguale al doppio della distanza AB",
+          "$\\Delta\\vec{r} = \\vec{0}$ (vettore nullo)",
+          "Non si può calcolare senza conoscere il percorso"
+        ],
+        correct: 2,
+        explanation: "Lo spostamento è $\\Delta\\vec{r} = \\vec{r}_f - \\vec{r}_{in}$. Siccome il punto finale coincide con quello iniziale ($\\vec{r}_f = \\vec{r}_{in}$), lo spostamento è il <strong>vettore nullo</strong>. Attenzione: la distanza percorsa NON è zero, ma lo spostamento sì."
+      },
+      {
+        q: "La velocità media $\\vec{v}_M = \\frac{\\Delta\\vec{r}}{\\Delta t}$ è uno scalare o un vettore? Perché?",
+        options: [
+          "Scalare, perché si divide per $\\Delta t$ che è scalare",
+          "Vettore, perché al numeratore c'è un vettore e al denominatore uno scalare",
+          "Scalare, perché il risultato è un singolo numero (la \"velocità\")",
+          "Dipende dalla traiettoria"
+        ],
+        correct: 1,
+        explanation: "Un vettore ($\\Delta\\vec{r}$) diviso uno scalare ($\\Delta t$) dà un <strong>vettore</strong>. La velocità media $\\vec{v}_M$ ha la stessa direzione e verso dello spostamento $\\Delta\\vec{r}$, con modulo $|\\Delta\\vec{r}|/\\Delta t$."
+      },
+      {
+        q: "Qual è la differenza principale tra cinematica e dinamica?",
+        options: [
+          "La cinematica studia i corpi fermi, la dinamica quelli in moto",
+          "La cinematica descrive i moti senza studiarne le cause, la dinamica studia le cause delle variazioni del moto",
+          "La cinematica usa solo scalari, la dinamica usa solo vettori",
+          "Non c'è differenza, sono sinonimi"
+        ],
+        correct: 1,
+        explanation: "La <strong>cinematica</strong> si occupa della <strong>descrizione</strong> dei moti (come si muove?), senza chiedersi perché. La <strong>dinamica</strong> studia le <strong>cause</strong> delle variazioni del moto: le forze e le leggi che le governano (perché si muove?)."
+      },
+      {
+        q: "Quale affermazione rappresenta il metodo scientifico galileiano?",
+        options: [
+          "\"Sento che fuori fa freddo\"",
+          "\"La temperatura esterna è di 5°C, misurata con un termometro calibrato\"",
+          "\"Mi sembra che il sasso cada veloce\"",
+          "\"Secondo la mia esperienza, i corpi pesanti cadono prima\""
+        ],
+        correct: 1,
+        explanation: "Il metodo scientifico richiede <strong>oggettività</strong> e <strong>misurabilità</strong>. Solo l'opzione B fornisce una grandezza fisica quantificata (5°C), misurata con uno strumento, espressa in un'unità di misura. Le altre opzioni sono percezioni soggettive."
+      },
+      {
+        q: "Quali sono i tre requisiti fondamentali di una grandezza fisica?",
+        options: [
+          "Nome, formula, unità SI",
+          "Definizione, unità di misura, strumento di misura",
+          "Modulo, direzione, verso",
+          "Oggettività, soggettività, misurabilità"
+        ],
+        correct: 1,
+        explanation: "Ogni grandezza fisica richiede: (1) una <strong>definizione</strong> chiara, (2) un'<strong>unità di misura</strong>, (3) uno <strong>strumento di misura</strong>. L'opzione C (modulo, direzione, verso) descrive le componenti di un vettore, non i requisiti generali di una grandezza fisica."
+      },
+      {
+        q: "Il simbolo $\\triangleq$ nella formula $\\Delta\\vec{r} \\triangleq \\vec{r}_f - \\vec{r}_{in}$ significa:",
+        options: [
+          "Approssimativamente uguale",
+          "Uguale per definizione",
+          "Proporzionale a",
+          "Uguale sotto certe condizioni"
+        ],
+        correct: 1,
+        explanation: "Il simbolo $\\triangleq$ si legge <em>\"uguale per definizione\"</em>. Indica che la formula non è derivata da altre leggi, ma è essa stessa la <strong>definizione</strong> della grandezza a sinistra."
+      }
+    ]
+  };
+</script>
+<script src="../js/renderer.js?v=1773641082"></script>
+<script src="../js/graphs.js?v=1773641082"></script>
+
+<script>
+// ─── Graph utilities and functions ───
+// ─── Arrow Drawing Utility ───
+function drawArrow(ctx, x1, y1, x2, y2, color, width) {
+  const headLen = 10;
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+
+  // Shaft
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+
+  // Arrowhead
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+  ctx.closePath();
+  ctx.fill();
+}
+
+
+// ─── Graph: Vectors Kinematics ───
+function drawVectorsKinematics(ctx, canvas, controls) {
+  const W = canvas.width, H = canvas.height;
+  let animT = 0;
+  let animId = null;
+  let running = false;
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#252940';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    // Axes
+    ctx.strokeStyle = '#353a55';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(50, H-40); ctx.lineTo(W-30, H-40); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(50, H-40); ctx.lineTo(50, 30); ctx.stroke();
+    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif';
+    ctx.fillText('x', W-20, H-35);
+    ctx.fillText('y', 55, 25);
+
+    // Origin
+    const ox = 100, oy = H - 80;
+    ctx.fillStyle = '#6c8cff';
+    ctx.beginPath(); ctx.arc(ox, oy, 4, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
+    ctx.fillText('O', ox - 12, oy + 16);
+
+    // Trajectory (curved path)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(108,140,255,0.25)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    for (let i = 0; i <= 100; i++) {
+      const frac = i / 100;
+      const px = ox + frac * 450;
+      const py = oy - Math.sin(frac * Math.PI * 1.2) * 200 - frac * 40;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Points along trajectory
+    const tA = 0.2;
+    const tB = Math.min(0.2 + t * 0.6, 0.8);
+    const posA = { x: ox + tA * 450, y: oy - Math.sin(tA * Math.PI * 1.2) * 200 - tA * 40 };
+    const posB = { x: ox + tB * 450, y: oy - Math.sin(tB * Math.PI * 1.2) * 200 - tB * 40 };
+
+    // Position vectors r_i and r_f
+    drawArrow(ctx, ox, oy, posA.x, posA.y, '#74c0fc', 2);
+    ctx.fillStyle = '#74c0fc'; ctx.font = 'bold 13px sans-serif';
+    const rAMid = { x: (ox + posA.x)/2 - 15, y: (oy + posA.y)/2 + 5 };
+    ctx.fillText('r⃗ᵢ', rAMid.x, rAMid.y);
+
+    drawArrow(ctx, ox, oy, posB.x, posB.y, '#b197fc', 2);
+    ctx.fillStyle = '#b197fc'; ctx.font = 'bold 13px sans-serif';
+    const rBMid = { x: (ox + posB.x)/2 + 10, y: (oy + posB.y)/2 - 5 };
+    ctx.fillText('r⃗f', rBMid.x, rBMid.y);
+
+    // Displacement vector Δr
+    drawArrow(ctx, posA.x, posA.y, posB.x, posB.y, '#f0c050', 2.5);
+    const drMid = { x: (posA.x + posB.x)/2, y: (posA.y + posB.y)/2 - 15 };
+    ctx.fillStyle = '#f0c050'; ctx.font = 'bold 14px sans-serif';
+    ctx.fillText('Δr⃗', drMid.x, drMid.y);
+
+    // Points
+    ctx.fillStyle = '#ff6b6b';
+    ctx.beginPath(); ctx.arc(posA.x, posA.y, 5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e8eaf0'; ctx.font = '12px sans-serif';
+    ctx.fillText('P(tᵢ)', posA.x - 10, posA.y + 20);
+
+    ctx.fillStyle = '#51cf66';
+    ctx.beginPath(); ctx.arc(posB.x, posB.y, 5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e8eaf0'; ctx.font = '12px sans-serif';
+    ctx.fillText('P(tf)', posB.x + 8, posB.y + 18);
+  }
+
+  function animate() {
+    if (!running) return;
+    animT += 0.008;
+    if (animT > 1) { animT = 1; running = false; }
+    draw(animT);
+    if (running) animId = requestAnimationFrame(animate);
+  }
+
+  draw(1); // draw complete state initially
+
+  const playBtn = document.createElement('button');
+  playBtn.className = 'graph-btn';
+  playBtn.textContent = '▶ Anima';
+  playBtn.onclick = () => {
+    animT = 0; running = true;
+    animate();
+  };
+  controls.appendChild(playBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'graph-btn';
+  resetBtn.textContent = '↺ Reset';
+  resetBtn.onclick = () => {
+    running = false; if (animId) cancelAnimationFrame(animId);
+    animT = 1; draw(1);
+  };
+  controls.appendChild(resetBtn);
+}
+
+// ─── Graph: Parabolic Motion ───
+function drawParabolicMotion(ctx, canvas, controls) {
+  const W = canvas.width, H = canvas.height;
+  const g = 9.81;
+  let angle = 45, v0 = 30;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#252940'; ctx.lineWidth = 0.5;
+    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    const ox = 60, oy = H - 50;
+    // Axes
+    ctx.strokeStyle = '#353a55'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(W - 20, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, 20); ctx.stroke();
+    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif';
+    ctx.fillText('x', W - 15, oy + 16);
+    ctx.fillText('y', ox - 15, 25);
+
+    const rad = angle * Math.PI / 180;
+    const vx = v0 * Math.cos(rad), vy = v0 * Math.sin(rad);
+    const tFlight = 2 * vy / g;
+    const xMax = vx * tFlight;
+    const yMax = vy * vy / (2 * g);
+
+    // Scale to fit
+    const scaleX = (W - 100) / Math.max(xMax, 1);
+    const scaleY = (H - 100) / Math.max(yMax * 1.2, 1);
+    const scale = Math.min(scaleX, scaleY);
+
+    // Trajectory
+    ctx.beginPath();
+    ctx.strokeStyle = '#6c8cff'; ctx.lineWidth = 2.5;
+    const steps = 100;
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * tFlight;
+      const px = ox + vx * t * scale;
+      const py = oy - (vy * t - 0.5 * g * t * t) * scale;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // v0 arrow
+    const arrowLen = 60;
+    drawArrow(ctx, ox, oy, ox + arrowLen * Math.cos(rad), oy - arrowLen * Math.sin(rad), '#f0c050', 2.5);
+    ctx.fillStyle = '#f0c050'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('v⃗₀', ox + arrowLen * Math.cos(rad) + 5, oy - arrowLen * Math.sin(rad) - 5);
+
+    // Components
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(116,192,252,0.4)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + arrowLen * Math.cos(rad), oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox + arrowLen * Math.cos(rad), oy); ctx.lineTo(ox + arrowLen * Math.cos(rad), oy - arrowLen * Math.sin(rad)); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Apex marker
+    const tApex = vy / g;
+    const apexX = ox + vx * tApex * scale;
+    const apexY = oy - yMax * scale;
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = '#51cf66'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(apexX, apexY); ctx.lineTo(apexX, oy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#51cf66'; ctx.beginPath(); ctx.arc(apexX, apexY, 4, 0, Math.PI*2); ctx.fill();
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`h = ${yMax.toFixed(1)} m`, apexX + 8, apexY - 5);
+
+    // Range
+    const rangeX = ox + xMax * scale;
+    ctx.fillStyle = '#ff6b6b'; ctx.beginPath(); ctx.arc(rangeX, oy, 4, 0, Math.PI*2); ctx.fill();
+    ctx.font = '11px sans-serif';
+    ctx.fillText(`R = ${xMax.toFixed(1)} m`, rangeX - 25, oy + 20);
+
+    // Info
+    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
+    ctx.fillText(`θ = ${angle}°  |  v₀ = ${v0} m/s  |  T = ${tFlight.toFixed(2)} s`, ox + 10, 30);
+  }
+
+  draw();
+
+  // Angle slider
+  const ag = document.createElement('div');
+  ag.className = 'graph-slider-group';
+  ag.innerHTML = `<span>θ:</span><input type="range" min="5" max="85" value="${angle}"><span class="slider-val">${angle}°</span>`;
+  ag.querySelector('input').oninput = function() {
+    angle = +this.value;
+    ag.querySelector('.slider-val').textContent = angle + '°';
+    draw();
+  };
+  controls.appendChild(ag);
+
+  // v0 slider
+  const vg = document.createElement('div');
+  vg.className = 'graph-slider-group';
+  vg.innerHTML = `<span>v₀:</span><input type="range" min="5" max="60" value="${v0}"><span class="slider-val">${v0} m/s</span>`;
+  vg.querySelector('input').oninput = function() {
+    v0 = +this.value;
+    vg.querySelector('.slider-val').textContent = v0 + ' m/s';
+    draw();
+  };
+  controls.appendChild(vg);
+}
+
+// ─── Graph: Circular Motion ───
+function drawCircularMotion(ctx, canvas, controls) {
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2, R = 140;
+  let theta = 0;
+  let running = false;
+  let animId = null;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#252940'; ctx.lineWidth = 0.5;
+    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    // Circle path
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(108,140,255,0.3)'; ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Center
+    ctx.fillStyle = '#6b7089';
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif'; ctx.fillText('O', cx - 12, cy + 16);
+
+    // Point on circle
+    const px = cx + R * Math.cos(theta);
+    const py = cy - R * Math.sin(theta);
+
+    // Radius vector
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(160,165,184,0.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Velocity vector (tangent)
+    const vLen = 70;
+    const vx = -Math.sin(theta), vy = -Math.cos(theta); // perpendicular to radius, flipped y
+    drawArrow(ctx, px, py, px + vx * vLen, py + vy * vLen, '#51cf66', 2.5);
+    ctx.fillStyle = '#51cf66'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('v⃗', px + vx * vLen + 8, py + vy * vLen);
+
+    // Centripetal acceleration (toward center)
+    const aLen = 50;
+    const ax = cx - px, ay = cy - py;
+    const aMag = Math.sqrt(ax * ax + ay * ay);
+    drawArrow(ctx, px, py, px + (ax / aMag) * aLen, py + (ay / aMag) * aLen, '#ff6b6b', 2.5);
+    ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('a⃗ₙ', px + (ax / aMag) * aLen + 8, py + (ay / aMag) * aLen - 5);
+
+    // Point
+    ctx.fillStyle = '#f0c050';
+    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
+
+    // Angle arc
+    ctx.beginPath();
+    ctx.arc(cx, cy, 30, 0, -theta, theta > 0);
+    ctx.strokeStyle = '#ffa94d'; ctx.lineWidth = 1.5;
+    ctx.stroke();
+    if (theta > 0.15) {
+      ctx.fillStyle = '#ffa94d'; ctx.font = '12px sans-serif';
+      ctx.fillText('θ', cx + 35 * Math.cos(theta / 2), cy - 35 * Math.sin(theta / 2) + 4);
+    }
+
+    // Labels
+    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
+    ctx.fillText(`R = const  |  |v⃗| = const  |  a⃗ₙ = v²/R`, 20, 25);
+  }
+
+  function animate() {
+    if (!running) return;
+    theta += 0.02;
+    if (theta > Math.PI * 2) theta -= Math.PI * 2;
+    draw();
+    animId = requestAnimationFrame(animate);
+  }
+
+  theta = Math.PI / 4;
+  draw();
+
+  const playBtn = document.createElement('button');
+  playBtn.className = 'graph-btn';
+  playBtn.textContent = '▶ Anima';
+  playBtn.onclick = () => {
+    if (running) { running = false; playBtn.textContent = '▶ Anima'; }
+    else { running = true; playBtn.textContent = '⏸ Pausa'; animate(); }
+  };
+  controls.appendChild(playBtn);
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'graph-btn';
+  resetBtn.textContent = '↺ Reset';
+  resetBtn.onclick = () => {
+    running = false; if (animId) cancelAnimationFrame(animId);
+    playBtn.textContent = '▶ Anima';
+    theta = Math.PI / 4; draw();
+  };
+  controls.appendChild(resetBtn);
+}
+
+// ─── Arrow Drawing Utility ───
+function drawArrow(ctx, x1, y1, x2, y2, color, width) {
+  const headLen = 10;
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+
+  // Shaft
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+
+  // Arrowhead
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+  ctx.closePath();
+  ctx.fill();
+}
+
+
+
+</script>
+
+<script>
+// Sidebar toggle (open by default)
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+</body>
+</html>

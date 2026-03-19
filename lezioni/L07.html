@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L07 — Fisica 1 Study Guide</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="../index.html" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+    <span class="logo-sub">Study Guide</span>
+  </a>
+  <nav class="header-nav">
+    <a href="../index.html" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="../index.html" class="sidebar-back">&larr; Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="L06.html">&larr; Prec.</a>
+      <a href="L08.html">Succ. &rarr;</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">&#9776;</button>
+  </main>
+</div>
+
+<script>
+const LESSON = {
+    id: "L07", date: "Lezione 7 — 16 Mar 2026",
+    title: "Introduzione alla Dinamica: Le Leggi di Newton, Quantita di Moto e Impulso",
+    abstract: "Dalla cinematica alla dinamica: la relazione causa-effetto. Le tre leggi di Newton. La forza come grandezza fisica. La massa inerziale. La quantita di moto e la sua conservazione. Il teorema dell'impulso, le forze impulsive e la forza media.",
+
+    sections: [
+      // ──────────────── SEZIONE 1: DALLA CINEMATICA ALLA DINAMICA ────────────────
+      {
+        id: "s7-intro",
+        type: "section",
+        title: "Dalla Cinematica alla Dinamica: il Salto Concettuale",
+        icon: "🔀",
+        content: `<p>Con la cinematica abbiamo imparato a descrivere <em>come</em> si muovono i corpi: posizione, velocita, accelerazione. Ma non ci siamo mai chiesti <strong>perche</strong> un corpo accelera, decelera o cambia direzione.</p>
+<p>La <strong>dinamica</strong> studia esattamente questo: la relazione <strong>causa-effetto</strong> tra le interazioni (forze) e le variazioni del moto (accelerazione). Se la cinematica e il "come", la dinamica e il "perche".</p>`,
+
+        subsections: [
+          {
+            subtitle: "Lo stato di moto e la sua variazione",
+            content: `<p>Lo <strong>stato di moto</strong> di un corpo e rappresentato dalla sua velocita istantanea $\\vec{v}$. Se $\\vec{v}$ varia — in modulo, in direzione o in entrambi — c'e un'<strong>accelerazione</strong> $\\vec{a}$.</p>
+<p>Domanda chiave della dinamica: <em>cosa causa questa variazione?</em> La risposta: le <strong>interazioni</strong> con altri sistemi.</p>`
+          },
+          {
+            subtitle: "Le interazioni fondamentali in natura",
+            content: `<p>Esistono <strong>4 interazioni fondamentali</strong>:</p>
+<p>1. <strong>Elettromagnetica</strong> — responsabile di quasi tutti i fenomeni quotidiani (contatto, attrito, elasticita, luce...)</p>
+<p>2. <strong>Gravitazionale</strong> — attrazione tra masse (peso, orbite, maree)</p>
+<p>3. <strong>Nucleare Forte</strong> — tiene insieme i nuclei atomici</p>
+<p>4. <strong>Nucleare Debole</strong> — responsabile di alcuni decadimenti radioattivi</p>
+<p>In meccanica classica studieremo solo gli effetti macroscopici delle prime due.</p>`
+          },
+          {
+            subtitle: "La Forza $\\vec{F}$: la grandezza che descrive le interazioni",
+            content: `<p>Per quantificare le interazioni, si introduce una nuova grandezza fisica: la <strong>Forza</strong> $\\vec{F}$. E una grandezza <strong>vettoriale</strong>: ha modulo, direzione e verso. Si misura in <strong>newton</strong> (N = kg$\\cdot$m/s$^2$).</p>
+<p>Dalle note a lezione: <em>"la Forza descrive la causa-effetto e la reciprocita"</em> — ogni interazione coinvolge sempre due sistemi.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 2: PRIMA LEGGE ────────────────
+      {
+        id: "s7-prima-legge",
+        type: "section",
+        title: "Prima Legge della Dinamica (Principio di Inerzia)",
+        icon: "⚖️",
+        content: `<p>La prima legge di Newton non e una legge sul moto dei corpi — e una legge che <strong>definisce una categoria speciale di osservatori</strong>: gli <strong>osservatori inerziali</strong>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Enunciato",
+            content: `<p><em>"In assenza di interazioni con altri sistemi (o di forze), il corpo mantiene la sua velocita costante (o rimane fermo) per gli osservatori inerziali."</em></p>
+<p>In formula: se $\\sum \\vec{F}_i = \\vec{0}$, allora $\\vec{v} = \\text{costante}$ (incluso $\\vec{v} = \\vec{0}$).</p>`
+          },
+          {
+            subtitle: "Cosa definisce un osservatore inerziale?",
+            content: `<p>Un osservatore inerziale e un sistema di riferimento in cui la prima legge vale. In pratica: un riferimento che <strong>non accelera</strong>. Un laboratorio sulla Terra e approssimativamente inerziale; un'auto in curva no.</p>
+<p>Questo e il prerequisito fondamentale: <strong>tutte le leggi di Newton valgono solo per osservatori inerziali</strong>.</p>`
+          },
+          {
+            subtitle: "Forza zero: condizione sufficiente ma NON necessaria",
+            content: `<p>Attenzione a una distinzione cruciale dai tuoi appunti:</p>
+<p>• Se non ci sono forze → il corpo <strong>non</strong> accelera (la prima legge lo garantisce).</p>
+<p>• Ma se l'accelerazione e zero, <strong>non significa necessariamente</strong> che non ci siano forze! Potrebbero esserci piu forze che si <strong>bilanciano</strong> a vicenda ($\\sum \\vec{F}_i = \\vec{0}$).</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Principio di inerzia", latex: "\\sum \\vec{F}_i = \\vec{0} \\;\\Rightarrow\\; \\vec{a} = \\vec{0} \\;\\Rightarrow\\; \\vec{v} = \\text{cost}" }
+        ]
+      },
+
+      // ──────────────── ALERT: INERZIALE vs NON-INERZIALE ────────────────
+      {
+        id: "s7-alert-inerziale",
+        type: "alert_box",
+        title: "Attenzione: \"Nessuna forza\" non implica \"nessuna accelerazione\" in qualunque riferimento!",
+        content: `<p>La prima legge vale <strong>solo per osservatori inerziali</strong>. In un riferimento non inerziale (es. auto in frenata) vedi oggetti "muoversi da soli" senza che nessuna forza li spinga. Questo non viola Newton — semplicemente il riferimento non e inerziale, e bisogna introdurre le <strong>forze fittizie</strong> (che studierai piu avanti).</p>`
+      },
+
+      // ──────────────── SEZIONE 3: SECONDA LEGGE ────────────────
+      {
+        id: "s7-seconda-legge",
+        type: "section",
+        title: "Seconda Legge della Dinamica: $\\vec{F} = m\\vec{a}$",
+        icon: "🚀",
+        content: `<p>Se c'e una variazione dello stato di moto (cioe un'accelerazione), allora deve esserci una causa: una <strong>forza</strong>. Newton osserva che la forza applicata e <strong>direttamente proporzionale</strong> all'accelerazione prodotta ($\\vec{F} \\propto \\vec{a}$), e che hanno <strong>stessa direzione e stesso verso</strong>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "La massa inerziale $m$: il coefficiente di proporzionalita",
+            content: `<p>Per trasformare la proporzionalita in un'equazione, si introduce il coefficiente $m$:</p>
+<p>$$\\vec{F} = m\\vec{a}$$</p>
+<p>La <strong>massa inerziale</strong> $m$ e una proprieta <strong>intrinseca e passiva</strong> dei corpi. Misura la loro capacita di "opporsi" alle variazioni dello stato di moto — cioe l'<strong>inerzia</strong>.</p>`
+          },
+          {
+            subtitle: "Significato fisico della massa",
+            content: `<p>Dalla formula $|\\vec{a}| = \\frac{|\\vec{F}|}{m}$:</p>
+<p>• A <strong>parita di forza</strong>, un corpo con massa maggiore subira un'accelerazione <strong>minore</strong>.</p>
+<p>• La massa e come una "resistenza al cambiamento": piu e grande, piu e difficile far variare la velocita del corpo.</p>
+<p>Dai tuoi appunti: <em>"a parita di forza, l'effetto $|\\vec{a}|$ e il prodotto scalare elevato in base alla $m$, cioe un corpo con massa piu grande avra meno effetto"</em>.</p>`
+          },
+          {
+            subtitle: "Forze risultanti e condizione di equilibrio",
+            content: `<p>Nei sistemi reali agiscono <strong>piu forze contemporaneamente</strong>. L'equazione diventa:</p>
+<p>$$\\vec{F}_{\\text{ris}} = \\sum_i \\vec{F}_i = m\\vec{a}$$</p>
+<p>Dove $\\vec{F}_{\\text{ris}}$ e la <strong>forza risultante</strong>: la somma vettoriale di tutte le forze agenti sul corpo.</p>
+<p>Se $\\vec{F}_{\\text{ris}} = \\vec{0}$, allora $\\vec{a} = \\vec{0}$: questa e la <strong>condizione di equilibrio</strong>.</p>`
+          },
+          {
+            subtitle: "Equilibrio statico vs dinamico",
+            content: `<p>Dai tuoi appunti hai evidenziato due casi:</p>
+<p>• <strong>Equilibrio statico</strong>: $\\vec{v} = \\vec{0}$ e $\\vec{a} = \\vec{0}$ — il corpo e fermo e resta fermo.</p>
+<p>• <strong>Equilibrio dinamico</strong>: $\\vec{v} = \\text{cost} \\neq \\vec{0}$ e $\\vec{a} = \\vec{0}$ — il corpo si muove a velocita costante (MRU).</p>
+<p>In entrambi i casi la risultante delle forze e nulla.</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Seconda legge di Newton", latex: "\\vec{F}_{\\text{ris}} = \\sum_i \\vec{F}_i = m\\vec{a}" },
+          { label: "Modulo dell'accelerazione", latex: "|\\vec{a}| = \\frac{|\\vec{F}_{\\text{ris}}|}{m}" },
+          { label: "Condizione di equilibrio", latex: "\\sum_i \\vec{F}_i = \\vec{0} \\;\\Rightarrow\\; \\vec{a} = \\vec{0}" }
+        ]
+      },
+
+      // ──────────────── GRAPH: SECONDA LEGGE F-a ────────────────
+      {
+        type: "graph",
+        id: "graph-newton-second",
+        title: "La Seconda Legge: Relazione $F$–$a$",
+        graphType: "newton_second_law",
+        caption: "Il grafico mostra la proporzionalita diretta tra F e a. La pendenza della retta e la massa inerziale m. Usa lo slider per cambiare m."
+      },
+
+      // ──────────────── DESCRIZIONE GRAFICO F-a ────────────────
+      {
+        id: "s7-desc-graph-fa",
+        type: "note_box",
+        title: "Cosa Mostra il Grafico $F$–$a$",
+        content: `<p>Questo grafico rappresenta la <strong>Seconda Legge di Newton</strong> in forma visiva. Sull'asse orizzontale c'e l'accelerazione $a$ (in m/s$^2$) e sull'asse verticale la forza $F$ (in N). La relazione $F = ma$ produce una <strong>retta passante per l'origine</strong>.</p>
+<p>La <strong>pendenza</strong> (coefficiente angolare) della retta e esattamente la <strong>massa inerziale</strong> $m$: piu la retta e ripida, maggiore e la massa del corpo. Prova a variare $m$ con lo slider: vedrai che un corpo pesante richiede molta piu forza per ottenere la stessa accelerazione di uno leggero.</p>
+<p><strong>Utilita</strong>: questo tipo di grafico si usa sperimentalmente — misurando forza e accelerazione per diversi valori e facendo un fit lineare, la pendenza ti da la massa del corpo.</p>`
+      },
+
+      // ──────────────── SEZIONE 4: QUANTITA DI MOTO ────────────────
+      {
+        id: "s7-qdm",
+        type: "section",
+        title: "La Quantita di Moto $\\vec{p}$",
+        icon: "💨",
+        content: `<p>Newton in realta formulo la seconda legge non in termini di accelerazione, ma di una grandezza piu fondamentale: la <strong>quantita di moto</strong> (o <em>momento lineare</em>).</p>`,
+
+        subsections: [
+          {
+            subtitle: "Definizione",
+            content: `<p>La quantita di moto e definita come:</p>
+<p>$$\\vec{p} = m\\vec{v}$$</p>
+<p>E un vettore con la stessa direzione e verso della velocita, ma "pesato" dalla massa. Rappresenta lo <strong>stato dinamico</strong> del corpo: tiene conto non solo di quanto e veloce, ma anche di quanta "materia" si sta muovendo.</p>`
+          },
+          {
+            subtitle: "Significato fisico",
+            content: `<p>Due corpi possono avere la stessa quantita di moto in modi molto diversi:</p>
+<p>• Un camion lento: $m$ grande, $v$ piccolo → $p$ grande</p>
+<p>• Un proiettile veloce: $m$ piccolo, $v$ grande → $p$ grande</p>
+<p>La quantita di moto cattura <em>l'effetto complessivo</em>: e quella che conta negli urti, nelle collisioni, nelle esplosioni. Dai tuoi appunti: <em>"quello che devi fare per impattare nel moto, per avere effetti... cosa devo fare per avere effetti? Certo, dipende dalla massa"</em>.</p>`
+          },
+          {
+            subtitle: "Riformulazione della Seconda Legge: $\\vec{F} = \\frac{d\\vec{p}}{dt}$",
+            content: `<p>La forza e in realta la <strong>derivata della quantita di moto</strong> rispetto al tempo:</p>
+<p>$$\\vec{F} = \\frac{d\\vec{p}}{dt}$$</p>
+<p>Se la massa e costante ($m = \\text{cost}$):</p>
+<p>$$\\vec{F} = \\frac{d(m\\vec{v})}{dt} = m\\frac{d\\vec{v}}{dt} = m\\vec{a}$$</p>
+<p>Ritroviamo $\\vec{F} = m\\vec{a}$. Ma la formulazione con $\\vec{p}$ e <strong>piu generale</strong>: vale anche quando la massa varia nel tempo (es. razzo che perde carburante).</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Quantita di moto", latex: "\\vec{p} = m\\vec{v}" },
+          { label: "Seconda legge (forma generale)", latex: "\\vec{F} = \\frac{d\\vec{p}}{dt}" },
+          { label: "Caso m = cost", latex: "\\vec{F} = m\\frac{d\\vec{v}}{dt} = m\\vec{a}" }
+        ]
+      },
+
+      // ──────────────── NOTE BOX: PROBLEMA DIRETTO ────────────────
+      {
+        id: "s7-note-prob-diretto",
+        type: "note_box",
+        title: "Problema Diretto: dalla legge oraria alla forza",
+        content: `<p>Se conosco la legge oraria $\\vec{r}(t)$ di un corpo, posso ricavare la quantita di moto $\\vec{p}(t) = m\\vec{v}(t) = m\\frac{d\\vec{r}}{dt}$, e derivandola scopro la forza:</p>
+<p>$$\\vec{F} = \\frac{d\\vec{p}}{dt}$$</p>
+<p>Questo e il <strong>problema diretto</strong>: conosco il moto → trovo la forza che lo causa.</p>`
+      },
+
+      // ──────────────── SEZIONE 5: IMPULSO E TEOREMA ────────────────
+      {
+        id: "s7-impulso",
+        type: "section",
+        title: "L'Impulso $\\vec{J}$ e il Teorema dell'Impulso",
+        icon: "⚡",
+        content: `<p>Il <strong>problema inverso</strong>: se conosco la forza applicata nel tempo, come scopro la variazione del moto? Per rispondere, si introduce l'<strong>impulso</strong>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Definizione di impulso",
+            content: `<p>L'impulso e l'integrale della forza nel tempo:</p>
+<p>$$\\vec{J} = \\int_{t_0}^{t} \\vec{F}(t')\\,dt'$$</p>
+<p>E una grandezza vettoriale che "accumula" l'effetto della forza su un intervallo temporale. Si misura in N$\\cdot$s (equivalente a kg$\\cdot$m/s).</p>`
+          },
+          {
+            subtitle: "Teorema dell'impulso",
+            content: `<p>Risolvendo l'integrale con $\\vec{F} = d\\vec{p}/dt$:</p>
+<p>$$\\vec{J} = \\int_{t_0}^{t} \\frac{d\\vec{p}}{dt'}\\,dt' = \\vec{p}(t) - \\vec{p}(t_0) = \\Delta\\vec{p}$$</p>
+<p>Cioe:</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Definizione di impulso", latex: "\\vec{J} = \\int_{t_0}^{t} \\vec{F}(t')\\,dt'" },
+          { label: "Teorema dell'impulso (IMPORTANTE)", latex: "\\vec{J} = \\Delta\\vec{p} = \\vec{p}_f - \\vec{p}_i" }
+        ],
+
+        extra_content: `<p>In parole: <strong>l'impulso della forza e uguale alla variazione della quantita di moto</strong>. Questa e una delle relazioni piu potenti della meccanica. Dai tuoi appunti, hai evidenziato in giallo: <em>"Teorema dell'impulso"</em> e annotato <em>"serve per la seguente lezione"</em>.</p>`
+      },
+
+      // ──────────────── SEZIONE 6: FORZE IMPULSIVE ────────────────
+      {
+        id: "s7-forze-impulsive",
+        type: "section",
+        title: "Forze Impulsive e Forza Media",
+        icon: "🎾",
+        content: `<p>In molte situazioni reali la forza non e costante — anzi, agisce per un <strong>tempo brevissimo</strong> con un'intensita enorme. Questi sono i casi delle <strong>forze impulsive</strong>.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Cos'e una forza impulsiva?",
+            content: `<p>Pensa a una racchetta da tennis che colpisce la pallina: la forza e <strong>enorme</strong> (centinaia di newton) ma dura <strong>pochi millisecondi</strong>. Non ci interessa il valore istante per istante — ci interessa l'<strong>effetto complessivo</strong>, cioe l'impulso $\\vec{J}$.</p>
+<p>Graficamente, la forza impulsiva appare come un picco molto alto e molto stretto nel grafico $F(t)$. L'<strong>area sotto la curva</strong> e l'impulso $\\vec{J}$, che e uguale a $\\Delta\\vec{p}$.</p>`
+          },
+          {
+            subtitle: "La forza media $\\vec{F}_m$",
+            content: `<p>La <strong>forza media</strong> e quella forza <em>costante</em> che, applicata per lo stesso tempo $\\Delta t$, produrrebbe la <strong>stessa variazione di quantita di moto</strong>:</p>
+<p>$$\\vec{F}_m = \\frac{\\Delta\\vec{p}}{\\Delta t} = \\frac{\\vec{J}}{\\Delta t}$$</p>
+<p>Equivalentemente:</p>
+<p>$$\\vec{F}_m = \\frac{1}{\\Delta t}\\int_{t_0}^{t_0 + \\Delta t} \\vec{F}(t')\\,dt'$$</p>
+<p>Geometricamente: e l'altezza del <strong>rettangolo</strong> che ha la stessa area del picco della forza impulsiva sullo stesso intervallo $\\Delta t$.</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Forza media", latex: "\\vec{F}_m = \\frac{\\Delta\\vec{p}}{\\Delta t} = \\frac{\\vec{J}}{\\Delta t}" }
+        ]
+      },
+
+      // ──────────────── GRAPH: IMPULSO ────────────────
+      {
+        type: "graph",
+        id: "graph-impulse",
+        title: "Forza Impulsiva e Teorema dell'Impulso",
+        graphType: "impulse_theorem",
+        caption: "La curva rossa e la forza impulsiva F(t). L'area sotto la curva (rosa) e l'impulso J = Delta p. Il rettangolo blu tratteggiato e la forza media."
+      },
+
+      // ──────────────── DESCRIZIONE GRAFICO IMPULSO ────────────────
+      {
+        id: "s7-desc-graph-impulso",
+        type: "note_box",
+        title: "Cosa Mostra il Grafico dell'Impulso",
+        content: `<p>Questo grafico visualizza il <strong>Teorema dell'Impulso</strong> in modo interattivo. La <strong>curva rossa</strong> rappresenta una vera forza impulsiva $F(t)$, come quella di una racchetta che colpisce una pallina: un picco enorme concentrato in un tempo brevissimo.</p>
+<p>L'<strong>area colorata</strong> sotto la curva (in rosa) e l'<strong>impulso</strong> $\\vec{J} = \\int F(t)\\,dt = \\Delta\\vec{p}$. Il <strong>rettangolo blu tratteggiato</strong> mostra la <strong>forza media</strong> $F_m$: ha esattamente la stessa area della curva rossa, nello stesso intervallo $\\Delta t$.</p>
+<p><strong>Utilita</strong>: usa lo slider per cambiare la durata dell'impatto $\\Delta t$. Nota come: se $\\Delta t$ diminuisce (urto piu rapido) il picco cresce ma l'area (l'impulso) resta costante — perche $\\Delta p$ e lo stesso. Questo spiega perche un pugno rapido fa piu male: stessa $\\Delta p$ in meno tempo = forza media piu alta.</p>`
+      },
+
+      // ──────────────── METHOD BOX ────────────────
+      {
+        id: "s7-metodo-dinamica",
+        type: "method_box",
+        title: "Schema di Risoluzione di un Problema di Dinamica",
+        steps: [
+          "<strong>Scegli il sistema</strong>: individua il corpo (o i corpi) di interesse.",
+          "<strong>Disegna il diagramma di corpo libero</strong>: rappresenta TUTTE le forze agenti sul corpo (peso, normali, attrito, tensioni...).",
+          "<strong>Scegli il sistema di riferimento</strong>: assi comodi (spesso uno lungo il moto, l'altro perpendicolare).",
+          "<strong>Scrivi $\\vec{F}_{\\text{ris}} = m\\vec{a}$</strong> — proietta lungo ogni asse: $\\sum F_x = ma_x$, $\\sum F_y = ma_y$.",
+          "<strong>Risolvi le equazioni</strong>: trova le incognite (accelerazione, forze, velocita...).",
+          "<strong>Verifica</strong>: controlla le unita di misura e il senso fisico del risultato."
+        ]
+      },
+
+      // ──────────────── ALERT: F = dp/dt PIU GENERALE ────────────────
+      {
+        id: "s7-alert-dpdt",
+        type: "alert_box",
+        title: "Perche $\\vec{F} = d\\vec{p}/dt$ e piu generale di $\\vec{F} = m\\vec{a}$?",
+        content: `<p>La formulazione $\\vec{F} = m\\vec{a}$ vale <strong>solo</strong> quando la massa e costante. Ma se la massa varia nel tempo (es. un razzo che espelle carburante), bisogna usare la forma completa:</p>
+<p>$$\\vec{F} = \\frac{d\\vec{p}}{dt} = \\frac{d(m\\vec{v})}{dt} = \\frac{dm}{dt}\\vec{v} + m\\frac{d\\vec{v}}{dt}$$</p>
+<p>Appare un termine in piu ($\\frac{dm}{dt}\\vec{v}$) che $\\vec{F} = m\\vec{a}$ non cattura. La forma con la quantita di moto e quindi la versione <strong>corretta e universale</strong> della seconda legge.</p>`
+      },
+
+      // ──────────────── NOTE BOX: UNITA DI MISURA ────────────────
+      {
+        id: "s7-note-unita",
+        type: "note_box",
+        title: "Unita di Misura della Dinamica (SI)",
+        content: `<p>Le unita nel Sistema Internazionale per le nuove grandezze:</p>
+<p>• <strong>Forza $F$</strong>: newton (N) = kg$\\cdot$m/s$^2$</p>
+<p>• <strong>Massa $m$</strong>: kilogrammo (kg)</p>
+<p>• <strong>Quantita di moto $p$</strong>: kg$\\cdot$m/s</p>
+<p>• <strong>Impulso $J$</strong>: N$\\cdot$s = kg$\\cdot$m/s (stessa unita di $p$!)</p>
+<p>Il fatto che impulso e quantita di moto abbiano le stesse unita non e un caso: e una conseguenza del teorema $\\vec{J} = \\Delta\\vec{p}$.</p>`
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Enuncia la <strong>Prima Legge di Newton</strong> (Principio di Inerzia). Cosa definisce?",
+        back: "<em>\"In assenza di interazioni con altri sistemi, il corpo mantiene la sua velocita costante (o rimane fermo) per gli osservatori inerziali.\"</em><br><br>Non e una legge sul moto — e la <strong>definizione degli osservatori inerziali</strong>: quei riferimenti in cui un corpo libero da forze non accelera."
+      },
+      {
+        type: "definizione",
+        front: "Enuncia la <strong>Seconda Legge di Newton</strong> nelle due formulazioni.",
+        back: "<strong>Forma classica</strong> ($m = \\text{cost}$): $$\\vec{F}_{\\text{ris}} = m\\vec{a}$$<br><strong>Forma generale</strong>: $$\\vec{F} = \\frac{d\\vec{p}}{dt}$$<br>La seconda e piu generale: vale anche quando $m$ varia nel tempo."
+      },
+      {
+        type: "definizione",
+        front: "Cos'e la <strong>massa inerziale</strong>? Cosa misura fisicamente?",
+        back: "E il coefficiente di proporzionalita tra forza e accelerazione: $m = F/a$.<br><br>Misura la capacita del corpo di <strong>opporsi</strong> alle variazioni dello stato di moto (inerzia). E una proprieta <strong>intrinseca e passiva</strong>: a parita di forza, un corpo con $m$ maggiore ha $|\\vec{a}|$ minore."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la <strong>quantita di moto</strong> $\\vec{p}$. Perche e importante?",
+        back: "$$\\vec{p} = m\\vec{v}$$<br>Rappresenta lo \"stato dinamico\" del corpo: combina massa e velocita in un unico vettore.<br><br>E importante perche la seconda legge nella forma $\\vec{F} = d\\vec{p}/dt$ e piu generale di $\\vec{F} = m\\vec{a}$, e perche la quantita di moto totale si <strong>conserva</strong> in assenza di forze esterne."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra il <strong>Teorema dell'Impulso</strong> partendo da $\\vec{F} = d\\vec{p}/dt$.",
+        back: "Da $\\vec{F} = \\frac{d\\vec{p}}{dt}$ moltiplico entrambi i membri per $dt$ e integro: $$\\int_{t_0}^{t} \\vec{F}(t')\\,dt' = \\int_{\\vec{p}_0}^{\\vec{p}} d\\vec{p}' = \\vec{p} - \\vec{p}_0$$ Definendo l'impulso $\\vec{J} = \\int_{t_0}^{t} \\vec{F}\\,dt'$: $$\\boxed{\\vec{J} = \\Delta\\vec{p}} \\quad \\blacksquare$$"
+      },
+      {
+        type: "domanda",
+        front: "Cos'e una <strong>forza impulsiva</strong>? E cos'e la <strong>forza media</strong>?",
+        back: "<strong>Forza impulsiva</strong>: forza enorme applicata per un tempo brevissimo (es. racchetta su pallina). Non conta il valore istante per istante, ma l'integrale (impulso $\\vec{J}$).<br><br><strong>Forza media</strong>: $\\vec{F}_m = \\frac{\\Delta\\vec{p}}{\\Delta t}$. E la forza costante che, nello stesso $\\Delta t$, produce la stessa $\\Delta\\vec{p}$."
+      },
+      {
+        type: "domanda",
+        front: "Qual e la differenza tra <strong>equilibrio statico</strong> ed <strong>equilibrio dinamico</strong>?",
+        back: "In entrambi i casi $\\vec{a} = \\vec{0}$ e $\\sum \\vec{F} = \\vec{0}$.<br><br>• <strong>Statico</strong>: $\\vec{v} = \\vec{0}$ — il corpo e fermo.<br>• <strong>Dinamico</strong>: $\\vec{v} = \\text{cost} \\neq \\vec{0}$ — il corpo si muove a velocita costante (MRU).<br><br>Dal punto di vista di Newton, sono fisicamente equivalenti: nessuna forza netta."
+      },
+      {
+        type: "tranello",
+        front: "Se l'accelerazione di un corpo e zero, non ci sono forze agenti su di esso. Vero o falso?",
+        back: "<strong>Falso!</strong> $\\vec{a} = \\vec{0}$ implica solo che la <strong>risultante</strong> delle forze e nulla ($\\sum \\vec{F}_i = \\vec{0}$). Possono esserci molte forze che si bilanciano perfettamente. Esempio: un libro su un tavolo ha peso $\\vec{P}$ e reazione normale $\\vec{N}$ con $\\vec{P} + \\vec{N} = \\vec{0}$."
+      },
+      {
+        type: "tranello",
+        front: "La formula $\\vec{F} = m\\vec{a}$ vale sempre?",
+        back: "<strong>No!</strong> Vale solo per $m = \\text{cost}$ e in riferimenti inerziali.<br>La forma corretta e universale e $\\vec{F} = \\frac{d\\vec{p}}{dt}$.<br>Se $m$ varia: $\\vec{F} = \\frac{dm}{dt}\\vec{v} + m\\vec{a} \\neq m\\vec{a}$."
+      },
+      {
+        type: "tranello",
+        front: "L'impulso e la quantita di moto hanno le stesse unita di misura. E un caso?",
+        back: "<strong>No!</strong> E una conseguenza diretta del Teorema dell'Impulso: $\\vec{J} = \\Delta\\vec{p}$. Se l'impulso e uguale a una variazione di quantita di moto, le unita <strong>devono</strong> coincidere. Entrambi si misurano in kg$\\cdot$m/s (oppure N$\\cdot$s)."
+      }
+    ],
+
+    // ──────────────── QUIZ ────────────────
+    quiz: [
+      {
+        q: "La dinamica studia:",
+        options: [
+          "Come si muovono i corpi (posizione, velocita, accelerazione)",
+          "La relazione causa-effetto tra forze e variazioni del moto",
+          "Solo i corpi in equilibrio",
+          "Solo i corpi in caduta libera"
+        ],
+        correct: 1,
+        explanation: "La cinematica descrive <em>come</em> si muovono i corpi, la dinamica studia il <em>perche</em>: la relazione causa-effetto tra le forze (causa) e l'accelerazione (effetto)."
+      },
+      {
+        q: "La Prima Legge di Newton serve principalmente a:",
+        options: [
+          "Calcolare la forza risultante",
+          "Definire gli osservatori inerziali",
+          "Dimostrare che tutti i corpi cadono con la stessa accelerazione",
+          "Definire la massa inerziale"
+        ],
+        correct: 1,
+        explanation: "La prima legge non e una legge sul moto — e la definizione di <strong>osservatore inerziale</strong>: un riferimento in cui un corpo libero da forze mantiene velocita costante."
+      },
+      {
+        q: "Se $\\sum \\vec{F}_i = \\vec{0}$, quale affermazione e vera?",
+        options: [
+          "Il corpo e sicuramente fermo",
+          "Non ci sono forze agenti sul corpo",
+          "L'accelerazione e nulla e la velocita e costante",
+          "Il corpo decelera fino a fermarsi"
+        ],
+        correct: 2,
+        explanation: "$\\sum \\vec{F}_i = \\vec{0} \\Rightarrow \\vec{a} = \\vec{0} \\Rightarrow \\vec{v} = \\text{cost}$. Ma \"costante\" include sia $\\vec{v} = \\vec{0}$ (fermo) sia $\\vec{v} \\neq \\vec{0}$ (MRU)."
+      },
+      {
+        q: "La massa inerziale $m$ misura:",
+        options: [
+          "Il peso del corpo",
+          "Il volume del corpo",
+          "La resistenza del corpo alle variazioni dello stato di moto",
+          "La velocita massima raggiungibile"
+        ],
+        correct: 2,
+        explanation: "$m$ e una proprieta intrinseca che misura l'<strong>inerzia</strong>: la capacita di opporsi alle variazioni di velocita. A parita di forza, $m$ grande → $a$ piccola."
+      },
+      {
+        q: "La quantita di moto $\\vec{p}$ e definita come:",
+        options: [
+          "$\\vec{p} = m\\vec{a}$",
+          "$\\vec{p} = m\\vec{v}$",
+          "$\\vec{p} = \\vec{F} \\cdot t$",
+          "$\\vec{p} = \\frac{1}{2}mv^2$"
+        ],
+        correct: 1,
+        explanation: "$\\vec{p} = m\\vec{v}$ per definizione. Attenzione: $\\frac{1}{2}mv^2$ e l'energia cinetica, $m\\vec{a}$ e la forza, $\\vec{F}\\cdot t$ sarebbe l'impulso solo se $\\vec{F}$ fosse costante."
+      },
+      {
+        q: "La formulazione $\\vec{F} = d\\vec{p}/dt$ e piu generale di $\\vec{F} = m\\vec{a}$ perche:",
+        options: [
+          "Include anche il caso $\\vec{F} = 0$",
+          "Vale anche quando la massa varia nel tempo",
+          "E valida in tutti i sistemi di riferimento",
+          "Include anche la terza legge di Newton"
+        ],
+        correct: 1,
+        explanation: "Se $m$ varia: $\\frac{d\\vec{p}}{dt} = \\frac{dm}{dt}\\vec{v} + m\\vec{a} \\neq m\\vec{a}$. La forma $\\vec{F} = m\\vec{a}$ perde il termine $\\frac{dm}{dt}\\vec{v}$."
+      },
+      {
+        q: "Il Teorema dell'Impulso afferma che:",
+        options: [
+          "$\\vec{J} = m\\vec{a}$",
+          "$\\vec{J} = \\Delta\\vec{p}$",
+          "$\\vec{J} = \\vec{F} \\cdot \\Delta t$ (sempre)",
+          "$\\vec{J} = \\frac{1}{2}m v^2$"
+        ],
+        correct: 1,
+        explanation: "$\\vec{J} = \\int \\vec{F}\\,dt = \\Delta\\vec{p}$. Nota: $\\vec{J} = \\vec{F}\\Delta t$ vale solo se $\\vec{F}$ e costante. La relazione generale e $\\vec{J} = \\Delta\\vec{p}$."
+      },
+      {
+        q: "La forza media $\\vec{F}_m$ e:",
+        options: [
+          "La forza massima diviso 2",
+          "La forza costante che produce la stessa $\\Delta\\vec{p}$ nello stesso $\\Delta t$",
+          "La media aritmetica tra forza iniziale e finale",
+          "La forza minima applicata"
+        ],
+        correct: 1,
+        explanation: "$\\vec{F}_m = \\frac{\\Delta\\vec{p}}{\\Delta t} = \\frac{\\vec{J}}{\\Delta t}$. E la forza costante equivalente: produce lo stesso impulso (stessa area) nello stesso tempo."
+      },
+      {
+        q: "Un'auto da 1000 kg viaggia a 20 m/s. La sua quantita di moto vale:",
+        options: [
+          "$5 \\times 10^4$ N",
+          "$2 \\times 10^4$ kg$\\cdot$m/s",
+          "$2 \\times 10^5$ kg$\\cdot$m/s",
+          "$1 \\times 10^4$ kg$\\cdot$m/s"
+        ],
+        correct: 1,
+        explanation: "$p = mv = 1000 \\times 20 = 20000 = 2 \\times 10^4$ kg$\\cdot$m/s."
+      },
+      {
+        q: "Quale delle seguenti non e un'interazione fondamentale?",
+        options: [
+          "Elettromagnetica",
+          "Gravitazionale",
+          "Elastica",
+          "Nucleare Forte"
+        ],
+        correct: 2,
+        explanation: "Le 4 interazioni fondamentali sono: elettromagnetica, gravitazionale, nucleare forte e nucleare debole. La forza elastica e un effetto macroscopico dell'interazione elettromagnetica."
+      }
+    ]
+  };
+</script>
+<script src="../js/renderer.js?v=1773750000"></script>
+<script src="../js/graphs.js?v=1773750000"></script>
+
+<script>
+// Sidebar toggle (open by default)
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+</body>
+</html>
