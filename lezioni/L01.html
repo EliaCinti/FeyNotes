@@ -46,7 +46,6 @@ const LESSON = {
     abstract: "Organizzazione del corso, metodo galileiano, grandezze scalari vs vettoriali, e le prime definizioni fondamentali: posizione, spostamento, velocità media.",
 
     sections: [
-      // ──────────────── INFO CORSO ────────────────
       {
         id: "s-info",
         type: "info_corso",
@@ -75,8 +74,6 @@ const LESSON = {
           ]
         }
       },
-
-      // ──────────────── STRUTTURA ESAME ────────────────
       {
         id: "s-esame",
         type: "section",
@@ -94,8 +91,6 @@ const LESSON = {
         extra_content: `<p>Per gli studenti di <strong>Informatica (6 CFU, nuovo ordinamento)</strong>: si svolgono solo i primi 2 problemi in <strong>⅔ del tempo totale</strong> (2 ore su 3). Il punteggio minimo per accedere alla prova orale è <strong>16/30</strong>.</p>
         <p>L'orale è obbligatorio. Le domande orali tipiche riguardano <strong>definizioni formali</strong>, <strong>dimostrazioni</strong> e la <strong>comprensione concettuale</strong> — non la ripetizione mnemonica di formule.</p>`
       },
-
-      // ──────────────── METODO SCIENTIFICO ────────────────
       {
         id: "s-metodo-scientifico",
         type: "section",
@@ -115,8 +110,6 @@ const LESSON = {
           src: "— Prof. Mercuri, Lezione 1"
         }
       },
-
-      // ──────────────── GRANDEZZE FISICHE ────────────────
       {
         id: "s-grandezze",
         type: "section",
@@ -134,8 +127,6 @@ const LESSON = {
         <p>• <strong>Riproducibilità</strong> — L'esperimento deve essere descritto in modo sufficientemente dettagliato da poter essere <strong>riprodotto</strong> da altri scienziati, in qualsiasi laboratorio del mondo.</p>
         <p>• <strong>Confutabilità</strong> — Un risultato scientifico deve poter essere <strong>confutato</strong>: la comunità scientifica internazionale deve poterlo verificare, confermare o smentire. Se un'affermazione non è confutabile, non è scientifica.</p>`
       },
-
-      // ──────────────── SCALARI vs VETTORI ────────────────
       {
         id: "s-scalari-vettori",
         type: "section",
@@ -185,8 +176,6 @@ const LESSON = {
           ]
         }
       },
-
-      // ──────────────── TRAPPOLA FORMALISMO ────────────────
       {
         id: "s-trap-frecce",
         type: "alert_box",
@@ -194,8 +183,6 @@ const LESSON = {
         content: `<p>All'orale e allo scritto, il prof controlla <strong>sistematicamente</strong> il formalismo. Scrivere $\\Delta r$ invece di $\\Delta\\vec{r}$ (dimenticando la freccia) oppure scrivere $\\vec{\\Delta t}$ invece di $\\Delta t$ (aggiungendo una freccia a uno scalare) è un <strong>errore concettuale grave</strong> che può compromettere l'esito dell'esame.</p>
         <p><strong>Regola d'oro:</strong> prima di scrivere qualsiasi simbolo, chiediti: <em>"questa grandezza è uno scalare o un vettore?"</em> — e agisci di conseguenza.</p>`
       },
-
-      // ──────────────── CINEMATICA vs DINAMICA ────────────────
       {
         id: "s-cin-din",
         type: "section",
@@ -215,8 +202,6 @@ const LESSON = {
         extra_content: `<p>Il prof sottolinea: la cinematica <strong>descrive</strong> il moto senza chiedersi cosa lo causa. Descrivendo un moto si possono fare delle <strong>previsioni</strong>. Quando si passa a studiare le <strong>cause</strong> delle variazioni del moto (perché un oggetto accelera, rallenta, cambia direzione), si entra nel territorio della <strong>dinamica</strong>.</p>
         <p>Nel corso si parte dalla cinematica perché bisogna prima saper <strong>descrivere</strong> un moto (linguaggio), e solo dopo si può ragionare sulle sue <strong>cause</strong> (fisica vera e propria).</p>`
       },
-
-      // ──────────────── DEFINIZIONE DI MOTO ────────────────
       {
         id: "s-moto",
         type: "section",
@@ -227,8 +212,6 @@ const LESSON = {
         <p>1. <strong>"Di quanto si è spostato?"</strong> → Questo porta alla definizione di <strong>spostamento</strong> $\\Delta\\vec{r}$</p>
         <p>2. <strong>"In quanto tempo?"</strong> → Questo porta alla definizione di <strong>intervallo di tempo</strong> $\\Delta t$ e, combinando le due, alla <strong>velocità media</strong> $\\vec{v}_M$</p>`
       },
-
-      // ──────────────── POSIZIONE ────────────────
       {
         id: "s-posizione",
         type: "section",
@@ -243,8 +226,6 @@ const LESSON = {
         extra_content: `<p>La notazione $\\vec{r}(t)$ si legge: <em>"il vettore posizione in funzione del tempo"</em>. Significa che, per ogni istante $t$, il vettore $\\vec{r}$ assume un valore diverso — descrivendo così la traiettoria del corpo.</p>
         <p>Se il corpo è <strong>fermo</strong>, $\\vec{r}$ non cambia nel tempo. Se il corpo è <strong>in moto</strong>, $\\vec{r}(t)$ varia e la sequenza di tutte le posizioni nel tempo disegna la <strong>traiettoria</strong>.</p>`
       },
-
-      // ──────────────── SPOSTAMENTO ────────────────
       {
         id: "s-spostamento",
         type: "section",
@@ -261,8 +242,6 @@ const LESSON = {
         <p>• Il simbolo $\\triangleq$ si legge <em>"uguale per definizione"</em>: indica che si tratta di una definizione, non di un risultato derivato.</p>
         <p>• Il $\\Delta$ (delta maiuscolo) indica sempre una <strong>differenza</strong> tra il valore finale e il valore iniziale di una grandezza: $\\Delta(\\cdot) = (\\cdot)_f - (\\cdot)_{in}$.</p>`
       },
-
-      // ──────────────── NOTA SPOSTAMENTO vs DISTANZA ────────────────
       {
         id: "s-note-spost",
         type: "note_box",
@@ -272,8 +251,6 @@ const LESSON = {
         <p>• Lo <strong>spostamento</strong> (vettore) è $\\Delta\\vec{r} = \\vec{r}_f - \\vec{r}_{in} = \\vec{0}$ perché sei tornato al punto di partenza!</p>
         <p>Questa distinzione è fonte classica di errori all'esame.</p>`
       },
-
-      // ──────────────── VELOCITÀ MEDIA ────────────────
       {
         id: "s-vel-media",
         type: "section",
@@ -294,16 +271,12 @@ const LESSON = {
           src: "— Prof. Mercuri, Lezione 1"
         }
       },
-
-      // ──────────────── GRAFICO VETTORI ────────────────
       {
         id: "s-graph-vectors",
         type: "graph",
         graphType: "vectors_kinematics",
         title: "Vettori Posizione, Spostamento e Velocità Media — Animazione"
       },
-
-      // ──────────────── METODO DI STUDIO ────────────────
       {
         id: "s-metodo-studio",
         type: "section",
@@ -321,8 +294,6 @@ const LESSON = {
           src: "— Prof. Mercuri, Lezione 1"
         }
       },
-
-      // ──────────────── RIEPILOGO FORMULE ────────────────
       {
         id: "s-riepilogo",
         type: "section",
@@ -339,7 +310,6 @@ const LESSON = {
       }
     ],
 
-    // ──────────────── FLASHCARD ORALE ────────────────
     oral_cards: [
       {
         type: "definizione",
@@ -403,93 +373,52 @@ const LESSON = {
       }
     ],
 
-    // ──────────────── QUIZ ────────────────
     quiz: [
       {
         q: "Quale delle seguenti grandezze è un <strong>vettore</strong>?",
-        options: [
-          "Massa $m$",
-          "Temperatura $T$",
-          "Spostamento $\\Delta\\vec{r}$",
-          "Intervallo di tempo $\\Delta t$"
-        ],
+        options: ["Massa $m$", "Temperatura $T$", "Spostamento $\\Delta\\vec{r}$", "Intervallo di tempo $\\Delta t$"],
         correct: 2,
         explanation: "Lo spostamento $\\Delta\\vec{r}$ è un vettore: richiede modulo, direzione e verso per essere completamente descritto. Le altre tre (massa, temperatura, intervallo di tempo) sono tutte grandezze scalari."
       },
       {
         q: "$\\Delta t$ è uno scalare o un vettore?",
-        options: [
-          "È un vettore perché indica una variazione",
-          "È uno scalare perché il tempo non ha direzione nello spazio",
-          "Dipende dal sistema di riferimento",
-          "È un tensore di rango 1"
-        ],
+        options: ["È un vettore perché indica una variazione", "È uno scalare perché il tempo non ha direzione nello spazio", "Dipende dal sistema di riferimento", "È un tensore di rango 1"],
         correct: 1,
         explanation: "$\\Delta t$ è <strong>sempre</strong> uno scalare. Il tempo è una grandezza completamente descritta da un numero: non ha direzione né verso. La freccia su $\\Delta t$ non va mai messa."
       },
       {
         q: "Un corpo parte dal punto A, arriva al punto B, e torna al punto A. Cosa vale il suo spostamento $\\Delta\\vec{r}$?",
-        options: [
-          "Uguale alla distanza AB",
-          "Uguale al doppio della distanza AB",
-          "$\\Delta\\vec{r} = \\vec{0}$ (vettore nullo)",
-          "Non si può calcolare senza conoscere il percorso"
-        ],
+        options: ["Uguale alla distanza AB", "Uguale al doppio della distanza AB", "$\\Delta\\vec{r} = \\vec{0}$ (vettore nullo)", "Non si può calcolare senza conoscere il percorso"],
         correct: 2,
         explanation: "Lo spostamento è $\\Delta\\vec{r} = \\vec{r}_f - \\vec{r}_{in}$. Siccome il punto finale coincide con quello iniziale ($\\vec{r}_f = \\vec{r}_{in}$), lo spostamento è il <strong>vettore nullo</strong>. Attenzione: la distanza percorsa NON è zero, ma lo spostamento sì."
       },
       {
         q: "La velocità media $\\vec{v}_M = \\frac{\\Delta\\vec{r}}{\\Delta t}$ è uno scalare o un vettore? Perché?",
-        options: [
-          "Scalare, perché si divide per $\\Delta t$ che è scalare",
-          "Vettore, perché al numeratore c'è un vettore e al denominatore uno scalare",
-          "Scalare, perché il risultato è un singolo numero (la \"velocità\")",
-          "Dipende dalla traiettoria"
-        ],
+        options: ["Scalare, perché si divide per $\\Delta t$ che è scalare", "Vettore, perché al numeratore c'è un vettore e al denominatore uno scalare", "Scalare, perché il risultato è un singolo numero (la \"velocità\")", "Dipende dalla traiettoria"],
         correct: 1,
         explanation: "Un vettore ($\\Delta\\vec{r}$) diviso uno scalare ($\\Delta t$) dà un <strong>vettore</strong>. La velocità media $\\vec{v}_M$ ha la stessa direzione e verso dello spostamento $\\Delta\\vec{r}$, con modulo $|\\Delta\\vec{r}|/\\Delta t$."
       },
       {
         q: "Qual è la differenza principale tra cinematica e dinamica?",
-        options: [
-          "La cinematica studia i corpi fermi, la dinamica quelli in moto",
-          "La cinematica descrive i moti senza studiarne le cause, la dinamica studia le cause delle variazioni del moto",
-          "La cinematica usa solo scalari, la dinamica usa solo vettori",
-          "Non c'è differenza, sono sinonimi"
-        ],
+        options: ["La cinematica studia i corpi fermi, la dinamica quelli in moto", "La cinematica descrive i moti senza studiarne le cause, la dinamica studia le cause delle variazioni del moto", "La cinematica usa solo scalari, la dinamica usa solo vettori", "Non c'è differenza, sono sinonimi"],
         correct: 1,
         explanation: "La <strong>cinematica</strong> si occupa della <strong>descrizione</strong> dei moti (come si muove?), senza chiedersi perché. La <strong>dinamica</strong> studia le <strong>cause</strong> delle variazioni del moto: le forze e le leggi che le governano (perché si muove?)."
       },
       {
         q: "Quale affermazione rappresenta il metodo scientifico galileiano?",
-        options: [
-          "\"Sento che fuori fa freddo\"",
-          "\"La temperatura esterna è di 5°C, misurata con un termometro calibrato\"",
-          "\"Mi sembra che il sasso cada veloce\"",
-          "\"Secondo la mia esperienza, i corpi pesanti cadono prima\""
-        ],
+        options: ["\"Sento che fuori fa freddo\"", "\"La temperatura esterna è di 5°C, misurata con un termometro calibrato\"", "\"Mi sembra che il sasso cada veloce\"", "\"Secondo la mia esperienza, i corpi pesanti cadono prima\""],
         correct: 1,
         explanation: "Il metodo scientifico richiede <strong>oggettività</strong> e <strong>misurabilità</strong>. Solo l'opzione B fornisce una grandezza fisica quantificata (5°C), misurata con uno strumento, espressa in un'unità di misura. Le altre opzioni sono percezioni soggettive."
       },
       {
         q: "Quali sono i tre requisiti fondamentali di una grandezza fisica?",
-        options: [
-          "Nome, formula, unità SI",
-          "Definizione, unità di misura, strumento di misura",
-          "Modulo, direzione, verso",
-          "Oggettività, soggettività, misurabilità"
-        ],
+        options: ["Nome, formula, unità SI", "Definizione, unità di misura, strumento di misura", "Modulo, direzione, verso", "Oggettività, soggettività, misurabilità"],
         correct: 1,
         explanation: "Ogni grandezza fisica richiede: (1) una <strong>definizione</strong> chiara, (2) un'<strong>unità di misura</strong>, (3) uno <strong>strumento di misura</strong>. L'opzione C (modulo, direzione, verso) descrive le componenti di un vettore, non i requisiti generali di una grandezza fisica."
       },
       {
         q: "Il simbolo $\\triangleq$ nella formula $\\Delta\\vec{r} \\triangleq \\vec{r}_f - \\vec{r}_{in}$ significa:",
-        options: [
-          "Approssimativamente uguale",
-          "Uguale per definizione",
-          "Proporzionale a",
-          "Uguale sotto certe condizioni"
-        ],
+        options: ["Approssimativamente uguale", "Uguale per definizione", "Proporzionale a", "Uguale sotto certe condizioni"],
         correct: 1,
         explanation: "Il simbolo $\\triangleq$ si legge <em>\"uguale per definizione\"</em>. Indica che la formula non è derivata da altre leggi, ma è essa stessa la <strong>definizione</strong> della grandezza a sinistra."
       }
@@ -498,381 +427,6 @@ const LESSON = {
 </script>
 <script src="../js/renderer.js?v=1773641082"></script>
 <script src="../js/graphs.js?v=1773641082"></script>
-
-<script>
-// ─── Graph utilities and functions ───
-// ─── Arrow Drawing Utility ───
-function drawArrow(ctx, x1, y1, x2, y2, color, width) {
-  const headLen = 10;
-  const angle = Math.atan2(y2 - y1, x2 - x1);
-
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.lineWidth = width;
-  ctx.lineCap = 'round';
-
-  // Shaft
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.stroke();
-
-  // Arrowhead
-  ctx.beginPath();
-  ctx.moveTo(x2, y2);
-  ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
-  ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
-  ctx.closePath();
-  ctx.fill();
-}
-
-
-// ─── Graph: Vectors Kinematics ───
-function drawVectorsKinematics(ctx, canvas, controls) {
-  const W = canvas.width, H = canvas.height;
-  let animT = 0;
-  let animId = null;
-  let running = false;
-
-  function draw(t) {
-    ctx.clearRect(0, 0, W, H);
-
-    // Grid
-    ctx.strokeStyle = '#252940';
-    ctx.lineWidth = 0.5;
-    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-
-    // Axes
-    ctx.strokeStyle = '#353a55';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(50, H-40); ctx.lineTo(W-30, H-40); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(50, H-40); ctx.lineTo(50, 30); ctx.stroke();
-    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif';
-    ctx.fillText('x', W-20, H-35);
-    ctx.fillText('y', 55, 25);
-
-    // Origin
-    const ox = 100, oy = H - 80;
-    ctx.fillStyle = '#6c8cff';
-    ctx.beginPath(); ctx.arc(ox, oy, 4, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
-    ctx.fillText('O', ox - 12, oy + 16);
-
-    // Trajectory (curved path)
-    ctx.beginPath();
-    ctx.strokeStyle = 'rgba(108,140,255,0.25)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([5, 5]);
-    for (let i = 0; i <= 100; i++) {
-      const frac = i / 100;
-      const px = ox + frac * 450;
-      const py = oy - Math.sin(frac * Math.PI * 1.2) * 200 - frac * 40;
-      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-    }
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Points along trajectory
-    const tA = 0.2;
-    const tB = Math.min(0.2 + t * 0.6, 0.8);
-    const posA = { x: ox + tA * 450, y: oy - Math.sin(tA * Math.PI * 1.2) * 200 - tA * 40 };
-    const posB = { x: ox + tB * 450, y: oy - Math.sin(tB * Math.PI * 1.2) * 200 - tB * 40 };
-
-    // Position vectors r_i and r_f
-    drawArrow(ctx, ox, oy, posA.x, posA.y, '#74c0fc', 2);
-    ctx.fillStyle = '#74c0fc'; ctx.font = 'bold 13px sans-serif';
-    const rAMid = { x: (ox + posA.x)/2 - 15, y: (oy + posA.y)/2 + 5 };
-    ctx.fillText('r⃗ᵢ', rAMid.x, rAMid.y);
-
-    drawArrow(ctx, ox, oy, posB.x, posB.y, '#b197fc', 2);
-    ctx.fillStyle = '#b197fc'; ctx.font = 'bold 13px sans-serif';
-    const rBMid = { x: (ox + posB.x)/2 + 10, y: (oy + posB.y)/2 - 5 };
-    ctx.fillText('r⃗f', rBMid.x, rBMid.y);
-
-    // Displacement vector Δr
-    drawArrow(ctx, posA.x, posA.y, posB.x, posB.y, '#f0c050', 2.5);
-    const drMid = { x: (posA.x + posB.x)/2, y: (posA.y + posB.y)/2 - 15 };
-    ctx.fillStyle = '#f0c050'; ctx.font = 'bold 14px sans-serif';
-    ctx.fillText('Δr⃗', drMid.x, drMid.y);
-
-    // Points
-    ctx.fillStyle = '#ff6b6b';
-    ctx.beginPath(); ctx.arc(posA.x, posA.y, 5, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#e8eaf0'; ctx.font = '12px sans-serif';
-    ctx.fillText('P(tᵢ)', posA.x - 10, posA.y + 20);
-
-    ctx.fillStyle = '#51cf66';
-    ctx.beginPath(); ctx.arc(posB.x, posB.y, 5, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#e8eaf0'; ctx.font = '12px sans-serif';
-    ctx.fillText('P(tf)', posB.x + 8, posB.y + 18);
-  }
-
-  function animate() {
-    if (!running) return;
-    animT += 0.008;
-    if (animT > 1) { animT = 1; running = false; }
-    draw(animT);
-    if (running) animId = requestAnimationFrame(animate);
-  }
-
-  draw(1); // draw complete state initially
-
-  const playBtn = document.createElement('button');
-  playBtn.className = 'graph-btn';
-  playBtn.textContent = '▶ Anima';
-  playBtn.onclick = () => {
-    animT = 0; running = true;
-    animate();
-  };
-  controls.appendChild(playBtn);
-
-  const resetBtn = document.createElement('button');
-  resetBtn.className = 'graph-btn';
-  resetBtn.textContent = '↺ Reset';
-  resetBtn.onclick = () => {
-    running = false; if (animId) cancelAnimationFrame(animId);
-    animT = 1; draw(1);
-  };
-  controls.appendChild(resetBtn);
-}
-
-// ─── Graph: Parabolic Motion ───
-function drawParabolicMotion(ctx, canvas, controls) {
-  const W = canvas.width, H = canvas.height;
-  const g = 9.81;
-  let angle = 45, v0 = 30;
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Grid
-    ctx.strokeStyle = '#252940'; ctx.lineWidth = 0.5;
-    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-
-    const ox = 60, oy = H - 50;
-    // Axes
-    ctx.strokeStyle = '#353a55'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(W - 20, oy); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, 20); ctx.stroke();
-    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif';
-    ctx.fillText('x', W - 15, oy + 16);
-    ctx.fillText('y', ox - 15, 25);
-
-    const rad = angle * Math.PI / 180;
-    const vx = v0 * Math.cos(rad), vy = v0 * Math.sin(rad);
-    const tFlight = 2 * vy / g;
-    const xMax = vx * tFlight;
-    const yMax = vy * vy / (2 * g);
-
-    // Scale to fit
-    const scaleX = (W - 100) / Math.max(xMax, 1);
-    const scaleY = (H - 100) / Math.max(yMax * 1.2, 1);
-    const scale = Math.min(scaleX, scaleY);
-
-    // Trajectory
-    ctx.beginPath();
-    ctx.strokeStyle = '#6c8cff'; ctx.lineWidth = 2.5;
-    const steps = 100;
-    for (let i = 0; i <= steps; i++) {
-      const t = (i / steps) * tFlight;
-      const px = ox + vx * t * scale;
-      const py = oy - (vy * t - 0.5 * g * t * t) * scale;
-      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-    }
-    ctx.stroke();
-
-    // v0 arrow
-    const arrowLen = 60;
-    drawArrow(ctx, ox, oy, ox + arrowLen * Math.cos(rad), oy - arrowLen * Math.sin(rad), '#f0c050', 2.5);
-    ctx.fillStyle = '#f0c050'; ctx.font = 'bold 13px sans-serif';
-    ctx.fillText('v⃗₀', ox + arrowLen * Math.cos(rad) + 5, oy - arrowLen * Math.sin(rad) - 5);
-
-    // Components
-    ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = 'rgba(116,192,252,0.4)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + arrowLen * Math.cos(rad), oy); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(ox + arrowLen * Math.cos(rad), oy); ctx.lineTo(ox + arrowLen * Math.cos(rad), oy - arrowLen * Math.sin(rad)); ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Apex marker
-    const tApex = vy / g;
-    const apexX = ox + vx * tApex * scale;
-    const apexY = oy - yMax * scale;
-    ctx.setLineDash([3, 3]); ctx.strokeStyle = '#51cf66'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(apexX, apexY); ctx.lineTo(apexX, oy); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#51cf66'; ctx.beginPath(); ctx.arc(apexX, apexY, 4, 0, Math.PI*2); ctx.fill();
-    ctx.font = '11px sans-serif';
-    ctx.fillText(`h = ${yMax.toFixed(1)} m`, apexX + 8, apexY - 5);
-
-    // Range
-    const rangeX = ox + xMax * scale;
-    ctx.fillStyle = '#ff6b6b'; ctx.beginPath(); ctx.arc(rangeX, oy, 4, 0, Math.PI*2); ctx.fill();
-    ctx.font = '11px sans-serif';
-    ctx.fillText(`R = ${xMax.toFixed(1)} m`, rangeX - 25, oy + 20);
-
-    // Info
-    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
-    ctx.fillText(`θ = ${angle}°  |  v₀ = ${v0} m/s  |  T = ${tFlight.toFixed(2)} s`, ox + 10, 30);
-  }
-
-  draw();
-
-  // Angle slider
-  const ag = document.createElement('div');
-  ag.className = 'graph-slider-group';
-  ag.innerHTML = `<span>θ:</span><input type="range" min="5" max="85" value="${angle}"><span class="slider-val">${angle}°</span>`;
-  ag.querySelector('input').oninput = function() {
-    angle = +this.value;
-    ag.querySelector('.slider-val').textContent = angle + '°';
-    draw();
-  };
-  controls.appendChild(ag);
-
-  // v0 slider
-  const vg = document.createElement('div');
-  vg.className = 'graph-slider-group';
-  vg.innerHTML = `<span>v₀:</span><input type="range" min="5" max="60" value="${v0}"><span class="slider-val">${v0} m/s</span>`;
-  vg.querySelector('input').oninput = function() {
-    v0 = +this.value;
-    vg.querySelector('.slider-val').textContent = v0 + ' m/s';
-    draw();
-  };
-  controls.appendChild(vg);
-}
-
-// ─── Graph: Circular Motion ───
-function drawCircularMotion(ctx, canvas, controls) {
-  const W = canvas.width, H = canvas.height;
-  const cx = W / 2, cy = H / 2, R = 140;
-  let theta = 0;
-  let running = false;
-  let animId = null;
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Grid
-    ctx.strokeStyle = '#252940'; ctx.lineWidth = 0.5;
-    for (let x = 0; x <= W; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-    for (let y = 0; y <= H; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-
-    // Circle path
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(108,140,255,0.3)'; ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Center
-    ctx.fillStyle = '#6b7089';
-    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#6b7089'; ctx.font = '12px sans-serif'; ctx.fillText('O', cx - 12, cy + 16);
-
-    // Point on circle
-    const px = cx + R * Math.cos(theta);
-    const py = cy - R * Math.sin(theta);
-
-    // Radius vector
-    ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = 'rgba(160,165,184,0.3)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Velocity vector (tangent)
-    const vLen = 70;
-    const vx = -Math.sin(theta), vy = -Math.cos(theta); // perpendicular to radius, flipped y
-    drawArrow(ctx, px, py, px + vx * vLen, py + vy * vLen, '#51cf66', 2.5);
-    ctx.fillStyle = '#51cf66'; ctx.font = 'bold 13px sans-serif';
-    ctx.fillText('v⃗', px + vx * vLen + 8, py + vy * vLen);
-
-    // Centripetal acceleration (toward center)
-    const aLen = 50;
-    const ax = cx - px, ay = cy - py;
-    const aMag = Math.sqrt(ax * ax + ay * ay);
-    drawArrow(ctx, px, py, px + (ax / aMag) * aLen, py + (ay / aMag) * aLen, '#ff6b6b', 2.5);
-    ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 13px sans-serif';
-    ctx.fillText('a⃗ₙ', px + (ax / aMag) * aLen + 8, py + (ay / aMag) * aLen - 5);
-
-    // Point
-    ctx.fillStyle = '#f0c050';
-    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2); ctx.fill();
-
-    // Angle arc
-    ctx.beginPath();
-    ctx.arc(cx, cy, 30, 0, -theta, theta > 0);
-    ctx.strokeStyle = '#ffa94d'; ctx.lineWidth = 1.5;
-    ctx.stroke();
-    if (theta > 0.15) {
-      ctx.fillStyle = '#ffa94d'; ctx.font = '12px sans-serif';
-      ctx.fillText('θ', cx + 35 * Math.cos(theta / 2), cy - 35 * Math.sin(theta / 2) + 4);
-    }
-
-    // Labels
-    ctx.fillStyle = '#a0a5b8'; ctx.font = '12px sans-serif';
-    ctx.fillText(`R = const  |  |v⃗| = const  |  a⃗ₙ = v²/R`, 20, 25);
-  }
-
-  function animate() {
-    if (!running) return;
-    theta += 0.02;
-    if (theta > Math.PI * 2) theta -= Math.PI * 2;
-    draw();
-    animId = requestAnimationFrame(animate);
-  }
-
-  theta = Math.PI / 4;
-  draw();
-
-  const playBtn = document.createElement('button');
-  playBtn.className = 'graph-btn';
-  playBtn.textContent = '▶ Anima';
-  playBtn.onclick = () => {
-    if (running) { running = false; playBtn.textContent = '▶ Anima'; }
-    else { running = true; playBtn.textContent = '⏸ Pausa'; animate(); }
-  };
-  controls.appendChild(playBtn);
-
-  const resetBtn = document.createElement('button');
-  resetBtn.className = 'graph-btn';
-  resetBtn.textContent = '↺ Reset';
-  resetBtn.onclick = () => {
-    running = false; if (animId) cancelAnimationFrame(animId);
-    playBtn.textContent = '▶ Anima';
-    theta = Math.PI / 4; draw();
-  };
-  controls.appendChild(resetBtn);
-}
-
-// ─── Arrow Drawing Utility ───
-function drawArrow(ctx, x1, y1, x2, y2, color, width) {
-  const headLen = 10;
-  const angle = Math.atan2(y2 - y1, x2 - x1);
-
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.lineWidth = width;
-  ctx.lineCap = 'round';
-
-  // Shaft
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.stroke();
-
-  // Arrowhead
-  ctx.beginPath();
-  ctx.moveTo(x2, y2);
-  ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
-  ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
-  ctx.closePath();
-  ctx.fill();
-}
-
-
-
-</script>
 
 <script>
 // Sidebar toggle (open by default)
