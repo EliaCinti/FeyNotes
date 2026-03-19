@@ -197,9 +197,9 @@ const LESSON = {
       {
         type: "graph",
         id: "graph-impulse-l09",
-        title: "Forza Impulsiva durante l'Urto con il Muro",
-        graphType: "impulse_theorem",
-        caption: "La curva rossa è la forza impulsiva F(t) durante il contatto. L'area sotto la curva è l'impulso J = Δp. Prova a ridurre Δt: la forza media cresce!"
+        title: "Diagramma: Pallina da Tennis contro il Muro",
+        graphType: "ball_wall_impulse",
+        caption: "Prima: v⃗i verso il muro. Dopo: v⃗f rimbalza. La forza media F⃗m è diretta via dal muro."
       },
 
       // ──────────────── SEZIONE: VINCOLI ────────────────
@@ -275,9 +275,9 @@ const LESSON = {
       {
         type: "graph",
         id: "graph-weight-normal-l09",
-        title: "Forza Peso e Reazione Normale su Piano Orizzontale",
-        graphType: "weight_normal",
-        caption: "Varia la massa per vedere come P e R_N cambiano proporzionalmente. Sul piano orizzontale: R_N = mg."
+        graphType: "inclined_plane_forces",
+        title: "Reazione Normale: Piano Orizzontale vs Piano Inclinato",
+        caption: "A sinistra: RN = mg. A destra: RN = mg cosθ (più corta di P!). Il peso si scompone in componente parallela e perpendicolare."
       },
 
       // ──────────────── ALERT: N ≠ mg SEMPRE ────────────────
@@ -344,6 +344,14 @@ const LESSON = {
 <p>La formula corretta è la <strong>disuguaglianza</strong>: $|\\vec{F}_{a,s}| \\leq \\mu_s R_N$. Solo nell'istante in cui il corpo sta per mettersi in moto (soglia di scorrimento), l'uguaglianza vale.</p>`
       },
 
+      {
+        type: "graph",
+        id: "graph-friction-behavior",
+        title: "Il Grafico dell'Attrito: da Quiete a Moto",
+        graphType: "friction_behavior",
+        caption: "Fase 1 (quiete): l'attrito statico si adatta (rampa). Punto di rottura: μs·RN. Fase 2 (moto): l'attrito dinamico è costante a μd·RN."
+      },
+
       // ──────────────── ATTRITO DINAMICO ────────────────
       {
         id: "s9-attrito-dinamico",
@@ -393,10 +401,13 @@ const LESSON = {
       {
         id: "s9-nota-ridurre-rn",
         type: "note_box",
-        title: "📚 Trucco: come ridurre l'attrito?",
-        content: `<p>Sia l'attrito statico massimo ($\\mu_s R_N$) che l'attrito dinamico ($\\mu_d R_N$) dipendono da $R_N$. Se vuoi che sia più facile far scivolare un oggetto, puoi <strong>ridurre $R_N$</strong>.</p>
-<p>Come? Il prof ha suggerito: <strong>tira verso l'alto</strong> (con un filo, o semplicemente applicando una componente di forza verso l'alto). Se tiri un blocco obliquamente verso l'alto mentre lo spingi orizzontalmente, la componente verticale della tua forza riduce $R_N$, e di conseguenza riduce l'attrito.</p>
-<p>Questo è il motivo per cui è più facile spostare una valigia pesante tirandola con la maniglia (angolata verso l'alto) piuttosto che spingendola parallelamente al pavimento.</p>`
+        title: "📚 Come Vincere l'Attrito: le Tre Strade",
+        content: `<p>Sia l'attrito statico massimo ($\\mu_s R_N$) che l'attrito dinamico ($\\mu_d R_N$) dipendono da $R_N$. Quindi se hai difficoltà a spostare un oggetto, hai <strong>tre strade</strong>:</p>
+                  <p><strong>1. Ridurre $\\mu$</strong> — cambi i materiali a contatto (es. metti pattini, lubrificante, ruote). Ma spesso non puoi scegliere i materiali.</p>
+                  <p><strong>2. Ridurre $R_N$</strong> — esempio pratico del prof: devi spostare un blocco pesante sul pavimento. Hai a disposizione una certa forza $F$ e non riesci a farlo partire spingendo orizzontalmente. <strong>Trucco:</strong> investi parte di quella forza per <strong>tirare verso l'alto</strong> (applicando la forza con un angolo). La componente verticale della tua forza riduce $R_N$ (il pavimento deve sostenere meno peso), e di conseguenza si riduce la soglia $\\mu_s R_N$ da superare. Con lo stesso sforzo, ora riesci a farlo partire!</p>
+                  <p>Ecco perché è più facile spostare una valigia pesante <strong>tirandola con la maniglia inclinata</strong> verso l'alto piuttosto che spingendola rasoterra.</p>
+                  <p><strong>3. Aumentare la forza</strong> — se non puoi toccare $\\mu$ e non puoi ridurre $R_N$, l'unica opzione rimasta è applicare più forza. Bruta ma efficace.</p>
+                  <p>In un problema d'esame, la strategia è quasi sempre la 2: scomponi la forza applicata in componenti, ricava $R_N$ dall'equilibrio verticale (che ora dipende dalla forza applicata!), e poi usa $R_N$ nell'equazione dell'attrito.</p>`
       },
 
       // ──────────────── GRAFICO ATTRITO: DESCRIZIONE ────────────────
@@ -585,6 +596,9 @@ const LESSON = {
 </script>
 <script src="../js/renderer.js?v=1773936998"></script>
 <script src="../js/graphs.js?v=1773936998"></script>
+<script src="../js/renderer.js?v=1773936998"></script>
+<script src="../js/graphs.js?v=1773936998"></script>
+<script src="../js/graphs-l09.js?v=1773936998"></script>
 
 <script>
 // Sidebar toggle (open by default)
