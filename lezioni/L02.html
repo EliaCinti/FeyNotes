@@ -42,392 +42,302 @@
 <script>
 const LESSON = {
     id: "L02", date: "Lezione 2 — 4 Mar 2026",
-    title: "Vettori, Componenti Cartesiane e Cinematica del Punto Materiale",
-    abstract: "Rappresentazione cartesiana dei vettori tramite coseni direttori e versori fondamentali. Somma e differenza vettoriale. Spostamento, velocità media e istantanea. Il legame derivata–integrale tra posizione e velocità.",
+    title: "Cinematica Vettoriale: Spostamento, Velocità e Problema Inverso",
+    abstract: "Introduzione formale alla cinematica del punto materiale. Ripasso sui vettori nello spazio 3D e sulle proprietà dei coseni direttori. Definizione vettoriale di posizione, spostamento, velocità media e istantanea. Introduzione al problema inverso della cinematica tramite integrazione.",
 
     sections: [
       {
-        id: "s-richiami-vettori",
+        id: "s1-strumenti",
         type: "section",
-        title: "Richiami: il Vettore e le sue Tre Informazioni",
-        icon: "🔁",
-        content: `<p>La lezione si apre con un richiamo forte: la cinematica è <strong>deterministica</strong> — data una posizione iniziale e le informazioni complete sullo spostamento, il punto di arrivo è unico. Ma per descrivere uno spostamento <strong>non basta un numero</strong>.</p>
-<p>Un vettore trasporta <strong>tre informazioni</strong>:</p>`,
-        steps: [
-          "<strong>Modulo</strong> $|\\vec{r}|$ — l'intensità (\"quanto è lungo\")",
-          "<strong>Direzione</strong> — la retta su cui giace il vettore (\"su quale retta\")",
-          "<strong>Verso</strong> — l'orientamento lungo quella retta (\"in che senso\")"
-        ],
-        extra_content: `<p>Queste tre informazioni insieme identificano univocamente il vettore nello spazio. Se ne manca anche solo una, il moto non è determinato.</p>`,
+        title: "Introduzione agli Strumenti Matematici",
+        icon: "🧮",
+        content: `<p>Prima di iniziare a parlare di moti e traiettorie, è fondamentale padroneggiare il linguaggio con cui descriveremo la natura: i <strong>vettori</strong> e l'<strong>analisi matematica</strong>.</p>
+        <p>In cinematica studiamo il moto in maniera <strong>deterministica</strong>: dato un punto di partenza e uno spostamento esatto, dobbiamo poter determinare il punto di arrivo in modo univoco. Per farlo ci servono grandezze vettoriali. Dire "mi sono spostato di 10 m" non basta. Devo specificare:</p>
+        <p>• La <strong>direzione</strong> (es. la retta su cui mi muovo).</p>
+        <p>• Il <strong>verso</strong> (verso Nord o verso Sud?).</p>
+        <p>• Il <strong>modulo</strong> (l'entità dello spostamento, 10 m).</p>`,
         quote: {
-          text: "Se non avete gli arnesi necessari per capire e comprendere il formalismo necessario per esporre i concetti, dovete andare a reperire quegli attrezzi.",
+          text: "\"Se voi dovete smontare la ruota di una macchina e non avete una chiave adatta, non la smontate... La matematica, la geometria, i vettori, sono gli strumenti indispensabili per poter studiare la fisica.\"",
           src: "— Prof. Mercuri, Lezione 2"
         }
       },
       {
-        id: "s-componenti-cartesiane",
+        id: "s1-coseni",
         type: "section",
-        title: "Componenti Cartesiane e Coseni Direttori",
+        title: "Vettori e Coseni Direttori nello Spazio 3D",
         icon: "📐",
-        content: `<p>Per lavorare quantitativamente con i vettori, scegliamo un <strong>sistema di riferimento cartesiano</strong> con assi $x$, $y$, $z$ ortogonali. Ogni vettore $\\vec{r}$ viene "proiettato" sugli assi tramite gli angoli che forma con ciascuno di essi — i cosiddetti <strong>coseni direttori</strong>.</p>
-<p>Dato un vettore $\\vec{r}$ che forma gli angoli $\\theta_x$, $\\theta_y$, $\\theta_z$ rispettivamente con gli assi $x$, $y$, $z$, le <strong>componenti scalari</strong> del vettore sono:</p>`,
+        content: `<p>Un vettore generico $\\vec{r}$ in tre dimensioni può essere scomposto rispetto a una terna di versori cartesiani ortonormali $\\hat{i}, \\hat{j}, \\hat{k}$:</p>`,
         formulas: [
-          { label: "Componente x",  latex: "x = |\\vec{r}|\\cos\\theta_x" },
-          { label: "Componente y",  latex: "y = |\\vec{r}|\\cos\\theta_y" },
-          { label: "Componente z",  latex: "z = |\\vec{r}|\\cos\\theta_z" },
-          { label: "Modulo (invariante)", latex: "|\\vec{r}| = \\sqrt{x^2 + y^2 + z^2}" }
+          { label: "Scomposizione vettore", latex: "\\vec{r} = x\\hat{i} + y\\hat{j} + z\\hat{k}" },
+          { label: "Modulo del vettore", latex: "|\\vec{r}| = \\sqrt{x^2 + y^2 + z^2}" }
         ],
-        extra_content: `<p>Il modulo è un <strong>invariante</strong>: non dipende dal sistema di coordinate scelto. Cambiando assi, cambiano le componenti ma il modulo resta lo stesso.</p>`,
-        subsections: [
-          {
-            subtitle: "Proprietà fondamentale: $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$",
-            content: `<p>Questa identità discende direttamente dalla definizione di modulo. Sostituendo le componenti nella formula del modulo:</p>
-<p>$$|\\vec{r}| = |\\vec{r}|\\sqrt{\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z}$$</p>
-<p>Perché l'uguaglianza valga, la somma dei quadrati dei coseni deve fare 1. <strong>Conseguenza cruciale</strong>: dei tre angoli, solo <strong>due sono indipendenti</strong> — il terzo è automaticamente determinato.</p>`,
-            equations: ["\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1"]
-          },
-          {
-            subtitle: "Caso particolare 2D: se $\\theta_z = 90°$",
-            content: `<p>Quando il vettore giace nel piano $xy$ (cioè $\\theta_z = 90°$), allora $\\cos\\theta_z = 0$ e la proprietà si riduce a:</p>
-<p>$$\\cos^2\\theta_x + \\cos^2\\theta_y = 1$$</p>
-<p>Da cui si ottiene la relazione $\\cos\\theta_y = \\sin\\theta_x$, che è esattamente la trigonometria del triangolo rettangolo nel piano. Questo conferma che nel piano basta <strong>un solo angolo</strong> per determinare la direzione.</p>`,
-            equations: ["\\cos\\theta_z = 0 \\;\\Rightarrow\\; \\cos^2\\theta_y = 1 - \\cos^2\\theta_x = \\sin^2\\theta_x \\;\\Rightarrow\\; \\cos\\theta_y = \\sin\\theta_x"]
-          },
-          {
-            subtitle: "Coseni direttori come rapporti",
-            content: `<p>I coseni direttori possono essere calcolati anche come <strong>rapporto tra la componente e il modulo</strong>:</p>`,
-            equations: [
-              "\\cos\\theta_x = \\frac{x}{|\\vec{r}|} = \\frac{x}{\\sqrt{x^2+y^2+z^2}}",
-              "\\cos\\theta_y = \\frac{y}{|\\vec{r}|} = \\frac{y}{\\sqrt{x^2+y^2+z^2}}",
-              "\\cos\\theta_z = \\frac{z}{|\\vec{r}|} = \\frac{z}{\\sqrt{x^2+y^2+z^2}}"
-            ]
-          }
+        extra_content: `<p>dove $x, y, z$ sono le <strong>componenti scalari</strong> (proiezioni ortogonali) del vettore lungo gli assi. Il modulo si calcola con il teorema di Pitagora tridimensionale.</p>
+        <p>Un modo alternativo per descrivere la direzione e il verso di un vettore è usare gli <strong>angoli</strong> che esso forma con gli assi cartesiani: $\\theta_x, \\theta_y, \\theta_z$. I coseni di questi angoli prendono il nome di <strong>coseni direttori</strong>. Dalla trigonometria:</p>
+        <p>$$x = |\\vec{r}|\\cos\\theta_x \\qquad y = |\\vec{r}|\\cos\\theta_y \\qquad z = |\\vec{r}|\\cos\\theta_z$$</p>`
+      },
+      {
+        id: "s1-trap-coseni",
+        type: "alert_box",
+        title: "🚨 I coseni direttori NON sono indipendenti",
+        content: `<p>Ne bastano solo <strong>due</strong> per descrivere la direzione e il verso nello spazio; il terzo è vincolato.</p>
+        <p><strong>Dimostrazione:</strong> Partiamo dal modulo al quadrato:</p>
+        <p>$$|\\vec{r}|^2 = x^2 + y^2 + z^2 = |\\vec{r}|^2(\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z)$$</p>
+        <p>Semplificando $|\\vec{r}|^2$ (per $|\\vec{r}| \\neq 0$) otteniamo la <strong>proprietà fondamentale</strong>:</p>
+        <p>$$\\boxed{\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1}$$</p>
+        <p>Se il vettore giace nel piano $xy$ (cioè $z=0$), allora $\\theta_z = 90°$, $\\cos\\theta_z = 0$, e la relazione si riduce a $\\cos^2\\theta_x + \\cos^2\\theta_y = 1$, che implica $\\theta_y = 90° - \\theta_x$.</p>`
+      },
+      {
+        id: "s1-fig-componenti",
+        type: "section",
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Sistema 3D con assi $x, y, z$ e versori $\\hat{i}, \\hat{j}, \\hat{k}$. Un vettore $\\vec{r}$ al centro. Evidenziare le componenti $x, y, z$ sugli assi e gli angoli $\\theta_x, \\theta_y, \\theta_z$ tra il vettore e ciascun asse.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L02/componenti-vettore.png</p>
+        </div>`
+      },
+      {
+        id: "s2-cinematica",
+        type: "section",
+        title: "Cinematica del Punto Materiale",
+        icon: "📍",
+        content: `<p>Per descrivere il moto di un corpo dobbiamo prima di tutto definire <strong>dove</strong> si trova in un dato istante di tempo.</p>
+        <p>Il <strong>vettore posizione</strong> $\\vec{r}(t)$ è il vettore che unisce l'origine del sistema di riferimento scelto con la posizione occupata dal punto materiale all'istante $t$.</p>`,
+        formulas: [
+          { label: "Vettore posizione", latex: "\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j} + z(t)\\hat{k}" }
         ]
       },
       {
-        id: "s-versori",
+        id: "s2-nota-traiettoria",
+        type: "note_box",
+        title: "📚 Legge oraria vs Traiettoria",
+        content: `<p>La <strong>legge oraria</strong> è la funzione vettoriale $\\vec{r}(t)$ che associa ad ogni istante di tempo la posizione spaziale.</p>
+        <p>La <strong>traiettoria</strong> è il luogo geometrico dei punti nello spazio occupati dal corpo — è la curva "disegnata" nello spazio, <strong>indipendente dalla variabile tempo</strong>.</p>
+        <p>Due corpi possono percorrere la stessa traiettoria con leggi orarie completamente diverse (uno veloce, uno lento).</p>`
+      },
+      {
+        id: "s2-spostamento",
         type: "section",
-        title: "Versori Fondamentali $\\hat{i}$, $\\hat{j}$, $\\hat{k}$",
-        icon: "🎯",
-        content: `<p>Per passare dalle componenti <strong>scalari</strong> (numeri) ai vettori <strong>componenti</strong> (frecce lungo gli assi), si introducono i <strong>versori fondamentali</strong>: tre vettori di modulo 1 diretti lungo gli assi del sistema di riferimento.</p>
-<p>La distinzione è fondamentale:</p>`,
-        table_compare: {
-          headers: ["Concetto", "Tipo", "Esempio"],
-          rows: [
-            ["Componente scalare $x$", "Numero (scalare)", "$x = 3$ m"],
-            ["Versore $\\hat{i}$", "Vettore di modulo 1", "$|\\hat{i}| = 1$, direzione asse $x$"],
-            ["Vettore componente $\\vec{x}$", "Vettore = scalare × versore", "$\\vec{x} = x\\hat{i} = 3\\hat{i}$ m"]
-          ]
-        },
-        extra_content: `<p>Il vettore originale si ricostruisce come <strong>somma dei vettori componenti</strong>:</p>`,
+        title: "Vettore Spostamento",
+        icon: "➡️",
+        content: `<p>Supponiamo che al tempo $t_1$ il punto si trovi in $\\vec{r}_1$ e al tempo successivo $t_2$ si trovi in $\\vec{r}_2$.</p>
+        <p>Il <strong>Vettore Spostamento</strong> $\\Delta\\vec{r}_{12}$ tra gli istanti $t_1$ e $t_2$ è definito come la variazione del vettore posizione:</p>`,
         formulas: [
-          { label: "Decomposizione vettoriale", latex: "\\vec{r} = x\\hat{i} + y\\hat{j} + z\\hat{k}" },
-          { label: "Notazione compatta", latex: "\\vec{r} = (x, \\, y, \\, z)" }
-        ],
-        subsections: [
-          {
-            subtitle: "Perché servono i versori?",
-            content: `<p>Senza versori, $x = 3$ è solo un numero: non ha direzione. Moltiplicando per $\\hat{i}$ otteniamo $\\vec{x} = 3\\hat{i}$, che è un <strong>vettore</strong> con modulo 3, direzione dell'asse $x$, verso positivo. Il versore "trasforma" lo scalare in vettore, assegnandogli la direzione mancante.</p>`
-          },
-          {
-            subtitle: "Tangente dell'angolo",
-            content: `<p>Dagli appunti emerge anche un modo alternativo per trovare l'angolo: la <strong>tangente</strong>.</p>`,
-            equations: ["\\tan\\theta_x = \\frac{y}{x}, \\qquad \\tan\\theta_y = \\frac{x}{y}"]
-          }
+          { label: "Spostamento (definizione)", latex: "\\Delta\\vec{r}_{12} \\triangleq \\vec{r}(t_2) - \\vec{r}(t_1) = \\vec{r}_2 - \\vec{r}_1" },
+          { label: "Spostamento in componenti", latex: "\\Delta\\vec{r}_{12} = (x_2 - x_1)\\hat{i} + (y_2 - y_1)\\hat{j} + (z_2 - z_1)\\hat{k}" }
         ]
       },
       {
-        id: "s-somma-vettori",
-        type: "section",
-        title: "Somma e Differenza di Vettori per Componenti",
-        icon: "➕",
-        content: `<p>La potenza della rappresentazione cartesiana è che le operazioni vettoriali si riducono a <strong>operazioni sulle componenti</strong>, asse per asse.</p>
-<p>Dati due vettori $\\vec{S}_1 = (S_{1x},\\, S_{1y},\\, S_{1z})$ e $\\vec{S}_2 = (S_{2x},\\, S_{2y},\\, S_{2z})$:</p>`,
-        formulas: [
-          { label: "Somma vettoriale", latex: "\\vec{S}_{\\text{tot}} = \\vec{S}_1 + \\vec{S}_2 = (S_{1x}+S_{2x},\\; S_{1y}+S_{2y},\\; S_{1z}+S_{2z})" },
-          { label: "Componente x totale", latex: "S_{\\text{tot},x} = S_{1x} + S_{2x}" },
-          { label: "Componente y totale", latex: "S_{\\text{tot},y} = S_{1y} + S_{2y}" },
-          { label: "Componente z totale", latex: "S_{\\text{tot},z} = S_{1z} + S_{2z}" }
-        ],
-        extra_content: `<p>Graficamente, la somma si ottiene con la <strong>regola del parallelogramma</strong>: si mettono i due vettori coda a coda e il vettore somma è la diagonale.</p>`
+        id: "s2-trap-spostamento",
+        type: "alert_box",
+        title: "🚨 Trappola d'Esame — Spostamento ≠ Distanza percorsa",
+        content: `<p>Lo spostamento $\\Delta\\vec{r}$ dipende <strong>solo</strong> dalla posizione iniziale e da quella finale, ed è rappresentato dal segmento rettilineo che unisce i due punti.</p>
+        <p>La <strong>distanza percorsa</strong> reale $s$ lungo la traiettoria curva è in generale maggiore o uguale al modulo dello spostamento:</p>
+        <p>$$s \\geq |\\Delta\\vec{r}|$$</p>
+        <p>L'uguaglianza vale solo se il moto è rettilineo e senza inversioni di verso.</p>`
       },
       {
-        id: "s-spostamento",
+        id: "s2-fig-spostamento",
         type: "section",
-        title: "Il Vettore Spostamento $\\Delta\\vec{r}_{12}$",
-        icon: "📏",
-        content: `<p>Uno stesso punto materiale si sposta nel tempo da una posizione $\\vec{r}_1 = (x_1, y_1, z_1)$ a una posizione $\\vec{r}_2 = (x_2, y_2, z_2)$. Lo <strong>spostamento</strong> è la differenza tra le posizioni:</p>`,
-        formulas: [
-          { label: "Spostamento", latex: "\\Delta\\vec{r}_{12} = \\vec{r}_2 - \\vec{r}_1 = \\vec{r}_2 + (-\\vec{r}_1)" },
-          { label: "In componenti", latex: "\\Delta\\vec{r}_{12} = (x_2 - x_1)\\hat{i} + (y_2 - y_1)\\hat{j} + (z_2 - z_1)\\hat{k}" },
-          { label: "Distanza (modulo)", latex: "d_{12} = |\\Delta\\vec{r}_{12}| = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}" }
-        ],
-        extra_content: `<p>Attenzione: la <strong>distanza</strong> $d_{12}$ è il <em>modulo</em> dello spostamento, quindi è uno <strong>scalare positivo</strong> — non un vettore.</p>`,
-        subsections: [
-          {
-            subtitle: "Ogni componente dello spostamento è un numero",
-            content: `<p>$\\Delta\\vec{r}_{12,\\,x} = x_2 - x_1$ è un <strong>numero</strong> (scalare), non un vettore. Il vettore spostamento si ottiene solo quando lo moltiplichiamo per il versore: $(x_2 - x_1)\\hat{i}$.</p>`
-          }
-        ]
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Sistema di riferimento spaziale. Una linea curva tratteggiata rappresenta la traiettoria. Due vettori posizione $\\vec{r}_1$ e $\\vec{r}_2$ partono dall'origine verso la curva. Il vettore $\\Delta\\vec{r}_{12}$ collega la punta di $\\vec{r}_1$ alla punta di $\\vec{r}_2$.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L02/spostamento.png</p>
+        </div>`
       },
       {
-        id: "s-posizione-tempo",
+        id: "s3-vel-media",
         type: "section",
-        title: "Posizione come Funzione del Tempo: $\\vec{r}(t)$",
+        title: "Dalla Velocità Media alla Velocità Istantanea",
         icon: "⏱️",
-        content: `<p>Passiamo ora alla <strong>cinematica vera e propria</strong>. L'idea chiave è che la posizione di un punto materiale <strong>cambia nel tempo</strong>. Scriviamo:</p>`,
+        content: `<p>Definito lo spostamento, introduciamo una grandezza che ci dica non solo <em>di quanto</em> ci siamo spostati, ma <em>quanto rapidamente</em> lo abbiamo fatto.</p>
+        <p>La <strong>Velocità Media</strong> $\\vec{v}_m$ nell'intervallo $\\Delta t = t_2 - t_1$ è il rapporto vettoriale tra lo spostamento totale e l'intervallo di tempo:</p>`,
         formulas: [
-          { label: "Posizione al tempo t", latex: "\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j} + z(t)\\hat{k}" },
-          { label: "Posizione iniziale (t₁)", latex: "\\vec{r}_1(t_1) = x_1\\hat{i} + y_1\\hat{j} + z_1\\hat{k}" },
-          { label: "Posizione finale (t₂)", latex: "\\vec{r}_2(t_2) = x_2\\hat{i} + y_2\\hat{j} + z_2\\hat{k}" },
-          { label: "Intervallo di tempo", latex: "\\Delta t = t_2 - t_1" }
+          { label: "Velocità media", latex: "\\vec{v}_m \\triangleq \\frac{\\Delta\\vec{r}_{12}}{\\Delta t} = \\frac{\\vec{r}_2 - \\vec{r}_1}{t_2 - t_1}" }
         ],
-        extra_content: `<p>Le coordinate $x(t)$, $y(t)$, $z(t)$ sono ora <strong>funzioni del tempo</strong> — non numeri fissi. La cinematica consiste nello studio di <strong>come evolvono queste funzioni</strong>.</p>
-<p>La strategia fondamentale è: <strong>analizzare separatamente</strong> l'evoluzione temporale di ogni componente, poi ricomporre vettorialmente.</p>`
+        extra_content: `<p>Geometricamente, poiché $\\Delta t$ è uno scalare (positivo), il vettore velocità media ha la <strong>stessa direzione e lo stesso verso del vettore spostamento</strong> $\\Delta\\vec{r}$ — cioè la retta <strong>secante</strong> la traiettoria passante per $\\vec{r}_1$ e $\\vec{r}_2$.</p>`
       },
       {
-        id: "s-velocita-media",
+        id: "s3-vel-ist",
         type: "section",
-        title: "Velocità Media $\\vec{v}_m$",
-        icon: "🏃",
-        content: `<p>La <strong>velocità media</strong> è il rapporto tra lo spostamento e l'intervallo di tempo impiegato per compierlo.</p>`,
+        title: "Passaggio al limite: Velocità Istantanea",
+        icon: "🎯",
+        content: `<p>La velocità media ci dà un'informazione globale, ma se volessimo sapere la velocità del corpo <em>esattamente</em> nell'istante $t$? Dobbiamo far tendere a zero l'intervallo di tempo di osservazione.</p>
+        <p>Facciamo tendere $t_2 \\to t_1$, o equivalentemente $\\Delta t \\to 0$. In questa operazione di limite, il vettore secante $\\Delta\\vec{r}$ diventa sempre più piccolo, e la secante tende alla <strong>tangente</strong> alla traiettoria nel punto $P(t)$.</p>`,
         formulas: [
-          { label: "Forma vettoriale", latex: "\\vec{v}_m \\triangleq \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}" },
-          { label: "Componente x", latex: "v_{x,m} = \\frac{x_2 - x_1}{t_2 - t_1} = \\frac{\\Delta x}{\\Delta t}" },
-          { label: "Componente y", latex: "v_{y,m} = \\frac{y_2 - y_1}{t_2 - t_1} = \\frac{\\Delta y}{\\Delta t}" },
-          { label: "Componente z", latex: "v_{z,m} = \\frac{z_2 - z_1}{t_2 - t_1} = \\frac{\\Delta z}{\\Delta t}" }
+          { label: "Velocità istantanea", latex: "\\vec{v}(t) \\triangleq \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{r}}{\\Delta t} = \\frac{d\\vec{r}}{dt}" }
         ],
-        subsections: [
-          {
-            subtitle: "Direzione della velocità media",
-            content: `<p>Poiché $\\vec{v}_m = \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}$ e $\\Delta t$ è uno scalare positivo, $\\vec{v}_m$ ha la <strong>stessa direzione e lo stesso verso</strong> del vettore spostamento $\\Delta\\vec{r}_{12}$.</p>`
-          }
-        ]
+        extra_content: `<p>In componenti cartesiane, la derivazione vettoriale si riduce a tre derivazioni scalari (essendo $\\hat{i}, \\hat{j}, \\hat{k}$ costanti nel tempo):</p>
+        <p>$$v_x(t) = \\frac{dx(t)}{dt} \\qquad v_y(t) = \\frac{dy(t)}{dt} \\qquad v_z(t) = \\frac{dz(t)}{dt}$$</p>
+        <p>Da cui si ricostruisce il vettore:</p>
+        <p>$$\\boxed{\\vec{v}(t) = v_x(t)\\hat{i} + v_y(t)\\hat{j} + v_z(t)\\hat{k}}$$</p>`
       },
       {
-        id: "s-velocita-istantanea",
+        id: "s3-orale-tangente",
+        type: "oral_box",
+        title: "🎤 Domanda d'Esame Orale — Direzione della velocità istantanea",
+        content: `<p>Il prof potrebbe chiedervi: <em>"Che direzione ha il vettore velocità istantanea?"</em></p>
+        <p><strong>Risposta esatta:</strong> Il vettore velocità istantanea in un punto della traiettoria è <strong>sempre tangente</strong> alla traiettoria in quel punto, con verso concorde a quello del moto. (A differenza della velocità media che è secante).</p>`
+      },
+      {
+        id: "s3-fig-tangente",
         type: "section",
-        title: "Velocità Istantanea $\\vec{v}(t)$ — Il Passaggio al Limite",
-        icon: "⚡",
-        content: `<p>La velocità media ci dice come il punto si muove <em>in media</em> tra $t_1$ e $t_2$. Ma se vogliamo sapere cosa succede <strong>in un istante preciso</strong>, dobbiamo far tendere $\\Delta t \\to 0$.</p>`,
-        formulas: [
-          { label: "Componente x", latex: "v_x(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta x}{\\Delta t} = \\frac{dx}{dt} = \\frac{dx(t)}{dt}" },
-          { label: "Componente y", latex: "v_y(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta y}{\\Delta t} = \\frac{dy}{dt} = \\frac{dy(t)}{dt}" },
-          { label: "Componente z", latex: "v_z(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta z}{\\Delta t} = \\frac{dz}{dt} = \\frac{dz(t)}{dt}" },
-          { label: "Forma vettoriale compatta", latex: "\\vec{v}(t) = \\frac{d\\vec{r}(t)}{dt} = \\left(\\frac{dx}{dt},\\; \\frac{dy}{dt},\\; \\frac{dz}{dt}\\right)" }
-        ],
-        extra_content: `<p>In sintesi: <strong>la velocità istantanea è la derivata del vettore posizione rispetto al tempo</strong>.</p>`,
-        subsections: [
-          {
-            subtitle: "Notazione differenziale",
-            content: `<p>Quando $\\Delta t \\to 0$, le variazioni finite diventano <strong>differenziali</strong>:</p>
-<p>$$\\Delta\\vec{r} \\to d\\vec{r} = (dx,\\; dy,\\; dz)$$</p>
-<p>$$\\Delta t \\to dt$$</p>
-<p>E il vettore velocità diventa $\\vec{v}(t) = (v_x(t),\\; v_y(t),\\; v_z(t))$.</p>`
-          }
-        ]
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Traiettoria curva $\\gamma$. Un punto $P$ al tempo $t$. Il vettore $\\vec{v}(t) = \\frac{d\\vec{r}}{dt}$ disegnato tangente alla curva nel punto $P$, con verso concorde al moto.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L02/traiettoria-tangente.png</p>
+        </div>`
       },
       {
-        id: "s-traiettoria",
+        id: "s4-inverso",
         type: "section",
-        title: "Traiettoria: la Velocità è Sempre Tangente",
-        icon: "🔀",
-        content: `<p>Il disegno chiave della lezione mostra una <strong>traiettoria curva</strong> con due posizioni $\\vec{r}_1$ e $\\vec{r}_2$. Osserviamo cosa succede quando avviciniamo i due punti:</p>`,
-        steps: [
-          "$\\vec{v}_m$ è parallela a $\\Delta\\vec{r}_{12}$ — è una <strong>secante</strong> alla traiettoria che congiunge i due punti.",
-          "Quando $\\Delta t \\to 0$, i due punti si avvicinano e la secante diventa una <strong>tangente</strong>.",
-          "Quindi $\\vec{v}(t)$ è parallela a $d\\vec{r}$ — <strong>la velocità istantanea è sempre tangente alla traiettoria</strong>."
-        ],
-        quote: {
-          text: "La velocità media è parallela al vettore spostamento nel grafico. La velocità istantanea è parallela a dr nel grafico.",
-          src: "— Appunti Lezione 2, pagina 6"
-        }
+        title: "Il Problema Inverso della Cinematica",
+        icon: "🔄",
+        content: `<p>Abbiamo appena visto come, nota la legge della posizione $\\vec{r}(t)$, è facile ricavare la velocità $\\vec{v}(t)$ tramite derivazione.</p>
+        <p>Ma in Fisica ci troviamo spesso di fronte al <strong>problema inverso</strong>: supponiamo di conoscere la velocità $\\vec{v}(t)$ in ogni istante. Come faccio a determinare <em>dove</em> si trova il corpo all'istante $t$?</p>
+        <p>Dobbiamo invertire la derivata usando l'<strong>integrazione</strong>. Partiamo dalla definizione di velocità istantanea in forma differenziale (asse $x$ per semplicità):</p>
+        <p>$$v_x(t) = \\frac{dx}{dt} \\implies dx = v_x(t)\\,dt$$</p>
+        <p>Integrando entrambi i membri:</p>
+        <p>$$\\int_{x(t_0)}^{x(t)} dx = \\int_{t_0}^{t} v_x(t')\\,dt'$$</p>`
       },
       {
-        id: "s-integrazione",
-        type: "section",
-        title: "Dall'Integrazione si Risale alla Posizione: \"Prevedere il Futuro\"",
-        icon: "🔮",
-        content: `<p>Abbiamo visto che la <strong>derivata</strong> porta dalla posizione alla velocità. L'operazione inversa — l'<strong>integrale</strong> — ci permette di fare il percorso opposto.</p>`,
-        formulas: [
-          { label: "Componente x", latex: "x(t) = x(t_0) + \\int_{t_0}^{t} v_x(t')\\, dt'" },
-          { label: "Componente y", latex: "y(t) = y(t_0) + \\int_{t_0}^{t} v_y(t')\\, dt'" },
-          { label: "Componente z", latex: "z(t) = z(t_0) + \\int_{t_0}^{t} v_z(t')\\, dt'" },
-          { label: "Forma vettoriale", latex: "\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\, dt'" }
-        ],
-        subsections: [
-          {
-            subtitle: "Dimostrazione: passaggio derivata → integrale",
-            content: `<p>Dal legame $\\frac{dx(t)}{dt} = v_x(t)$, moltiplichiamo entrambi i lati per $dt$:</p>
-<p>$$dx(t) = v_x(t)\\,dt'$$</p>
-<p>Integrando il lato sinistro tra $x(t_0)$ e $x(t)$ e il destro tra $t_0$ e $t$:</p>
-<p>$$\\int_{x(t_0)}^{x(t)} dx = \\int_{t_0}^{t} v_x(t')\\,dt'$$</p>
-<p>Il membro sinistro vale $x(t) - x(t_0)$, da cui:</p>
-<p>$$x(t) = x(t_0) + \\int_{t_0}^{t} v_x(t')\\,dt'$$</p>`
-          }
-        ]
-      },
-      {
-        id: "s-metodo-deriv-int",
-        type: "method_box",
-        title: "Schema Operativo: Derivata ↔ Integrale",
-        steps: [
-          "<strong>Posizione → Velocità</strong>: si <strong>deriva</strong> la posizione rispetto al tempo. $\\vec{v}(t) = \\frac{d\\vec{r}(t)}{dt}$",
-          "<strong>Velocità → Posizione</strong>: si <strong>integra</strong> la velocità rispetto al tempo, aggiungendo la condizione iniziale. $\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$",
-          "In entrambi i casi, l'operazione vettoriale si esegue <strong>componente per componente</strong>: $x(t)$, $y(t)$, $z(t)$ separatamente."
-        ]
-      },
-      {
-        id: "s-trap-scalare-vettore",
+        id: "s4-trap-muta",
         type: "alert_box",
-        title: "🚨 Trappola d'Esame: Scalare vs Vettore",
-        content: `<p>La componente $x$ di uno spostamento è un <strong>numero</strong> (scalare). Il <strong>vettore componente</strong> è $x\\hat{i}$. Scrivere $\\Delta\\vec{r}_x = x_2 - x_1$ <strong>senza il versore</strong> è formalmente sbagliato — quello è lo scalare. La forma corretta del vettore è $(x_2 - x_1)\\hat{i}$.</p>`
+        title: "🚨 Attenzione — Variabile muta di integrazione",
+        content: `<p>Usiamo $t'$ come "variabile muta" di integrazione per non confonderla con il limite superiore $t$. Scrivere $\\int_{t_0}^{t} v_x(t)\\,dt$ sarebbe ambiguo!</p>`
       },
       {
-        id: "s-trap-vm-direzione",
-        type: "alert_box",
-        title: "🚨 Trappola: Direzione della Velocità Media vs Istantanea",
-        content: `<p>La velocità <strong>media</strong> $\\vec{v}_m$ è parallela allo <strong>spostamento</strong> $\\Delta\\vec{r}$ (secante alla traiettoria).</p>
-<p>La velocità <strong>istantanea</strong> $\\vec{v}(t)$ è tangente alla <strong>traiettoria</strong> nel punto considerato.</p>
-<p>Le due cose <strong>non coincidono</strong> in generale!</p>`
+        id: "s4-formula",
+        type: "section",
+        title: "Equazione di evoluzione della posizione",
+        icon: "⭐",
+        content: `<p>Risolvendo l'integrale a sinistra e portando $x(t_0)$ a destra, ed estendendo il ragionamento in forma vettoriale:</p>`,
+        formulas: [
+          { label: "Problema Inverso (posizione)", latex: "\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'" }
+        ],
+        extra_content: `<p>Questa formula dice esplicitamente che per conoscere la posizione finale servono <strong>due informazioni distinte</strong>:</p>
+        <p>1. $\\int_{t_0}^{t} \\vec{v}(t')\\,dt'$ — lo <strong>spostamento totale</strong> avvenuto nell'intervallo temporale.</p>
+        <p>2. $\\vec{r}(t_0)$ — le <strong>condizioni iniziali</strong> del sistema. Senza il punto di partenza, l'integrale dice solo <em>di quanto</em> mi sono spostato, non <em>dove</em> sono arrivato.</p>`
       },
       {
-        id: "s-note-math",
-        type: "note_box",
-        title: "📚 Prerequisiti Matematici per questa Lezione",
-        content: `<p>Il professore ha ribadito con forza che servono tre strumenti:</p>
-<p><strong>1. Trigonometria</strong> — seno, coseno, tangente.</p>
-<p><strong>2. Derivate</strong> — necessarie per definire la velocità istantanea.</p>
-<p><strong>3. Integrali</strong> — necessari per risalire dalla velocità alla posizione.</p>`
+        id: "s4-orale-integrale",
+        type: "oral_box",
+        title: "🎤 Domanda d'Esame Orale — L'integrale della velocità dà la posizione?",
+        content: `<p>Il prof chiede: <em>"Se calcolo $\\int \\vec{v}(t)\\,dt$, ho trovato la posizione?"</em></p>
+        <p><strong>NO!</strong> L'integrale definito della velocità fornisce solo la <strong>variazione di posizione</strong> (cioè lo spostamento $\\Delta\\vec{r}$). Per la posizione effettiva $\\vec{r}(t)$ devo sommare le <strong>condizioni iniziali</strong> $\\vec{r}(t_0)$.</p>`
       },
       {
-        id: "s-note-logistica",
-        type: "note_box",
-        title: "📚 Note Logistiche (menzionate a lezione)",
-        content: `<p><strong>Aule:</strong> Le aule 1 e 2 sono problematiche per visibilità e acustica — la fila centrale è il punto migliore.</p>
-<p><strong>Comportamento in aula:</strong> Il professore ha chiesto silenzio e niente cellulari durante le spiegazioni.</p>`
-      },
-      {
-        type: "graph",
-        id: "graph-vector-components",
-        title: "Scomposizione di un Vettore nelle Componenti Cartesiane",
-        graphType: "vector_components",
-        caption: "Modifica angolo e modulo per vedere come cambiano le componenti Aₓ e Aᵧ"
-      },
-      {
-        id: "s-graph-displacement",
-        type: "graph",
-        graphType: "vectors_kinematics",
-        title: "Vettori Posizione e Spostamento — Animazione Interattiva"
+        id: "s-riepilogo",
+        type: "section",
+        title: "Riepilogo Formule della Lezione",
+        icon: "📐",
+        content: `<p>Tutte le formule introdotte oggi, raccolte in un unico quadro sinottico:</p>`,
+        formulas: [
+          { label: "Vettore posizione",              latex: "\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j} + z(t)\\hat{k}" },
+          { label: "Modulo del vettore",             latex: "|\\vec{r}| = \\sqrt{x^2 + y^2 + z^2}" },
+          { label: "Legge coseni direttori",         latex: "\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1" },
+          { label: "Vettore spostamento",            latex: "\\Delta\\vec{r}_{12} = \\vec{r}_2 - \\vec{r}_1" },
+          { label: "Velocità media",                 latex: "\\vec{v}_m = \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}" },
+          { label: "Velocità istantanea",            latex: "\\vec{v}(t) = \\frac{d\\vec{r}}{dt}" },
+          { label: "Problema inverso (posizione)",   latex: "\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'" }
+        ]
       }
     ],
 
     oral_cards: [
       {
-        type: "definizione",
-        front: "Quali <strong>tre informazioni</strong> servono per identificare un vettore?",
-        back: "<strong>Modulo</strong> (intensità), <strong>direzione</strong> (la retta su cui giace) e <strong>verso</strong> (l'orientamento lungo quella retta). Senza anche solo una di queste, il vettore non è determinato."
+        type: "teorema",
+        front: "Quanti angoli sono necessari per determinare univocamente la direzione di un vettore in 3D?",
+        back: "Ne sono sufficienti <strong>due</strong>. Poiché vale $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$, il terzo coseno direttore è vincolato e ricavabile dagli altri due."
       },
       {
         type: "definizione",
-        front: "Cosa sono i <strong>coseni direttori</strong> e quale proprietà fondamentale soddisfano?",
-        back: "Sono i coseni degli angoli $\\theta_x$, $\\theta_y$, $\\theta_z$ che il vettore forma con gli assi. Danno le componenti: $x = |\\vec{r}|\\cos\\theta_x$, ecc. La proprietà chiave è: $$\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$$ Conseguenza: solo <strong>due angoli su tre</strong> sono indipendenti."
-      },
-      {
-        type: "definizione",
-        front: "Cos'è un <strong>versore</strong> e a cosa serve? Scrivi la decomposizione di $\\vec{r}$ con i versori.",
-        back: "Un versore è un vettore di <strong>modulo 1</strong> che indica una direzione. I versori fondamentali sono $\\hat{i}$, $\\hat{j}$, $\\hat{k}$ (lungo $x$, $y$, $z$). Servono a trasformare componenti scalari in vettori: $$\\vec{r} = x\\hat{i} + y\\hat{j} + z\\hat{k}$$"
-      },
-      {
-        type: "definizione",
-        front: "Scrivi la definizione di <strong>velocità media</strong> in forma vettoriale e in componenti.",
-        back: "Forma vettoriale: $$\\vec{v}_m \\triangleq \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}$$ In componenti: $v_{x,m} = \\frac{\\Delta x}{\\Delta t}$, $v_{y,m} = \\frac{\\Delta y}{\\Delta t}$, $v_{z,m} = \\frac{\\Delta z}{\\Delta t}$. Ha la <strong>stessa direzione</strong> dello spostamento."
-      },
-      {
-        type: "definizione",
-        front: "Scrivi la definizione di <strong>velocità istantanea</strong> e spiega il suo significato geometrico.",
-        back: "$$\\vec{v}(t) = \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{r}}{\\Delta t} = \\frac{d\\vec{r}}{dt}$$ È la <strong>derivata del vettore posizione</strong> rispetto al tempo. Geometricamente è sempre <strong>tangente alla traiettoria</strong>."
+        front: "Definisci la <strong>velocità media</strong> e indica qual è la sua direzione.",
+        back: "$\\vec{v}_m = \\frac{\\Delta\\vec{r}}{\\Delta t}$. Poiché $1/\\Delta t$ è uno scalare, la velocità media ha la stessa direzione e verso di $\\Delta\\vec{r}$, cioè è <strong>secante</strong> alla traiettoria."
       },
       {
         type: "domanda",
-        front: "Come si passa dalla <strong>velocità</strong> alla <strong>posizione</strong>? Scrivi la formula e spiega.",
-        back: "Si <strong>integra</strong> la velocità e si aggiunge la posizione iniziale: $$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$$ Questo permette di \"prevedere il futuro\"."
+        front: "Che differenza c'è, vettorialmente, tra velocità media e velocità istantanea?",
+        back: "La velocità media è allineata alla retta <strong>secante</strong> la traiettoria. La velocità istantanea ($\\Delta t \\to 0$) è <strong>tangente</strong> alla traiettoria nel punto considerato."
+      },
+      {
+        type: "tranello",
+        front: "⚠️ Se calcolo $\\int \\vec{v}(t)\\,dt$, ho trovato la posizione?",
+        back: "<strong>NO.</strong> L'integrale fornisce solo lo spostamento $\\Delta\\vec{r}$. Per la posizione serve anche $\\vec{r}(t_0)$: le condizioni iniziali."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è il <strong>vettore posizione</strong> $\\vec{r}(t)$?",
+        back: "Il vettore che unisce l'origine del sistema di riferimento con la posizione del punto materiale all'istante $t$. In componenti: $\\vec{r}(t) = x(t)\\hat{i} + y(t)\\hat{j} + z(t)\\hat{k}$."
+      },
+      {
+        type: "definizione",
+        front: "Differenza tra <strong>legge oraria</strong> e <strong>traiettoria</strong>?",
+        back: "La <strong>legge oraria</strong> è $\\vec{r}(t)$: associa ad ogni istante la posizione. La <strong>traiettoria</strong> è la curva geometrica nello spazio, indipendente dal tempo."
       },
       {
         type: "domanda",
-        front: "Perché il modulo $|\\vec{r}|$ è detto <strong>invariante</strong>?",
-        back: "Perché non dipende dal sistema di coordinate scelto. Se ruoti gli assi, le componenti $x$, $y$, $z$ cambiano, ma $|\\vec{r}| = \\sqrt{x^2+y^2+z^2}$ resta lo stesso."
+        front: "Il prof chiede: <em>\"Che direzione ha $\\vec{v}(t)$?\"</em>",
+        back: "Sempre <strong>tangente</strong> alla traiettoria nel punto considerato, con verso concorde al moto."
+      },
+      {
+        type: "definizione",
+        front: "Definisci il <strong>vettore spostamento</strong> $\\Delta\\vec{r}$.",
+        back: "$\\Delta\\vec{r}_{12} \\triangleq \\vec{r}_2 - \\vec{r}_1$. Connette posizione iniziale e finale in linea retta. La distanza percorsa $s \\geq |\\Delta\\vec{r}|$."
+      },
+      {
+        type: "formula",
+        front: "Scrivi la formula del <strong>problema inverso</strong> e spiega ogni termine.",
+        back: "$$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$$<br>$\\vec{r}(t_0)$: condizioni iniziali. L'integrale: spostamento totale. Servono <strong>entrambi</strong>."
       },
       {
         type: "tranello",
-        front: "Qual è la differenza tra <strong>componente scalare</strong> $x$ e <strong>vettore componente</strong> $\\vec{x}$?",
-        back: "$x$ è un <strong>numero</strong> (scalare): es. $x = 3$ m. <br>$\\vec{x} = x\\hat{i}$ è un <strong>vettore</strong>. <br>Scrivere $\\Delta\\vec{r}_x = x_2 - x_1$ senza il versore $\\hat{i}$ è <strong>formalmente sbagliato</strong> per un vettore."
-      },
-      {
-        type: "tranello",
-        front: "La velocità media ha la stessa direzione della velocità istantanea?",
-        back: "<strong>No, in generale!</strong> $\\vec{v}_m$ è parallela a $\\Delta\\vec{r}$ (secante). $\\vec{v}(t)$ è tangente alla traiettoria. Coincidono solo quando $\\Delta t \\to 0$ o nel moto rettilineo uniforme."
-      },
-      {
-        type: "dimostrazione",
-        front: "Dimostra che $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$.",
-        back: "Dalle definizioni: $x = |\\vec{r}|\\cos\\theta_x$, $y = |\\vec{r}|\\cos\\theta_y$, $z = |\\vec{r}|\\cos\\theta_z$. Sostituendo in $|\\vec{r}|^2 = x^2+y^2+z^2$: $$|\\vec{r}|^2 = |\\vec{r}|^2(\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z)$$ Dividendo per $|\\vec{r}|^2 \\neq 0$: $$\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1 \\quad \\blacksquare$$"
-      },
-      {
-        type: "dimostrazione",
-        front: "Dimostra il passaggio dall'equazione differenziale $\\frac{dx}{dt} = v_x(t)$ alla formula integrale per $x(t)$.",
-        back: "Si moltiplica per $dt$: $dx = v_x(t)\\,dt'$. Si integra tra $t_0$ e $t$: $$\\int_{x(t_0)}^{x(t)} dx = \\int_{t_0}^{t} v_x(t')\\,dt'$$ Il membro sinistro è $x(t) - x(t_0)$. Quindi: $$x(t) = x(t_0) + \\int_{t_0}^{t} v_x(t')\\,dt' \\quad \\blacksquare$$"
+        front: "⚠️ Perché nell'integrale si usa $t'$ e non $t$?",
+        back: "$t'$ è una <strong>variabile muta</strong>. Se scrivessimo $\\int_{t_0}^{t} v(t)\\,dt$ ci sarebbe ambiguità tra variabile di integrazione e limite superiore."
       }
     ],
 
     quiz: [
       {
-        q: "Quanti angoli indipendenti servono per determinare la direzione di un vettore nello spazio 3D?",
-        options: ["Uno", "Due", "Tre", "Dipende dal sistema di riferimento"],
+        q: "Quanti coseni direttori servono per definire univocamente la direzione di un vettore in 3D?",
+        options: ["Tutti e tre, sono indipendenti", "Solo due, il terzo è vincolato", "Solo uno, gli altri si ricavano", "Dipende dal sistema di riferimento"],
         correct: 1,
-        explanation: "Poiché $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$, fissati due angoli il terzo è determinato. Quindi servono <strong>due</strong> angoli indipendenti."
+        explanation: "Dalla proprietà $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$, conoscendo due coseni il terzo è determinato (a meno del segno)."
       },
       {
-        q: "Se $\\vec{r} = (3, 4, 0)$ m, quanto vale $|\\vec{r}|$?",
-        options: ["$5$ m", "$7$ m", "$\\sqrt{7}$ m", "$25$ m"],
-        correct: 0,
-        explanation: "$|\\vec{r}| = \\sqrt{3^2 + 4^2 + 0^2} = \\sqrt{9+16} = \\sqrt{25} = 5$ m."
-      },
-      {
-        q: "Cosa rappresenta fisicamente l'operazione $\\frac{d\\vec{r}(t)}{dt}$?",
-        options: ["L'accelerazione istantanea", "La velocità media tra due istanti", "La velocità istantanea al tempo $t$", "Lo spostamento infinitesimo"],
-        correct: 2,
-        explanation: "La derivata del vettore posizione rispetto al tempo è la <strong>velocità istantanea</strong>: $\\vec{v}(t) = \\frac{d\\vec{r}(t)}{dt}$."
-      },
-      {
-        q: "La velocità istantanea $\\vec{v}(t)$ è geometricamente:",
-        options: ["Parallela al vettore posizione $\\vec{r}(t)$", "Perpendicolare alla traiettoria", "Tangente alla traiettoria nel punto considerato", "Diretta verso il centro della traiettoria"],
-        correct: 2,
-        explanation: "Quando $\\Delta t \\to 0$, lo spostamento $\\Delta\\vec{r}$ diventa $d\\vec{r}$, tangente alla curva."
-      },
-      {
-        q: "Per ricostruire la posizione $\\vec{r}(t)$ a partire dalla velocità $\\vec{v}(t)$, serve anche:",
-        options: ["La massa del corpo", "L'accelerazione media", "La posizione iniziale $\\vec{r}(t_0)$", "La traiettoria esplicita"],
-        correct: 2,
-        explanation: "L'integrale fornisce lo <strong>spostamento</strong>, non la posizione assoluta. Per ottenere $\\vec{r}(t)$ bisogna aggiungere $\\vec{r}(t_0)$ — la <strong>condizione iniziale</strong>."
-      },
-      {
-        q: "Il prodotto $x \\cdot \\hat{i}$ (scalare per versore) produce:",
-        options: ["Uno scalare", "Un versore", "Un vettore con direzione dell'asse $x$ e modulo $|x|$", "Un angolo"],
-        correct: 2,
-        explanation: "Moltiplicare uno <strong>scalare</strong> per un <strong>versore</strong> produce un <strong>vettore</strong>."
-      },
-      {
-        q: "Se $\\theta_z = 90°$ per un vettore nel piano $xy$, quale relazione vale?",
-        options: ["$\\cos\\theta_x = \\cos\\theta_y$", "$\\cos\\theta_y = \\sin\\theta_x$", "$\\sin\\theta_y = \\sin\\theta_x$", "$\\cos\\theta_y = \\cos\\theta_x$"],
+        q: "La velocità media $\\vec{v}_m$ è diretta come:",
+        options: ["La tangente alla traiettoria", "La secante alla traiettoria (cioè come $\\Delta\\vec{r}$)", "L'accelerazione", "Perpendicolare allo spostamento"],
         correct: 1,
-        explanation: "Con $\\theta_z = 90°$, $\\cos\\theta_z = 0$. La proprietà diventa $\\cos^2\\theta_x + \\cos^2\\theta_y = 1$, da cui $\\cos\\theta_y = \\sin\\theta_x$."
+        explanation: "$\\vec{v}_m = \\Delta\\vec{r}/\\Delta t$. Poiché $\\Delta t > 0$ è scalare, $\\vec{v}_m$ ha stessa direzione e verso di $\\Delta\\vec{r}$: la secante."
       },
       {
-        q: "La velocità media $\\vec{v}_m$ è parallela a:",
-        options: ["La traiettoria nel punto iniziale", "Il vettore posizione $\\vec{r}_1$", "Il vettore spostamento $\\Delta\\vec{r}_{12}$", "Il versore $\\hat{i}$"],
+        q: "La velocità istantanea $\\vec{v}(t)$ è diretta come:",
+        options: ["La secante alla traiettoria", "La tangente alla traiettoria nel punto $P(t)$", "Il raggio di curvatura", "La perpendicolare alla traiettoria"],
+        correct: 1,
+        explanation: "Per $\\Delta t \\to 0$, la secante tende alla tangente. $d\\vec{r}/dt$ è sempre tangente alla traiettoria con verso concorde al moto."
+      },
+      {
+        q: "Per calcolare $\\vec{r}(t)$ nota $\\vec{v}(t)$, servono:",
+        options: ["Solo l'integrale della velocità", "Solo le condizioni iniziali", "Sia l'integrale che le condizioni iniziali $\\vec{r}(t_0)$", "La derivata seconda della posizione"],
         correct: 2,
-        explanation: "$\\vec{v}_m = \\frac{\\Delta\\vec{r}_{12}}{\\Delta t}$. Poiché $\\Delta t$ è uno scalare positivo, $\\vec{v}_m$ ha la stessa direzione e verso di $\\Delta\\vec{r}_{12}$."
+        explanation: "$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$. L'integrale dà lo spostamento; senza $\\vec{r}(t_0)$ non sai dove sei arrivato."
+      },
+      {
+        q: "Se un corpo torna al punto di partenza lungo una curva:",
+        options: ["$s = 0$ e $|\\Delta\\vec{r}| = 0$", "$s > 0$ e $|\\Delta\\vec{r}| = 0$", "$s = 0$ e $|\\Delta\\vec{r}| > 0$", "$s = |\\Delta\\vec{r}|$"],
+        correct: 1,
+        explanation: "La distanza percorsa $s > 0$ (il corpo ha viaggiato). Ma $\\Delta\\vec{r} = \\vec{0}$ perché punto iniziale e finale coincidono."
+      },
+      {
+        q: "Le componenti di $\\vec{v}(t)$ si ottengono:",
+        options: ["Integrando le componenti di $\\vec{r}$", "Derivando le componenti di $\\vec{r}$ rispetto a $t$", "Moltiplicando le componenti per $\\Delta t$", "Dividendo il modulo per 3"],
+        correct: 1,
+        explanation: "$v_x = dx/dt$, $v_y = dy/dt$, $v_z = dz/dt$. I versori sono costanti, quindi la derivazione vettoriale si riduce a tre derivazioni scalari."
       }
     ]
   };
