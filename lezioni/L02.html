@@ -300,45 +300,6 @@ const LESSON = {
         front: "⚠️ Perché nell'integrale si usa $t'$ e non $t$?",
         back: "$t'$ è una <strong>variabile muta</strong>. Se scrivessimo $\\int_{t_0}^{t} v(t)\\,dt$ ci sarebbe ambiguità tra variabile di integrazione e limite superiore."
       }
-    ],
-
-    quiz: [
-      {
-        q: "Quanti coseni direttori servono per definire univocamente la direzione di un vettore in 3D?",
-        options: ["Tutti e tre, sono indipendenti", "Solo due, il terzo è vincolato", "Solo uno, gli altri si ricavano", "Dipende dal sistema di riferimento"],
-        correct: 1,
-        explanation: "Dalla proprietà $\\cos^2\\theta_x + \\cos^2\\theta_y + \\cos^2\\theta_z = 1$, conoscendo due coseni il terzo è determinato (a meno del segno)."
-      },
-      {
-        q: "La velocità media $\\vec{v}_m$ è diretta come:",
-        options: ["La tangente alla traiettoria", "La secante alla traiettoria (cioè come $\\Delta\\vec{r}$)", "L'accelerazione", "Perpendicolare allo spostamento"],
-        correct: 1,
-        explanation: "$\\vec{v}_m = \\Delta\\vec{r}/\\Delta t$. Poiché $\\Delta t > 0$ è scalare, $\\vec{v}_m$ ha stessa direzione e verso di $\\Delta\\vec{r}$: la secante."
-      },
-      {
-        q: "La velocità istantanea $\\vec{v}(t)$ è diretta come:",
-        options: ["La secante alla traiettoria", "La tangente alla traiettoria nel punto $P(t)$", "Il raggio di curvatura", "La perpendicolare alla traiettoria"],
-        correct: 1,
-        explanation: "Per $\\Delta t \\to 0$, la secante tende alla tangente. $d\\vec{r}/dt$ è sempre tangente alla traiettoria con verso concorde al moto."
-      },
-      {
-        q: "Per calcolare $\\vec{r}(t)$ nota $\\vec{v}(t)$, servono:",
-        options: ["Solo l'integrale della velocità", "Solo le condizioni iniziali", "Sia l'integrale che le condizioni iniziali $\\vec{r}(t_0)$", "La derivata seconda della posizione"],
-        correct: 2,
-        explanation: "$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$. L'integrale dà lo spostamento; senza $\\vec{r}(t_0)$ non sai dove sei arrivato."
-      },
-      {
-        q: "Se un corpo torna al punto di partenza lungo una curva:",
-        options: ["$s = 0$ e $|\\Delta\\vec{r}| = 0$", "$s > 0$ e $|\\Delta\\vec{r}| = 0$", "$s = 0$ e $|\\Delta\\vec{r}| > 0$", "$s = |\\Delta\\vec{r}|$"],
-        correct: 1,
-        explanation: "La distanza percorsa $s > 0$ (il corpo ha viaggiato). Ma $\\Delta\\vec{r} = \\vec{0}$ perché punto iniziale e finale coincidono."
-      },
-      {
-        q: "Le componenti di $\\vec{v}(t)$ si ottengono:",
-        options: ["Integrando le componenti di $\\vec{r}$", "Derivando le componenti di $\\vec{r}$ rispetto a $t$", "Moltiplicando le componenti per $\\Delta t$", "Dividendo il modulo per 3"],
-        correct: 1,
-        explanation: "$v_x = dx/dt$, $v_y = dy/dt$, $v_z = dz/dt$. I versori sono costanti, quindi la derivazione vettoriale si riduce a tre derivazioni scalari."
-      }
     ]
   };
 </script>
