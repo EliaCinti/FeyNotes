@@ -91,11 +91,10 @@ const LESSON = {
         type: "section",
         title: "",
         icon: "",
-        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
-          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
-          <p style="font-size: 0.9rem;">Sistema 3D con assi $x, y, z$ e versori $\\hat{i}, \\hat{j}, \\hat{k}$. Un vettore $\\vec{r}$ al centro. Evidenziare le componenti $x, y, z$ sugli assi e gli angoli $\\theta_x, \\theta_y, \\theta_z$ tra il vettore e ciascun asse.</p>
-          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L02/componenti-vettore.png</p>
-        </div>`
+        content: `<figure style="text-align: center; margin: 1.5rem 0;">
+          <img src="../assets/L02/componenti-vettore.jpeg" alt="Scomposizione di un vettore nelle componenti lungo i e j con angoli direttori" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+          <figcaption style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Scomposizione del vettore $\\vec{r}$ nelle componenti lungo $\\hat{i}$ e $\\hat{j}$, con angoli direttori $\\theta_x$ e $\\theta_y$. Nel piano $xy$: $\\theta_z = 90°$, $\\cos\\theta_z = 0$.</figcaption>
+        </figure>`
       },
       {
         id: "s2-cinematica",
@@ -138,17 +137,6 @@ const LESSON = {
         <p>L'uguaglianza vale solo se il moto è rettilineo e senza inversioni di verso.</p>`
       },
       {
-        id: "s2-fig-spostamento",
-        type: "section",
-        title: "",
-        icon: "",
-        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
-          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
-          <p style="font-size: 0.9rem;">Sistema di riferimento spaziale. Una linea curva tratteggiata rappresenta la traiettoria. Due vettori posizione $\\vec{r}_1$ e $\\vec{r}_2$ partono dall'origine verso la curva. Il vettore $\\Delta\\vec{r}_{12}$ collega la punta di $\\vec{r}_1$ alla punta di $\\vec{r}_2$.</p>
-          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L02/spostamento.png</p>
-        </div>`
-      },
-      {
         id: "s3-vel-media",
         type: "section",
         title: "Dalla Velocità Media alla Velocità Istantanea",
@@ -183,15 +171,20 @@ const LESSON = {
         <p><strong>Risposta esatta:</strong> Il vettore velocità istantanea in un punto della traiettoria è <strong>sempre tangente</strong> alla traiettoria in quel punto, con verso concorde a quello del moto. (A differenza della velocità media che è secante).</p>`
       },
       {
-        id: "s3-fig-tangente",
+        id: "s3-fig-riepilogo",
         type: "section",
-        title: "",
-        icon: "",
-        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
-          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
-          <p style="font-size: 0.9rem;">Traiettoria curva $\\gamma$. Un punto $P$ al tempo $t$. Il vettore $\\vec{v}(t) = \\frac{d\\vec{r}}{dt}$ disegnato tangente alla curva nel punto $P$, con verso concorde al moto.</p>
-          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L02/traiettoria-tangente.png</p>
-        </div>`
+        title: "Il quadro completo: posizione, spostamento e velocità",
+        icon: "🖼️",
+        content: `<p>Il diagramma qui sotto riunisce tutte le grandezze introdotte finora in un'unica figura. Prenditi un momento per identificare ogni elemento prima di proseguire.</p>
+        <figure style="text-align: center; margin: 1.5rem 0;">
+          <img src="../assets/L02/spostamento-velocita.jpeg" alt="Vettori posizione, spostamento, velocità media e velocità istantanea" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+        </figure>
+        <p><strong>Come leggere il diagramma:</strong></p>
+        <p>• <strong style="color: #cc0000;">In rosso</strong> — i due <strong>vettori posizione</strong> $\\vec{r}_1$ e $\\vec{r}_2$, che partono dall'origine e puntano ai due punti sulla traiettoria (in verde) occupati dal corpo agli istanti $t$ e $t + \\Delta t$.</p>
+        <p>• <strong style="color: #3333cc;">In blu</strong> — il <strong>vettore spostamento</strong> $\\Delta\\vec{r}_{12} = \\vec{r}_2 - \\vec{r}_1$, che collega direttamente i due punti. Nota come sia più corto della traiettoria curva: la distanza percorsa $s$ è sempre $\\geq |\\Delta\\vec{r}|$.</p>
+        <p>• <strong style="color: #cc8800;">In arancione</strong> — il vettore <strong>velocità media</strong> $\\vec{v}_m$. Ha la stessa direzione dello spostamento $\\Delta\\vec{r}$: è la retta <strong>secante</strong> che taglia la traiettoria passando per entrambi i punti.</p>
+        <p>• <strong style="color: #9933cc;">In viola</strong> — le <strong>velocità istantanee</strong> nei due punti. Ogni freccia è <strong>tangente</strong> alla traiettoria nel rispettivo punto, con verso concorde al moto. Questa è la differenza fondamentale: la velocità media "taglia" la curva (secante), la velocità istantanea la "sfiora" (tangente).</p>
+        <p>Quando $\\Delta t \\to 0$, i due punti si avvicinano, la secante arancione ruota verso la tangente viola, e la velocità media converge alla velocità istantanea. Questo è esattamente il passaggio al limite che definisce $\\vec{v}(t) = d\\vec{r}/dt$.</p>`
       },
       {
         id: "s4-inverso",
