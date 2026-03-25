@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L10 — Fisica 1 Study Guide</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="../index.html" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+    <span class="logo-sub">Study Guide</span>
+  </a>
+  <nav class="header-nav">
+    <a href="../index.html" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="../index.html" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="L09.html">← Prec.</a>
+      <a href="L11.html" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<script>
+const LESSON = {
+    id: "L10", date: "Lezione 10 — 25 Mar 2026",
+    title: "Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari",
+    abstract: "Inquadramento concettuale Dinamica vs Cinematica. Forze di contatto: reazione normale e attrito. Dimostrazione che RN ≠ mg attraverso il problema dell'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata su piano scabro.",
+
+    sections: [
+
+      /* ====================================================
+         SEZIONE 1: Interazione → Forza → Effetto
+         ==================================================== */
+      {
+        id: "s1-intro",
+        type: "section",
+        title: "Dalla Cinematica alla Dinamica: Interazioni, Forze ed Effetti",
+        icon: "🔗",
+        content: `<p>Il professore ha aperto la lezione con una distinzione concettuale fondamentale per inquadrare il passaggio dalla Cinematica alla Dinamica.</p>
+        <p>In <strong>Cinematica</strong> descriviamo il moto (velocità, accelerazione) senza curarci di chi o cosa lo abbia generato: l'accelerazione $\\vec{a}$ è una grandezza puramente descrittiva.</p>
+        <p>In <strong>Dinamica</strong> andiamo alla radice del problema. Lo schema è:</p>
+        <p>$$\\text{Interazione tra corpi} \\implies \\vec{F} \\implies \\text{Effetto sul moto } (\\vec{a})$$</p>
+        <p>La <strong>forza</strong> è la <strong>causa</strong> (oggetto della Dinamica). L'<strong>accelerazione</strong> è l'<strong>effetto</strong> (oggetto della Cinematica).</p>`
+      },
+
+      /* ====================================================
+         SEZIONE 2: Forze di Contatto
+         ==================================================== */
+      {
+        id: "s2-contatto",
+        type: "section",
+        title: "Le Forze di Contatto: Reazione Normale e Attrito",
+        icon: "🤝",
+        content: `<p>Quando due corpi (o un corpo e una superficie) sono a contatto, l'interazione genera una forza totale che si scompone in due componenti:</p>
+        <p>1. <strong>Reazione Vincolare Normale</strong> ($\\vec{R}_N$) — diretta sempre <strong>perpendicolarmente</strong> alla superficie di contatto. Impedisce ai corpi di compenetrarsi.</p>
+        <p>2. <strong>Forza di Attrito</strong> ($\\vec{F}_A$) — diretta <strong>parallelamente</strong> alla superficie di contatto. Si oppone allo scorrimento relativo tra le due superfici.</p>`
+      },
+      {
+        id: "s2-attrito",
+        type: "section",
+        title: "Attrito Statico e Dinamico",
+        icon: "🧱",
+        content: `<p>L'attrito si divide in due tipi a seconda dello stato del corpo:</p>
+        <p>• <strong>Attrito Statico</strong> — se i corpi sono in quiete (nessun moto relativo). Reagisce fino a un valore massimo per impedire l'inizio del moto:</p>
+        <p>$$|\\vec{F}_{A,s}| \\leq \\mu_s R_N$$</p>
+        <p>• <strong>Attrito Dinamico</strong> — se c'è moto relativo (strisciamento). Ha un valore calcolabile:</p>
+        <p>$$\\vec{F}_A = -\\mu_d R_N \\hat{u}_v$$</p>
+        <p>dove $\\hat{u}_v$ è il versore della velocità. Il segno meno indica che l'attrito si oppone sempre al verso del moto.</p>`,
+        formulas: [
+          { label: "Attrito statico (massimo)", latex: "|\\vec{F}_{A,s}|_{\\max} = \\mu_s R_N" },
+          { label: "Attrito dinamico", latex: "F_A = \\mu_d R_N" }
+        ]
+      },
+
+      /* ====================================================
+         SEZIONE 3: RN ≠ mg — Ascensore
+         ==================================================== */
+      {
+        id: "s3-rn-non-mg",
+        type: "section",
+        title: "La Reazione Vincolare NON è sempre uguale al Peso",
+        icon: "⚖️",
+        content: `<p>Uno degli errori più comuni tra gli studenti è assumere a priori che $R_N = mg$. Il professore ha smontato questa credenza analizzando il <strong>problema dell'ascensore</strong>.</p>`
+      },
+      {
+        id: "s3-trap-rn",
+        type: "alert_box",
+        title: "🚨 Trappola d'Esame — NON scrivere mai RN = mg senza giustificazione!",
+        content: `<p>$R_N = mg$ vale <strong>solo</strong> quando l'accelerazione verticale è nulla (corpo fermo o in MRU su piano orizzontale, senza altre forze verticali). In tutti gli altri casi, $R_N$ va <strong>ricavata dall'equilibrio</strong> sull'asse perpendicolare alla superficie.</p>`
+      },
+      {
+        id: "s3-ascensore",
+        type: "section",
+        title: "Il Problema dell'Ascensore",
+        icon: "🛗",
+        content: `<p>Consideriamo una persona di massa $m$ sul pavimento di un ascensore. Asse $y$ verso l'alto. Le forze sono: il peso $\\vec{P} = -mg\\hat{j}$ verso il basso e la reazione normale $\\vec{R}_N = R_N\\hat{j}$ verso l'alto.</p>
+        <p>Applicando la II Legge di Newton e proiettando lungo $y$:</p>
+        <p>$$R_N - mg = m \\cdot a_y$$</p>
+        <p>Da cui ricaviamo l'<strong>equazione generale</strong>:</p>`,
+        formulas: [
+          { label: "Equazione generale ascensore", latex: "R_N = m(g + a_y)" }
+        ],
+        extra_content: `<p>Analizziamo i <strong>5 casi fisici</strong> discussi a lezione:</p>`
+      },
+
+      /* ---- Placeholder grafico: ascensore ---- */
+      {
+        id: "s3-fig-ascensore",
+        type: "section",
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Diagramma di corpo libero della persona nell'ascensore. Asse $y$ verso l'alto. Massa $m$ sul pavimento (tratteggio). $\\vec{R}_N$ verso l'alto, $\\vec{P} = m\\vec{g}$ verso il basso. Indicare il pavimento dell'ascensore con tratteggio.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L10/ascensore.jpeg</p>
+        </div>`
+      },
+
+      /* ---- I 5 casi ---- */
+      {
+        id: "s3-caso1",
+        type: "section",
+        title: "Caso 1: Ascensore fermo o in MRU (ay = 0)",
+        icon: "",
+        content: `<p>Se l'ascensore è fermo o si muove a velocità costante, l'accelerazione è nulla:</p>
+        <p>$$R_N - mg = 0 \\implies \\boxed{R_N = mg}$$</p>
+        <p><strong>Solo in questo caso</strong> la reazione del pavimento è esattamente uguale alla forza peso.</p>`
+      },
+      {
+        id: "s3-caso2",
+        type: "section",
+        title: "Caso 2: Ascensore sale accelerando (ay = a > 0)",
+        icon: "",
+        content: `<p>L'ascensore accelera verso l'alto. Dall'equazione generale:</p>
+        <p>$$R_N = m(g + a) \\implies \\boxed{R_N > mg}$$</p>
+        <p>Il pavimento deve "spingere" di più: sostenere il peso <em>e</em> accelerare la massa verso l'alto. Su una bilancia, vi sentireste <strong>più pesanti</strong>.</p>`
+      },
+      {
+        id: "s3-caso3",
+        type: "section",
+        title: "Caso 3: Ascensore scende accelerando (ay = −a < 0)",
+        icon: "",
+        content: `<p>L'ascensore accelera verso il basso:</p>
+        <p>$$R_N = m(g - a) \\implies \\boxed{R_N < mg}$$</p>
+        <p>Vi sentite <strong>più leggeri</strong>. L'interazione tra le suole e il pavimento diminuisce.</p>`
+      },
+      {
+        id: "s3-caso4",
+        type: "section",
+        title: "Caso 4: Caduta libera (ay = −g) — CASO LIMITE",
+        icon: "",
+        content: `<p>Si rompono i cavi! L'ascensore precipita con accelerazione $g$ verso il basso:</p>
+        <p>$$R_N = m(g - g) \\implies \\boxed{R_N = 0}$$</p>
+        <p><strong>Perdita totale di contatto.</strong> Provate la sensazione di assenza di peso (come gli astronauti sulla ISS, che sono in caduta libera continua attorno alla Terra).</p>`
+      },
+      {
+        id: "s3-caso5",
+        type: "section",
+        title: "Caso 5: Accelerazione verso il basso estrema (ay < −g)",
+        icon: "",
+        content: `<p>L'ascensore è spinto attivamente verso il basso più velocemente della gravità. Il calcolo darebbe $R_N < 0$, ma i vincoli d'appoggio sono <strong>unilaterali</strong>: possono solo spingere, non tirare.</p>
+        <p>Fisicamente: <strong>nessun contatto con il pavimento</strong>. La persona fluttuerebbe e andrebbe a sbattere contro il soffitto! La pedana scende più velocemente della persona, che resta "indietro" in caduta libera.</p>`
+      },
+
+      /* ====================================================
+         SEZIONE 4: Piano Inclinato
+         ==================================================== */
+      {
+        id: "s4-piano",
+        type: "section",
+        title: "Il Piano Inclinato",
+        icon: "📐",
+        content: `<p>Un altro sistema classico per mostrare che $R_N \\neq mg$. Consideriamo una cassa di massa $m$ su un piano inclinato di angolo $\\theta$.</p>
+        <p>Il trucco fondamentale è posizionare gli assi <strong>parallelo e perpendicolare</strong> al piano:</p>
+        <p>• Asse $x$: parallelo al piano, verso il basso (verso lo scivolamento)</p>
+        <p>• Asse $y$: perpendicolare al piano, verso l'esterno</p>
+        <p>Scomponiamo la forza peso $\\vec{P} = m\\vec{g}$:</p>`,
+        formulas: [
+          { label: "Componente parallela (fa scivolare)", latex: "P_x = mg\\sin\\theta" },
+          { label: "Componente perpendicolare (schiaccia)", latex: "P_y = mg\\cos\\theta" }
+        ]
+      },
+      {
+        id: "s4-metodo",
+        type: "section",
+        title: "Piano Inclinato senza Attrito",
+        icon: "",
+        content: `<p>Proiettando la II Legge di Newton sugli assi:</p>
+        <p><strong>Asse $y$</strong> (perpendicolare al piano, nessun moto in questa direzione):</p>
+        <p>$$R_N - mg\\cos\\theta = 0 \\implies \\boxed{R_N = mg\\cos\\theta}$$</p>
+        <p><strong>Asse $x$</strong> (parallelo al piano, la cassa scende):</p>
+        <p>$$mg\\sin\\theta = ma \\implies \\boxed{a = g\\sin\\theta}$$</p>`
+      },
+
+      /* ---- Placeholder grafico: piano inclinato senza attrito ---- */
+      {
+        id: "s4-fig-piano-no-attrito",
+        type: "section",
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Piano inclinato con angolo $\\theta$. Assi $x$ (parallelo al piano, verso il basso) e $y$ (perpendicolare, verso l'esterno). Massa $m$ sul piano. Vettori: $\\vec{P} = m\\vec{g}$ verticale verso il basso, $\\vec{R}_N$ perpendicolare al piano verso l'esterno. Scomposizione di $\\vec{P}$: $P_x = mg\\sin\\theta$ lungo il piano e $P_y = mg\\cos\\theta$ perpendicolare.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L10/piano-inclinato-no-attrito.jpeg</p>
+        </div>`
+      },
+
+      {
+        id: "s4-nota-limiti",
+        type: "note_box",
+        title: "📚 Casi limite del piano inclinato",
+        content: `<p>• Se $\\theta = 0°$ (piano orizzontale): $\\cos 0° = 1$, $\\sin 0° = 0$ → $R_N = mg$ e $a = 0$. Il corpo sta fermo.</p>
+        <p>• Se $\\theta = 90°$ (piano verticale): $\\cos 90° = 0$, $\\sin 90° = 1$ → $R_N = 0$ e $a = g$. Caduta libera! Non c'è più contatto con la superficie.</p>
+        <p>$R_N$ è <strong>massima</strong> quando il piano è orizzontale e <strong>nulla</strong> quando il piano è verticale.</p>`
+      },
+
+      /* ---- Piano inclinato CON attrito ---- */
+      {
+        id: "s4-attrito",
+        type: "section",
+        title: "Piano Inclinato con Attrito Dinamico",
+        icon: "🧱",
+        content: `<p>Stesso scenario, ma ora la cassa scende e agisce l'attrito dinamico $\\vec{F}_A = -\\mu_d R_N \\hat{u}_x$ (verso opposto al moto, cioè su per il piano). L'equazione di Newton vettoriale è:</p>
+        <p>$$\\vec{F}_A + \\vec{P} + \\vec{R}_N = m\\vec{a}$$</p>
+        <p><strong>Asse $y$</strong> (identico al caso senza attrito):</p>
+        <p>$$R_N - mg\\cos\\theta = 0 \\implies R_N = mg\\cos\\theta$$</p>
+        <p><strong>Asse $x$</strong>:</p>
+        <p>$$mg\\sin\\theta - \\mu_d R_N = ma$$</p>
+        <p>Sostituendo $R_N = mg\\cos\\theta$ e dividendo per $m$:</p>`,
+        formulas: [
+          { label: "Accelerazione sul piano inclinato con attrito", latex: "a = g(\\sin\\theta - \\mu_d\\cos\\theta)" }
+        ]
+      },
+
+      /* ---- Placeholder grafico: piano inclinato con attrito ---- */
+      {
+        id: "s4-fig-piano-attrito",
+        type: "section",
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Piano inclinato con angolo $\\theta$. Stessi assi del precedente. Massa $m$ che scende. Vettori: $\\vec{P} = m\\vec{g}$ (verticale giù), $\\vec{R}_N$ (perpendicolare al piano), $\\vec{F}_A$ (parallelo al piano, verso l'alto — si oppone al moto). Scomposizione di $\\vec{P}$ in $P_\\parallel = mg\\sin\\theta$ e $P_\\perp = mg\\cos\\theta$.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L10/piano-inclinato-attrito.jpeg</p>
+        </div>`
+      },
+
+      {
+        id: "s4-orale-piano",
+        type: "oral_box",
+        title: "🎤 Domanda d'Esame Orale — Piano inclinato",
+        content: `<p>Il prof potrebbe chiedere: <em>"Cosa succede alla reazione normale al variare dell'angolo del piano inclinato?"</em></p>
+        <p><strong>Risposta:</strong> $R_N = mg\\cos\\theta$. È massima per $\\theta = 0°$ (piano orizzontale, $R_N = mg$) e nulla per $\\theta = 90°$ (piano verticale, caduta libera). La $R_N$ <strong>non è mai uguale a $mg$</strong> se $\\theta \\neq 0°$.</p>`
+      },
+
+      /* ====================================================
+         SEZIONE 5: Mini Test — Cassa con fune
+         ==================================================== */
+      {
+        id: "s5-minitest",
+        type: "section",
+        title: "Esercizio Fondamentale: Il \"Mini Test\"",
+        icon: "📝",
+        content: `<p>Nella seconda parte della lezione, il professore ha assegnato un problema definendolo come <em>"identico a quello che troverete all'esame"</em>.</p>`
+      },
+      {
+        id: "s5-testo",
+        type: "section",
+        title: "Testo del Problema",
+        icon: "",
+        content: `<p>Una cassa di massa $m$ poggia su un pavimento orizzontale scabro, con coefficiente di attrito dinamico $\\mu_d$. Una persona tira la cassa tramite una fune, applicando una forza $\\vec{F}$ inclinata di un angolo $\\theta$ rispetto all'orizzontale.</p>
+        <p><strong>Determinare</strong> il modulo della forza $|\\vec{F}|$ necessario affinché la cassa si muova di <strong>Moto Rettilineo Uniforme</strong>.</p>
+        <p><strong>Dati noti:</strong> $m$, $\\theta$, $\\mu_d$.</p>
+        <p><strong>Incognite:</strong> $F$ e $R_N$.</p>`
+      },
+
+      /* ---- Placeholder grafico: mini test ---- */
+      {
+        id: "s5-fig-minitest",
+        type: "section",
+        title: "",
+        icon: "",
+        content: `<div class="graph-placeholder" style="background: var(--card-bg); border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin: 1.5rem 0; color: var(--text-muted);">
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">📷 GRAFICO DA INSERIRE</p>
+          <p style="font-size: 0.9rem;">Cassa di massa $m$ su pavimento orizzontale scabro (tratteggio). Assi $x$ (orizzontale, verso destra) e $y$ (verticale, verso l'alto). Quattro forze: $\\vec{P} = m\\vec{g}$ (verticale giù), $\\vec{R}_N$ (verticale su), $\\vec{F}$ (inclinata di $\\theta$ rispetto all'orizzontale, verso destra-alto), $\\vec{F}_A$ (orizzontale, verso sinistra). Mostrare le componenti di $\\vec{F}$: $F\\cos\\theta$ orizzontale e $F\\sin\\theta$ verticale con linee tratteggiate.</p>
+          <p style="font-size: 0.8rem; font-family: monospace; margin-top: 0.5rem;">File: assets/L10/mini-test-fune.jpeg</p>
+        </div>`
+      },
+
+      {
+        id: "s5-citazione",
+        type: "section",
+        title: "",
+        icon: "",
+        content: ``,
+        quote: {
+          text: "\"Non cercate di indovinare la soluzione a mente. Scrivete le equazioni di Newton e il risultato arriverà da sé.\"",
+          src: "— Prof. Mercuri, Lezione 10"
+        }
+      },
+
+      /* ---- Svolgimento ---- */
+      {
+        id: "s5-svolgimento",
+        type: "section",
+        title: "Svolgimento Completo",
+        icon: "✏️",
+        content: `<p>Le <strong>4 forze</strong> in gioco sono: peso $\\vec{P}$, reazione normale $\\vec{R}_N$, trazione $\\vec{F}$ e attrito dinamico $\\vec{F}_A$.</p>
+        <p>La condizione richiesta è <strong>Moto Rettilineo Uniforme</strong>, che cinematicamente significa $\\vec{a} = \\vec{0}$. Quindi la risultante delle forze deve essere zero:</p>
+        <p>$$\\vec{F} + \\vec{P} + \\vec{R}_N + \\vec{F}_A = \\vec{0}$$</p>
+        <p><strong>Proiezione lungo l'asse $y$</strong> (verticale, $a_y = 0$):</p>
+        <p>La componente verticale della fune tira su, la normale spinge su, il peso tira giù:</p>
+        <p>$$F\\sin\\theta + R_N - mg = 0$$</p>
+        <p>Da cui ricaviamo subito la reazione normale:</p>
+        <p>$$\\boxed{R_N = mg - F\\sin\\theta}$$</p>
+        <p><strong>Proiezione lungo l'asse $x$</strong> (orizzontale, $a_x = 0$):</p>
+        <p>La componente orizzontale della fune tira avanti, l'attrito frena:</p>
+        <p>$$F\\cos\\theta - \\mu_d R_N = 0$$</p>
+        <p>Sostituiamo $R_N$:</p>
+        <p>$$F\\cos\\theta - \\mu_d(mg - F\\sin\\theta) = 0$$</p>
+        <p>Sviluppiamo:</p>
+        <p>$$F\\cos\\theta - \\mu_d mg + \\mu_d F\\sin\\theta = 0$$</p>
+        <p>Raccogliamo $F$:</p>
+        <p>$$F(\\cos\\theta + \\mu_d\\sin\\theta) = \\mu_d mg$$</p>`,
+        formulas: [
+          { label: "Forza necessaria per MRU", latex: "F = \\frac{\\mu_d \\, mg}{\\cos\\theta + \\mu_d\\sin\\theta}" }
+        ]
+      },
+
+      /* ---- Analisi fisica ---- */
+      {
+        id: "s5-analisi",
+        type: "section",
+        title: "Analisi Fisica del Risultato",
+        icon: "💡",
+        content: `<p>Il professore si è soffermato a lungo su <strong>perché questo risultato è bellissimo</strong> e cosa ci insegna sulla fisica reale.</p>
+        <p>Il punto chiave è nell'equazione di $R_N$: $R_N = mg - F\\sin\\theta$.</p>
+        <p><strong>Se tiriamo orizzontalmente</strong> ($\\theta = 0$, $\\sin 0 = 0$): la $R_N = mg$, l'attrito è massimo ($\\mu_d mg$), e la forza richiesta è $F = \\mu_d mg$. Tutta la fatica va contro l'attrito.</p>
+        <p><strong>Se incliniamo la fune verso l'alto</strong> ($\\theta > 0$): compare il termine $F\\sin\\theta$ che <strong>solleva parzialmente</strong> la cassa. La forza premente diminuisce ($R_N < mg$), quindi $F_A = \\mu_d R_N$ diminuisce. Ecco perché, intuitivamente, <strong>quando trasciniamo un mobile pesante tendiamo a tirare un po' verso l'alto</strong>: lo "alleggeriamo", riducendo l'attrito.</p>
+        <p>Matematicamente, la forza $F$ diminuisce all'aumentare di $\\theta$ fino a un certo <strong>angolo ottimale</strong>. L'obiettivo è <strong>massimizzare il denominatore</strong> $\\cos\\theta + \\mu_d\\sin\\theta$ per minimizzare $F$.</p>
+        <p>Se però incliniamo troppo ($\\theta \\to 90°$), $\\cos\\theta \\to 0$: smettiamo di far scorrere avanti la cassa e cominciamo solo a sollevarla, sprecando fatica per l'avanzamento. Esiste quindi un <strong>angolo magico</strong> in cui fatichiamo il minimo possibile (ottenibile con $\\frac{dF}{d\\theta} = 0$).</p>`
+      },
+
+      {
+        id: "s5-nota-rn",
+        type: "alert_box",
+        title: "🚨 Attenzione — Anche qui RN ≠ mg!",
+        content: `<p>Nella formula $R_N = mg - F\\sin\\theta$, la componente verticale della fune "alleggerisce" la cassa. Questo è un altro esempio in cui $R_N \\neq mg$, stavolta su piano <strong>orizzontale</strong>! Ogni volta che c'è una forza con componente verticale oltre al peso, la $R_N$ cambia.</p>`
+      },
+
+      {
+        id: "s5-metodo",
+        type: "section",
+        title: "",
+        icon: "",
+        content: ``,
+        quote: {
+          text: "\"Vedete? Non ho provato a indovinare. Ho scritto le equazioni di Newton, le ho proiettate sugli assi, e il risultato è uscito da solo. All'esame fate la stessa cosa: non improvvisate, scrivete le equazioni.\"",
+          src: "— Prof. Mercuri, Lezione 10"
+        }
+      },
+
+      /* ====================================================
+         METODO RISOLUTIVO GENERALE
+         ==================================================== */
+      {
+        id: "s6-metodo",
+        type: "section",
+        title: "Metodo Generale per Problemi di Dinamica",
+        icon: "⚙️",
+        content: `<p>Da questa lezione e dalle precedenti emerge un <strong>metodo sistematico</strong> per risolvere qualsiasi problema di dinamica del punto materiale:</p>
+        <p>1. <strong>Disegna il diagramma di corpo libero</strong> — identifica TUTTE le forze che agiscono sul corpo.</p>
+        <p>2. <strong>Scegli gli assi</strong> — parallelo e perpendicolare alla superficie (piano inclinato) oppure orizzontale/verticale (piano orizzontale). La scelta giusta semplifica i conti.</p>
+        <p>3. <strong>Scrivi la II Legge di Newton vettoriale</strong>: $\\vec{F}_{\\text{tot}} = m\\vec{a}$.</p>
+        <p>4. <strong>Proietta sugli assi</strong> — ottieni un sistema di equazioni scalari.</p>
+        <p>5. <strong>Ricava $R_N$</strong> dall'asse perpendicolare alla superficie ($\\sum F_\\perp = 0$ se non c'è moto in quella direzione).</p>
+        <p>6. <strong>Sostituisci $R_N$</strong> nell'equazione dell'asse parallelo per trovare $a$ (o la forza incognita).</p>
+        <p>7. <strong>Verifica</strong> — controlla i casi limite ($\\theta = 0°$, $\\theta = 90°$, $\\mu_d = 0$) e la coerenza fisica.</p>`
+      },
+
+      /* ====================================================
+         RIEPILOGO FORMULE
+         ==================================================== */
+      {
+        id: "s-riepilogo",
+        type: "section",
+        title: "Riepilogo Formule della Lezione",
+        icon: "📐",
+        content: `<p>Tutte le formule chiave introdotte oggi:</p>`,
+        formulas: [
+          { label: "Equazione ascensore (generale)",               latex: "R_N = m(g + a_y)" },
+          { label: "Ascensore fermo / MRU",                        latex: "R_N = mg \\quad (a_y = 0)" },
+          { label: "Ascensore sale accelerando",                   latex: "R_N = m(g+a) > mg" },
+          { label: "Ascensore scende accelerando",                 latex: "R_N = m(g-a) < mg" },
+          { label: "Caduta libera",                                latex: "R_N = 0 \\quad (a_y = -g)" },
+          { label: "RN su piano inclinato",                        latex: "R_N = mg\\cos\\theta" },
+          { label: "Accelerazione piano inclinato (no attrito)",   latex: "a = g\\sin\\theta" },
+          { label: "Accelerazione piano inclinato (con attrito)",  latex: "a = g(\\sin\\theta - \\mu_d\\cos\\theta)" },
+          { label: "Forza per MRU con fune inclinata",             latex: "F = \\frac{\\mu_d mg}{\\cos\\theta + \\mu_d\\sin\\theta}" },
+          { label: "RN con fune inclinata",                        latex: "R_N = mg - F\\sin\\theta" }
+        ]
+      }
+    ],
+
+    /* ====================================================
+       FLASHCARD
+       ==================================================== */
+    oral_cards: [
+      {
+        type: "tranello",
+        front: "⚠️ La reazione normale è sempre uguale a $mg$?",
+        back: "<strong>NO!</strong> $R_N = mg$ vale solo su piano orizzontale, corpo fermo o in MRU, senza altre forze verticali. In tutti gli altri casi va ricavata dall'equilibrio perpendicolare. Esempi: ascensore accelerante ($R_N = m(g+a_y)$), piano inclinato ($R_N = mg\\cos\\theta$), fune inclinata ($R_N = mg - F\\sin\\theta$)."
+      },
+      {
+        type: "definizione",
+        front: "Come si scompone la forza di contatto tra due superfici?",
+        back: "Si scompone in: (1) <strong>Reazione Normale</strong> $\\vec{R}_N$ — perpendicolare alla superficie, impedisce la compenetrazione. (2) <strong>Forza di Attrito</strong> $\\vec{F}_A$ — parallela alla superficie, si oppone allo scorrimento relativo."
+      },
+      {
+        type: "definizione",
+        front: "Qual è la differenza tra attrito statico e dinamico?",
+        back: "<strong>Statico:</strong> corpi in quiete, $|\\vec{F}_{A,s}| \\leq \\mu_s R_N$ (si adatta fino al massimo). <strong>Dinamico:</strong> c'è moto relativo, $F_A = \\mu_d R_N$ (valore fisso). L'attrito statico massimo è sempre $\\geq$ dell'attrito dinamico."
+      },
+      {
+        type: "domanda",
+        front: "Nell'ascensore in caduta libera, quanto vale $R_N$? Cosa prova la persona?",
+        back: "$R_N = m(g - g) = 0$. Perdita totale di contatto con il pavimento. La persona prova la sensazione di <strong>assenza di peso</strong>, come gli astronauti (che sono in caduta libera continua attorno alla Terra)."
+      },
+      {
+        type: "domanda",
+        front: "Sul piano inclinato, come varia $R_N$ al variare di $\\theta$?",
+        back: "$R_N = mg\\cos\\theta$. È <strong>massima</strong> per $\\theta = 0°$ (piano orizzontale, $R_N = mg$). <strong>Diminuisce</strong> con l'angolo. È <strong>nulla</strong> per $\\theta = 90°$ (caduta libera verticale, nessun contatto)."
+      },
+      {
+        type: "formula",
+        front: "Scrivi l'accelerazione di una cassa che scende su un piano inclinato con attrito dinamico.",
+        back: "$$a = g(\\sin\\theta - \\mu_d\\cos\\theta)$$<br>Derivata da: asse $x$ → $mg\\sin\\theta - \\mu_d R_N = ma$, asse $y$ → $R_N = mg\\cos\\theta$. Si semplifica la massa $m$."
+      },
+      {
+        type: "domanda",
+        front: "Nel mini test, perché la forza $F$ necessaria <strong>diminuisce</strong> se incliniamo la fune verso l'alto?",
+        back: "Perché $R_N = mg - F\\sin\\theta$: la componente verticale della fune <strong>alleggerisce</strong> la cassa, riducendo la forza premente e quindi l'attrito $F_A = \\mu_d R_N$. Meno attrito → meno forza necessaria."
+      },
+      {
+        type: "formula",
+        front: "Scrivi la formula della forza $F$ per il MRU della cassa tirata con fune inclinata.",
+        back: "$$F = \\frac{\\mu_d mg}{\\cos\\theta + \\mu_d\\sin\\theta}$$<br>Ricavata imponendo $\\vec{a} = \\vec{0}$ e proiettando su $x$ e $y$. Il denominatore ha un massimo che corrisponde all'angolo di fatica minima."
+      },
+      {
+        type: "tranello",
+        front: "⚠️ Su un piano orizzontale con una forza inclinata, $R_N = mg$?",
+        back: "<strong>NO!</strong> Se c'è una forza con componente verticale: $R_N = mg - F\\sin\\theta$. Anche su piano orizzontale, la $R_N$ dipende da tutte le forze verticali, non solo dal peso."
+      },
+      {
+        type: "domanda",
+        front: "Qual è il metodo corretto per risolvere problemi di dinamica?",
+        back: "1. Diagramma corpo libero. 2. Scelta assi. 3. II Legge di Newton vettoriale. 4. Proiezione sugli assi. 5. Ricavare $R_N$ dall'asse $\\perp$. 6. Sostituire nell'asse $\\parallel$. 7. Verificare casi limite. <strong>Mai improvvisare — scrivere le equazioni!</strong>"
+      }
+    ]
+  };
+</script>
+<script src="../js/renderer.js?v=1773641082"></script>
+<script src="../js/graphs.js?v=1773641082"></script>
+
+<script>
+// Sidebar toggle (open by default)
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+</body>
+</html>
