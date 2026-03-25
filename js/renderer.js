@@ -27,6 +27,12 @@ function renderLesson(lesson) {
     html += renderSection(sec);
   }
 
+  // ─── Ko-fi banner ───
+  html += `<div style="text-align: center; margin: 3rem 0 1rem; padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg);">
+    <p style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-secondary);">Ti è stata utile questa lezione?</p>
+    <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1rem;">☕ Offrimi un caffè</a>
+  </div>`;
+
   // ─── Flashcards ───
   if (lesson.oral_cards && lesson.oral_cards.length > 0) {
     html += `<div class="section-divider" id="oral-cards-section">🃏 Flashcard per l'Orale</div>`;
@@ -77,6 +83,8 @@ function renderLesson(lesson) {
   // Footer
   html += `<footer class="site-footer" style="margin-top: 60px;">
     Realizzato da <span class="footer-name">Elia Cinti</span> · <span class="footer-uni">Ingegneria Informatica — Università di Roma Tor Vergata</span> · A.A. 2025/2026
+    <br>
+    <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-size: 0.85rem;">☕ Offrimi un caffè</a>
   </footer>`;
 
   main.innerHTML = html;
