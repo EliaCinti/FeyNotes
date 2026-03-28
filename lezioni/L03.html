@@ -121,7 +121,7 @@ const LESSON = {
           }
         ]
       },
-      
+
       // ──────────────── FIGURA: Δr → tangente ────────────────
       {
         id: "s3-fig-delta-r",
@@ -138,7 +138,7 @@ const LESSON = {
         <p><strong>Pannello 4</strong> (in basso a destra) — $\\Delta t \\to 0$. I punti collassano. $\\Delta\\vec{r}$ è diventato $d\\vec{r}$: <strong>tangente alla traiettoria</strong> nel punto $\\vec{r}(t)$. Dividendo per $dt$ si ottiene $\\vec{v}(t) = d\\vec{r}/dt$, con direzione tangente e verso concorde al moto.</p>`
       },
 
-      // ──────────────── SEZIONE 3: VELOCITÀ MEDIA vs ISTANTANEA ────────────────
+      // ──────────────── NOTE BOX: VELOCITÀ MEDIA vs ISTANTANEA ────────────────
       {
         id: "s3-vm-non-percorso",
         type: "note_box",
@@ -147,7 +147,7 @@ const LESSON = {
 <p>Puoi percorrere una traiettoria rettilinea o un giro del mondo: se parti e arrivi nello stesso modo, la velocità media è la stessa. Per questo la velocità <strong>istantanea</strong> è l'informazione davvero utile — ti dice cosa sta succedendo <em>adesso</em>.</p>`
       },
 
-      // ──────────────── SEZIONE 4: ACCELERAZIONE ────────────────
+      // ──────────────── SEZIONE: ACCELERAZIONE ────────────────
       {
         id: "s3-accelerazione",
         type: "section",
@@ -173,53 +173,14 @@ const LESSON = {
           {
             subtitle: "Perché l'accelerazione è vettoriale?",
             content: `<p>$\\vec{a}$ è la variazione di un <strong>vettore</strong> ($\\vec{v}$). Questo significa che l'accelerazione è non nulla se cambia <strong>anche solo una</strong> delle tre caratteristiche della velocità:</p>
-<p>• Cambia il <strong>modulo</strong> (il corpo accelera o rallenta)</p>
-<p>• Cambia la <strong>direzione</strong> (il corpo curva, anche senza cambiare velocità scalare)</p>
-<p>• Cambia il <strong>verso</strong> (il corpo inverte la marcia)</p>`
+<p>• Cambia il <strong>modulo</strong> (il corpo accelera o rallenta — come premere l'acceleratore o il freno in auto)</p>
+<p>• Cambia la <strong>direzione</strong> (il corpo curva, anche senza cambiare velocità scalare — come girare lo sterzo)</p>
+<p>• Cambia il <strong>verso</strong> (il corpo inverte la marcia)</p>
+<p>In fisica, "accelerare" non significa solo "andare più forte" — significa <strong>cambiare in qualsiasi modo il vettore velocità</strong>. Anche sterzare a velocità costante è un'accelerazione. Il moto circolare uniforme ne è l'esempio più chiaro: il modulo di $\\vec{v}$ non cambia, ma la direzione ruota continuamente → c'è un'accelerazione diretta verso il centro della traiettoria (centripeta).</p>`
           },
           {
             subtitle: "Direzione dell'accelerazione: NON è tangente alla traiettoria",
             content: `<p>A differenza della velocità (che è sempre tangente alla traiettoria), l'accelerazione punta nella direzione di $d\\vec{v}$ — la variazione del vettore velocità. In generale, <strong>non è tangente</strong> alla traiettoria.</p>`
-          }
-        ]
-      },
-
-      // ──────────────── SEZIONE 5: ANALOGIA AUTOMOBILISTICA ────────────────
-      {
-        id: "s3-analogia-auto",
-        type: "section",
-        title: "L'Analogia dell'Automobile",
-        icon: "🚗",
-        content: `<p>Il professore ha usato un'analogia potente: in un'auto, <strong>tutti i comandi</strong> sono "acceleratori" nel senso fisico del termine:</p>`,
-
-        table_compare: {
-          headers: ["Comando", "Cosa modifica", "Accelerazione?"],
-          rows: [
-            ["Pedale acceleratore", "Modulo di $\\vec{v}$ (aumenta)", "Sì — $\\vec{a}$ tangente, stesso verso di $\\vec{v}$"],
-            ["Pedale freno", "Modulo di $\\vec{v}$ (diminuisce)", "Sì — $\\vec{a}$ tangente, verso opposto a $\\vec{v}$"],
-            ["Sterzo", "Direzione di $\\vec{v}$", "Sì — $\\vec{a}$ ha componente perpendicolare a $\\vec{v}$"]
-          ]
-        },
-
-        extra_content: `<p>In fisica, "accelerare" non significa solo "andare più forte" — significa <strong>cambiare in qualsiasi modo il vettore velocità</strong>. Anche sterzare a velocità costante è un'accelerazione.</p>`
-      },
-
-      // ──────────────── SEZIONE 6: MOTO UNIFORME E MCU ────────────────
-      {
-        id: "s3-moto-uniforme",
-        type: "section",
-        title: "Casi Particolari: Moto Uniforme e Moto Circolare Uniforme",
-        icon: "🔄",
-        content: `<p>Due casi che creano confusione se non si capisce bene la differenza tra modulo e vettore:</p>`,
-
-        subsections: [
-          {
-            subtitle: "Moto Uniforme",
-            content: `<p>Un moto in cui il <strong>modulo</strong> della velocità è costante ($|\\vec{v}| = \\text{cost}$). Attenzione: questo <strong>non</strong> significa che la velocità (vettore) sia costante! Se il corpo percorre una curva a tachimetro fisso, il modulo non cambia ma la direzione sì → c'è accelerazione.</p>`
-          },
-          {
-            subtitle: "Moto Circolare Uniforme (MCU)",
-            content: `<p>Esempio fondamentale: il corpo percorre una circonferenza con $|\\vec{v}| = \\text{cost}$. Eppure è un <strong>moto accelerato</strong>! La direzione della velocità cambia in continuazione (resta tangente al cerchio) → serve un'accelerazione per mantenere questa traiettoria curva. Questa accelerazione punta verso il <strong>centro</strong> della circonferenza (accelerazione centripeta).</p>`
           }
         ]
       },
@@ -236,7 +197,7 @@ const LESSON = {
 <p>Per sapere se $\\vec{a} = 0$ serve conoscere $\\vec{a}(t)$, cioè il vettore che descrive la variazione del moto. $\\vec{v} = 0$ in un istante non dice nulla sull'accelerazione in quell'istante.</p>`
       },
 
-      // ──────────────── SEZIONE 7: LA TRIADE r, v, a ────────────────
+      // ──────────────── SEZIONE: LA TRIADE r, v, a ────────────────
       {
         id: "s3-triade",
         type: "section",
@@ -264,7 +225,7 @@ const LESSON = {
         ]
       },
 
-      // ──────────────── SEZIONE 8: PROBLEMA DIRETTO ────────────────
+      // ──────────────── SEZIONE: PROBLEMA DIRETTO ────────────────
       {
         id: "s3-problema-diretto",
         type: "section",
@@ -285,7 +246,7 @@ const LESSON = {
         ]
       },
 
-      // ──────────────── SEZIONE 9: PROBLEMA INVERSO ────────────────
+      // ──────────────── SEZIONE: PROBLEMA INVERSO ────────────────
       {
         id: "s3-problema-inverso",
         type: "section",
@@ -351,23 +312,6 @@ const LESSON = {
 <p>• Se il moto è in un piano → metti il piano su $xy$ (la componente $z$ è zero).</p>
 <p>• Se c'è una simmetria → sfruttala (es. coordinate polari per moti circolari).</p>
 <p>Un buon sistema di coordinate può ridurre un problema 3D a un problema 1D!</p>`
-      },
-
-      // ──────────────── GRAPH: ACCELERATION CONCEPT ────────────────
-      {
-        type: "graph",
-        id: "graph-acceleration-concept",
-        title: "Lancio Verticale: v = 0 ma a ≠ 0",
-        graphType: "acceleration_concept",
-        caption: "Osserva: all'apice la velocità è zero ma l'accelerazione g agisce sempre!"
-      },
-
-      // ──────────────── GRAPH: CIRCULAR MOTION ────────────────
-      {
-        id: "s3-graph-circular",
-        type: "graph",
-        graphType: "circular_motion",
-        title: "Moto Circolare Uniforme: $\\vec{v}$ tangente, $\\vec{a}$ verso il centro"
       }
     ],
 
@@ -394,16 +338,6 @@ const LESSON = {
         back: "<strong>Diretto</strong>: si conosce $\\vec{r}(t)$ e si <strong>deriva</strong> per trovare $\\vec{v}(t)$ e $\\vec{a}(t)$. Non servono condizioni iniziali.<br><strong>Inverso</strong>: si conosce $\\vec{a}(t)$ e si <strong>integra</strong> per trovare $\\vec{v}(t)$ e $\\vec{r}(t)$. Servono due condizioni iniziali: $\\vec{v}(t_0)$ e $\\vec{r}(t_0)$."
       },
       {
-        type: "domanda",
-        front: "Perché nel moto circolare uniforme c'è <strong>accelerazione</strong> anche se il modulo della velocità è costante?",
-        back: "Perché la <strong>direzione</strong> del vettore velocità cambia in continuazione (resta tangente al cerchio che gira). L'accelerazione misura la variazione del <strong>vettore</strong> velocità, non solo del modulo. Nel MCU, $\\vec{a}$ è diretta verso il centro (centripeta) ed è perpendicolare a $\\vec{v}$."
-      },
-      {
-        type: "domanda",
-        front: "In un'auto, quali comandi producono <strong>accelerazione</strong> in senso fisico?",
-        back: "<strong>Tutti</strong>: l'acceleratore (cambia il modulo di $\\vec{v}$ in aumento), il freno (cambia il modulo in diminuzione) e lo sterzo (cambia la direzione di $\\vec{v}$). In fisica, \"accelerare\" = cambiare il vettore velocità in qualsiasi modo."
-      },
-      {
         type: "tranello",
         front: "Se $\\vec{v} = 0$ in un certo istante, l'accelerazione è necessariamente zero?",
         back: "<strong>No!</strong> Un corpo può essere istantaneamente fermo con $\\vec{a} \\neq 0$. Esempi: pendolo nel punto di inversione, oggetto lanciato in alto all'apice. Per sapere se $\\vec{a} = 0$ devo guardare $\\vec{a}(t)$, non $\\vec{v}$ in un singolo istante. Come dice il prof: \"Non è una domanda ben posta\"."
@@ -428,8 +362,6 @@ const LESSON = {
 </script>
 <script src="../js/renderer.js?v=2"></script>
 <script src="../js/graphs.js?v=2"></script>
-
-<!-- Graph functions provided by graphs.js -->
 
 <script>
 // Sidebar toggle (open by default)
