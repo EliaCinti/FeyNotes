@@ -99,7 +99,7 @@ const LESSON = {
         type: "section",
         title: "Riepilogo: Posizione → Spostamento → Velocità",
         icon: "🔁",
-        content: `<p>Prima di introdurre l'accelerazione, la lezione ripercorre le definizioni già viste, con l'aggiunta di disegni fondamentali (pagina 1 degli appunti) che mostrano l'evoluzione grafica da $\\Delta\\vec{r}$ finito a $d\\vec{r}$ infinitesimo.</p>`,
+        content: `<p>Prima di introdurre l'accelerazione, la lezione ripercorre le definizioni già viste, con l'aggiunta di disegni fondamentali che mostrano l'evoluzione grafica da $\\Delta\\vec{r}$ finito a $d\\vec{r}$ infinitesimo.</p>`,
 
         formulas: [
           { label: "Posizione", latex: "\\vec{r}(t)" },
@@ -108,7 +108,7 @@ const LESSON = {
           { label: "Velocità istantanea", latex: "\\vec{v}(t) \\triangleq \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{r}}{\\Delta t} = \\frac{d\\vec{r}}{dt}" }
         ],
 
-        extra_content: `<p>La sequenza di 4 disegni nei tuoi appunti è illuminante: mostra come al diminuire di $\\Delta t$, il vettore $\\Delta\\vec{r}$ si accorcia e <strong>ruota</strong> fino a diventare tangente alla traiettoria. Nell'ultimo disegno $\\Delta\\vec{r}$ è "praticamente tangente". Hai annotato: <em>"So direzione e verso. Manca il modulo."</em></p>`,
+        extra_content: `<p>La sequenza di 4 disegni è illuminante: mostra come al diminuire di $\\Delta t$, il vettore $\\Delta\\vec{r}$ si accorcia e <strong>ruota</strong> fino a diventare tangente alla traiettoria. Nell'ultimo disegno $\\Delta\\vec{r}$ è "praticamente tangente". Hai annotato: <em>"So direzione e verso. Manca il modulo."</em></p>`,
 
         subsections: [
           {
@@ -120,6 +120,22 @@ const LESSON = {
 <p>"Conosco il moto quando conosco $\\vec{v}(t)$" — l'annotazione è nel tuo quaderno.</p>`
           }
         ]
+      },
+      
+      // ──────────────── FIGURA: Δr → tangente ────────────────
+      {
+        id: "s3-fig-delta-r",
+        type: "section",
+        title: "Dal finito all'infinitesimo: come nasce la velocità istantanea",
+        icon: "🎯",
+        content: `<p>La sequenza di quattro disegni qui sotto è il cuore concettuale del passaggio dalla velocità media a quella istantanea. Leggi da sinistra a destra, dall'alto in basso:</p>
+        <figure style="text-align: center; margin: 1.5rem 0;">
+          <img src="../assets/L03/delta-r-tangente.jpeg" alt="Sequenza: Δr che diventa tangente alla traiettoria al diminuire di Δt" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+        </figure>
+        <p><strong>Pannello 1</strong> (in alto a sinistra) — $\\Delta t$ è grande. Il punto $\\vec{r}(t+\\Delta t)$ è lontano da $\\vec{r}(t)$ lungo la traiettoria. Il vettore spostamento $\\Delta\\vec{r}$ (arancione) è lungo e "taglia" la curva: è una <strong>secante</strong>.</p>
+        <p><strong>Pannello 2</strong> (in alto a destra) — $\\Delta t$ si riduce. $\\vec{r}(t+\\Delta t)$ si avvicina a $\\vec{r}(t)$. $\\Delta\\vec{r}$ si accorcia e <strong>ruota</strong>, allineandosi di più con la curva. Le linee tratteggiate mostrano le posizioni precedenti per confronto.</p>
+        <p><strong>Pannello 3</strong> (in basso a sinistra) — $\\Delta t$ ancora più piccolo. I due punti sono quasi sovrapposti. $\\Delta\\vec{r}$ è molto corto e quasi tangente.</p>
+        <p><strong>Pannello 4</strong> (in basso a destra) — $\\Delta t \\to 0$. I punti collassano. $\\Delta\\vec{r}$ è diventato $d\\vec{r}$: <strong>tangente alla traiettoria</strong> nel punto $\\vec{r}(t)$. Dividendo per $dt$ si ottiene $\\vec{v}(t) = d\\vec{r}/dt$, con direzione tangente e verso concorde al moto.</p>`
       },
 
       // ──────────────── SEZIONE 3: VELOCITÀ MEDIA vs ISTANTANEA ────────────────

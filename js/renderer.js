@@ -168,6 +168,15 @@ function renderSection(sec) {
         </div>
       </div>`;
       break;
+    
+    case 'oral_box':
+      h += `<div class="content-section" id="${id}">
+        <div class="alert-box" style="background: #1a1528; border-color: #7B5EA7;">
+          <div class="ab-title" style="color: #c4a6e8;">${sec.title}</div>
+          ${sec.content}
+        </div>
+      </div>`;
+      break;
 
     case 'method_box':
       h += `<div class="content-section" id="${id}">
