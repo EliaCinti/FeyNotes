@@ -211,6 +211,35 @@
             color: var(--accent-amber);
         }
 
+        .about-text a.highlight {
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent-amber-dim);
+            transition: border-color var(--transition-fast);
+        }
+
+        .about-text a.highlight:hover {
+            border-bottom-style: solid;
+            border-color: var(--accent-amber);
+        }
+
+        .about-cmd {
+            font-size: 13px;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+
+        .about-cmd .prompt {
+            color: var(--accent-amber);
+        }
+
+        .about-block {
+            margin-bottom: 28px;
+        }
+
+        .about-block:last-child {
+            margin-bottom: 0;
+        }
+
         .about-features {
             display: flex;
             gap: 32px;
@@ -485,14 +514,36 @@
         <div class="container">
             <div class="section-label fade-in fade-in-delay-2">// about</div>
             <div class="about-content fade-in fade-in-delay-3">
-                <p class="about-text">
-                    Ciao, sono <span class="highlight">Elia Cinti</span>. 
-                    Studio Ingegneria Informatica a Roma Tor Vergata. 
-                    Qui raccolgo i miei appunti di lezione &mdash; strutturati, 
-                    revisionati, e con flashcard per il ripasso orale.
-                    Ogni lezione viene trascritta, rielaborata e arricchita 
-                    con formule, diagrammi e domande tipo esame.
-                </p>
+
+                <div class="about-block">
+                    <div class="about-cmd"><span class="prompt">$</span> whoami</div>
+                    <p class="about-text">
+                        Sono <span class="highlight">Elia Cinti</span>, studente di 
+                        Ingegneria Informatica a Roma Tor Vergata. FeyNotes &egrave; nato 
+                        da un'esigenza semplice: capire davvero quello che studio. 
+                        Ogni lezione viene trascritta, destrutturata e ricostruita in 
+                        appunti che abbiano senso &mdash; non copia-incolla dalle slide, 
+                        ma roba che leggi e capisci.
+                    </p>
+                    <p class="about-text" style="margin-top: 12px;">
+                        Se vuoi curiosare su cosa sto costruendo, il mio 
+                        <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer" class="highlight">GitHub</a> 
+                        &egrave; sempre aperto. E se FeyNotes ti &egrave; stato utile, puoi 
+                        aiutarmi a tenerlo in piedi offrendomi un caff&egrave; 
+                        <a href="#support" class="highlight">qui in basso</a> &mdash; 
+                        se poi ci conosciamo e ci vediamo, il caff&egrave; te lo offro io.
+                    </p>
+                </div>
+
+                <div class="about-block">
+                    <div class="about-cmd"><span class="prompt">$</span> cat filosofia.txt</div>
+                    <p class="about-text">
+                        Gli appunti buoni non dovrebbero essere un vantaggio competitivo. 
+                        Se qualcosa mi ha aiutato a capire un concetto, perch&eacute; tenerlo 
+                        chiuso in un iPad? FeyNotes &egrave; gratis, aperto, e lo sar&agrave; sempre.
+                    </p>
+                </div>
+
                 <div class="about-features">
                     <div class="about-feature">
                         <div class="about-feature-dot"></div>
@@ -553,7 +604,7 @@
     </section>
 
     <!-- Support / Ko-fi -->
-    <section class="support">
+    <section class="support" id="support">
         <div class="container">
             <p class="support-text">Se ti sono stati utili, offrimi un caff&egrave;</p>
             <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer" class="support-link">
