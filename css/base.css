@@ -273,15 +273,17 @@ a:hover { color: var(--text-primary); }
   line-height: 1.9;
   max-width: 720px;
 }
-.fn-about-text .hl { color: var(--accent); }
+.fn-about-text .hl { color: #ffffff; font-weight: 600; }
 .fn-about-text a.hl {
   text-decoration: none;
-  border-bottom: 1px dashed var(--accent-dim);
+  color: #ffffff;
+  font-weight: 600;
+  border-bottom: 1px dashed rgba(255,255,255,0.4);
   transition: border-color var(--transition-fast);
 }
 .fn-about-text a.hl:hover {
   border-bottom-style: solid;
-  border-color: var(--accent);
+  border-color: #ffffff;
 }
 .fn-about-block { margin-bottom: 28px; }
 .fn-about-block:last-child { margin-bottom: 0; }
