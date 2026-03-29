@@ -216,7 +216,8 @@ a:hover { color: var(--text-primary); }
 .fn-label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--teal);
+  color: var(--text-primary);
+  font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -225,7 +226,8 @@ a:hover { color: var(--text-primary); }
 .fn-cmd {
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  color: var(--teal);
+  color: var(--text-primary);
+  font-weight: 700;
   margin-bottom: 10px;
 }
 .fn-cmd .prompt { color: var(--accent); }
@@ -458,7 +460,8 @@ a:hover { color: var(--text-primary); }
 .fn-section-label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--teal);
+  color: var(--text-primary);
+  font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 20px;
