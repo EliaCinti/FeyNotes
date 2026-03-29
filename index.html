@@ -1,200 +1,584 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fisica 1 — Study Guide</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FeyNotes — Appunti di Ingegneria Informatica, Università di Roma Tor Vergata. Lezioni strutturate, flashcard e formule.">
+    <meta name="author" content="Elia Cinti">
+    <meta name="robots" content="index, follow">
+
+    <!-- Security meta tags -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="FeyNotes — Appunti di Ingegneria Informatica">
+    <meta property="og:description" content="Appunti strutturati, flashcard e formule per Ingegneria Informatica — Tor Vergata.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eliacinti.dev">
+
+    <title>FeyNotes — Appunti di Ingegneria Informatica</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           FeyNotes Homepage — Retro Terminal x Apple
+           ============================================ */
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-surface: #111111;
+            --bg-card: #141414;
+            --bg-card-hover: #1a1a1a;
+            --border-subtle: #1e1e1e;
+            --border-default: #2a2a2a;
+            --border-hover: #3a3a3a;
+            --text-primary: #f5f0e8;
+            --text-secondary: #c4b8a8;
+            --text-muted: #887e72;
+            --accent-amber: #ef9f27;
+            --accent-amber-dim: #d4901a;
+            --accent-green: #97c459;
+            --accent-green-dim: #7aad35;
+            --accent-red: #e24b4a;
+            --accent-blue: #85b7eb;
+            --font-mono: 'IBM Plex Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            --max-width: 720px;
+            --transition-fast: 0.15s ease;
+            --transition-default: 0.25s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- Scanline overlay (subtle CRT effect) --- */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            z-index: 9999;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Navigation --- */
+        .nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo span {
+            color: var(--accent-amber);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: color var(--transition-fast);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 80px 0 64px;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            color: var(--accent-green-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 32px;
+            background: var(--accent-amber);
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 480px;
+        }
+
+        /* --- About --- */
+        .about {
+            padding: 0 0 64px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--accent-green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .about-content {
+            border-left: 2px solid var(--border-default);
+            padding-left: 24px;
+        }
+
+        .about-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            max-width: 540px;
+        }
+
+        .about-text .highlight {
+            color: var(--accent-amber);
+        }
+
+        .about-features {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .about-feature {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .about-feature-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-amber-dim);
+        }
+
+        /* --- Courses --- */
+        .courses {
+            padding: 0 0 80px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            padding: 24px 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: 
+                border-color var(--transition-default),
+                background-color var(--transition-default),
+                transform var(--transition-fast);
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .course-card:hover .course-arrow {
+            color: var(--accent-amber);
+            transform: translateX(4px);
+        }
+
+        .course-card:hover .course-glow {
+            opacity: 1;
+        }
+
+        .course-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-amber-dim), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-default);
+        }
+
+        .course-icon {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .course-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .course-prof {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .course-count {
+            font-size: 11px;
+            color: var(--accent-amber-dim);
+        }
+
+        .course-arrow {
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: 
+                color var(--transition-fast),
+                transform var(--transition-fast);
+        }
+
+        .course-card--soon {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .course-card--soon:hover {
+            transform: none;
+            border-color: var(--border-default);
+            background: var(--bg-card);
+        }
+
+        .course-badge {
+            display: inline-block;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        /* --- Ko-fi / Support --- */
+        .support {
+            padding: 40px 0;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .support-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .support-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--accent-amber);
+            text-decoration: none;
+            padding: 10px 24px;
+            border: 1px solid var(--accent-amber-dim);
+            border-radius: 6px;
+            transition: 
+                background-color var(--transition-fast),
+                border-color var(--transition-fast);
+        }
+
+        .support-link:hover {
+            background: rgba(239, 159, 39, 0.08);
+            border-color: var(--accent-amber);
+        }
+
+        .support-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 24px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* --- Animations --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.1s; }
+        .fade-in-delay-2 { animation-delay: 0.2s; }
+        .fade-in-delay-3 { animation-delay: 0.3s; }
+        .fade-in-delay-4 { animation-delay: 0.4s; }
+        .fade-in-delay-5 { animation-delay: 0.5s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 600px) {
+            .hero { padding: 56px 0 48px; }
+            .hero-title { font-size: 28px; }
+            .courses-grid { grid-template-columns: 1fr; }
+            .about-features { flex-direction: column; gap: 12px; }
+            .nav-links { gap: 16px; }
+            .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ─── Header ─── -->
-<header id="site-header">
-  <a href="index.html" class="header-logo">
-    <span class="logo-icon">⚛️</span>
-    Fisica 1
-    <span class="logo-sub">Study Guide</span>
-  </a>
-  <nav class="header-nav">
-    <a href="index.html" class="active">Lezioni</a>
-    <a href="#">Formulario</a>
-    <a href="#">Esercizi</a>
-  </nav>
-</header>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="/" class="nav-logo">fey<span>_</span>notes</a>
+            <ul class="nav-links">
+                <li><a href="#corsi">corsi</a></li>
+                <li><a href="#about">about</a></li>
+                <li><a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<!-- ─── Page Content ─── -->
-<main class="page-wrapper">
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-label fade-in">// welcome</div>
+            <h1 class="hero-title fade-in fade-in-delay-1">
+                FeyNotes<span class="cursor"></span>
+            </h1>
+            <p class="hero-subtitle fade-in fade-in-delay-2">
+                appunti di ingegneria informatica &mdash; Tor Vergata
+            </p>
+        </div>
+    </header>
 
-  <div class="hero">
-    <span class="hero-badge">Tor Vergata — A.A. 2025/2026</span>
-    <h1>Fisica 1</h1>
-    <p>Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.</p>
-    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px; font-weight: 300;">di <strong style="color: var(--accent); font-weight: 600;">Elia Cinti</strong> — Ingegneria Informatica</p>
-  </div>
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-label fade-in fade-in-delay-2">// about</div>
+            <div class="about-content fade-in fade-in-delay-3">
+                <p class="about-text">
+                    Ciao, sono <span class="highlight">Elia Cinti</span>. 
+                    Studio Ingegneria Informatica a Roma Tor Vergata. 
+                    Qui raccolgo i miei appunti di lezione &mdash; strutturati, 
+                    revisionati, e con flashcard per il ripasso orale.
+                    Ogni lezione viene trascritta, rielaborata e arricchita 
+                    con formule, diagrammi e domande tipo esame.
+                </p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <div class="about-feature-dot"></div>
+                        lezioni strutturate
+                    </div>
+                    <div class="about-feature">
+                        <div class="about-feature-dot"></div>
+                        flashcard orali
+                    </div>
+                    <div class="about-feature">
+                        <div class="about-feature-dot"></div>
+                        formule &amp; diagrammi
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Cinematica -->
-  <div class="section-header">
-    <h2>🏃 Cinematica</h2>
-    <div class="section-line"></div>
-  </div>
+    <!-- Courses -->
+    <section class="courses" id="corsi">
+        <div class="container">
+            <div class="section-label fade-in fade-in-delay-3">// corsi</div>
+            <div class="courses-grid">
 
-  <div class="lessons-grid" id="cinematica-grid">
-    <!-- Populated by JS -->
-  </div>
+                <a href="/fisica1/" class="course-card fade-in fade-in-delay-3">
+                    <div class="course-glow"></div>
+                    <div class="course-icon">fn::fisica</div>
+                    <div class="course-name">Fisica 1</div>
+                    <div class="course-prof">Prof. Mercuri</div>
+                    <div class="course-meta">
+                        <span class="course-count">12 lezioni</span>
+                        <span class="course-arrow">&rarr;</span>
+                    </div>
+                </a>
 
-  <!-- Dinamica -->
-  <div class="section-header">
-    <h2>⚙️ Dinamica</h2>
-    <div class="section-line"></div>
-  </div>
+                <a href="/geometria/" class="course-card fade-in fade-in-delay-4">
+                    <div class="course-glow"></div>
+                    <div class="course-icon">fn::geometria</div>
+                    <div class="course-name">Geometria</div>
+                    <div class="course-prof">Trusiani / Di Gennaro</div>
+                    <div class="course-meta">
+                        <span class="course-count">3 lezioni</span>
+                        <span class="course-arrow">&rarr;</span>
+                    </div>
+                </a>
 
-  <div class="lessons-grid" id="dinamica-grid">
-    <div class="lesson-card" style="opacity: 0.4; cursor: default;">
-      <div class="card-num">Prossimamente</div>
-      <div class="card-title">Le lezioni di dinamica saranno aggiunte man mano che il corso procede.</div>
-    </div>
-  </div>
+                <div class="course-card course-card--soon fade-in fade-in-delay-5">
+                    <div class="course-icon">fn::controlli</div>
+                    <div class="course-name">Fondamenti di Controlli</div>
+                    <div class="course-prof">esercizi</div>
+                    <div class="course-meta">
+                        <span class="course-badge">coming soon</span>
+                    </div>
+                </div>
 
-  <!-- Termodinamica -->
-  <div class="section-header">
-    <h2>🌡️ Termodinamica</h2>
-    <div class="section-line"></div>
-  </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="lessons-grid" id="termo-grid">
-    <div class="lesson-card" style="opacity: 0.4; cursor: default;">
-      <div class="card-num">Prossimamente</div>
-      <div class="card-title">Le lezioni di termodinamica saranno aggiunte nella seconda parte del corso.</div>
-    </div>
-  </div>
+    <!-- Support / Ko-fi -->
+    <section class="support">
+        <div class="container">
+            <p class="support-text">Se ti sono stati utili, offrimi un caff&egrave;</p>
+            <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer" class="support-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                    <line x1="6" y1="1" x2="6" y2="4"/>
+                    <line x1="10" y1="1" x2="10" y2="4"/>
+                    <line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+                ko-fi.com/eliacinti
+            </a>
+        </div>
+    </section>
 
-</main>
-
-<footer class="site-footer">
-  Realizzato da <span class="footer-name">Elia Cinti</span> · <span class="footer-uni">Ingegneria Informatica — Università di Roma Tor Vergata</span> · A.A. 2025/2026
-  <br>
-  <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-size: 0.85rem;">☕ Offrimi un caffè</a>
-</footer>
-
-<script>
-/* ═══════════════════════════════════════════════════════════════
-   LESSON INDEX — Metadata for all lessons
-   ═══════════════════════════════════════════════════════════════ */
-const LESSON_INDEX = [
-  {
-    id: "L01", num: "Lezione 1", date: "11 Mar 2026",
-    title: "Introduzione, Metodo Scientifico e Prime Grandezze Cinematiche",
-    abstract: "Metodo galileiano, grandezze scalari vs vettoriali, posizione, spostamento, velocità media.",
-    category: "cinematica",
-    file: "lezioni/L01.html"
-  },
-  {
-    id: "L02", num: "Lezione 2", date: "4 Mar 2026",
-    title: "Vettore Posizione, Coseni Direttori e Velocità",
-    abstract: "Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.",
-    category: "cinematica",
-    file: "lezioni/L02.html"
-  },
-  {
-    id: "L03", num: "Lezione 3", date: "5 Mar 2026",
-    title: "Velocità Istantanea, Accelerazione e Moto Rettilineo",
-    abstract: "Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.",
-    category: "cinematica",
-    file: "lezioni/L03.html"
-  },
-  {
-    id: "L04", num: "Lezione 4", date: "9 Mar 2026",
-    title: "Moto Uniformemente Accelerato e Caduta Libera",
-    abstract: "Equazioni del moto UA, caduta libera, composizione dei moti, moto del proiettile.",
-    category: "cinematica",
-    file: "lezioni/L04.html"
-  },
-  {
-    id: "L05", num: "Lezione 5", date: "11 Mar 2026",
-    title: "Moto Circolare Uniforme e Moto Circolare Uniformemente Accelerato",
-    abstract: "MCU, MCUA, velocità angolare, accelerazione centripeta, relazione grandezze lineari-angolari.",
-    category: "cinematica",
-    file: "lezioni/L05.html"
-  },
-  {
-    id: "L06", num: "Lezione 6", date: "12 Mar 2026",
-    title: "Fondamenti di Cinematica del Moto Circolare",
-    abstract: "Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.",
-    category: "cinematica",
-    file: "lezioni/L06.html"
-  },
-  {
-    id: "L07", num: "Lezione 7", date: "16 Mar 2026",
-    title: "Introduzione alla Dinamica: Le Leggi di Newton, Quantita di Moto e Impulso",
-    abstract: "Dalla cinematica alla dinamica. Prima e Seconda Legge di Newton. Massa inerziale. Quantita di moto, teorema dell'impulso, forze impulsive e forza media.",
-    category: "dinamica",
-    file: "lezioni/L07.html"
-  },
-  {
-    id: "L08", num: "Lezione 8", date: "18 Mar 2026",
-    title: "Terzo Principio, Risoluzione Vettoriale delle Forze e Forza Peso",
-    abstract: "Terzo principio (azione-reazione). Equilibrio statico 2D con scomposizione vettoriale. Corpi a contatto. Forza peso e reazione normale.",
-    category: "dinamica",
-    file: "lezioni/L08.html"
-  },
-  {
-    id: "L09", num: "Lezione 9", date: "19 Mar 2026",
-    title: "Esercizi, Vincoli, Reazione Normale e Attrito",
-    abstract: "Esercizi su MCUA e teorema dell'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.",
-    category: "dinamica",
-    file: "lezioni/L09.html"
-},
-{
-    id: "L10", num: "Lezione 10", date: "25 Mar 2026",
-    title: "Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari",
-    abstract: "RN ≠ mg: problema dell'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata.",
-    category: "dinamica",
-    file: "lezioni/L10.html"
-  },
-];
-
-/* ─── Populate grids ─── */
-function populateGrid(gridId, category) {
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-
-  const lessons = LESSON_INDEX.filter(l => l.category === category);
-  if (lessons.length === 0) return;
-
-  // Remove placeholder
-  grid.innerHTML = '';
-
-  for (const l of lessons) {
-    grid.innerHTML += `
-      <a class="lesson-card" href="${l.file}">
-        <div class="card-num">${l.num}</div>
-        <div class="card-title">${l.title}</div>
-        <div class="card-abstract">${l.abstract}</div>
-        <div class="card-date">${l.date}</div>
-      </a>`;
-  }
-}
-
-populateGrid('cinematica-grid', 'cinematica');
-populateGrid('dinamica-grid', 'dinamica');
-populateGrid('termo-grid', 'termodinamica');
-
-/* ─── Render KaTeX in lesson cards ─── */
-document.querySelectorAll('.card-title, .card-abstract').forEach(el => {
-  const html = el.innerHTML;
-  if (!html.includes('$')) return;
-  let processed = html.replace(/(?<!\$)\$(?!\$)([^$]+?)\$(?!\$)/g, (_, tex) => {
-    const span = document.createElement('span');
-    try { katex.render(tex, span, { throwOnError: false }); }
-    catch (e) { span.textContent = tex; }
-    return span.outerHTML;
-  });
-  if (processed !== html) el.innerHTML = processed;
-});
-</script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span class="footer-copy">&copy; 2026 Elia Cinti</span>
+            <div class="footer-links">
+                <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a>
+                <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">ko-fi</a>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
