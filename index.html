@@ -22,7 +22,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================
@@ -36,23 +36,25 @@
         }
 
         :root {
-            --bg-deep: #0a0a0a;
-            --bg-surface: #111111;
-            --bg-card: #141414;
-            --bg-card-hover: #1a1a1a;
-            --border-subtle: #1e1e1e;
-            --border-default: #2a2a2a;
-            --border-hover: #3a3a3a;
-            --text-primary: #f5f0e8;
-            --text-secondary: #c4b8a8;
-            --text-muted: #887e72;
-            --accent-amber: #ef9f27;
-            --accent-amber-dim: #d4901a;
-            --accent-green: #97c459;
-            --accent-green-dim: #7aad35;
-            --accent-red: #e24b4a;
-            --accent-blue: #85b7eb;
-            --font-mono: 'IBM Plex Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            --bg-deep: #0b0d14;
+            --bg-surface: #12141e;
+            --bg-card: #1a1d2c;
+            --bg-card-hover: #22263a;
+            --border-subtle: #262a42;
+            --border-default: #31365a;
+            --border-hover: #3d4270;
+            --text-primary: #e4e7f0;
+            --text-secondary: #9ca1ba;
+            --text-muted: #7a7f9a;
+            --accent-amber: #6c8cff;
+            --accent-amber-dim: #4a65cc;
+            --accent-green: #63e6be;
+            --accent-green-dim: #3dbf96;
+            --accent-red: #ff6b6b;
+            --accent-blue: #74c0fc;
+            --accent-gold: #f0c050;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            --font-body: 'Outfit', system-ui, -apple-system, sans-serif;
             --max-width: 960px;
             --transition-fast: 0.15s ease;
             --transition-default: 0.25s ease;
@@ -63,11 +65,11 @@
         }
 
         body {
-            font-family: var(--font-mono);
+            font-family: var(--font-body);
             background-color: var(--bg-deep);
             color: var(--text-primary);
-            line-height: 1.7;
-            font-size: 14px;
+            line-height: 1.72;
+            font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -111,6 +113,7 @@
         }
 
         .nav-logo {
+            font-family: var(--font-mono);
             font-size: 15px;
             font-weight: 500;
             color: var(--text-primary);
@@ -129,6 +132,7 @@
         }
 
         .nav-links a {
+            font-family: var(--font-mono);
             font-size: 12px;
             color: var(--text-muted);
             text-decoration: none;
@@ -146,6 +150,7 @@
         }
 
         .hero-label {
+            font-family: var(--font-mono);
             font-size: 11px;
             color: var(--accent-green-dim);
             letter-spacing: 2px;
@@ -188,6 +193,7 @@
         }
 
         .section-label {
+            font-family: var(--font-mono);
             font-size: 11px;
             color: var(--accent-green);
             letter-spacing: 2px;
@@ -223,6 +229,7 @@
         }
 
         .about-cmd {
+            font-family: var(--font-mono);
             font-size: 13px;
             color: var(--accent-green);
             margin-bottom: 10px;
@@ -249,6 +256,7 @@
         }
 
         .about-feature {
+            font-family: var(--font-mono);
             font-size: 11px;
             color: var(--text-muted);
             display: flex;
@@ -318,6 +326,7 @@
         }
 
         .course-icon {
+            font-family: var(--font-mono);
             font-size: 13px;
             color: var(--text-muted);
             margin-bottom: 16px;
@@ -346,6 +355,7 @@
         }
 
         .course-count {
+            font-family: var(--font-mono);
             font-size: 11px;
             color: var(--accent-amber-dim);
         }
@@ -371,6 +381,7 @@
 
         .course-badge {
             display: inline-block;
+            font-family: var(--font-mono);
             font-size: 10px;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -397,11 +408,12 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: var(--font-mono);
             font-size: 13px;
-            color: var(--accent-amber);
+            color: var(--accent-gold);
             text-decoration: none;
             padding: 10px 24px;
-            border: 1px solid var(--accent-amber-dim);
+            border: 1px solid rgba(240,192,80,0.3);
             border-radius: 6px;
             transition: 
                 background-color var(--transition-fast),
@@ -409,8 +421,8 @@
         }
 
         .support-link:hover {
-            background: rgba(239, 159, 39, 0.08);
-            border-color: var(--accent-amber);
+            background: rgba(240,192,80,0.08);
+            border-color: var(--accent-gold);
         }
 
         .support-link svg {
@@ -431,6 +443,7 @@
         }
 
         .footer-copy {
+            font-family: var(--font-mono);
             font-size: 11px;
             color: var(--text-muted);
         }
@@ -441,6 +454,7 @@
         }
 
         .footer-links a {
+            font-family: var(--font-mono);
             font-size: 11px;
             color: var(--text-muted);
             text-decoration: none;
