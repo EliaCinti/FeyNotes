@@ -850,3 +850,90 @@ a:hover { color: #8da8ff; }
   .formula-item { flex-direction: column; gap: 4px; }
   .formula-label { min-width: unset; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   FEYNOTES GLOBAL — Header home link & cursor
+   ═══════════════════════════════════════════════════════════════ */
+.header-home {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  transition: color var(--transition);
+}
+.header-home:hover { color: var(--text-primary); }
+.header-home-accent { color: var(--accent); }
+.header-cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 14px;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: headerBlink 1s step-end infinite;
+}
+@keyframes headerBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.header-sep {
+  color: var(--border-light);
+  font-size: 1rem;
+  font-weight: 300;
+  margin: 0 10px;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEYNOTES GLOBAL — Updated footer
+   ═══════════════════════════════════════════════════════════════ */
+.site-footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-footer-links {
+  display: flex;
+  gap: 20px;
+}
+.site-footer-links a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.site-footer-links a:hover { color: var(--text-secondary); }
+.site-footer .footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.site-footer-coffee {
+  display: block;
+  text-align: center;
+  padding: 20px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.site-footer-coffee a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.site-footer-coffee a:hover { color: #f5d070; }
+
+@media (max-width: 600px) {
+  .site-footer-inner {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
