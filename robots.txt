@@ -1,3 +1,5 @@
+
+cat > robots.txt << 'EOF'
 User-agent: *
 Allow: /
 

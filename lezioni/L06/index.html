@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 6 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 6: Fondamenti di Cinematica del Moto Circolare. Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 6: Fondamenti di Cinematica del Moto Circolare — Fisica 1">
+  <meta property="og:description" content="Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/lezioni/L06/">
+  <link rel="canonical" href="https://eliacinti.dev/lezioni/L06/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=4">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 6 — Fondamenti di Cinematica del Moto Circolare",
+  "description": "Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/lezioni/L06/",
+  "datePublished": "2026-03-12",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    <span class="logo-icon">⚛️</span>
+    Fisica 1
+  </a>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/lezioni/L05/">← Prec.</a>
+      <a href="/lezioni/L07/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L06", date: "Lezione 6 — 12 Mar 2026",
+    title: "Fondamenti di Cinematica del Moto Circolare",
+    abstract: "Descrizione angolare del moto circolare: posizione angolare, velocita angolare, accelerazione angolare. Leggi orarie del MCU e del MCUA. Periodo e frequenza. Trattazione vettoriale con il prodotto vettoriale. Esercizi pratici: giradischi e massa rotante.",
+
+    sections: [
+      // ──────────────── SEZIONE 1: DAL GENERALE ALL'ANGOLARE ────────────────
+      {
+        id: "s6-intro-angolare",
+        type: "section",
+        title: "Dal Moto Generico al Moto Circolare: Descrizione Angolare",
+        icon: "🔄",
+        content: `<p>Nella lezione precedente abbiamo visto che quando $\\rho = \\text{cost} = R$, il moto e <strong>circolare</strong>. Se fissiamo il piano di rotazione e il verso di rotazione, la posizione del punto lungo la circonferenza $C$ e completamente determinata da un <strong>unico scalare</strong>: l'angolo $\\theta(t)$.</p>
+<p>Questo ci permette di passare da una descrizione vettoriale a 3 componenti ($x, y, z$) a una descrizione <strong>scalare</strong> con una sola variabile: la <strong>posizione angolare</strong>. Pero attenzione: queste grandezze <em>sembrano</em> scalari ma <strong>non lo sono</strong> — sono vettoriali. Per la trattazione le consideriamo scalari solo perche fissiamo direzione e verso, e lavoriamo solo con il modulo.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Arco e angolo: la relazione fondamentale",
+            content: `<p>La relazione geometrica tra arco percorso $s$ e angolo $\\theta$ su una circonferenza di raggio $R$ e:</p>
+<p>• Per spostamenti <strong>infinitesimali</strong>: $ds = R\\,d\\theta$</p>
+<p>• Per spostamenti <strong>finiti</strong>: $\\Delta s = R\\,\\Delta\\theta$</p>
+<p>Questa relazione e la chiave che collega tutte le grandezze lineari a quelle angolari.</p>`
+          },
+          {
+            subtitle: "Le tre grandezze angolari fondamentali",
+            content: `<p><strong>Posizione angolare</strong> $\\theta(t)$: determina la collocazione spaziale del punto lungo la circonferenza $C$.</p>
+<p><strong>Velocita angolare</strong> $\\omega(t)$: la rapidita con cui il punto istante per istante si sposta lungo $C$.</p>
+<p>$$\\omega(t) = \\frac{d\\theta}{dt}$$</p>
+<p><strong>Accelerazione angolare</strong> $\\alpha(t)$: la variazione della rapidita angolare.</p>
+<p>$$\\alpha(t) = \\frac{d\\omega}{dt}$$</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Velocita angolare", latex: "\\omega(t) = \\frac{d\\theta}{dt}" },
+          { label: "Accelerazione angolare", latex: "\\alpha(t) = \\frac{d\\omega}{dt}" },
+          { label: "Relazione arco-angolo", latex: "ds = R\\,d\\theta \\quad \\Leftrightarrow \\quad \\Delta s = R\\,\\Delta\\theta" },
+          { label: "Velocita lineare da angolare", latex: "v = \\frac{ds}{dt} = R\\,\\frac{d\\theta}{dt} = R\\,\\omega" }
+        ]
+      },
+
+      // ──────────────── NOTE BOX: UNITA DI MISURA ANGOLARI ────────────────
+      {
+        id: "s6-note-unita",
+        type: "note_box",
+        title: "Unita di Misura Angolari (SI)",
+        content: `<p>Le unita nel Sistema Internazionale per le grandezze angolari:</p>
+<p>• <strong>Posizione angolare $\\theta$</strong>: radianti (rad) — adimensionale</p>
+<p>• <strong>Velocita angolare $\\omega$</strong>: rad/s</p>
+<p>• <strong>Accelerazione angolare $\\alpha$</strong>: rad/s$^2$</p>
+<p>Ricorda: $2\\pi$ rad $= 360°$, quindi $1$ rad $\\approx 57.3°$.</p>`
+      },
+
+      // ──────────────── SEZIONE 2: LEGGI ORARIE ────────────────
+      {
+        id: "s6-leggi-orarie",
+        type: "section",
+        title: "Leggi Orarie Angolari del Moto Circolare",
+        icon: "📐",
+        content: `<p>Partendo dalle definizioni di $\\omega$ e $\\alpha$, possiamo integrare per ottenere le leggi orarie generali del moto circolare. Con condizioni iniziali $\\theta(t_0) = \\theta_0$ e $t_0 = 0$:</p>
+<p>$$\\theta(t) = \\theta_0 + \\int_0^t \\omega(t')\\,dt'$$</p>
+<p>$$\\omega(t) = \\omega_0 + \\int_0^t \\alpha(t')\\,dt'$$</p>
+<p>Queste sono le <strong>leggi orarie angolari</strong> del moto circolare nella forma piu generale. Vediamo ora i casi particolari.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Caso 1: $\\omega = \\text{cost}$ — Moto Circolare Uniforme (MCU)",
+            content: `<p>Se la velocita angolare e costante ($\\alpha = 0$), le leggi orarie si semplificano enormemente:</p>
+<p>$$\\theta(t) = \\theta_0 + \\omega\\,t$$</p>
+<p>$$\\omega(t) = \\omega = \\text{cost}$$</p>
+<p>La velocita lineare $v = R\\omega$ sara <strong>costante</strong> poiche sia $v$ che $R$ sono costanti. Questo giustifica il nome "uniforme": il punto percorre archi uguali in tempi uguali.</p>`
+          },
+          {
+            subtitle: "Caso 2: $\\alpha = \\text{cost}$ — Moto Circolare Uniformemente Accelerato (MCUA)",
+            content: `<p>Se l'accelerazione angolare e costante ($\\alpha \\neq 0$, $\\alpha = \\text{cost}$), le leggi orarie diventano:</p>
+<p>$$\\theta(t) = \\theta_0 + \\omega_0\\,t + \\frac{1}{2}\\alpha\\,t^2$$</p>
+<p>$$\\omega(t) = \\omega_0 + \\alpha\\,t$$</p>
+<p>Nota la <strong>perfetta analogia</strong> con le leggi del moto rettilineo uniformemente accelerato: $s(t) = s_0 + v_0 t + \\frac{1}{2}at^2$ e $v(t) = v_0 + at$. La struttura matematica e identica, cambiano solo i simboli!</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "MCU — legge oraria", latex: "\\theta(t) = \\theta_0 + \\omega\\,t" },
+          { label: "MCUA — legge oraria", latex: "\\theta(t) = \\theta_0 + \\omega_0\\,t + \\tfrac{1}{2}\\alpha\\,t^2" },
+          { label: "MCUA — velocita angolare", latex: "\\omega(t) = \\omega_0 + \\alpha\\,t" }
+        ],
+
+        table_compare: {
+          headers: ["Grandezza", "Moto Rettilineo", "Moto Circolare"],
+          rows: [
+            ["Posizione", "$s(t) = s_0 + v_0 t + \\frac{1}{2}at^2$", "$\\theta(t) = \\theta_0 + \\omega_0 t + \\frac{1}{2}\\alpha t^2$"],
+            ["Velocita", "$v(t) = v_0 + at$", "$\\omega(t) = \\omega_0 + \\alpha t$"],
+            ["Accelerazione", "$a = \\text{cost}$", "$\\alpha = \\text{cost}$"],
+            ["Relazione v-$\\omega$", "$v$", "$v = R\\omega$"],
+            ["Relazione s-$\\theta$", "$s$", "$s = R\\theta$"]
+          ]
+        }
+      },
+
+      // ──────────────── GRAPH: MCU ────────────────
+      {
+        type: "graph",
+        id: "graph-mcu-period",
+        title: "Moto Circolare Uniforme — Periodo e Frequenza",
+        graphType: "mcu_period",
+        caption: "Visualizza il MCU: il punto percorre la circonferenza con velocita angolare costante. Osserva il periodo T e la relazione v = Rw."
+      },
+
+      // ──────────────── SEZIONE 3: PERIODO E FREQUENZA ────────────────
+      {
+        id: "s6-periodo",
+        type: "section",
+        title: "Periodo $T$ e Frequenza $f$ nel MCU",
+        icon: "⏱️",
+        content: `<p>Il MCU e un <strong>moto periodico</strong> di periodo $T$: trascorso un tempo $T$, sia $\\omega$ che $\\theta$ riacquistano gli stessi valori. Formalmente:</p>
+<p>$$\\theta(t + T) = \\theta(t) \\qquad \\omega(t + T) = \\omega(t)$$</p>
+<p>In un periodo $T$ il punto compie un giro completo, percorrendo la circonferenza intera $2\\pi R$:</p>
+<p>$$v = \\frac{\\Delta s}{\\Delta t} = \\frac{2\\pi R}{T}$$</p>
+<p>Da cui, usando $v = R\\omega$:</p>`,
+
+        formulas: [
+          { label: "Periodo (IMPORTANTE)", latex: "T = \\frac{2\\pi}{\\omega}" },
+          { label: "Frequenza", latex: "f = \\frac{1}{T} = \\frac{\\omega}{2\\pi}" },
+          { label: "Velocita dal periodo", latex: "v = \\frac{2\\pi R}{T} = 2\\pi R f" }
+        ],
+
+        extra_content: `<p>Nei tuoi appunti hai incorniciato $T = \\frac{2\\pi}{\\omega}$ e scritto <strong>"importante"</strong>. Questa formula e fondamentale: collega il periodo (grandezza misurabile direttamente col cronometro) alla velocita angolare.</p>
+<p>La <strong>frequenza</strong> $f$ indica quanti giri al secondo compie il punto. Si misura in <strong>hertz</strong> (Hz = s$^{-1}$). Nell'uso comune si parla spesso di "giri al minuto" (rpm): per convertire, $f_{\\text{Hz}} = \\frac{\\text{rpm}}{60}$.</p>`
+      },
+
+      // ──────────────── ALERT: VELOCITA VARIA ────────────────
+      {
+        id: "s6-alert-non-uniforme",
+        type: "alert_box",
+        title: "Se la velocita varia, il moto NON e uniforme!",
+        content: `<p>Se la velocita (o equivalentemente $\\omega$) <strong>varia</strong> nel tempo, il moto non sara uniforme. Le conseguenze:</p>
+<p>• Anche il modulo di $\\vec{a}_N = v^2/R$ <strong>non</strong> sara costante (poiche $v$ cambia).</p>
+<p>• Se pero $\\alpha = d\\omega/dt = \\text{costante}$, il moto e MCUA e possiamo usare le leggi orarie quadratiche.</p>
+<p>• Nel MCUA, $\\rho = R$ resta costante (e sempre un cerchio), ma l'accelerazione totale ha <strong>sia</strong> componente tangenziale ($a_T \\neq 0$) <strong>sia</strong> normale ($a_N \\neq 0$).</p>`
+      },
+
+      // ──────────────── GRAPH: MCUA TRANSITORIO ────────────────
+      {
+        type: "graph",
+        id: "graph-mcua-transient",
+        title: "MCUA: Transitorio di Avviamento",
+        graphType: "mcua_transient",
+        caption: "Simula un disco che parte da fermo e accelera con alpha costante. Osserva come theta(t) cresce quadraticamente e omega(t) cresce linearmente."
+      },
+
+      // ──────────────── SEZIONE 4: TRATTAZIONE VETTORIALE ────────────────
+      {
+        id: "s6-vettoriale",
+        type: "section",
+        title: "Trattazione Vettoriale: $\\vec{\\omega}$ e il Prodotto Vettoriale",
+        icon: "✖️",
+        content: `<p>Finora abbiamo trattato $\\omega$ come uno scalare. Ma in realta e un <strong>vettore</strong> $\\vec{\\omega}$ con:</p>`,
+
+        subsections: [
+          {
+            subtitle: "Definizione di $\\vec{\\omega}$",
+            content: `<p>Il vettore velocita angolare $\\vec{\\omega}$ e definito come il vettore per cui:</p>
+<p>• <strong>Modulo</strong>: $|\\vec{\\omega}| = \\frac{d\\theta}{dt} = \\frac{v}{R}$</p>
+<p>• <strong>Direzione</strong>: perpendicolare ($\\perp$) al piano di rotazione</p>
+<p>• <strong>Verso</strong>: quello dal quale il moto appare <strong>antiorario</strong> (regola della mano destra: se le dita si chiudono nel verso di rotazione, il pollice indica $\\vec{\\omega}$)</p>`
+          },
+          {
+            subtitle: "La relazione vettoriale $\\vec{v} = \\vec{\\omega} \\times \\vec{R}$",
+            content: `<p>La velocita lineare si ottiene tramite il <strong>prodotto vettoriale</strong> (hai scritto: <em>"devo essere capace"</em>):</p>
+<p>$$\\vec{v} = \\vec{\\omega} \\times \\vec{R}$$</p>
+<p>Dove $\\vec{R}$ e il raggio vettore (dal centro della circonferenza al punto). Per trovare il <strong>modulo</strong>:</p>
+<p>$$|\\vec{v}| = |\\vec{\\omega}| \\cdot |\\vec{R}| \\cdot \\sin\\varphi$$</p>
+<p>Dove $\\varphi$ e l'angolo tra $\\vec{\\omega}$ e $\\vec{R}$. Poiche $\\vec{\\omega} \\perp$ al piano di rotazione e $\\vec{R}$ giace nel piano, l'angolo e sempre $90°$ e $\\sin 90° = 1$, quindi $v = \\omega R$ come gia sapevamo. Ma il prodotto vettoriale ci da anche la <strong>direzione</strong>: $\\vec{v}$ e tangente alla traiettoria!</p>`
+          },
+          {
+            subtitle: "L'accelerazione in forma vettoriale",
+            content: `<p>Derivando $\\vec{v} = \\vec{\\omega} \\times \\vec{R}$ rispetto al tempo (regola del prodotto per prodotti vettoriali):</p>
+<p>$$\\vec{a} = \\frac{d\\vec{v}}{dt} = \\underbrace{\\left(\\frac{d\\vec{\\omega}}{dt} \\times \\vec{R}\\right)}_{\\vec{a}_T \\text{ (tangenziale)}} + \\underbrace{\\left(\\vec{\\omega} \\times \\vec{v}\\right)}_{\\vec{a}_N \\text{ (normale)}}$$</p>
+<p>Nota che $\\frac{d\\vec{\\omega}}{dt} = \\vec{\\alpha}$ (l'accelerazione angolare vettoriale), e che $\\vec{\\alpha} \\parallel \\vec{\\omega}$ (stessa direzione, perpendicolare al piano).</p>`
+          },
+          {
+            subtitle: "Caso MCU: $\\vec{a} = \\vec{a}_N = \\vec{\\omega} \\times \\vec{v}$",
+            content: `<p>Nel MCU $\\vec{\\omega} = \\text{cost}$, quindi $\\vec{\\alpha} = \\vec{0}$ e il termine tangenziale sparisce:</p>
+<p>$$\\vec{a} \\equiv \\vec{a}_N = \\vec{\\omega} \\times \\vec{v} = -\\omega^2\\vec{R}$$</p>
+<p>Questa e l'<strong>accelerazione centripeta</strong>: ha la stessa direzione di $\\vec{R}$ ma verso <strong>opposto</strong> (punta verso il centro). Il segno meno conferma che l'accelerazione e diretta verso il centro della circonferenza.</p>`
+          }
+        ],
+
+        formulas: [
+          { label: "Velocita vettoriale", latex: "\\vec{v} = \\vec{\\omega} \\times \\vec{R}" },
+          { label: "Accelerazione totale", latex: "\\vec{a} = (\\vec{\\alpha} \\times \\vec{R}) + (\\vec{\\omega} \\times \\vec{v})" },
+          { label: "Accelerazione centripeta (MCU)", latex: "\\vec{a}_N = \\vec{\\omega} \\times \\vec{v} = -\\omega^2\\vec{R}" },
+          { label: "Modulo prodotto vettoriale", latex: "|\\vec{A} \\times \\vec{B}| = |\\vec{A}|\\,|\\vec{B}|\\,\\sin\\varphi" }
+        ]
+      },
+
+      // ──────────────── GRAPH: CROSS PRODUCT ────────────────
+      {
+        type: "graph",
+        id: "graph-cross-product",
+        title: "Prodotto Vettoriale: $\\vec{v} = \\vec{\\omega} \\times \\vec{R}$",
+        graphType: "cross_product_circular",
+        caption: "Visualizza come omega, R e v sono collegati dal prodotto vettoriale. omega e perpendicolare al piano, v e tangente."
+      },
+
+      // ──────────────── METHOD BOX ────────────────
+      {
+        id: "s6-metodo-conversione",
+        type: "method_box",
+        title: "Come Convertire tra Grandezze Lineari e Angolari",
+        steps: [
+          "<strong>Identifica $R$</strong> — il raggio della traiettoria circolare.",
+          "<strong>Da lineare ad angolare</strong>: $\\omega = v/R$ e $\\alpha = a_T/R$.",
+          "<strong>Da angolare a lineare</strong>: $v = R\\omega$ e $a_T = R\\alpha$.",
+          "<strong>Accelerazione centripeta</strong>: $a_N = v^2/R = R\\omega^2$.",
+          "<strong>Periodo</strong>: $T = 2\\pi/\\omega = 2\\pi R/v$.",
+          "<strong>Conversione rpm $\\to$ rad/s</strong>: $\\omega = \\frac{2\\pi \\cdot \\text{rpm}}{60}$."
+        ]
+      },
+
+      // ──────────────── SEZIONE 5: ESERCIZIO GIRADISCHI ────────────────
+      {
+        id: "s6-es-giradischi",
+        type: "section",
+        title: "Esercizio Svolto: Il Giradischi (Transitorio MCUA)",
+        icon: "🎵",
+        content: `<p>Dai tuoi appunti (pagina 4): un giradischi inizialmente <strong>fermo</strong> viene portato a 33 giri al minuto con accelerazione angolare costante in un tempo $t_f = 0.6$ s. Il disco ha raggio $R = 13$ cm.</p>
+<p><strong>Dati</strong>: $\\omega_0 = 0$, $\\theta_0 = 0$, $t_0 = 0$, $R = 0.13$ m, $\\omega_f = 33$ rpm, $t_f = 0.6$ s.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Passo 1: Conversione unita",
+            content: `<p>Prima convertiamo $\\omega_f$ in rad/s:</p>
+<p>$$\\omega_f = 33 \\;\\text{rpm} = 33 \\cdot \\frac{2\\pi}{60} \\;\\text{rad/s} \\approx 3.46 \\;\\text{rad/s}$$</p>`
+          },
+          {
+            subtitle: "Calcolo 1: $\\alpha$",
+            content: `<p>Dal MCUA: $\\omega(t) = \\omega_0 + \\alpha t$. A $t = t_f$: $\\omega_f = 0 + \\alpha \\cdot t_f$, quindi:</p>
+<p>$$\\alpha = \\frac{\\omega_f}{t_f} = \\frac{3.46}{0.6} \\approx 5.76 \\;\\text{rad/s}^2$$</p>`
+          },
+          {
+            subtitle: "Calcolo 2: $v$ al bordo dopo $t^* = 0.4$ s",
+            content: `<p>A $t^* = 0.4$ s la velocita angolare e: $\\omega(0.4) = \\alpha \\cdot t^* = 5.76 \\times 0.4 \\approx 2.30$ rad/s.</p>
+<p>La velocita lineare al bordo ($R = 0.13$ m):</p>
+<p>$$v = R\\omega = 0.13 \\times 2.30 \\approx 0.30 \\;\\text{m/s}$$</p>`
+          },
+          {
+            subtitle: "Calcolo 3: $\\theta$ dopo $t_f = 0.6$ s",
+            content: `<p>Dalla legge oraria del MCUA:</p>
+<p>$$\\theta(t_f) = \\theta_0 + \\omega_0 t_f + \\frac{1}{2}\\alpha t_f^2 = 0 + 0 + \\frac{1}{2}(5.76)(0.6)^2 \\approx 1.04 \\;\\text{rad}$$</p>
+<p>Cioe circa $59.4°$. In 0.6 secondi il disco compie poco meno di $\\frac{1}{6}$ di giro per arrivare alla velocita di regime.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 6: ESERCIZIO MASSA ROTANTE ────────────────
+      {
+        id: "s6-es-massa",
+        type: "section",
+        title: "Esercizio Svolto: Massa Rotante su Circonferenza",
+        icon: "🔩",
+        content: `<p>Dalla lavagna (pagina 5 dei tuoi appunti): una massa ruota su una circonferenza di raggio $R = 1$ m con accelerazione angolare costante $\\alpha = \\frac{\\omega_T}{T} = 0.4$ rad/s$^2$. Condizioni iniziali: $t_0 = 0$, $\\omega_0 = 0$, $\\theta_0 = 0$.</p>`,
+
+        subsections: [
+          {
+            subtitle: "Calcolo 1: Tempo per completare 1 giro ($t_F$)",
+            content: `<p>Dopo un giro completo $\\theta = 2\\pi$. Dal MCUA con $\\omega_0 = 0$:</p>
+<p>$$2\\pi = \\frac{1}{2}\\alpha\\,t_F^2 \\qquad \\Rightarrow \\qquad t_F = \\sqrt{\\frac{4\\pi}{\\alpha}} = \\sqrt{\\frac{4\\pi}{0.4}} \\approx 5.60 \\;\\text{s}$$</p>`
+          },
+          {
+            subtitle: "Calcolo 2: Velocita a fine primo giro $\\vec{v}_F$",
+            content: `<p>$\\omega_F = \\alpha \\cdot t_F = 0.4 \\times 5.60 \\approx 2.24$ rad/s.</p>
+<p>$$v_F = R\\omega_F = 1 \\times 2.24 \\approx 2.24 \\;\\text{m/s}$$</p>
+<p>La direzione di $\\vec{v}_F$ e tangente alla traiettoria nel punto raggiunto.</p>`
+          },
+          {
+            subtitle: "Calcolo 3: Accelerazione a fine primo giro $\\vec{a}_F$",
+            content: `<p>L'accelerazione ha due componenti:</p>
+<p>$$a_T = R\\alpha = 1 \\times 0.4 = 0.4 \\;\\text{m/s}^2 \\quad \\text{(tangenziale)}$$</p>
+<p>$$a_N = \\frac{v_F^2}{R} = \\frac{(2.24)^2}{1} \\approx 5.02 \\;\\text{m/s}^2 \\quad \\text{(centripeta)}$$</p>
+<p>$$|\\vec{a}_F| = \\sqrt{a_T^2 + a_N^2} = \\sqrt{0.16 + 25.2} \\approx 5.03 \\;\\text{m/s}^2$$</p>
+<p>Nota come la componente centripeta sia molto piu grande di quella tangenziale!</p>`
+          }
+        ]
+      },
+
+      // ──────────────── ALERT: ANALOGIA ────────────────
+      {
+        id: "s6-alert-analogia",
+        type: "alert_box",
+        title: "L'Analogia Lineare-Angolare e il Tuo Migliore Amico",
+        content: `<p>Se sai risolvere un problema di MUA rettilineo, sai gia risolvere un problema di MCUA. Basta sostituire:</p>
+<p>$s \\to \\theta$, $v \\to \\omega$, $a \\to \\alpha$. Tutte le formule hanno la stessa struttura. Se ti blocchi su un problema circolare, <strong>pensa a come lo risolveresti in linea retta</strong>, poi traduci le grandezze.</p>`
+      },
+
+      // ──────────────── GRAPH: ANGULAR KINEMATICS ────────────────
+      {
+        type: "graph",
+        id: "graph-angular-kinematics",
+        title: "Cinematica Angolare: $\\theta(t)$ e $\\omega(t)$",
+        graphType: "angular_kinematics",
+        caption: "Confronta i grafici theta(t) e omega(t) per MCU (lineare/costante) e MCUA (parabolico/lineare). Usa lo slider per cambiare alpha."
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Definisci <strong>posizione angolare</strong>, <strong>velocita angolare</strong> e <strong>accelerazione angolare</strong>. Scrivi le formule.",
+        back: "$\\theta(t)$: angolo che individua la posizione del punto sulla circonferenza.<br>$\\omega(t) = \\frac{d\\theta}{dt}$: rapidita con cui il punto si sposta lungo la circonferenza.<br>$\\alpha(t) = \\frac{d\\omega}{dt}$: variazione della rapidita angolare.<br>Relazione con le grandezze lineari: $v = R\\omega$, $a_T = R\\alpha$."
+      },
+      {
+        type: "definizione",
+        front: "Cos'e il <strong>periodo $T$</strong> nel MCU? Scrivi la formula e spiega il significato.",
+        back: "Il periodo $T$ e il tempo impiegato per compiere un giro completo ($2\\pi$ radianti): $$T = \\frac{2\\pi}{\\omega}$$ La frequenza e l'inverso: $f = 1/T = \\omega/(2\\pi)$. In un periodo: $\\Delta s = 2\\pi R$, $\\Delta\\theta = 2\\pi$."
+      },
+      {
+        type: "definizione",
+        front: "Come si definisce il <strong>vettore</strong> $\\vec{\\omega}$? Modulo, direzione, verso.",
+        back: "<strong>Modulo</strong>: $|\\vec{\\omega}| = d\\theta/dt = v/R$.<br><strong>Direzione</strong>: perpendicolare al piano di rotazione.<br><strong>Verso</strong>: quello dal quale il moto appare antiorario (regola della mano destra).<br>La velocita si ottiene da: $\\vec{v} = \\vec{\\omega} \\times \\vec{R}$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che nel MCU $\\vec{a}_N = -\\omega^2\\vec{R}$ partendo da $\\vec{v} = \\vec{\\omega} \\times \\vec{R}$.",
+        back: "Nel MCU $\\vec{\\omega} = \\text{cost}$, quindi: $$\\vec{a} = \\frac{d\\vec{v}}{dt} = \\vec{\\omega} \\times \\frac{d\\vec{R}}{dt} = \\vec{\\omega} \\times \\vec{v}$$ Ma $\\vec{v} = \\vec{\\omega} \\times \\vec{R}$, quindi: $$\\vec{a} = \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{R})$$ Usando la regola BAC-CAB: $\\vec{A} \\times (\\vec{B} \\times \\vec{C}) = \\vec{B}(\\vec{A}\\cdot\\vec{C}) - \\vec{C}(\\vec{A}\\cdot\\vec{B})$. Dato che $\\vec{\\omega} \\perp \\vec{R}$ ($\\vec{\\omega}\\cdot\\vec{R} = 0$): $$\\vec{a} = -\\vec{R}(\\vec{\\omega}\\cdot\\vec{\\omega}) = -\\omega^2\\vec{R} \\quad \\blacksquare$$ Direzione di $\\vec{R}$ ma verso opposto: punta verso il centro."
+      },
+      {
+        type: "domanda",
+        front: "Scrivi le leggi orarie del <strong>MCUA</strong> e spiega l'analogia con il MUA rettilineo.",
+        back: "$$\\theta(t) = \\theta_0 + \\omega_0 t + \\frac{1}{2}\\alpha t^2$$ $$\\omega(t) = \\omega_0 + \\alpha t$$ Analogia: sono identiche alle formule del MUA con $s \\to \\theta$, $v \\to \\omega$, $a \\to \\alpha$. La struttura matematica e la stessa perche l'accelerazione (angolare o lineare) e costante in entrambi i casi."
+      },
+      {
+        type: "domanda",
+        front: "Come si converte da <strong>giri al minuto (rpm)</strong> a <strong>rad/s</strong>?",
+        back: "$$\\omega_{\\text{rad/s}} = \\frac{2\\pi \\cdot n_{\\text{rpm}}}{60}$$ Esempio: 33 rpm = $33 \\cdot \\frac{2\\pi}{60} = \\frac{33\\pi}{30} \\approx 3.46$ rad/s. Il fattore $2\\pi/60$ converte giri in radianti e minuti in secondi."
+      },
+      {
+        type: "domanda",
+        front: "Nel MCUA, come calcoli il tempo per completare $n$ giri partendo da fermo?",
+        back: "Con $\\omega_0 = 0$ e $\\theta_0 = 0$, dopo $n$ giri si ha $\\theta = 2\\pi n$: $$2\\pi n = \\frac{1}{2}\\alpha t^2 \\quad \\Rightarrow \\quad t = \\sqrt{\\frac{4\\pi n}{\\alpha}}$$ Per 1 giro: $t = \\sqrt{4\\pi/\\alpha}$."
+      },
+      {
+        type: "tranello",
+        front: "Nel MCUA, l'accelerazione centripeta $a_N$ e costante?",
+        back: "<strong>No!</strong> $a_N = v^2/R = R\\omega^2$. Nel MCUA $\\omega$ cambia nel tempo ($\\omega = \\omega_0 + \\alpha t$), quindi $a_N$ <strong>cresce</strong> nel tempo. Solo $\\alpha$ (e quindi $a_T = R\\alpha$) e costante."
+      },
+      {
+        type: "tranello",
+        front: "Se $\\omega$ e negativo, cosa significa fisicamente?",
+        back: "Significa che il punto ruota nel verso <strong>orario</strong> (opposto al verso convenzionale positivo). La velocita lineare $v = R|\\omega|$ e sempre positiva (e un modulo), ma il <strong>verso</strong> di percorrenza e invertito. In forma vettoriale, $\\vec{\\omega}$ punta nella direzione opposta rispetto al caso antiorario."
+      },
+      {
+        type: "tranello",
+        front: "Perche il prodotto $\\vec{\\omega} \\times \\vec{R}$ da $\\vec{v}$ tangente e non radiale?",
+        back: "Perche il prodotto vettoriale $\\vec{A} \\times \\vec{B}$ e sempre <strong>perpendicolare</strong> ad entrambi i fattori. Dato che $\\vec{\\omega}$ e perpendicolare al piano e $\\vec{R}$ e nel piano (radiale), il risultato $\\vec{v}$ deve essere: perpendicolare a $\\vec{\\omega}$ (quindi nel piano) E perpendicolare a $\\vec{R}$ (quindi tangente alla circonferenza)."
+      }
+    ]
+  };
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=4"></script>
+<script src="/js/graphs.js?v=4"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

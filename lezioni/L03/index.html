@@ -3,21 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L03 — Fisica 1 Study Guide</title>
-  <link rel="stylesheet" href="../css/base.css?v=4">
-  <link rel="stylesheet" href="../css/style.css">
+  <title>Lezione 3 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 3: Velocità Istantanea, Accelerazione e Moto Rettilineo. Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 3: Velocità Istantanea, Accelerazione e Moto Rettilineo — Fisica 1">
+  <meta property="og:description" content="Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/lezioni/L03/">
+  <link rel="canonical" href="https://eliacinti.dev/lezioni/L03/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=4">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 3 — Velocità Istantanea, Accelerazione e Moto Rettilineo",
+  "description": "Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/lezioni/L03/",
+  "datePublished": "2026-03-05",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
 </head>
 <body>
 
+<!-- ─── Header ─── -->
 <header id="site-header">
   <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
   <span class="header-sep">/</span>
   <a href="/fisica1/" class="header-logo">
     <span class="logo-icon">⚛️</span>
     Fisica 1
-    <span class="logo-sub">Study Guide</span>
   </a>
   <nav class="header-nav">
     <a href="/fisica1/" class="active">Lezioni</a>
@@ -26,14 +65,15 @@
   </nav>
 </header>
 
+<!-- ─── Lesson Layout ─── -->
 <div class="lesson-layout">
   <aside class="lesson-sidebar">
     <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
     <div class="sidebar-title">In questa lezione</div>
     <div id="lesson-sidebar-links"></div>
     <div class="sidebar-nav-buttons">
-      <a href="L02.html">← Prec.</a>
-      <a href="L04.html">Succ. →</a>
+      <a href="/lezioni/L02/">← Prec.</a>
+      <a href="/lezioni/L04/">Succ. →</a>
     </div>
   </aside>
 
@@ -42,6 +82,7 @@
   </main>
 </div>
 
+<!-- ─── Lesson Data ─── -->
 <script>
 const LESSON = {
     id: "L03", date: "Lezione 3 — 5 Mar 2026",
@@ -362,12 +403,15 @@ const LESSON = {
       }
     ]
   };
-</script>
-<script src="../js/renderer.js?v=2"></script>
-<script src="../js/graphs.js?v=2"></script>
 
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=4"></script>
+<script src="/js/graphs.js?v=4"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
 <script>
-// Sidebar toggle (open by default)
 const toggleBtn = document.getElementById('sidebar-toggle');
 const sidebar = document.querySelector('.lesson-sidebar');
 if (toggleBtn && sidebar) {
@@ -377,5 +421,6 @@ if (toggleBtn && sidebar) {
   });
 }
 </script>
+
 </body>
 </html>

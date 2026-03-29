@@ -1,0 +1,319 @@
+const LESSON = {
+    id: "L03", date: "Lezione 3 — 5 Mar 2026",
+    title: "Accelerazione, Leggi Orarie e Problemi Diretti/Inversi",
+    abstract: "L'accelerazione come variazione dello stato di moto. La gerarchia posizione–velocità–accelerazione legata da derivate e integrali. Problemi diretti (derivare) e inversi (integrare). Perché v=0 non implica a=0.",
+
+    sections: [
+      // ──────────────── INFO ESAME ────────────────
+      {
+        id: "s3-info-esame",
+        type: "info_corso",
+        title: "Informazioni su Esame e Calendario",
+        icon: "📋",
+        data: {
+          rows: [
+            { label: "Primo appello",          val: "24 giugno 2026",                                      hl: true },
+            { label: "Scritto (Informatica 6 CFU)", val: "2 problemi — 1 ora e 20/30 min",                hl: false },
+            { label: "Scritto (altri indirizzi)",   val: "3 problemi — 2 ore",                             hl: false },
+            { label: "Peso dell'orale",        val: "L'orale può ribaltare lo scritto — peso maggiore!",   hl: true },
+            { label: "Fine teoria (Informatica)", val: "~8 maggio 2026",                                   hl: false },
+            { label: "Esercitazioni (tutor)",  val: "Lunedì 16:00–18:00, Aula A4 — Dott.ssa Ciscione",    hl: false },
+            { label: "Orario esteso",          val: "Da mercoledì 11 marzo, lezioni dalle 8:30",           hl: false }
+          ]
+        }
+      },
+
+      // ──────────────── SEZIONE 1: METODOLOGIA ────────────────
+      {
+        id: "s3-metodologia",
+        type: "section",
+        title: "Metodologia: dal Vettore all'Algebra",
+        icon: "🧠",
+        content: `<p>Il messaggio centrale della lezione — scritto in testa ai tuoi appunti — è chiaro: <strong>capire la scomposizione vettoriale in algebrico</strong>, sapendo scegliere un buon sistema di coordinate "furbo", e poi alla fine saper ricomporre in un vettore.</p>
+<p>La strategia risolutiva della fisica è un ciclo in tre passi:</p>`,
+
+        steps: [
+          "<strong>Scomposizione</strong>: un'equazione vettoriale viene proiettata sugli assi → diventa un <strong>sistema di equazioni algebriche</strong> (numeri con segno).",
+          "<strong>Risoluzione algebrica</strong>: si risolvono le equazioni scalari separatamente, asse per asse.",
+          "<strong>Ricomposizione</strong>: le soluzioni scalari vengono ricombinate con i versori per ottenere la <strong>soluzione vettoriale</strong> completa."
+        ],
+
+        extra_content: `<p>La fisica <strong>non dipende</strong> dal sistema di coordinate scelto — le leggi sono le stesse. Ma un sistema scelto <em>astutamente</em> (es. con un asse allineato alla direzione del moto) può <strong>semplificare drasticamente</strong> i calcoli, riducendo il numero di equazioni da risolvere.</p>`,
+
+        subsections: [
+          {
+            subtitle: "\"Componenti\" (femminile) vs \"Vettori Componenti\" (maschile)",
+            content: `<p>Una distinzione terminologica importante che il professore ha sottolineato:</p>
+<p>• La <strong>componente</strong> $x$ è un <em>numero</em> con segno (scalare): indica la proiezione del vettore sull'asse. Può essere positiva o negativa.</p>
+<p>• Il <strong>vettore componente</strong> $\\vec{x} = x\\hat{i}$ è un'entità geometrica orientata lungo l'asse.</p>
+<p>Non confonderli: la componente è il "quanto", il vettore componente è il "quanto e in che direzione".</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE 2: RIEPILOGO GRANDEZZE ────────────────
+      {
+        id: "s3-riepilogo",
+        type: "section",
+        title: "Riepilogo: Posizione → Spostamento → Velocità",
+        icon: "🔁",
+        content: `<p>Prima di introdurre l'accelerazione, la lezione ripercorre le definizioni già viste, con l'aggiunta di disegni fondamentali che mostrano l'evoluzione grafica da $\\Delta\\vec{r}$ finito a $d\\vec{r}$ infinitesimo.</p>`,
+
+        formulas: [
+          { label: "Posizione", latex: "\\vec{r}(t)" },
+          { label: "Spostamento", latex: "\\Delta\\vec{r}(t) \\triangleq \\vec{r}(t_2) - \\vec{r}(t_1) = \\vec{r}(t + \\Delta t) - \\vec{r}(t)" },
+          { label: "Velocità media", latex: "\\vec{v}_m \\triangleq \\frac{\\Delta\\vec{r}}{\\Delta t}" },
+          { label: "Velocità istantanea", latex: "\\vec{v}(t) \\triangleq \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{r}}{\\Delta t} = \\frac{d\\vec{r}}{dt}" }
+        ],
+
+        extra_content: `<p>La sequenza di 4 disegni è illuminante: mostra come al diminuire di $\\Delta t$, il vettore $\\Delta\\vec{r}$ si accorcia e <strong>ruota</strong> fino a diventare tangente alla traiettoria. Nell'ultimo disegno $\\Delta\\vec{r}$ è "praticamente tangente". Hai annotato: <em>"So direzione e verso. Manca il modulo."</em></p>`,
+
+        subsections: [
+          {
+            subtitle: "La velocità come \"stato di moto\"",
+            content: `<p>Il professore ha definito la velocità istantanea come lo <strong>\"stato di moto\"</strong> del corpo. Conoscere $\\vec{v}(t)$ significa conoscere istante per istante:</p>
+<p>• <strong>Direzione</strong> = direzione del moto = tangente alla traiettoria</p>
+<p>• <strong>Verso</strong> = il senso in cui il corpo si sta muovendo</p>
+<p>• <strong>Modulo</strong> = la rapidità (quanto veloce va)</p>
+<p>"Conosco il moto quando conosco $\\vec{v}(t)$" — l'annotazione è nel tuo quaderno.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── FIGURA: Δr → tangente ────────────────
+      {
+        id: "s3-fig-delta-r",
+        type: "section",
+        title: "Dal finito all'infinitesimo: come nasce la velocità istantanea",
+        icon: "🎯",
+        content: `<p>La sequenza di quattro disegni qui sotto è il cuore concettuale del passaggio dalla velocità media a quella istantanea. Leggi da sinistra a destra, dall'alto in basso:</p>
+        <figure style="text-align: center; margin: 1.5rem 0;">
+          <img src="../assets/L03/delta-r-tangente.jpeg" alt="Sequenza: Δr che diventa tangente alla traiettoria al diminuire di Δt" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+        </figure>
+        <p><strong>Pannello 1</strong> (in alto a sinistra) — $\\Delta t$ è grande. Il punto $\\vec{r}(t+\\Delta t)$ è lontano da $\\vec{r}(t)$ lungo la traiettoria. Il vettore spostamento $\\Delta\\vec{r}$ (arancione) è lungo e "taglia" la curva: è una <strong>secante</strong>.</p>
+        <p><strong>Pannello 2</strong> (in alto a destra) — $\\Delta t$ si riduce. $\\vec{r}(t+\\Delta t)$ si avvicina a $\\vec{r}(t)$. $\\Delta\\vec{r}$ si accorcia e <strong>ruota</strong>, allineandosi di più con la curva. Le linee tratteggiate mostrano le posizioni precedenti per confronto.</p>
+        <p><strong>Pannello 3</strong> (in basso a sinistra) — $\\Delta t$ ancora più piccolo. I due punti sono quasi sovrapposti. $\\Delta\\vec{r}$ è molto corto e quasi tangente.</p>
+        <p><strong>Pannello 4</strong> (in basso a destra) — $\\Delta t \\to 0$. I punti collassano. $\\Delta\\vec{r}$ è diventato $d\\vec{r}$: <strong>tangente alla traiettoria</strong> nel punto $\\vec{r}(t)$. Dividendo per $dt$ si ottiene $\\vec{v}(t) = d\\vec{r}/dt$, con direzione tangente e verso concorde al moto.</p>`
+      },
+
+      // ──────────────── NOTE BOX: VELOCITÀ MEDIA vs ISTANTANEA ────────────────
+      {
+        id: "s3-vm-non-percorso",
+        type: "note_box",
+        title: "📚 La velocità media ignora il percorso",
+        content: `<p>Il professore ha sottolineato un punto cruciale: la velocità media $\\vec{v}_m = \\Delta\\vec{r}/\\Delta t$ <strong>non contiene informazioni</strong> su cosa succede <em>tra</em> i due istanti $t_1$ e $t_2$. Si preoccupa solo delle posizioni iniziale e finale.</p>
+<p>Puoi percorrere una traiettoria rettilinea o un giro del mondo: se parti e arrivi nello stesso modo, la velocità media è la stessa. Per questo la velocità <strong>istantanea</strong> è l'informazione davvero utile — ti dice cosa sta succedendo <em>adesso</em>.</p>`
+      },
+
+      // ──────────────── SEZIONE: ACCELERAZIONE ────────────────
+      {
+        id: "s3-accelerazione",
+        type: "section",
+        title: "L'Accelerazione: la Variazione dello Stato di Moto",
+        icon: "🚀",
+        content: `<p>Ora il salto concettuale: così come la velocità descrive <em>come cambia la posizione</em>, l'<strong>accelerazione</strong> descrive <em>come cambia la velocità</em> (lo stato di moto). Non descrive il moto in sé, ma <strong>come il moto varia</strong>.</p>`,
+
+        formulas: [
+          { label: "Accelerazione media", latex: "\\vec{a}_m \\triangleq \\frac{\\Delta\\vec{v}}{\\Delta t}" },
+          { label: "Accelerazione istantanea", latex: "\\vec{a}(t) \\triangleq \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{v}}{\\Delta t} = \\frac{d\\vec{v}}{dt}" }
+        ],
+
+        extra_content: `<p>Poiché $\\vec{v} = d\\vec{r}/dt$, l'accelerazione è anche la <strong>derivata seconda</strong> della posizione:</p>`,
+
+        subsections: [
+          {
+            subtitle: "L'accelerazione come derivata seconda",
+            content: `<p>Concatenando le derivate:</p>`,
+            equations: [
+              "\\vec{a}(t) = \\frac{d\\vec{v}}{dt} = \\frac{d}{dt}\\left(\\frac{d\\vec{r}}{dt}\\right) = \\frac{d^2\\vec{r}}{dt^2}"
+            ]
+          },
+          {
+            subtitle: "Perché l'accelerazione è vettoriale?",
+            content: `<p>$\\vec{a}$ è la variazione di un <strong>vettore</strong> ($\\vec{v}$). Questo significa che l'accelerazione è non nulla se cambia <strong>anche solo una</strong> delle tre caratteristiche della velocità:</p>
+<p>• Cambia il <strong>modulo</strong> (il corpo accelera o rallenta — come premere l'acceleratore o il freno in auto)</p>
+<p>• Cambia la <strong>direzione</strong> (il corpo curva, anche senza cambiare velocità scalare — come girare lo sterzo)</p>
+<p>• Cambia il <strong>verso</strong> (il corpo inverte la marcia)</p>
+<p>In fisica, "accelerare" non significa solo "andare più forte" — significa <strong>cambiare in qualsiasi modo il vettore velocità</strong>. Anche sterzare a velocità costante è un'accelerazione. Il moto circolare uniforme ne è l'esempio più chiaro: il modulo di $\\vec{v}$ non cambia, ma la direzione ruota continuamente → c'è un'accelerazione diretta verso il centro della traiettoria (centripeta).</p>`
+          },
+          {
+            subtitle: "Direzione dell'accelerazione: NON è tangente alla traiettoria",
+            content: `<p>A differenza della velocità (che è sempre tangente alla traiettoria), l'accelerazione punta nella direzione di $d\\vec{v}$ — la variazione del vettore velocità. In generale, <strong>non è tangente</strong> alla traiettoria.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── ALERT BOX: v=0 ≠ a=0 ────────────────
+      {
+        id: "s3-trap-v-zero",
+        type: "alert_box",
+        title: "🚨 Trappola: \"Se un corpo sta fermo, l'accelerazione è zero?\"",
+        content: `<p>Dagli appunti: <em>"Non è una domanda ben posta, perché per rispondere devo sapere cosa accadrà alla velocità in un $dt$ successivo."</em></p>
+<p>La risposta è: <strong>non necessariamente</strong>. Un corpo può avere $\\vec{v} = 0$ e $\\vec{a} \\neq 0$. Esempi:</p>
+<p>• Un <strong>pendolo</strong> nel punto di inversione: si ferma un istante, ma l'accelerazione (gravitazionale) non è mai zero — subito dopo riparte.</p>
+<p>• Un oggetto lanciato in alto nell'istante in cui raggiunge la <strong>massima altezza</strong>: $v = 0$ ma $a = g$ verso il basso.</p>
+<p>Per sapere se $\\vec{a} = 0$ serve conoscere $\\vec{a}(t)$, cioè il vettore che descrive la variazione del moto. $\\vec{v} = 0$ in un istante non dice nulla sull'accelerazione in quell'istante.</p>`
+      },
+
+      // ──────────────── SEZIONE: LA TRIADE r, v, a ────────────────
+      {
+        id: "s3-triade",
+        type: "section",
+        title: "La Triade $\\vec{r}(t)$, $\\vec{v}(t)$, $\\vec{a}(t)$: la Cinematica è Coperta",
+        icon: "🔺",
+        content: `<p>Il professore ha scritto alla lavagna la gerarchia completa — con tre grandezze la cinematica è <strong>interamente descritta</strong>:</p>`,
+
+        formulas: [
+          { label: "Posizione", latex: "\\vec{r}(t)" },
+          { label: "Velocità (derivata di r)", latex: "\\vec{v}(t) = \\frac{d\\vec{r}}{dt}" },
+          { label: "Accelerazione (derivata di v)", latex: "\\vec{a}(t) = \\frac{d\\vec{v}}{dt} = \\frac{d^2\\vec{r}}{dt^2}" }
+        ],
+
+        extra_content: `<p>Dai tuoi appunti: <em>"Con queste 3 cose la cinematica è coperta. Il più importante è $\\vec{v}(t)$."</em></p>
+<p>Le tre grandezze sono legate da una catena di derivate (in avanti) e integrali (all'indietro):</p>`,
+
+        subsections: [
+          {
+            subtitle: "La catena derivata–integrale",
+            content: `<p>Leggendo da sinistra a destra si <strong>deriva</strong>, da destra a sinistra si <strong>integra</strong>:</p>
+<p style="text-align:center; font-size:1.1rem;">$\\vec{r}(t) \\;\\xrightarrow{d/dt}\\; \\vec{v}(t) \\;\\xrightarrow{d/dt}\\; \\vec{a}(t)$</p>
+<p style="text-align:center; font-size:1.1rem;">$\\vec{r}(t) \\;\\xleftarrow{\\int\\,dt}\\; \\vec{v}(t) \\;\\xleftarrow{\\int\\,dt}\\; \\vec{a}(t)$</p>
+<p>Questi legami generano i due tipi fondamentali di problemi cinematici.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE: PROBLEMA DIRETTO ────────────────
+      {
+        id: "s3-problema-diretto",
+        type: "section",
+        title: "Problema Diretto: dalla Posizione a Velocità e Accelerazione",
+        icon: "➡️",
+        content: `<p>Il <strong>problema diretto</strong> è il più semplice: si parte dalla conoscenza di $\\vec{r}(t)$ (la legge oraria) e si <strong>derivano</strong> le grandezze successive.</p>`,
+
+        steps: [
+          "Data $\\vec{r}(t)$, si calcola $\\vec{v}(t) = \\frac{d\\vec{r}}{dt}$ — derivando componente per componente.",
+          "Da $\\vec{v}(t)$, si calcola $\\vec{a}(t) = \\frac{d\\vec{v}}{dt}$ — derivando ancora componente per componente."
+        ],
+
+        extra_content: `<p>Non servono condizioni iniziali: la derivata è un'operazione <strong>locale</strong>, basta conoscere la funzione.</p>`,
+
+        formulas: [
+          { label: "Velocità", latex: "\\vec{v}(t) = \\frac{d\\vec{r}}{dt} = \\left(\\frac{dx}{dt},\\; \\frac{dy}{dt},\\; \\frac{dz}{dt}\\right)" },
+          { label: "Accelerazione", latex: "\\vec{a}(t) = \\frac{d\\vec{v}}{dt} = \\left(\\frac{dv_x}{dt},\\; \\frac{dv_y}{dt},\\; \\frac{dv_z}{dt}\\right)" }
+        ]
+      },
+
+      // ──────────────── SEZIONE: PROBLEMA INVERSO ────────────────
+      {
+        id: "s3-problema-inverso",
+        type: "section",
+        title: "Problema Inverso: dall'Accelerazione alla Posizione (Integrando)",
+        icon: "⬅️",
+        content: `<p>Il <strong>problema inverso</strong> è quello che si incontra più spesso in pratica: si conosce l'accelerazione (data dalle forze, come vedremo in dinamica) e si vuole trovare come si muove il corpo. Si procede <strong>integrando</strong>.</p>
+<p>Ma attenzione: ogni integrazione introduce una <strong>costante di integrazione</strong> — serve conoscere le <strong>condizioni iniziali</strong>!</p>`,
+
+        formulas: [
+          { label: "Da a(t) a v(t)", latex: "\\vec{v}(t) = \\vec{v}(t_0) + \\int_{t_0}^{t} \\vec{a}(t')\\,dt'" },
+          { label: "Da v(t) a r(t)", latex: "\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'" }
+        ],
+
+        extra_content: `<p>Il professore chiama queste le <strong>\"leggi orarie del moto\"</strong> (annotazione evidenziata nei tuoi appunti, pagina 3). Nella pratica, l'integrale vettoriale si risolve <strong>integrando le componenti scalari</strong> $v_x$, $v_y$, $v_z$ (o $a_x$, $a_y$, $a_z$) separatamente.</p>`,
+
+        subsections: [
+          {
+            subtitle: "La derivazione completa (dagli appunti pag. 3)",
+            content: `<p>Partiamo da $\\vec{v}(t) = d\\vec{r}/dt$. Integrando entrambi i membri tra $t_0$ e $t$:</p>
+<p>$$\\int_{t_0}^{t} d\\vec{r} = \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$$</p>
+<p>Il membro sinistro dà $\\vec{r}(t) - \\vec{r}(t_0)$. Quindi:</p>
+<p>$$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$$</p>
+<p>Analogamente, da $\\vec{a}(t) = d\\vec{v}/dt$:</p>
+<p>$$\\vec{v}(t) = \\vec{v}(t_0) + \\int_{t_0}^{t} \\vec{a}(t')\\,dt'$$</p>`
+          },
+          {
+            subtitle: "Perché servono le condizioni iniziali?",
+            content: `<p>L'integrale dà solo la <strong>variazione</strong> ($\\Delta\\vec{r}$ o $\\Delta\\vec{v}$), non il valore assoluto. Per sapere <em>dove</em> sei al tempo $t$, devi sapere <em>da dove</em> sei partito: $\\vec{r}(t_0)$ e $\\vec{v}(t_0)$. Senza queste informazioni, la soluzione ha infinite possibilità — gli integrali producono famiglie di soluzioni, e le condizioni iniziali selezionano quella corretta.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── METHOD BOX: SCHEMA PROBLEMI ────────────────
+      {
+        id: "s3-metodo-dir-inv",
+        type: "method_box",
+        title: "Schema Risolutivo: Problema Diretto vs Inverso",
+        steps: [
+          "<strong>DIRETTO</strong> — Conosci $\\vec{r}(t)$? → Deriva per ottenere $\\vec{v}(t)$, poi deriva ancora per $\\vec{a}(t)$. Nessuna condizione iniziale richiesta.",
+          "<strong>INVERSO</strong> — Conosci $\\vec{a}(t)$? → Integra con $\\vec{v}_0$ per ottenere $\\vec{v}(t)$. → Integra con $\\vec{r}_0$ per ottenere $\\vec{r}(t)$. Servono <strong>due</strong> condizioni iniziali: $\\vec{v}(t_0)$ e $\\vec{r}(t_0)$.",
+          "In entrambi i casi, <strong>lavora componente per componente</strong>: le operazioni vettoriali si traducono in operazioni scalari su $x$, $y$, $z$."
+        ]
+      },
+
+      // ──────────────── ALERT BOX: DIREZIONE ACCELERAZIONE ────────────────
+      {
+        id: "s3-trap-dir-acc",
+        type: "alert_box",
+        title: "🚨 Trappola: \"L'accelerazione è tangente alla traiettoria?\"",
+        content: `<p><strong>No!</strong> La velocità è sempre tangente alla traiettoria, ma l'accelerazione <strong>in generale no</strong>.</p>
+<p>$\\vec{a}$ punta nella direzione di $d\\vec{v}$, cioè verso dove il vettore velocità sta <em>cambiando</em>. In un moto circolare uniforme, ad esempio, $\\vec{a}$ è <strong>perpendicolare</strong> a $\\vec{v}$ (punta verso il centro).</p>
+<p>Solo nel moto rettilineo $\\vec{a}$ è parallela (o antiparallela) a $\\vec{v}$.</p>`
+      },
+
+      // ──────────────── NOTE BOX: SCELTA COORDINATE ────────────────
+      {
+        id: "s3-note-coordinate",
+        type: "note_box",
+        title: "📚 Scegliere il Sistema di Coordinate \"Furbo\"",
+        content: `<p>La fisica non cambia al variare del sistema di coordinate. Ma la <strong>facilità dei calcoli</strong> sì — enormemente.</p>
+<p>Consigli pratici:</p>
+<p>• Se il moto è lungo una retta → metti un asse <strong>lungo la retta</strong> (le altre componenti sono zero).</p>
+<p>• Se il moto è in un piano → metti il piano su $xy$ (la componente $z$ è zero).</p>
+<p>• Se c'è una simmetria → sfruttala (es. coordinate polari per moti circolari).</p>
+<p>Un buon sistema di coordinate può ridurre un problema 3D a un problema 1D!</p>`
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Definisci <strong>accelerazione media</strong> e <strong>accelerazione istantanea</strong> in forma vettoriale.",
+        back: "$$\\vec{a}_m \\triangleq \\frac{\\Delta\\vec{v}}{\\Delta t}$$ $$\\vec{a}(t) \\triangleq \\lim_{\\Delta t \\to 0} \\frac{\\Delta\\vec{v}}{\\Delta t} = \\frac{d\\vec{v}}{dt}$$ L'accelerazione istantanea è la <strong>derivata della velocità</strong> rispetto al tempo. Equivalentemente, la <strong>derivata seconda della posizione</strong>: $\\vec{a} = d^2\\vec{r}/dt^2$."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è una <strong>legge oraria</strong>? Scrivi le due formule fondamentali del problema inverso.",
+        back: "La legge oraria esprime come la posizione evolve nel tempo. Le formule integrali sono: $$\\vec{v}(t) = \\vec{v}(t_0) + \\int_{t_0}^{t} \\vec{a}(t')\\,dt'$$ $$\\vec{r}(t) = \\vec{r}(t_0) + \\int_{t_0}^{t} \\vec{v}(t')\\,dt'$$ Richiedono le <strong>condizioni iniziali</strong> $\\vec{v}_0$ e $\\vec{r}_0$."
+      },
+      {
+        type: "definizione",
+        front: "Cosa significa \"la velocità istantanea è lo <strong>stato di moto</strong>\"?",
+        back: "Conoscere $\\vec{v}(t)$ in un istante significa conoscere simultaneamente: la <strong>direzione</strong> del moto (tangente alla traiettoria), il <strong>verso</strong> del moto, e il <strong>modulo</strong> (rapidità). $\\vec{v}(t)$ è la grandezza più importante della cinematica perché descrive completamente come si muove il corpo istante per istante."
+      },
+      {
+        type: "domanda",
+        front: "Qual è la differenza tra <strong>problema diretto</strong> e <strong>problema inverso</strong> in cinematica?",
+        back: "<strong>Diretto</strong>: si conosce $\\vec{r}(t)$ e si <strong>deriva</strong> per trovare $\\vec{v}(t)$ e $\\vec{a}(t)$. Non servono condizioni iniziali.<br><strong>Inverso</strong>: si conosce $\\vec{a}(t)$ e si <strong>integra</strong> per trovare $\\vec{v}(t)$ e $\\vec{r}(t)$. Servono due condizioni iniziali: $\\vec{v}(t_0)$ e $\\vec{r}(t_0)$."
+      },
+      {
+        type: "tranello",
+        front: "Se $\\vec{v} = 0$ in un certo istante, l'accelerazione è necessariamente zero?",
+        back: "<strong>No!</strong> Un corpo può essere istantaneamente fermo con $\\vec{a} \\neq 0$. Esempi: pendolo nel punto di inversione, oggetto lanciato in alto all'apice. Per sapere se $\\vec{a} = 0$ devo guardare $\\vec{a}(t)$, non $\\vec{v}$ in un singolo istante. Come dice il prof: \"Non è una domanda ben posta\"."
+      },
+      {
+        type: "tranello",
+        front: "L'accelerazione è sempre tangente alla traiettoria, come la velocità?",
+        back: "<strong>No!</strong> $\\vec{v}$ è sempre tangente alla traiettoria. $\\vec{a}$ punta nella direzione di $d\\vec{v}$, che in generale <strong>non</strong> è tangente. Nel MCU, $\\vec{a}$ è <strong>perpendicolare</strong> a $\\vec{v}$. Solo nel moto rettilineo $\\vec{a}$ è parallela (o antiparallela) a $\\vec{v}$."
+      },
+      {
+        type: "tranello",
+        front: "Moto uniforme = moto senza accelerazione?",
+        back: "<strong>No!</strong> \"Moto uniforme\" significa $|\\vec{v}| = \\text{cost}$ (modulo costante). Ma se la direzione cambia (es. curva), c'è accelerazione. $\\vec{a} = 0$ solo se $\\vec{v}$ (vettore) è costante, cioè nel moto <strong>rettilineo</strong> uniforme."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra il passaggio da $\\vec{a}(t) = d\\vec{v}/dt$ alla legge oraria integrale per $\\vec{v}(t)$.",
+        back: "Da $d\\vec{v} = \\vec{a}(t)\\,dt$, integriamo tra $t_0$ e $t$: $$\\int_{t_0}^{t} d\\vec{v} = \\int_{t_0}^{t} \\vec{a}(t')\\,dt'$$ Il membro sinistro dà $\\vec{v}(t) - \\vec{v}(t_0)$. Quindi: $$\\vec{v}(t) = \\vec{v}(t_0) + \\int_{t_0}^{t} \\vec{a}(t')\\,dt' \\quad \\blacksquare$$"
+      }
+    ]
+  };

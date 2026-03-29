@@ -3,21 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L02 — Fisica 1 Study Guide</title>
-  <link rel="stylesheet" href="../css/base.css?v=4">
-  <link rel="stylesheet" href="../css/style.css">
+  <title>Lezione 2 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 2: Vettore Posizione, Coseni Direttori e Velocità. Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 2: Vettore Posizione, Coseni Direttori e Velocità — Fisica 1">
+  <meta property="og:description" content="Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/lezioni/L02/">
+  <link rel="canonical" href="https://eliacinti.dev/lezioni/L02/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=4">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 2 — Vettore Posizione, Coseni Direttori e Velocità",
+  "description": "Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/lezioni/L02/",
+  "datePublished": "2026-03-04",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
 </head>
 <body>
 
+<!-- ─── Header ─── -->
 <header id="site-header">
   <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
   <span class="header-sep">/</span>
   <a href="/fisica1/" class="header-logo">
     <span class="logo-icon">⚛️</span>
     Fisica 1
-    <span class="logo-sub">Study Guide</span>
   </a>
   <nav class="header-nav">
     <a href="/fisica1/" class="active">Lezioni</a>
@@ -26,14 +65,15 @@
   </nav>
 </header>
 
+<!-- ─── Lesson Layout ─── -->
 <div class="lesson-layout">
   <aside class="lesson-sidebar">
     <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
     <div class="sidebar-title">In questa lezione</div>
     <div id="lesson-sidebar-links"></div>
     <div class="sidebar-nav-buttons">
-      <a href="L01.html">← Prec.</a>
-      <a href="L03.html">Succ. →</a>
+      <a href="/lezioni/L01/">← Prec.</a>
+      <a href="/lezioni/L03/">Succ. →</a>
     </div>
   </aside>
 
@@ -42,6 +82,7 @@
   </main>
 </div>
 
+<!-- ─── Lesson Data ─── -->
 <script>
 const LESSON = {
     id: "L02", date: "Lezione 2 — 4 Mar 2026",
@@ -298,12 +339,15 @@ const LESSON = {
       }
     ]
   };
-</script>
-<script src="../js/renderer.js?v=2"></script>
-<script src="../js/graphs.js?v=2"></script>
 
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=4"></script>
+<script src="/js/graphs.js?v=4"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
 <script>
-// Sidebar toggle (open by default)
 const toggleBtn = document.getElementById('sidebar-toggle');
 const sidebar = document.querySelector('.lesson-sidebar');
 if (toggleBtn && sidebar) {
@@ -313,5 +357,6 @@ if (toggleBtn && sidebar) {
   });
 }
 </script>
+
 </body>
 </html>

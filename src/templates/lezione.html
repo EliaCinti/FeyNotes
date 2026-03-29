@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="{{THEME}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta name="author" content="{{AUTHOR}}">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{OG_TITLE}}">
+  <meta property="og:description" content="{{OG_DESCRIPTION}}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{OG_URL}}">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v={{CSS_VERSION}}">
+  <link rel="stylesheet" href="/css/style.css?v={{CSS_VERSION}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{{JSON_LD}}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
+  <span class="header-sep">/</span>
+  <a href="{{COURSE_URL}}" class="header-logo">
+    <span class="logo-icon">{{COURSE_ICON}}</span>
+    {{COURSE_NAME}}
+  </a>
+  <nav class="header-nav">
+    {{NAV_LINKS}}
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="{{COURSE_URL}}" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      {{PREV_LINK}}
+      {{NEXT_LINK}}
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+{{LESSON_DATA}}
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v={{CSS_VERSION}}"></script>
+<script src="/js/graphs.js?v={{CSS_VERSION}}"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

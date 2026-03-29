@@ -1,0 +1,489 @@
+const LESSON = {
+    id: "L09", date: "Lezione 9 — 19 Mar 2026",
+    title: "Esercizi, Vincoli, Reazione Normale e Attrito",
+    abstract: "Esercizio riepilogativo MCUA. Applicazione del teorema dell'impulso: pallina da tennis contro un muro. I vincoli e le forze vincolari. La reazione normale al piano (orizzontale e inclinato). Forza di attrito statico e dinamico: definizioni, differenze e trappole d'esame.",
+
+    sections: [
+      // ──────────────── ESERCIZIO RIEPILOGATIVO MCUA ────────────────
+      {
+        id: "s9-recap-mcua",
+        type: "section",
+        title: "Esercizio Riepilogativo: Giradischi (MCUA)",
+        icon: "🎵",
+        content: `<p>La lezione si apre con un esercizio riepilogativo di cinematica angolare, a conclusione degli argomenti della lezione precedente.</p>
+<p><strong>Problema:</strong> Un giradischi inizialmente <strong>fermo</strong> ($\\omega_0 = 0$) viene portato a $33$ giri/min con accelerazione angolare costante in un tempo $t_F = 0.6$ s. Il disco ha raggio $R = 13$ cm.</p>
+<p><strong>Ipotesi:</strong> $t(0) = t_0 = 0$, $\\theta(0) = \\theta_0 = 0$.</p>`,
+        subsections: [
+          {
+            subtitle: "Leggi orarie del MCUA (con $\\omega_0 = 0$, $\\theta_0 = 0$)",
+            content: `<p>Poiché partiamo da fermo e $\\theta_0 = 0$, le leggi orarie si semplificano:</p>
+<p>$$\\theta(t) = \\frac{1}{2}\\alpha\\,t^2$$</p>
+<p>$$\\omega(t) = \\alpha\\,t$$</p>`
+          },
+          {
+            subtitle: "1) Calcolo di $\\alpha$",
+            content: `<p>Prima convertiamo $\\omega_F$ in rad/s:</p>
+<p>$$\\omega_F = 33 \\;\\text{giri/min} = 33 \\cdot \\frac{2\\pi}{60} \\approx 3{,}46 \\;\\text{rad/s}$$</p>
+<p>Dalla legge $\\omega(t) = \\alpha t$, a $t = t_F$:</p>
+<p>$$\\alpha = \\frac{\\omega_F}{t_F} = \\frac{3{,}46}{0{,}6} \\approx 5{,}8 \\;\\text{rad/s}^2$$</p>`
+          },
+          {
+            subtitle: "2) Velocità tangenziale al bordo dopo $t^* = 0{,}4$ s",
+            content: `<p>$\\omega(t^*) = \\alpha \\cdot t^* = 5{,}8 \\times 0{,}4 = 2{,}32$ rad/s</p>
+<p>La velocità lineare al bordo ($R = 0{,}13$ m):</p>
+<p>$$v(t^*) = \\omega(t^*) \\cdot R = 2{,}32 \\times 0{,}13 \\approx 0{,}3 \\;\\text{m/s}$$</p>`
+          },
+          {
+            subtitle: "3) Angolo spazzato dopo $t_F = 0{,}6$ s",
+            content: `<p>$$\\theta(t_F) = \\frac{1}{2}\\alpha\\,t_F^2 = \\frac{1}{2} \\cdot 5{,}8 \\cdot (0{,}6)^2 \\approx 1 \\;\\text{rad}$$</p>
+<p>Cioè circa $57°$ — il disco compie poco meno di $\\frac{1}{6}$ di giro per arrivare alla velocità di regime.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── ESERCIZIO DA FARE ────────────────
+      {
+        id: "s9-es-da-fare",
+        type: "section",
+        title: "Esercizio da Fare: Moto Circolare con $v(t) = A + Bt^2$",
+        icon: "📝",
+        content: `<p>Il professore ha proposto un esercizio <strong>da svolgere autonomamente</strong>. Un punto materiale si muove su una traiettoria circolare di raggio $R$, con il modulo della velocità che varia nel tempo secondo:</p>
+<p>$$|\\vec{v}(t)| = v(t) = A + Bt^2$$</p>`,
+        formulas: [
+          { label: "Dati", latex: "A = 4 \\;\\text{m/s}, \\quad B = 1 \\;\\text{m/s}^3, \\quad R = 1 \\;\\text{m}, \\quad t_1 = 2 \\;\\text{s}" }
+        ],
+        extra_content: `<p><strong>Determinare:</strong></p>
+<p>a) L'arco percorso $s(t_1)$</p>
+<p>b) L'accelerazione $\\vec{a}(0)$ all'istante iniziale</p>
+<p>c) L'accelerazione $\\vec{a}(t_1)$ all'istante $t_1 = 2$ s</p>
+<p><strong>Suggerimento:</strong> Ricorda la scomposizione intrinseca: $a_T = \\frac{dv}{dt}$ e $a_N = \\frac{v^2}{R}$. Per l'arco, integra $v(t)$: $s(t) = \\int_0^t v(t')\\,dt'$. Il modulo totale dell'accelerazione è $|\\vec{a}| = \\sqrt{a_T^2 + a_N^2}$.</p>`
+      },
+
+      // ──────────────── NOTA PESO IN KG ────────────────
+      {
+        id: "s9-peso-kg",
+        type: "alert_box",
+        title: "🚨 Reminder del Prof: \"Io peso 80 kg\" è SBAGLIATO!",
+        content: `<p>Il professore ha ribadito all'inizio della lezione: i <strong>kg</strong> sono l'unità di misura della <strong>massa inerziale</strong> $m$, non del peso. Il <strong>peso</strong> è una <strong>forza</strong> e si misura in <strong>newton</strong>:</p>
+<p>$$P = mg = 80 \\times 9{,}81 = 784{,}8 \\;\\text{N}$$</p>
+<p>Dire "peso 80 kg" è un abuso di linguaggio quotidiano — fisicamente è scorretto. All'esame, questa confusione costa cara.</p>`
+      },
+
+      // ──────────────── TEOREMA IMPULSO: APPLICAZIONE ────────────────
+      {
+        id: "s9-impulso-app",
+        type: "section",
+        title: "Applicazione del Teorema dell'Impulso: Pallina da Tennis contro il Muro",
+        icon: "🎾",
+        content: `<p>Il professore ha svolto alla lavagna un esercizio fondamentale che mostra come applicare concretamente il <strong>teorema dell'impulso</strong> a un caso reale: un urto elastico.</p>
+<p><strong>Problema:</strong> Una pallina da tennis di massa $m = 0{,}05$ kg viaggia orizzontalmente verso un muro con velocità $v = 2$ m/s. Urta il muro e <strong>rimbalza</strong> con la stessa velocità ma in verso opposto. Il tempo di contatto col muro è $\\Delta t = 3$ ms $= 3 \\times 10^{-3}$ s.</p>
+<p><strong>Calcolare:</strong> la forza media $\\vec{F}_m$ esercitata dal muro sulla pallina durante l'urto.</p>`,
+        subsections: [
+          {
+            subtitle: "Approccio Vettoriale Diretto",
+            content: `<p>Dal <strong>teorema dell'impulso</strong>:</p>
+<p>$$\\vec{J} = \\int_{t_0}^{t_0 + \\Delta t} \\vec{F}(t)\\,dt = \\Delta\\vec{p} = m\\,\\Delta\\vec{v}$$</p>
+<p>La forza media è quella forza costante che produce lo stesso impulso nello stesso $\\Delta t$:</p>
+<p>$$\\vec{F}_m\\,\\Delta t = m\\,\\Delta\\vec{v} = m(\\vec{v}_f - \\vec{v}_i)$$</p>
+<p>La pallina rimbalza: la velocità <strong>inverte il verso</strong> senza cambiare modulo. Quindi $\\vec{v}_f = -\\vec{v}_i$, da cui:</p>
+<p>$$\\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i = -\\vec{v} - \\vec{v} = -2\\vec{v}$$</p>
+<p>Quindi:</p>
+<p>$$\\vec{F}_m = \\frac{m(-2\\vec{v})}{\\Delta t} = -\\frac{2m\\vec{v}}{\\Delta t}$$</p>
+<p>In modulo:</p>
+<p>$$|\\vec{F}_m| = \\frac{2mv}{\\Delta t} = \\frac{2 \\times 0{,}05 \\times 2}{3 \\times 10^{-3}} = \\frac{0{,}2}{0{,}003} \\approx 66{,}7 \\;\\text{N}$$</p>`
+          },
+          {
+            subtitle: "Approccio per Componenti (il metodo \"furbo\")",
+            content: `<p>Il professore ha poi mostrato come risolvere lo stesso problema <strong>per componenti</strong>, che è il metodo più sicuro e sistematico.</p>
+<p>Siccome il moto è <strong>unidirezionale</strong> (orizzontale), scegliamo un sistema di coordinate con l'<strong>asse $x$ nella direzione del moto iniziale</strong> (verso il muro) e l'asse $y$ perpendicolare.</p>
+<p><strong>Condizioni iniziali e finali:</strong></p>
+<p>• $v_{i,x} = +v = +2$ m/s (verso il muro)</p>
+<p>• $v_{f,x} = -v = -2$ m/s (rimbalza, verso opposto)</p>
+<p>• $v_{i,y} = v_{f,y} = 0$ (nessun moto verticale)</p>
+<p><strong>Su $x$:</strong></p>
+<p>$$F_{m,x}\\,\\Delta t = m(v_{f,x} - v_{i,x}) = m(-v - v) = -2mv$$</p>
+<p>$$F_{m,x} = -\\frac{2mv}{\\Delta t} = -\\frac{2 \\times 0{,}05 \\times 2}{3 \\times 10^{-3}} = -66{,}7 \\;\\text{N}$$</p>
+<p><strong>Su $y$:</strong></p>
+<p>$$F_{m,y} = 0$$</p>
+<p><strong>Su $z$:</strong></p>
+<p>$$F_{m,z} = 0$$</p>
+<p><strong>Risultato vettoriale:</strong></p>
+<p>$$\\vec{F}_m = F_{m,x}\\,\\hat{u}_x = -\\frac{2mv}{\\Delta t}\\,\\hat{u}_x$$</p>`
+          },
+          {
+            subtitle: "Interpretazione del segno negativo",
+            content: `<p>Il segno <strong>meno</strong> è fondamentale e ha un significato fisico preciso: la forza media esercitata dal muro sulla pallina è diretta nel verso <strong>opposto</strong> al moto iniziale. Questo è perfettamente ragionevole:</p>
+<p>• La pallina arriva verso destra ($+x$) → il muro la respinge verso sinistra ($-x$).</p>
+<p>• Il muro <strong>cambia il verso</strong> della velocità della pallina — questo richiede una forza diretta contro il moto iniziale.</p>
+<p>• Questo è coerente col <strong>terzo principio</strong>: la pallina preme sul muro verso destra, il muro reagisce spingendola verso sinistra.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Variazione di quantità di moto (rimbalzo)", latex: "\\Delta\\vec{p} = m(\\vec{v}_f - \\vec{v}_i) = -2m\\vec{v}" },
+          { label: "Forza media (rimbalzo)", latex: "\\vec{F}_m = -\\frac{2m\\vec{v}}{\\Delta t}" },
+          { label: "Modulo forza media", latex: "|\\vec{F}_m| = \\frac{2mv}{\\Delta t}" }
+        ]
+      },
+
+      // ──────────────── CONFRONTO FERMARE vs RIMBALZARE ────────────────
+      {
+        id: "s9-confronto-urti",
+        type: "note_box",
+        title: "📚 Fermare un oggetto vs farlo rimbalzare",
+        content: `<p>Confrontiamo due scenari per la stessa pallina ($m = 0{,}05$ kg, $v = 2$ m/s, $\\Delta t = 3$ ms):</p>
+<p><strong>Caso A — La pallina si ferma</strong> (urto perfettamente anelastico, $v_f = 0$):</p>
+<p>$$|\\Delta\\vec{p}| = m \\cdot v = 0{,}1 \\;\\text{kg·m/s} \\quad \\Rightarrow \\quad |F_m| = \\frac{0{,}1}{0{,}003} \\approx 33{,}3 \\;\\text{N}$$</p>
+<p><strong>Caso B — La pallina rimbalza</strong> (urto elastico, $v_f = -v$):</p>
+<p>$$|\\Delta\\vec{p}| = 2mv = 0{,}2 \\;\\text{kg·m/s} \\quad \\Rightarrow \\quad |F_m| = \\frac{0{,}2}{0{,}003} \\approx 66{,}7 \\;\\text{N}$$</p>
+<p><strong>Far rimbalzare un oggetto richiede il doppio della forza media rispetto a fermarlo!</strong> Questo perché nel rimbalzo bisogna prima annullare la velocità e poi riaccelerare nel verso opposto — la variazione totale di $\\vec{v}$ è $2v$, non $v$.</p>`
+      },
+
+      // ──────────────── ALERT: SEGNI E COMPONENTI ────────────────
+      {
+        id: "s9-alert-segni",
+        type: "alert_box",
+        title: "🚨 Trappola d'Esame: Non perdere i segni!",
+        content: `<p>Negli esercizi con impulso e quantità di moto, gli studenti sbagliano più spesso i <strong>segni</strong> che i calcoli. Il metodo sicuro è:</p>
+<p>1. Scegli un sistema di coordinate <strong>prima</strong> di scrivere qualsiasi equazione.</p>
+<p>2. Assegna i segni alle velocità: $v_{i,x} = +v$ se va nel verso positivo, $v_{f,x} = -v$ se inverte.</p>
+<p>3. Calcola $\\Delta v_x = v_{f,x} - v_{i,x}$ algebricamente — <strong>non a occhio</strong>.</p>
+<p>4. Il segno del risultato ti dice il verso della forza. Non ignorarlo!</p>
+<p>Nell'esempio della pallina: $\\Delta v_x = (-2) - (+2) = -4$ m/s. Se avessi scritto $\\Delta v_x = 2 - 2 = 0$, avresti concluso che non serve forza — assurdo.</p>`
+      },
+
+      // ──────────────── GRAPH: IMPULSO ────────────────
+      {
+        type: "graph",
+        id: "graph-impulse-l09",
+        title: "Diagramma: Pallina da Tennis contro il Muro",
+        graphType: "ball_wall_impulse",
+        caption: "Prima: v⃗i verso il muro. Dopo: v⃗f rimbalza. La forza media F⃗m è diretta via dal muro."
+      },
+
+      // ──────────────── SEZIONE: VINCOLI ────────────────
+      {
+        id: "s9-vincoli",
+        type: "section",
+        title: "I Vincoli: Quando le Cose Non Vanno Come Ti Aspetti",
+        icon: "🔒",
+        content: `<p>Il professore ha introdotto i vincoli con un'osservazione molto efficace: <em>"mi accorgo che c'è un vincolo quando le cose non vanno come mi aspetto che vadano"</em>.</p>
+<p>Se lascio cadere un libro, mi aspetto che cada verso il basso per la gravità. Ma se il libro è appoggiato su un tavolo, <strong>non cade</strong>. Perché? Perché il tavolo è un <strong>vincolo</strong> che impedisce il moto libero del libro.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione di vincolo",
+            content: `<p>Un <strong>vincolo</strong> è qualsiasi limitazione imposta ai moti liberi dei corpi. Può essere un oggetto fisico (tavolo, pavimento, fune, parete, binario) o una limitazione geometrica.</p>
+<p>Quando un vincolo impedisce un moto che altrimenti avverrebbe, genera una <strong>forza di reazione</strong> — la <strong>forza vincolare</strong>. Questa forza è <em>concomitante</em> al vincolo: esiste <strong>solo</strong> perché il vincolo c'è. Se il vincolo sparisce, la forza sparisce con esso.</p>`
+          },
+          {
+            subtitle: "Vincoli di contatto",
+            content: `<p>I vincoli più comuni sono i <strong>vincoli di contatto tra superfici estese</strong>: il contatto tra un libro e il tavolo su cui è appoggiato, tra un paracadute e l'aria, tra le ruote di un'auto e l'asfalto.</p>
+<p>Quando due superfici sono a contatto, il vincolo genera due tipi di forze:</p>
+<p>1. <strong>Reazione Normale</strong> $\\vec{R}_N$ — perpendicolare alla superficie di contatto</p>
+<p>2. <strong>Forza di Attrito</strong> $\\vec{F}_a$ — parallela alla superficie di contatto</p>`
+          }
+        ]
+      },
+
+      // ──────────────── SEZIONE: REAZIONE NORMALE ────────────────
+      {
+        id: "s9-reazione-normale",
+        type: "section",
+        title: "La Reazione Normale al Piano $\\vec{R}_N$",
+        icon: "⬆️",
+        content: `<p>La <strong>reazione normale</strong> è la forza che una superficie esercita su un corpo a contatto, <strong>perpendicolarmente</strong> alla superficie stessa. È la risposta del vincolo alla tendenza del corpo di attraversare la superficie.</p>`,
+        subsections: [
+          {
+            subtitle: "Proprietà fondamentali",
+            content: `<p>• <strong>Direzione</strong>: sempre perpendicolare (normale) alla superficie di contatto.</p>
+<p>• <strong>Verso</strong>: sempre <em>via</em> dalla superficie, verso il corpo. Il tavolo spinge il libro <strong>verso l'alto</strong>, non verso il basso.</p>
+<p>• <strong>Modulo</strong>: <strong>NON ha una formula fissa!</strong> Si "autoregola" per garantire l'equilibrio nella direzione perpendicolare alla superficie. Non è sempre uguale a $mg$.</p>`
+          },
+          {
+            subtitle: "Caso 1: Piano orizzontale, corpo fermo",
+            content: `<p>Un libro di massa $m$ è appoggiato su un tavolo orizzontale. Le forze verticali sono:</p>
+<p>• $\\vec{P} = m\\vec{g}$ (verso il basso)</p>
+<p>• $\\vec{R}_N$ (verso l'alto)</p>
+<p>Il corpo è fermo ($\\vec{a} = \\vec{0}$), quindi la risultante è nulla:</p>
+<p>$$\\vec{R}_N + \\vec{P} = \\vec{0} \\quad \\Rightarrow \\quad R_N = mg$$</p>
+<p>In questo caso, e <strong>solo in questo caso</strong>, la reazione normale è uguale al peso.</p>`
+          },
+          {
+            subtitle: "La reazione normale si adatta!",
+            content: `<p>Il prof ha fatto un'osservazione chiave: se <strong>premo il blocco con la mano</strong> verso il basso, $R_N$ <strong>aumenta</strong> (deve bilanciare peso + forza della mano). Se invece <strong>tiro il blocco verso l'alto</strong> con un filo, $R_N$ <strong>diminuisce</strong> (deve bilanciare solo la parte di peso che il filo non compensa).</p>
+<p>La reazione normale non è una costante — è una forza che si <strong>adatta</strong> alle condizioni del problema.</p>`
+          },
+          {
+            subtitle: "Caso 2: Piano inclinato",
+            content: `<p>Su un piano inclinato di angolo $\\theta$, la reazione normale non è più uguale a $mg$. Bisogna scomporre il peso nelle componenti parallela e perpendicolare al piano:</p>
+<p>• Componente <strong>perpendicolare</strong> al piano: $P_\\perp = mg\\cos\\theta$</p>
+<p>• Componente <strong>parallela</strong> al piano (fa scivolare il corpo): $P_\\parallel = mg\\sin\\theta$</p>
+<p>La reazione normale bilancia solo la componente perpendicolare:</p>
+<p>$$R_N = mg\\cos\\theta$$</p>
+<p>Nota: $R_N < mg$ sempre (perché $\\cos\\theta < 1$ per $\\theta > 0$). Più il piano è inclinato, minore è la reazione normale.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Piano orizzontale (caso semplice)", latex: "R_N = mg" },
+          { label: "Piano inclinato", latex: "R_N = mg\\cos\\theta" },
+          { label: "Comp. parallela al piano inclinato", latex: "P_\\parallel = mg\\sin\\theta" }
+        ]
+      },
+
+      // ──────────────── GRAPH: PESO E NORMALE ────────────────
+      {
+        type: "graph",
+        id: "graph-weight-normal-l09",
+        graphType: "inclined_plane_forces",
+        title: "Reazione Normale: Piano Orizzontale vs Piano Inclinato",
+        caption: "A sinistra: RN = mg. A destra: RN = mg cosθ (più corta di P!). Il peso si scompone in componente parallela e perpendicolare."
+      },
+
+      // ──────────────── ALERT: N ≠ mg SEMPRE ────────────────
+      {
+        id: "s9-alert-rn",
+        type: "alert_box",
+        title: "🚨 Trappola d'Esame: $R_N = mg$ NON vale sempre!",
+        content: `<p>$R_N = mg$ vale <strong>solo</strong> su un piano orizzontale con il corpo fermo e nessuna altra forza verticale. In tutti gli altri casi:</p>
+<p>• <strong>Piano inclinato</strong>: $R_N = mg\\cos\\theta < mg$</p>
+<p>• <strong>Forza verticale in più</strong> (premo verso il basso con forza $F$): $R_N = mg + F > mg$</p>
+<p>• <strong>Filo che tira verso l'alto</strong> con tensione $T$: $R_N = mg - T < mg$</p>
+<p>• <strong>Ascensore che accelera verso l'alto</strong>: $R_N = m(g + a) > mg$</p>
+<p>La regola generale: scrivi $\\sum F_\\perp = 0$ (o $= ma_\\perp$) e <strong>ricava</strong> $R_N$ — non assumerla mai uguale a $mg$.</p>`
+      },
+
+      // ──────────────── SEZIONE: ATTRITO ────────────────
+      {
+        id: "s9-attrito",
+        type: "section",
+        title: "Le Forze di Attrito Radente",
+        icon: "🧱",
+        content: `<p>Quando cerchiamo di far scivolare un oggetto su una superficie, le microscopiche imperfezioni e i legami elettromagnetici tra le due superfici a contatto si oppongono al moto. Questa resistenza si manifesta come una forza <strong>parallela al piano</strong> di contatto, detta <strong>forza di attrito</strong>.</p>
+<p>L'attrito si divide in due regimi fondamentalmente diversi: <strong>statico</strong> (corpo fermo) e <strong>dinamico</strong> (corpo in moto).</p>`
+      },
+
+      // ──────────────── ATTRITO STATICO ────────────────
+      {
+        id: "s9-attrito-statico",
+        type: "section",
+        title: "Attrito Statico: la Forza che Si Adatta",
+        icon: "🧊",
+        content: `<p>L'attrito statico si manifesta quando le due superfici sono in <strong>quiete relativa</strong> l'una rispetto all'altra. Se spingo un mobile pesante e questo non si muove, significa che è presente una forza di attrito statico che <strong>bilancia esattamente</strong> la mia spinta.</p>`,
+        subsections: [
+          {
+            subtitle: "Comportamento adattivo (NON è costante!)",
+            content: `<p>Questa è la caratteristica chiave dell'attrito statico: <strong>non ha un valore fisso</strong>. Si adatta alla forza applicata:</p>
+<p>• Se spingo con 10 N e il mobile sta fermo → $F_{a,s} = 10$ N (verso opposto)</p>
+<p>• Se spingo con 30 N e il mobile sta fermo → $F_{a,s} = 30$ N (verso opposto)</p>
+<p>• Se spingo con 50 N e il mobile sta fermo → $F_{a,s} = 50$ N (verso opposto)</p>
+<p>L'attrito statico <strong>cresce</strong> per bilanciare la forza che applico, finché il corpo resta fermo.</p>`
+          },
+          {
+            subtitle: "Il valore massimo: il \"punto di rottura\"",
+            content: `<p>L'attrito statico ha un <strong>limite massimo</strong>. Oltre questo valore, non riesce più a bilanciare la forza applicata e il corpo inizia a muoversi. Questo limite è:</p>
+<p>$$F_{a,s}^{\\text{max}} = \\mu_s \\cdot R_N$$</p>
+<p>Dove $\\mu_s$ è il <strong>coefficiente di attrito statico</strong> (adimensionale, dipende dai materiali delle due superfici a contatto).</p>
+<p>La relazione corretta per l'attrito statico è una <strong>disuguaglianza</strong>:</p>
+<p>$$|\\vec{F}_{a,s}| \\leq \\mu_s \\cdot |\\vec{R}_N|$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Attrito statico (disuguaglianza!)", latex: "|\\vec{F}_{a,s}| \\leq \\mu_s \\cdot R_N" },
+          { label: "Valore massimo attrito statico", latex: "F_{a,s}^{\\text{max}} = \\mu_s \\cdot R_N" }
+        ]
+      },
+
+      // ──────────────── ALERT: DOMANDA ORALE ATTRITO ────────────────
+      {
+        id: "s9-alert-orale-attrito",
+        type: "alert_box",
+        title: "🚨 DOMANDA D'ESAME ORALE — Errore Classico sull'Attrito Statico",
+        content: `<p>Il professore ha detto esplicitamente: <em>"All'esame non ditemi che l'attrito statico vale $\\mu_s \\cdot R_N$."</em></p>
+<p>$\\mu_s \\cdot R_N$ <strong>NON è il valore</strong> della forza di attrito statico. È il suo <strong>valore MASSIMO</strong>. Finché il corpo è fermo, $F_{a,s}$ si adatta alla forza applicata e vale <strong>meno</strong> di $\\mu_s R_N$.</p>
+<p>La formula corretta è la <strong>disuguaglianza</strong>: $|\\vec{F}_{a,s}| \\leq \\mu_s R_N$. Solo nell'istante in cui il corpo sta per mettersi in moto (soglia di scorrimento), l'uguaglianza vale.</p>`
+      },
+
+      {
+        type: "graph",
+        id: "graph-friction-behavior",
+        title: "Il Grafico dell'Attrito: da Quiete a Moto",
+        graphType: "friction_behavior",
+        caption: "Fase 1 (quiete): l'attrito statico si adatta (rampa). Punto di rottura: μs·RN. Fase 2 (moto): l'attrito dinamico è costante a μd·RN."
+      },
+
+      // ──────────────── ATTRITO DINAMICO ────────────────
+      {
+        id: "s9-attrito-dinamico",
+        type: "section",
+        title: "Attrito Dinamico: la Forza Costante",
+        icon: "🏎️",
+        content: `<p>Una volta superata la soglia massima dell'attrito statico, il corpo inizia a <strong>scivolare</strong>. A questo punto le asperità tra i materiali sono parzialmente spezzate e l'attrito <strong>diminuisce bruscamente</strong>, stabilizzandosi su un valore costante.</p>`,
+        subsections: [
+          {
+            subtitle: "Formula dell'attrito dinamico",
+            content: `<p>A differenza dell'attrito statico, quello dinamico ha un modulo <strong>fisso</strong>:</p>
+<p>$$|\\vec{F}_{a,d}| = \\mu_d \\cdot R_N$$</p>
+<p>Nota: questa è un'<strong>uguaglianza</strong>, non una disuguaglianza. Una volta che il corpo scivola, l'attrito dinamico ha sempre questo valore — non si adatta.</p>`
+          },
+          {
+            subtitle: "Direzione e verso",
+            content: `<p>La forza di attrito dinamico è:</p>
+<p>• <strong>Parallela</strong> alla superficie di contatto</p>
+<p>• Con verso <strong>sempre opposto</strong> alla velocità relativa di scivolamento</p>
+<p>L'attrito dinamico si oppone <strong>sempre</strong> al moto — mai lo favorisce.</p>`
+          },
+          {
+            subtitle: "$\\mu_s > \\mu_d$: perché partire è più faticoso che continuare",
+            content: `<p>Un fatto sperimentale fondamentale: il coefficiente di attrito statico è <strong>sempre maggiore</strong> di quello dinamico:</p>
+<p>$$\\mu_s > \\mu_d$$</p>
+<p>Questo spiega un'esperienza quotidiana: <strong>far partire</strong> un divano pesante è più faticoso che <strong>continuarlo a spingere</strong> una volta che sta già strisciando. Quando superi la soglia $\\mu_s R_N$ e il corpo inizia a muoversi, l'attrito cala bruscamente a $\\mu_d R_N < \\mu_s R_N$ — senti il corpo che "cede" improvvisamente.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Attrito dinamico (uguaglianza)", latex: "|\\vec{F}_{a,d}| = \\mu_d \\cdot R_N" },
+          { label: "Relazione tra coefficienti", latex: "\\mu_s > \\mu_d \\quad \\text{(sempre)}" }
+        ],
+        table_compare: {
+          headers: ["", "Attrito Statico", "Attrito Dinamico"],
+          rows: [
+            ["Quando agisce", "Corpo fermo (quiete relativa)", "Corpo in moto (scivola)"],
+            ["Formula", "$|\\vec{F}_{a,s}| \\leq \\mu_s R_N$ (disuguaglianza)", "$|\\vec{F}_{a,d}| = \\mu_d R_N$ (uguaglianza)"],
+            ["Valore", "Si adatta alla forza applicata", "Costante"],
+            ["Coefficiente", "$\\mu_s$ (statico)", "$\\mu_d$ (dinamico)"],
+            ["Relazione", "$\\mu_s > \\mu_d$ sempre", "$\\mu_d < \\mu_s$ sempre"],
+            ["Direzione", "Opposta alla forza applicata", "Opposta alla velocità di scivolamento"]
+          ]
+        }
+      },
+
+      // ──────────────── NOTA: COME RIDURRE R_N ────────────────
+      {
+        id: "s9-nota-ridurre-rn",
+        type: "note_box",
+        title: "📚 Come Vincere l'Attrito: le Tre Strade",
+        content: `<p>Sia l'attrito statico massimo ($\\mu_s R_N$) che l'attrito dinamico ($\\mu_d R_N$) dipendono da $R_N$. Quindi se hai difficoltà a spostare un oggetto, hai <strong>tre strade</strong>:</p>
+                  <p><strong>1. Ridurre $\\mu$</strong> — cambi i materiali a contatto (es. metti pattini, lubrificante, ruote). Ma spesso non puoi scegliere i materiali.</p>
+                  <p><strong>2. Ridurre $R_N$</strong> — esempio pratico del prof: devi spostare un blocco pesante sul pavimento. Hai a disposizione una certa forza $F$ e non riesci a farlo partire spingendo orizzontalmente. <strong>Trucco:</strong> investi parte di quella forza per <strong>tirare verso l'alto</strong> (applicando la forza con un angolo). La componente verticale della tua forza riduce $R_N$ (il pavimento deve sostenere meno peso), e di conseguenza si riduce la soglia $\\mu_s R_N$ da superare. Con lo stesso sforzo, ora riesci a farlo partire!</p>
+                  <p>Ecco perché è più facile spostare una valigia pesante <strong>tirandola con la maniglia inclinata</strong> verso l'alto piuttosto che spingendola rasoterra.</p>
+                  <p><strong>3. Aumentare la forza</strong> — se non puoi toccare $\\mu$ e non puoi ridurre $R_N$, l'unica opzione rimasta è applicare più forza. Bruta ma efficace.</p>
+                  <p>In un problema d'esame, la strategia è quasi sempre la 2: scomponi la forza applicata in componenti, ricava $R_N$ dall'equilibrio verticale (che ora dipende dalla forza applicata!), e poi usa $R_N$ nell'equazione dell'attrito.</p>`
+      },
+
+      // ──────────────── GRAFICO ATTRITO: DESCRIZIONE ────────────────
+      {
+        id: "s9-grafico-attrito",
+        type: "section",
+        title: "Il Grafico $|\\vec{F}_a|$ vs $|\\vec{F}_{\\text{applicata}}|$: il Comportamento Completo",
+        icon: "📊",
+        content: `<p>Il professore ha disegnato alla lavagna un grafico fondamentale che mostra come la forza di attrito cambia al crescere della forza applicata. Il grafico ha sull'asse orizzontale il modulo della forza applicata $|\\vec{F}|$ e sull'asse verticale il modulo della forza di attrito $|\\vec{F}_a|$.</p>`,
+        subsections: [
+          {
+            subtitle: "Fase 1 — Quiete (attrito statico)",
+            content: `<p>Finché il corpo è fermo, la forza di attrito <strong>cresce linearmente</strong> con la forza applicata (pendenza 1: $F_{a,s} = F_{\\text{app}}$). In questa fase $|\\vec{F}_a| = |\\vec{F}_{\\text{app}}|$ esattamente — il corpo è in equilibrio.</p>
+<p>Questa fase continua fino al valore massimo $F_{a,s}^{\\text{max}} = \\mu_s R_N$.</p>`
+          },
+          {
+            subtitle: "Punto di rottura — Transizione statico→dinamico",
+            content: `<p>Quando la forza applicata raggiunge $\\mu_s R_N$, il corpo <strong>sta per muoversi</strong>. In questo istante l'attrito statico è al suo massimo. Un incremento infinitesimo della forza applicata fa <strong>partire</strong> il corpo.</p>`
+          },
+          {
+            subtitle: "Fase 2 — Moto (attrito dinamico)",
+            content: `<p>Appena il corpo parte, l'attrito <strong>cala bruscamente</strong> al valore $F_{a,d} = \\mu_d R_N$ (che è minore di $\\mu_s R_N$) e <strong>resta costante</strong> indipendentemente dalla forza applicata. Il grafico diventa una linea orizzontale.</p>
+<p>Il "salto" verso il basso nel grafico spiega perché, quando un oggetto pesante finalmente "parte", sembra cedere di colpo — l'attrito crolla da $\\mu_s R_N$ a $\\mu_d R_N$.</p>`
+          }
+        ]
+      },
+
+      // ──────────────── METHOD BOX ────────────────
+      {
+        id: "s9-metodo-attrito",
+        type: "method_box",
+        title: "Come Risolvere un Problema con Attrito",
+        steps: [
+          "<strong>Disegna il diagramma di corpo libero</strong> con TUTTE le forze: peso, reazione normale, forza applicata, attrito.",
+          "<strong>Scegli gli assi</strong>: uno parallelo alla superficie di contatto, uno perpendicolare.",
+          "<strong>Sull'asse perpendicolare</strong>: scrivi $\\sum F_\\perp = 0$ (di solito) e <strong>ricava $R_N$</strong>. Non assumere $R_N = mg$!",
+          "<strong>Chiediti</strong>: il corpo è fermo o in moto? Se è fermo, usa $|F_{a,s}| \\leq \\mu_s R_N$. Se è in moto, usa $|F_{a,d}| = \\mu_d R_N$.",
+          "<strong>Sull'asse parallelo</strong>: scrivi $\\sum F_\\parallel = ma_\\parallel$ e risolvi.",
+          "<strong>Verifica la coerenza</strong>: se hai assunto \"fermo\" e trovi $F_{a,s} > \\mu_s R_N$, allora l'ipotesi è sbagliata — il corpo si muove! Rifai con attrito dinamico."
+        ]
+      },
+
+      // ──────────────── RIEPILOGO FORMULE ────────────────
+      {
+        id: "s9-riepilogo",
+        type: "section",
+        title: "Riepilogo Formule della Lezione",
+        icon: "📐",
+        content: `<p>Tutte le formule introdotte e utilizzate oggi:</p>`,
+        formulas: [
+          { label: "Teorema dell'impulso", latex: "\\vec{J} = \\Delta\\vec{p} = m(\\vec{v}_f - \\vec{v}_i)" },
+          { label: "Forza media", latex: "\\vec{F}_m = \\frac{\\Delta\\vec{p}}{\\Delta t}" },
+          { label: "Rimbalzo elastico ($v_f = -v_i$)", latex: "\\Delta\\vec{p} = -2m\\vec{v}_i" },
+          { label: "Reazione normale (piano orizz.)", latex: "R_N = mg" },
+          { label: "Reazione normale (piano inclinato)", latex: "R_N = mg\\cos\\theta" },
+          { label: "Attrito statico", latex: "|\\vec{F}_{a,s}| \\leq \\mu_s \\cdot R_N" },
+          { label: "Attrito dinamico", latex: "|\\vec{F}_{a,d}| = \\mu_d \\cdot R_N" },
+          { label: "Relazione coefficienti", latex: "\\mu_s > \\mu_d" }
+        ]
+      }
+    ],
+
+    // ──────────────── FLASHCARD ORALE ────────────────
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Cos'è un <strong>vincolo</strong>? Fai un esempio e spiega la <strong>forza vincolare</strong> che genera.",
+        back: "Un vincolo è una limitazione imposta ai moti liberi dei corpi. Esempio: un tavolo impedisce al libro di cadere.<br><br>Il vincolo genera una <strong>forza vincolare</strong> (o forza di reazione vincolare): una forza che esiste solo perché il vincolo c'è. Nel caso del tavolo, genera la <strong>reazione normale</strong> $\\vec{R}_N$, diretta verso l'alto, che bilancia il peso."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è la <strong>reazione normale</strong> $\\vec{R}_N$? Direzione, verso, modulo.",
+        back: "<strong>Direzione</strong>: perpendicolare alla superficie di contatto.<br><strong>Verso</strong>: via dalla superficie, verso il corpo.<br><strong>Modulo</strong>: NON ha formula fissa. Si autoregola per bilanciare le forze perpendicolari al piano.<br>• Piano orizzontale, corpo fermo: $R_N = mg$<br>• Piano inclinato: $R_N = mg\\cos\\theta$<br>• Con forze extra: si ricava da $\\sum F_\\perp = 0$."
+      },
+      {
+        type: "definizione",
+        front: "Scrivi la legge dell'<strong>attrito statico</strong>. Perché è una disuguaglianza?",
+        back: "$$|\\vec{F}_{a,s}| \\leq \\mu_s R_N$$<br>È una disuguaglianza perché l'attrito statico si <strong>adatta</strong> alla forza applicata. Se spingo con 10 N, l'attrito è 10 N. Se spingo con 50 N, è 50 N. Il valore $\\mu_s R_N$ è solo il <strong>massimo</strong> che può raggiungere — oltre, il corpo parte."
+      },
+      {
+        type: "definizione",
+        front: "Scrivi la legge dell'<strong>attrito dinamico</strong>. Perché è diversa da quella statico?",
+        back: "$$|\\vec{F}_{a,d}| = \\mu_d R_N$$<br>È un'<strong>uguaglianza</strong>, non una disuguaglianza. Una volta che il corpo scivola, l'attrito dinamico ha modulo costante $\\mu_d R_N$, indipendente dalla forza applicata. Il verso è sempre opposto alla velocità di scivolamento."
+      },
+      {
+        type: "domanda",
+        front: "Perché <strong>far partire</strong> un divano pesante è più faticoso che <strong>continuare a spingerlo</strong>?",
+        back: "Perché $\\mu_s > \\mu_d$ (sempre). Per far partire il divano devo superare la soglia $\\mu_s R_N$ (attrito statico massimo). Una volta che scivola, l'attrito cala bruscamente a $\\mu_d R_N < \\mu_s R_N$. Il \"calo\" è improvviso — ecco perché senti il divano che \"cede\" di colpo."
+      },
+      {
+        type: "domanda",
+        front: "Nell'esercizio della pallina da tennis ($m = 0{,}05$ kg, $v = 2$ m/s, $\\Delta t = 3$ ms), calcola $|\\vec{F}_m|$.",
+        back: "La pallina rimbalza: $\\vec{v}_f = -\\vec{v}_i$. Quindi $\\Delta\\vec{p} = m(\\vec{v}_f - \\vec{v}_i) = -2m\\vec{v}_i$.<br><br>$$|\\vec{F}_m| = \\frac{|\\Delta\\vec{p}|}{\\Delta t} = \\frac{2mv}{\\Delta t} = \\frac{2 \\times 0{,}05 \\times 2}{3 \\times 10^{-3}} = \\frac{0{,}2}{0{,}003} \\approx 66{,}7 \\;\\text{N}$$<br>Verso: opposto al moto iniziale (il muro respinge la pallina)."
+      },
+      {
+        type: "domanda",
+        front: "Perché far <strong>rimbalzare</strong> una pallina richiede il <strong>doppio</strong> della forza rispetto a <strong>fermarla</strong>?",
+        back: "Perché la variazione di velocità è diversa:<br>• Fermarla: $\\Delta v = 0 - v = -v$ → $|\\Delta p| = mv$<br>• Farla rimbalzare: $\\Delta v = -v - v = -2v$ → $|\\Delta p| = 2mv$<br><br>Nel rimbalzo bisogna prima annullare la velocità e poi riaccelerare nel verso opposto. La variazione totale è $2v$, non $v$."
+      },
+      {
+        type: "domanda",
+        front: "Su un piano inclinato di angolo $\\theta$, quanto vale $R_N$? E la componente del peso che fa scivolare?",
+        back: "Scomponendo il peso:<br>• Perpendicolare al piano: $P_\\perp = mg\\cos\\theta$ → $R_N = mg\\cos\\theta$<br>• Parallela al piano (fa scivolare): $P_\\parallel = mg\\sin\\theta$<br><br>Nota: $R_N < mg$ perché $\\cos\\theta < 1$ per $\\theta > 0$."
+      },
+      {
+        type: "tranello",
+        front: "⚠️ Il prof chiede: \"Quanto vale l'attrito statico?\" — Cosa NON rispondere?",
+        back: "<strong>NON rispondere</strong> \"$\\mu_s R_N$\"! Questo è il valore <strong>massimo</strong>, non il valore della forza in generale.<br><br>Risposta corretta: \"L'attrito statico si adatta alla forza applicata e vale $|\\vec{F}_{a,s}| \\leq \\mu_s R_N$. Il suo valore esatto dipende dalla forza che sto applicando. Solo alla soglia di scorrimento vale $\\mu_s R_N$.\""
+      },
+      {
+        type: "tranello",
+        front: "⚠️ La reazione normale è sempre uguale a $mg$?",
+        back: "<strong>No!</strong> $R_N = mg$ vale solo su piano orizzontale, corpo fermo, nessuna forza verticale extra.<br>Su piano inclinato: $R_N = mg\\cos\\theta$.<br>Con forza verticale extra: $R_N$ cambia.<br>Regola: <strong>ricava sempre $R_N$</strong> dall'equilibrio perpendicolare al piano."
+      },
+      {
+        type: "tranello",
+        front: "⚠️ Da cosa dipende $\\mu_s$?",
+        back: "$\\mu_s$ è determinato dalla <strong>natura dei due materiali</strong> delle superfici a contatto, NON dalla massa o dalla forza applicata. Gomma su asfalto ha $\\mu_s$ alto, ghiaccio su acciaio ha $\\mu_s$ basso. È un coefficiente adimensionale che si misura sperimentalmente."
+      }
+    ]
+  };

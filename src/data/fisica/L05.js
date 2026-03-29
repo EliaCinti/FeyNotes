@@ -1,48 +1,3 @@
-<!DOCTYPE html>
-<html lang="it" data-theme="fisica">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L05 — Fisica 1 Study Guide</title>
-  <link rel="stylesheet" href="../css/base.css?v=4">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-</head>
-<body>
-
-<header id="site-header">
-  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
-  <span class="header-sep">/</span>
-  <a href="/fisica1/" class="header-logo">
-    <span class="logo-icon">⚛️</span>
-    Fisica 1
-    <span class="logo-sub">Study Guide</span>
-  </a>
-  <nav class="header-nav">
-    <a href="/fisica1/" class="active">Lezioni</a>
-    <a href="#">Formulario</a>
-    <a href="#">Esercizi</a>
-  </nav>
-</header>
-
-<div class="lesson-layout">
-  <aside class="lesson-sidebar">
-    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
-    <div class="sidebar-title">In questa lezione</div>
-    <div id="lesson-sidebar-links"></div>
-    <div class="sidebar-nav-buttons">
-      <a href="L04.html">← Prec.</a>
-      <a href="L06.html">Succ. →</a>
-    </div>
-  </aside>
-
-  <main class="lesson-content" id="lesson-content">
-    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
-  </main>
-</div>
-
-<script>
 const LESSON = {
     id: "L05", date: "Lezione 5 — 11 Mar 2026",
     title: "Equazione della Traiettoria, Scomposizione Intrinseca dell'Accelerazione e Moto Circolare",
@@ -368,22 +323,3 @@ const LESSON = {
       }
     ]
   };
-</script>
-<script src="../js/renderer.js?v=2"></script>
-<script src="../js/graphs.js?v=2"></script>
-
-<!-- Graph functions provided by graphs.js -->
-
-<script>
-// Sidebar toggle (open by default)
-const toggleBtn = document.getElementById('sidebar-toggle');
-const sidebar = document.querySelector('.lesson-sidebar');
-if (toggleBtn && sidebar) {
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('closed');
-    toggleBtn.classList.toggle('collapsed');
-  });
-}
-</script>
-</body>
-</html>
