@@ -4,3 +4,11 @@ node_modules/
 *.swp
 *.swo
 *~
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+
+# Node (se in futuro aggiungi dipendenze)
+node_modules/
