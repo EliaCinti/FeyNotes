@@ -1,649 +1,128 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-theme="home">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FeyNotes — Appunti di Ingegneria Informatica, Università di Roma Tor Vergata. Lezioni strutturate, flashcard e formule.">
     <meta name="author" content="Elia Cinti">
     <meta name="robots" content="index, follow">
-
-    <!-- Security meta tags -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-
-    <!-- Open Graph -->
     <meta property="og:title" content="FeyNotes — Appunti di Ingegneria Informatica">
     <meta property="og:description" content="Appunti strutturati, flashcard e formule per Ingegneria Informatica — Tor Vergata.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://eliacinti.dev">
-
     <title>FeyNotes — Appunti di Ingegneria Informatica</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* ============================================
-           FeyNotes Homepage — Retro Terminal x Apple
-           ============================================ */
-
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-deep: #0b0d14;
-            --bg-surface: #12141e;
-            --bg-card: #1a1d2c;
-            --bg-card-hover: #22263a;
-            --border-subtle: #262a42;
-            --border-default: #31365a;
-            --border-hover: #3d4270;
-            --text-primary: #e4e7f0;
-            --text-secondary: #9ca1ba;
-            --text-muted: #7a7f9a;
-            --accent-amber: #6c8cff;
-            --accent-amber-dim: #4a65cc;
-            --accent-green: #63e6be;
-            --accent-green-dim: #3dbf96;
-            --accent-red: #ff6b6b;
-            --accent-blue: #74c0fc;
-            --accent-gold: #f0c050;
-            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-            --font-body: 'Outfit', system-ui, -apple-system, sans-serif;
-            --max-width: 960px;
-            --transition-fast: 0.15s ease;
-            --transition-default: 0.25s ease;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-deep);
-            color: var(--text-primary);
-            line-height: 1.72;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* --- Scanline overlay (subtle CRT effect) --- */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 0, 0, 0.03) 2px,
-                rgba(0, 0, 0, 0.03) 4px
-            );
-            z-index: 9999;
-        }
-
-        /* --- Layout --- */
-        .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* --- Navigation --- */
-        .nav {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: var(--font-mono);
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-logo span {
-            color: var(--accent-amber);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            transition: color var(--transition-fast);
-        }
-
-        .nav-links a:hover {
-            color: var(--text-secondary);
-        }
-
-        /* --- Hero --- */
-        .hero {
-            padding: 80px 0 64px;
-        }
-
-        .hero-label {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--accent-green-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .hero-title {
-            font-size: 36px;
-            font-weight: 500;
-            color: var(--text-primary);
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 32px;
-            background: var(--accent-amber);
-            margin-left: 4px;
-            vertical-align: text-bottom;
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .hero-subtitle {
-            font-size: 14px;
-            color: var(--text-muted);
-            max-width: 600px;
-        }
-
-        /* --- About --- */
-        .about {
-            padding: 0 0 64px;
-        }
-
-        .section-label {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--accent-green);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .about-content {
-            border-left: 2px solid var(--border-default);
-            padding-left: 24px;
-        }
-
-        .about-text {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.9;
-            max-width: 720px;
-        }
-
-        .about-text .highlight {
-            color: var(--accent-amber);
-        }
-
-        .about-text a.highlight {
-            text-decoration: none;
-            border-bottom: 1px dashed var(--accent-amber-dim);
-            transition: border-color var(--transition-fast);
-        }
-
-        .about-text a.highlight:hover {
-            border-bottom-style: solid;
-            border-color: var(--accent-amber);
-        }
-
-        .about-cmd {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--accent-green);
-            margin-bottom: 10px;
-        }
-
-        .about-cmd .prompt {
-            color: var(--accent-amber);
-        }
-
-        .about-block {
-            margin-bottom: 28px;
-        }
-
-        .about-block:last-child {
-            margin-bottom: 0;
-        }
-
-        .about-features {
-            display: flex;
-            gap: 32px;
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .about-feature {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .about-feature-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-amber-dim);
-        }
-
-        /* --- Courses --- */
-        .courses {
-            padding: 0 0 80px;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .course-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-default);
-            border-radius: 8px;
-            padding: 24px 20px;
-            text-decoration: none;
-            color: inherit;
-            transition: 
-                border-color var(--transition-default),
-                background-color var(--transition-default),
-                transform var(--transition-fast);
-            display: block;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .course-card:hover {
-            border-color: var(--border-hover);
-            background: var(--bg-card-hover);
-            transform: translateY(-2px);
-        }
-
-        .course-card:hover .course-arrow {
-            color: var(--accent-amber);
-            transform: translateX(4px);
-        }
-
-        .course-card:hover .course-glow {
-            opacity: 1;
-        }
-
-        .course-glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-amber-dim), transparent);
-            opacity: 0;
-            transition: opacity var(--transition-default);
-        }
-
-        .course-icon {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            font-style: italic;
-        }
-
-        .course-name {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .course-prof {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .course-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .course-count {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--accent-amber-dim);
-        }
-
-        .course-arrow {
-            font-size: 14px;
-            color: var(--text-muted);
-            transition: 
-                color var(--transition-fast),
-                transform var(--transition-fast);
-        }
-
-        .course-card--soon {
-            opacity: 0.5;
-            cursor: default;
-        }
-
-        .course-card--soon:hover {
-            transform: none;
-            border-color: var(--border-default);
-            background: var(--bg-card);
-        }
-
-        .course-badge {
-            display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: var(--border-subtle);
-            color: var(--text-muted);
-        }
-
-        /* --- Ko-fi / Support --- */
-        .support {
-            padding: 40px 0;
-            border-top: 1px solid var(--border-subtle);
-            text-align: center;
-        }
-
-        .support-text {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .support-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--accent-gold);
-            text-decoration: none;
-            padding: 10px 24px;
-            border: 1px solid rgba(240,192,80,0.3);
-            border-radius: 6px;
-            transition: 
-                background-color var(--transition-fast),
-                border-color var(--transition-fast);
-        }
-
-        .support-link:hover {
-            background: rgba(240,192,80,0.08);
-            border-color: var(--accent-gold);
-        }
-
-        .support-link svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* --- Footer --- */
-        .footer {
-            padding: 24px 0;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-copy {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-links a {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color var(--transition-fast);
-        }
-
-        .footer-links a:hover {
-            color: var(--text-secondary);
-        }
-
-        /* --- Animations --- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(12px);
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        .fade-in-delay-1 { animation-delay: 0.1s; }
-        .fade-in-delay-2 { animation-delay: 0.2s; }
-        .fade-in-delay-3 { animation-delay: 0.3s; }
-        .fade-in-delay-4 { animation-delay: 0.4s; }
-        .fade-in-delay-5 { animation-delay: 0.5s; }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* --- Responsive --- */
-        @media (max-width: 600px) {
-            .hero { padding: 56px 0 48px; }
-            .hero-title { font-size: 28px; }
-            .courses-grid { grid-template-columns: 1fr; }
-            .about-features { flex-direction: column; gap: 12px; }
-            .nav-links { gap: 16px; }
-            .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="container nav-inner">
-            <a href="/" class="nav-logo">fey<span>_</span>notes</a>
-            <ul class="nav-links">
-                <li><a href="#corsi">corsi</a></li>
-                <li><a href="#about">about</a></li>
-                <li><a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a></li>
-            </ul>
-        </div>
+<header id="site-header">
+    <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
+    <nav class="header-nav">
+        <a href="#corsi">corsi</a>
+        <a href="#about">about</a>
+        <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a>
     </nav>
+</header>
 
-    <!-- Hero -->
-    <header class="hero">
-        <div class="container">
-            <div class="hero-label fade-in">// welcome</div>
-            <h1 class="hero-title fade-in fade-in-delay-1">
-                FeyNotes<span class="cursor"></span>
-            </h1>
-            <p class="hero-subtitle fade-in fade-in-delay-2">
-                appunti di ingegneria informatica &mdash; Tor Vergata
-            </p>
-        </div>
-    </header>
+<header class="fn-hero" style="padding-top: calc(var(--header-h) + 60px);">
+    <div class="fn-container">
+        <div class="fn-label fn-fade">// welcome</div>
+        <h1 class="fn-fade fn-d1">FeyNotes<span class="fn-cursor"></span></h1>
+        <p class="fn-hero-sub fn-fade fn-d2">appunti di ingegneria informatica — Tor Vergata</p>
+    </div>
+</header>
 
-    <!-- About -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="section-label fade-in fade-in-delay-2">// about</div>
-            <div class="about-content fade-in fade-in-delay-3">
-
-                <div class="about-block">
-                    <div class="about-cmd"><span class="prompt">$</span> whoami</div>
-                    <p class="about-text">
-                        Sono <span class="highlight">Elia Cinti</span>, studente di 
-                        Ingegneria Informatica a Roma Tor Vergata. FeyNotes &egrave; nato 
-                        da un'esigenza semplice: capire davvero quello che studio. 
-                        Ogni lezione viene trascritta, destrutturata e ricostruita in 
-                        appunti che abbiano senso &mdash; non copia-incolla dalle slide, 
-                        ma roba che leggi e capisci.
-                    </p>
-                    <p class="about-text" style="margin-top: 12px;">
-                        Se vuoi curiosare su cosa sto costruendo, il mio 
-                        <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer" class="highlight">GitHub</a> 
-                        &egrave; sempre aperto. E se FeyNotes ti &egrave; stato utile, puoi 
-                        aiutarmi a tenerlo in piedi offrendomi un caff&egrave; 
-                        <a href="#support" class="highlight">qui in basso</a> &mdash; 
-                        se poi ci conosciamo e ci vediamo, il caff&egrave; te lo offro io.
-                    </p>
-                </div>
-
-                <div class="about-block">
-                    <div class="about-cmd"><span class="prompt">$</span> cat filosofia.txt</div>
-                    <p class="about-text">
-                        Gli appunti buoni non dovrebbero essere un vantaggio competitivo. 
-                        Se qualcosa mi ha aiutato a capire un concetto, perch&eacute; tenerlo 
-                        chiuso in un iPad? FeyNotes &egrave; gratis, aperto, e lo sar&agrave; sempre.
-                    </p>
-                </div>
-
-                <div class="about-features">
-                    <div class="about-feature">
-                        <div class="about-feature-dot"></div>
-                        lezioni strutturate
-                    </div>
-                    <div class="about-feature">
-                        <div class="about-feature-dot"></div>
-                        flashcard orali
-                    </div>
-                    <div class="about-feature">
-                        <div class="about-feature-dot"></div>
-                        formule &amp; diagrammi
-                    </div>
-                </div>
+<section class="fn-about" id="about">
+    <div class="fn-container">
+        <div class="fn-label fn-fade fn-d2">// about</div>
+        <div class="fn-about-content fn-fade fn-d3">
+            <div class="fn-about-block">
+                <div class="fn-cmd"><span class="prompt">$</span> whoami</div>
+                <p class="fn-about-text">
+                    Sono <span class="hl">Elia Cinti</span>, studente di
+                    Ingegneria Informatica a Roma Tor Vergata. FeyNotes &egrave; nato
+                    da un'esigenza semplice: capire davvero quello che studio.
+                    Ogni lezione viene trascritta, destrutturata e ricostruita in
+                    appunti che abbiano senso &mdash; non copia-incolla dalle slide,
+                    ma roba che leggi e capisci.
+                </p>
+                <p class="fn-about-text" style="margin-top: 12px;">
+                    Se vuoi curiosare su cosa sto costruendo, il mio
+                    <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer" class="hl">GitHub</a>
+                    &egrave; sempre aperto. E se FeyNotes ti &egrave; stato utile, puoi
+                    aiutarmi a tenerlo in piedi offrendomi un caff&egrave;
+                    <a href="#support" class="hl">qui in basso</a> &mdash;
+                    se poi ci conosciamo e ci vediamo, il caff&egrave; te lo offro io.
+                </p>
+            </div>
+            <div class="fn-about-block">
+                <div class="fn-cmd"><span class="prompt">$</span> cat filosofia.txt</div>
+                <p class="fn-about-text">
+                    Gli appunti buoni non dovrebbero essere un vantaggio competitivo.
+                    Se qualcosa mi ha aiutato a capire un concetto, perch&eacute; tenerlo
+                    chiuso in un iPad? FeyNotes &egrave; gratis, aperto, e lo sar&agrave; sempre.
+                </p>
+            </div>
+            <div class="fn-about-features">
+                <div class="fn-about-feature"><div class="fn-about-feature-dot"></div>lezioni strutturate</div>
+                <div class="fn-about-feature"><div class="fn-about-feature-dot"></div>flashcard orali</div>
+                <div class="fn-about-feature"><div class="fn-about-feature-dot"></div>formule &amp; diagrammi</div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Courses -->
-    <section class="courses" id="corsi">
-        <div class="container">
-            <div class="section-label fade-in fade-in-delay-3">// corsi</div>
-            <div class="courses-grid">
-
-                <a href="/fisica1/" class="course-card fade-in fade-in-delay-3">
-                    <div class="course-glow"></div>
-                    <div class="course-icon">fn::fisica</div>
-                    <div class="course-name">Fisica 1</div>
-                    <div class="course-prof">Prof. Mercuri</div>
-                    <div class="course-meta">
-                        <span class="course-count">12 lezioni</span>
-                        <span class="course-arrow">&rarr;</span>
-                    </div>
-                </a>
-
-                <a href="/geometria/" class="course-card fade-in fade-in-delay-4">
-                    <div class="course-glow"></div>
-                    <div class="course-icon">fn::geometria</div>
-                    <div class="course-name">Geometria</div>
-                    <div class="course-prof">Trusiani / Di Gennaro</div>
-                    <div class="course-meta">
-                        <span class="course-count">3 lezioni</span>
-                        <span class="course-arrow">&rarr;</span>
-                    </div>
-                </a>
-
-                <div class="course-card course-card--soon fade-in fade-in-delay-5">
-                    <div class="course-icon">fn::controlli</div>
-                    <div class="course-name">Fondamenti di Controlli</div>
-                    <div class="course-prof">esercizi</div>
-                    <div class="course-meta">
-                        <span class="course-badge">coming soon</span>
-                    </div>
+<section class="fn-courses" id="corsi">
+    <div class="fn-container">
+        <div class="fn-label fn-fade fn-d3">// corsi</div>
+        <div class="fn-courses-grid">
+            <a href="/fisica1/" class="fn-course-card fn-fade fn-d3" data-course="fisica">
+                <div class="fn-course-glow"></div>
+                <div class="fn-course-icon">fn::fisica</div>
+                <div class="fn-course-name">Fisica 1</div>
+                <div class="fn-course-prof">Prof. Mercuri</div>
+                <div class="fn-course-meta">
+                    <span class="fn-course-count">12 lezioni</span>
+                    <span class="fn-course-arrow">&rarr;</span>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Support / Ko-fi -->
-    <section class="support" id="support">
-        <div class="container">
-            <p class="support-text">Se ti sono stati utili, offrimi un caff&egrave;</p>
-            <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer" class="support-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
-                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
-                    <line x1="6" y1="1" x2="6" y2="4"/>
-                    <line x1="10" y1="1" x2="10" y2="4"/>
-                    <line x1="14" y1="1" x2="14" y2="4"/>
-                </svg>
-                ko-fi.com/eliacinti
             </a>
+            <a href="/geometria/" class="fn-course-card fn-fade fn-d4" data-course="geometria">
+                <div class="fn-course-glow"></div>
+                <div class="fn-course-icon">fn::geometria</div>
+                <div class="fn-course-name">Geometria</div>
+                <div class="fn-course-prof">Trusiani / Di Gennaro</div>
+                <div class="fn-course-meta">
+                    <span class="fn-course-count">3 lezioni</span>
+                    <span class="fn-course-arrow">&rarr;</span>
+                </div>
+            </a>
+            <div class="fn-course-card fn-course-card--soon fn-fade fn-d5" data-course="controlli">
+                <div class="fn-course-icon">fn::controlli</div>
+                <div class="fn-course-name">Fondamenti di Controlli</div>
+                <div class="fn-course-prof">esercizi</div>
+                <div class="fn-course-meta">
+                    <span class="fn-course-badge">coming soon</span>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-inner">
-            <span class="footer-copy">&copy; 2026 Elia Cinti</span>
-            <div class="footer-links">
+<div class="fn-container" id="support">
+    <footer class="fn-footer">
+        <div class="fn-footer-coffee">Se ti sono stati utili, <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">offrimi un caff&egrave;</a></div>
+        <div class="fn-footer-inner">
+            <span class="fn-footer-copy">&copy; 2026 Elia Cinti</span>
+            <div class="fn-footer-links">
                 <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a>
                 <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">ko-fi</a>
             </div>
         </div>
     </footer>
+</div>
 
 </body>
 </html>

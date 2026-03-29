@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-theme="fisica">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fisica 1 — Study Guide</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>Fisica 1 — FeyNotes</title>
+  <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
 </head>
 <body>
 
-<!-- ─── Header ─── -->
 <header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes<span class="header-cursor"></span></a>
+  <span class="header-sep">/</span>
   <a href="/fisica1/" class="header-logo">
     <span class="logo-icon">⚛️</span>
     Fisica 1
-    <span class="logo-sub">Study Guide</span>
   </a>
   <nav class="header-nav">
     <a href="/fisica1/" class="active">Lezioni</a>
@@ -25,155 +25,87 @@
   </nav>
 </header>
 
-<!-- ─── Page Content ─── -->
-<main class="page-wrapper">
+<div class="fn-page">
 
-  <div class="hero">
-    <span class="hero-badge">Tor Vergata — A.A. 2025/2026</span>
-    <h1>Fisica 1</h1>
-    <p>Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.</p>
-    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px; font-weight: 300;">di <strong style="color: var(--accent); font-weight: 600;">Elia Cinti</strong> — Ingegneria Informatica</p>
+  <div class="fn-course-hero">
+    <div class="fn-label fn-fade">// corso</div>
+    <div class="fn-course-badge-inline fn-fade fn-d1">Tor Vergata — A.A. 2025/2026</div>
+    <h1 class="fn-fade fn-d1">Fisica 1<span class="fn-cursor"></span></h1>
+    <p class="fn-course-hero-sub fn-fade fn-d2">Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.</p>
+    <p class="fn-course-hero-meta fn-fade fn-d3">di <span class="hl">Elia Cinti</span> — Ingegneria Informatica · Prof. Mercuri</p>
   </div>
 
-  <!-- Cinematica -->
-  <div class="section-header">
-    <h2>🏃 Cinematica</h2>
-    <div class="section-line"></div>
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// cinematica</div>
+    <div class="fn-grid" id="cinematica-grid"></div>
   </div>
 
-  <div class="lessons-grid" id="cinematica-grid">
-    <!-- Populated by JS -->
-  </div>
-
-  <!-- Dinamica -->
-  <div class="section-header">
-    <h2>⚙️ Dinamica</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="lessons-grid" id="dinamica-grid">
-    <div class="lesson-card" style="opacity: 0.4; cursor: default;">
-      <div class="card-num">Prossimamente</div>
-      <div class="card-title">Le lezioni di dinamica saranno aggiunte man mano che il corso procede.</div>
+  <div class="fn-section fn-fade fn-d4">
+    <div class="fn-section-label">// dinamica</div>
+    <div class="fn-grid" id="dinamica-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di dinamica saranno aggiunte man mano che il corso procede.</div>
+      </div>
     </div>
   </div>
 
-  <!-- Termodinamica -->
-  <div class="section-header">
-    <h2>🌡️ Termodinamica</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="lessons-grid" id="termo-grid">
-    <div class="lesson-card" style="opacity: 0.4; cursor: default;">
-      <div class="card-num">Prossimamente</div>
-      <div class="card-title">Le lezioni di termodinamica saranno aggiunte nella seconda parte del corso.</div>
+  <div class="fn-section fn-fade fn-d4">
+    <div class="fn-section-label">// termodinamica</div>
+    <div class="fn-grid" id="termo-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di termodinamica saranno aggiunte nella seconda parte del corso.</div>
+      </div>
     </div>
   </div>
 
-</main>
+</div>
 
-<footer class="site-footer">
-  Realizzato da <span class="footer-name">Elia Cinti</span> · <span class="footer-uni">Ingegneria Informatica — Università di Roma Tor Vergata</span> · A.A. 2025/2026
-  <br>
-  <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-size: 0.85rem;">☕ Offrimi un caffè</a>
-</footer>
+<div class="fn-page">
+  <footer class="fn-footer">
+    <div class="fn-footer-coffee">Se ti sono stati utili, <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">offrimi un caffè</a></div>
+    <div class="fn-footer-inner">
+      <span class="fn-footer-copy">&copy; 2026 Elia Cinti</span>
+      <div class="fn-footer-links">
+        <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a>
+        <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">ko-fi</a>
+      </div>
+    </div>
+  </footer>
+</div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   LESSON INDEX — Metadata for all lessons
-   ═══════════════════════════════════════════════════════════════ */
 const LESSON_INDEX = [
-  {
-    id: "L01", num: "Lezione 1", date: "11 Mar 2026",
-    title: "Introduzione, Metodo Scientifico e Prime Grandezze Cinematiche",
-    abstract: "Metodo galileiano, grandezze scalari vs vettoriali, posizione, spostamento, velocità media.",
-    category: "cinematica",
-    file: "../lezioni/L01.html"
-  },
-  {
-    id: "L02", num: "Lezione 2", date: "4 Mar 2026",
-    title: "Vettore Posizione, Coseni Direttori e Velocità",
-    abstract: "Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.",
-    category: "cinematica",
-    file: "../lezioni/L02.html"
-  },
-  {
-    id: "L03", num: "Lezione 3", date: "5 Mar 2026",
-    title: "Velocità Istantanea, Accelerazione e Moto Rettilineo",
-    abstract: "Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.",
-    category: "cinematica",
-    file: "../lezioni/L03.html"
-  },
-  {
-    id: "L04", num: "Lezione 4", date: "9 Mar 2026",
-    title: "Moto Uniformemente Accelerato e Caduta Libera",
-    abstract: "Equazioni del moto UA, caduta libera, composizione dei moti, moto del proiettile.",
-    category: "cinematica",
-    file: "../lezioni/L04.html"
-  },
-  {
-    id: "L05", num: "Lezione 5", date: "11 Mar 2026",
-    title: "Moto Circolare Uniforme e Moto Circolare Uniformemente Accelerato",
-    abstract: "MCU, MCUA, velocità angolare, accelerazione centripeta, relazione grandezze lineari-angolari.",
-    category: "cinematica",
-    file: "../lezioni/L05.html"
-  },
-  {
-    id: "L06", num: "Lezione 6", date: "12 Mar 2026",
-    title: "Fondamenti di Cinematica del Moto Circolare",
-    abstract: "Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.",
-    category: "cinematica",
-    file: "../lezioni/L06.html"
-  },
-  {
-    id: "L07", num: "Lezione 7", date: "16 Mar 2026",
-    title: "Introduzione alla Dinamica: Le Leggi di Newton, Quantita di Moto e Impulso",
-    abstract: "Dalla cinematica alla dinamica. Prima e Seconda Legge di Newton. Massa inerziale. Quantita di moto, teorema dell'impulso, forze impulsive e forza media.",
-    category: "dinamica",
-    file: "../lezioni/L07.html"
-  },
-  {
-    id: "L08", num: "Lezione 8", date: "18 Mar 2026",
-    title: "Terzo Principio, Risoluzione Vettoriale delle Forze e Forza Peso",
-    abstract: "Terzo principio (azione-reazione). Equilibrio statico 2D con scomposizione vettoriale. Corpi a contatto. Forza peso e reazione normale.",
-    category: "dinamica",
-    file: "../lezioni/L08.html"
-  },
-  {
-    id: "L09", num: "Lezione 9", date: "19 Mar 2026",
-    title: "Esercizi, Vincoli, Reazione Normale e Attrito",
-    abstract: "Esercizi su MCUA e teorema dell'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.",
-    category: "dinamica",
-    file: "../lezioni/L09.html"
-},
-{
-    id: "L10", num: "Lezione 10", date: "25 Mar 2026",
-    title: "Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari",
-    abstract: "RN ≠ mg: problema dell'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata.",
-    category: "dinamica",
-    file: "../lezioni/L10.html"
-  },
+  { id: "L01", num: "Lezione 1", date: "11 Mar 2026", title: "Introduzione, Metodo Scientifico e Prime Grandezze Cinematiche", abstract: "Metodo galileiano, grandezze scalari vs vettoriali, posizione, spostamento, velocità media.", category: "cinematica", file: "../lezioni/L01.html" },
+  { id: "L02", num: "Lezione 2", date: "4 Mar 2026", title: "Vettore Posizione, Coseni Direttori e Velocità", abstract: "Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.", category: "cinematica", file: "../lezioni/L02.html" },
+  { id: "L03", num: "Lezione 3", date: "5 Mar 2026", title: "Velocità Istantanea, Accelerazione e Moto Rettilineo", abstract: "Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.", category: "cinematica", file: "../lezioni/L03.html" },
+  { id: "L04", num: "Lezione 4", date: "9 Mar 2026", title: "Moto Uniformemente Accelerato e Caduta Libera", abstract: "Equazioni del moto UA, caduta libera, composizione dei moti, moto del proiettile.", category: "cinematica", file: "../lezioni/L04.html" },
+  { id: "L05", num: "Lezione 5", date: "11 Mar 2026", title: "Moto Circolare Uniforme e Moto Circolare Uniformemente Accelerato", abstract: "MCU, MCUA, velocità angolare, accelerazione centripeta, relazione grandezze lineari-angolari.", category: "cinematica", file: "../lezioni/L05.html" },
+  { id: "L06", num: "Lezione 6", date: "12 Mar 2026", title: "Fondamenti di Cinematica del Moto Circolare", abstract: "Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.", category: "cinematica", file: "../lezioni/L06.html" },
+  { id: "L07", num: "Lezione 7", date: "16 Mar 2026", title: "Introduzione alla Dinamica: Le Leggi di Newton, Quantita di Moto e Impulso", abstract: "Dalla cinematica alla dinamica. Prima e Seconda Legge di Newton. Massa inerziale. Quantita di moto, teorema dell'impulso, forze impulsive e forza media.", category: "dinamica", file: "../lezioni/L07.html" },
+  { id: "L08", num: "Lezione 8", date: "18 Mar 2026", title: "Terzo Principio, Risoluzione Vettoriale delle Forze e Forza Peso", abstract: "Terzo principio (azione-reazione). Equilibrio statico 2D con scomposizione vettoriale. Corpi a contatto. Forza peso e reazione normale.", category: "dinamica", file: "../lezioni/L08.html" },
+  { id: "L09", num: "Lezione 9", date: "19 Mar 2026", title: "Esercizi, Vincoli, Reazione Normale e Attrito", abstract: "Esercizi su MCUA e teorema dell'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.", category: "dinamica", file: "../lezioni/L09.html" },
+  { id: "L10", num: "Lezione 10", date: "25 Mar 2026", title: "Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari", abstract: "RN ≠ mg: problema dell'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata.", category: "dinamica", file: "../lezioni/L10.html" },
 ];
 
-/* ─── Populate grids ─── */
 function populateGrid(gridId, category) {
   const grid = document.getElementById(gridId);
   if (!grid) return;
-
   const lessons = LESSON_INDEX.filter(l => l.category === category);
   if (lessons.length === 0) return;
-
-  // Remove placeholder
   grid.innerHTML = '';
-
   for (const l of lessons) {
     grid.innerHTML += `
-      <a class="lesson-card" href="${l.file}">
-        <div class="card-num">${l.num}</div>
-        <div class="card-title">${l.title}</div>
-        <div class="card-abstract">${l.abstract}</div>
-        <div class="card-date">${l.date}</div>
+      <a class="fn-card" href="${l.file}">
+        <div class="fn-card-glow"></div>
+        <div class="fn-card-num">${l.num}</div>
+        <div class="fn-card-title">${l.title}</div>
+        <div class="fn-card-abstract">${l.abstract}</div>
+        <div class="fn-card-footer">
+          <span class="fn-card-date">${l.date}</span>
+          <span class="fn-card-arrow">&rarr;</span>
+        </div>
       </a>`;
   }
 }
@@ -182,8 +114,7 @@ populateGrid('cinematica-grid', 'cinematica');
 populateGrid('dinamica-grid', 'dinamica');
 populateGrid('termo-grid', 'termodinamica');
 
-/* ─── Render KaTeX in lesson cards ─── */
-document.querySelectorAll('.card-title, .card-abstract').forEach(el => {
+document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;
   if (!html.includes('$')) return;
   let processed = html.replace(/(?<!\$)\$(?!\$)([^$]+?)\$(?!\$)/g, (_, tex) => {
