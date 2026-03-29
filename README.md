@@ -1,129 +1,148 @@
-# Fisica 1 — Study Guide
+# FeyNotes
 
-Guida allo studio di Fisica 1 per il corso di Ingegneria Informatica @ Università di Roma Tor Vergata.
+Appunti di Ingegneria Informatica — Università di Roma Tor Vergata.
 
-## Struttura del progetto
+🌐 **[eliacinti.dev](https://eliacinti.dev)**
+
+---
+
+## Struttura
 
 ```
-fisica1-guide/
-├── index.html              ← Landing page con griglia lezioni
-├── css/
-│   └── style.css           ← Design system condiviso (dark theme)
-├── js/
-│   └── renderer.js         ← Engine che converte dati lezione → HTML
-├── lezioni/
-│   ├── L01.html            ← Ogni lezione è un file separato
-│   ├── L02.html
-│   └── ...
-├── animations/             ← Video/GIF generati con Manim
-│   ├── vettori-scalari.mp4
-│   ├── moto-parabolico.mp4
-│   └── ...
-└── assets/                 ← Immagini, icone, altro
+FeyNotes/
+  index.html                 ← Homepage
+  fisica1/index.html         ← Index Fisica 1
+  css/
+    base.css                 ← Design system (temi, layout, componenti)
+    style.css                ← Stili lezione (sidebar, contenuto, flashcard)
+  js/
+    renderer.js              ← Render LESSON → HTML
+    graphs.js                ← Grafici interattivi
+  src/
+    config.js                ← Configurazione corsi e metadati lezioni
+    templates/
+      lezione.html           ← Template unico per tutte le lezioni
+    data/
+      fisica/
+        L01.js … L10.js      ← Dati di ogni lezione (oggetto LESSON)
+  lezioni/                   ← OUTPUT generato da build.js
+    L01/index.html
+    L02/index.html
+    ...
+  build.js                   ← Build script
+  sitemap.xml                ← Generato da build.js
+  robots.txt
 ```
 
-## Come funziona
+## Aggiungere una nuova lezione
 
-### Aggiungere una nuova lezione
+### 1. Crea il file dati
 
-1. Crea un nuovo file `lezioni/LXX.html` copiando il template da una lezione esistente
-2. Modifica l'oggetto `LESSON` con i dati della nuova lezione
-3. Aggiungi la lezione all'array `LESSON_INDEX` in `index.html`
-4. Aggiorna i link "Prec./Succ." nella sidebar
+```bash
+touch src/data/fisica/L11.js
+```
 
-### Formato dati lezione
-
-Ogni lezione è un oggetto JavaScript con questa struttura:
+Incolla l'oggetto LESSON con la struttura standard:
 
 ```javascript
 const LESSON = {
-  id: "L06",
-  date: "Lezione 6 — 18 Mar 2026",
-  title: "Titolo della Lezione",
-  abstract: "Descrizione breve...",
-
-  sections: [
-    // Sezione standard
-    {
-      id: "s-mio-id",        // ID per il link nella sidebar
-      type: "section",        // "section" | "info_corso" | "alert_box"
-      title: "Titolo Sezione",
-      icon: "📌",
-      content: `<p>Testo HTML con $formule$ KaTeX inline.</p>`,
-      
-      // Opzionali:
-      formulas: [
-        { label: "Nome", latex: "E = mc^2" }
-      ],
-      steps: [
-        "Primo passo...",
-        "Secondo passo..."
-      ],
-      table_compare: {
-        headers: ["Col1", "Col2"],
-        rows: [["a", "b"], ["c", "d"]]
-      },
-      subsections: [
-        { subtitle: "Sottotitolo", content: `<p>...</p>`, equations: ["x^2"] }
-      ],
-      quote: {
-        text: "Citazione del prof...",
-        src: "— Prof. Mercuri"
-      },
-      
-      // Animazione Manim (video/GIF)
-      animation: {
-        type: "video",         // "video" o "gif"
-        src: "../animations/nome-file.mp4",
-        caption: "Descrizione dell'animazione"
-      },
-
-      // Grafico interattivo Canvas
-      graph: {
-        id: "graph-nome",
-        width: 700, height: 400,
-        caption: "Descrizione"
-      }
-    }
-  ]
+    id: "L11", date: "Lezione 11 — DD Mmm 2026",
+    title: "Titolo della lezione",
+    abstract: "Abstract breve.",
+    sections: [ ... ],
+    oral_cards: [ ... ]
 };
 ```
 
-### Integrare un'animazione Manim
+### 2. Registra la lezione in config.js
 
-1. Genera l'animazione:
-   ```bash
-   manim-on
-   manim -qm --format gif file.py NomeScena    # per GIF
-   manim -qm file.py NomeScena                 # per MP4
-   ```
-2. Copia il file in `animations/`
-3. Nella sezione della lezione, aggiungi:
-   ```javascript
-   animation: {
-     type: "video",  // oppure "gif"
-     src: "../animations/nome-file.mp4",
-     caption: "Cosa mostra questa animazione"
-   }
-   ```
+Apri `src/config.js` e aggiungi alla lista `lessons` del corso:
 
-Il video appare inline con un badge "Manim" e i controlli di riproduzione.
-
-## Servire il sito
-
-### Sviluppo locale
-```bash
-cd fisica1-guide
-python3 -m http.server 8000
-# Apri http://localhost:8000
+```javascript
+{ id: 'L11', num: 'Lezione 11', date: 'DD Mmm 2026', title: '...', abstract: '...', category: 'dinamica' },
 ```
 
-### Su un server
-Basta copiare l'intera cartella su qualsiasi web server statico (Nginx, Apache, GitHub Pages, Netlify, Cloudflare Pages, ecc.).
+### 3. Build
 
-## Tech stack
+```bash
+# Solo la nuova lezione
+node build.js --lesson L11
 
-- **HTML/CSS/JS** puro — nessun framework, nessun build step
-- **KaTeX** per le formule matematiche
-- **Manim** (Community Edition) per le animazioni
-- **Canvas API** per i grafici interattivi
+# Oppure tutto il corso
+node build.js --course fisica
+
+# Oppure tutto
+node build.js
+```
+
+### 4. Deploy
+
+```bash
+git add .
+git commit -m "feat: add L11"
+git push
+ssh elia@eliacinti.dev "cd ~/website && git pull"
+```
+
+## Aggiungere un nuovo corso
+
+### 1. Aggiungi il corso in `src/config.js`
+
+```javascript
+geometria: {
+  id: 'geometria',
+  theme: 'geometria',       // corrisponde a [data-theme="geometria"] in base.css
+  name: 'Geometria',
+  icon: '△',
+  indexUrl: '/geometria/',
+  professor: 'Trusiani / Di Gennaro',
+  university: 'Università di Roma Tor Vergata',
+  year: 'A.A. 2025/2026',
+  nav: [ ... ],
+  lessons: [ ... ],
+},
+```
+
+### 2. Crea la cartella dati
+
+```bash
+mkdir -p src/data/geometria
+```
+
+### 3. Aggiungi il tema in `css/base.css`
+
+```css
+[data-theme="geometria"] {
+  --accent: #ff8c42;
+  --accent-dim: #d4702e;
+  --accent-glow: rgba(255,140,66,0.12);
+  --accent-glow-strong: rgba(255,140,66,0.25);
+}
+```
+
+### 4. Build e deploy
+
+```bash
+node build.js --course geometria
+```
+
+## Cache busting
+
+Dopo aver modificato `base.css` o `style.css`, incrementa `cssVersion` in `src/config.js` e rifai il build. Il numero di versione viene iniettato in tutti i link CSS e JS.
+
+## Temi disponibili
+
+| Corso | Theme | Accento |
+|-------|-------|---------|
+| Homepage | `home` | `#8b8b8b` (grigio) |
+| Fisica 1 | `fisica` | `#e8d44d` (giallo) |
+| Geometria | `geometria` | `#ff8c42` (arancione) |
+| FdC | `controlli` | `#ff6b6b` (coral) |
+
+## Tecnologie
+
+- HTML/CSS/JS statico (nessun framework)
+- KaTeX per le formule
+- Node.js per il build (zero dipendenze)
+- Nginx + Docker + Cloudflare
+- Hetzner CX23
