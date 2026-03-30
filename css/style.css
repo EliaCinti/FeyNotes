@@ -229,12 +229,16 @@ a:hover { color: #f0dc6e; }
 .lesson-layout {
   margin-top: var(--header-h);
   display: flex;
-  height: calc(100vh - var(--header-h));
+  min-height: calc(100vh - var(--header-h));
 }
 
 /* Sidebar — open by default on desktop, toggled via JS */
 .lesson-sidebar {
   width: var(--sidebar-w); min-width: var(--sidebar-w);
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  align-self: flex-start;
   background: var(--bg-secondary);
   border-right: 1px solid var(--border);
   overflow-y: auto;
@@ -325,7 +329,7 @@ a:hover { color: #f0dc6e; }
 
 /* Main content — full width */
 .lesson-content {
-  flex: 1; overflow-y: auto;
+  flex: 1; overflow-y: visible;
   padding: 36px 80px 80px;
 }
 .lesson-content > * {
