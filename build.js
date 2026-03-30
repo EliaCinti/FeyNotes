@@ -182,6 +182,7 @@ function buildLesson(courseId, lessonId) {
     COURSE_URL: course.indexUrl,
     COURSE_ICON: course.icon,
     COURSE_NAME: course.name,
+    LESSON_NUM: lessonMeta.num,
     NAV_LINKS: buildNavLinks(course),
     PREV_LINK: buildPrevLink(course, lessonIndex),
     NEXT_LINK: buildNextLink(course, lessonIndex),

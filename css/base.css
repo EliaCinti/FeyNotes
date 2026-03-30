@@ -156,6 +156,7 @@ a:hover { color: var(--text-primary); }
 }
 
 /* Breadcrumb separator */
+.header-lesson { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); white-space: nowrap; }
 .header-sep {
   color: var(--border-light);
   font-size: 1rem;
