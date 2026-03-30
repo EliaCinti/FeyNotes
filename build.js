@@ -18,7 +18,6 @@ const { SITE, COURSES } = require('./src/config');
 const ROOT = __dirname;
 const TEMPLATE_DIR = path.join(ROOT, 'src', 'templates');
 const DATA_DIR = path.join(ROOT, 'src', 'data');
-const OUTPUT_DIR = path.join(ROOT, 'lezioni');
 
 // ─── CLI Args ───
 const args = process.argv.slice(2);
@@ -28,6 +27,19 @@ for (let i = 0; i < args.length; i++) {
     flags[args[i].slice(2)] = args[i + 1] || true;
     i++;
   }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  URL HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+function lessonUrl(course, lessonId) {
+  return `${course.basePath}/lezioni/${lessonId}/`;
+}
+
+function lessonOutputPath(course, lessonId) {
+  // e.g. /fisica1/lezioni/L01/index.html
+  return path.join(ROOT, course.basePath.slice(1), 'lezioni', lessonId, 'index.html');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -64,7 +76,7 @@ function buildPrevLink(course, lessonIndex) {
     return '<a href="#" style="opacity:0.3">← Prec.</a>';
   }
   const prev = course.lessons[lessonIndex - 1];
-  return `<a href="/lezioni/${prev.id}/">← Prec.</a>`;
+  return `<a href="${lessonUrl(course, prev.id)}">← Prec.</a>`;
 }
 
 function buildNextLink(course, lessonIndex) {
@@ -72,7 +84,7 @@ function buildNextLink(course, lessonIndex) {
     return '<a href="#" style="opacity:0.3">Succ. →</a>';
   }
   const next = course.lessons[lessonIndex + 1];
-  return `<a href="/lezioni/${next.id}/">Succ. →</a>`;
+  return `<a href="${lessonUrl(course, next.id)}">Succ. →</a>`;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -87,7 +99,7 @@ function buildJsonLd(course, lessonMeta) {
     'description': lessonMeta.abstract,
     'educationalLevel': 'University',
     'inLanguage': 'it',
-    'url': `${SITE.url}/lezioni/${lessonMeta.id}/`,
+    'url': `${SITE.url}${lessonUrl(course, lessonMeta.id)}`,
     'datePublished': formatDateISO(lessonMeta.date),
     'author': {
       '@type': 'Person',
@@ -138,6 +150,7 @@ function buildLesson(courseId, lessonId) {
   }
 
   const lessonMeta = course.lessons[lessonIndex];
+  const url = lessonUrl(course, lessonId);
 
   // Read template
   const templatePath = path.join(TEMPLATE_DIR, 'lezione.html');
@@ -163,8 +176,8 @@ function buildLesson(courseId, lessonId) {
     AUTHOR: SITE.author,
     OG_TITLE: escapeHtml(`${lessonMeta.num}: ${lessonMeta.title} — ${course.name}`),
     OG_DESCRIPTION: escapeHtml(stripHtml(lessonMeta.abstract)),
-    OG_URL: `${SITE.url}/lezioni/${lessonId}/`,
-    CANONICAL_URL: `${SITE.url}/lezioni/${lessonId}/`,
+    OG_URL: `${SITE.url}${url}`,
+    CANONICAL_URL: `${SITE.url}${url}`,
     CSS_VERSION: String(SITE.cssVersion),
     COURSE_URL: course.indexUrl,
     COURSE_ICON: course.icon,
@@ -180,12 +193,48 @@ function buildLesson(courseId, lessonId) {
   const html = render(template, vars);
 
   // Write output
-  const outputPath = path.join(OUTPUT_DIR, lessonId, 'index.html');
+  const outputPath = lessonOutputPath(course, lessonId);
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, html, 'utf-8');
 
-  console.log(`  ✓ ${lessonId} → lezioni/${lessonId}/index.html`);
+  const relPath = path.relative(ROOT, outputPath);
+  console.log(`  ✓ ${lessonId} → ${relPath}`);
   return true;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BUILD COURSE INDEX
+// ═══════════════════════════════════════════════════════════════
+
+function buildCourseIndex(courseId) {
+  const course = COURSES[courseId];
+  if (!course) return;
+
+  // Update lesson links in the course index.html
+  const indexPath = path.join(ROOT, course.basePath.slice(1), 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    console.log(`  ⚠ Course index not found: ${indexPath} — skipping link update`);
+    return;
+  }
+
+  let html = fs.readFileSync(indexPath, 'utf-8');
+
+  // Update lesson file references in JS
+  for (const lesson of course.lessons) {
+    // Match various old patterns and normalize to new URL
+    const oldPatterns = [
+      `"/lezioni/${lesson.id}/"`,
+      `"../lezioni/${lesson.id}.html"`,
+      `"../lezioni/${lesson.id}/"`,
+    ];
+    const newUrl = `"${lessonUrl(course, lesson.id)}"`;
+    for (const old of oldPatterns) {
+      html = html.split(old).join(newUrl);
+    }
+  }
+
+  fs.writeFileSync(indexPath, html, 'utf-8');
+  console.log(`  ✓ Updated links in ${path.relative(ROOT, indexPath)}`);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -206,6 +255,8 @@ function buildCourse(courseId) {
     if (buildLesson(courseId, lesson.id)) built++;
   }
 
+  buildCourseIndex(courseId);
+
   console.log(`   Done: ${built}/${course.lessons.length} lessons built.\n`);
 }
 
@@ -222,14 +273,13 @@ function buildSitemap() {
   // Homepage
   urls.push({ loc: SITE.url + '/', priority: '1.0', changefreq: 'weekly' });
 
-  // Course indexes
+  // Course indexes + lessons
   for (const [, course] of Object.entries(COURSES)) {
     urls.push({ loc: SITE.url + course.indexUrl, priority: '0.8', changefreq: 'weekly' });
 
-    // Lessons
     for (const lesson of course.lessons) {
       urls.push({
-        loc: `${SITE.url}/lezioni/${lesson.id}/`,
+        loc: `${SITE.url}${lessonUrl(course, lesson.id)}`,
         priority: '0.7',
         changefreq: 'monthly',
         lastmod: formatDateISO(lesson.date),
@@ -259,7 +309,7 @@ function buildSitemap() {
 
 function main() {
   console.log('═══════════════════════════════════════');
-  console.log('  FeyNotes Build System');
+  console.log('  FeyNotes Build System v2');
   console.log('═══════════════════════════════════════');
 
   if (flags.sitemap) {
@@ -268,7 +318,6 @@ function main() {
   }
 
   if (flags.lesson) {
-    // Find which course this lesson belongs to
     const lessonId = flags.lesson;
     const courseId = flags.course || Object.keys(COURSES).find(cId =>
       COURSES[cId].lessons.some(l => l.id === lessonId)

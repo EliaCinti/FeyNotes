@@ -8,7 +8,7 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 4,
+  cssVersion: 5,
 };
 
 const COURSES = {
@@ -17,6 +17,7 @@ const COURSES = {
     theme: 'fisica',
     name: 'Fisica 1',
     icon: '⚛️',
+    basePath: '/fisica1',
     indexUrl: '/fisica1/',
     professor: 'Prof. Mercuri',
     university: 'Università di Roma Tor Vergata',
@@ -41,8 +42,16 @@ const COURSES = {
   },
 
   // ─── Future courses ───
-  // geometria: { id: 'geometria', theme: 'geometria', name: 'Geometria', ... },
-  // controlli: { id: 'controlli', theme: 'controlli', name: 'Fondamenti di Controlli', ... },
+  // geometria: {
+  //   id: 'geometria', theme: 'geometria', name: 'Geometria', icon: '△',
+  //   basePath: '/geometria', indexUrl: '/geometria/',
+  //   professor: 'Trusiani / Di Gennaro', ...
+  // },
+  // controlli: {
+  //   id: 'controlli', theme: 'controlli', name: 'Fondamenti di Controlli', icon: '◎',
+  //   basePath: '/controlli', indexUrl: '/controlli/',
+  //   ...
+  // },
 };
 
 module.exports = { SITE, COURSES };
