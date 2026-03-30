@@ -304,6 +304,35 @@ function buildSitemap() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  UPDATE HOMEPAGE — Lesson counts
+// ═══════════════════════════════════════════════════════════════
+
+function updateHomepage() {
+  const homePath = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(homePath)) {
+    console.log('  ⚠ Homepage not found — skipping count update');
+    return;
+  }
+
+  let html = fs.readFileSync(homePath, 'utf-8');
+
+  for (const [, course] of Object.entries(COURSES)) {
+    const count = course.lessons.length;
+    const label = count === 1 ? '1 lezione' : `${count} lezioni`;
+    // Match: data-course="fisica" ... fn-course-count">XX lezioni</span>
+    // We use a regex that finds the card by data-course and updates the count inside it
+    const regex = new RegExp(
+      `(data-course="${course.id}"[\\s\\S]*?class="fn-course-count">)\\d+ lezion[ei]`,
+      'g'
+    );
+    html = html.replace(regex, `$1${label}`);
+  }
+
+  fs.writeFileSync(homePath, html, 'utf-8');
+  console.log('  ✓ Updated lesson counts in index.html');
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  MAIN
 // ═══════════════════════════════════════════════════════════════
 
@@ -327,12 +356,14 @@ function main() {
     } else {
       console.error(`Lesson "${lessonId}" not found in any course.`);
     }
+    updateHomepage();
     buildSitemap();
     return;
   }
 
   if (flags.course) {
     buildCourse(flags.course);
+    updateHomepage();
     buildSitemap();
     return;
   }
@@ -341,6 +372,7 @@ function main() {
   for (const courseId of Object.keys(COURSES)) {
     buildCourse(courseId);
   }
+  updateHomepage();
   buildSitemap();
 
   console.log('✅ Build complete!');

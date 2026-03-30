@@ -141,7 +141,7 @@ a:hover { color: var(--text-primary); }
 .header-home-accent { color: var(--accent); }
 
 /* Blinking cursor */
-.header-cursor {
+.header-cursor { display: none;
   display: inline-block;
   width: 1.5px;
   height: 14px;
