@@ -17,10 +17,10 @@
   --text-primary: #e4e7f0;
   --text-secondary: #9ca1ba;
   --text-muted: #5f6580;
-  --accent: #6c8cff;
-  --accent-dim: #4a65cc;
-  --accent-glow: rgba(108,140,255,0.12);
-  --accent-glow-strong: rgba(108,140,255,0.25);
+  --accent: #e8d44d;
+  --accent-dim: #c4b030;
+  --accent-glow: rgba(232,212,77,0.12);
+  --accent-glow-strong: rgba(232,212,77,0.25);
   --gold: #f0c050;
   --gold-dim: rgba(240,192,80,0.10);
   --red: #ff6b6b;
@@ -65,7 +65,7 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
-a:hover { color: #8da8ff; }
+a:hover { color: #f0dc6e; }
 
 /* ═══════════════════════════════════════════════════════════════
    HEADER — Shared across all pages
