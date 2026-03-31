@@ -113,7 +113,12 @@ const LESSON = {
             <p>2. <strong>Molla compressa</strong>: $L \lt L_0$, la molla è più corta della lunghezza naturale ($\\Delta L \\lt 0$).</p>
             <p>3. <strong>Molla allungata (elongata)</strong>: $L \gt L_0$, la molla è più lunga della lunghezza naturale ($\\Delta L \\gt 0$).</p>`
           }
-        ]
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 1 — La molla nei tre stati</strong></p>
+          <p><em>Tre configurazioni della molla ancorate a un muro a sinistra: (a) a riposo con lunghezza $L_0$, (b) compressa con spire ravvicinate, (c) allungata con spire distanziate. Linea tratteggiata verticale sulla posizione O.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`
       },
       /* ====================================================
          SEZIONE 2: Vettore Deformazione
@@ -168,6 +173,16 @@ const LESSON = {
             <p>A parità di deformazione, la molla rigida esercita una forza <strong>20 volte superiore</strong>.</p>`
           }
         ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 2 — Forza elastica come forza di richiamo</strong></p>
+          <p><em>Molla ancorata al muro con massa m. Due situazioni: (a) molla allungata con $\\vec{F}_e$ verso sinistra e $\\vec{\\Delta L}$ verso destra, (b) molla compressa con frecce invertite. Le due forze sono sempre antiparallele.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>
+        <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 3 — Grafico $F_e$ vs $x$</strong></p>
+          <p><em>Grafico cartesiano: asse x = deformazione, asse y = forza elastica. Retta per l'origine con pendenza negativa $-k$. Due rette con pendenza diversa ($-k_1$ e $-k_2$) per confrontare molla rigida e morbida.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`,
         formulas: [
           { label: "Legge di Hooke (vettoriale)", latex: "\\vec{F}_e = -k \\vec{\\Delta L}" },
           { label: "Forza elastica lungo x", latex: "F_x = -kx" }
@@ -200,7 +215,12 @@ const LESSON = {
             <p><strong>Lungo l'asse $y$</strong> (verticale): non c'è moto verticale ($a_y = 0$), quindi $R_N = mg$. Fine, non ci serve altro lungo $y$.</p>
             <p><strong>Lungo l'asse $x$</strong> (orizzontale): l'unica forza è quella elastica (l'attrito è nullo per ipotesi).</p>`
           }
-        ]
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 4 — Sistema massa-molla orizzontale</strong></p>
+          <p><em>Muro a sinistra, molla con spire, massa m (rettangolo) su piano orizzontale senza attrito. Asse x con origine in x=0 (posizione di equilibrio). Forza elastica orizzontale sulla massa, forza peso e reazione normale verticali (che si bilanciano).</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`
       },
       /* ====================================================
          SEZIONE 5: Derivazione Equazione del Moto
@@ -259,7 +279,12 @@ const LESSON = {
             <p><strong>Fase 2</strong>: La massa accelera verso $x = 0$. Arrivata in $x = 0$, la forza è nulla ma la velocità è massima: per inerzia la massa supera la posizione di equilibrio.</p>
             <p><strong>Fase 3</strong>: La molla ora è compressa: $F_e \\gt 0$, la forza rallenta la massa e poi la rispinge verso destra.</p>
             <p><strong>Fase 4</strong>: La massa raggiunge $x = -A$ (simmetrico), si ferma un istante ($v = 0$), e il ciclo ricomincia.</p>
-            <p>Poiché non ci sono forze dissipative (attrito nullo), questo moto continua <strong>all'infinito</strong> tra $x = -A$ e $x = +A$.</p>`
+            <p>Poiché non ci sono forze dissipative (attrito nullo), questo moto continua <strong>all'infinito</strong> tra $x = -A$ e $x = +A$.</p>
+            <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+              <p><strong>📊 Diagramma 5 — Le fasi dell'oscillazione</strong></p>
+              <p><em>Quattro fotogrammi: (a) massa in x=+A, v=0, forza verso sinistra. (b) massa in x=0, velocità massima, forza nulla. (c) massa in x=-A, v=0, forza verso destra. (d) massa in x=0, velocità massima. Sotto: linea con -A, 0, +A e frecce del moto avanti-indietro.</em></p>
+              <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+            </div>`
           },
           {
             subtitle: "Periodo, Frequenza, Pulsazione",
@@ -330,7 +355,12 @@ const LESSON = {
             ["Relazione ω-T-ν", "$\\omega = 2\\pi\\nu = 2\\pi/T$"]
           ]
         },
-        extra_content: `<p><strong>Anticipazione:</strong> nella prossima lezione troveremo la soluzione dell'equazione differenziale: $x(t) = A\\cos(\\omega t + \\varphi)$, dove $A$ è l'ampiezza e $\\varphi$ è la fase iniziale. Studieremo inoltre l'energia nel moto armonico: energia cinetica, energia potenziale elastica e la loro conservazione.</p>`
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 6 — Grafico x(t) sinusoidale</strong></p>
+          <p><em>Grafico tempo (asse x) vs posizione (asse y). Curva coseno che oscilla tra +A e -A. Indicare il periodo T come distanza tra due massimi consecutivi. Indicare l'ampiezza A dal centro al picco.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>
+        <p><strong>Anticipazione:</strong> nella prossima lezione troveremo la soluzione dell'equazione differenziale: $x(t) = A\\cos(\\omega t + \\varphi)$, dove $A$ è l'ampiezza e $\\varphi$ è la fase iniziale. Studieremo inoltre l'energia nel moto armonico: energia cinetica, energia potenziale elastica e la loro conservazione.</p>`
       }
     ],
 
