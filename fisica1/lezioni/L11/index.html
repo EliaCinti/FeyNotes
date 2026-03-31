@@ -110,8 +110,8 @@ const LESSON = {
             subtitle: "I Tre Casi Fisici Possibili",
             content: `<p>A seconda della lunghezza $L$ della molla in un dato istante, possiamo avere:</p>
             <p>1. <strong>Molla a riposo</strong>: $L = L_0$, nessuna deformazione ($\\Delta L = 0$).</p>
-            <p>2. <strong>Molla compressa</strong>: $L < L_0$, la molla è più corta della lunghezza naturale ($\\Delta L < 0$).</p>
-            <p>3. <strong>Molla allungata (elongata)</strong>: $L > L_0$, la molla è più lunga della lunghezza naturale ($\\Delta L > 0$).</p>`
+            <p>2. <strong>Molla compressa</strong>: $L \lt L_0$, la molla è più corta della lunghezza naturale ($\\Delta L \\lt 0$).</p>
+            <p>3. <strong>Molla allungata (elongata)</strong>: $L \gt L_0$, la molla è più lunga della lunghezza naturale ($\\Delta L \\gt 0$).</p>`
           }
         ]
       },
@@ -149,12 +149,12 @@ const LESSON = {
           },
           {
             subtitle: "Perché il Segno Meno? Analisi Caso per Caso",
-            content: `<p><strong>Caso 1 — Molla allungata</strong> ($\\Delta L > 0$, estremo spostato a destra):</p>
+            content: `<p><strong>Caso 1 — Molla allungata</strong> ($\\Delta L \\gt 0$, estremo spostato a destra):</p>
             <p>La deformazione punta verso destra. Il segno $-$ ribalta il verso: la forza punta verso sinistra, cioè verso la posizione di riposo. La molla <em>tira indietro</em> l'estremo.</p>
-            <p>$$\\Delta L > 0 \\Rightarrow F_e = -k\\Delta L < 0 \\quad \\text{(forza verso sinistra)}$$</p>
-            <p><strong>Caso 2 — Molla compressa</strong> ($\\Delta L < 0$, estremo spostato a sinistra):</p>
+            <p>$$\\Delta L \\gt 0 \\Rightarrow F_e = -k\\Delta L \\lt 0 \\quad \\text{(forza verso sinistra)}$$</p>
+            <p><strong>Caso 2 — Molla compressa</strong> ($\\Delta L \\lt 0$, estremo spostato a sinistra):</p>
             <p>La deformazione punta verso sinistra. Il segno $-$ ribalta il verso: la forza punta verso destra, cioè di nuovo verso la posizione di riposo. La molla <em>spinge fuori</em> l'estremo.</p>
-            <p>$$\\Delta L < 0 \\Rightarrow F_e = -k\\Delta L > 0 \\quad \\text{(forza verso destra)}$$</p>
+            <p>$$\\Delta L \\lt 0 \\Rightarrow F_e = -k\\Delta L \\gt 0 \\quad \\text{(forza verso destra)}$$</p>
             <p>In entrambi i casi la forza riporta verso il centro. Questo è il meccanismo che genera le oscillazioni: la massa supera la posizione di equilibrio per inerzia, la forza la richiama indietro, la massa supera di nuovo dall'altra parte, e così via all'infinito (in assenza di attrito).</p>`
           },
           {
@@ -230,8 +230,8 @@ const LESSON = {
             subtitle: "Cosa Ci Dice Questa Equazione?",
             content: `<p>L'equazione afferma che: <em>l'accelerazione del corpo è proporzionale alla sua posizione, ma con segno opposto</em>.</p>
             <p>In formule: $\\ddot{x} = -\\omega^2 x$. Cioè:</p>
-            <p>Se $x > 0$ (massa a destra dell'equilibrio): $\\ddot{x} < 0$ (accelerazione verso sinistra).</p>
-            <p>Se $x < 0$ (massa a sinistra): $\\ddot{x} > 0$ (accelerazione verso destra).</p>
+            <p>Se $x \\gt 0$ (massa a destra dell'equilibrio): $\\ddot{x} \\lt 0$ (accelerazione verso sinistra).</p>
+            <p>Se $x \\lt 0$ (massa a sinistra): $\\ddot{x} \\gt 0$ (accelerazione verso destra).</p>
             <p>Se $x = 0$ (all'equilibrio): $\\ddot{x} = 0$ (accelerazione nulla, ma velocità massima!).</p>
             <p><strong>L'accelerazione riporta sempre verso il centro: è questa la firma del moto armonico.</strong></p>
             <p>Qualsiasi sistema fisico la cui equazione del moto possa essere ridotta alla forma $\\ddot{x} + \\omega^2 x = 0$ è un <strong>oscillatore armonico</strong> e compie un moto armonico semplice. Non deve essere necessariamente una molla: pendoli (per piccole oscillazioni), circuiti LC, molecole vibranti — tutti obbediscono alla stessa equazione.</p>`
@@ -254,10 +254,10 @@ const LESSON = {
         subsections: [
           {
             subtitle: "Descrizione Qualitativa del Moto",
-            content: `<p>Immaginiamo di spostare la massa dalla posizione di equilibrio ($x = 0$) fino a una posizione $x = A > 0$, e poi di lasciarla andare. Cosa succede?</p>
-            <p><strong>Fase 1</strong>: La molla è allungata: $F_e < 0$, la forza richiama la massa verso sinistra.</p>
+            content: `<p>Immaginiamo di spostare la massa dalla posizione di equilibrio ($x = 0$) fino a una posizione $x = A \\gt 0$, e poi di lasciarla andare. Cosa succede?</p>
+            <p><strong>Fase 1</strong>: La molla è allungata: $F_e \\lt 0$, la forza richiama la massa verso sinistra.</p>
             <p><strong>Fase 2</strong>: La massa accelera verso $x = 0$. Arrivata in $x = 0$, la forza è nulla ma la velocità è massima: per inerzia la massa supera la posizione di equilibrio.</p>
-            <p><strong>Fase 3</strong>: La molla ora è compressa: $F_e > 0$, la forza rallenta la massa e poi la rispinge verso destra.</p>
+            <p><strong>Fase 3</strong>: La molla ora è compressa: $F_e \\gt 0$, la forza rallenta la massa e poi la rispinge verso destra.</p>
             <p><strong>Fase 4</strong>: La massa raggiunge $x = -A$ (simmetrico), si ferma un istante ($v = 0$), e il ciclo ricomincia.</p>
             <p>Poiché non ci sono forze dissipative (attrito nullo), questo moto continua <strong>all'infinito</strong> tra $x = -A$ e $x = +A$.</p>`
           },
