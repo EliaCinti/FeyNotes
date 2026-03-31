@@ -151,10 +151,10 @@ const LESSON = {
             subtitle: "Perché il Segno Meno? Analisi Caso per Caso",
             content: `<p><strong>Caso 1 — Molla allungata</strong> ($\\Delta L > 0$, estremo spostato a destra):</p>
             <p>La deformazione punta verso destra. Il segno $-$ ribalta il verso: la forza punta verso sinistra, cioè verso la posizione di riposo. La molla <em>tira indietro</em> l'estremo.</p>
-            <p>$$\\Delta L > 0 \\implies F_e = -k\\Delta L < 0 \\quad \\text{(forza verso sinistra)}$$</p>
+            <p>$$\\Delta L > 0 \\Rightarrow F_e = -k\\Delta L < 0 \\quad \\text{(forza verso sinistra)}$$</p>
             <p><strong>Caso 2 — Molla compressa</strong> ($\\Delta L < 0$, estremo spostato a sinistra):</p>
             <p>La deformazione punta verso sinistra. Il segno $-$ ribalta il verso: la forza punta verso destra, cioè di nuovo verso la posizione di riposo. La molla <em>spinge fuori</em> l'estremo.</p>
-            <p>$$\\Delta L < 0 \\implies F_e = -k\\Delta L > 0 \\quad \\text{(forza verso destra)}$$</p>
+            <p>$$\\Delta L < 0 \\Rightarrow F_e = -k\\Delta L > 0 \\quad \\text{(forza verso destra)}$$</p>
             <p>In entrambi i casi la forza riporta verso il centro. Questo è il meccanismo che genera le oscillazioni: la massa supera la posizione di equilibrio per inerzia, la forza la richiama indietro, la massa supera di nuovo dall'altra parte, e così via all'infinito (in assenza di attrito).</p>`
           },
           {
@@ -163,8 +163,8 @@ const LESSON = {
             <p>$k$ <strong>grande</strong>: la molla è rigida. Basta una piccola deformazione per generare una grande forza (es. ammortizzatori, molle industriali).</p>
             <p>$k$ <strong>piccolo</strong>: la molla è morbida. Serve una grande deformazione per generare una forza apprezzabile (es. molla di una penna a scatto, Slinky).</p>
             <p><strong>Esempio numerico</strong> — Allungamento di $\\Delta L = 0.1\\,\\text{m}$ su due molle diverse:</p>
-            <p>Molla A: $k_A = 200\\,\\text{N/m}$ (rigida) $\\implies F_A = 200 \\times 0.1 = 20\\,\\text{N}$</p>
-            <p>Molla B: $k_B = 10\\,\\text{N/m}$ (morbida) $\\implies F_B = 10 \\times 0.1 = 1\\,\\text{N}$</p>
+            <p>Molla A: $k_A = 200\\,\\text{N/m}$ (rigida) $\\Rightarrow F_A = 200 \\times 0.1 = 20\\,\\text{N}$</p>
+            <p>Molla B: $k_B = 10\\,\\text{N/m}$ (morbida) $\\Rightarrow F_B = 10 \\times 0.1 = 1\\,\\text{N}$</p>
             <p>A parità di deformazione, la molla rigida esercita una forza <strong>20 volte superiore</strong>.</p>`
           }
         ],
@@ -220,10 +220,10 @@ const LESSON = {
           {
             subtitle: "La Pulsazione ω",
             content: `<p>Per semplificare l'equazione, definiamo una nuova grandezza, la <strong>pulsazione</strong> $\\omega$ (omega):</p>
-            <p>$$\\omega^2 = \\frac{k}{m} \\implies \\omega = \\sqrt{\\frac{k}{m}}$$</p>
+            <p>$$\\omega^2 = \\frac{k}{m} \\Rightarrow \\omega = \\sqrt{\\frac{k}{m}}$$</p>
             <p>Le unità di misura sono: $[\\omega] = \\sqrt{\\frac{\\text{N/m}}{\\text{kg}}} = \\sqrt{\\frac{\\text{kg}\\cdot\\text{s}^{-2}}{\\text{kg}}} = \\text{s}^{-1} = \\text{rad/s}$.</p>
             <p>Sostituendo $\\omega^2$ nell'equazione, arriviamo alla <strong>forma fondamentale</strong>:</p>
-            <p>$$\\boxed{\\ddot{x}(t) + \\omega^2 x(t) = 0}$$</p>
+            <p>$$\\ddot{x}(t) + \\omega^2 x(t) = 0$$</p>
             <p>Questa è l'<strong>Equazione Differenziale del Moto Armonico Semplice</strong>.</p>`
           },
           {
@@ -267,7 +267,7 @@ const LESSON = {
             <p>La relazione tra periodo $T$ e pulsazione $\\omega$ è:</p>
             <p>$$T = \\frac{2\\pi}{\\omega}$$</p>
             <p>Sostituendo la definizione di $\\omega$, otteniamo la formula del periodo per il sistema massa-molla:</p>
-            <p>$$\\boxed{T = 2\\pi\\sqrt{\\frac{m}{k}}}$$</p>
+            <p>$$T = 2\\pi\\sqrt{\\frac{m}{k}}$$</p>
             <p>Si definisce infine la <strong>frequenza</strong> $\\nu$ come l'inverso del periodo, misurata in Hertz (Hz):</p>
             <p>$$\\nu = \\frac{1}{T} = \\frac{\\omega}{2\\pi}$$</p>
             <p>La frequenza indica il <strong>numero di oscillazioni complete compiute in un secondo</strong>.</p>`
@@ -275,8 +275,8 @@ const LESSON = {
           {
             subtitle: "Significato Fisico di m e k nel Periodo",
             content: `<p>L'equazione del periodo ci permette di capire fisicamente il ruolo di ciascun parametro:</p>
-            <p><strong>Effetto della massa $m$</strong> (al numeratore sotto radice): la massa rappresenta l'<strong>inerzia</strong>. Una massa maggiore si oppone di più alle variazioni di velocità imposte dalla molla, e quindi impiega più tempo a completare un'oscillazione: $m \\uparrow \\implies T \\uparrow$ (oscillazione più lenta).</p>
-            <p><strong>Effetto della costante elastica $k$</strong> (al denominatore sotto radice): $k$ misura la <strong>rigidezza</strong> della molla. Una molla più rigida esercita una forza di richiamo più intensa a parità di spostamento, abbreviando il periodo: $k \\uparrow \\implies T \\downarrow$ (oscillazione più rapida).</p>
+            <p><strong>Effetto della massa $m$</strong> (al numeratore sotto radice): la massa rappresenta l'<strong>inerzia</strong>. Una massa maggiore si oppone di più alle variazioni di velocità imposte dalla molla, e quindi impiega più tempo a completare un'oscillazione: $m \\uparrow \\Rightarrow T \\uparrow$ (oscillazione più lenta).</p>
+            <p><strong>Effetto della costante elastica $k$</strong> (al denominatore sotto radice): $k$ misura la <strong>rigidezza</strong> della molla. Una molla più rigida esercita una forza di richiamo più intensa a parità di spostamento, abbreviando il periodo: $k \\uparrow \\Rightarrow T \\downarrow$ (oscillazione più rapida).</p>
             <p><strong>Osservazione fondamentale:</strong> il periodo $T$ <strong>non dipende dall'ampiezza</strong> delle oscillazioni! Che la massa oscilli di 1 cm o di 1 m, il tempo di ciascun ciclo è lo stesso. Questa proprietà è chiamata <strong>isocronia delle oscillazioni</strong> ed è una caratteristica peculiare del moto armonico semplice.</p>`
           }
         ],
@@ -316,7 +316,8 @@ const LESSON = {
         title: "Riepilogo e Mappa Concettuale",
         icon: "🗺️",
         content: `<p>La catena logica completa che porta dalla deformazione di una molla al moto armonico:</p>
-        <p>$$\\text{Molla deformata} \\xrightarrow{\\text{Hooke}} \\vec{F}_e = -k\\vec{\\Delta L} \\xrightarrow{\\text{II Legge}} m\\ddot{x} = -kx \\xrightarrow{\\omega^2 = k/m} \\ddot{x} + \\omega^2 x = 0$$</p>`,
+        <p>$$\\text{Molla deformata} \\overset{\\text{Hooke}}{\\longrightarrow} \\vec{F}_e = -k\\vec{\\Delta L} \\overset{\\text{II Legge}}{\\longrightarrow} m\\ddot{x} = -kx \\overset{\\omega^2 = k/m}{\\longrightarrow} \\ddot{x} + \\omega^2 x = 0$$
+</p>`,
         table_compare: {
           headers: ["Grandezza", "Formula"],
           rows: [
@@ -362,7 +363,7 @@ const LESSON = {
       {
         type: "domanda",
         front: "Come influiscono <strong>massa $m$</strong> e <strong>costante elastica $k$</strong> sul periodo $T$ del moto armonico?",
-        back: "$T = 2\\pi\\sqrt{m/k}$. La massa $m$ è al numeratore: $m \\uparrow \\implies T \\uparrow$ (oscillazione più lenta, maggiore inerzia). La costante $k$ è al denominatore: $k \\uparrow \\implies T \\downarrow$ (oscillazione più rapida, molla più rigida)."
+        back: "$T = 2\\pi\\sqrt{m/k}$. La massa $m$ è al numeratore: $m \\uparrow \\Rightarrow T \\uparrow$ (oscillazione più lenta, maggiore inerzia). La costante $k$ è al denominatore: $k \\uparrow \\Rightarrow T \\downarrow$ (oscillazione più rapida, molla più rigida)."
       },
       {
         type: "tranello",
