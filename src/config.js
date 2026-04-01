@@ -39,6 +39,7 @@ const COURSES = {
       { id: 'L09', num: 'Lezione 9', date: '19 Mar 2026', title: 'Esercizi, Vincoli, Reazione Normale e Attrito', abstract: 'Esercizi su MCUA e teorema dell\'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.', category: 'dinamica' },
       { id: 'L10', num: 'Lezione 10', date: '25 Mar 2026', title: 'Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari', abstract: 'RN ≠ mg: problema dell\'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata.', category: 'dinamica' },
       { id: 'L11', num: 'Lezione 11', date: '27 Mar 2026', title: 'La Forza Elastica e il Moto Armonico Semplice', abstract: 'Il modello della molla ideale. Vettore deformazione e Legge di Hooke. Sistema massa-molla in 1D. Derivazione dell\'equazione del moto armonico. Pulsazione, periodo e frequenza.', category: 'dinamica' },
+      { id: 'L12', num: 'Lezione 12', date: '1 Apr 2026', title: 'Moto Armonico Semplice: Soluzione, Sistemi di Molle e Attrito Viscoso', abstract: 'Soluzione dell\'equazione del moto armonico. Determinazione di ampiezza e fase iniziale. Molle in parallelo e in serie. Attrito viscoso lineare: velocità limite e soluzione analitica.', category: 'dinamica' },
     ],
   },
 

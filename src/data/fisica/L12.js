@@ -1,0 +1,387 @@
+const LESSON = {
+    id: "L12", date: "Lezione 12 — 1 Apr 2026",
+    title: "Moto Armonico Semplice: Soluzione, Sistemi di Molle e Attrito Viscoso",
+    abstract: "Soluzione dell'equazione del moto armonico: legge oraria, velocità, accelerazione. Determinazione di ampiezza e fase iniziale. Molle in parallelo e in serie. Attrito viscoso lineare: caduta in un fluido, velocità limite, soluzione analitica.",
+
+    sections: [
+      /* ====================================================
+         SEZIONE 1: Richiamo e Soluzione
+         ==================================================== */
+      {
+        id: "s12-richiamo",
+        type: "section",
+        title: "Richiamo: L'Equazione del Moto Armonico Semplice",
+        icon: "🔁",
+        content: `<p>Nella lezione precedente, analizzando il modello della molla ideale e applicando la seconda legge di Newton, abbiamo ricavato l'equazione differenziale del moto armonico:</p>
+        <p>$$m\\ddot{x} = -kx \\quad\\Rightarrow\\quad \\ddot{x} + \\omega^2 x = 0$$</p>
+        <p>dove $\\omega^2 = k/m$ è la pulsazione al quadrato.</p>
+        <p>Il professore ha chiarito che non è richiesta la risoluzione formale dell'equazione differenziale (argomento dei corsi di analisi). L'approccio del corso è <strong>operativo</strong>: si fornisce la soluzione generale e si verifica che soddisfi l'equazione.</p>
+        <p>La <strong>soluzione generale</strong> è una funzione sinusoidale:</p>
+        <p>$$x(t) = A\\sin(\\omega t + \\varphi)$$</p>
+        <p>(Una forma equivalente è $x(t) = A\\cos(\\omega t + \\varphi')$ con una diversa costante di fase).</p>`,
+        subsections: [
+          {
+            subtitle: "Significato Fisico dei Parametri",
+            content: `<p>Analizziamo ogni termine della soluzione:</p>
+            <p><strong>$x(t)$</strong>: posizione della massa in funzione del tempo.</p>
+            <p><strong>$A$</strong>: <strong>ampiezza</strong> del moto. Rappresenta lo spostamento massimo dalla posizione di equilibrio. Poiché $\\sin$ è limitato tra $-1$ e $1$, la posizione oscilla sempre in $[-A, A]$.</p>
+            <p><strong>$\\omega$</strong>: <strong>pulsazione</strong> (frequenza angolare), legata al sistema tramite $\\omega = \\sqrt{k/m}$. Determina la rapidità dell'oscillazione. Unità: $\\text{rad/s}$.</p>
+            <p><strong>$(\\omega t + \\varphi)$</strong>: <strong>fase</strong> del moto all'istante $t$.</p>
+            <p><strong>$\\varphi$</strong>: <strong>fase iniziale</strong> (costante di fase), determinata dalle condizioni iniziali ($x_0$ e $v_0$). Si misura in radianti.</p>`
+          }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 2: Verifica e Grandezze Cinematiche
+         ==================================================== */
+      {
+        id: "s12-verifica",
+        type: "section",
+        title: "Verifica della Soluzione e Grandezze Cinematiche",
+        icon: "✅",
+        content: `<p>Per verificare che $x(t) = A\\sin(\\omega t + \\varphi)$ sia effettivamente la soluzione, deriviamo per trovare velocità e accelerazione, e poi sostituiamo nell'equazione differenziale.</p>`,
+        subsections: [
+          {
+            subtitle: "Velocità",
+            content: `<p>La velocità è la derivata prima della posizione:</p>
+            <p>$$v(t) = \\dot{x}(t) = A\\omega\\cos(\\omega t + \\varphi)$$</p>
+            <p>La velocità massima si ha quando $\\cos(\\omega t + \\varphi) = \\pm 1$, ovvero $v_{\\max} = A\\omega$. Questo accade quando la massa passa per la posizione di equilibrio ($x = 0$).</p>`
+          },
+          {
+            subtitle: "Accelerazione",
+            content: `<p>L'accelerazione è la derivata seconda della posizione:</p>
+            <p>$$a(t) = \\ddot{x}(t) = -A\\omega^2\\sin(\\omega t + \\varphi)$$</p>
+            <p>Risultato fondamentale: l'accelerazione è proporzionale all'opposto della posizione. Infatti, ricordando che $x(t) = A\\sin(\\omega t + \\varphi)$:</p>
+            <p>$$a(t) = -\\omega^2 x(t)$$</p>`
+          },
+          {
+            subtitle: "Verifica nell'Equazione Differenziale",
+            content: `<p>Sostituiamo nell'equazione $\\ddot{x} + \\omega^2 x = 0$:</p>
+            <p>$$(-\\omega^2 x) + \\omega^2 x = 0 \\quad\\Rightarrow\\quad 0 = 0 \\;\\checkmark$$</p>
+            <p>L'identità è verificata: la funzione sinusoidale è l'effettiva legge oraria del moto armonico.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Legge oraria", latex: "x(t) = A\\sin(\\omega t + \\varphi)" },
+          { label: "Velocità", latex: "v(t) = A\\omega\\cos(\\omega t + \\varphi)" },
+          { label: "Accelerazione", latex: "a(t) = -A\\omega^2\\sin(\\omega t + \\varphi) = -\\omega^2 x(t)" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 3: Periodicità
+         ==================================================== */
+      {
+        id: "s12-periodicita",
+        type: "section",
+        title: "Periodicità del Moto",
+        icon: "🔄",
+        content: `<p>Il moto armonico è per definizione <strong>periodico</strong>: trascorso un tempo fisso $T$ (periodo), il sistema ritorna nello stesso identico stato cinematico — stessa posizione, stessa velocità, stessa accelerazione.</p>
+        <p>Le funzioni seno e coseno sono periodiche di periodo $2\\pi$. Affinché il moto si ripeta dopo un tempo $T$, l'argomento della funzione seno deve aumentare di $2\\pi$:</p>
+        <p>$$\\omega(t + T) + \\varphi = (\\omega t + \\varphi) + 2\\pi \\quad\\Rightarrow\\quad \\omega T = 2\\pi$$</p>
+        <p>Da cui:</p>
+        <p>$$T = \\frac{2\\pi}{\\omega} = 2\\pi\\sqrt{\\frac{m}{k}}$$</p>
+        <p>La <strong>frequenza</strong> $\\nu$ rappresenta il numero di oscillazioni complete al secondo (in Hertz):</p>
+        <p>$$\\nu = \\frac{1}{T} = \\frac{\\omega}{2\\pi}$$</p>
+        <p>Ad esempio, $\\nu = 3\\,\\text{Hz}$ significa che la massa compie 3 oscillazioni complete avanti e indietro in un secondo.</p>`
+      },
+      /* ====================================================
+         SEZIONE 4: Determinazione A e φ
+         ==================================================== */
+      {
+        id: "s12-condizioni-iniziali",
+        type: "section",
+        title: "Determinazione di Ampiezza e Fase Iniziale",
+        icon: "🎯",
+        content: `<p>Le costanti $A$ (ampiezza) e $\\varphi$ (fase iniziale) dipendono <strong>esclusivamente dalle condizioni iniziali</strong> ($x_0$ e $v_0$ al tempo $t = 0$). Non dipendono dalle caratteristiche intrinseche del sistema ($m$ e $k$), che determinano solo $\\omega$ e $T$.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio: Sistema Lasciato Andare da Fermo",
+            content: `<p>Supponiamo che il sistema venga lasciato andare da fermo da una posizione deformata $x_0$. Le condizioni iniziali sono: $x(0) = x_0$ e $v(0) = 0$.</p>
+            <p>Sostituendo $t = 0$ nelle equazioni generali:</p>
+            <p>$$x(0) = A\\sin(\\varphi) = x_0$$</p>
+            <p>$$v(0) = A\\omega\\cos(\\varphi) = 0$$</p>
+            <p>Dalla condizione sulla velocità: poiché $A \\neq 0$ e $\\omega \\neq 0$, deve essere:</p>
+            <p>$$\\cos(\\varphi) = 0 \\quad\\Rightarrow\\quad \\varphi = \\frac{\\pi}{2}$$</p>
+            <p>Sostituendo nella posizione iniziale:</p>
+            <p>$$x_0 = A\\sin\\left(\\frac{\\pi}{2}\\right) = A \\cdot 1 \\quad\\Rightarrow\\quad A = x_0$$</p>
+            <p>Quindi il moto è descritto da:</p>
+            <p>$$x(t) = x_0 \\sin\\left(\\omega t + \\frac{\\pi}{2}\\right)$$</p>
+            <p>Usando la proprietà trigonometrica $\\sin(\\alpha + \\pi/2) = \\cos(\\alpha)$, si semplifica in:</p>
+            <p>$$x(t) = x_0 \\cos(\\omega t)$$</p>
+            <p>Questa è l'espressione tipica per un moto che parte dalla sua <strong>massima estensione</strong> (poiché $\\cos(0) = 1$, quindi $x(0) = x_0$) con <strong>velocità nulla</strong>.</p>`
+          }
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 1 — Grafico x(t) = x₀ cos(ωt)</strong></p>
+          <p><em>Grafico tempo vs posizione: curva coseno che parte da $x_0$ e oscilla tra $+x_0$ e $-x_0$. Indicare periodo $T$, ampiezza $A = x_0$, e i punti dove $v = 0$ (estremi) e $v = v_{\\max}$ (passaggio per zero).</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`,
+        formulas: [
+          { label: "Condizioni iniziali generali", latex: "x(0) = A\\sin(\\varphi), \\quad v(0) = A\\omega\\cos(\\varphi)" },
+          { label: "Moto da fermo da x₀", latex: "x(t) = x_0\\cos(\\omega t)" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 5: Molle in Parallelo
+         ==================================================== */
+      {
+        id: "s12-parallelo",
+        type: "section",
+        title: "Sistemi con più Molle: Molle in Parallelo",
+        icon: "⚡",
+        content: `<p>Il professore ha illustrato casi più realistici in cui una massa interagisce con <strong>più molle contemporaneamente</strong>. L'obiettivo è determinare una <strong>costante elastica equivalente</strong> $K_{eq}$ che permetta di trattare il sistema complesso come una singola molla.</p>
+        <p>Due molle si dicono collegate <strong>in parallelo</strong> se sono ancorate, da un lato, alla stessa parete fissa e, dall'altro, allo <strong>stesso oggetto</strong> in movimento, con gli assi di oscillazione paralleli.</p>`,
+        subsections: [
+          {
+            subtitle: "Derivazione della Costante Equivalente",
+            content: `<p>In questa configurazione, quando la massa $m$ si sposta di $x$, <strong>entrambe le molle subiscono la medesima deformazione</strong> $x$.</p>
+            <p>Le forze elastiche delle due molle sono:</p>
+            <p>$$F_1 = -k_1 x, \\qquad F_2 = -k_2 x$$</p>
+            <p>La forza totale sulla massa è:</p>
+            <p>$$F_{\\text{tot}} = F_1 + F_2 = -k_1 x - k_2 x = -(k_1 + k_2)x$$</p>
+            <p>Questa ha la forma $F = -K_{eq}x$ con:</p>
+            <p>$$K_{eq} = k_1 + k_2$$</p>
+            <p>In generale, per $N$ molle in parallelo: $K_{eq} = \\sum_{i=1}^{N} k_i$.</p>
+            <p><strong>Nota:</strong> in parallelo la rigidezza totale <strong>aumenta</strong> — il sistema resiste di più alla deformazione.</p>`
+          },
+          {
+            subtitle: "Esercizio Discusso a Lezione",
+            content: `<p>Due molle in parallelo: $k_1 = 0.8\\,\\text{N/m}$, $k_2 = 0.4\\,\\text{N/m}$, massa $m = 0.3\\,\\text{kg}$.</p>
+            <p>Costante equivalente: $K_{eq} = 0.8 + 0.4 = 1.2\\,\\text{N/m}$.</p>
+            <p>Pulsazione: $\\omega = \\sqrt{K_{eq}/m} = \\sqrt{1.2/0.3} = \\sqrt{4} = 2\\,\\text{rad/s}$.</p>
+            <p>Periodo: $T = 2\\pi/\\omega = 2\\pi/2 \\approx 3.14\\,\\text{s}$.</p>
+            <p>Frequenza: $\\nu = 1/T \\approx 0.318\\,\\text{Hz}$.</p>`
+          }
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 2 — Molle in parallelo</strong></p>
+          <p><em>Schema di una massa $M$ collegata a una parete da due molle affiancate (in parallelo) con costanti $k_1$ e $k_2$. Entrambe subiscono la stessa deformazione $x$.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`,
+        formulas: [
+          { label: "Costante equivalente in parallelo", latex: "K_{eq} = k_1 + k_2" },
+          { label: "Caso generale (N molle)", latex: "K_{eq} = \\sum_{i=1}^{N} k_i" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 6: Molle in Serie
+         ==================================================== */
+      {
+        id: "s12-serie",
+        type: "section",
+        title: "Sistemi con più Molle: Molle in Serie",
+        icon: "🔗",
+        content: `<p>Si ha un collegamento <strong>in serie</strong> quando le molle sono collegate una di seguito all'altra: una molla è attaccata al muro, l'altra è attaccata alla prima molla, e la massa è attaccata alla seconda molla.</p>
+        <p>L'analisi è più delicata perché la deformazione totale $x$ <strong>non è</strong> la deformazione di ogni singola molla. Lo spostamento totale è la <strong>somma</strong> degli allungamenti delle singole molle:</p>
+        <p>$$x_{\\text{tot}} = x_1 + x_2$$</p>`,
+        subsections: [
+          {
+            subtitle: "Il Punto di Unione ha Massa Nulla",
+            content: `<p>Il punto di giunzione tra le due molle (punto A) ha massa nulla (molla ideale). Per la seconda legge ($F = ma$), con $m = 0$, la forza risultante su A deve essere <strong>sempre nulla</strong>: il punto è istantaneamente in equilibrio.</p>
+            <p>Questo implica che <strong>ogni molla è sottoposta alla medesima forza</strong> $F$, ma si deforma in modo diverso, inversamente proporzionale alla sua rigidità:</p>
+            <p>$$x_1 = \\frac{F}{k_1}, \\qquad x_2 = \\frac{F}{k_2}$$</p>`
+          },
+          {
+            subtitle: "Derivazione della Costante Equivalente",
+            content: `<p>La deformazione totale è:</p>
+            <p>$$x_{\\text{tot}} = x_1 + x_2 = \\frac{F}{k_1} + \\frac{F}{k_2} = F\\left(\\frac{1}{k_1} + \\frac{1}{k_2}\\right)$$</p>
+            <p>Vogliamo trovare $K_{eq}$ tale che $x_{\\text{tot}} = F/K_{eq}$. Confrontando:</p>
+            <p>$$\\frac{1}{K_{eq}} = \\frac{1}{k_1} + \\frac{1}{k_2} \\quad\\Rightarrow\\quad K_{eq} = \\frac{k_1 \\cdot k_2}{k_1 + k_2}$$</p>
+            <p><strong>Nota fondamentale:</strong> in serie la rigidezza equivalente <strong>diminuisce</strong> — il sistema diventa più morbido della singola molla più morbida. Per generare la stessa forza occorre tirare di più, perché lo spostamento si distribuisce su più elementi.</p>`
+          }
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 3 — Molle in serie</strong></p>
+          <p><em>Schema: parete a sinistra, molla $k_1$, punto di giunzione A, molla $k_2$, massa $M$ a destra. Indicare che la forza $F$ è la stessa su entrambe le molle, ma le deformazioni $x_1$ e $x_2$ sono diverse.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`,
+        formulas: [
+          { label: "Costante equivalente in serie", latex: "\\frac{1}{K_{eq}} = \\frac{1}{k_1} + \\frac{1}{k_2}" },
+          { label: "Forma esplicita (2 molle)", latex: "K_{eq} = \\frac{k_1 \\cdot k_2}{k_1 + k_2}" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 7: Attrito Viscoso
+         ==================================================== */
+      {
+        id: "s12-attrito-viscoso",
+        type: "section",
+        title: "Forze di Attrito: L'Attrito Viscoso",
+        icon: "💧",
+        content: `<p>Dopo aver studiato il moto armonico puro (che è un'idealizzazione con oscillazioni eterne), il professore ha introdotto una nuova categoria di forze dissipative: l'<strong>attrito viscoso</strong>.</p>
+        <p>Nelle lezioni passate abbiamo visto l'attrito radente (statico e dinamico), che avviene per contatto strisciante tra superfici solide. L'attrito dinamico ha modulo costante ($F_d = \\mu_d N$), <strong>indipendente dalla velocità</strong>.</p>
+        <p>L'attrito viscoso si manifesta quando un corpo solido si muove <strong>all'interno di un fluido</strong> (liquido o gas). A differenza dell'attrito radente, l'attrito viscoso <strong>dipende fortemente dalla velocità</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Il Modello Lineare",
+            content: `<p>Il modello più semplice, valido per oggetti a basse velocità in fluidi abbastanza viscosi, è l'<strong>attrito viscoso lineare</strong>: la forza resistente è direttamente proporzionale e opposta alla velocità:</p>
+            <p>$$\\vec{F}_v = -b\\vec{v}$$</p>
+            <p>dove $b$ è il <strong>coefficiente di attrito viscoso</strong> (o di smorzamento). Il segno meno indica che la forza si oppone sempre alla direzione del moto.</p>`
+          },
+          {
+            subtitle: "Da Cosa Dipende il Coefficiente b?",
+            content: `<p>Il coefficiente $b$ dipende da due fattori principali:</p>
+            <p>1. <strong>Proprietà del fluido</strong>: densità e viscosità intrinseca. L'acqua frena un corpo molto più dell'aria.</p>
+            <p>2. <strong>Geometria dell'oggetto</strong>: forma aerodinamica/idrodinamica e sezione frontale (l'area esposta nella direzione del moto). Un paracadute ha un $b$ enorme per la sua grande sezione; un oggetto aerodinamico ha un $b$ molto piccolo.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Attrito viscoso lineare", latex: "\\vec{F}_v = -b\\vec{v}" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 8: Caduta in Fluido Viscoso
+         ==================================================== */
+      {
+        id: "s12-caduta-viscosa",
+        type: "section",
+        title: "Caduta in un Fluido Viscoso: Velocità Limite",
+        icon: "🪂",
+        content: `<p>Per comprendere l'effetto dell'attrito viscoso, studiamo il caso classico della <strong>caduta di un grave in un fluido viscoso</strong> — un modello fondamentale (dalle gocce di pioggia al paracadutista).</p>
+        <p>Consideriamo un oggetto di massa $m$ lasciato cadere da fermo in un fluido. Fissiamo un asse $y$ verticale orientato verso il basso.</p>`,
+        subsections: [
+          {
+            subtitle: "Equazione del Moto",
+            content: `<p>Applichiamo la seconda legge di Newton lungo l'asse $y$ (positivo verso il basso):</p>
+            <p>La <strong>forza peso</strong> $mg$ è diretta verso il basso (positiva). La <strong>forza d'attrito viscoso</strong> $bv$ si oppone al moto, quindi agisce verso l'alto (negativa).</p>
+            <p>$$mg - bv = ma \\quad\\Rightarrow\\quad m\\frac{dv}{dt} = mg - bv$$</p>
+            <p>Dividendo per $m$ e definendo $k_{sm} = b/m$:</p>
+            <p>$$\\frac{dv}{dt} = g - k_{sm}v$$</p>`
+          },
+          {
+            subtitle: "Analisi Fisica del Comportamento",
+            content: `<p><strong>Istante iniziale</strong> ($t = 0$): il corpo parte da fermo ($v = 0$). L'attrito viscoso è nullo. L'unica forza è il peso. L'accelerazione iniziale è massima: $a = g$ (caduta libera).</p>
+            <p><strong>Man mano che il corpo cade</strong>: la velocità $v$ aumenta. Di conseguenza aumenta la forza d'attrito $bv$ verso l'alto. Il termine $g - k_{sm}v$ diventa sempre più piccolo: <strong>l'accelerazione diminuisce progressivamente</strong>.</p>
+            <p><strong>A un certo punto</strong>: l'attrito bilancia esattamente il peso. La forza risultante è zero, l'accelerazione è nulla, e il corpo prosegue a <strong>velocità costante</strong>.</p>`
+          },
+          {
+            subtitle: "La Velocità Limite",
+            content: `<p>Quando la forza risultante è nulla ($mg - bv = 0$), si raggiunge la <strong>velocità limite</strong> (o velocità di regime):</p>
+            <p>$$v_L = \\frac{mg}{b} = \\frac{g}{k_{sm}}$$</p>
+            <p>Una volta raggiunta $v_L$, il moto diventa <strong>rettilineo uniforme</strong>: il peso tira in giù con una forza pari all'attrito che frena verso l'alto.</p>
+            <p><strong>Applicazione pratica:</strong> è il principio del paracadute. Un oggetto con grande $b$ (grande sezione frontale) raggiunge una $v_L$ piccola; un oggetto aerodinamico e denso ha $b$ piccolo e $v_L$ molto elevata.</p>`
+          }
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 4 — Caduta in fluido viscoso: forze</strong></p>
+          <p><em>Vasca piena di liquido con una massa (sasso) che cade. Vettori: peso $\\vec{P}$ verso il basso, forza d'attrito $\\vec{F}_v$ verso l'alto (che cresce in modulo man mano che l'oggetto accelera).</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`,
+        formulas: [
+          { label: "Equazione del moto", latex: "m\\frac{dv}{dt} = mg - bv" },
+          { label: "Velocità limite", latex: "v_L = \\frac{mg}{b}" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 9: Soluzione Analitica
+         ==================================================== */
+      {
+        id: "s12-soluzione-viscosa",
+        type: "section",
+        title: "Soluzione Analitica della Caduta Viscosa",
+        icon: "📐",
+        content: `<p>Per determinare come evolve la velocità nel tempo, risolviamo l'equazione differenziale a variabili separabili (usando $k = b/m$ per semplicità):</p>
+        <p>$$\\frac{dv}{dt} = g - kv$$</p>`,
+        subsections: [
+          {
+            subtitle: "Procedura di Integrazione",
+            content: `<p>Separiamo le variabili:</p>
+            <p>$$\\frac{dv}{g - kv} = dt$$</p>
+            <p>Integriamo da $t = 0$ (dove $v = 0$) a un istante generico $t$:</p>
+            <p>$$\\int_0^{v(t)} \\frac{dv'}{g - kv'} = \\int_0^t dt'$$</p>
+            <p>L'integrale a sinistra ha la forma $\\int \\frac{f'(x)}{f(x)}dx = \\ln|f(x)|$. Svolgendo:</p>
+            <p>$$-\\frac{1}{k}\\left[\\ln(g - kv')\\right]_0^{v(t)} = t$$</p>
+            <p>$$-\\frac{1}{k}\\ln\\left(\\frac{g - kv(t)}{g}\\right) = t$$</p>
+            <p>Moltiplichiamo per $-k$ ed eleviamo a esponenziale:</p>
+            <p>$$\\frac{g - kv(t)}{g} = e^{-kt}$$</p>
+            <p>Isolando $v(t)$:</p>
+            <p>$$g - kv(t) = ge^{-kt} \\quad\\Rightarrow\\quad kv(t) = g - ge^{-kt}$$</p>`
+          },
+          {
+            subtitle: "La Legge Oraria della Velocità",
+            content: `<p>Dividendo per $k$, si ottiene la legge della velocità:</p>
+            <p>$$v(t) = \\frac{g}{k}\\left(1 - e^{-kt}\\right)$$</p>
+            <p>Ricordando che $g/k = v_L$ (velocità limite), possiamo riscriverla come:</p>
+            <p>$$v(t) = v_L\\left(1 - e^{-\\frac{b}{m}t}\\right)$$</p>
+            <p>Questa espressione descrive perfettamente il comportamento fisico: a $t = 0$, $v = 0$; per $t \\to \\infty$, il termine $e^{-kt} \\to 0$ e $v \\to v_L$. La funzione esponenziale decrescente descrive come il sistema si avvicina in modo dolce ma inesorabile alla velocità limite.</p>`
+          }
+        ],
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 5 — Grafico v(t) nella caduta viscosa</strong></p>
+          <p><em>Grafico tempo (asse x) vs velocità (asse y). Linea tratteggiata orizzontale all'altezza $v_L = g/k$ (asintoto). Curva che parte dall'origine $(0,0)$ e sale con pendenza decrescente (concavità verso il basso), tendendo asintoticamente a $v_L$. La pendenza iniziale è $g$ (massima accelerazione).</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`,
+        formulas: [
+          { label: "Velocità nel tempo", latex: "v(t) = \\frac{g}{k}(1 - e^{-kt})" },
+          { label: "Forma con velocità limite", latex: "v(t) = v_L(1 - e^{-\\frac{b}{m}t})" }
+        ]
+      },
+      /* ====================================================
+         SEZIONE 10: Riepilogo
+         ==================================================== */
+      {
+        id: "s12-riepilogo",
+        type: "section",
+        title: "Riepilogo delle Formule",
+        icon: "🗺️",
+        content: `<p>Tabella riassuntiva di tutte le formule introdotte in questa lezione:</p>`,
+        table_compare: {
+          headers: ["Grandezza", "Formula"],
+          rows: [
+            ["Legge oraria MAS", "$x(t) = A\\sin(\\omega t + \\varphi)$"],
+            ["Velocità MAS", "$v(t) = A\\omega\\cos(\\omega t + \\varphi)$"],
+            ["Accelerazione MAS", "$a(t) = -\\omega^2 x(t)$"],
+            ["Velocità massima", "$v_{\\max} = A\\omega$"],
+            ["Molle in parallelo", "$K_{eq} = k_1 + k_2$"],
+            ["Molle in serie", "$1/K_{eq} = 1/k_1 + 1/k_2$"],
+            ["Attrito viscoso", "$\\vec{F}_v = -b\\vec{v}$"],
+            ["Velocità limite", "$v_L = mg/b$"],
+            ["Caduta viscosa", "$v(t) = v_L(1 - e^{-bt/m})$"]
+          ]
+        }
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Qual è la <strong>soluzione generale</strong> dell'equazione del moto armonico semplice e cosa rappresenta ogni parametro?",
+        back: "$x(t) = A\\sin(\\omega t + \\varphi)$. <strong>$A$</strong>: ampiezza (spostamento massimo). <strong>$\\omega$</strong>: pulsazione ($\\sqrt{k/m}$, rad/s). <strong>$\\varphi$</strong>: fase iniziale (determinata dalle condizioni iniziali). <strong>$(\\omega t + \\varphi)$</strong>: fase istantanea."
+      },
+      {
+        type: "dimostrazione",
+        front: "Come si <strong>verifica</strong> che $x(t) = A\\sin(\\omega t + \\varphi)$ è soluzione dell'equazione $\\ddot{x} + \\omega^2 x = 0$?",
+        back: "Si calcola $\\ddot{x} = -A\\omega^2\\sin(\\omega t + \\varphi) = -\\omega^2 x(t)$. Sostituendo: $(-\\omega^2 x) + \\omega^2 x = 0$. L'identità è verificata."
+      },
+      {
+        type: "domanda",
+        front: "Da cosa dipendono $A$ e $\\varphi$? E da cosa dipendono $\\omega$ e $T$?",
+        back: "$A$ e $\\varphi$ dipendono <strong>solo dalle condizioni iniziali</strong> ($x_0$ e $v_0$). Non dipendono da $m$ o $k$. Invece $\\omega$ e $T$ dipendono <strong>solo dalle caratteristiche del sistema</strong> ($m$ e $k$): $\\omega = \\sqrt{k/m}$, $T = 2\\pi/\\omega$."
+      },
+      {
+        type: "domanda",
+        front: "Qual è la <strong>costante elastica equivalente</strong> per molle in parallelo e in serie?",
+        back: "<strong>Parallelo</strong>: $K_{eq} = k_1 + k_2$ (rigidezza aumenta, stessa deformazione). <strong>Serie</strong>: $1/K_{eq} = 1/k_1 + 1/k_2$, ovvero $K_{eq} = k_1 k_2/(k_1+k_2)$ (rigidezza diminuisce, stessa forza)."
+      },
+      {
+        type: "tranello",
+        front: "In un sistema di molle in serie, ogni molla subisce la <strong>stessa deformazione</strong>?",
+        back: "<strong>No!</strong> In serie ogni molla è sottoposta alla <strong>stessa forza</strong> $F$, ma le deformazioni sono <strong>diverse</strong>: $x_i = F/k_i$. La molla più morbida si deforma di più. È in <strong>parallelo</strong> che le deformazioni sono uguali."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è l'<strong>attrito viscoso lineare</strong> e in cosa si differenzia dall'attrito radente?",
+        back: "L'attrito viscoso è $\\vec{F}_v = -b\\vec{v}$: proporzionale alla velocità e opposto al moto. Si manifesta in un fluido. L'attrito radente dinamico invece ha modulo costante ($\\mu_d N$), indipendente dalla velocità."
+      },
+      {
+        type: "dimostrazione",
+        front: "Deriva l'espressione della <strong>velocità limite</strong> nella caduta con attrito viscoso.",
+        back: "Dalla seconda legge: $mg - bv = ma$. A velocità limite l'accelerazione è nulla ($a = 0$): $mg - bv_L = 0$. Quindi $v_L = mg/b$. Quando il peso bilancia esattamente l'attrito, il moto diventa rettilineo uniforme."
+      },
+      {
+        type: "domanda",
+        front: "Descrivi <strong>qualitativamente</strong> l'evoluzione della velocità nella caduta in un fluido viscoso, partendo da fermo.",
+        back: "Fase 1: $v = 0$, attrito nullo, accelerazione massima $= g$ (caduta libera). Fase 2: $v$ aumenta, l'attrito $bv$ cresce, l'accelerazione diminuisce. Fase 3: l'attrito bilancia il peso, $a = 0$, la velocità si stabilizza a $v_L = mg/b$. La legge è $v(t) = v_L(1 - e^{-bt/m})$."
+      }
+    ]
+};
