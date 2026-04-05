@@ -1,0 +1,382 @@
+const LESSON = {
+    id: "L02", date: "Lezione 02 — 3 Mar 2026",
+    title: "Ulteriori Esempi di Spazi Vettoriali",
+    abstract: "Dai calcoli espliciti in ℝ² alla generalizzazione in ℝⁿ, passando per lo spazio delle matrici M(m,n), lo spazio dei polinomi ℝ[t] e i vettori geometrici: una panoramica completa sugli spazi vettoriali fondamentali.",
+
+    sections: [
+        {
+            id: "s02-calcoli-r2",
+            type: "section",
+            title: "Calcoli nello Spazio Vettoriale ℝ²",
+            icon: "🧮",
+            content: `<p>La lezione si apre riprendendo i concetti introdotti precedentemente riguardo lo spazio vettoriale $\\mathbb{R}^2$, ovvero il piano cartesiano. Viene proposto un calcolo esplicito per prendere confidenza con le operazioni di addizione tra vettori e moltiplicazione per uno scalare.</p>
+<p>L'obiettivo è calcolare le componenti di un vettore $\\underline{x} = (x_1, x_2)$, definito come risultato della seguente espressione:</p>
+<p>$$\\underline{x} = 2(-1, 3) + \\sqrt{7}(1, -\\sqrt{7}) - 5(0, 1)$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Nota fondamentale: la Combinazione Lineare",
+                    content: `<p>L'espressione appena scritta è un prototipo di una struttura algebrica che diventerà il <strong>pilastro dell'intero corso</strong>. Essa prende il nome di <strong>Combinazione Lineare</strong>. Nello specifico, stiamo operando una combinazione lineare dei vettori $(-1, 3)$, $(1, -\\sqrt{7})$ e $(0, 1)$, ai quali sono stati associati rispettivamente i "pesi" (o coefficienti scalari) $2$, $\\sqrt{7}$ e $-5$.</p>`
+                },
+                {
+                    subtitle: "Passaggio 1: Moltiplicazioni esterne",
+                    content: `<p>Per risolvere l'espressione, è imperativo rispettare la gerarchia delle operazioni: <strong>si eseguono prima le moltiplicazioni esterne</strong> (distribuzione degli scalari nelle componenti dei vettori) e solo successivamente si procede con le somme.</p>
+<ul>
+<li>Il primo vettore moltiplicato per il peso $2$: $2(-1, 3) = (-2, 6)$</li>
+<li>Il secondo vettore moltiplicato per il peso $\\sqrt{7}$. Ricordando che $\\sqrt{7} \\cdot (-\\sqrt{7}) = -7$: $\\sqrt{7}(1, -\\sqrt{7}) = (\\sqrt{7}, -7)$</li>
+<li>Il terzo vettore moltiplicato per il peso $-5$: $-5(0, 1) = (0, -5)$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Passaggio 2: Addizione dei vettori risultanti",
+                    content: `<p>Adesso l'equazione si è ridotta a una pura somma tra tre vettori di $\\mathbb{R}^2$:</p>
+<p>$$\\underline{x} = (-2, 6) + (\\sqrt{7}, -7) + (0, -5)$$</p>
+<p>Come definito dagli assiomi di $\\mathbb{R}^2$, la somma si esegue addizionando ordinatamente le rispettive componenti omologhe:</p>
+<p>$$\\underline{x} = \\Big( (-2) + \\sqrt{7} + 0 \\; , \\; 6 + (-7) + (-5) \\Big)$$</p>
+<p>Eseguendo le somme algebriche, otteniamo il vettore finale:</p>
+<p>$$\\underline{x} = (\\sqrt{7} - 2 \\; , \\; -6)$$</p>
+<p>In conclusione, le componenti del vettore incognito sono:</p>
+<p>$$x_1 = \\sqrt{7} - 2 \\qquad x_2 = -6$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Combinazione lineare in ℝ²", latex: "\\underline{x} = 2(-1, 3) + \\sqrt{7}(1, -\\sqrt{7}) - 5(0, 1) = (\\sqrt{7} - 2, \\; -6)" }
+            ]
+        },
+        {
+            id: "s02-spazio-rn",
+            type: "section",
+            title: "Lo Spazio Vettoriale delle n-ple: ℝⁿ",
+            icon: "📐",
+            content: `<p>Fino ad ora abbiamo operato in $\\mathbb{R}^2$, ma la matematica non si ferma a due dimensioni. Possiamo generalizzare il concetto in modo del tutto naturale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione e Notazione",
+                    content: `<p>Fissiamo un intero $n \\geq 1$. Consideriamo un insieme di $n$ numeri reali presi in un ordine specifico: $x_1, x_2, \\dots, x_n \\in \\mathbb{R}$. L'entità matematica formata da questa sequenza ordinata viene chiamata <strong>$n$-pla di numeri reali</strong> e la indicheremo con una lettera sottolineata:</p>
+<p>$$\\underline{x} = (x_1, x_2, \\dots, x_n) = [x_1, x_2, \\dots, x_n]$$</p>
+<p>L'uso delle parentesi tonde o quadre è una pura scelta stilistica. Analizzando l'anatomia:</p>
+<ul>
+<li>$x_1$ rappresenta la 1ª componente</li>
+<li>$x_2$ rappresenta la 2ª componente</li>
+<li>$x_n$ rappresenta l'$n$-esima componente</li>
+</ul>`
+                },
+                {
+                    subtitle: "Uguaglianza tra n-ple",
+                    content: `<p>Prendiamo due vettori $\\underline{x} = (x_1, \\dots, x_n)$ e $\\underline{y} = (y_1, \\dots, y_n)$. Per definizione, $\\underline{x}$ è uguale a $\\underline{y}$ se e solo se le loro componenti coincidono ordinatamente:</p>
+<p>$$\\underline{x} = \\underline{y} \\iff x_i = y_i \\quad \\forall \\, i = 1, \\dots, n$$</p>
+<p>Poiché l'ordine è cruciale, permutare i numeri cambia il vettore. <em>Esempio per $n = 3$:</em> Il vettore $(1, 0, 0)$ è intrinsecamente diverso dal vettore $(0, 1, 0)$, in quanto la prima componente del primo è $1$, mentre quella del secondo è $0$.</p>`
+                },
+                {
+                    subtitle: "L'insieme ℝⁿ",
+                    content: `<p>Definiamo $\\mathbb{R}^n$ (letto "erre alla $n$") come l'insieme di tutte le possibili $n$-ple di numeri reali:</p>
+<p>$$\\mathbb{R}^n = \\{(x_1, x_2, \\dots, x_n) \\mid x_i \\in \\mathbb{R} \\text{ per } i = 1, \\dots, n\\}$$</p>`
+                },
+                {
+                    subtitle: "Struttura Algebrica in ℝⁿ",
+                    content: `<p>Per rendere $\\mathbb{R}^n$ uno spazio vettoriale, introduciamo le due operazioni canoniche. Dati $\\underline{x}, \\underline{y} \\in \\mathbb{R}^n$ e $a \\in \\mathbb{R}$:</p>
+<p><strong>1. Addizione</strong> — si sommano componente per componente:</p>
+<p>$$\\underline{x} + \\underline{y} = (x_1 + y_1, \\; x_2 + y_2, \\; \\dots, \\; x_n + y_n)$$</p>
+<p><strong>2. Moltiplicazione per uno scalare</strong> — lo scalare moltiplica ogni componente:</p>
+<p>$$a \\cdot \\underline{x} = (ax_1, \\; ax_2, \\; \\dots, \\; ax_n)$$</p>
+<p>Queste due operazioni soddisfano i famosi 8 assiomi elencati nella lezione precedente. Dunque, si decreta ufficialmente che <strong>$(\\mathbb{R}^n, +, \\cdot)$ è uno spazio vettoriale</strong>.</p>`
+                },
+                {
+                    subtitle: "Esercizio Pratico in ℝ³",
+                    content: `<p>Calcolare le componenti della seguente combinazione lineare nello spazio $\\mathbb{R}^3$:</p>
+<p>$$\\underline{x} = 2(1, 0, 0) - \\sqrt{5}(0, -1, 0) + 8(0, 0, 1)$$</p>
+<p>Procediamo eseguendo prima le moltiplicazioni per gli scalari:</p>
+<p>$$\\underline{x} = (2, 0, 0) + (0, \\sqrt{5}, 0) + (0, 0, 8)$$</p>
+<p>Addizioniamo componente per componente:</p>
+<p>$$x_1 = 2 + 0 + 0 = 2$$</p>
+<p>$$x_2 = 0 + \\sqrt{5} + 0 = \\sqrt{5}$$</p>
+<p>$$x_3 = 0 + 0 + 8 = 8$$</p>
+<p>Il vettore finale è dunque $\\underline{x} = (2, \\sqrt{5}, 8)$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Addizione in ℝⁿ", latex: "\\underline{x} + \\underline{y} = (x_1 + y_1, \\; x_2 + y_2, \\; \\dots, \\; x_n + y_n)" },
+                { label: "Prodotto scalare in ℝⁿ", latex: "a \\cdot \\underline{x} = (ax_1, \\; ax_2, \\; \\dots, \\; ax_n)" }
+            ]
+        },
+        {
+            id: "s02-spazio-matrici",
+            type: "section",
+            title: "Lo Spazio delle Matrici: M(m, n)",
+            icon: "🔢",
+            content: `<p>Fino ad ora abbiamo considerato entità monodimensionali (le $n$-ple, assimilabili a righe o colonne singole). Alziamo il livello di astrazione.</p>
+<p>Fissiamo due numeri interi positivi $m \\geq 1$ e $n \\geq 1$. Consideriamo una "tabella" rettangolare di numeri reali: questa tabella, chiamata <strong>Matrice</strong>, è composta da $m$ righe e $n$ colonne. Si indica con una lettera maiuscola, come $A$:</p>
+<p>$$A = \\begin{bmatrix} a_{11} & a_{12} & \\dots & a_{1n} \\\\ a_{21} & a_{22} & \\dots & a_{2n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ a_{m1} & a_{m2} & \\dots & a_{mn} \\end{bmatrix}$$</p>
+<p>Per evitare di scrivere sempre la tabella estesa, si usa una notazione compatta:</p>
+<p>$$A = (a_{ij})_{\\substack{1 \\leq i \\leq m \\\\ 1 \\leq j \\leq n}}$$</p>
+<p>Nomenclatura formale:</p>
+<ul>
+<li>$a_{ij} \\in \\mathbb{R}$ è un singolo numero reale</li>
+<li>L'indice $i$ è l'<strong>indice di riga</strong> (quale riga orizzontale)</li>
+<li>L'indice $j$ è l'<strong>indice di colonna</strong> (quale colonna verticale)</li>
+<li>$a_{ij}$ è la componente all'incrocio tra la riga $i$ e la colonna $j$</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "Uguaglianza e Insieme delle Matrici",
+                    content: `<p>Due matrici $A = (a_{ij})$ e $B = (b_{ij})$, aventi lo stesso numero di righe $m$ e colonne $n$, sono uguali se e solo se tutte le componenti corrispondenti sono identiche:</p>
+<p>$$A = B \\iff a_{ij} = b_{ij} \\quad \\forall \\, i = 1, \\dots, m \\quad \\text{e} \\quad \\forall \\, j = 1, \\dots, n$$</p>
+<p>La disposizione degli elementi è discriminante. Ad esempio, prendendo due matrici $2 \\times 3$:</p>
+<p>$$A = \\begin{bmatrix} 1 & 0 & 0 \\\\ 0 & 0 & 0 \\end{bmatrix} \\neq B = \\begin{bmatrix} 0 & 1 & 0 \\\\ 0 & 0 & 0 \\end{bmatrix}$$</p>
+<p>Sono diverse perché $a_{11} = 1$ mentre $b_{11} = 0$.</p>
+<p>L'insieme di tutte le matrici con $m$ righe e $n$ colonne a coefficienti reali si indica con:</p>
+<p>$$\\mathcal{M}(m, n) = \\{ (a_{ij}) \\mid a_{ij} \\in \\mathbb{R}, \\; i = 1 \\dots m, \\; j = 1 \\dots n \\}$$</p>`
+                },
+                {
+                    subtitle: "Spazio Vettoriale delle Matrici",
+                    content: `<p>Per dotare $\\mathcal{M}(m, n)$ di struttura algebrica, introduciamo le due operazioni. Dati $A, B \\in \\mathcal{M}(m, n)$ e $c \\in \\mathbb{R}$:</p>
+<p><strong>1. Addizione tra matrici</strong> — si sommano gli elementi nella stessa posizione:</p>
+<p>$$A + B := (a_{ij} + b_{ij})$$</p>
+<p><strong>2. Moltiplicazione per uno scalare</strong> — lo scalare moltiplica tutti gli elementi:</p>
+<p>$$c \\cdot A := (c \\cdot a_{ij})$$</p>
+<p>L'elemento neutro è la <strong>Matrice Nulla</strong> $\\underline{0}$, in cui tutti gli elementi sono $0$. L'opposto di una matrice è $-A = (-a_{ij})$.</p>
+<p>Grazie a queste definizioni, <strong>la terna $(\\mathcal{M}(m, n), +, \\cdot)$ è uno spazio vettoriale</strong>.</p>`
+                },
+                {
+                    subtitle: "Esercizio sulle Matrici in M(2, 3)",
+                    content: `<p>Calcolare la seguente combinazione lineare in $\\mathcal{M}(2, 3)$:</p>
+<p>$$A = -2 \\begin{bmatrix} 2 & 3 & -1 \\\\ -2 & -4 & -1 \\end{bmatrix} + \\frac{1}{3} \\begin{bmatrix} 0 & 3 & 6 \\\\ -3 & -6 & 0 \\end{bmatrix} - \\sqrt{2} \\begin{bmatrix} \\sqrt{2} & 0 & 0 \\\\ -2 & 0 & 0 \\end{bmatrix}$$</p>
+<p><strong>Passaggio 1:</strong> Eseguiamo i prodotti esterni per lo scalare:</p>
+<ul>
+<li>Prima matrice (per $-2$): $\\begin{bmatrix} -4 & -6 & 2 \\\\ 4 & 8 & 2 \\end{bmatrix}$ — Attenzione: $(-2) \\cdot (-1) = 2$</li>
+<li>Seconda matrice (per $1/3$): $\\begin{bmatrix} 0 & 1 & 2 \\\\ -1 & -2 & 0 \\end{bmatrix}$</li>
+<li>Terza matrice (per $\\sqrt{2}$): $\\begin{bmatrix} 2 & 0 & 0 \\\\ -2\\sqrt{2} & 0 & 0 \\end{bmatrix}$ — Nota: $\\sqrt{2} \\cdot \\sqrt{2} = 2$</li>
+</ul>
+<p><strong>Passaggio 2:</strong> Somme e sottrazioni elemento per elemento:</p>
+<ul>
+<li>$a_{11}$: $-4 + 0 - 2 = -6$</li>
+<li>$a_{12}$: $-6 + 1 - 0 = -5$</li>
+<li>$a_{13}$: $2 + 2 - 0 = 4$</li>
+<li>$a_{21}$: $4 - 1 - (-2\\sqrt{2}) = 3 + 2\\sqrt{2}$</li>
+<li>$a_{22}$: $8 - 2 - 0 = 6$</li>
+<li>$a_{23}$: $2 + 0 - 0 = 2$</li>
+</ul>
+<p>Il risultato finale è:</p>
+<p>$$A = \\begin{bmatrix} -6 & -5 & 4 \\\\ 3 + 2\\sqrt{2} & 6 & 2 \\end{bmatrix}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Addizione tra matrici", latex: "A + B := (a_{ij} + b_{ij})" },
+                { label: "Prodotto scalare di matrice", latex: "c \\cdot A := (c \\cdot a_{ij})" }
+            ]
+        },
+        {
+            id: "s02-osmosi-spazi",
+            type: "note_box",
+            title: "Osmosi tra Spazi",
+            icon: "🔗",
+            content: `<p>Un fatto teorico interessante: gli spazi sono tra loro collegati. Se consideriamo lo spazio delle matrici con una sola riga e $n$ colonne, otteniamo di fatto l'insieme delle $n$-ple:</p>
+<p>$$\\mathcal{M}(1, n) = \\mathbb{R}^n$$</p>
+<p>Analogamente, l'insieme delle matrici colonna ($m$ righe e 1 colonna) è strutturalmente equiparabile allo spazio $\\mathbb{R}^m$ (sono <strong>isomorfi</strong>, ovvero si comportano algebricamente nello stesso identico modo):</p>
+<p>$$\\mathcal{M}(m, 1) \\cong \\mathbb{R}^m$$</p>`
+        },
+        {
+            id: "s02-spazio-polinomi",
+            type: "section",
+            title: "Lo Spazio dei Polinomi: ℝ[t]",
+            icon: "📈",
+            content: `<p>Evolviamo ancora il concetto. Fissiamo dei numeri reali $a_0, a_1, \\dots, a_h \\in \\mathbb{R}$, con $h \\geq 0$. Costruiamo una funzione $p(t)$ calcolata nella seguente forma:</p>
+<p>$$p(t) = a_0 + a_1t + a_2t^2 + \\dots + a_ht^h$$</p>
+<p>Questa espressione si definisce <strong>polinomio</strong> nella variabile $t$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Nomenclatura Polinomiale",
+                    content: `<p>Identifichiamo gli elementi cardine:</p>
+<ul>
+<li>Il numero reale $a_h$ (quello che moltiplica la potenza di $t$ più alta) prende il nome di <strong>coefficiente direttore</strong></li>
+<li>L'esponente $h$ associato al coefficiente direttore è il <strong>grado del polinomio</strong>: $\\deg p(t) = h$. Attenzione: questo vale <strong>solo se $a_h \\neq 0$</strong>. Se fosse zero, il termine svanirebbe e il grado sarebbe determinato dal termine precedente non nullo</li>
+<li>Il termine costante $a_0$ (che possiamo immaginare come $a_0 \\cdot t^0$) si chiama <strong>termine noto</strong></li>
+</ul>
+<p><strong>Esempi:</strong></p>
+<ul>
+<li>$p(t) = 5$: polinomio di grado $\\deg p(t) = 0$, coefficiente direttore $5$, termine noto $5$</li>
+<li>$q(t) = -t^4 + 10t^5$: polinomio di grado $\\deg q(t) = 5$, coefficiente direttore $10$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Il Polinomio Nullo",
+                    content: `<p>Cosa accade se tutti i coefficienti $a_i$ sono pari a zero? La funzione che a qualsiasi $t \\in \\mathbb{R}$ associa costantemente lo zero:</p>
+<p>$$t \\in \\mathbb{R} \\longmapsto 0 \\in \\mathbb{R}$$</p>
+<p>Questa è il <strong>polinomio nullo</strong>, corrispondente a $0 + 0t + 0t^2 + \\dots$. Una caratteristica fondamentale e insidiosa è che, a differenza di tutti gli altri polinomi, ad esso <strong>non viene assegnato alcun grado</strong>. Questo perché non esiste un $a_h \\neq 0$ che determini l'esponente massimo.</p>`
+                },
+                {
+                    subtitle: "Il Principio d'Identità dei Polinomi",
+                    content: `<p>Siano $p(t)$ e $q(t)$ due polinomi qualsiasi:</p>
+<p>$$p(t) = a_0 + a_1t + \\dots + a_ht^h$$</p>
+<p>$$q(t) = b_0 + b_1t + \\dots + b_ht^h$$</p>
+<p>Il <strong>Principio di identità dei polinomi</strong> sancisce che due polinomi assumono gli stessi valori per ogni $t \\in \\mathbb{R}$ se e solo se tutti i loro coefficienti sono omologamente identici:</p>
+<p>$$p(t) = q(t) \\quad \\forall \\, t \\in \\mathbb{R} \\iff a_0 = b_0, \\; a_1 = b_1, \\; \\dots, \\; a_h = b_h$$</p>`
+                },
+                {
+                    subtitle: "Lo Spazio Vettoriale ℝ[t]",
+                    content: `<p>Denotiamo con $\\mathbb{R}[t]$ l'insieme di <em>tutti</em> i polinomi a coefficienti reali nella variabile $t$. Introduciamo le due operazioni:</p>
+<p><strong>1. Addizione tra polinomi</strong> — si sommano i coefficienti corrispondenti allo stesso grado di $t$:</p>
+<p>$$p(t) + q(t) = (a_0 + b_0) + (a_1 + b_1)t + (a_2 + b_2)t^2 + \\dots$$</p>
+<p><strong>2. Moltiplicazione scalare</strong> — un numero $c \\in \\mathbb{R}$ si distribuisce su tutti i coefficienti:</p>
+<p>$$c \\cdot p(t) = (c \\cdot a_0) + (c \\cdot a_1)t + \\dots + (c \\cdot a_h)t^h$$</p>
+<p>Con queste operazioni, <strong>$\\mathbb{R}[t]$ è uno spazio vettoriale</strong>. L'elemento neutro è il polinomio nullo.</p>`
+                },
+                {
+                    subtitle: "Esercizio: combinazione lineare di polinomi",
+                    content: `<p>Il professore ha illustrato un calcolo esplicito alla lavagna:</p>
+<p>$$p(t) = -3(1 + t^2) + 5(t - t^6) - (1 + t + t^3) + 4(5 - t - t^4) + 5t^6$$</p>
+<p>Applichiamo la distributività degli scalari:</p>
+<p>$$p(t) = (-3 - 3t^2) + (5t - 5t^6) + (-1 - t - t^3) + (20 - 4t - 4t^4) + 5t^6$$</p>
+<p>Raggruppiamo i termini per potenza di $t$:</p>
+<ul>
+<li>Termini in $t^6$: $-5t^6 + 5t^6 = 0$ (si elide!)</li>
+<li>Termini in $t^4$: $-4t^4$</li>
+<li>Termini in $t^3$: $-t^3$</li>
+<li>Termini in $t^2$: $-3t^2$</li>
+<li>Termini in $t$: $5t - t - 4t = 0$ (anche il termine lineare si elide!)</li>
+<li>Termini noti: $-3 - 1 + 20 = 16$</li>
+</ul>
+<p>Il polinomio finale pulito e ordinato è:</p>
+<p>$$p(t) = 16 - 3t^2 - t^3 - 4t^4$$</p>
+<p>I coefficienti effettivi sono:</p>
+<p>$$a_0 = 16, \\quad a_1 = 0, \\quad a_2 = -3, \\quad a_3 = -1, \\quad a_4 = -4$$</p>
+<p>Il <strong>grado del polinomio</strong> è $4$ ($\\deg p(t) = 4$).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Polinomio generico", latex: "p(t) = a_0 + a_1t + a_2t^2 + \\dots + a_ht^h" },
+                { label: "Identità dei polinomi", latex: "p(t) = q(t) \\; \\forall t \\iff a_i = b_i \\; \\forall i" },
+                { label: "Addizione tra polinomi", latex: "p(t) + q(t) = (a_0 + b_0) + (a_1 + b_1)t + \\dots" }
+            ]
+        },
+        {
+            id: "s02-polinomio-nullo-alert",
+            type: "alert_box",
+            title: "Trappola d'esame: il grado del polinomio nullo",
+            icon: "⚠️",
+            content: `<p>Il polinomio nullo (tutti i coefficienti uguali a zero) <strong>non ha grado</strong>. È un errore comune all'esame dire che ha grado $0$: il grado $0$ appartiene ai polinomi costanti non nulli come $p(t) = 5$. Il polinomio nullo è l'unico a cui non si assegna grado.</p>`
+        },
+        {
+            id: "s02-vettori-geometrici",
+            type: "section",
+            title: "Lo Spazio dei Vettori Geometrici",
+            icon: "🏹",
+            content: `<p>Ci si sposta da concetti prettamente algebrici (numeri e tabelle) a concetti derivati dalla fisica e dalla geometria pura.</p>
+<p>Sia $\\mathcal{E}$ l'insieme di tutti i punti nello spazio fisico tridimensionale. Prendiamo due punti $O, P \\in \\mathcal{E}$. Tracciando un segmento orientato (una freccia) che parte da $O$ e giunge a $P$, costruiamo un <strong>vettore geometrico</strong>, denotato $\\overrightarrow{OP}$. Questo è un vettore geometrico <em>applicato</em> nell'origine $O$ con <em>estremo</em> nel punto $P$.</p>
+<p>Mantenendo fisso il punto $O$ e lasciando variare $P$ ovunque in $\\mathcal{E}$, costruiamo l'insieme di tutte le infinite "frecce" uscenti da $O$:</p>
+<p>$$\\mathcal{V}_O = \\{ \\overrightarrow{OP} \\mid P \\in \\mathcal{E} \\}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Le operazioni geometriche: Regola del Parallelogramma",
+                    content: `<p>Per far assurgere $\\mathcal{V}_O$ al rango di spazio vettoriale, servono le due operazioni — stavolta <strong>geometriche e visive</strong>.</p>
+<p><strong>1. Addizione Vettoriale (Regola del Parallelogramma):</strong> Dati $\\overrightarrow{OP}$ e $\\overrightarrow{OQ}$, la loro somma $\\overrightarrow{OR}$ è il vettore che individua la diagonale del parallelogramma formato usando i due vettori di partenza come lati adiacenti:</p>
+<p>$$\\overrightarrow{OP} + \\overrightarrow{OQ} = \\overrightarrow{OR}$$</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Regola del Parallelogramma</strong></p>
+  <p><em>Punto O in basso a sinistra. Due frecce: OP verso destra e OQ verso l'alto. Linee tratteggiate completano il parallelogramma. La diagonale OR (da O al vertice opposto) è il vettore somma, evidenziato in blu.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p><strong>2. Moltiplicazione Scalare:</strong> Il vettore $\\overrightarrow{OP}$ moltiplicato per $c \\in \\mathbb{R}$ produce un nuovo vettore sulla medesima retta d'azione:</p>
+<ul>
+<li>Se $c \\gt 1$: il vettore si <strong>allunga</strong></li>
+<li>Se $0 \\lt c \\lt 1$: il vettore si <strong>contrae</strong></li>
+<li>Se $c \\lt 0$: la freccia <strong>inverte il suo verso</strong></li>
+</ul>
+<p>Il vettore nullo in questo spazio è $\\overrightarrow{OO}$, una freccia di lunghezza zero che parte e arriva nello stesso punto. Si può dimostrare che tutte e 8 le proprietà degli spazi vettoriali sono geometricamente soddisfatte. <strong>Lo spazio fisico si piega all'eleganza dell'algebra lineare.</strong></p>`
+                }
+            ],
+            formulas: [
+                { label: "Somma vettoriale (parallelogramma)", latex: "\\overrightarrow{OP} + \\overrightarrow{OQ} = \\overrightarrow{OR}" },
+                { label: "Spazio dei vettori geometrici", latex: "\\mathcal{V}_O = \\{ \\overrightarrow{OP} \\mid P \\in \\mathcal{E} \\}" }
+            ]
+        },
+        {
+            id: "s02-riepilogo",
+            type: "note_box",
+            title: "Riepilogo: gli spazi vettoriali visti oggi",
+            icon: "📋",
+            content: `<p>In questa lezione abbiamo visto <strong>quattro esempi fondamentali</strong> di spazi vettoriali:</p>
+<table style="width:100%; border-collapse: collapse; margin: 10px 0;">
+<tr style="border-bottom: 2px solid var(--border-light);">
+<th style="text-align:left; padding: 6px;">Spazio</th>
+<th style="text-align:left; padding: 6px;">Elementi</th>
+<th style="text-align:left; padding: 6px;">Operazioni</th>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+<td style="padding: 6px;">$\\mathbb{R}^n$</td>
+<td style="padding: 6px;">$n$-ple di numeri reali</td>
+<td style="padding: 6px;">Componente per componente</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+<td style="padding: 6px;">$\\mathcal{M}(m,n)$</td>
+<td style="padding: 6px;">Matrici $m \\times n$</td>
+<td style="padding: 6px;">Elemento per elemento</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+<td style="padding: 6px;">$\\mathbb{R}[t]$</td>
+<td style="padding: 6px;">Polinomi a coefficienti reali</td>
+<td style="padding: 6px;">Coefficiente per coefficiente</td>
+</tr>
+<tr>
+<td style="padding: 6px;">$\\mathcal{V}_O$</td>
+<td style="padding: 6px;">Vettori geometrici applicati in $O$</td>
+<td style="padding: 6px;">Regola del parallelogramma</td>
+</tr>
+</table>
+<p>In tutti i casi, la struttura è la stessa: un insieme dotato di addizione e moltiplicazione scalare che soddisfano gli 8 assiomi.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è una combinazione lineare?",
+            back: "Una combinazione lineare di vettori $\\underline{v}_1, \\dots, \\underline{v}_k$ con coefficienti scalari $c_1, \\dots, c_k \\in \\mathbb{R}$ è l'espressione $c_1\\underline{v}_1 + c_2\\underline{v}_2 + \\dots + c_k\\underline{v}_k$. È la struttura algebrica fondamentale del corso."
+        },
+        {
+            type: "definizione",
+            front: "Definisci lo spazio vettoriale ℝⁿ e le sue operazioni.",
+            back: "$\\mathbb{R}^n$ è l'insieme di tutte le $n$-ple ordinate di numeri reali $(x_1, \\dots, x_n)$. L'addizione si fa componente per componente: $(x_i) + (y_i) = (x_i + y_i)$. La moltiplicazione scalare distribuisce lo scalare su ogni componente: $a \\cdot (x_i) = (ax_i)$. Con queste operazioni soddisfa gli 8 assiomi di spazio vettoriale."
+        },
+        {
+            type: "definizione",
+            front: "Quando due n-ple sono uguali?",
+            back: "Due $n$-ple $\\underline{x} = (x_1, \\dots, x_n)$ e $\\underline{y} = (y_1, \\dots, y_n)$ sono uguali se e solo se $x_i = y_i$ per ogni $i = 1, \\dots, n$. L'ordine conta: $(1, 0, 0) \\neq (0, 1, 0)$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è lo spazio M(m, n) e quali operazioni lo rendono uno spazio vettoriale?",
+            back: "$\\mathcal{M}(m, n)$ è l'insieme di tutte le matrici con $m$ righe e $n$ colonne a coefficienti reali. L'addizione somma elementi nella stessa posizione: $(A+B)_{ij} = a_{ij} + b_{ij}$. La moltiplicazione scalare è $(cA)_{ij} = c \\cdot a_{ij}$. L'elemento neutro è la matrice nulla (tutti zeri)."
+        },
+        {
+            type: "domanda",
+            front: "Che relazione c'è tra M(1, n) e ℝⁿ? E tra M(m, 1) e ℝᵐ?",
+            back: "$\\mathcal{M}(1, n) = \\mathbb{R}^n$: una matrice con 1 riga e $n$ colonne è esattamente una $n$-pla. $\\mathcal{M}(m, 1) \\cong \\mathbb{R}^m$: una matrice colonna con $m$ righe è isomorfa (si comporta algebricamente allo stesso modo) a una $m$-pla."
+        },
+        {
+            type: "tranello",
+            front: "Qual è il grado del polinomio nullo? E qual è il grado di p(t) = 5?",
+            back: "Il polinomio nullo (tutti i coefficienti zero) <strong>non ha grado</strong>: non è definito. È l'unico polinomio senza grado. Invece $p(t) = 5$ ha grado $0$: è un polinomio costante non nullo con coefficiente direttore $a_0 = 5$. Confonderli è un errore frequentissimo all'esame!"
+        },
+        {
+            type: "definizione",
+            front: "Enuncia il Principio d'Identità dei Polinomi.",
+            back: "Due polinomi $p(t) = a_0 + a_1t + \\dots + a_ht^h$ e $q(t) = b_0 + b_1t + \\dots + b_ht^h$ sono uguali per ogni $t \\in \\mathbb{R}$ se e solo se $a_i = b_i$ per ogni $i$. In altre parole, l'uguaglianza funzionale equivale all'uguaglianza coefficiente per coefficiente."
+        },
+        {
+            type: "domanda",
+            front: "Come si definisce la somma di due vettori geometrici nello spazio V_O?",
+            back: "Con la <strong>regola del parallelogramma</strong>: dati $\\overrightarrow{OP}$ e $\\overrightarrow{OQ}$, si costruisce il parallelogramma avente questi due vettori come lati adiacenti. La diagonale che parte da $O$ è il vettore somma $\\overrightarrow{OR} = \\overrightarrow{OP} + \\overrightarrow{OQ}$."
+        },
+        {
+            type: "domanda",
+            front: "Qual è l'elemento neutro nello spazio dei vettori geometrici V_O?",
+            back: "È il vettore degenere $\\overrightarrow{OO}$, una freccia di lunghezza zero che parte e arriva nello stesso punto $O$. Sommando qualsiasi vettore $\\overrightarrow{OP}$ con $\\overrightarrow{OO}$ si ottiene di nuovo $\\overrightarrow{OP}$."
+        },
+        {
+            type: "formula",
+            front: "Quali sono le operazioni che definiscono lo spazio vettoriale ℝ[t]?",
+            back: "Addizione: $p(t) + q(t) = (a_0 + b_0) + (a_1 + b_1)t + (a_2 + b_2)t^2 + \\dots$ (si sommano i coefficienti dello stesso grado). Moltiplicazione scalare: $c \\cdot p(t) = (ca_0) + (ca_1)t + \\dots + (ca_h)t^h$ (lo scalare entra in ogni coefficiente). L'elemento neutro è il polinomio nullo."
+        }
+    ]
+};
+

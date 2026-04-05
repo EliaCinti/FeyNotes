@@ -79,6 +79,7 @@ const COURSES = {
     ],
     lessons: [
       { id: 'L01', num: 'Lezione 1', date: '2 Mar 2026', title: 'Spazi Vettoriali', abstract: 'Definizione rigorosa di spazio vettoriale, gli 8 assiomi fondamentali, le 7 proprietà di calcolo con relative dimostrazioni, e i primi esempi costruttivi.', category: 'spazi-vettoriali' },
+      { id: 'L02', num: 'Lezione 2', date: '3 Mar 2026', title: 'Ulteriori Esempi di Spazi Vettoriali', abstract: 'Dai calcoli espliciti in ℝ² alla generalizzazione in ℝⁿ, passando per lo spazio delle matrici M(m,n), lo spazio dei polinomi ℝ[t] e i vettori geometrici: una panoramica completa sugli spazi vettoriali fondamentali.', category: 'spazi-vettoriali' },
     ],
   },
   //
