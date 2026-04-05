@@ -1,5 +1,5 @@
 const LESSON = {
-    id: "L13", date: "Lezione 13 — 5 Apr 2026",
+    id: "L13", date: "Lezione 13 — 2 Apr 2026",
     title: "La Tensione e le Funi Ideali",
     abstract: "Definizione di fune ideale e tensione come forza vincolare. Proprietà della tensione costante lungo una fune priva di massa. Applicazioni classiche: masse collegate su piano orizzontale, macchina di Atwood, massa sospesa a due funi. Forza centripeta e attrito statico nell'automobile in curva.",
 
