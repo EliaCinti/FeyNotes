@@ -1,6 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════
    FEYNOTES — Course Configuration
    Single source of truth for all courses and lesson metadata.
+   Add a course here + its theme in base.css → everything else
+   is generated automatically by build.js.
    ═══════════════════════════════════════════════════════════════ */
 
 const SITE = {
@@ -22,10 +24,16 @@ const COURSES = {
     professor: 'Prof. Mercuri',
     university: 'Università di Roma Tor Vergata',
     year: 'A.A. 2025/2026',
+    description: 'Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.',
     nav: [
       { label: 'Lezioni', href: '/fisica1/', active: true },
       { label: 'Formulario', href: '#' },
       { label: 'Esercizi', href: '#' },
+    ],
+    categories: [
+      { id: 'cinematica', label: 'cinematica', gridId: 'cinematica-grid' },
+      { id: 'dinamica', label: 'dinamica', gridId: 'dinamica-grid' },
+      { id: 'termodinamica', label: 'termodinamica', gridId: 'termo-grid' },
     ],
     lessons: [
       { id: 'L01', num: 'Lezione 1', date: '11 Mar 2026', title: 'Introduzione, Metodo Scientifico e Prime Grandezze Cinematiche', abstract: 'Metodo galileiano, grandezze scalari vs vettoriali, posizione, spostamento, velocità media.', category: 'cinematica' },
@@ -43,16 +51,49 @@ const COURSES = {
     ],
   },
 
-  // ─── Future courses ───
+  // ─── Future courses — uncomment and fill when ready ───
+  //
   // geometria: {
-  //   id: 'geometria', theme: 'geometria', name: 'Geometria', icon: '△',
-  //   basePath: '/geometria', indexUrl: '/geometria/',
-  //   professor: 'Trusiani / Di Gennaro', ...
+  //   id: 'geometria',
+  //   theme: 'geometria',
+  //   name: 'Geometria',
+  //   icon: '△',
+  //   basePath: '/geometria',
+  //   indexUrl: '/geometria/',
+  //   professor: 'Trusiani / Di Gennaro',
+  //   university: 'Università di Roma Tor Vergata',
+  //   year: 'A.A. 2025/2026',
+  //   description: 'Appunti di Geometria per Ingegneria Informatica.',
+  //   nav: [
+  //     { label: 'Lezioni', href: '/geometria/', active: true },
+  //   ],
+  //   categories: [
+  //     { id: 'algebra-lineare', label: 'algebra lineare', gridId: 'algebra-grid' },
+  //     { id: 'geometria-analitica', label: 'geometria analitica', gridId: 'geometria-grid' },
+  //   ],
+  //   lessons: [],
   // },
+  //
   // controlli: {
-  //   id: 'controlli', theme: 'controlli', name: 'Fondamenti di Controlli', icon: '◎',
-  //   basePath: '/controlli', indexUrl: '/controlli/',
-  //   ...
+  //   id: 'controlli',
+  //   theme: 'controlli',
+  //   name: 'Fondamenti di Controlli',
+  //   icon: '◎',
+  //   basePath: '/controlli',
+  //   indexUrl: '/controlli/',
+  //   professor: 'Prof. ...',
+  //   university: 'Università di Roma Tor Vergata',
+  //   year: 'A.A. 2025/2026',
+  //   description: 'Esercizi e appunti di Fondamenti di Controlli.',
+  //   nav: [
+  //     { label: 'Lezioni', href: '/controlli/', active: true },
+  //     { label: 'Esercizi', href: '#' },
+  //   ],
+  //   categories: [
+  //     { id: 'teoria', label: 'teoria', gridId: 'teoria-grid' },
+  //     { id: 'esercizi', label: 'esercizi', gridId: 'esercizi-grid' },
+  //   ],
+  //   lessons: [],
   // },
 };
 

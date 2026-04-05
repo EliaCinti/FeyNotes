@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 /* ═══════════════════════════════════════════════════════════════
-   FEYNOTES — Build Script
-   Generates static lesson pages from template + data files.
+   FEYNOTES — Build Script v3
+   Generates everything from templates + config:
+     - Lesson pages     (fisica1/lezioni/L01/index.html)
+     - Course indexes   (fisica1/index.html)
+     - Homepage counts  (index.html)
+     - Sitemap          (sitemap.xml)
 
    Usage:
-     node build.js                  Build all courses
+     node build.js                  Build all
      node build.js --course fisica  Build one course
      node build.js --lesson L01     Build one lesson
      node build.js --sitemap        Regenerate sitemap only
@@ -30,20 +34,7 @@ for (let i = 0; i < args.length; i++) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  URL HELPERS
-// ═══════════════════════════════════════════════════════════════
-
-function lessonUrl(course, lessonId) {
-  return `${course.basePath}/lezioni/${lessonId}/`;
-}
-
-function lessonOutputPath(course, lessonId) {
-  // e.g. /fisica1/lezioni/L01/index.html
-  return path.join(ROOT, course.basePath.slice(1), 'lezioni', lessonId, 'index.html');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  TEMPLATE ENGINE
+//  UTILITIES
 // ═══════════════════════════════════════════════════════════════
 
 function render(template, vars) {
@@ -60,8 +51,32 @@ function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+function lessonUrl(course, lessonId) {
+  return `${course.basePath}/lezioni/${lessonId}/`;
+}
+
+function lessonOutputPath(course, lessonId) {
+  return path.join(ROOT, course.basePath.slice(1), 'lezioni', lessonId, 'index.html');
+}
+
+function formatDateISO(dateStr) {
+  const months = {
+    'Gen': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
+    'Mag': '05', 'Giu': '06', 'Lug': '07', 'Ago': '08',
+    'Set': '09', 'Ott': '10', 'Nov': '11', 'Dic': '12',
+  };
+  const parts = dateStr.split(' ');
+  if (parts.length === 3) {
+    const day = parts[0].padStart(2, '0');
+    const month = months[parts[1]] || '01';
+    const year = parts[2];
+    return `${year}-${month}-${day}`;
+  }
+  return new Date().toISOString().split('T')[0];
+}
+
 // ═══════════════════════════════════════════════════════════════
-//  NAV LINK GENERATORS
+//  NAV HELPERS
 // ═══════════════════════════════════════════════════════════════
 
 function buildNavLinks(course) {
@@ -88,10 +103,10 @@ function buildNextLink(course, lessonIndex) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  JSON-LD STRUCTURED DATA
+//  JSON-LD
 // ═══════════════════════════════════════════════════════════════
 
-function buildJsonLd(course, lessonMeta) {
+function buildLessonJsonLd(course, lessonMeta) {
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'LearningResource',
@@ -101,35 +116,30 @@ function buildJsonLd(course, lessonMeta) {
     'inLanguage': 'it',
     'url': `${SITE.url}${lessonUrl(course, lessonMeta.id)}`,
     'datePublished': formatDateISO(lessonMeta.date),
-    'author': {
-      '@type': 'Person',
-      'name': SITE.author,
-    },
+    'author': { '@type': 'Person', 'name': SITE.author },
     'isPartOf': {
       '@type': 'Course',
       'name': course.name,
-      'provider': {
-        '@type': 'Organization',
-        'name': course.university,
-      },
+      'provider': { '@type': 'Organization', 'name': course.university },
     },
   }, null, 2);
 }
 
-function formatDateISO(dateStr) {
-  const months = {
-    'Gen': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
-    'Mag': '05', 'Giu': '06', 'Lug': '07', 'Ago': '08',
-    'Set': '09', 'Ott': '10', 'Nov': '11', 'Dic': '12',
-  };
-  const parts = dateStr.split(' ');
-  if (parts.length === 3) {
-    const day = parts[0].padStart(2, '0');
-    const month = months[parts[1]] || '01';
-    const year = parts[2];
-    return `${year}-${month}-${day}`;
-  }
-  return new Date().toISOString().split('T')[0];
+function buildCourseJsonLd(course) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    'name': course.name,
+    'description': course.description,
+    'provider': { '@type': 'Organization', 'name': course.university },
+    'inLanguage': 'it',
+    'url': `${SITE.url}${course.indexUrl}`,
+    'hasCourseInstance': {
+      '@type': 'CourseInstance',
+      'name': course.year,
+      'instructor': { '@type': 'Person', 'name': course.professor },
+    },
+  }, null, 2);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -138,37 +148,22 @@ function formatDateISO(dateStr) {
 
 function buildLesson(courseId, lessonId) {
   const course = COURSES[courseId];
-  if (!course) {
-    console.error(`  ✗ Course "${courseId}" not found in config`);
-    return false;
-  }
+  if (!course) { console.error(`  ✗ Course "${courseId}" not found`); return false; }
 
   const lessonIndex = course.lessons.findIndex(l => l.id === lessonId);
-  if (lessonIndex === -1) {
-    console.error(`  ✗ Lesson "${lessonId}" not found in course "${courseId}"`);
-    return false;
-  }
+  if (lessonIndex === -1) { console.error(`  ✗ Lesson "${lessonId}" not found`); return false; }
 
   const lessonMeta = course.lessons[lessonIndex];
-  const url = lessonUrl(course, lessonId);
 
-  // Read template
   const templatePath = path.join(TEMPLATE_DIR, 'lezione.html');
-  if (!fs.existsSync(templatePath)) {
-    console.error(`  ✗ Template not found: ${templatePath}`);
-    return false;
-  }
+  if (!fs.existsSync(templatePath)) { console.error(`  ✗ Template not found`); return false; }
   const template = fs.readFileSync(templatePath, 'utf-8');
 
-  // Read lesson data
   const dataPath = path.join(DATA_DIR, courseId, `${lessonId}.js`);
-  if (!fs.existsSync(dataPath)) {
-    console.error(`  ✗ Data file not found: ${dataPath}`);
-    return false;
-  }
+  if (!fs.existsSync(dataPath)) { console.error(`  ✗ Data not found: ${dataPath}`); return false; }
   const lessonData = fs.readFileSync(dataPath, 'utf-8');
 
-  // Build variables
+  const url = lessonUrl(course, lessonId);
   const vars = {
     THEME: course.theme,
     PAGE_TITLE: `${lessonMeta.num} — ${course.name} — FeyNotes`,
@@ -182,24 +177,20 @@ function buildLesson(courseId, lessonId) {
     COURSE_URL: course.indexUrl,
     COURSE_ICON: course.icon,
     COURSE_NAME: course.name,
-    LESSON_NUM: lessonMeta.num,
     NAV_LINKS: buildNavLinks(course),
     PREV_LINK: buildPrevLink(course, lessonIndex),
     NEXT_LINK: buildNextLink(course, lessonIndex),
+    LESSON_NUM: lessonMeta.num,
     LESSON_DATA: lessonData,
-    JSON_LD: buildJsonLd(course, lessonMeta),
+    JSON_LD: buildLessonJsonLd(course, lessonMeta),
   };
 
-  // Render
   const html = render(template, vars);
-
-  // Write output
   const outputPath = lessonOutputPath(course, lessonId);
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, html, 'utf-8');
 
-  const relPath = path.relative(ROOT, outputPath);
-  console.log(`  ✓ ${lessonId} → ${relPath}`);
+  console.log(`  ✓ ${lessonId} → ${path.relative(ROOT, outputPath)}`);
   return true;
 }
 
@@ -211,43 +202,87 @@ function buildCourseIndex(courseId) {
   const course = COURSES[courseId];
   if (!course) return;
 
-  // Update lesson links in the course index.html
-  const indexPath = path.join(ROOT, course.basePath.slice(1), 'index.html');
-  if (!fs.existsSync(indexPath)) {
-    console.log(`  ⚠ Course index not found: ${indexPath} — skipping link update`);
+  const templatePath = path.join(TEMPLATE_DIR, 'corso.html');
+  if (!fs.existsSync(templatePath)) {
+    console.error(`  ✗ Course template not found: ${templatePath}`);
     return;
   }
+  const template = fs.readFileSync(templatePath, 'utf-8');
 
-  let html = fs.readFileSync(indexPath, 'utf-8');
+  // Build category sections HTML
+  let categorySections = '';
+  for (const cat of course.categories) {
+    const hasLessons = course.lessons.some(l => l.category === cat.id);
+    categorySections += `
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// ${cat.label}</div>
+    <div class="fn-grid" id="${cat.gridId}">`;
 
-  // Update lesson file references in JS
-  for (const lesson of course.lessons) {
-    // Match various old patterns and normalize to new URL
-    const oldPatterns = [
-      `"/lezioni/${lesson.id}/"`,
-      `"../lezioni/${lesson.id}.html"`,
-      `"../lezioni/${lesson.id}/"`,
-    ];
-    const newUrl = `"${lessonUrl(course, lesson.id)}"`;
-    for (const old of oldPatterns) {
-      html = html.split(old).join(newUrl);
+    if (!hasLessons) {
+      categorySections += `
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di ${cat.label} saranno aggiunte man mano che il corso procede.</div>
+      </div>`;
     }
+
+    categorySections += `
+    </div>
+  </div>
+`;
   }
 
-  fs.writeFileSync(indexPath, html, 'utf-8');
-  console.log(`  ✓ Updated links in ${path.relative(ROOT, indexPath)}`);
+  // Build lesson index JSON for client-side JS
+  const lessonIndex = course.lessons.map(l => ({
+    id: l.id,
+    num: l.num,
+    date: l.date,
+    title: l.title,
+    abstract: l.abstract,
+    category: l.category,
+    file: lessonUrl(course, l.id),
+  }));
+
+  // Build populate calls
+  const populateCalls = course.categories
+    .map(cat => `populateGrid('${cat.gridId}', '${cat.id}');`)
+    .join('\n');
+
+  const vars = {
+    THEME: course.theme,
+    COURSE_NAME: course.name,
+    COURSE_URL: course.indexUrl,
+    META_DESCRIPTION: escapeHtml(`${course.name} — ${course.description}`),
+    OG_DESCRIPTION: escapeHtml(course.description),
+    OG_URL: `${SITE.url}${course.indexUrl}`,
+    CANONICAL_URL: `${SITE.url}${course.indexUrl}`,
+    AUTHOR: SITE.author,
+    CSS_VERSION: String(SITE.cssVersion),
+    NAV_LINKS: buildNavLinks(course),
+    YEAR_BADGE: `${course.university.split(' — ')[0]} — ${course.year}`,
+    COURSE_DESCRIPTION: course.description,
+    PROFESSOR: course.professor,
+    CATEGORY_SECTIONS: categorySections,
+    LESSON_INDEX_JSON: JSON.stringify(lessonIndex, null, 2),
+    POPULATE_CALLS: populateCalls,
+    JSON_LD: buildCourseJsonLd(course),
+  };
+
+  const html = render(template, vars);
+  const outputPath = path.join(ROOT, course.basePath.slice(1), 'index.html');
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, html, 'utf-8');
+
+  console.log(`  ✓ ${course.name} index → ${path.relative(ROOT, outputPath)}`);
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  BUILD COURSE
+//  BUILD COURSE (all lessons + index)
 // ═══════════════════════════════════════════════════════════════
 
 function buildCourse(courseId) {
   const course = COURSES[courseId];
-  if (!course) {
-    console.error(`Course "${courseId}" not found`);
-    return;
-  }
+  if (!course) { console.error(`Course "${courseId}" not found`); return; }
 
   console.log(`\n📚 Building ${course.name} (${course.lessons.length} lessons)...`);
 
@@ -262,19 +297,42 @@ function buildCourse(courseId) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  SITEMAP GENERATOR
+//  UPDATE HOMEPAGE — Lesson counts
+// ═══════════════════════════════════════════════════════════════
+
+function updateHomepage() {
+  const homePath = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(homePath)) {
+    console.log('  ⚠ Homepage not found — skipping count update');
+    return;
+  }
+
+  let html = fs.readFileSync(homePath, 'utf-8');
+
+  for (const [, course] of Object.entries(COURSES)) {
+    const count = course.lessons.length;
+    const label = count === 1 ? '1 lezione' : `${count} lezioni`;
+    const regex = new RegExp(
+      `(data-course="${course.id}"[\\s\\S]*?class="fn-course-count">)\\d+ lezion[ei]`,
+      'g'
+    );
+    html = html.replace(regex, `$1${label}`);
+  }
+
+  fs.writeFileSync(homePath, html, 'utf-8');
+  console.log('  ✓ Updated lesson counts in index.html');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SITEMAP
 // ═══════════════════════════════════════════════════════════════
 
 function buildSitemap() {
   console.log('🗺  Generating sitemap.xml...');
 
-  const today = new Date().toISOString().split('T')[0];
   let urls = [];
-
-  // Homepage
   urls.push({ loc: SITE.url + '/', priority: '1.0', changefreq: 'weekly' });
 
-  // Course indexes + lessons
   for (const [, course] of Object.entries(COURSES)) {
     urls.push({ loc: SITE.url + course.indexUrl, priority: '0.8', changefreq: 'weekly' });
 
@@ -305,41 +363,12 @@ function buildSitemap() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  UPDATE HOMEPAGE — Lesson counts
-// ═══════════════════════════════════════════════════════════════
-
-function updateHomepage() {
-  const homePath = path.join(ROOT, 'index.html');
-  if (!fs.existsSync(homePath)) {
-    console.log('  ⚠ Homepage not found — skipping count update');
-    return;
-  }
-
-  let html = fs.readFileSync(homePath, 'utf-8');
-
-  for (const [, course] of Object.entries(COURSES)) {
-    const count = course.lessons.length;
-    const label = count === 1 ? '1 lezione' : `${count} lezioni`;
-    // Match: data-course="fisica" ... fn-course-count">XX lezioni</span>
-    // We use a regex that finds the card by data-course and updates the count inside it
-    const regex = new RegExp(
-      `(data-course="${course.id}"[\\s\\S]*?class="fn-course-count">)\\d+ lezion[ei]`,
-      'g'
-    );
-    html = html.replace(regex, `$1${label}`);
-  }
-
-  fs.writeFileSync(homePath, html, 'utf-8');
-  console.log('  ✓ Updated lesson counts in index.html');
-}
-
-// ═══════════════════════════════════════════════════════════════
 //  MAIN
 // ═══════════════════════════════════════════════════════════════
 
 function main() {
   console.log('═══════════════════════════════════════');
-  console.log('  FeyNotes Build System v2');
+  console.log('  FeyNotes Build System v3');
   console.log('═══════════════════════════════════════');
 
   if (flags.sitemap) {
@@ -354,6 +383,7 @@ function main() {
     );
     if (courseId) {
       buildLesson(courseId, lessonId);
+      buildCourseIndex(courseId);
     } else {
       console.error(`Lesson "${lessonId}" not found in any course.`);
     }

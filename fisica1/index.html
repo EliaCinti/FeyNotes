@@ -4,10 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fisica 1 — FeyNotes</title>
-  <link rel="stylesheet" href="../css/base.css?v=6">
+  <meta name="description" content="Fisica 1 — Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="Fisica 1 — FeyNotes">
+  <meta property="og:description" content="Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/">
+  <link rel="stylesheet" href="/css/base.css?v=10">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Fisica 1",
+  "description": "Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Università di Roma Tor Vergata"
+  },
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "name": "A.A. 2025/2026",
+    "instructor": {
+      "@type": "Person",
+      "name": "Prof. Mercuri"
+    }
+  }
+}</script>
 </head>
 <body>
 
@@ -28,36 +58,35 @@
 
   <div class="fn-course-hero">
     <div class="fn-label fn-fade">// corso</div>
-    <div class="fn-course-badge-inline fn-fade fn-d1">Tor Vergata — A.A. 2025/2026</div>
+    <div class="fn-course-badge-inline fn-fade fn-d1">Università di Roma Tor Vergata — A.A. 2025/2026</div>
     <h1 class="fn-fade fn-d1">Fisica 1</h1>
     <p class="fn-course-hero-sub fn-fade fn-d2">Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.</p>
     <p class="fn-course-hero-meta fn-fade fn-d3">di <span class="hl">Elia Cinti</span> — Ingegneria Informatica · Prof. Mercuri</p>
   </div>
 
+  
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// cinematica</div>
-    <div class="fn-grid" id="cinematica-grid"></div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d4">
-    <div class="fn-section-label">// dinamica</div>
-    <div class="fn-grid" id="dinamica-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di dinamica saranno aggiunte man mano che il corso procede.</div>
-      </div>
+    <div class="fn-grid" id="cinematica-grid">
     </div>
   </div>
 
-  <div class="fn-section fn-fade fn-d4">
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// dinamica</div>
+    <div class="fn-grid" id="dinamica-grid">
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// termodinamica</div>
     <div class="fn-grid" id="termo-grid">
       <div class="fn-card fn-card--placeholder">
         <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di termodinamica saranno aggiunte nella seconda parte del corso.</div>
+        <div class="fn-card-title">Le lezioni di termodinamica saranno aggiunte man mano che il corso procede.</div>
       </div>
     </div>
   </div>
+
 
 </div>
 
@@ -76,18 +105,114 @@
 
 <script>
 const LESSON_INDEX = [
-  { id: "L01", num: "Lezione 1", date: "11 Mar 2026", title: "Introduzione, Metodo Scientifico e Prime Grandezze Cinematiche", abstract: "Metodo galileiano, grandezze scalari vs vettoriali, posizione, spostamento, velocità media.", category: "cinematica", file: "/fisica1/lezioni/L01/" },
-  { id: "L02", num: "Lezione 2", date: "4 Mar 2026", title: "Vettore Posizione, Coseni Direttori e Velocità", abstract: "Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.", category: "cinematica", file: "/fisica1/lezioni/L02/" },
-  { id: "L03", num: "Lezione 3", date: "5 Mar 2026", title: "Velocità Istantanea, Accelerazione e Moto Rettilineo", abstract: "Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.", category: "cinematica", file: "/fisica1/lezioni/L03/" },
-  { id: "L04", num: "Lezione 4", date: "9 Mar 2026", title: "Moto Uniformemente Accelerato e Caduta Libera", abstract: "Equazioni del moto UA, caduta libera, composizione dei moti, moto del proiettile.", category: "cinematica", file: "/fisica1/lezioni/L04/" },
-  { id: "L05", num: "Lezione 5", date: "11 Mar 2026", title: "Moto Circolare Uniforme e Moto Circolare Uniformemente Accelerato", abstract: "MCU, MCUA, velocità angolare, accelerazione centripeta, relazione grandezze lineari-angolari.", category: "cinematica", file: "/fisica1/lezioni/L05/" },
-  { id: "L06", num: "Lezione 6", date: "12 Mar 2026", title: "Fondamenti di Cinematica del Moto Circolare", abstract: "Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.", category: "cinematica", file: "/fisica1/lezioni/L06/" },
-  { id: "L07", num: "Lezione 7", date: "16 Mar 2026", title: "Introduzione alla Dinamica: Le Leggi di Newton, Quantita di Moto e Impulso", abstract: "Dalla cinematica alla dinamica. Prima e Seconda Legge di Newton. Massa inerziale. Quantita di moto, teorema dell'impulso, forze impulsive e forza media.", category: "dinamica", file: "/fisica1/lezioni/L07/" },
-  { id: "L08", num: "Lezione 8", date: "18 Mar 2026", title: "Terzo Principio, Risoluzione Vettoriale delle Forze e Forza Peso", abstract: "Terzo principio (azione-reazione). Equilibrio statico 2D con scomposizione vettoriale. Corpi a contatto. Forza peso e reazione normale.", category: "dinamica", file: "/fisica1/lezioni/L08/" },
-  { id: "L09", num: "Lezione 9", date: "19 Mar 2026", title: "Esercizi, Vincoli, Reazione Normale e Attrito", abstract: "Esercizi su MCUA e teorema dell'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.", category: "dinamica", file: "/fisica1/lezioni/L09/" },
-  { id: "L10", num: "Lezione 10", date: "25 Mar 2026", title: "Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari", abstract: "RN ≠ mg: problema dell'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata.", category: "dinamica", file: "/fisica1/lezioni/L10/" },
-  { id: "L11", num: "Lezione 11", date: "27 Mar 2026", title: "La Forza Elastica e il Moto Armonico Semplice", abstract: "Il modello della molla ideale. Vettore deformazione e Legge di Hooke. Sistema massa-molla in 1D. Derivazione dell'equazione del moto armonico. Pulsazione, periodo e frequenza.", category: "dinamica", file: "/fisica1/lezioni/L11/" },
-  { id: "L12", num: "Lezione 12", date: "1 Apr 2026", title: "Moto Armonico Semplice: Soluzione, Sistemi di Molle e Attrito Viscoso", abstract: "Soluzione dell'equazione del moto armonico. Determinazione di ampiezza e fase iniziale. Molle in parallelo e in serie. Attrito viscoso lineare: velocità limite e soluzione analitica.", category: "dinamica", file: "/fisica1/lezioni/L12/" },
+  {
+    "id": "L01",
+    "num": "Lezione 1",
+    "date": "11 Mar 2026",
+    "title": "Introduzione, Metodo Scientifico e Prime Grandezze Cinematiche",
+    "abstract": "Metodo galileiano, grandezze scalari vs vettoriali, posizione, spostamento, velocità media.",
+    "category": "cinematica",
+    "file": "/fisica1/lezioni/L01/"
+  },
+  {
+    "id": "L02",
+    "num": "Lezione 2",
+    "date": "4 Mar 2026",
+    "title": "Vettore Posizione, Coseni Direttori e Velocità",
+    "abstract": "Coseni direttori, versori fondamentali, somma vettoriale, velocità istantanea come derivata.",
+    "category": "cinematica",
+    "file": "/fisica1/lezioni/L02/"
+  },
+  {
+    "id": "L03",
+    "num": "Lezione 3",
+    "date": "5 Mar 2026",
+    "title": "Velocità Istantanea, Accelerazione e Moto Rettilineo",
+    "abstract": "Tangenza della velocità, accelerazione, decomposizione intrinseca, moto rettilineo uniforme.",
+    "category": "cinematica",
+    "file": "/fisica1/lezioni/L03/"
+  },
+  {
+    "id": "L04",
+    "num": "Lezione 4",
+    "date": "9 Mar 2026",
+    "title": "Moto Uniformemente Accelerato e Caduta Libera",
+    "abstract": "Equazioni del moto UA, caduta libera, composizione dei moti, moto del proiettile.",
+    "category": "cinematica",
+    "file": "/fisica1/lezioni/L04/"
+  },
+  {
+    "id": "L05",
+    "num": "Lezione 5",
+    "date": "11 Mar 2026",
+    "title": "Moto Circolare Uniforme e Moto Circolare Uniformemente Accelerato",
+    "abstract": "MCU, MCUA, velocità angolare, accelerazione centripeta, relazione grandezze lineari-angolari.",
+    "category": "cinematica",
+    "file": "/fisica1/lezioni/L05/"
+  },
+  {
+    "id": "L06",
+    "num": "Lezione 6",
+    "date": "12 Mar 2026",
+    "title": "Fondamenti di Cinematica del Moto Circolare",
+    "abstract": "Descrizione angolare del moto, leggi orarie MCU e MCUA, periodo e frequenza, trattazione vettoriale con prodotto vettoriale, esercizi svolti.",
+    "category": "cinematica",
+    "file": "/fisica1/lezioni/L06/"
+  },
+  {
+    "id": "L07",
+    "num": "Lezione 7",
+    "date": "16 Mar 2026",
+    "title": "Introduzione alla Dinamica: Le Leggi di Newton, Quantita di Moto e Impulso",
+    "abstract": "Dalla cinematica alla dinamica. Prima e Seconda Legge di Newton. Massa inerziale. Quantita di moto, teorema dell'impulso, forze impulsive e forza media.",
+    "category": "dinamica",
+    "file": "/fisica1/lezioni/L07/"
+  },
+  {
+    "id": "L08",
+    "num": "Lezione 8",
+    "date": "18 Mar 2026",
+    "title": "Terzo Principio, Risoluzione Vettoriale delle Forze e Forza Peso",
+    "abstract": "Terzo principio (azione-reazione). Equilibrio statico 2D con scomposizione vettoriale. Corpi a contatto. Forza peso e reazione normale.",
+    "category": "dinamica",
+    "file": "/fisica1/lezioni/L08/"
+  },
+  {
+    "id": "L09",
+    "num": "Lezione 9",
+    "date": "19 Mar 2026",
+    "title": "Esercizi, Vincoli, Reazione Normale e Attrito",
+    "abstract": "Esercizi su MCUA e teorema dell'impulso (pallina da tennis contro muro). Vincoli e forze vincolari. Reazione normale. Attrito statico e dinamico.",
+    "category": "dinamica",
+    "file": "/fisica1/lezioni/L09/"
+  },
+  {
+    "id": "L10",
+    "num": "Lezione 10",
+    "date": "25 Mar 2026",
+    "title": "Dinamica: Forze di Contatto, Attrito e Reazioni Vincolari",
+    "abstract": "RN ≠ mg: problema dell'ascensore (5 casi). Piano inclinato con e senza attrito. Esercizio fondamentale: cassa tirata con fune inclinata.",
+    "category": "dinamica",
+    "file": "/fisica1/lezioni/L10/"
+  },
+  {
+    "id": "L11",
+    "num": "Lezione 11",
+    "date": "27 Mar 2026",
+    "title": "La Forza Elastica e il Moto Armonico Semplice",
+    "abstract": "Il modello della molla ideale. Vettore deformazione e Legge di Hooke. Sistema massa-molla in 1D. Derivazione dell'equazione del moto armonico. Pulsazione, periodo e frequenza.",
+    "category": "dinamica",
+    "file": "/fisica1/lezioni/L11/"
+  },
+  {
+    "id": "L12",
+    "num": "Lezione 12",
+    "date": "1 Apr 2026",
+    "title": "Moto Armonico Semplice: Soluzione, Sistemi di Molle e Attrito Viscoso",
+    "abstract": "Soluzione dell'equazione del moto armonico. Determinazione di ampiezza e fase iniziale. Molle in parallelo e in serie. Attrito viscoso lineare: velocità limite e soluzione analitica.",
+    "category": "dinamica",
+    "file": "/fisica1/lezioni/L12/"
+  }
 ];
 
 function populateGrid(gridId, category) {

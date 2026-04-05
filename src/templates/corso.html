@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="{{THEME}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{COURSE_NAME}} — FeyNotes</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta name="author" content="{{AUTHOR}}">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="{{COURSE_NAME}} — FeyNotes">
+  <meta property="og:description" content="{{OG_DESCRIPTION}}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{OG_URL}}">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <link rel="stylesheet" href="/css/base.css?v={{CSS_VERSION}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script type="application/ld+json">{{JSON_LD}}</script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="{{COURSE_URL}}" class="header-logo">
+    {{COURSE_NAME}}
+  </a>
+  <nav class="header-nav">
+    {{NAV_LINKS}}
+  </nav>
+</header>
+
+<div class="fn-page">
+
+  <div class="fn-course-hero">
+    <div class="fn-label fn-fade">// corso</div>
+    <div class="fn-course-badge-inline fn-fade fn-d1">{{YEAR_BADGE}}</div>
+    <h1 class="fn-fade fn-d1">{{COURSE_NAME}}</h1>
+    <p class="fn-course-hero-sub fn-fade fn-d2">{{COURSE_DESCRIPTION}}</p>
+    <p class="fn-course-hero-meta fn-fade fn-d3">di <span class="hl">{{AUTHOR}}</span> — Ingegneria Informatica · {{PROFESSOR}}</p>
+  </div>
+
+  {{CATEGORY_SECTIONS}}
+
+</div>
+
+<div class="fn-page">
+  <footer class="fn-footer">
+    <div class="fn-footer-coffee">Se ti sono stati utili, <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">offrimi un caffè</a></div>
+    <div class="fn-footer-inner">
+      <span class="fn-footer-copy">&copy; 2026 Elia Cinti</span>
+      <div class="fn-footer-links">
+        <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a>
+        <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">ko-fi</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const LESSON_INDEX = {{LESSON_INDEX_JSON}};
+
+function populateGrid(gridId, category) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  const lessons = LESSON_INDEX.filter(l => l.category === category);
+  if (lessons.length === 0) return;
+  grid.innerHTML = '';
+  for (const l of lessons) {
+    grid.innerHTML += `
+      <a class="fn-card" href="${l.file}">
+        <div class="fn-card-glow"></div>
+        <div class="fn-card-num">${l.num}</div>
+        <div class="fn-card-title">${l.title}</div>
+        <div class="fn-card-abstract">${l.abstract}</div>
+        <div class="fn-card-footer">
+          <span class="fn-card-date">${l.date}</span>
+          <span class="fn-card-arrow">&rarr;</span>
+        </div>
+      </a>`;
+  }
+}
+
+{{POPULATE_CALLS}}
+
+document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
+  const html = el.innerHTML;
+  if (!html.includes('$')) return;
+  let processed = html.replace(/(?<!\$)\$(?!\$)([^$]+?)\$(?!\$)/g, (_, tex) => {
+    const span = document.createElement('span');
+    try { katex.render(tex, span, { throwOnError: false }); }
+    catch (e) { span.textContent = tex; }
+    return span.outerHTML;
+  });
+  if (processed !== html) el.innerHTML = processed;
+});
+</script>
+
+</body>
+</html>
