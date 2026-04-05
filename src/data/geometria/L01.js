@@ -1,0 +1,443 @@
+const LESSON = {
+    id: "L01", date: "Lezione 01 — 02 Mar 2026",
+    title: "Spazi Vettoriali",
+    abstract: "Definizione rigorosa di spazio vettoriale, gli 8 assiomi fondamentali, le 7 proprietà di calcolo con relative dimostrazioni, e i primi esempi costruttivi: dallo spazio nullo al piano cartesiano ℝ².",
+
+    sections: [
+        {
+            id: "s01-logistica",
+            type: "note_box",
+            title: "Informazioni Logistiche sul Corso",
+            icon: "📋",
+            content: `<p>Prima di addentrarci nei concetti matematici, la lezione si è aperta con alcune direttive fondamentali riguardanti la logistica e l'organizzazione del corso.</p>
+<ul>
+<li><strong>Docenti e Orari:</strong> Le lezioni del <strong>Lunedì</strong> saranno tenute dal Prof. <em>Trusiani</em>. Le lezioni del <strong>Martedì</strong> e del <strong>Giovedì</strong> saranno tenute dal Prof. <em>Di Gennaro</em>.</li>
+<li><strong>Esercitazioni (Tutorato):</strong> Le sessioni di tutorato si terranno il <strong>Giovedì</strong> e saranno gestite dal tutor <em>Minetto</em>.</li>
+<li><strong>Iscrizioni:</strong> È assolutamente necessario iscriversi prima sul portale <strong>Delphi</strong> e poi al gruppo <strong>Teams</strong> del corso.</li>
+<li><strong>Materiale Didattico:</strong> Il programma si articolerà su <strong>6 Capitoli</strong> di dispense. Inoltre, sarà disponibile su Teams un <strong>catalogo di esercizi svolti</strong>.</li>
+<li><strong>Modalità d'Esame:</strong> L'esame sarà composto da una <strong>prova scritta</strong> seguita da una <strong>prova orale</strong>.</li>
+</ul>`
+        },
+        {
+            id: "s01-definizione-introduttiva",
+            type: "section",
+            title: "Definizione Introduttiva e Sostegno",
+            icon: "🏗️",
+            content: `<p>L'intero impianto dell'algebra lineare si fonda su una struttura matematica ben precisa: lo <strong>spazio vettoriale</strong>. L'obiettivo di questa prima lezione è definire rigorosamente cosa sia questa struttura e quali siano le "regole del gioco" che ne governano il comportamento.</p>
+<p>Iniziamo con il porre le fondamenta. Consideriamo un insieme astratto che chiameremo $V$. Affinché si possa parlare di spazio vettoriale, questo insieme non deve essere vuoto:</p>
+<p>$$V = \\text{insieme} \\neq \\emptyset$$</p>
+<p>Gli elementi che vivono all'interno di questo insieme $V$ verranno indicati con lettere sottolineate, come $\\underline{u}$ e $\\underline{v}$. Su questo insieme $V$ andiamo a definire <strong>due operazioni fondamentali</strong>:</p>`,
+            subsections: [
+                {
+                    subtitle: "Operazione Interna (Addizione)",
+                    content: `<p>Questa operazione, denotata con il simbolo $+$, prende due elementi dell'insieme $V$ e li combina per restituire un terzo elemento che <em>deve necessariamente</em> appartenere ancora all'insieme $V$. Si dice "interna" proprio perché non ci fa mai "uscire" dal nostro insieme di partenza.</p>
+<p>$$\\underline{u} + \\underline{v} \\in V \\quad \\longleftarrow \\text{ operazione interna } +$$</p>`
+                },
+                {
+                    subtitle: "Operazione Esterna (Moltiplicazione per uno scalare)",
+                    content: `<p>Qui entra in gioco un secondo insieme, un campo di numeri. Nel nostro caso, utilizzeremo l'insieme dei numeri reali $\\mathbb{R}$. Prendiamo un numero reale $a \\in \\mathbb{R}$ (che chiameremo <em>numero scalare</em>) e un elemento $\\underline{u} \\in V$. Definiamo un'operazione, denotata con un punto $\\cdot$ (spesso omesso per brevità), che combina $a$ e $\\underline{u}$, restituendo un nuovo elemento che deve cadere nuovamente in $V$.</p>
+<p>$$a \\cdot \\underline{u} \\in V \\quad \\longleftarrow \\text{ operazione esterna } \\cdot$$</p>
+<p>Perché la chiamiamo "esterna"? Il motivo è formale ma cruciale: il numero $a$ <strong>non appartiene</strong> all'insieme $V$ ($a \\notin V$), bensì proviene da "fuori" (dall'insieme $\\mathbb{R}$). L'operazione "pesca" un elemento dall'esterno, lo applica a un elemento interno, e il risultato atterra di nuovo all'interno.</p>`
+                },
+                {
+                    subtitle: "Struttura Algebrica e Sostegno",
+                    content: `<p>Mettendo insieme l'insieme $V$ e le due operazioni appena definite, formiamo una "terna" matematica:</p>
+<p>$$(V, +, \\cdot)$$</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Struttura algebrica e sostegno</strong></p>
+  <p><em>Schema che mostra la terna $(V, +, \\cdot)$ con frecce che indicano $V$ come "sostegno" e l'intero blocco come "struttura algebrica".</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Il blocco $(V, +, \\cdot)$ viene chiamato <strong>struttura algebrica</strong>. L'insieme $V$ nudo e crudo, privo delle operazioni, prende il nome di <strong>sostegno</strong> (ovvero la base, l'impalcatura su cui la struttura viene costruita).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Operazione interna", latex: "\\underline{u} + \\underline{v} \\in V" },
+                { label: "Operazione esterna", latex: "a \\cdot \\underline{u} \\in V, \\quad a \\in \\mathbb{R}" }
+            ]
+        },
+        {
+            id: "s01-otto-assiomi",
+            type: "section",
+            title: "Gli 8 Assiomi dello Spazio Vettoriale",
+            icon: "📜",
+            content: `<p>Affinché la struttura algebrica $(V, +, \\cdot)$ possa fregiarsi del titolo di <strong>spazio vettoriale</strong>, le operazioni devono sottostare rigorosamente a <strong>8 condizioni</strong> (chiamate <em>assiomi</em>). Se anche una sola di queste 8 proprietà dovesse fallire, l'insieme <strong>non è</strong> uno spazio vettoriale.</p>
+<p>Possiamo suddividere questi 8 assiomi in tre categorie logiche:</p>
+<ul>
+<li>Le prime <strong>4 proprietà</strong> riguardano esclusivamente l'operazione interna $+$.</li>
+<li>Le successive <strong>2 proprietà</strong> riguardano esclusivamente l'operazione esterna $\\cdot$.</li>
+<li>Le ultime <strong>2 proprietà</strong> (leggi distributive) governano come $+$ e $\\cdot$ interagiscono tra loro.</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "Proprietà 1: Associatività dell'Addizione",
+                    content: `<p>Per ogni terna di vettori scelti a piacere, l'ordine in cui eseguiamo le somme non altera il risultato finale.</p>
+<p>$$\\forall\\, \\underline{u}, \\underline{v}, \\underline{w} \\in V \\qquad (\\underline{u} + \\underline{v}) + \\underline{w} = \\underline{u} + (\\underline{v} + \\underline{w})$$</p>`
+                },
+                {
+                    subtitle: "Proprietà 2: Esistenza dell'Elemento Neutro",
+                    content: `<p>Deve esistere all'interno del sostegno $V$ un elemento speciale, denotato $\\underline{0}$ (attenzione: è un <strong>vettore</strong>, non il numero zero!). Questo vettore è "invisibile" rispetto all'addizione: sommandolo a qualsiasi vettore $\\underline{u}$, il vettore $\\underline{u}$ rimane inalterato.</p>
+<p>$$\\exists\\, \\underline{0} \\in V \\text{ t.c. } \\forall\\, \\underline{u} \\in V \\Rightarrow \\underline{u} + \\underline{0} = \\underline{0} + \\underline{u} = \\underline{u}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà 3: Esistenza dell'Elemento Opposto",
+                    content: `<p>Per ogni vettore $\\underline{u} \\in V$, l'insieme stesso deve contenere un elemento "speculare" $\\underline{w}$. Se sommiamo $\\underline{u}$ al suo opposto $\\underline{w}$, essi si annichiliscono, generando l'elemento neutro $\\underline{0}$.</p>
+<p>$$\\forall\\, \\underline{u} \\in V, \\; \\exists\\, \\underline{w} \\in V \\text{ t.c. } \\underline{u} + \\underline{w} = \\underline{w} + \\underline{u} = \\underline{0}$$</p>
+<p>Per convenzione universale, l'opposto si denota $\\underline{w} = -\\underline{u}$. La relazione è perfettamente simmetrica: l'opposto dell'opposto è il vettore originale:</p>
+<p>$$\\underline{u} = -(-\\underline{u}) = -\\underline{w}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà 4: Commutatività dell'Addizione",
+                    content: `<p>L'ordine degli addendi non cambia la somma.</p>
+<p>$$\\forall\\, \\underline{u}, \\underline{v} \\in V \\qquad \\underline{u} + \\underline{v} = \\underline{v} + \\underline{u}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà 5: Pseudo-Associatività della Moltiplicazione Esterna",
+                    content: `<p>Questa proprietà riguarda l'applicazione in sequenza di due scalari $a$ e $b$ a un vettore $\\underline{u}$. Possiamo prima moltiplicare i due scalari tra loro in $\\mathbb{R}$ e poi applicare il risultato al vettore, oppure prima "pesare" il vettore per $b$ e poi dilatare il risultato per $a$.</p>
+<p>$$\\forall\\, a, b \\in \\mathbb{R}, \\quad \\forall\\, \\underline{u} \\in V \\qquad (a \\cdot b) \\cdot \\underline{u} = a \\cdot (b \\cdot \\underline{u})$$</p>
+<p>Nota bene: a sinistra, $(a \\cdot b)$ è una moltiplicazione tra numeri reali; a destra, $(b \\cdot \\underline{u})$ è la moltiplicazione esterna in $V$.</p>`
+                },
+                {
+                    subtitle: "Proprietà 6: Elemento Neutro della Moltiplicazione Scalare",
+                    content: `<p>Il numero reale $1$ funge da elemento neutro per il prodotto esterno. Lascia il vettore esattamente così com'è.</p>
+<p>$$\\forall\\, \\underline{u} \\in V \\qquad 1 \\cdot \\underline{u} = \\underline{u}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà 7: Distributività rispetto alla somma di vettori",
+                    content: `<p>Se moltiplichiamo uno scalare $a$ per una somma vettoriale, lo scalare si distribuisce su ciascun vettore.</p>
+<p>$$\\forall\\, \\underline{u}, \\underline{v} \\in V, \\quad \\forall\\, a \\in \\mathbb{R} \\qquad a \\cdot (\\underline{u} + \\underline{v}) = a \\cdot \\underline{u} + a \\cdot \\underline{v}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà 8: Distributività rispetto alla somma di scalari",
+                    content: `<p>Se abbiamo una somma tra due scalari e la applichiamo a un vettore, il vettore si "distribuisce" su ciascuno scalare.</p>
+<p>$$\\forall\\, a, b \\in \\mathbb{R}, \\quad \\forall\\, \\underline{u} \\in V \\qquad (a + b) \\cdot \\underline{u} = a \\cdot \\underline{u} + b \\cdot \\underline{u}$$</p>
+<p>Il "$+$" a sinistra dell'uguale avviene in $\\mathbb{R}$, mentre il "$+$" a destra avviene in $V$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Associatività +", latex: "(\\underline{u} + \\underline{v}) + \\underline{w} = \\underline{u} + (\\underline{v} + \\underline{w})" },
+                { label: "Elemento neutro", latex: "\\underline{u} + \\underline{0} = \\underline{u}" },
+                { label: "Elemento opposto", latex: "\\underline{u} + (-\\underline{u}) = \\underline{0}" },
+                { label: "Commutatività +", latex: "\\underline{u} + \\underline{v} = \\underline{v} + \\underline{u}" },
+                { label: "Pseudo-associatività ·", latex: "(a \\cdot b) \\cdot \\underline{u} = a \\cdot (b \\cdot \\underline{u})" },
+                { label: "Neutro ·", latex: "1 \\cdot \\underline{u} = \\underline{u}" },
+                { label: "Distributività su vettori", latex: "a \\cdot (\\underline{u} + \\underline{v}) = a\\underline{u} + a\\underline{v}" },
+                { label: "Distributività su scalari", latex: "(a + b) \\cdot \\underline{u} = a\\underline{u} + b\\underline{u}" }
+            ]
+        },
+        {
+            id: "s01-alert-assiomi",
+            type: "alert_box",
+            title: "Attenzione: tutti e 8 gli assiomi devono valere!",
+            icon: "⚠️",
+            content: `<p>Se anche <strong>una sola</strong> delle 8 proprietà dovesse fallire, l'insieme <strong>non è</strong> uno spazio vettoriale. Non basta che "quasi tutte" valgano: la struttura è un tutto-o-niente.</p>
+<p><strong>Esempio classico:</strong> Prendiamo $\\mathbb{R}$ con l'operazione $x \\oplus y = x + 2y$. Con $x = 1, y = 2$: $1 \\oplus 2 = 1 + 4 = 5$, ma $2 \\oplus 1 = 2 + 2 = 4$. Poiché $5 \\neq 4$, la commutatività salta, e con essa crolla l'intera struttura.</p>`
+        },
+        {
+            id: "s01-nomenclatura",
+            type: "section",
+            title: "Notazioni, Nomenclatura ed Esempi Iniziali",
+            icon: "🏷️",
+            content: `<p>Cristallizziamo la nomenclatura che ci accompagnerà per l'intero semestre:</p>
+<ul>
+<li>Dato lo spazio vettoriale $(V, +, \\cdot) = V$, un elemento $\\underline{u} \\in V$ prende il nome di <strong>Vettore</strong>.</li>
+<li>L'elemento $\\underline{0}$ è detto <strong>Vettore nullo</strong> di $V$.</li>
+<li>L'elemento $-\\underline{u}$ è l'<strong>opposto</strong> di $\\underline{u}$.</li>
+<li><strong>La Sottrazione:</strong> non è un concetto primitivo, bensì una conseguenza dell'addizione e dell'opposto:</li>
+</ul>
+<p>$$\\underline{v} - \\underline{u} := \\underline{v} + (-\\underline{u})$$</p>
+<ul>
+<li>Una quantità $a \\in \\mathbb{R}$ utilizzata per moltiplicare un vettore è chiamata indifferentemente <strong>scalare</strong>, <strong>coefficiente</strong> o <strong>peso</strong>.</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "Tipi di spazio vettoriale per campo scalare",
+                    content: `<p>A seconda del campo di numeri da cui si estraggono gli scalari, lo spazio vettoriale prende un nome specifico:</p>
+<ul>
+<li>Scalari in $\\mathbb{R}$ $\\Rightarrow$ <strong>$\\mathbb{R}$-spazio vettoriale</strong> (il nostro caso standard)</li>
+<li>Scalari in $\\mathbb{C}$ $\\Rightarrow$ <strong>$\\mathbb{C}$-spazio vettoriale</strong></li>
+<li>Scalari in $\\mathbb{Q}$ $\\Rightarrow$ <strong>$\\mathbb{Q}$-spazio vettoriale</strong></li>
+</ul>`
+                },
+                {
+                    subtitle: "Esempio: ℝ è uno spazio vettoriale",
+                    content: `<p>L'insieme dei numeri reali $\\mathbb{R}$ stesso è uno spazio vettoriale. La terna $(\\mathbb{R}, +, \\cdot)$ soddisfa tutti e 8 gli assiomi. I vettori coincidono con i numeri reali stessi.</p>`
+                },
+                {
+                    subtitle: "Esempio: quando una struttura NON è uno spazio vettoriale",
+                    content: `<p>Prendiamo $\\mathbb{R}$ con l'operazione $x \\oplus y = x + 2y$. La terna $(\\mathbb{R}, \\oplus, \\cdot)$ <strong>non è uno spazio vettoriale</strong>.</p>
+<p>Verifica della Proprietà 4 (Commutatività): con $x = 1$ e $y = 2$:</p>
+<p>$$1 \\oplus 2 = 1 + 2(2) = 5$$</p>
+<p>$$2 \\oplus 1 = 2 + 2(1) = 4$$</p>
+<p>Poiché $5 \\neq 4$, la commutatività fallisce. L'intera struttura crolla.</p>`
+                }
+            ]
+        },
+        {
+            id: "s01-proprieta-calcolo",
+            type: "section",
+            title: "Proprietà di Calcolo in uno Spazio Vettoriale",
+            icon: "🧮",
+            content: `<p>Finora abbiamo elencato gli assiomi imposti <em>a priori</em>. Ora ci occuperemo delle <strong>conseguenze logiche</strong> di questi assiomi. Le seguenti <strong>7 proprietà di calcolo</strong> vengono rigorosamente dedotte partendo dagli 8 assiomi.</p>`,
+            subsections: [
+                {
+                    subtitle: "1) Unicità del Vettore Nullo",
+                    content: `<p>Il vettore nullo $\\underline{0}$ è assolutamente <strong>unico</strong>. Non possono esistere due vettori diversi che si comportano entrambi come elemento neutro per l'addizione.</p>`
+                },
+                {
+                    subtitle: "2) Unicità dell'Opposto",
+                    content: `<p>Anche l'opposto di un vettore è <strong>unico</strong>. Fissato un vettore $\\underline{u}$, esiste uno e un solo vettore $\\underline{w}$ tale che la loro somma faccia zero.</p>`
+                },
+                {
+                    subtitle: "3) Moltiplicazione per il vettore nullo",
+                    content: `<p>Sia $a \\in \\mathbb{R}$ uno scalare qualsiasi. Moltiplicare $a$ per il vettore nullo dà inesorabilmente il vettore nullo.</p>
+<p>$$a \\cdot \\underline{0} = \\underline{0}$$</p>
+<p>Inoltre, l'opposto del vettore nullo è se stesso: $-\\underline{0} = \\underline{0}$.</p>`
+                },
+                {
+                    subtitle: "4) Moltiplicazione per lo scalare zero",
+                    content: `<p>Preso un vettore $\\underline{u}$ qualsiasi e moltiplicandolo per lo scalare $0$, il risultato collassa nel vettore nullo.</p>
+<p>$$0 \\cdot \\underline{u} = \\underline{0}$$</p>`
+                },
+                {
+                    subtitle: "5) Legge di annullamento del prodotto",
+                    content: `<p>Regola d'oro per risolvere equazioni vettoriali. Un prodotto tra uno scalare e un vettore è il vettore nullo <em>se e solo se</em> almeno uno dei due fattori è nullo:</p>
+<p>$$a \\cdot \\underline{u} = \\underline{0} \\iff a = 0 \\quad \\text{oppure} \\quad \\underline{u} = \\underline{0}$$</p>`
+                },
+                {
+                    subtitle: "6) Regola dei Segni",
+                    content: `<p>I segni meno godono di estrema "mobilità" nel prodotto esterno:</p>
+<p>$$(-a) \\cdot \\underline{u} = -(a \\cdot \\underline{u}) = a \\cdot (-\\underline{u})$$</p>
+<p>Corollario — meno per meno fa più:</p>
+<p>$$(-a)(-\\underline{u}) = a\\underline{u}$$</p>`
+                },
+                {
+                    subtitle: "7) Esistenza e Unicità della soluzione di equazioni lineari in V",
+                    content: `<p>Per ogni $a \\neq 0 \\in \\mathbb{R}$ e per ogni coppia $\\underline{u}, \\underline{v} \\in V$, esiste ed è <strong>unico</strong> un vettore $\\underline{x} \\in V$ tale che:</p>
+<p>$$a\\underline{x} + \\underline{u} = \\underline{v}$$</p>
+<p>La soluzione esplicita è:</p>
+<p>$$\\underline{x} = \\frac{1}{a}(\\underline{v} - \\underline{u})$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Scalare × vettore nullo", latex: "a \\cdot \\underline{0} = \\underline{0}" },
+                { label: "Zero × vettore", latex: "0 \\cdot \\underline{u} = \\underline{0}" },
+                { label: "Annullamento del prodotto", latex: "a \\cdot \\underline{u} = \\underline{0} \\iff a = 0 \\text{ oppure } \\underline{u} = \\underline{0}" },
+                { label: "Regola dei segni", latex: "(-a) \\cdot \\underline{u} = -(a \\cdot \\underline{u}) = a \\cdot (-\\underline{u})" },
+                { label: "Soluzione eq. lineare", latex: "\\underline{x} = \\frac{1}{a}(\\underline{v} - \\underline{u})" }
+            ]
+        },
+        {
+            id: "s01-dimostrazioni",
+            type: "section",
+            title: "Dimostrazioni delle Proprietà di Calcolo",
+            icon: "📐",
+            content: `<p>A livello universitario, la matematica non si accetta per fede. Procediamo a dimostrare formalmente le proprietà enunciate, usando esclusivamente gli 8 assiomi.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione: Unicità del Vettore Nullo (Prop. 1)",
+                    content: `<p>Supponiamo per assurdo che esistano due vettori distinti $\\underline{0}$ e $\\underline{0}'$ in $V$, entrambi elementi neutri. Calcoliamo la loro somma:</p>
+<p>$$\\underline{0} + \\underline{0}'$$</p>
+<p>Poiché $\\underline{0}$ è nullo: $\\underline{0} + \\underline{0}' = \\underline{0}'$</p>
+<p>Poiché $\\underline{0}'$ è nullo: $\\underline{0} + \\underline{0}' = \\underline{0}$</p>
+<p>Se $A = \\underline{0}'$ e $A = \\underline{0}$, allora necessariamente:</p>
+<p>$$\\underline{0} = \\underline{0}' \\qquad \\blacksquare$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione: Unicità dell'Opposto (Prop. 2)",
+                    content: `<p>Sia $\\underline{u} \\in V$. Supponiamo che $\\underline{w}$ e $\\underline{w}'$ siano entrambi opposti di $\\underline{u}$, cioè:</p>
+<p>$$\\underline{u} + \\underline{w} = \\underline{0} \\qquad \\text{e} \\qquad \\underline{u} + \\underline{w}' = \\underline{0}$$</p>
+<p>Partiamo da $\\underline{w}$ e manipoliamo algebricamente:</p>
+<p>$$\\underline{w} = \\underline{w} + \\underline{0} \\quad \\text{(Assioma 2)}$$</p>
+<p>$$= \\underline{w} + (\\underline{u} + \\underline{w}') \\quad \\text{(sostituzione: } \\underline{0} = \\underline{u} + \\underline{w}'\\text{)}$$</p>
+<p>$$= (\\underline{w} + \\underline{u}) + \\underline{w}' \\quad \\text{(Assioma 1: associatività)}$$</p>
+<p>$$= \\underline{0} + \\underline{w}' \\quad \\text{(ipotesi: } \\underline{w} + \\underline{u} = \\underline{0}\\text{)}$$</p>
+<p>$$= \\underline{w}' \\quad \\text{(Assioma 2)} \\qquad \\blacksquare$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione: a · 0̲ = 0̲ (Prop. 3)",
+                    content: `<p>Partiamo dall'identità $\\underline{0} = \\underline{0} + \\underline{0}$. Moltiplichiamo entrambi i membri per $a$:</p>
+<p>$$a \\cdot \\underline{0} = a \\cdot (\\underline{0} + \\underline{0})$$</p>
+<p>Per l'Assioma 7 (distributività):</p>
+<p>$$a \\cdot \\underline{0} = a \\cdot \\underline{0} + a \\cdot \\underline{0}$$</p>
+<p>L'equazione ha la forma $A = A + A$. Sommiamo ad ambo i membri $-(a \\cdot \\underline{0})$:</p>
+<p>$$a \\cdot \\underline{0} + (-(a \\cdot \\underline{0})) = a \\cdot \\underline{0} + a \\cdot \\underline{0} + (-(a \\cdot \\underline{0}))$$</p>
+<p>$$\\underline{0} = a \\cdot \\underline{0} + \\underline{0}$$</p>
+<p>$$\\underline{0} = a \\cdot \\underline{0} \\qquad \\blacksquare$$</p>
+<p><em>La dimostrazione della Proprietà 4 ($0 \\cdot \\underline{u} = \\underline{0}$) è algebricamente identica, sfruttando $0 = 0 + 0$ e l'Assioma 8 (distributività sugli scalari).</em></p>`
+                },
+                {
+                    subtitle: "Dimostrazione: Legge di annullamento del prodotto (Prop. 5)",
+                    content: `<p>Vogliamo provare: $a \\cdot \\underline{u} = \\underline{0} \\iff a = 0 \\lor \\underline{u} = \\underline{0}$.</p>
+<p><strong>Freccia $\\Leftarrow$:</strong> Se $a = 0$ o $\\underline{u} = \\underline{0}$, il prodotto fa $\\underline{0}$ per le Proprietà 3 e 4. ✓</p>
+<p><strong>Freccia $\\Rightarrow$:</strong> Supponiamo $a \\cdot \\underline{u} = \\underline{0}$ con $a \\neq 0$. Poiché $a \\neq 0$, esiste $\\frac{1}{a}$. Moltiplichiamo ambo i membri:</p>
+<p>$$\\frac{1}{a} \\cdot (a \\cdot \\underline{u}) = \\frac{1}{a} \\cdot \\underline{0}$$</p>
+<p>A destra, per la Prop. 3: $\\frac{1}{a} \\cdot \\underline{0} = \\underline{0}$. A sinistra, per l'Assioma 5:</p>
+<p>$$\\left(\\frac{1}{a} \\cdot a\\right) \\cdot \\underline{u} = \\underline{0}$$</p>
+<p>$$1 \\cdot \\underline{u} = \\underline{0}$$</p>
+<p>Per l'Assioma 6: $\\underline{u} = \\underline{0} \\qquad \\blacksquare$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione: Regola dei Segni (Prop. 6)",
+                    content: `<p>Vogliamo dimostrare che $(-a) \\cdot \\underline{u} = -(a \\cdot \\underline{u})$. Due entità sono una l'opposto dell'altra se sommandole si ottiene $\\underline{0}$. Calcoliamo:</p>
+<p>$$a \\cdot \\underline{u} + (-a) \\cdot \\underline{u}$$</p>
+<p>Per l'Assioma 8 (raccogliamo $\\underline{u}$):</p>
+<p>$$= (a + (-a)) \\cdot \\underline{u} = 0 \\cdot \\underline{u} = \\underline{0}$$</p>
+<p>Poiché la somma fa $\\underline{0}$, sono opposti. Dunque $(-a) \\cdot \\underline{u} = -(a \\cdot \\underline{u})$.</p>
+<p>Per il "meno per meno":</p>
+<p>$$(-a)(-\\underline{u}) = -(a \\cdot (-\\underline{u})) = -(-(a \\cdot \\underline{u})) = a \\cdot \\underline{u} \\qquad \\blacksquare$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione: Esistenza e Unicità della soluzione (Prop. 7)",
+                    content: `<p>Equazione: $a\\underline{x} + \\underline{u} = \\underline{v}$, con $a \\neq 0$.</p>
+<p><strong>Esistenza:</strong> Verifichiamo che $\\underline{x} = \\frac{1}{a}(\\underline{v} - \\underline{u})$ soddisfa l'equazione. Sostituiamo:</p>
+<p>$$a \\left[ \\frac{1}{a}(\\underline{v} - \\underline{u}) \\right] + \\underline{u}$$</p>
+<p>Per pseudo-associatività: $a \\cdot \\frac{1}{a} = 1$, quindi:</p>
+<p>$$= 1 \\cdot (\\underline{v} - \\underline{u}) + \\underline{u} = (\\underline{v} + (-\\underline{u})) + \\underline{u}$$</p>
+<p>$$= \\underline{v} + ((-\\underline{u}) + \\underline{u}) = \\underline{v} + \\underline{0} = \\underline{v} \\quad \\checkmark$$</p>
+<p><strong>Unicità:</strong> Supponiamo due soluzioni $\\underline{x}$ e $\\underline{y}$:</p>
+<p>$$a\\underline{x} + \\underline{u} = \\underline{v} \\quad \\text{e} \\quad a\\underline{y} + \\underline{u} = \\underline{v}$$</p>
+<p>Entrambe uguali a $\\underline{v}$, quindi $a\\underline{x} + \\underline{u} = a\\underline{y} + \\underline{u}$.</p>
+<p>Sommando $-\\underline{u}$ ad ambo i membri: $a\\underline{x} = a\\underline{y}$.</p>
+<p>Moltiplicando per $\\frac{1}{a}$ (poiché $a \\neq 0$):</p>
+<p>$$\\frac{1}{a}(a\\underline{x}) = \\frac{1}{a}(a\\underline{y}) \\Rightarrow 1 \\cdot \\underline{x} = 1 \\cdot \\underline{y} \\Rightarrow \\underline{x} = \\underline{y} \\qquad \\blacksquare$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s01-esercizio-combinazioni",
+            type: "section",
+            title: "Esercizio Preparatorio alle Combinazioni Lineari",
+            icon: "✏️",
+            content: `<p>A fine dimostrazioni, la lezione propone un esercizio algebrico che funge da anticipazione al concetto di <strong>dipendenza e indipendenza lineare</strong> (argomento cardine delle lezioni future).</p>
+<p>Siano $\\underline{u}_1, \\underline{u}_2, \\dots, \\underline{u}_n \\in V$ e $a_1, a_2, \\dots, a_n \\in \\mathbb{R}$. Ipotizziamo che $a_1 \\neq 0$. Data la combinazione lineare posta pari a zero:</p>
+<p>$$a_1\\underline{u}_1 + a_2\\underline{u}_2 + \\dots + a_n\\underline{u}_n = \\underline{0}$$</p>
+<p>Si richiede di dimostrare che $\\underline{u}_1$ si può esprimere in funzione degli altri:</p>
+<p>$$\\underline{u}_1 = \\left(-\\frac{a_2}{a_1}\\right)\\underline{u}_2 + \\left(-\\frac{a_3}{a_1}\\right)\\underline{u}_3 + \\dots + \\left(-\\frac{a_n}{a_1}\\right)\\underline{u}_n$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Svolgimento",
+                    content: `<p>Sommiamo ad ambo i membri l'opposto del blocco $a_2\\underline{u}_2 + \\dots + a_n\\underline{u}_n$, portandolo dall'altra parte con segno meno:</p>
+<p>$$a_1\\underline{u}_1 = -a_2\\underline{u}_2 - a_3\\underline{u}_3 - \\dots - a_n\\underline{u}_n$$</p>
+<p>Poiché $a_1 \\neq 0$, moltiplichiamo entrambi i membri per $\\frac{1}{a_1}$, ottenendo il risultato cercato. Questo meccanismo di "isolare un vettore" sarà il pane quotidiano del corso.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Isolamento del vettore", latex: "\\underline{u}_1 = \\left(-\\frac{a_2}{a_1}\\right)\\underline{u}_2 + \\dots + \\left(-\\frac{a_n}{a_1}\\right)\\underline{u}_n" }
+            ]
+        },
+        {
+            id: "s01-esempi-costruttivi",
+            type: "section",
+            title: "Esempi Costruttivi di Spazi Vettoriali",
+            icon: "🔨",
+            content: `<p>La teoria formale acquista spessore solo se calata in esempi concreti. Il professore analizza tre casi fondativi: dal più vuoto al più essenziale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 1: Lo Spazio Nullo",
+                    content: `<p>L'insieme più scarno possibile che possa definirsi spazio vettoriale. Per l'Assioma 2, deve contenere <em>almeno</em> l'elemento neutro. Consideriamo $V = \\{\\ast\\}$ composto da un singolo elemento. Questo unico elemento $\\ast$ deve essere il vettore nullo.</p>
+<p>Questo spazio prende il nome di <strong>Spazio Nullo</strong>. Tutte le operazioni al suo interno ($\\underline{0} + \\underline{0}$, $a \\cdot \\underline{0}$) restituiscono sempre e solo il vettore nullo.</p>`
+                },
+                {
+                    subtitle: "Esempio 2: Lo Spazio ℝ su se stesso",
+                    content: `<p>L'insieme dei numeri reali con la comune addizione e moltiplicazione, $(\\mathbb{R}, +, \\cdot)$, è formalmente uno spazio vettoriale. In questo caso:</p>
+<ul>
+<li>Il vettore $\\underline{u}$ coincide con una variabile $x \\in \\mathbb{R}$</li>
+<li>L'elemento neutro $\\underline{0}$ coincide col numero zero aritmetico $0$</li>
+<li>L'opposto $-\\underline{u}$ diventa la semplice negazione aritmetica $-x$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Esempio 3: Il Piano Cartesiano ℝ²",
+                    content: `<p>Definiamo $(\\mathbb{R}^2, +, \\cdot)$. L'insieme $\\mathbb{R}^2$ è l'unione di tutte le coppie ordinate di numeri reali:</p>
+<p>$$\\mathbb{R}^2 = \\{(x_1, x_2) \\mid x_1, x_2 \\in \\mathbb{R}\\}$$</p>
+<p><strong>Anatomia di un vettore:</strong> un vettore $\\underline{x} = (x_1, x_2)$. Il valore $x_1$ è la <strong>prima componente</strong>, $x_2$ la <strong>seconda componente</strong>.</p>
+<p><strong>Uguaglianza tra vettori:</strong> due vettori sono uguali se e solo se le componenti coincidono una a una:</p>
+<p>$$(x_1, x_2) = (y_1, y_2) \\iff x_1 = y_1 \\text{ e } x_2 = y_2$$</p>
+<p>Questo implica che l'ordine conta! Ad esempio: $(1, 0) \\neq (0, 1)$.</p>
+<p><strong>Addizione Interna:</strong> si sommano le componenti corrispondenti:</p>
+<p>$$\\underline{x} + \\underline{y} := (x_1 + y_1,\\; x_2 + y_2)$$</p>
+<p><strong>Moltiplicazione Esterna:</strong> lo scalare $a$ moltiplica ogni singola componente:</p>
+<p>$$a \\cdot \\underline{x} := (a \\cdot x_1,\\; a \\cdot x_2)$$</p>
+<p>Queste operazioni permettono di verificare, componente per componente, tutti gli 8 assiomi. $\\mathbb{R}^2$ è l'archetipo di ogni spazio vettoriale che tratteremo.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Addizione in ℝ²", latex: "(x_1, x_2) + (y_1, y_2) = (x_1 + y_1,\\; x_2 + y_2)" },
+                { label: "Prodotto scalare in ℝ²", latex: "a \\cdot (x_1, x_2) = (a x_1,\\; a x_2)" }
+            ]
+        },
+        {
+            id: "s01-oral-tip",
+            type: "oral_box",
+            title: "Domanda tipica d'esame orale",
+            icon: "🎤",
+            content: `<p><strong>"Enunci gli 8 assiomi dello spazio vettoriale e dimostri l'unicità dell'elemento neutro."</strong></p>
+<p>All'orale è fondamentale saper elencare <em>tutti</em> gli 8 assiomi in modo ordinato (prima i 4 dell'addizione, poi i 2 della moltiplicazione scalare, poi le 2 distributive) e saper dimostrare almeno le Proprietà 1 e 2 (unicità del neutro e dell'opposto). Il docente ha dedicato ampio tempo alle dimostrazioni in classe, il che suggerisce che siano candidati probabili all'esame.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cos'è uno spazio vettoriale?",
+            back: "Uno spazio vettoriale è una struttura algebrica $(V, +, \\cdot)$ dove $V$ è un insieme non vuoto, $+$ è un'operazione interna (somma due vettori ottenendo un vettore) e $\\cdot$ è un'operazione esterna (moltiplica uno scalare $a \\in \\mathbb{R}$ per un vettore ottenendo un vettore), che soddisfa 8 assiomi: associatività e commutatività della somma, esistenza e unicità del neutro e dell'opposto, pseudo-associatività e neutro del prodotto scalare, e due leggi distributive."
+        },
+        {
+            type: "definizione",
+            front: "Qual è la differenza tra operazione interna e operazione esterna?",
+            back: "L'operazione interna $+$ combina due elementi di $V$ restituendo un elemento di $V$ (non si esce mai dal sostegno). L'operazione esterna $\\cdot$ prende un elemento da fuori ($a \\in \\mathbb{R}$, che $\\notin V$) e un elemento di $V$, restituendo un elemento di $V$. Si chiama 'esterna' perché uno dei due operandi proviene dall'esterno del sostegno."
+        },
+        {
+            type: "domanda",
+            front: "Elenca gli 8 assiomi dello spazio vettoriale, raggruppati per categoria.",
+            back: "**Addizione (4):** 1) Associatività: $(\\underline{u}+\\underline{v})+\\underline{w} = \\underline{u}+(\\underline{v}+\\underline{w})$. 2) Elemento neutro: $\\exists\\,\\underline{0}$ t.c. $\\underline{u}+\\underline{0}=\\underline{u}$. 3) Elemento opposto: $\\forall\\,\\underline{u}, \\exists\\,-\\underline{u}$ t.c. $\\underline{u}+(-\\underline{u})=\\underline{0}$. 4) Commutatività: $\\underline{u}+\\underline{v}=\\underline{v}+\\underline{u}$. **Prodotto scalare (2):** 5) Pseudo-associatività: $(ab)\\underline{u} = a(b\\underline{u})$. 6) Neutro: $1\\cdot\\underline{u}=\\underline{u}$. **Distributive (2):** 7) $a(\\underline{u}+\\underline{v})=a\\underline{u}+a\\underline{v}$. 8) $(a+b)\\underline{u}=a\\underline{u}+b\\underline{u}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra l'unicità del vettore nullo.",
+            back: "Supponiamo esistano due elementi neutri $\\underline{0}$ e $\\underline{0}'$. Calcoliamo $\\underline{0} + \\underline{0}'$. Poiché $\\underline{0}$ è neutro: $\\underline{0} + \\underline{0}' = \\underline{0}'$. Poiché $\\underline{0}'$ è neutro: $\\underline{0} + \\underline{0}' = \\underline{0}$. Dunque $\\underline{0} = \\underline{0}'$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra l'unicità dell'opposto di un vettore.",
+            back: "Siano $\\underline{w}$ e $\\underline{w}'$ entrambi opposti di $\\underline{u}$: $\\underline{u}+\\underline{w}=\\underline{0}$ e $\\underline{u}+\\underline{w}'=\\underline{0}$. Allora: $\\underline{w} = \\underline{w}+\\underline{0} = \\underline{w}+(\\underline{u}+\\underline{w}') = (\\underline{w}+\\underline{u})+\\underline{w}' = \\underline{0}+\\underline{w}' = \\underline{w}'$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che $a \\cdot \\underline{0} = \\underline{0}$.",
+            back: "Da $\\underline{0} = \\underline{0} + \\underline{0}$, moltiplicando per $a$: $a\\underline{0} = a(\\underline{0}+\\underline{0}) = a\\underline{0} + a\\underline{0}$ (per distributività). Sommando $-(a\\underline{0})$ ad ambo i membri: $\\underline{0} = a\\underline{0}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra la legge di annullamento del prodotto: $a\\underline{u} = \\underline{0} \\Rightarrow a=0$ oppure $\\underline{u}=\\underline{0}$.",
+            back: "Se $a \\neq 0$, allora esiste $\\frac{1}{a}$. Moltiplichiamo: $\\frac{1}{a}(a\\underline{u}) = \\frac{1}{a}\\underline{0} = \\underline{0}$. A sinistra: $(\\frac{1}{a}\\cdot a)\\underline{u} = 1\\cdot\\underline{u} = \\underline{u}$. Dunque $\\underline{u} = \\underline{0}$."
+        },
+        {
+            type: "tranello",
+            front: "Il vettore nullo $\\underline{0}$ è lo stesso del numero zero?",
+            back: "No! Il vettore nullo $\\underline{0}$ è un elemento dell'insieme $V$, non un numero. In $\\mathbb{R}$ come spazio vettoriale, coincidono per caso. Ma in $\\mathbb{R}^2$, il vettore nullo è $\\underline{0} = (0, 0)$, una coppia, non un numero. Nella notazione $0 \\cdot \\underline{u} = \\underline{0}$, lo $0$ a sinistra è lo scalare reale, e $\\underline{0}$ a destra è il vettore nullo."
+        },
+        {
+            type: "tranello",
+            front: "L'operazione $x \\oplus y = x + 2y$ su $\\mathbb{R}$ definisce uno spazio vettoriale?",
+            back: "No! Basta verificare che la commutatività fallisce: $1 \\oplus 2 = 1 + 4 = 5$ ma $2 \\oplus 1 = 2 + 2 = 4$. Poiché $5 \\neq 4$, la proprietà 4 non vale e la struttura non è uno spazio vettoriale. Per dimostrare che qualcosa NON è uno spazio vettoriale, basta un singolo controesempio su un singolo assioma."
+        },
+        {
+            type: "formula",
+            front: "Come si definiscono le operazioni nello spazio $\\mathbb{R}^2$?",
+            back: "Dati $\\underline{x} = (x_1, x_2)$ e $\\underline{y} = (y_1, y_2)$: Addizione: $\\underline{x} + \\underline{y} = (x_1 + y_1, x_2 + y_2)$. Prodotto per scalare: $a \\cdot \\underline{x} = (ax_1, ax_2)$. Le operazioni agiscono componente per componente."
+        },
+        {
+            type: "domanda",
+            front: "Cos'è il sostegno di uno spazio vettoriale?",
+            back: "Il sostegno è l'insieme $V$ \"nudo e crudo\", privo delle operazioni. È la base, l'impalcatura su cui la struttura algebrica viene costruita. La struttura algebrica completa è la terna $(V, +, \\cdot)$, dove $V$ è il sostegno e $+$, $\\cdot$ sono le operazioni."
+        },
+        {
+            type: "domanda",
+            front: "In una combinazione lineare $a_1\\underline{u}_1 + \\dots + a_n\\underline{u}_n = \\underline{0}$ con $a_1 \\neq 0$, come si isola $\\underline{u}_1$?",
+            back: "Si porta tutto il resto dall'altra parte: $a_1\\underline{u}_1 = -a_2\\underline{u}_2 - \\dots - a_n\\underline{u}_n$. Poiché $a_1 \\neq 0$, si moltiplica per $\\frac{1}{a_1}$: $\\underline{u}_1 = (-\\frac{a_2}{a_1})\\underline{u}_2 + \\dots + (-\\frac{a_n}{a_1})\\underline{u}_n$. Questo meccanismo è alla base della dipendenza lineare."
+        }
+    ]
+};
+

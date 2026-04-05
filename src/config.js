@@ -53,27 +53,32 @@ const COURSES = {
   },
 
   // ─── Future courses — uncomment and fill when ready ───
-  //
-  // geometria: {
-  //   id: 'geometria',
-  //   theme: 'geometria',
-  //   name: 'Geometria',
-  //   icon: '△',
-  //   basePath: '/geometria',
-  //   indexUrl: '/geometria/',
-  //   professor: 'Trusiani / Di Gennaro',
-  //   university: 'Università di Roma Tor Vergata',
-  //   year: 'A.A. 2025/2026',
-  //   description: 'Appunti di Geometria per Ingegneria Informatica.',
-  //   nav: [
-  //     { label: 'Lezioni', href: '/geometria/', active: true },
-  //   ],
-  //   categories: [
-  //     { id: 'algebra-lineare', label: 'algebra lineare', gridId: 'algebra-grid' },
-  //     { id: 'geometria-analitica', label: 'geometria analitica', gridId: 'geometria-grid' },
-  //   ],
-  //   lessons: [],
-  // },
+  // ─── Future courses — uncomment and fill when ready ───
+
+  geometria: {
+    id: 'geometria',
+    theme: 'geometria',
+    name: 'Geometria',
+    icon: '△',
+    basePath: '/geometria',
+    indexUrl: '/geometria/',
+    professor: 'Trusiani / Di Gennaro',
+    university: 'Università di Roma Tor Vergata',
+    year: 'A.A. 2025/2026',
+    description: 'Appunti di Geometria per Ingegneria Informatica. Spazi vettoriali, matrici, sistemi lineari, applicazioni lineari, forme quadratiche e geometria analitica.',
+    nav: [
+      { label: 'Lezioni', href: '/geometria/', active: true },
+    ],
+    categories: [
+      { id: 'spazi-vettoriali', label: 'spazi vettoriali', gridId: 'spazi-grid' },
+      { id: 'matrici', label: 'matrici', gridId: 'matrici-grid' },
+      { id: 'sistemi-lineari', label: 'sistemi lineari', gridId: 'sistemi-grid' },
+      { id: 'applicazioni-lineari', label: 'applicazioni lineari', gridId: 'applicazioni-grid' },
+      { id: 'forme-quadratiche', label: 'forme quadratiche', gridId: 'forme-grid' },
+      { id: 'geometria-analitica', label: 'geometria analitica', gridId: 'geoanalitica-grid' },
+    ],
+    lessons: [],
+  },
   //
   // controlli: {
   //   id: 'controlli',
