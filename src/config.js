@@ -77,7 +77,9 @@ const COURSES = {
       { id: 'forme-quadratiche', label: 'forme quadratiche', gridId: 'forme-grid' },
       { id: 'geometria-analitica', label: 'geometria analitica', gridId: 'geoanalitica-grid' },
     ],
-    lessons: [],
+    lessons: [
+      { id: 'L01', num: 'Lezione 1', date: '2 Mar 2026', title: 'Spazi Vettoriali', abstract: 'Definizione rigorosa di spazio vettoriale, gli 8 assiomi fondamentali, le 7 proprietà di calcolo con relative dimostrazioni, e i primi esempi costruttivi.', category: 'spazi-vettoriali' },
+    ],
   },
   //
   // controlli: {
