@@ -17,10 +17,10 @@
   --text-primary: #e4e7f0;
   --text-secondary: #9ca1ba;
   --text-muted: #5f6580;
-  --accent: #e8d44d;
-  --accent-dim: #c4b030;
-  --accent-glow: rgba(232,212,77,0.12);
-  --accent-glow-strong: rgba(232,212,77,0.25);
+  /* --accent: managed by base.css */
+  /* --accent-dim: managed by base.css */
+  /* --accent-glow: managed by base.css */
+  /* --accent-glow-strong: managed by base.css */
   --gold: #f0c050;
   --gold-dim: rgba(240,192,80,0.10);
   --red: #ff6b6b;
@@ -65,7 +65,7 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
-a:hover { color: #f0dc6e; }
+a:hover { color: var(--accent); }
 
 /* ═══════════════════════════════════════════════════════════════
    HEADER — Shared across all pages
