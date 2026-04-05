@@ -42,14 +42,14 @@ const LESSON = {
 <p>Da queste relazioni otteniamo $\\vec{T}_A = -\\vec{F}_A$ e $\\vec{T}_B = -\\vec{F}_B$. Poiché abbiamo dimostrato che $\\vec{F}_A = -\\vec{F}_B$, segue che:</p>
 <p>$$\\vec{T}_A = -(-\\vec{F}_B) = \\vec{F}_B = -\\vec{T}_B$$</p>
 <p>Questo significa che i vettori tensione ai due estremi sono opposti, $\\vec{T}_A = -\\vec{T}_B$, e quindi hanno la <strong>stessa magnitudine</strong>:</p>
-<p>$$\\| \\vec{T}_A \\| = \\| \\vec{T}_B \\|$$</p>
+<p>$$| \\vec{T}_A | = | \\vec{T}_B |$$</p>
 <p>Poiché A e B sono due punti arbitrari della fune, concludiamo che la magnitudine della tensione, che indicheremo semplicemente con $T$, è <strong>costante lungo tutta la fune</strong>.</p>
 <p>La fune ideale è dunque un dispositivo che <strong>trasferisce una forza da un estremo all'altro</strong>, mantenendone inalterata la magnitudine. Questo è utilissimo, ad esempio, per cambiare la direzione di una forza applicata, come vedremo con le carrucole.</p>`
                 }
             ],
             formulas: [
                 { label: "Equilibrio fune ideale", latex: "\\vec{F}_A = -\\vec{F}_B" },
-                { label: "Tensione costante", latex: "\\| \\vec{T}_A \\| = \\| \\vec{T}_B \\| = T" }
+                { label: "Tensione costante", latex: "| \\vec{T}_A | = | \\vec{T}_B | = T" }
             ]
         },
         {
@@ -238,7 +238,7 @@ const LESSON = {
         {
             type: "dimostrazione",
             front: "Dimostra che la tensione è costante lungo una fune ideale.",
-            back: "Si applica $\\vec{F} = m\\vec{a}$ a un segmento di fune tra due punti A e B. Poiché $m_{\\text{fune}} = 0$: $\\vec{F}_A + \\vec{F}_B = 0$, quindi $\\vec{F}_A = -\\vec{F}_B$. Analizzando gli elementini agli estremi (massa nulla): $\\vec{T}_A = -\\vec{F}_A$ e $\\vec{T}_B = -\\vec{F}_B$. Segue $\\vec{T}_A = -\\vec{T}_B$, quindi $\\|\\vec{T}_A\\| = \\|\\vec{T}_B\\| = T$ costante ovunque sulla fune."
+            back: "Si applica $\\vec{F} = m\\vec{a}$ a un segmento di fune tra due punti A e B. Poiché $m_{\\text{fune}} = 0$: $\\vec{F}_A + \\vec{F}_B = 0$, quindi $\\vec{F}_A = -\\vec{F}_B$. Analizzando gli elementini agli estremi (massa nulla): $\\vec{T}_A = -\\vec{F}_A$ e $\\vec{T}_B = -\\vec{F}_B$. Segue $\\vec{T}_A = -\\vec{T}_B$, quindi $|\\vec{T}_A| = |vec{T}_B| = T$ costante ovunque sulla fune."
         },
         {
             type: "formula",
