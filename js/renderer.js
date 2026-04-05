@@ -452,7 +452,7 @@ function renderAllKatex(container) {
     // Display math $$...$$
     let processed = html.replace(/\$\$([^$]+?)\$\$/g, (_, tex) => {
       const span = document.createElement('span');
-      try { katex.render(tex, span, { throwOnError: false, displayMode: true }); }
+      try { katex.render(tex.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'), span, { throwOnError: false, displayMode: true }); }
       catch (e) { span.textContent = tex; }
       return span.outerHTML;
     });
@@ -460,7 +460,7 @@ function renderAllKatex(container) {
     // Inline math $...$ (but not $$)
     processed = processed.replace(/(?<!\$)\$(?!\$)([^$]+?)\$(?!\$)/g, (_, tex) => {
       const span = document.createElement('span');
-      try { katex.render(tex, span, { throwOnError: false, displayMode: false }); }
+      try { katex.render(tex.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'), span, { throwOnError: false, displayMode: false }); }
       catch (e) { span.textContent = tex; }
       return span.outerHTML;
     });
