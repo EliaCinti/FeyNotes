@@ -82,28 +82,33 @@ const COURSES = {
       { id: 'L02', num: 'Lezione 2', date: '3 Mar 2026', title: 'Ulteriori Esempi di Spazi Vettoriali', abstract: 'Dai calcoli espliciti in ℝ² alla generalizzazione in ℝⁿ, passando per lo spazio delle matrici M(m,n), lo spazio dei polinomi ℝ[t] e i vettori geometrici: una panoramica completa sugli spazi vettoriali fondamentali.', category: 'spazi-vettoriali' },
     ],
   },
-  //
-  // controlli: {
-  //   id: 'controlli',
-  //   theme: 'controlli',
-  //   name: 'Fondamenti di Controlli',
-  //   icon: '◎',
-  //   basePath: '/controlli',
-  //   indexUrl: '/controlli/',
-  //   professor: 'Prof. ...',
-  //   university: 'Università di Roma Tor Vergata',
-  //   year: 'A.A. 2025/2026',
-  //   description: 'Esercizi e appunti di Fondamenti di Controlli.',
-  //   nav: [
-  //     { label: 'Lezioni', href: '/controlli/', active: true },
-  //     { label: 'Esercizi', href: '#' },
-  //   ],
-  //   categories: [
-  //     { id: 'teoria', label: 'teoria', gridId: 'teoria-grid' },
-  //     { id: 'esercizi', label: 'esercizi', gridId: 'esercizi-grid' },
-  //   ],
-  //   lessons: [],
-  // },
+  controlli: {
+    id: 'controlli',
+    theme: 'controlli',
+    name: 'Fondamenti di Controlli',
+    icon: '◎',
+    basePath: '/controlli',
+    indexUrl: '/controlli/',
+    professor: '',
+    university: 'Università di Roma Tor Vergata',
+    year: 'A.A. 2025/2026',
+    description: 'Guide risolutive per gli esercizi di Fondamenti di Controlli, organizzate per blocchi tematici.',
+    nav: [
+      { label: 'Guide', href: '/controlli/', active: true },
+    ],
+    categories: [
+      { id: 'blocco-1', label: 'blocco 1 — equilibrio e linearizzazione', gridId: 'blocco1-grid' },
+      { id: 'blocco-2', label: 'blocco 2 — sistemi meccanici', gridId: 'blocco2-grid' },
+      { id: 'blocco-4', label: 'blocco 4 — dalla soluzione al sistema', gridId: 'blocco4-grid' },
+      { id: 'blocco-5', label: 'blocco 5 — fratti semplici', gridId: 'blocco5-grid' },
+      { id: 'blocco-6', label: 'blocco 6', gridId: 'blocco6-grid' },
+      { id: 'blocco-7', label: 'blocco 7', gridId: 'blocco7-grid' },
+      { id: 'blocco-8', label: 'blocco 8', gridId: 'blocco8-grid' },
+      { id: 'blocco-9', label: 'blocco 9', gridId: 'blocco9-grid' },
+      { id: 'blocco-10', label: 'blocco 10', gridId: 'blocco10-grid' },
+    ],
+    lessons: [],
+  },
 };
 
 module.exports = { SITE, COURSES };
