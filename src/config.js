@@ -24,6 +24,7 @@ const COURSES = {
     professor: 'Prof. Mercuri',
     university: 'Università di Roma Tor Vergata',
     year: 'A.A. 2025/2026',
+    lessonLabel: 'Lezione',
     description: 'Guida allo studio con lezioni, formule, animazioni interattive e visualizzazioni Manim per capire la fisica davvero.',
     nav: [
       { label: 'Lezioni', href: '/fisica1/', active: true },
@@ -65,6 +66,7 @@ const COURSES = {
     professor: 'Trusiani / Di Gennaro',
     university: 'Università di Roma Tor Vergata',
     year: 'A.A. 2025/2026',
+    lessonLabel: 'Lezione',
     description: 'Appunti di Geometria per Ingegneria Informatica. Spazi vettoriali, matrici, sistemi lineari, applicazioni lineari, forme quadratiche e geometria analitica.',
     nav: [
       { label: 'Lezioni', href: '/geometria/', active: true },
@@ -92,6 +94,7 @@ const COURSES = {
     professor: '',
     university: 'Università di Roma Tor Vergata',
     year: 'A.A. 2025/2026',
+    lessonLabel: 'Guida',
     description: 'Guide risolutive per gli esercizi di Fondamenti di Controlli, organizzate per blocchi tematici.',
     nav: [
       { label: 'Guide', href: '/controlli/', active: true },
@@ -109,7 +112,7 @@ const COURSES = {
     ],
     lessons: [
       { id: 'L01', num: 'Guida 1', date: '6 Apr 2026', title: 'Equilibrio e Linearizzazione', abstract: 'Come partire da un sistema fisico non lineare, trovare il punto di equilibrio e costruire le matrici numeriche A, B, C, D attraverso la linearizzazione.', category: 'blocco-1' },
-      { id: 'L02', num: 'Lezione 2', date: '6 Apr 2026', title: 'Modellazione di Sistemi Meccanici', abstract: 'Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell\'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.', category: 'blocco-2' },
+      { id: 'L02', num: 'Guida 2', date: '6 Apr 2026', title: 'Modellazione di Sistemi Meccanici', abstract: 'Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell\'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.', category: 'blocco-2' },
     ],
   },
 };

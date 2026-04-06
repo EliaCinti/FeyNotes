@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="controlli">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida 1 — Fondamenti di Controlli — FeyNotes</title>
+  <meta name="description" content="Fondamenti di Controlli, Guida 1: Equilibrio e Linearizzazione. Come partire da un sistema fisico non lineare, trovare il punto di equilibrio e costruire le matrici numeriche A, B, C, D attraverso la linearizzazione.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guida 1: Equilibrio e Linearizzazione — Fondamenti di Controlli">
+  <meta property="og:description" content="Come partire da un sistema fisico non lineare, trovare il punto di equilibrio e costruire le matrici numeriche A, B, C, D attraverso la linearizzazione.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/controlli/lezioni/L01/">
+  <link rel="canonical" href="https://eliacinti.dev/controlli/lezioni/L01/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Guida 1 — Equilibrio e Linearizzazione",
+  "description": "Come partire da un sistema fisico non lineare, trovare il punto di equilibrio e costruire le matrici numeriche A, B, C, D attraverso la linearizzazione.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/controlli/lezioni/L01/",
+  "datePublished": "2026-04-06",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fondamenti di Controlli",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/controlli/" class="header-logo">
+    
+    Fondamenti di Controlli
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Guida 1</span>
+  <nav class="header-nav">
+    <a href="/controlli/" class="active">Guide</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/controlli/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="#" style="opacity:0.3">← Prec.</a>
+      <a href="/controlli/lezioni/L02/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L01", date: "Lezione 01 — 6 Apr 2026",
+    title: "Equilibrio e Linearizzazione",
+    abstract: "Come partire da un sistema fisico non lineare, trovare il punto di equilibrio e costruire le matrici numeriche A, B, C, D attraverso la linearizzazione.",
+
+    sections: [
+      {
+        id: "s01-obiettivo",
+        type: "section",
+        title: "Obiettivo della Linearizzazione",
+        icon: "🎯",
+        content: `<p>Partendo da un sistema fisico con equazioni <strong>non lineari</strong> (es. ci sono seni, coseni, moltiplicazioni tra $x$), l'obiettivo è:</p>
+<ol>
+<li>Trovare dove il sistema <strong>"sta in equilibrio"</strong></li>
+<li>Costruire le <strong>matrici numeriche</strong> $A$, $B$ e (se presente l'equazione di uscita $y$) $C$, $D$</li>
+</ol>
+<p>Queste matrici descrivono il comportamento del sistema <em>nell'intorno</em> del punto di equilibrio e permettono di applicare tutti gli strumenti dell'analisi lineare.</p>`
+      },
+      {
+        id: "s01-step1-equilibrio",
+        type: "section",
+        title: "STEP 1 — Trovare il Punto di Equilibrio",
+        icon: "⚖️",
+        content: `<p>Il testo darà un valore fisso per l'ingresso, chiamato $u_e$ (ad esempio $u_e = 0$). Si deve sostituire questo $u_e$ nelle equazioni e trovare i valori di $x$ per cui il sistema è in equilibrio.</p>`,
+        subsections: [
+          {
+            subtitle: "Sistema a Tempo Continuo",
+            content: `<p>Se il sistema è a <strong>tempo continuo</strong> ($\\dot{x}$ oppure $\\mathbb{T} = \\mathbb{R}$):</p>
+<p>$\\dot{x}$ rappresenta la <em>velocità</em>. Il sistema è in equilibrio quando <strong>$\\dot{x} = 0$</strong>. Quindi si cancella tutto quello che c'è a sinistra dell'uguale e ci si mette uno $0$.</p>
+<p>Poniamo tutte le equazioni uguali a $0$:</p>
+<p>$$\\begin{cases} f_1(x, u_e) = 0 \\\\ f_2(x, u_e) = 0 \\end{cases}$$</p>
+<p>Risolviamo il sistema (per sostituzione), andando a sostituire ad $u$ il valore $u_e$ fornito dal testo, e troviamo i numeri $x_{e_1}, x_{e_2}, \\dots, x_{e_n}$.</p>`
+          },
+          {
+            subtitle: "Sistema a Tempo Discreto",
+            content: `<p>Se il sistema è a <strong>tempo discreto</strong> ($x(t+1)$ oppure $\\mathbb{T} = \\mathbb{Z}$):</p>
+<p>$x_1(t+1) = \\dots$ significa "lo stato che il sistema avrà domani". Il sistema è in equilibrio quando lo <strong>stato di oggi è uguale a quello di domani</strong>.</p>
+<p>La regola è: cancellare il $(t+1)$ a sinistra e lasciare la lettera da sola. In pratica si pone:</p>
+<p>$$x_i = f_i(x, u_e)$$</p>
+<p>Si sostituisce $u$ con $u_e$ fornito dall'esercizio e si risolvono le equazioni per trovare $x_{e_1}, x_{e_2}, \\dots, x_{e_n}$.</p>`
+          }
+        ]
+      },
+      {
+        id: "s01-step2-matrice-a",
+        type: "section",
+        title: "STEP 2 — Calcolare la Matrice A",
+        icon: "🅰️",
+        content: `<p>La matrice $A$ descrive come si comporta il sistema <strong>da solo</strong> (senza ingresso). Si prendono le equazioni <em>originali</em> (con la $u$ generica, <strong>non</strong> con $u_e$) e si fanno le <strong>derivate parziali rispetto alle variabili di stato $x$</strong>.</p>
+<p><strong>Regola della derivata parziale:</strong> quando si deriva rispetto a una lettera, si fa finta che tutte le altre lettere siano dei numeri (costanti).</p>
+<p>$$A = \\begin{bmatrix} a_{1,1} & a_{1,2} & \\cdots & a_{1,n} \\\\ a_{2,1} & a_{2,2} & \\cdots & a_{2,n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ a_{m,1} & a_{m,2} & \\cdots & a_{m,n} \\end{bmatrix}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Come riempire ogni casella",
+            content: `<p><strong>$a_{1,1}$</strong> = Prendi la <em>prima</em> equazione. Fai la derivata considerando solo $x_1$ come variabile. Tutto il resto è da considerare numero.</p>
+<p><strong>$a_{1,2}$</strong> = Prendi la <em>prima</em> equazione e derivi considerando $x_2$ come variabile.</p>
+<p><strong>$a_{1,n}$</strong> = Prendi la <em>prima</em> equazione e derivi considerando $x_n$ come variabile.</p>
+<p><strong>$a_{2,1}$</strong> = Ora prendi la <em>seconda</em> equazione e derivi considerando $x_1$ come variabile.</p>
+<p>In generale, per ogni posizione $a_{i,k}$:</p>
+<p>$$a_{i,k} = \\frac{\\partial f_i}{\\partial x_k}$$</p>
+<p>dove $i$ = numero dell'equazione e $k$ = indice della variabile di stato rispetto alla quale si deriva.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Elemento generico di A", latex: "a_{i,k} = \\frac{\\partial f_i}{\\partial x_k}" }
+        ]
+      },
+      {
+        id: "s01-step3-matrice-b",
+        type: "section",
+        title: "STEP 3 — Ricavare la Matrice B",
+        icon: "🅱️",
+        content: `<p>La matrice $B$ risponde alla domanda: <strong>cosa succede se tocco l'ingresso $u$?</strong></p>
+<p>$B$ è un <strong>vettore colonna</strong>. Si ricava derivando ciascuna equazione rispetto a $u$ (tutte le $x$ diventano costanti).</p>
+<p>$$B = \\begin{bmatrix} b_{1,1} \\\\ b_{2,1} \\\\ \\vdots \\\\ b_{m,1} \\end{bmatrix}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Come riempire ogni casella",
+            content: `<p><strong>$b_{1,1}$</strong> = Prendi la <em>prima</em> equazione e fai la derivata considerando solo $u$ come variabile (tutte le $x$ diventano numeri).</p>
+<p><strong>$b_{2,1}$</strong> = Prendi la <em>seconda</em> equazione e fai la derivata considerando solo $u$ come variabile.</p>
+<p>In generale:</p>
+<p>$$b_{i,1} = \\frac{\\partial f_i}{\\partial u}$$</p>
+<p>dove $i$ = numero dell'equazione da prendere in considerazione.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Elemento generico di B", latex: "b_{i,1} = \\frac{\\partial f_i}{\\partial u}" }
+        ]
+      },
+      {
+        id: "s01-step4-matrice-c",
+        type: "section",
+        title: "STEP 4 — Calcolare la Matrice C",
+        icon: "©️",
+        content: `<p>Se il testo dell'esercizio fornisce anche un'equazione del tipo $y(t) = \\dots$, questa rappresenta l'<strong>uscita del sistema</strong> (il "cruscotto").</p>`,
+        subsections: [
+          {
+            subtitle: "Attenzione fondamentale",
+            content: `<p><strong>ATTENZIONE:</strong> per calcolare $C$ e $D$ si ignora completamente la parte con le derivate $\\dot{x}$ (o gli stati futuri) e si guarda <em>solo</em> l'equazione di $y$.</p>`
+          },
+          {
+            subtitle: "Come costruire C",
+            content: `<p>La matrice $C$ si ricava facendo le <strong>derivate parziali dell'equazione $y$ rispetto alle variabili di stato $x$</strong>, esattamente come fatto per la matrice $A$.</p>
+<p>Se c'è una sola equazione $y$, $C$ sarà un <strong>vettore riga</strong> con tante "caselle" quante sono le $x$:</p>
+<p>$$C = \\begin{bmatrix} c_{1,1} & c_{1,2} & \\cdots & c_{1,n} \\end{bmatrix}$$</p>
+<p><strong>$c_{1,1}$</strong> = Prendi l'equazione di $y$ e fai la derivata considerando solo $x_1$ come variabile.</p>
+<p><strong>$c_{1,2}$</strong> = Prendi l'equazione di $y$ e derivi considerando solo $x_2$ come variabile.</p>
+<p>E così via per tutte le variabili presenti nel sistema.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Elemento generico di C", latex: "c_{1,k} = \\frac{\\partial y}{\\partial x_k}" }
+        ]
+      },
+      {
+        id: "s01-step5-matrice-d",
+        type: "section",
+        title: "STEP 5 — Ricavare la Matrice D",
+        icon: "🇩",
+        content: `<p>La matrice $D$ rappresenta il <strong>legame diretto</strong> tra l'ingresso $u$ e l'uscita $y$.</p>
+<p>Si ricava derivando l'equazione $y$ considerando <em>solo</em> $u$ come variabile (tutte le $x$ diventano numeri finti che in derivazione scompaiono se non sono moltiplicati a $u$).</p>
+<p>Se c'è un solo ingresso e una sola uscita, $D$ sarà un singolo numero (uno scalare):</p>
+<p>$$D = \\begin{bmatrix} d_{1,1} \\end{bmatrix}$$</p>
+<p><strong>$d_{1,1}$</strong> = Derivata dell'equazione di $y$ rispetto a $u$.</p>`,
+        subsections: [
+          {
+            subtitle: "Nota pratica",
+            content: `<p><em>In moltissimi esercizi l'equazione di $y$ non contiene la lettera $u$. In quel caso, la derivata fa zero e quindi <strong>$D = 0$</strong>.</em></p>`
+          }
+        ],
+        formulas: [
+          { label: "Elemento generico di D", latex: "d_{1,1} = \\frac{\\partial y}{\\partial u}" }
+        ]
+      },
+      {
+        id: "s01-step6-sostituzione",
+        type: "section",
+        title: "STEP 6 — La Sostituzione Finale",
+        icon: "🔢",
+        content: `<p>Le matrici $A$, $B$, $C$ e $D$ ottenute finora saranno probabilmente ancora composte da alcune lettere (variabili di stato e ingresso).</p>
+<p>Prendi i valori $x_{e_1}, x_{e_2}, \\dots, x_{e_n}$ e $u_e$ trovati nello <strong>STEP 1</strong> e <strong>sostituiscili</strong> al posto delle rispettive lettere presenti all'interno delle matrici.</p>
+<p>Otterrai delle <strong>matrici fatte puramente di numeri</strong> e l'esercizio (la linearizzazione) potrà ritenersi <strong>concluso</strong>.</p>`
+      },
+      {
+        id: "s01-riepilogo",
+        type: "alert_box",
+        title: "Riepilogo del procedimento completo",
+        icon: "📋",
+        content: `<p>Il procedimento di linearizzazione si riassume in <strong>6 passi</strong>:</p>
+<ol>
+<li><strong>Punto di equilibrio:</strong> poni $\\dot{x} = 0$ (TC) oppure $x(t+1) = x(t)$ (TD), sostituisci $u_e$ e risolvi per $x_e$</li>
+<li><strong>Matrice A:</strong> derivate parziali delle equazioni di stato rispetto alle $x$</li>
+<li><strong>Matrice B:</strong> derivate parziali delle equazioni di stato rispetto a $u$</li>
+<li><strong>Matrice C:</strong> derivate parziali dell'equazione di uscita $y$ rispetto alle $x$</li>
+<li><strong>Matrice D:</strong> derivata parziale dell'equazione di uscita $y$ rispetto a $u$</li>
+<li><strong>Sostituzione:</strong> rimpiazza le lettere nelle matrici con i valori numerici di $x_e$ e $u_e$</li>
+</ol>
+<p>Il risultato finale è il sistema lineare:</p>
+<p>$$\\dot{\\delta x} = A\\,\\delta x + B\\,\\delta u, \\qquad \\delta y = C\\,\\delta x + D\\,\\delta u$$</p>`
+      },
+      {
+        id: "s01-tc-vs-td",
+        type: "note_box",
+        title: "Tempo Continuo vs Tempo Discreto — Come riconoscerli",
+        icon: "⏱️",
+        content: `<p>Un errore comune è confondere i due casi. Ecco i segnali:</p>`,
+        table_compare: {
+          headers: ["Tempo Continuo (TC)", "Tempo Discreto (TD)"],
+          rows: [
+            ["$\\dot{x}$ nelle equazioni", "$x(t+1)$ nelle equazioni"],
+            ["$\\mathbb{T} = \\mathbb{R}$", "$\\mathbb{T} = \\mathbb{Z}$"],
+            ["Equilibrio: $\\dot{x} = 0$", "Equilibrio: $x(t+1) = x(t)$"],
+            ["Poni $0$ a sinistra dell'uguale", "Cancella il $(t+1)$ e lascia $x$"]
+          ]
+        }
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Cos'è un punto di equilibrio per un sistema a tempo continuo?",
+        back: "È il valore $x_e$ tale che, dato un ingresso costante $u_e$, il sistema rimane fermo: $\\dot{x} = f(x_e, u_e) = 0$. Fisicamente, tutte le velocità sono nulle."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è un punto di equilibrio per un sistema a tempo discreto?",
+        back: "È il valore $x_e$ tale che lo stato di oggi è uguale a quello di domani: $x_e = f(x_e, u_e)$. Il sistema non evolve più."
+      },
+      {
+        type: "domanda",
+        front: "In che cosa consiste la linearizzazione di un sistema non lineare?",
+        back: "Consiste nel calcolare le matrici $A$, $B$, $C$, $D$ attraverso le derivate parziali (Jacobiano) delle equazioni del sistema, valutate nel punto di equilibrio $(x_e, u_e)$. Il risultato è un modello lineare valido nell'intorno dell'equilibrio."
+      },
+      {
+        type: "formula",
+        front: "Come si costruisce la matrice A nella linearizzazione?",
+        back: "L'elemento generico è $a_{i,k} = \\frac{\\partial f_i}{\\partial x_k}$, cioè la derivata parziale della $i$-esima equazione di stato rispetto alla $k$-esima variabile di stato, valutata in $(x_e, u_e)$."
+      },
+      {
+        type: "formula",
+        front: "Come si costruisce la matrice B nella linearizzazione?",
+        back: "L'elemento generico è $b_{i,1} = \\frac{\\partial f_i}{\\partial u}$, cioè la derivata parziale della $i$-esima equazione di stato rispetto all'ingresso $u$, valutata in $(x_e, u_e)$."
+      },
+      {
+        type: "formula",
+        front: "Come si costruiscono le matrici C e D?",
+        back: "$C$: derivate parziali dell'equazione di uscita $y$ rispetto alle $x$ → $c_{1,k} = \\frac{\\partial y}{\\partial x_k}$. $D$: derivata di $y$ rispetto a $u$ → $d_{1,1} = \\frac{\\partial y}{\\partial u}$. Spesso $D = 0$ perché $y$ non contiene $u$."
+      },
+      {
+        type: "tranello",
+        front: "Un errore comune: su quali equazioni si calcolano C e D?",
+        back: "Le matrici $C$ e $D$ si calcolano SOLO sull'equazione di uscita $y(t) = \\dots$, NON sulle equazioni di stato con $\\dot{x}$ o $x(t+1)$. È una trappola frequente confondere le due cose."
+      },
+      {
+        type: "domanda",
+        front: "Dopo aver calcolato le matrici A, B, C, D con le derivate parziali, cosa manca per completare la linearizzazione?",
+        back: "Manca la sostituzione numerica: si prendono i valori $x_{e_1}, x_{e_2}, \\dots, x_{e_n}$ e $u_e$ trovati al primo passo e si sostituiscono nelle matrici. Il risultato finale sono matrici puramente numeriche."
+      },
+      {
+        type: "tranello",
+        front: "Quando si calcolano le derivate parziali per A e B, si usa $u_e$ o $u$ generica?",
+        back: "Si usano le equazioni con la $u$ generica! Le derivate parziali si fanno PRIMA della sostituzione. Solo dopo aver ottenuto le espressioni delle matrici si sostituiscono i valori numerici di $x_e$ e $u_e$."
+      }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

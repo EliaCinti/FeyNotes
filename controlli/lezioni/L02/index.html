@@ -1,3 +1,89 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="controlli">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida 2 — Fondamenti di Controlli — FeyNotes</title>
+  <meta name="description" content="Fondamenti di Controlli, Guida 2: Modellazione di Sistemi Meccanici. Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guida 2: Modellazione di Sistemi Meccanici — Fondamenti di Controlli">
+  <meta property="og:description" content="Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/controlli/lezioni/L02/">
+  <link rel="canonical" href="https://eliacinti.dev/controlli/lezioni/L02/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Guida 2 — Modellazione di Sistemi Meccanici",
+  "description": "Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/controlli/lezioni/L02/",
+  "datePublished": "2026-04-06",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fondamenti di Controlli",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/controlli/" class="header-logo">
+    
+    Fondamenti di Controlli
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Guida 2</span>
+  <nav class="header-nav">
+    <a href="/controlli/" class="active">Guide</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/controlli/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/controlli/lezioni/L01/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
 const LESSON = {
     id: "L02", date: "Guida 2 — 6 Apr 2026",
     title: "Modellazione di Sistemi Meccanici",
@@ -210,3 +296,24 @@ const LESSON = {
     ]
 };
 
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

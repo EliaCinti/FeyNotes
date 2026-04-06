@@ -311,9 +311,11 @@ function updateHomepage() {
 
   for (const [, course] of Object.entries(COURSES)) {
     const count = course.lessons.length;
-    const label = count === 1 ? '1 lezione' : `${count} lezioni`;
+    const unitSingular = (course.lessonLabel || 'Lezione').toLowerCase();
+    const unitPlural = unitSingular === 'guida' ? 'guide' : 'lezioni';
+    const label = count === 1 ? `1 ${unitSingular}` : `${count} ${unitPlural}`;
     const regex = new RegExp(
-      `(data-course="${course.id}"[\\s\\S]*?class="fn-course-count">)\\d+ lezion[ei]`,
+      `(data-course="${course.id}"[\\s\\S]*?class="fn-course-count">)\\d+ \\w+`,
       'g'
     );
     html = html.replace(regex, `$1${label}`);
