@@ -114,7 +114,7 @@ const COURSES = {
       { id: 'L01', num: 'Guida 1', date: '6 Apr 2026', title: 'Equilibrio e Linearizzazione', abstract: 'Come partire da un sistema fisico non lineare, trovare il punto di equilibrio e costruire le matrici numeriche A, B, C, D attraverso la linearizzazione.', category: 'blocco-1' },
       { id: 'L02', num: 'Guida 2', date: '6 Apr 2026', title: 'Modellazione di Sistemi Meccanici', abstract: 'Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell\'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.', category: 'blocco-2' },
       { id: 'L03', num: 'Guida 3', date: '6 Apr 2026', title: 'Dalla Soluzione al Sistema (Blocco 4)', abstract: 'Dato y(t) con costanti arbitrarie, ricostruire l\'equazione differenziale (o alle differenze) originale del sistema usando l\'operatore Δ. Procedura in 4 step: individuare i poli nascosti, costruire il polinomio caratteristico, calcolare la forzante e scrivere l\'equazione finale.', category: 'blocco-4' },
-      { id: 'L04', num: 'Guida 4', date: '6 Apr 2026', title: 'Decomposizione in Fratti Semplici', abstract: 'Come spezzare una frazione \', category: 'blocco-5' },
+      { id: 'L04', num: 'Guida 4', date: '6 Apr 2026', title: 'Decomposizione in Fratti Semplici', abstract: 'Come spezzare una frazione', category: 'blocco-5' },
     ],
   },
 };

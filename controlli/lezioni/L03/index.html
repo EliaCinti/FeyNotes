@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="controlli">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida 3 — Fondamenti di Controlli — FeyNotes</title>
+  <meta name="description" content="Fondamenti di Controlli, Guida 3: Dalla Soluzione al Sistema (Blocco 4). Dato y(t) con costanti arbitrarie, ricostruire l'equazione differenziale (o alle differenze) originale del sistema usando l'operatore Δ. Procedura in 4 step: individuare i poli nascosti, costruire il polinomio caratteristico, calcolare la forzante e scrivere l'equazione finale.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guida 3: Dalla Soluzione al Sistema (Blocco 4) — Fondamenti di Controlli">
+  <meta property="og:description" content="Dato y(t) con costanti arbitrarie, ricostruire l'equazione differenziale (o alle differenze) originale del sistema usando l'operatore Δ. Procedura in 4 step: individuare i poli nascosti, costruire il polinomio caratteristico, calcolare la forzante e scrivere l'equazione finale.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/controlli/lezioni/L03/">
+  <link rel="canonical" href="https://eliacinti.dev/controlli/lezioni/L03/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Guida 3 — Dalla Soluzione al Sistema (Blocco 4)",
+  "description": "Dato y(t) con costanti arbitrarie, ricostruire l'equazione differenziale (o alle differenze) originale del sistema usando l'operatore Δ. Procedura in 4 step: individuare i poli nascosti, costruire il polinomio caratteristico, calcolare la forzante e scrivere l'equazione finale.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/controlli/lezioni/L03/",
+  "datePublished": "2026-04-06",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fondamenti di Controlli",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/controlli/" class="header-logo">
+    
+    Fondamenti di Controlli
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Guida 3</span>
+  <nav class="header-nav">
+    <a href="/controlli/" class="active">Guide</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/controlli/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/controlli/lezioni/L02/">← Prec.</a>
+      <a href="/controlli/lezioni/L04/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L03", date: "Lezione 03 — 6 Apr 2026",
+    title: "Dalla Soluzione al Sistema (Blocco 4)",
+    abstract: "Dato y(t) con costanti arbitrarie, ricostruire l'equazione differenziale (o alle differenze) originale del sistema usando l'operatore Δ. Procedura in 4 step: individuare i poli nascosti, costruire il polinomio caratteristico, calcolare la forzante e scrivere l'equazione finale.",
+
+    sections: [
+        {
+            id: "s03-obiettivo",
+            type: "section",
+            title: "Obiettivo del Blocco 4",
+            icon: "🎯",
+            content: `<p>Il testo fornisce la <strong>soluzione finale nel tempo</strong> $y(t)$, contenente delle costanti arbitrarie $c_1, c_2, \\dots$ L'obiettivo è <strong>ricostruire l'equazione differenziale (o alle differenze) originale</strong> del sistema, usando l'operatore $\\Delta$.</p>
+<p><strong>Significato dell'operatore $\\Delta$:</strong></p>
+<ul>
+<li>Se $\\mathbb{T} = \\mathbb{R}$ (Continuo): $\\Delta$ significa <strong>Derivata</strong>. ($\\Delta y = \\dot{y}$)</li>
+<li>Se $\\mathbb{T} = \\mathbb{Z}$ (Discreto): $\\Delta$ significa <strong>Passo successivo</strong>. ($\\Delta y(t) = y(t+1)$)</li>
+</ul>
+<p>In pratica si lavora "al contrario": dalla soluzione si risale al sistema che l'ha generata.</p>`
+        },
+        {
+            id: "s03-step1-poli",
+            type: "section",
+            title: "STEP 1 — Trovare i Mattoncini (I Poli Nascosti)",
+            icon: "🧱",
+            content: `<p>Si guardano <strong>SOLO</strong> i termini dell'equazione che hanno attaccata una costante $c$ ($c_1, c_2$, ecc.). Si ignorano per ora i termini senza la $c$. Ogni termine con la $c$ viene tradotto in un "mattoncino" $\\Delta$ secondo regole precise.</p>`,
+            subsections: [
+                {
+                    subtitle: "CASO A: Tempo Continuo (𝕋 = ℝ)",
+                    content: `<ul>
+<li><strong>Esponenziale semplice:</strong> $c_1 e^{at} \\Rightarrow (\\Delta - a)$<br><em>Esempio:</em> $c_1 e^{5t} \\rightarrow \\Delta - 5$</li>
+<li><strong>Costante da sola:</strong> $c_1 \\Rightarrow \\Delta$<br><em>(equivale a $c_1 e^{0 \\cdot t}$, quindi polo in $0$)</em></li>
+<li><strong>Risonanza (moltiplicato per $t$):</strong> $c_1 t \\, e^{at} \\Rightarrow (\\Delta - a)^2$</li>
+<li><strong>Oscillazioni smorzate ($\\alpha$ e $\\omega$):</strong> Se il termine ha la forma $c_1 e^{\\alpha t} \\cos(\\omega t)$ oppure $c_1 e^{\\alpha t} \\sin(\\omega t)$, si usa lo stampino universale:
+<p>$$\\Delta^2 - 2\\alpha\\Delta + (\\alpha^2 + \\omega^2)$$</p>
+<em>Esempio:</em> $c_1 e^{-3t} \\sin(4t)$. Qui $\\alpha = -3$ e $\\omega = 4$.
+<p>$$\\Delta^2 - 2(-3)\\Delta + ((-3)^2 + 4^2) = \\Delta^2 + 6\\Delta + 25$$</p></li>
+<li><strong>Seno/Coseno puri:</strong> $c_1 \\cos(\\omega t)$ è il caso speciale con $\\alpha = 0$. Diventa semplicemente: $(\\Delta^2 + \\omega^2)$</li>
+</ul>`
+                },
+                {
+                    subtitle: "CASO B: Tempo Discreto (𝕋 = ℤ)",
+                    content: `<ul>
+<li><strong>Esponenziale discreto:</strong> $c_1 a^t \\Rightarrow (\\Delta - a)$<br><em>Esempio:</em> $c_1 \\cdot 5^t \\rightarrow \\Delta - 5$</li>
+<li><strong>Costante da sola:</strong> $c_1 \\Rightarrow (\\Delta - 1)$<br><strong>⚠️ ATTENZIONE:</strong> nel discreto la costante equivale a $1^t$, quindi il polo è $1$, <strong>non</strong> $0$!</li>
+<li><strong>Risonanza:</strong> $c_1 \\, t \\, a^t \\Rightarrow (\\Delta - a)^2$</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Stampino oscillazioni smorzate (continuo)", latex: "\\Delta^2 - 2\\alpha\\Delta + (\\alpha^2 + \\omega^2)" },
+                { label: "Esponenziale → mattoncino (continuo)", latex: "c_1 e^{at} \\Rightarrow (\\Delta - a)" },
+                { label: "Esponenziale → mattoncino (discreto)", latex: "c_1 a^t \\Rightarrow (\\Delta - a)" },
+                { label: "Costante nel discreto", latex: "c_1 \\Rightarrow (\\Delta - 1)" }
+            ]
+        },
+        {
+            id: "s03-step1-trappola-discreto",
+            type: "alert_box",
+            title: "Trappola d'esame: costante nel discreto vs continuo",
+            icon: "⚠️",
+            content: `<p>Uno degli errori più frequenti: nel <strong>continuo</strong> la costante $c_1$ corrisponde al mattoncino $\\Delta$ (polo in $0$), mentre nel <strong>discreto</strong> corrisponde a $(\\Delta - 1)$ (polo in $1$).</p>
+<p>Il motivo è semplice: nel continuo $c_1 = c_1 e^{0 \\cdot t}$, quindi $a = 0$; nel discreto $c_1 = c_1 \\cdot 1^t$, quindi $a = 1$.</p>
+<p><strong>Se confondi i due casi perdi l'intero esercizio!</strong></p>`
+        },
+        {
+            id: "s03-step2-polinomio",
+            type: "section",
+            title: "STEP 2 — Costruire il Polinomio Caratteristico p(Δ)",
+            icon: "🔧",
+            content: `<p>Prendi tutti i "mattoncini" <strong>distinti</strong> trovati allo STEP 1 e <strong>moltiplicali tra loro</strong> come se $\\Delta$ fosse una normale variabile $x$.</p>
+<p><strong>Nota bene:</strong> Se hai trovato $(\\Delta - 2)$ e anche la sua risonanza $(\\Delta - 2)^2$, prendi <strong>solo quello con la potenza maggiore</strong>! Non moltiplicarli due volte.</p>
+<p><strong>Risultato:</strong> Otterrai un polinomio espanso, ad esempio:</p>
+<p>$$p(\\Delta) = \\Delta^2 - 3\\Delta + 2$$</p>
+<p>Questo rappresenta la parte sinistra dell'equazione finale: $p(\\Delta)\\, y(t) = \\dots$</p>`
+        },
+        {
+            id: "s03-step2-nota-potenze",
+            type: "note_box",
+            title: "Regola sulla potenza massima",
+            icon: "📝",
+            content: `<p>Se dalla soluzione emergono sia $c_1 e^{2t}$ sia $c_2 t\\, e^{2t}$, il primo dà $(\\Delta - 2)$ e il secondo $(\\Delta - 2)^2$. Non devi scrivere $(\\Delta - 2) \\cdot (\\Delta - 2)^2 = (\\Delta - 2)^3$: il termine $(\\Delta - 2)^2$ <strong>ingloba già</strong> il polo semplice. Prendi solo $(\\Delta - 2)^2$.</p>`
+        },
+        {
+            id: "s03-step3-forzante",
+            type: "section",
+            title: "STEP 3 — Calcolare la Forzante (L'Orfano)",
+            icon: "📡",
+            content: `<p>Ora guarda il testo originale dell'esercizio e cerca il pezzo di equazione <strong>SENZA</strong> la costante $c$. Quello è il <strong>termine forzante</strong> (l'ingresso mascherato). Devi "applicare" il polinomio $p(\\Delta)$ appena trovato a questo termine.</p>`,
+            subsections: [
+                {
+                    subtitle: "Nel continuo (𝕋 = ℝ): applicare le derivate",
+                    content: `<p>Se $p(\\Delta) = \\Delta^2 - 3\\Delta + 2$ e l'orfano è $t$, devi fare:</p>
+<p>$$(\\text{Derivata seconda di } t) - 3 \\cdot (\\text{Derivata prima di } t) + 2 \\cdot (t)$$</p>
+<p>$$= 0 - 3(1) + 2t = 2t - 3$$</p>`
+                },
+                {
+                    subtitle: "Nel discreto (𝕋 = ℤ): applicare gli shift temporali",
+                    content: `<p>Se $p(\\Delta) = \\Delta - 2$ e l'orfano è $3^t$, devi fare:</p>
+<p>$$(\\text{Sostituisci } t \\text{ con } t+1) - 2 \\cdot (3^t)$$</p>
+<p>$$= 3^{t+1} - 2 \\cdot 3^t$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s03-step4-soluzione",
+            type: "section",
+            title: "STEP 4 — Scrivere la Soluzione Finale",
+            icon: "✅",
+            content: `<p>Unisci la parte sinistra (STEP 2) e la parte destra (STEP 3). L'equazione finale richiesta sarà:</p>
+<p>$$p(\\Delta)\\, y(t) = \\text{Risultato Forzante}$$</p>
+<p><strong>Esempio finale completo:</strong></p>
+<p>$$(\\Delta^2 - 3\\Delta + 2)\\, y(t) = 2t - 3$$</p>
+<p>In un esercizio Moodle, questa è esattamente la risposta da inserire.</p>`,
+            formulas: [
+                { label: "Struttura equazione finale", latex: "p(\\Delta)\\, y(t) = \\text{Forzante calcolata}" }
+            ]
+        },
+        {
+            id: "s03-riepilogo-procedura",
+            type: "section",
+            title: "Riepilogo della Procedura Completa",
+            icon: "🗺️",
+            content: `<p>Ecco la procedura in sintesi, utile come checklist durante l'esame:</p>
+<ol>
+<li><strong>STEP 1:</strong> Isola i termini con le costanti $c_i$ e traduci ciascuno nel suo mattoncino $(\\Delta - \\cdot)$.</li>
+<li><strong>STEP 2:</strong> Moltiplica i mattoncini distinti (prendendo la potenza massima) per ottenere $p(\\Delta)$.</li>
+<li><strong>STEP 3:</strong> Prendi il termine "orfano" (senza $c$) e applicagli $p(\\Delta)$ — derivate nel continuo, shift nel discreto.</li>
+<li><strong>STEP 4:</strong> Scrivi $p(\\Delta)\\, y(t) = \\text{risultato dello STEP 3}$.</li>
+</ol>`,
+            table_compare: {
+                headers: ["Aspetto", "Continuo (𝕋 = ℝ)", "Discreto (𝕋 = ℤ)"],
+                rows: [
+                    ["Operatore Δ", "Derivata (ẏ)", "Shift y(t+1)"],
+                    ["Esponenziale", "c₁eᵃᵗ → (Δ − a)", "c₁aᵗ → (Δ − a)"],
+                    ["Costante c₁", "Δ (polo in 0)", "(Δ − 1) (polo in 1)"],
+                    ["Risonanza", "c₁ t eᵃᵗ → (Δ − a)²", "c₁ t aᵗ → (Δ − a)²"],
+                    ["Oscillazioni", "Δ² − 2αΔ + (α² + ω²)", "—"],
+                    ["Forzante", "Applica derivate", "Applica shift t→t+1"]
+                ]
+            }
+        },
+        {
+            id: "s03-orale-tipica",
+            type: "oral_box",
+            title: "Domanda tipica d'esame orale",
+            icon: "🎤",
+            content: `<p><strong>"Data la soluzione $y(t) = c_1 e^{2t} + c_2 e^{-t} + 3t$, scrivere l'equazione differenziale del sistema."</strong></p>
+<p>Risposta attesa: identificare i mattoncini $(\\Delta - 2)$ e $(\\Delta + 1)$, moltiplicarli per ottenere $p(\\Delta) = \\Delta^2 - \\Delta - 2$, poi applicare le derivate al termine orfano $3t$ per trovare la forzante.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cosa rappresenta l'operatore Δ nel tempo continuo e nel tempo discreto?",
+            back: "Nel <strong>continuo</strong> ($\\mathbb{T} = \\mathbb{R}$): $\\Delta$ è la <strong>derivata</strong>, $\\Delta y = \\dot{y}$. Nel <strong>discreto</strong> ($\\mathbb{T} = \\mathbb{Z}$): $\\Delta$ è il <strong>passo successivo</strong>, $\\Delta y(t) = y(t+1)$."
+        },
+        {
+            type: "formula",
+            front: "Qual è il mattoncino associato a un esponenziale $c_1 e^{at}$ nel continuo?",
+            back: "Il mattoncino è $(\\Delta - a)$. Esempio: $c_1 e^{5t} \\Rightarrow (\\Delta - 5)$."
+        },
+        {
+            type: "tranello",
+            front: "Qual è il mattoncino di una costante c₁ nel discreto? Perché è diverso dal continuo?",
+            back: "Nel <strong>discreto</strong>: $c_1 \\Rightarrow (\\Delta - 1)$ perché $c_1 = c_1 \\cdot 1^t$, polo in $1$. Nel <strong>continuo</strong>: $c_1 \\Rightarrow \\Delta$ perché $c_1 = c_1 e^{0 \\cdot t}$, polo in $0$. Confondere i due è un errore classico d'esame!"
+        },
+        {
+            type: "formula",
+            front: "Qual è lo stampino per oscillazioni smorzate $c_1 e^{\\alpha t} \\sin(\\omega t)$ nel continuo?",
+            back: "Lo stampino universale è: $\\Delta^2 - 2\\alpha\\Delta + (\\alpha^2 + \\omega^2)$. Per seno/coseno puri ($\\alpha = 0$) si semplifica a $(\\Delta^2 + \\omega^2)$."
+        },
+        {
+            type: "domanda",
+            front: "Se nella soluzione compaiono sia $c_1 e^{2t}$ che $c_2 t e^{2t}$, quanti mattoncini distinti devo usare?",
+            back: "Uno solo: $(\\Delta - 2)^2$. La risonanza (potenza maggiore) <strong>ingloba</strong> il polo semplice. Non moltiplicare $(\\Delta - 2) \\cdot (\\Delta - 2)^2$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Esempio completo: $y(t) = c_1 e^{2t} + c_2 e^{-t} + 3t$ nel continuo. Scrivi l'equazione del sistema.",
+            back: "STEP 1: $c_1 e^{2t} \\Rightarrow (\\Delta - 2)$, $c_2 e^{-t} \\Rightarrow (\\Delta + 1)$. STEP 2: $p(\\Delta) = (\\Delta - 2)(\\Delta + 1) = \\Delta^2 - \\Delta - 2$. STEP 3: Orfano = $3t$. Applico: $\\ddot{(3t)} - \\dot{(3t)} - 2(3t) = 0 - 3 - 6t = -6t - 3$. STEP 4: $(\\Delta^2 - \\Delta - 2)\\,y(t) = -6t - 3$."
+        },
+        {
+            type: "domanda",
+            front: "Come si applica p(Δ) alla forzante nel discreto?",
+            back: "Si sostituisce $\\Delta$ con lo <strong>shift temporale</strong>: $\\Delta f(t) = f(t+1)$, $\\Delta^2 f(t) = f(t+2)$, ecc. Esempio: se $p(\\Delta) = \\Delta - 2$ e l'orfano è $3^t$, il risultato è $3^{t+1} - 2 \\cdot 3^t$."
+        },
+        {
+            type: "domanda",
+            front: "Quali termini della soluzione y(t) vanno ignorati nello STEP 1?",
+            back: "Vanno ignorati i termini <strong>senza costante arbitraria</strong> $c_i$. Quei termini sono il cosiddetto 'orfano', cioè la risposta forzata del sistema, e serviranno solo allo STEP 3 per calcolare il lato destro dell'equazione."
+        },
+        {
+            type: "formula",
+            front: "Come si traduce $c_1 e^{-3t} \\sin(4t)$ nel suo mattoncino Δ?",
+            back: "Si usa lo stampino con $\\alpha = -3$ e $\\omega = 4$: $\\Delta^2 - 2(-3)\\Delta + ((-3)^2 + 4^2) = \\Delta^2 + 6\\Delta + 25$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

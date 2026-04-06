@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="controlli">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida 4 — Fondamenti di Controlli — FeyNotes</title>
+  <meta name="description" content="Fondamenti di Controlli, Guida 4: Decomposizione in Fratti Semplici. Come spezzare una frazione">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guida 4: Decomposizione in Fratti Semplici — Fondamenti di Controlli">
+  <meta property="og:description" content="Come spezzare una frazione">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/controlli/lezioni/L04/">
+  <link rel="canonical" href="https://eliacinti.dev/controlli/lezioni/L04/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Guida 4 — Decomposizione in Fratti Semplici",
+  "description": "Come spezzare una frazione",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/controlli/lezioni/L04/",
+  "datePublished": "2026-04-06",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fondamenti di Controlli",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/controlli/" class="header-logo">
+    
+    Fondamenti di Controlli
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Guida 4</span>
+  <nav class="header-nav">
+    <a href="/controlli/" class="active">Guide</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/controlli/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/controlli/lezioni/L03/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L04", date: "Lezione 04 — 6 Apr 2026",
+    title: "Decomposizione in Fratti Semplici",
+    abstract: "Come spezzare una frazione \"gigante\" in s in una somma di frazioni piccole per poter antitrasformare da Laplace usando le tabelle. Regola zero, i tre casi fondamentali, il sistema lineare e il trucco dei residui.",
+
+    sections: [
+        {
+            id: "s04-obiettivo",
+            type: "section",
+            title: "Obiettivo della Decomposizione",
+            icon: "🎯",
+            content: `<p>Moodle (o il professore) ti chiede di trovare l'evoluzione nel tempo $y(t)$ di un sistema. Per farlo, si usa la <strong>Trasformata di Laplace</strong>, che genera una frazione "gigante" in $s$.</p>
+<p>Siccome questa frazione non esiste nelle Tabelle Ufficiali, l'obiettivo è <strong>spezzarla in una somma di frazioni piccoline</strong> per poter fare un copia-incolla dalle tabelle e antitrasformare pezzo per pezzo.</p>`
+        },
+        {
+            id: "s04-regola-zero",
+            type: "alert_box",
+            title: "REGOLA 0 — Il Test della Trappola (Funzione Propria)",
+            icon: "🚨",
+            content: `<p>Prima di fare qualsiasi cosa, guarda il <strong>grado massimo della $s$</strong> al Numeratore e al Denominatore.</p>
+<ul>
+<li><strong>Grado Sopra $\\lt$ Grado Sotto:</strong> Tutto ok. Procedi allo STEP 1. È il 95% dei casi d'esame.</li>
+<li><strong>Grado Sopra $\\ge$ Grado Sotto:</strong> <strong>ALLARME!</strong> La frazione è "impropria". Non puoi spezzarla subito. <em>Devi prima eseguire la Divisione tra Polinomi (o Ruffini)</em> finché il resto non ha un grado minore del denominatore.</li>
+</ul>`,
+            formulas: [
+                { label: "Condizione di funzione propria", latex: "\\deg(N(s)) < \\deg(D(s))" }
+            ]
+        },
+        {
+            id: "s04-step1-poli",
+            type: "section",
+            title: "STEP 1 — Trovare i Poli (Fattorizzare il Denominatore)",
+            icon: "🔍",
+            content: `<p>Il denominatore "gigante" deve essere scomposto nei suoi <strong>mattoncini fondamentali</strong> (polinomi di 1° o massimo 2° grado).</p>
+<p>Poni il denominatore uguale a zero e trova le radici, usando:</p>
+<ul>
+<li>Raccoglimenti a fattor comune</li>
+<li>Formula del discriminante $\\Delta = b^2 - 4ac$</li>
+<li>Regola di Ruffini (per polinomi di grado $\\ge 3$)</li>
+</ul>
+<p>I valori di $s$ che annullano il denominatore si chiamano <strong>poli</strong> del sistema.</p>`
+        },
+        {
+            id: "s04-step2-scatole",
+            type: "section",
+            title: "STEP 2 — Impostare le \"Scatole\" (A, B, C)",
+            icon: "📦",
+            content: `<p>In base a come sono fatti i "mattoncini" del denominatore appena scomposto, si costruisce un'equazione con delle lettere incognite. Esistono <strong>SOLO 3 CASI</strong> al mondo.</p>`,
+            subsections: [
+                {
+                    subtitle: "CASO 1 — Poli Reali Semplici",
+                    content: `<p>Esempio: $(s-1)$ oppure $s$. Il pezzo è di 1° grado. Metti <strong>una sola lettera</strong> al numeratore.</p>
+<p>$$\\frac{\\dots}{(s-1)(s+2)} \\Rightarrow \\frac{A}{s-1} + \\frac{B}{s+2}$$</p>`
+                },
+                {
+                    subtitle: "CASO 2 — Poli Complessi Coniugati",
+                    content: `<p>Esempio: $s^2 + s + 1$. Il pezzo è di 2° grado e <em>il suo $\\Delta$ è negativo</em> (non si può più scomporre). Metti <strong>due lettere, di cui una con la $s$</strong>.</p>
+<p>$$\\frac{\\dots}{(s-1)(s^2+s+1)} \\Rightarrow \\frac{A}{s-1} + \\frac{Bs + C}{s^2+s+1}$$</p>`
+                },
+                {
+                    subtitle: "CASO 3 — Poli Multipli / Ripetuti",
+                    content: `<p>Esempio: $(s+2)^2$ o $s^3$. C'è la <strong>"Risonanza"</strong>. Devi costruire una <strong>scala</strong>, mettendo una frazione per ogni potenza fino a quella massima.</p>
+<p>$$\\frac{\\dots}{(s+2)^2 \\, s^3} \\Rightarrow \\frac{A}{s+2} + \\frac{B}{(s+2)^2} + \\frac{C}{s} + \\frac{D}{s^2} + \\frac{E}{s^3}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Caso 1 — Polo reale semplice (s−a)", latex: "\\frac{A}{s - a}" },
+                { label: "Caso 2 — Poli complessi (Δ < 0)", latex: "\\frac{Bs + C}{s^2 + bs + c}" },
+                { label: "Caso 3 — Polo ripetuto di ordine n", latex: "\\frac{A_1}{(s-a)} + \\frac{A_2}{(s-a)^2} + \\dots + \\frac{A_n}{(s-a)^n}" }
+            ]
+        },
+        {
+            id: "s04-step3-mcm",
+            type: "section",
+            title: "STEP 3 — Minimo Comune Multiplo e Raggruppamento",
+            icon: "🧹",
+            content: `<p>Una volta impostate le "scatole", bisogna <strong>riordinare la stanza</strong> per trovare i valori delle lettere incognite.</p>`,
+            subsections: [
+                {
+                    subtitle: "3.1 — Fai il m.c.m. a destra",
+                    content: `<p>Fai il minimo comune multiplo nella parte destra dell'uguale. Sarà <em>sempre</em> uguale al denominatore gigante di sinistra.</p>`
+                },
+                {
+                    subtitle: "3.2 — Elimina i denominatori",
+                    content: `<p><strong>Elimina i denominatori.</strong> Ti rimarrà un'uguaglianza tra i soli numeratori.</p>
+<p>$$3s + 1 = A(s^2+1) + (Bs+C)(s-1)$$</p>`
+                },
+                {
+                    subtitle: "3.3 — Moltiplica e distruggi le parentesi",
+                    content: `<p>Espandi tutti i prodotti a destra dell'uguale.</p>`
+                },
+                {
+                    subtitle: "3.4 — Crea le \"Famiglie\"",
+                    content: `<p>Raccogli a fattor comune tutte le $s^2$, tutte le $s$, e tutti i numeri orfani (termini noti).</p>
+<p>$$3s + 1 = (A+B)s^2 + (-B+C)s + (A-C)$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s04-step4-sistema",
+            type: "section",
+            title: "STEP 4 — Il Sistema Lineare (L'Effetto Specchio)",
+            icon: "🪞",
+            content: `<p>Se ci sono termini a destra, <strong>devono esserci anche a sinistra</strong>. Se a sinistra manca un grado di $s$, aggiungilo mettendogli uno <strong>zero</strong> davanti:</p>
+<p>$$\\mathbf{0}\\,s^2 + 3s + 1 = (A+B)s^2 + (-B+C)s + (A-C)$$</p>
+<p>Eguaglia i coefficienti di sinistra con quelli di destra per creare il sistema lineare:</p>
+<p>$$\\begin{cases} A + B = 0 & \\text{(Coefficienti di } s^2\\text{)} \\\\ -B + C = 3 & \\text{(Coefficienti di } s\\text{)} \\\\ A - C = 1 & \\text{(Termini noti)} \\end{cases}$$</p>
+<p>Risolvi il sistema (Metodo di Sostituzione) e trova i numeri $A$, $B$, $C$.</p>`,
+            formulas: [
+                { label: "Principio dell'Effetto Specchio", latex: "\\text{coeff. sinistro di } s^k = \\text{coeff. destro di } s^k \\quad \\forall k" }
+            ]
+        },
+        {
+            id: "s04-residui",
+            type: "section",
+            title: "Il Trucco da Cecchino: Metodo dei Residui",
+            icon: "🎯",
+            content: `<p>Esiste un trucco approvato dal professore per <strong>saltare lo STEP 3 e 4</strong> e calcolare le lettere istantaneamente in 10 secondi. <strong>Funziona alla perfezione per il CASO 1 (Poli Reali Semplici).</strong></p>`,
+            subsections: [
+                {
+                    subtitle: "La Regola",
+                    content: `<p>Per trovare la lettera sopra un polo (es. $A$ sopra a $s - a$), prendi la frazione gigante originale, <strong>cancella col dito il pezzo $(s-a)$ dal denominatore</strong>, e sostituisci al posto di tutte le $s$ rimaste il valore del polo (cioè $a$).</p>`
+                },
+                {
+                    subtitle: "Esempio Pratico",
+                    content: `<p>Vogliamo spezzare:</p>
+<p>$$W(s) = \\frac{s+1}{(s-1)(s-2)} = \\frac{A}{s-1} + \\frac{B}{s-2}$$</p>
+<p><strong>Per trovare A:</strong> Il suo denominatore è $(s-1)$, quindi il polo è $s=1$. Prendo la frazione originale, <em>cancello</em> $(s-1)$. Rimane $\\frac{s+1}{s-2}$. Sostituisco $s=1$:</p>
+<p>$$A = \\frac{1+1}{1-2} = \\frac{2}{-1} = \\mathbf{-2}$$</p>
+<p><strong>Per trovare B:</strong> Il suo denominatore è $(s-2)$, quindi il polo è $s=2$. Prendo la frazione, <em>cancello</em> $(s-2)$. Rimane $\\frac{s+1}{s-1}$. Sostituisco $s=2$:</p>
+<p>$$B = \\frac{2+1}{2-1} = \\frac{3}{1} = \\mathbf{3}$$</p>
+<p><strong>Risultato immediato</strong> senza fare il sistema:</p>
+<p>$$W(s) = \\frac{-2}{s-1} + \\frac{3}{s-2}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Formula del Residuo (polo semplice s = a)", latex: "A_i = \\lim_{s \\to a_i} (s - a_i) \\cdot F(s)" }
+            ]
+        },
+        {
+            id: "s04-nota-residui",
+            type: "note_box",
+            title: "Quando NON funziona il Metodo dei Residui",
+            icon: "⚠️",
+            content: `<p>Il trucco dei residui nella forma "cancella e sostituisci" funziona <strong>solo per poli reali semplici</strong> (CASO 1).</p>
+<ul>
+<li>Per i <strong>poli complessi coniugati</strong> (CASO 2) si deve usare il sistema lineare, oppure una versione estesa dei residui con numeri complessi.</li>
+<li>Per i <strong>poli ripetuti</strong> (CASO 3) il trucco diretto funziona solo per la lettera associata alla <em>potenza massima</em>. Le altre lettere richiedono derivate successive o il sistema lineare.</li>
+</ul>
+<p>All'esame, se hai tutti poli reali semplici, vai di residui. Se hai poli complessi o ripetuti, usa il sistema.</p>`
+        },
+        {
+            id: "s04-riepilogo",
+            type: "section",
+            title: "Riepilogo — Il Flusso Completo",
+            icon: "🗺️",
+            content: `<p>Ecco il flusso operativo completo da seguire in ogni esercizio:</p>
+<ol>
+<li><strong>REGOLA 0:</strong> Controlla che il grado del numeratore sia $\\lt$ grado del denominatore. Se no, dividi prima.</li>
+<li><strong>STEP 1:</strong> Fattorizza il denominatore trovando i poli ($D(s) = 0$).</li>
+<li><strong>STEP 2:</strong> Imposta le "scatole" $A$, $B$, $C$… in base ai 3 casi (reale semplice, complesso, ripetuto).</li>
+<li><strong>STEP 3:</strong> Fai il m.c.m., elimina i denominatori, espandi e raggruppa per potenze di $s$.</li>
+<li><strong>STEP 4:</strong> Eguaglia i coefficienti (Effetto Specchio) e risolvi il sistema lineare.</li>
+<li><strong>SCORCIATOIA:</strong> Se tutti i poli sono reali e semplici, usa il Metodo dei Residui al posto degli STEP 3-4.</li>
+</ol>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cos'è la decomposizione in fratti semplici e a cosa serve?",
+            back: "È una tecnica per spezzare una funzione razionale $F(s) = \\frac{N(s)}{D(s)}$ in una somma di frazioni elementari, ciascuna riconducibile a un'antitrasformata nota nelle tabelle di Laplace, così da poter calcolare $f(t) = \\mathcal{L}^{-1}\\{F(s)\\}$."
+        },
+        {
+            type: "tranello",
+            front: "Cosa devi controllare PRIMA di iniziare la decomposizione in fratti semplici?",
+            back: "Devi verificare che la funzione sia **propria**, cioè che il grado del numeratore sia strettamente minore del grado del denominatore ($\\deg(N) \\lt \\deg(D)$). Se è impropria ($\\deg(N) \\ge \\deg(D)$), devi prima eseguire la divisione tra polinomi."
+        },
+        {
+            type: "domanda",
+            front: "Quali sono i 3 casi possibili quando imposti le frazioni parziali?",
+            back: "1) **Polo reale semplice** $(s - a)$: si mette $\\frac{A}{s-a}$. 2) **Poli complessi coniugati** $(s^2 + bs + c)$ con $\\Delta \\lt 0$: si mette $\\frac{Bs + C}{s^2 + bs + c}$. 3) **Polo ripetuto** $(s-a)^n$: si costruisce una scala $\\frac{A_1}{s-a} + \\frac{A_2}{(s-a)^2} + \\dots + \\frac{A_n}{(s-a)^n}$."
+        },
+        {
+            type: "domanda",
+            front: "Come si riconoscono i poli complessi coniugati nella fattorizzazione?",
+            back: "Sono i fattori di 2° grado del tipo $s^2 + bs + c$ il cui discriminante è negativo: $\\Delta = b^2 - 4c \\lt 0$. Non si possono scomporre ulteriormente con numeri reali, quindi vanno lasciati interi e al numeratore si mettono due incognite: $Bs + C$."
+        },
+        {
+            type: "formula",
+            front: "Qual è la formula del Metodo dei Residui per un polo reale semplice $s = a$?",
+            back: "$$A_i = \\lim_{s \\to a_i} (s - a_i) \\cdot F(s)$$ In pratica: cancella il fattore $(s - a_i)$ dal denominatore di $F(s)$ e sostituisci $s = a_i$ in tutto il resto."
+        },
+        {
+            type: "dimostrazione",
+            front: "Applica il metodo dei residui a $F(s) = \\frac{s+1}{(s-1)(s-2)}$.",
+            back: "Si pone $F(s) = \\frac{A}{s-1} + \\frac{B}{s-2}$. Per $A$: cancello $(s-1)$, sostituisco $s=1$: $A = \\frac{1+1}{1-2} = -2$. Per $B$: cancello $(s-2)$, sostituisco $s=2$: $B = \\frac{2+1}{2-1} = 3$. Risultato: $F(s) = \\frac{-2}{s-1} + \\frac{3}{s-2}$."
+        },
+        {
+            type: "domanda",
+            front: "Cos'è l'\"Effetto Specchio\" nello STEP 4 della decomposizione?",
+            back: "Dopo aver espanso e raggruppato per potenze di $s$, i coefficienti di ciascuna potenza a sinistra dell'uguale devono essere identici a quelli a destra. Se a sinistra manca una potenza (es. $s^2$), il suo coefficiente è $0$. Questo genera un sistema lineare nelle incognite $A, B, C, \\dots$."
+        },
+        {
+            type: "tranello",
+            front: "Il metodo dei residui (cancella e sostituisci) funziona sempre?",
+            back: "No! Nella forma semplice funziona **solo per poli reali semplici** (CASO 1). Per i **poli complessi coniugati** e per le lettere dei **poli ripetuti** (tranne quella della potenza massima), bisogna usare il sistema lineare classico o formule con derivate successive."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
