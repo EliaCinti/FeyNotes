@@ -1,0 +1,212 @@
+const LESSON = {
+    id: "L02", date: "Lezione 02 — 6 Apr 2026",
+    title: "Modellazione di Sistemi Meccanici",
+    abstract: "Guida risolutiva completa: dal disegno meccanico (masse, molle, smorzatori) alle equazioni dell'energia, fino alle matrici di stato A, B, C, D. Procedimento step-by-step per esercizi Moodle e primo esonero.",
+
+    sections: [
+        {
+            id: "s02-obiettivo",
+            type: "note_box",
+            title: "Obiettivo della Lezione",
+            icon: "🎯",
+            content: `<p><strong>Obiettivo:</strong> Dato un disegno meccanico (masse, molle, smorzatori), ricavare le equazioni dell'energia per Moodle e le matrici di stato $A$, $B$, $C$, $D$.</p>`
+        },
+        {
+            id: "s02-vettore-stato",
+            type: "section",
+            title: "Vettore di Stato Standard",
+            icon: "📐",
+            content: `<p>Ogni massa ha una <strong>posizione</strong> ($q$) e una <strong>velocità</strong> ($v$). Se ci sono $n$ masse, il sistema ha $2n$ variabili di stato.</p>
+<p>L'ordine del vettore $\\boldsymbol{x}$ è sempre: <strong>prima tutte le posizioni, poi tutte le velocità</strong>.</p>
+<p>Esempio con 2 masse:</p>
+<p>$$\\boldsymbol{x} = \\begin{bmatrix} q_1 \\\\ q_2 \\\\ v_1 \\\\ v_2 \\end{bmatrix}$$</p>`,
+            formulas: [
+                { label: "Vettore di stato (2 masse)", latex: "\\boldsymbol{x} = \\begin{bmatrix} q_1 \\\\ q_2 \\\\ v_1 \\\\ v_2 \\end{bmatrix}" },
+                { label: "Numero variabili di stato", latex: "\\dim(\\boldsymbol{x}) = 2n" }
+            ]
+        },
+        {
+            id: "s02-step1-energie",
+            type: "section",
+            title: "Step 1 — Scrivere le Energie L ed F",
+            icon: "⚡",
+            content: `<p>L'energia dipende sempre dalla <strong>differenza</strong> di velocità (o di posizione) tra le due estremità di ogni elemento.</p>`,
+            subsections: [
+                {
+                    subtitle: "Energia dissipata F (smorzatori)",
+                    content: `<p>Guardare solo gli <strong>smorzatori</strong> ($d$) e usare le <strong>velocità</strong> ($v$). Ogni smorzatore aggiunge un termine alla somma:</p>
+<ul>
+<li>Smorzatore $d_k$ tra <strong>muro</strong> e massa $m_i$: $\\frac{1}{2} d_k v_i^2$</li>
+<li>Smorzatore $d_k$ tra masse $m_i$ e $m_j$: $\\frac{1}{2} d_k (v_i - v_j)^2$</li>
+</ul>
+<p>Somma tutti i pezzi per ottenere $F$.</p>`
+                },
+                {
+                    subtitle: "Lagrangiana L = T − U",
+                    content: `<p><strong>Energia cinetica $T$:</strong> conta le masse. Ogni massa $m_i$ aggiunge:</p>
+<p>$$+\\frac{1}{2} m_i v_i^2$$</p>
+<p><strong>Energia potenziale $-U$:</strong> conta le molle ($k$). Ogni molla aggiunge un termine col segno <strong>meno</strong>:</p>
+<ul>
+<li>Molla $k_i$ tra <strong>muro</strong> e massa $m_k$: $-\\frac{1}{2} k_i q_k^2$</li>
+<li>Molla $k_i$ tra masse $m_k$ e $m_j$: $-\\frac{1}{2} k_i (q_k - q_j)^2$</li>
+</ul>
+<p>Unisci tutto: $L = T - U$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Termine cinetico (massa)", latex: "+\\frac{1}{2} m_i v_i^2" },
+                { label: "Termine potenziale (molla a muro)", latex: "-\\frac{1}{2} k_i q_k^2" },
+                { label: "Termine potenziale (molla tra masse)", latex: "-\\frac{1}{2} k_i (q_k - q_j)^2" },
+                { label: "Termine dissipativo (smorzatore a muro)", latex: "\\frac{1}{2} d_k v_i^2" },
+                { label: "Termine dissipativo (smorzatore tra masse)", latex: "\\frac{1}{2} d_k (v_i - v_j)^2" }
+            ]
+        },
+        {
+            id: "s02-step2-matrici-base",
+            type: "section",
+            title: "Step 2 — Costruire le Matrici di Base (M, K, D)",
+            icon: "🧱",
+            content: `<p>Non servono equazioni: si costruiscono <strong>3 matrici $n \\times n$</strong> per ispezione visiva del disegno.</p>`,
+            subsections: [
+                {
+                    subtitle: "Matrice M (masse)",
+                    content: `<p>Masse sulla <strong>diagonale principale</strong>, resto zero.</p>
+<p>$$M = \\begin{bmatrix} m_1 & 0 \\\\ 0 & m_2 \\end{bmatrix}$$</p>`
+                },
+                {
+                    subtitle: "Matrice K (molle)",
+                    content: `<ul>
+<li><strong>Diagonale</strong> $K_{ii}$: somma di tutte le molle attaccate alla massa $i$.</li>
+<li><strong>Fuori diagonale</strong> $K_{ij}$: se c'è una molla $k$ tra massa $i$ e $j$, scrivi $-k$. Altrimenti $0$.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Matrice D (smorzatori)",
+                    content: `<p>Regola <strong>identica</strong> alla matrice $K$, ma usando gli smorzatori $d$.</p>
+<ul>
+<li><strong>Diagonale</strong> $D_{ii}$: somma di tutti gli smorzatori attaccati alla massa $i$.</li>
+<li><strong>Fuori diagonale</strong> $D_{ij}$: se c'è uno smorzatore $d$ tra massa $i$ e $j$, scrivi $-d$. Altrimenti $0$.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Matrice masse (2×2)", latex: "M = \\begin{bmatrix} m_1 & 0 \\\\ 0 & m_2 \\end{bmatrix}" },
+                { label: "Regola diagonale K", latex: "K_{ii} = \\sum \\text{molle collegate a } m_i" },
+                { label: "Regola fuori diagonale K", latex: "K_{ij} = -k \\text{ (se molla tra } i \\text{ e } j\\text{)}" }
+            ]
+        },
+        {
+            id: "s02-step3-AB",
+            type: "section",
+            title: "Step 3 — Assemblare A e B",
+            icon: "🔧",
+            content: `<p>Le matrici finali hanno dimensione $2n \\times 2n$ (per $A$) e $2n \\times 1$ (per $B$).</p>`,
+            subsections: [
+                {
+                    subtitle: "Matrice A (assemblaggio a blocchi)",
+                    content: `<p>$$A = \\begin{bmatrix} \\boldsymbol{0} & \\boldsymbol{I} \\\\ -M^{-1}K & -M^{-1}D \\end{bmatrix}$$</p>
+<p><strong>In pratica:</strong></p>
+<ul>
+<li><strong>Metà superiore sinistra:</strong> matrice di zeri.</li>
+<li><strong>Metà superiore destra:</strong> matrice identità $I$.</li>
+<li><strong>Metà inferiore sinistra:</strong> prendi $K$, cambia tutti i segni, dividi la riga $i$ per $m_i$.</li>
+<li><strong>Metà inferiore destra:</strong> prendi $D$, cambia tutti i segni, dividi la riga $i$ per $m_i$.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Vettore B",
+                    content: `<p>Colonna $2n \\times 1$. La <strong>metà superiore è tutta zero</strong>.</p>
+<p>Nella metà inferiore: se c'è una forza $u$ applicata alla massa $m_i$, metti $\\frac{1}{m_i}$ nella posizione corrispondente.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Matrice A (a blocchi)", latex: "A = \\begin{bmatrix} \\boldsymbol{0} & \\boldsymbol{I} \\\\ -M^{-1}K & -M^{-1}D \\end{bmatrix}" },
+                { label: "Vettore B (forza su massa i)", latex: "B = \\begin{bmatrix} 0 \\\\ \\vdots \\\\ 0 \\\\ \\frac{1}{m_i} \\\\ \\vdots \\end{bmatrix}" }
+            ]
+        },
+        {
+            id: "s02-step4-CD",
+            type: "section",
+            title: "Step 4 — Assemblare C e D",
+            icon: "📡",
+            content: `<p>Guardare il testo dell'esercizio alla voce $y(t) = \\dots$</p>`,
+            subsections: [
+                {
+                    subtitle: "Matrice C",
+                    content: `<p>Vettore riga di lunghezza $2n$. Si mette $1$ in corrispondenza della <strong>variabile misurata</strong>:</p>
+<ul>
+<li>$y(t) = q_1 \\Rightarrow C = \\begin{bmatrix} 1 & 0 & 0 & 0 \\end{bmatrix}$</li>
+<li>$y(t) = q_2 \\Rightarrow C = \\begin{bmatrix} 0 & 1 & 0 & 0 \\end{bmatrix}$</li>
+<li>$y(t) = v_1 \\Rightarrow C = \\begin{bmatrix} 0 & 0 & 1 & 0 \\end{bmatrix}$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Matrice D (feedthrough)",
+                    content: `<p>Nei problemi meccanici standard, l'ingresso $u$ <strong>non compare</strong> nell'equazione di uscita.</p>
+<p>Quindi: $\\boldsymbol{D = 0}$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "C per uscita q₁", latex: "C = \\begin{bmatrix} 1 & 0 & 0 & 0 \\end{bmatrix}" },
+                { label: "D (sistemi meccanici)", latex: "D = 0" }
+            ]
+        },
+        {
+            id: "s02-attenzione-D",
+            type: "alert_box",
+            title: "Attenzione: Due \"D\" Diverse!",
+            icon: "⚠️",
+            content: `<p>La matrice $D$ dello <strong>Step 4</strong> (effetto diretto ingresso-uscita, spazio di stato) e la matrice $D$ dello <strong>Step 2</strong> (smorzatori) sono <strong>due cose completamente diverse</strong>!</p>
+<p>Nel contesto dello spazio di stato, $D$ è <strong>sempre zero</strong> per questi esercizi meccanici. La matrice degli smorzatori dello Step 2 finisce dentro $A$ (nel blocco $-M^{-1}D_{\\text{smorzatori}}$).</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Come si costruisce il vettore di stato per un sistema meccanico con n masse?",
+            back: "Il vettore di stato ha dimensione $2n$: prima tutte le $n$ posizioni $q_i$, poi tutte le $n$ velocità $v_i$. Esempio con 2 masse: $\\boldsymbol{x} = [q_1, q_2, v_1, v_2]^T$."
+        },
+        {
+            type: "formula",
+            front: "Come si scrive il termine di energia dissipata F per uno smorzatore tra due masse?",
+            back: "Smorzatore $d_k$ tra masse $m_i$ e $m_j$: contributo $\\frac{1}{2} d_k (v_i - v_j)^2$. Se tra muro e massa $m_i$: $\\frac{1}{2} d_k v_i^2$."
+        },
+        {
+            type: "formula",
+            front: "Come si scrive il termine potenziale nella Lagrangiana per una molla tra due masse?",
+            back: "Molla $k_i$ tra masse $m_k$ e $m_j$: contributo $-\\frac{1}{2} k_i (q_k - q_j)^2$. Attenzione al segno meno (è $-U$)! Se tra muro e massa: $-\\frac{1}{2} k_i q_k^2$."
+        },
+        {
+            type: "domanda",
+            front: "Come si costruisce la matrice K delle molle?",
+            back: "Diagonale $K_{ii}$: somma di tutte le molle attaccate alla massa $i$. Fuori diagonale $K_{ij}$: $-k$ se c'è una molla $k$ tra massa $i$ e $j$, altrimenti $0$. La matrice $D$ degli smorzatori si costruisce con la stessa regola."
+        },
+        {
+            type: "formula",
+            front: "Qual è la struttura a blocchi della matrice A nello spazio di stato?",
+            back: "$A = \\begin{bmatrix} \\boldsymbol{0} & \\boldsymbol{I} \\\\ -M^{-1}K & -M^{-1}D \\end{bmatrix}$. In pratica: blocco inferiore sinistro = $-K$ con segni cambiati e righe divise per $m_i$; blocco inferiore destro = stessa cosa con $D$."
+        },
+        {
+            type: "domanda",
+            front: "Come si costruisce il vettore B?",
+            back: "Colonna $2n \\times 1$. La metà superiore è tutta zero. Nella metà inferiore, se la forza $u$ è applicata alla massa $m_i$, si mette $\\frac{1}{m_i}$ nella posizione corrispondente alla riga di $v_i$."
+        },
+        {
+            type: "domanda",
+            front: "Come si costruisce la matrice C?",
+            back: "Vettore riga di lunghezza $2n$. Si mette $1$ nella posizione della variabile misurata in uscita. Esempio: se $y(t) = q_2$ con 2 masse, $C = [0, 1, 0, 0]$."
+        },
+        {
+            type: "tranello",
+            front: "La matrice D dello spazio di stato e la matrice D degli smorzatori sono la stessa cosa?",
+            back: "No! Sono due oggetti completamente diversi. La $D$ dello spazio di stato (feedthrough) è sempre $0$ nei problemi meccanici standard. La $D$ degli smorzatori è una matrice $n \\times n$ che finisce nel blocco inferiore destro di $A$ come $-M^{-1}D_{\\text{smorzatori}}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Descrivi il procedimento completo per passare dal disegno meccanico allo spazio di stato.",
+            back: "1) Scrivere le energie $L = T - U$ e $F$ ispezionando masse, molle e smorzatori. 2) Costruire le matrici $M$ (diagonale masse), $K$ (molle) e $D$ (smorzatori) per ispezione. 3) Assemblare $A$ a blocchi: $[\\boldsymbol{0}, I; -M^{-1}K, -M^{-1}D]$ e $B$ con $1/m_i$ dove agisce la forza. 4) Leggere l'uscita $y(t)$ e costruire $C$ (riga con 1 nella posizione giusta), $D = 0$."
+        }
+    ]
+};
+
