@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 10 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 10: Operazioni tra Matrici, Invertibilità e Trasposizione. Prodotto riga per colonna, algebra delle matrici quadrate, matrici invertibili con formula per il caso 2×2, e matrice trasposta con tutte le proprietà.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 10: Operazioni tra Matrici, Invertibilità e Trasposizione — Geometria">
+  <meta property="og:description" content="Prodotto riga per colonna, algebra delle matrici quadrate, matrici invertibili con formula per il caso 2×2, e matrice trasposta con tutte le proprietà.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L10/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L10/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 10 — Operazioni tra Matrici, Invertibilità e Trasposizione",
+  "description": "Prodotto riga per colonna, algebra delle matrici quadrate, matrici invertibili con formula per il caso 2×2, e matrice trasposta con tutte le proprietà.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L10/",
+  "datePublished": "2026-03-24",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 10</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L09/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L10", date: "Lezione 10 — 24 Mar 2026",
+    title: "Operazioni tra Matrici, Invertibilità e Trasposizione",
+    abstract: "Prodotto riga per colonna, algebra delle matrici quadrate, matrici invertibili con formula per il caso 2×2, e matrice trasposta con tutte le proprietà.",
+
+    sections: [
+        {
+            id: "s10-tipi-matrici-quadrate",
+            type: "section",
+            title: "Richiami: Tipi di Matrici Quadrate",
+            icon: "🔲",
+            content: `<p>Una matrice si dice <strong>quadrata di ordine $n$</strong> se ha lo stesso numero di righe e di colonne ($n \\times n$). In questo caso, gli elementi $a_{11}, a_{22}, \\dots, a_{nn}$ formano la <strong>diagonale principale</strong>.</p>
+<p>Esistono famiglie speciali di matrici quadrate:</p>
+<ul>
+<li><strong>Diagonale:</strong> Tutti gli elementi fuori dalla diagonale principale sono zero.</li>
+<li><strong>Triangolare Superiore:</strong> Tutti gli elementi <em>sotto</em> la diagonale principale sono zero ($a_{ij} = 0$ se $i \\gt j$).</li>
+<li><strong>Triangolare Inferiore:</strong> Tutti gli elementi <em>sopra</em> la diagonale principale sono zero ($a_{ij} = 0$ se $i \\lt j$).</li>
+<li><strong>Simmetrica:</strong> La matrice è speculare rispetto alla diagonale ($a_{ij} = a_{ji}$).</li>
+</ul>`
+        },
+        {
+            id: "s10-prodotto-riga-colonna",
+            type: "section",
+            title: "Il Prodotto Riga per Colonna",
+            icon: "✖️",
+            content: `<p>Fino ad ora sapevamo sommare due matrici e moltiplicare una matrice per un numero. Ora vogliamo moltiplicare <strong>due matrici tra loro</strong>. Per farlo, ci serve un mattoncino base: il prodotto punto.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il prodotto punto tra vettori",
+                    content: `<p>Dati due vettori numerici $\\mathbf{x}, \\mathbf{y} \\in \\mathbb{R}^n$, il loro <strong>prodotto punto</strong> (o scalare canonico) è un numero reale che si ottiene moltiplicando le componenti a due a due e sommandole:</p>
+<p>$$\\mathbf{x} \\cdot \\mathbf{y} = x_1 y_1 + x_2 y_2 + \\dots + x_n y_n$$</p>
+<p><strong>Esempio di calcolo:</strong></p>
+<p>$$(1, -4, 2) \\cdot \\left(-3, 5, \\tfrac{1}{2}\\right) = (1)(-3) + (-4)(5) + (2)\\left(\\tfrac{1}{2}\\right) = -3 - 20 + 1 = -22$$</p>`
+                },
+                {
+                    subtitle: "Il prodotto tra matrici",
+                    content: `<p><strong>Definizione (Prodotto Riga per Colonna):</strong> Siano $A \\in \\mathcal{M}(m, n)$ e $B \\in \\mathcal{M}(n, p)$. Il prodotto $C = A \\cdot B$ è una nuova matrice $C \\in \\mathcal{M}(m, p)$ in cui l'elemento $c_{ij}$ si ottiene facendo il <strong>prodotto punto tra la riga $i$-esima di $A$ e la colonna $j$-esima di $B$</strong>:</p>
+<p>$$c_{ij} = A_i \\cdot B^j$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Prodotto punto", latex: "\\mathbf{x} \\cdot \\mathbf{y} = x_1 y_1 + x_2 y_2 + \\dots + x_n y_n" },
+                { label: "Elemento del prodotto matriciale", latex: "c_{ij} = A_i \\cdot B^j" }
+            ],
+            extra_content: `<p><strong>Esempio passo-passo del prof:</strong></p>
+<p>$$A = \\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\end{bmatrix}_{2 \\times 3} \\qquad B = \\begin{bmatrix} -1 & 1 \\\\ 0 & -4 \\\\ -2 & 1 \\end{bmatrix}_{3 \\times 2}$$</p>
+<p>Si può fare? Sì, $(2 \\times 3) \\cdot (3 \\times 2)$ darà una matrice $2 \\times 2$. Calcoliamo:</p>
+<ul>
+<li>$c_{11} = (1)(-1) + (2)(0) + (3)(-2) = -1 + 0 - 6 = -7$</li>
+<li>$c_{12} = (1)(1) + (2)(-4) + (3)(1) = 1 - 8 + 3 = -4$</li>
+<li>$c_{21} = (4)(-1) + (5)(0) + (6)(-2) = -4 + 0 - 12 = -16$</li>
+<li>$c_{22} = (4)(1) + (5)(-4) + (6)(1) = 4 - 20 + 6 = -10$</li>
+</ul>
+<p>Risultato:</p>
+<p>$$A \\cdot B = \\begin{bmatrix} -7 & -4 \\\\ -16 & -10 \\end{bmatrix}$$</p>`
+        },
+        {
+            id: "s10-regola-oro",
+            type: "alert_box",
+            title: "⚠️ Regola d'Oro per il Prodotto",
+            icon: "⚠️",
+            content: `<p>Il prodotto $A \\cdot B$ si può fare <strong>SOLO SE</strong> il numero di colonne della prima matrice ($A$) è uguale al numero di righe della seconda matrice ($B$).</p>
+<p>$$(m \\times \\mathbf{n}) \\cdot (\\mathbf{n} \\times p) \\Rightarrow \\text{Risultato: } (m \\times p)$$</p>
+<p>Se le dimensioni interne non coincidono, il prodotto <strong>non è definito</strong>. Questo è uno degli errori più frequenti all'esame!</p>`
+        },
+        {
+            id: "s10-algebra-matrici",
+            type: "section",
+            title: "L'Algebra delle Matrici Quadrate vs Numeri Reali",
+            icon: "⚖️",
+            content: `<p>Quando lavoriamo con <strong>matrici quadrate dello stesso ordine</strong> $n \\times n$, il prodotto di due matrici restituisce un'altra matrice $n \\times n$. Questo crea una vera e propria algebra. Ma come si comporta rispetto all'algebra dei classici numeri reali?</p>`,
+            table_compare: {
+                headers: ["Proprietà", "Numeri Reali", "Matrici Quadrate"],
+                rows: [
+                    ["Associativa: $A(BC) = (AB)C$", "✅ Vale", "✅ Vale"],
+                    ["Distributiva: $A(B+C) = AB + AC$", "✅ Vale", "✅ Vale"],
+                    ["Elemento neutro", "✅ Il numero $1$", "✅ La matrice identità $I$"],
+                    ["Commutativa: $AB = BA$", "✅ Vale", "❌ NON vale in generale"],
+                    ["Inverso per ogni elemento $\\neq 0$", "✅ Esiste sempre $x^{-1}$", "❌ NON sempre: esistono $A \\neq 0$ senza inversa"]
+                ]
+            },
+            extra_content: `<p>La <strong>Matrice Identità</strong> $I$ è formata da tutti $1$ sulla diagonale principale e $0$ altrove. Per ogni matrice $A$, si ha $A \\cdot I = I \\cdot A = A$.</p>
+<p>$$I_3 = \\begin{bmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{bmatrix}$$</p>`
+        },
+        {
+            id: "s10-non-commutativa",
+            type: "alert_box",
+            title: "🚨 Il Prodotto NON è Commutativo!",
+            icon: "🚨",
+            content: `<p>Questa è una delle trappole d'esame più classiche. In generale:</p>
+<p>$$A \\cdot B \\neq B \\cdot A$$</p>
+<p>Non si possono "scambiare" i fattori in un prodotto di matrici. Ogni volta che si manipola un'espressione matriciale, l'<strong>ordine dei fattori è sacro</strong>.</p>`
+        },
+        {
+            id: "s10-matrici-invertibili",
+            type: "section",
+            title: "Matrici Invertibili",
+            icon: "🔄",
+            content: `<p><strong>Definizione:</strong> Una matrice quadrata $A$ si dice <strong>invertibile</strong> se esiste una matrice $B$ dello stesso ordine tale che:</p>
+<p>$$A \\cdot B = B \\cdot A = I$$</p>
+<p>In tal caso, $B$ si chiama <strong>matrice inversa</strong> di $A$ e si indica con $A^{-1}$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio di matrice NON nulla ma NON invertibile",
+                    content: `<p>Consideriamo $A = \\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix}$. Per qualsiasi matrice $B = \\begin{bmatrix} x & y \\\\ z & t \\end{bmatrix}$ che proviamo a moltiplicare, otteniamo:</p>
+<p>$$A \\cdot B = \\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix} \\begin{bmatrix} x & y \\\\ z & t \\end{bmatrix} = \\begin{bmatrix} x & y \\\\ 0 & 0 \\end{bmatrix}$$</p>
+<p>La seconda riga sarà <strong>sempre</strong> fatta da zeri! Non potremo mai ottenere la matrice identità $I = \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$. Quindi $A$ non ha inversa.</p>`
+                },
+                {
+                    subtitle: "Inversa di matrici 2×2",
+                    content: `<p>Per le matrici $2 \\times 2$ esiste una formula diretta per calcolare l'inversa (se esiste):</p>
+<p>$$A = \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$$</p>
+<p>La matrice è invertibile <strong>se e solo se</strong> $ad - bc \\neq 0$. In tal caso:</p>
+<p>$$A^{-1} = \\frac{1}{ad - bc} \\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix}$$</p>
+<p>Il numero $ad - bc$ è il <strong>determinante</strong> della matrice $2 \\times 2$ (lo vedremo in dettaglio più avanti).</p>`
+                },
+                {
+                    subtitle: "Proprietà dell'inversa",
+                    content: `<p>Le proprietà fondamentali delle matrici invertibili sono:</p>
+<ol>
+<li>Se l'inversa esiste, è <strong>unica</strong>.</li>
+<li>$(A^{-1})^{-1} = A$ — l'inversa dell'inversa è la matrice originale.</li>
+<li>Se $A$ e $B$ sono invertibili, anche il loro prodotto lo è, e vale la <strong>regola del "calzini e scarpe"</strong>:</li>
+</ol>
+<p>$$(A \\cdot B)^{-1} = B^{-1} \\cdot A^{-1}$$</p>
+<p>L'ordine si inverte! La dimostrazione è elegante: basta moltiplicare $(AB)$ per $(B^{-1}A^{-1})$ e notare che i termini centrali $BB^{-1}$ diventano $I$, annullandosi a catena.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Condizione di invertibilità", latex: "A \\cdot A^{-1} = A^{-1} \\cdot A = I" },
+                { label: "Inversa 2×2", latex: "A^{-1} = \\frac{1}{ad - bc} \\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix}" },
+                { label: "Inversa di un prodotto", latex: "(A \\cdot B)^{-1} = B^{-1} \\cdot A^{-1}" }
+            ]
+        },
+        {
+            id: "s10-calzini-scarpe",
+            type: "note_box",
+            title: "💡 La regola \"Calzini e Scarpe\"",
+            icon: "🧦",
+            content: `<p>Sia per l'inversa che per la trasposta di un prodotto, l'ordine dei fattori si <strong>inverte</strong>. L'analogia è: la mattina metti prima i calzini e poi le scarpe; la sera togli prima le scarpe e poi i calzini. L'ultima operazione fatta è la prima a essere disfatta.</p>
+<p>$$(AB)^{-1} = B^{-1}A^{-1} \\qquad \\qquad (AB)^T = B^T A^T$$</p>`
+        },
+        {
+            id: "s10-matrice-trasposta",
+            type: "section",
+            title: "La Matrice Trasposta",
+            icon: "↗️",
+            content: `<p><strong>Definizione:</strong> La matrice trasposta $A^T$ è la matrice in cui le <strong>righe di $A$ diventano le colonne di $A^T$</strong>. Formalmente, l'elemento di posto $(i, j)$ di $A^T$ è uguale all'elemento di posto $(j, i)$ di $A$.</p>
+<p>Se $A$ è $m \\times n$, allora $A^T$ è $n \\times m$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Proprietà della trasposta",
+                    content: `<p>Le proprietà fondamentali della trasposizione sono:</p>
+<ol>
+<li><strong>Doppia trasposta:</strong> $(A^T)^T = A$</li>
+<li><strong>Trasposta di una somma:</strong> $(A + B)^T = A^T + B^T$</li>
+<li><strong>Trasposta di un prodotto per scalare:</strong> $(c \\cdot A)^T = c \\cdot A^T$</li>
+<li><strong>Trasposta di un prodotto:</strong> L'ordine si inverte!
+<p>$$(A \\cdot B)^T = B^T \\cdot A^T$$</p></li>
+<li><strong>Trasposta e inversa commutano:</strong> Se $A$ è invertibile, allora lo è anche $A^T$, e vale:
+<p>$$(A^T)^{-1} = (A^{-1})^T$$</p></li>
+</ol>`
+                }
+            ],
+            formulas: [
+                { label: "Doppia trasposta", latex: "(A^T)^T = A" },
+                { label: "Trasposta di un prodotto", latex: "(A \\cdot B)^T = B^T \\cdot A^T" },
+                { label: "Trasposta e inversa", latex: "(A^T)^{-1} = (A^{-1})^T" }
+            ]
+        },
+        {
+            id: "s10-riepilogo",
+            type: "oral_box",
+            title: "🎯 Domanda classica: Confronto inversa e trasposta",
+            icon: "🎯",
+            content: `<p><strong>Domanda tipica:</strong> "Quali proprietà accomunano la trasposizione e l'inversione?"</p>
+<p><strong>Risposta modello:</strong> Entrambe le operazioni, quando applicate a un prodotto, <strong>invertono l'ordine dei fattori</strong>:</p>
+<p>$$(AB)^{-1} = B^{-1}A^{-1} \\qquad (AB)^T = B^T A^T$$</p>
+<p>Inoltre, entrambe sono <strong>involuzioni</strong> (applicandole due volte si torna alla matrice originale): $(A^{-1})^{-1} = A$ e $(A^T)^T = A$. Infine, trasposta e inversa "commutano": $(A^T)^{-1} = (A^{-1})^T$.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quando è definito il prodotto tra due matrici $A$ e $B$?",
+            back: "Il prodotto $A \\cdot B$ è definito <strong>solo se</strong> il numero di colonne di $A$ è uguale al numero di righe di $B$. Se $A \\in \\mathcal{M}(m, n)$ e $B \\in \\mathcal{M}(n, p)$, il risultato è $C \\in \\mathcal{M}(m, p)$."
+        },
+        {
+            type: "formula",
+            front: "Come si calcola l'elemento $c_{ij}$ del prodotto $C = A \\cdot B$?",
+            back: "Si fa il prodotto punto tra la riga $i$-esima di $A$ e la colonna $j$-esima di $B$: $$c_{ij} = \\sum_{k=1}^{n} a_{ik} \\, b_{kj}$$"
+        },
+        {
+            type: "tranello",
+            front: "Il prodotto tra matrici è commutativo?",
+            back: "<strong>NO!</strong> In generale $A \\cdot B \\neq B \\cdot A$. Questo è uno degli errori più frequenti all'esame. L'ordine dei fattori è fondamentale."
+        },
+        {
+            type: "definizione",
+            front: "Quando una matrice quadrata $A$ si dice invertibile?",
+            back: "Quando esiste una matrice $A^{-1}$ tale che $A \\cdot A^{-1} = A^{-1} \\cdot A = I$. Non tutte le matrici non nulle sono invertibili: ad esempio $\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix}$ non ha inversa."
+        },
+        {
+            type: "formula",
+            front: "Qual è la formula per l'inversa di una matrice $2 \\times 2$?",
+            back: "Data $A = \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$, se $ad - bc \\neq 0$: $$A^{-1} = \\frac{1}{ad - bc} \\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix}$$"
+        },
+        {
+            type: "domanda",
+            front: "Qual è la regola per l'inversa di un prodotto $(AB)^{-1}$?",
+            back: "L'ordine si inverte (regola 'calzini e scarpe'): $$(AB)^{-1} = B^{-1} \\cdot A^{-1}$$ Dimostrazione: $(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AIA^{-1} = AA^{-1} = I$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è la matrice trasposta $A^T$?",
+            back: "È la matrice ottenuta scambiando righe e colonne: l'elemento di posto $(i,j)$ di $A^T$ è uguale all'elemento di posto $(j,i)$ di $A$. Se $A$ è $m \\times n$, allora $A^T$ è $n \\times m$."
+        },
+        {
+            type: "domanda",
+            front: "Quali proprietà accomunano trasposizione e inversione?",
+            back: "Entrambe invertono l'ordine nei prodotti: $(AB)^T = B^T A^T$ e $(AB)^{-1} = B^{-1}A^{-1}$. Entrambe sono involuzioni: $(A^T)^T = A$ e $(A^{-1})^{-1} = A$. Inoltre commutano: $(A^T)^{-1} = (A^{-1})^T$."
+        },
+        {
+            type: "tranello",
+            front: "Una matrice non nulla è sempre invertibile?",
+            back: "<strong>NO!</strong> A differenza dei numeri reali (dove ogni $x \\neq 0$ ha inverso), esistono matrici non nulle senza inversa. Esempio: $\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix} \\neq 0$ ma non è invertibile. Per le $2 \\times 2$, serve $ad - bc \\neq 0$."
+        },
+        {
+            type: "domanda",
+            front: "Cos'è la matrice identità e qual è il suo ruolo?",
+            back: "La matrice identità $I_n$ ha tutti $1$ sulla diagonale principale e $0$ altrove. È l'elemento neutro del prodotto matriciale: $A \\cdot I = I \\cdot A = A$ per ogni matrice $A$ quadrata di ordine $n$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

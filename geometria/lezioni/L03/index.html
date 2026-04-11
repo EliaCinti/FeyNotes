@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 3 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 3: Sottospazi Vettoriali e Vettori Geometrici. Dai vettori geometrici alla teoria dei sottospazi vettoriali: definizioni, caratterizzazioni, verifiche complete con esempi in ℝ², ℝ³ e ℝ[t]. Combinazioni lineari e Span.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 3: Sottospazi Vettoriali e Vettori Geometrici — Geometria">
+  <meta property="og:description" content="Dai vettori geometrici alla teoria dei sottospazi vettoriali: definizioni, caratterizzazioni, verifiche complete con esempi in ℝ², ℝ³ e ℝ[t]. Combinazioni lineari e Span.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L03/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L03/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 3 — Sottospazi Vettoriali e Vettori Geometrici",
+  "description": "Dai vettori geometrici alla teoria dei sottospazi vettoriali: definizioni, caratterizzazioni, verifiche complete con esempi in ℝ², ℝ³ e ℝ[t]. Combinazioni lineari e Span.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L03/",
+  "datePublished": "2026-03-05",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 3</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L02/">← Prec.</a>
+      <a href="/geometria/lezioni/L04/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L03", date: "Lezione 03 — 5 Mar 2026",
+    title: "Sottospazi Vettoriali e Vettori Geometrici",
+    abstract: "Dai vettori geometrici alla teoria dei sottospazi vettoriali: definizioni, caratterizzazioni, verifiche complete con esempi in ℝ², ℝ³ e ℝ[t]. Combinazioni lineari e Span.",
+
+    sections: [
+      {
+        id: "s03-vettori-geometrici",
+        type: "section",
+        title: "Lo Spazio dei Vettori Geometrici 𝒱ₒ",
+        icon: "📐",
+        content: `<p>Fissiamo un punto $O$ nello spazio euclideo $\\mathcal{E}$. Un <strong>vettore geometrico</strong> è un segmento orientato che va dall'origine $O$ a un punto $P \\in \\mathcal{E}$:</p>
+<p>$$\\overrightarrow{OP} = \\text{segmento orientato da } O \\text{ a } P$$</p>
+<p>L'insieme di tutti i vettori geometrici applicati in $O$ si indica con:</p>
+<p>$$\\mathcal{V}_O = \\left\\{ \\overrightarrow{OP} \\mid P \\in \\mathcal{E} \\right\\}$$</p>
+<p>La struttura algebrica considerata è la terna $(\\mathcal{V}_O, +, \\cdot)$, dove $+$ è l'addizione interna e $\\cdot$ è la moltiplicazione esterna per scalare.</p>`,
+        subsections: [
+          {
+            subtitle: "Addizione interna (regola del parallelogramma)",
+            content: `<p>Dati due vettori $\\overrightarrow{OP}$ e $\\overrightarrow{OQ}$ in $\\mathcal{V}_O$, la loro somma è il vettore $\\overrightarrow{OR}$ ottenuto completando il parallelogramma:</p>
+<p>$$\\overrightarrow{OP} + \\overrightarrow{OQ} = \\overrightarrow{OR}$$</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Regola del parallelogramma</strong></p>
+  <p><em>Dall'origine O partono i vettori OP e OQ. Si completa il parallelogramma con lati tratteggiati da P a R e da Q a R. La diagonale OR (in blu) è il vettore somma.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Geometricamente: si trasla $\\overrightarrow{OQ}$ in modo che la sua coda coincida con la punta di $\\overrightarrow{OP}$ (o viceversa). La diagonale del parallelogramma risultante è il vettore somma.</p>`
+          },
+          {
+            subtitle: "Moltiplicazione esterna (prodotto per scalare)",
+            content: `<p>Dato uno scalare $a \\in \\mathbb{R}$ e un vettore $\\overrightarrow{OP} \\in \\mathcal{V}_O$, il prodotto $\\overrightarrow{OS} := a \\cdot \\overrightarrow{OP}$ è definito come segue:</p>
+<ul>
+<li><strong>Modulo:</strong> $|\\overrightarrow{OS}| = |a| \\cdot |\\overrightarrow{OP}|$ (il modulo viene scalato di $|a|$).</li>
+<li><strong>Direzione:</strong> la stessa retta su cui giace $\\overrightarrow{OP}$.</li>
+<li><strong>Verso:</strong>
+  <ul>
+    <li>Se $a \\gt 0$: stesso verso di $\\overrightarrow{OP}$.</li>
+    <li>Se $a \\lt 0$: verso opposto a $\\overrightarrow{OP}$.</li>
+    <li>Se $a = 0$: si ottiene il vettore nullo, $\\overrightarrow{OS} = \\overrightarrow{OO} = \\underline{0}$.</li>
+  </ul>
+</li>
+</ul>`
+          },
+          {
+            subtitle: "Esempio: moltiplicazione per −3",
+            content: `<p>Dato $\\overrightarrow{OP}$, il vettore $\\overrightarrow{OS} = -3 \\cdot \\overrightarrow{OP}$ ha:</p>
+<ul>
+<li>modulo pari a 3 volte quello di $\\overrightarrow{OP}$,</li>
+<li>stessa direzione (stessa retta),</li>
+<li>verso opposto.</li>
+</ul>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Prodotto per scalare −3</strong></p>
+  <p><em>Su un asse orizzontale: dall'origine O parte OP verso destra (corto). Nella direzione opposta parte OS = −3·OP (tre volte più lungo, verso sinistra).</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+          },
+          {
+            subtitle: "Esercizio: costruzione grafica di 2·OP − 3·OQ",
+            content: `<p>Costruire graficamente il vettore $\\overrightarrow{OR} = 2\\overrightarrow{OP} - 3\\overrightarrow{OQ}$ usando la regola del parallelogramma.</p>
+<p><strong>Procedimento:</strong></p>
+<ol>
+<li>Si costruisce $2\\overrightarrow{OP}$: vettore nella stessa direzione e verso di $\\overrightarrow{OP}$, ma con modulo doppio.</li>
+<li>Si costruisce $-3\\overrightarrow{OQ}$: vettore nella stessa direzione di $\\overrightarrow{OQ}$, con modulo triplo e verso opposto.</li>
+<li>Si sommano i due vettori con la regola del parallelogramma.</li>
+</ol>`
+          }
+        ],
+        formulas: [
+          { label: "Spazio vettori geometrici", latex: "\\mathcal{V}_O = \\left\\{ \\overrightarrow{OP} \\mid P \\in \\mathcal{E} \\right\\}" },
+          { label: "Regola del parallelogramma", latex: "\\overrightarrow{OP} + \\overrightarrow{OQ} = \\overrightarrow{OR}" },
+          { label: "Prodotto per scalare (modulo)", latex: "|\\overrightarrow{OS}| = |a| \\cdot |\\overrightarrow{OP}|" }
+        ]
+      },
+      {
+        id: "s03-sottospazi-teoria",
+        type: "section",
+        title: "Teoria dei Sottospazi Vettoriali",
+        icon: "🧱",
+        content: `<p>Questa sezione introduce il concetto centrale di <strong>sottospazio vettoriale</strong>: un sottoinsieme di uno spazio vettoriale che si comporta esso stesso come uno spazio vettoriale.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione di sottospazio",
+            content: `<p>Sia $V$ uno spazio vettoriale e sia $W \\subseteq V$ un sottoinsieme. $W$ è un <strong>sottospazio vettoriale</strong> di $V$ se soddisfa le tre condizioni seguenti:</p>
+<ol>
+<li><strong>Vettore nullo:</strong> $\\underline{0} \\in W$.</li>
+<li><strong>Chiusura rispetto alla somma:</strong> $\\forall \\underline{u}, \\underline{v} \\in W \\Rightarrow \\underline{u} + \\underline{v} \\in W$.</li>
+<li><strong>Chiusura rispetto al prodotto per scalare:</strong> $\\forall a \\in \\mathbb{R}, \\; \\forall \\underline{u} \\in W \\Rightarrow a \\cdot \\underline{u} \\in W$.</li>
+</ol>
+<p><strong>Intuizione:</strong> un sottospazio è un sottoinsieme che «si comporta come uno spazio vettoriale a sé stante»: qualunque operazione tu faccia al suo interno (somma, scalatura), il risultato resta dentro il sottoinsieme. Inoltre deve contenere il vettore nullo, cioè <strong>passare per l'origine</strong>.</p>`
+          },
+          {
+            subtitle: "Caratterizzazione unificata (Proposizione)",
+            content: `<p>Sia $W \\subseteq V$ un sottoinsieme di uno spazio vettoriale $V$. Allora:</p>
+<p>$$W \\text{ è un sottospazio} \\iff \\begin{cases} W \\neq \\emptyset \\\\ \\forall \\underline{u}, \\underline{v} \\in W, \\; \\forall a, b \\in \\mathbb{R}: \\quad a\\underline{u} + b\\underline{v} \\in W \\end{cases}$$</p>
+<p><strong>Dimostrazione ($\\Rightarrow$):</strong> Se $W$ è un sottospazio, allora $W$ non è vuoto (contiene almeno $\\underline{0}$). Presi $\\underline{u}, \\underline{v} \\in W$ e $a, b \\in \\mathbb{R}$:</p>
+<ul>
+<li>Per la condizione 3: $a\\underline{u} \\in W$ e $b\\underline{v} \\in W$.</li>
+<li>Per la condizione 2: $a\\underline{u} + b\\underline{v} \\in W$.</li>
+</ul>
+<p><strong>Dimostrazione ($\\Leftarrow$):</strong> Supponiamo $W \\neq \\emptyset$ e che $\\forall \\underline{u}, \\underline{v} \\in W, \\; \\forall a, b \\in \\mathbb{R}: a\\underline{u} + b\\underline{v} \\in W$. Sia $\\underline{u} \\in W$ (esiste perché $W \\neq \\emptyset$).</p>
+<ol>
+<li><strong>Vettore nullo:</strong> Ponendo $a = 0$ e $b = 0$: $0 \\cdot \\underline{u} + 0 \\cdot \\underline{u} = \\underline{0} \\in W$.</li>
+<li><strong>Chiusura per somma:</strong> Siano $\\underline{u}, \\underline{v} \\in W$. Ponendo $a = 1$ e $b = 1$: $1 \\cdot \\underline{u} + 1 \\cdot \\underline{v} = \\underline{u} + \\underline{v} \\in W$.</li>
+<li><strong>Chiusura per scalare:</strong> Sia $a \\in \\mathbb{R}, \\; \\underline{u} \\in W$. Ponendo $b = 0$: $a \\cdot \\underline{u} + 0 \\cdot \\underline{u} = a \\cdot \\underline{u} \\in W$.</li>
+</ol>
+<p>Dunque $W$ è un sottospazio. ∎</p>`
+          },
+          {
+            subtitle: "Un sottospazio è esso stesso uno spazio vettoriale",
+            content: `<p>Se $W \\subseteq V$ è un sottospazio, allora $(W, +, \\cdot)$ <strong>è esso stesso uno spazio vettoriale</strong>.</p>
+<p>Per definizione, $(W, +, \\cdot)$ è una struttura algebrica chiusa:</p>
+<p>$$\\underline{u}, \\underline{v} \\in W \\Rightarrow \\underline{u} + \\underline{v} \\in W, \\qquad a \\in \\mathbb{R}, \\; \\underline{u} \\in W \\Rightarrow a \\cdot \\underline{u} \\in W$$</p>
+<p>Poiché $W \\subseteq V$ e $V$ è uno spazio vettoriale, tutte le proprietà degli assiomi (associatività, commutatività, distributività, ecc.) sono <strong>ereditate automaticamente</strong> da $V$. L'elemento neutro $\\underline{0}$ appartiene a $W$ per la condizione 1. Quindi $(W, +, \\cdot)$ soddisfa tutti gli assiomi. ∎</p>`
+          }
+        ],
+        formulas: [
+          { label: "Tre condizioni di sottospazio", latex: "\\underline{0} \\in W, \\quad \\underline{u}+\\underline{v} \\in W, \\quad a\\underline{u} \\in W" },
+          { label: "Caratterizzazione unificata", latex: "W \\neq \\emptyset \\;\\text{ e }\\; \\forall a,b \\in \\mathbb{R},\\; a\\underline{u} + b\\underline{v} \\in W" }
+        ]
+      },
+      {
+        id: "s03-alert-origine",
+        type: "alert_box",
+        title: "Un sottospazio deve passare per l'origine!",
+        icon: "⚠️",
+        content: `<p>Il primo test da fare è sempre: <strong>il vettore nullo appartiene a $W$?</strong> Se $\\underline{0} \\notin W$, allora $W$ non è un sottospazio. Punto.</p>
+<p>Esempio classico: $\\{(x_1, x_2) \\in \\mathbb{R}^2 : x_1 + x_2 = 1\\}$ è una retta in $\\mathbb{R}^2$ che <strong>non passa per l'origine</strong>, quindi non è un sottospazio. Invece $\\{(x_1, x_2) \\in \\mathbb{R}^2 : x_1 + x_2 = 0\\}$ passa per l'origine e lo è.</p>`
+      },
+      {
+        id: "s03-esempi-analisi",
+        type: "section",
+        title: "Analisi di Esempi",
+        icon: "🔍",
+        content: `<p>Vediamo una carrellata di esempi concreti, fondamentali per l'esame: saper riconoscere al volo se un insieme è o non è un sottospazio.</p>`,
+        subsections: [
+          {
+            subtitle: "Sottospazi banali",
+            content: `<p>Ogni spazio vettoriale $V$ possiede sempre almeno due sottospazi, detti <strong>banali</strong>:</p>
+<p>$$W = V \\qquad \\text{e} \\qquad W = \\{\\underline{0}\\}$$</p>
+<p><strong>Caso $V = \\mathbb{R}$:</strong> se $V = \\mathbb{R}$ (spazio vettoriale su $\\mathbb{R}$), gli unici sottospazi sono quelli banali: $W = \\mathbb{R}$ e $W = \\{0\\}$.</p>
+<p><em>Dimostrazione:</em> Sia $W \\subseteq \\mathbb{R}$ un sottospazio con $W \\neq \\{0\\}$. Allora esiste $x \\in W$ con $x \\neq 0$. Per qualunque $y \\in \\mathbb{R}$, possiamo scrivere:</p>
+<p>$$y = \\frac{y}{x} \\cdot x \\in W$$</p>
+<p>poiché $\\frac{y}{x} \\in \\mathbb{R}$ e $W$ è chiuso per moltiplicazione scalare. Quindi $W = \\mathbb{R}$. ∎</p>`
+          },
+          {
+            subtitle: "Tabella riepilogativa: esempi in ℝ² e ℝ³",
+            content: `<p>Ecco una panoramica dei casi trattati a lezione:</p>`
+          }
+        ],
+        table_compare: {
+          headers: ["#", "Definizione di W", "Sottospazio?", "Motivazione"],
+          rows: [
+            ["3", "$\\{(x_1,x_2) \\in \\mathbb{R}^2 : x_1+x_2=1\\}$", "❌ No", "$(0,0) \\notin W$ perché $0+0=0 \\neq 1$"],
+            ["4", "$\\{(x_1,x_2) \\in \\mathbb{R}^2 : x_1+x_2=0\\}$", "✅ Sì", "Contiene $\\underline{0}$; chiuso per $+$ e $\\cdot$"],
+            ["5", "$\\{(x_1,x_2) \\in \\mathbb{R}^2 : x_1+x_2 \\geq 0\\}$", "❌ No", "Non chiuso per $\\cdot$ con scalari negativi"],
+            ["6", "$\\{(0,0,0),(1,2,1)\\} \\subset \\mathbb{R}^3$", "❌ No", "$3 \\cdot (1,2,1)=(3,6,3) \\notin W$"],
+            ["7", "$\\{a(1,2,1) : a \\in \\mathbb{R}\\} \\subset \\mathbb{R}^3$", "✅ Sì", "Retta per l'origine"],
+            ["8", "$\\{(0,0,0),(1,0,0),(0,1,0)\\} \\subset \\mathbb{R}^3$", "❌ No", "$(1,0,0)+(0,1,0)=(1,1,0) \\notin W$"]
+          ]
+        },
+        extra_content: `<h4>Verifica completa dell'Esempio 4</h4>
+<p>$W = \\{(x_1, x_2) \\in \\mathbb{R}^2 : x_1 + x_2 = 0\\}$.</p>
+<ol>
+<li><strong>Vettore nullo:</strong> $(0,0) \\in W$ perché $0 + 0 = 0$. ✓</li>
+<li><strong>Chiusura per somma:</strong> Siano $\\underline{u} = (x_1, x_2) \\in W$ e $\\underline{v} = (y_1, y_2) \\in W$. Allora $x_1 + x_2 = 0$ e $y_1 + y_2 = 0$. Verifichiamo:</li>
+</ol>
+<p>$$\\underline{u} + \\underline{v} = (x_1 + y_1, \\; x_2 + y_2)$$</p>
+<p>$$(x_1 + y_1) + (x_2 + y_2) = \\underbrace{(x_1 + x_2)}_{=0} + \\underbrace{(y_1 + y_2)}_{=0} = 0 \\Rightarrow \\underline{u} + \\underline{v} \\in W \\; \\checkmark$$</p>
+<ol start="3">
+<li><strong>Chiusura per scalare:</strong> Sia $a \\in \\mathbb{R}$ e $\\underline{u} = (x_1, x_2) \\in W$.</li>
+</ol>
+<p>$$a \\cdot \\underline{u} = (ax_1, ax_2) \\quad \\text{e} \\quad ax_1 + ax_2 = a(x_1 + x_2) = a \\cdot 0 = 0 \\Rightarrow a\\underline{u} \\in W \\; \\checkmark$$</p>
+
+<h4>Perché l'Esempio 5 fallisce</h4>
+<p>$W = \\{(x_1, x_2) \\in \\mathbb{R}^2 : x_1 + x_2 \\geq 0\\}$.</p>
+<p>Contiene $(0,0)$? Sì, perché $0 + 0 = 0 \\geq 0$. Tuttavia, prendiamo $(1,0) \\in W$ (poiché $1 + 0 = 1 \\geq 0$). Moltiplicando per $a = -2$:</p>
+<p>$$-2 \\cdot (1,0) = (-2, 0) \\qquad \\text{e} \\qquad -2 + 0 = -2 \\lt 0 \\Rightarrow (-2, 0) \\notin W$$</p>
+<p><strong>Basta un solo controesempio</strong> per concludere che $W$ non è un sottospazio.</p>
+
+<h4>Verifica completa dell'Esempio 7</h4>
+<p>$W = \\{a(1,2,1) : a \\in \\mathbb{R}\\} \\subset \\mathbb{R}^3$.</p>
+<ol>
+<li><strong>Vettore nullo:</strong> Ponendo $a = 0$: $0 \\cdot (1,2,1) = (0,0,0) \\in W$. ✓</li>
+<li><strong>Chiusura per somma:</strong> Siano $\\underline{u} = a(1,2,1)$ e $\\underline{v} = b(1,2,1)$ con $a, b \\in \\mathbb{R}$.</li>
+</ol>
+<p>$$\\underline{u} + \\underline{v} = a(1,2,1) + b(1,2,1) = (a + b)(1,2,1) \\in W \\; \\checkmark$$</p>
+<ol start="3">
+<li><strong>Chiusura per scalare:</strong> Sia $c \\in \\mathbb{R}$ e $\\underline{u} = a(1,2,1) \\in W$.</li>
+</ol>
+<p>$$c \\cdot \\underline{u} = c \\cdot a(1,2,1) = (ca)(1,2,1) \\in W \\; \\checkmark$$</p>
+<p>Geometricamente, $W$ è la <strong>retta passante per l'origine</strong> con direzione $(1,2,1)$.</p>
+
+<h4>Esempio 8 — da insieme finito a sottospazio</h4>
+<p>L'insieme $W = \\{(0,0,0), (1,0,0), (0,1,0)\\}$ non è un sottospazio. Tuttavia, se consideriamo l'insieme di <em>tutte</em> le combinazioni lineari:</p>
+<p>$$W' = \\{a(1,0,0) + b(0,1,0) : a,b \\in \\mathbb{R}\\} = \\{(a,b,0) : a,b \\in \\mathbb{R}\\}$$</p>
+<p>allora $W'$ <strong>è un sottospazio</strong> — è il piano $xy$ in $\\mathbb{R}^3$ (il piano $z=0$).</p>`
+      },
+      {
+        id: "s03-sottospazi-polinomi",
+        type: "section",
+        title: "Sottospazi nello Spazio dei Polinomi ℝ[t]",
+        icon: "📈",
+        content: `<p>Gli spazi di polinomi forniscono esempi molto istruttivi della differenza tra condizioni che sembrano simili ma producono risultati opposti.</p>`,
+        subsections: [
+          {
+            subtitle: "Polinomi di grado esattamente h: NON è sottospazio",
+            content: `<p>Sia $V = \\mathbb{R}[t]$ e sia $h \\geq 1$. L'insieme:</p>
+<p>$$W_h = \\{0\\} \\cup \\{p(t) \\in \\mathbb{R}[t] : \\deg p(t) = h\\}$$</p>
+<p><strong>Non è un sottospazio.</strong> Prendiamo ad esempio $h = 2$:</p>
+<p>$$p(t) = t^2 + 1, \\qquad q(t) = -t^2 + t$$</p>
+<p>Entrambi hanno grado 2, ma:</p>
+<p>$$p(t) + q(t) = t + 1 \\qquad (\\text{grado 1, non 2!})$$</p>
+<p>I termini di grado massimo si annullano e il risultato esce dall'insieme.</p>`
+          },
+          {
+            subtitle: "Polinomi di grado ≤ h: È sottospazio",
+            content: `<p>L'insieme:</p>
+<p>$$\\mathbb{R}[t]_{\\leq h} = \\{p(t) \\in \\mathbb{R}[t] : \\deg p(t) \\leq h\\} \\cup \\{0\\}$$</p>
+<p><strong>È un sottospazio.</strong> La somma di polinomi di grado $\\leq h$ ha grado $\\leq h$, e il prodotto per scalare non cambia il grado.</p>`
+          }
+        ]
+      },
+      {
+        id: "s03-alert-grado",
+        type: "alert_box",
+        title: "Trappola d'esame: grado esatto vs grado al più",
+        icon: "🪤",
+        content: `<p><strong>«Grado esattamente $h$»</strong> $\\neq$ <strong>«Grado al più $h$»</strong>.</p>
+<p>Solo il secondo forma un sottospazio, perché il primo non è chiuso rispetto alla somma: i termini di grado massimo possono cancellarsi! Questa distinzione è un classico tranello d'esame.</p>`
+      },
+      {
+        id: "s03-sottospazi-geometrici",
+        type: "section",
+        title: "Sottospazi Geometrici in 𝒱ₒ",
+        icon: "📏",
+        content: `<p>Nello spazio dei vettori geometrici $\\mathcal{V}_O$:</p>
+<ul>
+<li>Una <strong>retta</strong> $\\ell$ <strong>passante per $O$</strong>: l'insieme $V_{O, \\ell} = \\{\\overrightarrow{OP} : P \\in \\ell\\}$ è un sottospazio.</li>
+<li>Un <strong>piano</strong> $S$ <strong>passante per $O$</strong>: l'insieme $V_{O, S} = \\{\\overrightarrow{OP} : P \\in S\\}$ è un sottospazio.</li>
+</ul>`,
+        subsections: [
+          {
+            subtitle: "L'unione di sottospazi NON è (in generale) un sottospazio",
+            content: `<p>Siano $\\ell_1$ e $\\ell_2$ due rette distinte passanti per $O$. L'unione $V_{O, \\ell_1} \\cup V_{O, \\ell_2}$ <strong>non è un sottospazio</strong>:</p>
+<p>Se $\\underline{u} \\in V_{O, \\ell_1}$ e $\\underline{v} \\in V_{O, \\ell_2}$ con $\\underline{u} \\neq \\underline{0}$ e $\\underline{v} \\neq \\underline{0}$, allora $\\underline{u} + \\underline{v}$ non giace né su $\\ell_1$ né su $\\ell_2$ (in generale), quindi $\\underline{u} + \\underline{v} \\notin V_{O, \\ell_1} \\cup V_{O, \\ell_2}$.</p>
+<p><strong>Attenzione:</strong> l'intersezione di sottospazi è sempre un sottospazio, ma l'unione no!</p>`
+          }
+        ]
+      },
+      {
+        id: "s03-combinazioni-lineari",
+        type: "section",
+        title: "Combinazioni Lineari e Spazi Generati",
+        icon: "🧬",
+        content: `<p>Le combinazioni lineari sono lo strumento fondamentale per costruire sottospazi e per descrivere la dipendenza tra vettori.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione di combinazione lineare",
+            content: `<p>Sia $V$ uno spazio vettoriale e siano $\\underline{v}_1, \\underline{v}_2, \\dots, \\underline{v}_h \\in V$ un <strong>sistema di vettori</strong> (si possono anche ripetere). Assegnati degli scalari $a_1, a_2, \\dots, a_h \\in \\mathbb{R}$, il vettore:</p>
+<p>$$\\underline{u} = a_1\\underline{v}_1 + a_2\\underline{v}_2 + \\dots + a_h\\underline{v}_h$$</p>
+<p>si dice <strong>combinazione lineare</strong> dei vettori $\\underline{v}_1, \\dots, \\underline{v}_h$ con pesi (o coefficienti) $a_1, \\dots, a_h$.</p>
+<p>In questo caso si dice che $\\underline{u}$ <strong>dipende linearmente</strong> dal sistema $\\{\\underline{v}_1, \\dots, \\underline{v}_h\\}$.</p>`
+          },
+          {
+            subtitle: "Esercizio 4.1: (4,13) è combinazione lineare?",
+            content: `<p>Il vettore $(4, 13) \\in \\mathbb{R}^2$ è combinazione lineare di $(1, 3)$ e $(1, 4)$?</p>
+<p><strong>Soluzione:</strong> Cerchiamo $x, y \\in \\mathbb{R}$ tali che:</p>
+<p>$$(4, 13) = x(1, 3) + y(1, 4) = (x + y, \\; 3x + 4y)$$</p>
+<p>Si ottiene il sistema:</p>
+<p>$$\\begin{cases} x + y = 4 \\\\ 3x + 4y = 13 \\end{cases}$$</p>
+<p>Dalla prima: $x = 4 - y$. Sostituendo nella seconda:</p>
+<p>$$3(4 - y) + 4y = 13 \\Rightarrow 12 - 3y + 4y = 13 \\Rightarrow y = 1, \\quad x = 3$$</p>
+<p>Verifica: $3(1, 3) + 1(1, 4) = (3, 9) + (1, 4) = (4, 13)$. ✓</p>
+<p><strong>Risposta:</strong> Sì, $(4, 13) = 3(1, 3) + 1(1, 4)$.</p>`
+          },
+          {
+            subtitle: "Esercizio 4.2: (0,1,1) dipende da (1,0,0) e (0,1,0)?",
+            content: `<p>Il vettore $(0, 1, 1) \\in \\mathbb{R}^3$ dipende linearmente da $(1, 0, 0)$ e $(0, 1, 0)$?</p>
+<p><strong>Soluzione:</strong> Cerchiamo $x, y \\in \\mathbb{R}$ tali che:</p>
+<p>$$(0, 1, 1) = x(1, 0, 0) + y(0, 1, 0) = (x, y, 0)$$</p>
+<p>Si ottiene il sistema:</p>
+<p>$$\\begin{cases} 0 = x \\\\ 1 = y \\\\ 1 = 0 \\end{cases}$$</p>
+<p>La terza equazione è <strong>impossibile!</strong> Quindi il sistema non ha soluzione.</p>
+<p><strong>Risposta:</strong> No, $(0, 1, 1)$ <strong>non</strong> dipende linearmente da $(1, 0, 0)$ e $(0, 1, 0)$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Combinazione lineare", latex: "\\underline{u} = a_1\\underline{v}_1 + a_2\\underline{v}_2 + \\dots + a_h\\underline{v}_h" }
+        ]
+      },
+      {
+        id: "s03-note-verifica-cl",
+        type: "note_box",
+        title: "Come verificare la dipendenza lineare",
+        icon: "📝",
+        content: `<p>Per verificare se un vettore $\\underline{u}$ è combinazione lineare di $\\underline{v}_1, \\dots, \\underline{v}_h$:</p>
+<ol>
+<li>Scrivi l'equazione $\\underline{u} = a_1\\underline{v}_1 + \\dots + a_h\\underline{v}_h$.</li>
+<li>Traduci in un <strong>sistema di equazioni lineari</strong> nelle incognite $a_1, \\dots, a_h$.</li>
+<li>Risolvi il sistema:
+  <ul>
+    <li>Se ammette soluzione $\\Rightarrow$ $\\underline{u}$ dipende linearmente.</li>
+    <li>Se è impossibile $\\Rightarrow$ $\\underline{u}$ <strong>non</strong> dipende linearmente.</li>
+  </ul>
+</li>
+</ol>`
+      },
+      {
+        id: "s03-span",
+        type: "section",
+        title: "Span (Sottospazio Generato)",
+        icon: "🌐",
+        content: `<p>Lo Span è il concetto che collega combinazioni lineari e sottospazi: dato un qualunque insieme di vettori, lo Span produce automaticamente il più piccolo sottospazio che li contiene.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione di Span",
+            content: `<p>Sia $S \\subseteq V$ un sottoinsieme. L'<strong>insieme generato</strong> da $S$, indicato $\\text{Span}(S)$, è l'insieme di tutte le possibili combinazioni lineari dei vettori in $S$:</p>
+<p>$$\\text{Span}(S) = \\Big\\{ a_1\\underline{v}_1 + a_2\\underline{v}_2 + \\dots + a_h\\underline{v}_h \\;\\Big|\\; h \\in \\mathbb{N}, \\; \\underline{v}_1, \\dots, \\underline{v}_h \\in S, \\; a_1, \\dots, a_h \\in \\mathbb{R} \\Big\\}$$</p>`
+          },
+          {
+            subtitle: "Span è sempre un sottospazio",
+            content: `<p><strong>Proposizione:</strong> $\\text{Span}(S)$ è <strong>sempre</strong> un sottospazio vettoriale di $V$, qualunque sia $S$.</p>
+<p><em>Idea della dimostrazione:</em> Il vettore nullo si ottiene ponendo tutti i coefficienti uguali a $0$. La somma di due combinazioni lineari è una combinazione lineare. Il prodotto di una combinazione lineare per uno scalare è una combinazione lineare. ∎</p>`
+          },
+          {
+            subtitle: "Esempio: Span di un singolo vettore",
+            content: `<p>In $\\mathbb{R}^3$, sia $S = \\{(1, 2, 1)\\}$. Allora:</p>
+<p>$$\\text{Span}(S) = \\{a(1, 2, 1) : a \\in \\mathbb{R}\\}$$</p>
+<p>Questo è la <strong>retta passante per l'origine</strong> con direzione $(1, 2, 1)$. Corrisponde esattamente all'Esempio 7 della sezione precedente.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Span (sottospazio generato)", latex: "\\text{Span}(S) = \\Big\\{ \\sum_{i=1}^{h} a_i\\underline{v}_i \\;\\Big|\\; \\underline{v}_i \\in S, \\; a_i \\in \\mathbb{R} \\Big\\}" }
+        ]
+      },
+      {
+        id: "s03-riepilogo",
+        type: "section",
+        title: "Riepilogo e Schema di Studio",
+        icon: "✅",
+        content: `<p><strong>Checklist per verificare un sottospazio:</strong> dato $W \\subseteq V$, per dimostrare che $W$ è un sottospazio:</p>
+<ol>
+<li>Verifica che $\\underline{0} \\in W$. Se no, <strong>stop</strong>: $W$ non è sottospazio.</li>
+<li>Prendi due generici $\\underline{u}, \\underline{v} \\in W$ e verifica che $\\underline{u} + \\underline{v} \\in W$.</li>
+<li>Prendi un generico $a \\in \\mathbb{R}$ e $\\underline{u} \\in W$, e verifica che $a\\underline{u} \\in W$.</li>
+</ol>
+<p>Oppure, in modo equivalente (caratterizzazione unificata):</p>
+<ul>
+<li>Verifica che $W \\neq \\emptyset$ e che $\\forall \\underline{u}, \\underline{v} \\in W, \\; \\forall a, b \\in \\mathbb{R}: \\; a\\underline{u} + b\\underline{v} \\in W$.</li>
+</ul>
+<p><em>Riferimento bibliografico: Capitolo 1, Sezioni 5 e 6 del testo di riferimento.</em></p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Che cos'è un sottospazio vettoriale? Enuncia le tre condizioni.",
+        back: "Un sottoinsieme $W \\subseteq V$ è un sottospazio vettoriale se: (1) $\\underline{0} \\in W$, (2) $\\forall \\underline{u}, \\underline{v} \\in W: \\underline{u} + \\underline{v} \\in W$ (chiusura per somma), (3) $\\forall a \\in \\mathbb{R}, \\underline{u} \\in W: a\\underline{u} \\in W$ (chiusura per prodotto scalare)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Enuncia e dimostra la caratterizzazione unificata dei sottospazi.",
+        back: "$W$ è un sottospazio $\\iff$ $W \\neq \\emptyset$ e $\\forall \\underline{u}, \\underline{v} \\in W, \\forall a,b \\in \\mathbb{R}: a\\underline{u}+b\\underline{v} \\in W$. ($\\Rightarrow$): $W \\neq \\emptyset$ perché contiene $\\underline{0}$; per chiusura scalare $a\\underline{u}, b\\underline{v} \\in W$; per chiusura somma $a\\underline{u}+b\\underline{v} \\in W$. ($\\Leftarrow$): Sia $\\underline{u} \\in W$. Con $a=b=0$: $\\underline{0} \\in W$. Con $a=b=1$: chiusura per somma. Con $b=0$: chiusura per scalare."
+      },
+      {
+        type: "domanda",
+        front: "Perché un sottospazio vettoriale è esso stesso uno spazio vettoriale?",
+        back: "Perché $(W, +, \\cdot)$ è chiuso per somma e prodotto scalare, contiene $\\underline{0}$, e tutte le altre proprietà (associatività, commutatività, distributività, ecc.) sono ereditate automaticamente da $V \\supseteq W$, poiché $V$ è già uno spazio vettoriale."
+      },
+      {
+        type: "tranello",
+        front: "L'insieme $\\{(x_1,x_2) \\in \\mathbb{R}^2 : x_1+x_2 \\geq 0\\}$ è un sottospazio? Perché?",
+        back: "No! Contiene $\\underline{0}$, ma non è chiuso per prodotto scalare con scalari negativi. Esempio: $(1,0) \\in W$ ma $-2 \\cdot (1,0)=(-2,0) \\notin W$ perché $-2+0=-2 \\lt 0$. Le disequazioni (non lineari omogenee) non danno mai sottospazi."
+      },
+      {
+        type: "tranello",
+        front: "L'unione di due sottospazi è un sottospazio?",
+        back: "In generale NO. Se $\\ell_1$ e $\\ell_2$ sono due rette distinte per l'origine, $V_{O,\\ell_1} \\cup V_{O,\\ell_2}$ non è un sottospazio: prendendo $\\underline{u} \\in \\ell_1$ e $\\underline{v} \\in \\ell_2$ non nulli, la somma $\\underline{u}+\\underline{v}$ in generale non sta né su $\\ell_1$ né su $\\ell_2$. L'intersezione invece è sempre un sottospazio."
+      },
+      {
+        type: "tranello",
+        front: "«Grado esattamente h» e «grado al più h»: quale forma un sottospazio in ℝ[t]?",
+        back: "Solo «grado al più $h$» forma un sottospazio ($\\mathbb{R}[t]_{\\leq h}$). «Grado esattamente $h$» non è chiuso per somma: ad esempio $t^2+1$ e $-t^2+t$ hanno grado 2, ma la loro somma $t+1$ ha grado 1. I termini di grado massimo possono cancellarsi."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è una combinazione lineare? Quando un vettore dipende linearmente da un sistema?",
+        back: "Dati $\\underline{v}_1, \\dots, \\underline{v}_h \\in V$ e scalari $a_1, \\dots, a_h \\in \\mathbb{R}$, il vettore $\\underline{u} = a_1\\underline{v}_1 + \\dots + a_h\\underline{v}_h$ è una combinazione lineare. Si dice che $\\underline{u}$ dipende linearmente dal sistema $\\{\\underline{v}_1, \\dots, \\underline{v}_h\\}$."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è lo Span di un insieme S? Perché è un sottospazio?",
+        back: "$\\text{Span}(S) = \\{a_1\\underline{v}_1 + \\dots + a_h\\underline{v}_h \\mid \\underline{v}_i \\in S, a_i \\in \\mathbb{R}\\}$, cioè l'insieme di tutte le combinazioni lineari di vettori di $S$. È un sottospazio perché: il vettore nullo si ottiene con tutti i coefficienti $= 0$; la somma di due combinazioni lineari è una combinazione lineare; il prodotto per scalare di una combinazione lineare è una combinazione lineare."
+      },
+      {
+        type: "domanda",
+        front: "Come si verifica se un vettore è combinazione lineare di un dato sistema di vettori?",
+        back: "Si scrive $\\underline{u} = a_1\\underline{v}_1 + \\dots + a_h\\underline{v}_h$, si traduce in un sistema di equazioni lineari nelle incognite $a_1, \\dots, a_h$, e si risolve. Se ammette soluzione, $\\underline{u}$ dipende linearmente; se è impossibile, non dipende."
+      },
+      {
+        type: "domanda",
+        front: "Quali sono gli unici sottospazi di ℝ come spazio vettoriale su ℝ?",
+        back: "Solo i due sottospazi banali: $W = \\{0\\}$ e $W = \\mathbb{R}$. Se $W$ contiene un elemento $x \\neq 0$, allora per ogni $y \\in \\mathbb{R}$ si ha $y = \\frac{y}{x} \\cdot x \\in W$ per chiusura scalare, quindi $W = \\mathbb{R}$."
+      }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

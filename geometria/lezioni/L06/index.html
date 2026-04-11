@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 6 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 6: Proprietà dei Sistemi Liberi e Legati. Proprietà fondamentali dei sistemi di vettori liberi e legati: caratterizzazione tramite dipendenza lineare, vettori sovrabbondanti, unicità delle coordinate, e l'algoritmo di scarto per estrarre generatori indipendenti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 6: Proprietà dei Sistemi Liberi e Legati — Geometria">
+  <meta property="og:description" content="Proprietà fondamentali dei sistemi di vettori liberi e legati: caratterizzazione tramite dipendenza lineare, vettori sovrabbondanti, unicità delle coordinate, e l'algoritmo di scarto per estrarre generatori indipendenti.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L06/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L06/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 6 — Proprietà dei Sistemi Liberi e Legati",
+  "description": "Proprietà fondamentali dei sistemi di vettori liberi e legati: caratterizzazione tramite dipendenza lineare, vettori sovrabbondanti, unicità delle coordinate, e l'algoritmo di scarto per estrarre generatori indipendenti.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L06/",
+  "datePublished": "2026-03-12",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 6</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L05/">← Prec.</a>
+      <a href="/geometria/lezioni/L07/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L06", date: "Lezione 06 — 12 Mar 2026",
+    title: "Proprietà dei Sistemi Liberi e Legati",
+    abstract: "Proprietà fondamentali dei sistemi di vettori liberi e legati: caratterizzazione tramite dipendenza lineare, vettori sovrabbondanti, unicità delle coordinate, e l'algoritmo di scarto per estrarre generatori indipendenti.",
+
+    sections: [
+        {
+            id: "s06-proprieta-4",
+            type: "section",
+            title: "Proprietà 4 — Caratterizzazione dei sistemi legati",
+            icon: "🔗",
+            content: `<p><strong>Proposizione (Proprietà 4).</strong> Il sistema di vettori $\\underline{u}_1, \\dots, \\underline{u}_h$ è legato $\\iff \\exists\\, i \\in \\{1, \\dots, h\\}$ tale che $\\underline{u}_i$ è linearmente dipendente da $\\underline{u}_1, \\dots, \\widehat{\\underline{u}}_i, \\dots, \\underline{u}_h$ (dove il cappelletto indica che il vettore è stato omesso).</p>
+<p>In altre parole: <strong>un sistema è legato se e solo se almeno uno dei suoi vettori si può scrivere come combinazione lineare degli altri</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione (⇒): sistema legato implica dipendenza",
+                    content: `<p>Assumiamo che $\\underline{u}_1, \\dots, \\underline{u}_h$ sia legato. Questo implica che $\\exists\\, (a_1, \\dots, a_h) \\in \\mathbb{R}^h$, con $(a_1, \\dots, a_h) \\neq (0, \\dots, 0)$, tale che:</p>
+<p>$$\\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$$</p>
+<p>Supponiamo per semplicità (a meno di permutazioni) che $a_1 \\neq 0$. Allora possiamo isolare $\\underline{u}_1$:</p>
+<p>$$\\underline{u}_1 = \\left(-\\frac{a_2}{a_1}\\right)\\underline{u}_2 + \\dots + \\left(-\\frac{a_h}{a_1}\\right)\\underline{u}_h$$</p>
+<p>Cioè $\\underline{u}_1$ dipende linearmente dal sistema $\\underline{u}_2, \\dots, \\underline{u}_h$. $\\square$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione (⇐): dipendenza implica sistema legato",
+                    content: `<p>Viceversa, assumiamo che $\\exists\\, i \\in \\{1, \\dots, h\\}$ tale che $\\underline{u}_i$ dipende linearmente da $\\underline{u}_1, \\dots, \\widehat{\\underline{u}}_i, \\dots, \\underline{u}_h$. Per semplicità possiamo assumere $i = 1$:</p>
+<p>$$\\underline{u}_1 = a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h$$</p>
+<p>Portando tutto a un membro otteniamo:</p>
+<p>$$\\underline{0} = \\underline{u}_1 - a_2\\underline{u}_2 - \\dots - a_h\\underline{u}_h$$</p>
+<p>Vale a dire che $(1, -a_2, \\dots, -a_h) \\in \\mathbb{R}^h$ è una <strong>relazione non banale</strong> per il sistema $\\underline{u}_1, \\dots, \\underline{u}_h$ $\\Rightarrow$ il sistema è legato. $\\square$</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-proprieta-5",
+            type: "section",
+            title: "Proprietà 5 — Vettori sovrabbondanti e Span",
+            icon: "♻️",
+            content: `<p><strong>Proposizione (Proprietà 5).</strong> Sia $\\underline{u}_1, \\dots, \\underline{u}_h$ un sistema di vettori. Allora:</p>
+<p>$$\\underline{u}_i \\text{ dipende lin. da } \\underline{u}_1, \\dots, \\widehat{\\underline{u}}_i, \\dots, \\underline{u}_h \\iff \\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h) = \\text{Span}(\\underline{u}_1, \\dots, \\widehat{\\underline{u}}_i, \\dots, \\underline{u}_h)$$</p>
+<p><strong>Definizione (Vettore sovrabbondante).</strong> Se vale la proprietà sopra, il vettore $\\underline{u}_i$ si dice <strong>sovrabbondante</strong> rispetto al sistema $\\underline{u}_1, \\dots, \\underline{u}_h$. Rimuoverlo non cambia lo Span!</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione (⇒): dipendenza implica uguaglianza degli Span",
+                    content: `<p>Assumiamo che $\\underline{u}_i$ dipenda linearmente dagli altri. Per semplicità poniamo $i = 1$:</p>
+<p>$$\\exists\\, (a_2, \\dots, a_h) \\in \\mathbb{R}^{h-1} \\text{ tale che } \\underline{u}_1 = a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h$$</p>
+<p>Questo significa che $\\underline{u}_1 \\in \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h)$. Pertanto l'insieme dei vettori generatori è contenuto nello Span degli altri:</p>
+<p>$$\\{\\underline{u}_1, \\dots, \\underline{u}_h\\} \\subseteq \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h)$$</p>
+<p>E per la proprietà di minimalità dello Span:</p>
+<p>$$\\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h) \\subseteq \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h)$$</p>
+<p>Viceversa, è banale che $\\{\\underline{u}_2, \\dots, \\underline{u}_h\\} \\subseteq \\{\\underline{u}_1, \\dots, \\underline{u}_h\\}$, da cui per monotonia:</p>
+<p>$$\\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h) \\subseteq \\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h)$$</p>
+<p>Avendo dimostrato la <strong>doppia inclusione</strong>, i due Span coincidono:</p>
+<p>$$\\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h) = \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h) \\quad \\square$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione (⇐): uguaglianza degli Span implica dipendenza",
+                    content: `<p>Assumiamo che $\\underline{u}_1$ sia sovrabbondante (per semplicità $i = 1$), ovvero:</p>
+<p>$$\\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h) = \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h)$$</p>
+<p>Poiché $\\underline{u}_1 \\in \\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h)$, abbiamo:</p>
+<p>$$\\underline{u}_1 \\in \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h)$$</p>
+<p>$\\Rightarrow \\underline{u}_1$ è combinazione lineare di $\\underline{u}_2, \\dots, \\underline{u}_h$, cioè dipende linearmente da essi. $\\square$</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-proprieta-6",
+            type: "section",
+            title: "Proprietà 6 — Sottosistemi di un sistema libero",
+            icon: "🧱",
+            content: `<p><strong>Proposizione (Proprietà 6).</strong> Sia $\\underline{u}_1, \\dots, \\underline{u}_h$ un sistema di vettori linearmente indipendenti (libero). Allora:</p>
+<ol>
+<li>$\\underline{u}_i \\neq \\underline{0}$ per ogni $i = 1, \\dots, h$</li>
+<li>$\\underline{u}_i \\neq \\underline{u}_j$ per ogni $i \\neq j$</li>
+<li>Ogni sottoinsieme $S \\subset \\{\\underline{u}_1, \\dots, \\underline{u}_h\\}$ è un sistema libero.</li>
+</ol>
+<p><strong>Il punto 3 è il più forte e implica gli altri due.</strong></p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione del punto 3",
+                    content: `<p>Assumiamo $S = \\{\\underline{u}_1, \\dots, \\underline{u}_k\\}$ (con $k \\lt h$). Sia $(a_1, \\dots, a_k) \\in \\mathbb{R}^k$ tale che:</p>
+<p>$$\\underline{0} = a_1\\underline{u}_1 + \\dots + a_k\\underline{u}_k$$</p>
+<p>Possiamo aggiungere gli altri vettori con coefficiente nullo:</p>
+<p>$$\\underline{0} = a_1\\underline{u}_1 + \\dots + a_k\\underline{u}_k + 0 \\cdot \\underline{u}_{k+1} + \\dots + 0 \\cdot \\underline{u}_h$$</p>
+<p>Vale a dire che $(a_1, \\dots, a_k, 0, \\dots, 0) \\in \\mathbb{R}^h$ è una relazione per $\\underline{u}_1, \\dots, \\underline{u}_h$. Poiché il sistema completo è <strong>libero</strong>, tutti i coefficienti devono essere nulli:</p>
+<p>$$a_1 = \\dots = a_k = 0$$</p>
+<p>Quindi $S$ è libero. $\\square$</p>
+<p><em>Nota:</em> Se $k = 2$, il fatto che $\\{\\underline{u}_1, \\underline{u}_2\\}$ sia libero significa che $\\underline{u}_1$ non è multiplo di $\\underline{u}_2$ e viceversa.</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-proprieta-7",
+            type: "section",
+            title: "Proprietà 7 — Unicità delle coordinate",
+            icon: "🎯",
+            content: `<p><strong>Proposizione (Proprietà 7).</strong> Sia $\\underline{u}_1, \\dots, \\underline{u}_h$ un sistema di vettori linearmente indipendenti. Sia $\\underline{u}$ un vettore linearmente dipendente da $\\underline{u}_1, \\dots, \\underline{u}_h$. Se:</p>
+<p>$$\\underline{u} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = b_1\\underline{u}_1 + \\dots + b_h\\underline{u}_h$$</p>
+<p>allora $a_i = b_i$ per ogni $i = 1, \\dots, h$.</p>
+<p>In altre parole: <strong>rispetto a un sistema libero, le coordinate di un vettore sono uniche</strong>. Questa proprietà è fondamentale per il concetto di coordinate rispetto a una base.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Sottraiamo le due espressioni membro a membro:</p>
+<p>$$\\underline{0} = \\underline{u} - \\underline{u} = (a_1 - b_1)\\underline{u}_1 + \\dots + (a_h - b_h)\\underline{u}_h$$</p>
+<p>Poiché $\\underline{u}_1, \\dots, \\underline{u}_h$ è libero, l'unica combinazione lineare che dà il vettore nullo è quella banale:</p>
+<p>$$a_i - b_i = 0 \\Rightarrow a_i = b_i \\quad \\forall\\, i = 1, \\dots, h \\quad \\square$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-proprieta-8",
+            type: "section",
+            title: "Proprietà 8 — Ultimo vettore dipendente",
+            icon: "🔑",
+            content: `<p><strong>Proposizione (Proprietà 8).</strong> Sia $\\underline{u}_1, \\dots, \\underline{u}_h$ (con $h \\geq 2$) un sistema <strong>legato</strong>, mentre $\\underline{u}_1, \\dots, \\underline{u}_{h-1}$ è <strong>libero</strong>. Allora $\\underline{u}_h$ dipende linearmente da $\\underline{u}_1, \\dots, \\underline{u}_{h-1}$.</p>
+<p>Intuitivamente: se aggiungendo l'ultimo vettore il sistema diventa legato, è proprio quell'ultimo vettore ad essere "di troppo".</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Dato che $\\underline{u}_1, \\dots, \\underline{u}_h$ è legato, $\\exists\\, (a_1, \\dots, a_h) \\in \\mathbb{R}^h$ non banale tale che:</p>
+<p>$$\\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$$</p>
+<p><strong>Supponiamo per assurdo</strong> che $a_h = 0$. Allora:</p>
+<p>$$\\underline{0} = a_1\\underline{u}_1 + \\dots + a_{h-1}\\underline{u}_{h-1}$$</p>
+<p>Ma $\\underline{u}_1, \\dots, \\underline{u}_{h-1}$ è libero, il che implicherebbe $a_i = 0$ per ogni $i = 1, \\dots, h-1$. Questo contraddice l'ipotesi che la combinazione originale sia non banale.</p>
+<p>Di conseguenza <strong>$a_h \\neq 0$</strong>, da cui possiamo isolare l'ultimo vettore:</p>
+<p>$$\\underline{u}_h = \\left(-\\frac{a_1}{a_h}\\right)\\underline{u}_1 + \\dots + \\left(-\\frac{a_{h-1}}{a_h}\\right)\\underline{u}_{h-1} \\quad \\square$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-criterio-sovrabbondanza",
+            type: "alert_box",
+            title: "Criterio di Sovrabbondanza",
+            icon: "⚠️",
+            content: `<p><strong>Osservazione importante.</strong> Sia $\\underline{u}_i$ un vettore del sistema $\\underline{u}_1, \\dots, \\underline{u}_h$. Allora:</p>
+<p>$$\\underline{u}_i \\text{ è sovrabbondante} \\iff \\exists\\, (a_1, \\dots, a_h) \\in \\mathbb{R}^h \\text{ con } a_i \\neq 0 \\text{ tale che } \\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$$</p>
+<p>Questo criterio è la <strong>chiave pratica</strong> per l'algoritmo di scarto: basta trovare una relazione non banale e guardare quali coefficienti sono non nulli. I vettori corrispondenti sono sovrabbondanti e possono essere eliminati.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione (⇒)",
+                    content: `<p>Assumiamo $\\underline{u}_i$ sovrabbondante. Per semplicità $i = 1$:</p>
+<p>$$\\exists\\, (a_2, \\dots, a_h) \\in \\mathbb{R}^{h-1} \\text{ tale che } \\underline{u}_1 = a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h$$</p>
+<p>$$\\Rightarrow \\underline{0} = \\underline{u}_1 - a_2\\underline{u}_2 - \\dots - a_h\\underline{u}_h$$</p>
+<p>Quindi $(1, -a_2, \\dots, -a_h) \\in \\mathbb{R}^h$ è una relazione con il primo peso $\\neq 0$. $\\square$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione (⇐)",
+                    content: `<p>Viceversa, assumiamo $\\exists\\, (a_1, \\dots, a_h) \\in \\mathbb{R}^h$ con $a_1 \\neq 0$ tale che $\\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$. Allora:</p>
+<p>$$\\underline{u}_1 = \\left(-\\frac{a_2}{a_1}\\right)\\underline{u}_2 + \\dots + \\left(-\\frac{a_h}{a_1}\\right)\\underline{u}_h$$</p>
+<p>$\\Rightarrow \\underline{u}_1 \\in \\text{Span}(\\underline{u}_2, \\dots, \\underline{u}_h) \\Rightarrow \\underline{u}_1$ è sovrabbondante. $\\square$</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-esempio-1",
+            type: "section",
+            title: "Esempio 1 — Estrazione di generatori indipendenti",
+            icon: "✂️",
+            content: `<p>Sia $W = \\text{Span}\\big((1, 0, 0),\\; (0, 1, 0),\\; (1, 1, 0)\\big)$.</p>
+<p>Si nota subito che:</p>
+<p>$$(1, 0, 0) + (0, 1, 0) - (1, 1, 0) = (0, 0, 0)$$</p>
+<p>Questo significa che $(1, 1, -1) \\in \\mathbb{R}^3$ è una relazione tra i vettori. Il coefficiente del terzo vettore è $-1 \\neq 0$, perciò l'ultimo vettore è <strong>sovrabbondante</strong> e possiamo eliminarlo senza alterare lo spazio generato.</p>
+<p>Ma attenzione: <strong>tutti e tre i coefficienti sono non nulli</strong>, quindi ciascuno dei tre vettori è sovrabbondante! Possiamo eliminare uno qualsiasi dei tre (ma solo uno alla volta). Le seguenti scritture sono equivalenti:</p>
+<p>$$W = \\text{Span}\\big((1, 0, 0),\\; (0, 1, 0)\\big) = \\text{Span}\\big((1, 0, 0),\\; (1, 1, 0)\\big) = \\text{Span}\\big((0, 1, 0),\\; (1, 1, 0)\\big)$$</p>
+<p>Basta mantenere almeno due di questi vettori.</p>`
+        },
+        {
+            id: "s06-algoritmo-scarto",
+            type: "section",
+            title: "Esempio 2 — L'Algoritmo di Scarto",
+            icon: "🧮",
+            content: `<p>Si consideri:</p>
+<p>$$W = \\text{Span}\\big((1, 1, 1, 1),\\; (1, 1, 1, 2),\\; (0, 0, 0, 1),\\; (3, 3, 3, 4)\\big)$$</p>
+<p><strong>Obiettivo:</strong> determinare un sistema di generatori che sia libero (una base per $W$).</p>`,
+            subsections: [
+                {
+                    subtitle: "Passo 1: Cercare le relazioni",
+                    content: `<p>Cerchiamo $(x, y, z, t) \\in \\mathbb{R}^4$ tale che:</p>
+<p>$$x(1, 1, 1, 1) + y(1, 1, 1, 2) + z(0, 0, 0, 1) + t(3, 3, 3, 4) = (0, 0, 0, 0)$$</p>
+<p>Mettendo a sistema componente per componente (notiamo che le prime tre righe sono identiche):</p>
+<p>$$\\begin{cases} x + y + 3t = 0 \\\\ x + 2y + z + 4t = 0 \\end{cases}$$</p>
+<p>Dalla prima equazione: $x = -3t - y$. Sostituendo nella seconda:</p>
+<p>$$(-3t - y) + 2y + z + 4t = 0 \\Rightarrow y + z + t = 0 \\Rightarrow y = -z - t$$</p>
+<p>Sostituendo $y$ nella prima:</p>
+<p>$$x = -3t - (-z - t) = z - 2t$$</p>
+<p>Le soluzioni sono tutte della forma:</p>
+<p>$$(z - 2t,\\; -z - t,\\; z,\\; t) \\in \\mathbb{R}^4$$</p>
+<p>al variare dei parametri liberi $z$ e $t$. Queste forniscono <strong>infinite relazioni</strong> per i vettori considerati.</p>`
+                },
+                {
+                    subtitle: "Passo 2: Primo scarto",
+                    content: `<p>Ponendo $z = 0$ e $t = 1$, otteniamo la relazione $(-2, -1, 0, 1)$.</p>
+<p>Il quarto vettore ha coefficiente $1 \\neq 0$, ed è quindi <strong>sovrabbondante</strong>. Eliminandolo:</p>
+<p>$$W = \\text{Span}\\big((1, 1, 1, 1),\\; (1, 1, 1, 2),\\; (0, 0, 0, 1)\\big)$$</p>`
+                },
+                {
+                    subtitle: "Passo 3: Secondo scarto",
+                    content: `<p>Ora verifichiamo la dipendenza dei restanti 3 vettori. Dal conto precedente, ponendo $t = 0$ e $z = 1$ otteniamo $(1, -1, 1, 0)$, che è una relazione valida solo tra i primi tre vettori (il quarto ha coefficiente 0).</p>
+<p>In questa relazione il secondo vettore ha coefficiente $-1 \\neq 0$, quindi è anch'esso <strong>sovrabbondante</strong>. Lo scartiamo:</p>
+<p>$$W = \\text{Span}\\big((1, 1, 1, 1),\\; (0, 0, 0, 1)\\big)$$</p>`
+                },
+                {
+                    subtitle: "Conclusione",
+                    content: `<p>I due vettori rimanenti $(1, 1, 1, 1)$ e $(0, 0, 0, 1)$ non sono multipli l'uno dell'altro, quindi il sistema è <strong>libero</strong>.</p>
+<p>In definitiva, $\\{(1, 1, 1, 1),\\; (0, 0, 0, 1)\\}$ è una <strong>base</strong> (sistema di generatori libero) per $W$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s06-riepilogo",
+            type: "note_box",
+            title: "Riepilogo delle Proprietà",
+            icon: "📋",
+            content: `<p>Ecco un quadro sintetico delle proprietà dimostrate in questa lezione:</p>`,
+            table_compare: {
+                headers: ["Proprietà", "Enunciato sintetico"],
+                rows: [
+                    ["P4", "Sistema legato ⟺ almeno un vettore dipende dagli altri"],
+                    ["P5", "Vettore dipendente dagli altri ⟺ è sovrabbondante (lo Span non cambia rimuovendolo)"],
+                    ["P6", "Ogni sottosistema di un sistema libero è libero"],
+                    ["P7", "Le coordinate rispetto a un sistema libero sono uniche"],
+                    ["P8", "Se il sistema è legato ma diventa libero togliendo l'ultimo, allora l'ultimo dipende dai precedenti"]
+                ]
+            }
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quando si dice che un vettore è sovrabbondante rispetto a un sistema?",
+            back: "Un vettore $\\underline{u}_i$ è <strong>sovrabbondante</strong> nel sistema $\\underline{u}_1, \\dots, \\underline{u}_h$ se $\\text{Span}(\\underline{u}_1, \\dots, \\underline{u}_h) = \\text{Span}(\\underline{u}_1, \\dots, \\widehat{\\underline{u}}_i, \\dots, \\underline{u}_h)$, cioè se rimuoverlo non cambia lo spazio generato. Equivalentemente, $\\underline{u}_i$ dipende linearmente dagli altri vettori del sistema."
+        },
+        {
+            type: "domanda",
+            front: "Enunciare e dimostrare la Proprietà 4: caratterizzazione dei sistemi legati.",
+            back: "Il sistema $\\underline{u}_1, \\dots, \\underline{u}_h$ è legato $\\iff$ almeno uno dei vettori dipende linearmente dagli altri. <br><strong>(⇒)</strong> Se il sistema è legato, esiste una relazione non banale $\\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$ con qualche $a_i \\neq 0$. Dividendo per $a_i$ si isola $\\underline{u}_i$ come combinazione degli altri. <br><strong>(⇐)</strong> Se $\\underline{u}_1 = a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h$, allora $(1, -a_2, \\dots, -a_h)$ è una relazione non banale."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostrare che ogni sottosistema di un sistema libero è libero (Proprietà 6, punto 3).",
+            back: "Sia $S = \\{\\underline{u}_1, \\dots, \\underline{u}_k\\}$ con $k \\lt h$. Se $\\underline{0} = a_1\\underline{u}_1 + \\dots + a_k\\underline{u}_k$, si estende con zeri: $(a_1, \\dots, a_k, 0, \\dots, 0)$ è una relazione per il sistema completo $\\underline{u}_1, \\dots, \\underline{u}_h$. Essendo questo libero, tutti i coefficienti sono nulli, in particolare $a_1 = \\dots = a_k = 0$. Quindi $S$ è libero."
+        },
+        {
+            type: "domanda",
+            front: "Perché l'unicità delle coordinate (Proprietà 7) è fondamentale per il concetto di base?",
+            back: "La Proprietà 7 dice che se $\\underline{u}_1, \\dots, \\underline{u}_h$ è libero e $\\underline{u} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = b_1\\underline{u}_1 + \\dots + b_h\\underline{u}_h$, allora $a_i = b_i$ per ogni $i$. Questo garantisce che ogni vettore nello Span ha una <strong>unica</strong> rappresentazione, condizione essenziale per definire le coordinate rispetto a una base."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostrare la Proprietà 7 (unicità delle coordinate rispetto a un sistema libero).",
+            back: "Se $\\underline{u} = \\sum a_i \\underline{u}_i = \\sum b_i \\underline{u}_i$, sottraendo: $\\underline{0} = \\sum (a_i - b_i)\\underline{u}_i$. Poiché il sistema è libero, $a_i - b_i = 0$ per ogni $i$, cioè $a_i = b_i$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostrare la Proprietà 8: se il sistema completo è legato ma quello senza l'ultimo vettore è libero, allora l'ultimo dipende dai precedenti.",
+            back: "Esiste una relazione non banale $\\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$. Se fosse $a_h = 0$, avremmo $\\underline{0} = a_1\\underline{u}_1 + \\dots + a_{h-1}\\underline{u}_{h-1}$ con qualche $a_i \\neq 0$, contraddicendo il fatto che $\\underline{u}_1, \\dots, \\underline{u}_{h-1}$ è libero. Quindi $a_h \\neq 0$ e si isola: $\\underline{u}_h = \\sum_{i=1}^{h-1} (-a_i/a_h)\\underline{u}_i$."
+        },
+        {
+            type: "tranello",
+            front: "Se un vettore è sovrabbondante in un sistema, significa che è il vettore nullo?",
+            back: "<strong>No!</strong> Sovrabbondante non significa nullo. Un vettore sovrabbondante è semplicemente uno che si può esprimere come combinazione lineare degli altri. Ad esempio, nel sistema $\\{(1,0,0),\\; (0,1,0),\\; (1,1,0)\\}$, il vettore $(1,1,0)$ è sovrabbondante ma non è il vettore nullo."
+        },
+        {
+            type: "formula",
+            front: "Qual è il criterio pratico di sovrabbondanza?",
+            back: "$\\underline{u}_i$ è sovrabbondante $\\iff$ esiste una relazione $\\underline{0} = a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h$ con $a_i \\neq 0$. In pratica: si trovano tutte le relazioni, e i vettori con coefficiente non nullo in almeno una relazione sono sovrabbondanti e possono essere scartati (uno alla volta)."
+        },
+        {
+            type: "domanda",
+            front: "Descrivere l'algoritmo di scarto per trovare una base di uno Span.",
+            back: "1) Si cercano tutte le relazioni tra i vettori generatori (risolvendo un sistema lineare omogeneo). 2) Si sceglie una relazione e si individua un vettore con coefficiente non nullo: è sovrabbondante. 3) Lo si elimina. 4) Si ripete fino a quando non ci sono più relazioni non banali tra i vettori rimasti. Il sistema risultante è libero e genera lo stesso Span: è una base."
+        },
+        {
+            type: "tranello",
+            front: "Nell'algoritmo di scarto, si possono eliminare più vettori sovrabbondanti contemporaneamente dalla stessa relazione?",
+            back: "<strong>Attenzione!</strong> In una stessa relazione, più vettori possono avere coefficiente non nullo, ma conviene eliminarne <strong>uno alla volta</strong> e poi ricalcolare le relazioni. Eliminarne più di uno simultaneamente potrebbe ridurre troppo lo Span. Nell'esempio della lezione, dalla relazione $(1, 1, -1)$ su tre vettori, si può eliminare uno qualsiasi dei tre, ma non due."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

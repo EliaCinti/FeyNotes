@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 5 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 5: Spazi Geometrici Finitamente Generabili e Indipendenza Lineare. Dimostrazione grafica che gli spazi vettoriali geometrici (1D, 2D, 3D) sono finitamente generabili. Metodo algebrico per trovare generatori di sottospazi definiti da equazioni. Definizione rigorosa di indipendenza e dipendenza lineare, con catalogo completo delle proprietà e caratterizzazione fondamentale.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 5: Spazi Geometrici Finitamente Generabili e Indipendenza Lineare — Geometria">
+  <meta property="og:description" content="Dimostrazione grafica che gli spazi vettoriali geometrici (1D, 2D, 3D) sono finitamente generabili. Metodo algebrico per trovare generatori di sottospazi definiti da equazioni. Definizione rigorosa di indipendenza e dipendenza lineare, con catalogo completo delle proprietà e caratterizzazione fondamentale.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L05/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L05/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 5 — Spazi Geometrici Finitamente Generabili e Indipendenza Lineare",
+  "description": "Dimostrazione grafica che gli spazi vettoriali geometrici (1D, 2D, 3D) sono finitamente generabili. Metodo algebrico per trovare generatori di sottospazi definiti da equazioni. Definizione rigorosa di indipendenza e dipendenza lineare, con catalogo completo delle proprietà e caratterizzazione fondamentale.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L05/",
+  "datePublished": "2026-03-10",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 5</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L04/">← Prec.</a>
+      <a href="/geometria/lezioni/L06/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L05", date: "Lezione 05 — 10 Mar 2026",
+    title: "Spazi Geometrici Finitamente Generabili e Indipendenza Lineare",
+    abstract: "Dimostrazione grafica che gli spazi vettoriali geometrici (1D, 2D, 3D) sono finitamente generabili. Metodo algebrico per trovare generatori di sottospazi definiti da equazioni. Definizione rigorosa di indipendenza e dipendenza lineare, con catalogo completo delle proprietà e caratterizzazione fondamentale.",
+
+    sections: [
+        {
+            id: "s05-spazi-geometrici-finitamente-generabili",
+            type: "section",
+            title: "Gli Spazi Geometrici Sono Finitamente Generabili",
+            icon: "📐",
+            content: `<p>Il tema di apertura è dimostrare (graficamente) che gli spazi dei vettori geometrici — su una retta, su un piano e nello spazio tridimensionale — sono tutti <strong>finitamente generabili</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Vettori su una retta (1D)",
+                    content: `<p>Sia $\\ell$ una retta passante per l'origine $O$ nello spazio fisico $\\mathcal{E}$. Lo spazio dei vettori su $\\ell$ è:</p>
+<p>$$\\mathcal{V}_{O,\\ell} = \\{\\overrightarrow{OP} : P \\in \\ell\\}$$</p>
+<p>ed è un sottospazio vettoriale di $\\mathcal{V}_O$.</p>
+<p>Fissiamo un punto $E \\in \\ell$ con $E \\neq O$. Allora:</p>
+<p>$$\\mathcal{V}_{O,\\ell} = \\text{Span}(\\overrightarrow{OE})$$</p>
+<p>Ogni vettore $\\overrightarrow{OP}$ sulla retta è un multiplo di $\\overrightarrow{OE}$:</p>
+<p>$$\\overrightarrow{OP} = x \\cdot \\overrightarrow{OE}$$</p>
+<p>dove $x$ è il rapporto tra la lunghezza di $\\overrightarrow{OP}$ e quella di $\\overrightarrow{OE}$, con il segno determinato dal verso: $x \\gt 0$ se $\\overrightarrow{OP}$ e $\\overrightarrow{OE}$ hanno lo stesso verso, $x \\lt 0$ se hanno verso opposto.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Vettori su una retta</strong></p>
+  <p><em>Retta $\\ell$ passante per l'origine $O$, con il vettore base $\\overrightarrow{OE}$ e un generico vettore $\\overrightarrow{OP} = x \\cdot \\overrightarrow{OE}$ più lungo, nella stessa direzione.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+                },
+                {
+                    subtitle: "Vettori su un piano (2D)",
+                    content: `<p>Sia $\\rho$ un piano passante per $O$. Fissiamo due punti $E_1, E_2 \\in \\rho$ tali che $O, E_1, E_2$ <strong>non siano allineati</strong> (cioè $\\overrightarrow{OE_1}$ e $\\overrightarrow{OE_2}$ non hanno la stessa direzione). Allora:</p>
+<p>$$\\mathcal{V}_{O,\\rho} = \\text{Span}(\\overrightarrow{OE_1}, \\overrightarrow{OE_2})$$</p>
+<p>Ogni vettore $\\overrightarrow{OP}$ nel piano può essere scritto come:</p>
+<p>$$\\overrightarrow{OP} = x_1\\overrightarrow{OE_1} + x_2\\overrightarrow{OE_2}$$</p>
+<p><strong>Dimostrazione geometrica:</strong> dato un qualunque punto $P$ nel piano, si tracciano le parallele alle direzioni di $\\overrightarrow{OE_1}$ e $\\overrightarrow{OE_2}$ passanti per $P$. Queste parallele intersecano gli assi definiti da $\\overrightarrow{OE_1}$ e $\\overrightarrow{OE_2}$ in due punti, le cui «coordinate» lungo gli assi forniscono i pesi $x_1$ e $x_2$ della combinazione lineare (<strong>regola del parallelogramma</strong>).</p>`
+                },
+                {
+                    subtitle: "Vettori nello spazio (3D)",
+                    content: `<p>Fissiamo tre punti $E_1, E_2, E_3 \\in \\mathcal{E}$ tali che $O, E_1, E_2, E_3$ <strong>non siano complanari</strong>. Allora:</p>
+<p>$$\\mathcal{V}_O = \\text{Span}(\\overrightarrow{OE_1}, \\overrightarrow{OE_2}, \\overrightarrow{OE_3})$$</p>
+<p>Ogni vettore $\\overrightarrow{OP} \\in \\mathcal{V}_O$ si scrive:</p>
+<p>$$\\overrightarrow{OP} = x_1\\overrightarrow{OE_1} + x_2\\overrightarrow{OE_2} + x_3\\overrightarrow{OE_3}$$</p>
+<p><strong>Procedura di scomposizione:</strong></p>
+<ol>
+<li>Si considera il piano $\\rho$ passante per $O$ contenente $\\overrightarrow{OE_1}$ e $\\overrightarrow{OE_2}$, e la retta per $O$ con direzione $\\overrightarrow{OE_3}$.</li>
+<li>Si proietta $P$ sul piano $\\rho$ (parallelamente a $\\overrightarrow{OE_3}$), ottenendo un punto $H$.</li>
+<li>Si decompone: $\\overrightarrow{OP} = \\overrightarrow{OH} + \\overrightarrow{OX_3}$, dove $\\overrightarrow{OX_3} = x_3\\overrightarrow{OE_3}$.</li>
+<li>La componente planare $\\overrightarrow{OH}$ viene ulteriormente scomposta lungo $\\overrightarrow{OE_1}$ e $\\overrightarrow{OE_2}$ come nel caso 2D.</li>
+</ol>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Scomposizione 3D</strong></p>
+  <p><em>Tre assi non complanari $\\overrightarrow{OE_1}$, $\\overrightarrow{OE_2}$, $\\overrightarrow{OE_3}$. Punto $P$ nello spazio, proiezione $H$ sul piano $\\rho$ (parallela a $\\overrightarrow{OE_3}$). Parallelepipedo tratteggiato che mostra la scomposizione $\\overrightarrow{OP} = \\overrightarrow{OX_1} + \\overrightarrow{OX_2} + \\overrightarrow{OX_3}$.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+                }
+            ],
+            table_compare: {
+                headers: ["Spazio geometrico", "Generatori necessari", "Condizione"],
+                rows: [
+                    ["Retta per $O$", "1 vettore non nullo", "—"],
+                    ["Piano per $O$", "2 vettori", "non allineati"],
+                    ["Spazio 3D", "3 vettori", "non complanari"]
+                ]
+            }
+        },
+        {
+            id: "s05-assenza-canonicita",
+            type: "note_box",
+            title: "Assenza di canonicità negli spazi geometrici",
+            icon: "⚠️",
+            content: `<p>A differenza di $\\mathbb{R}^n$ (che ha i vettori canonici $\\underline{e}_1, \\dots, \\underline{e}_n$), negli spazi geometrici <strong>non esiste un generatore «naturale»</strong>. La scelta di $E$ sulla retta è completamente arbitraria: anche fissando una lunghezza unitaria, resta l'ambiguità del verso (destra o sinistra). Questa è una <strong>differenza fondamentale</strong> tra spazi geometrici e spazi numerici.</p>`
+        },
+        {
+            id: "s05-nota-piano",
+            type: "note_box",
+            title: "Osservazione chiave sul piano",
+            icon: "💡",
+            content: `<p>Un piano <strong>non</strong> può essere generato con meno di due vettori: un singolo vettore genera solo una retta. Servono almeno due vettori non allineati.</p>`
+        },
+        {
+            id: "s05-applicazione-algebrica",
+            type: "section",
+            title: "Applicazione Algebrica: Trovare Generatori di un Sottospazio",
+            icon: "🔧",
+            content: `<p><strong>Esercizio:</strong> Sia $W = \\{(x_1, x_2, x_3) \\in \\mathbb{R}^3 : x_1 - 3x_2 + 5x_3 = 0\\}$. Provare che $W$ è un sottospazio finitamente generabile di $\\mathbb{R}^3$ e trovare un sistema finito di generatori.</p>
+<p><strong>Osservazione preliminare:</strong> Alcuni vettori che stanno in $W$: $(0, 0, 0)$, $(3, 1, 0)$, $(0, 1, \\frac{3}{5})$, ecc. Invece $(1, 1, 1) \\notin W$ perché $1 - 3 + 5 = 3 \\neq 0$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Svolgimento",
+                    content: `<p>Dall'equazione $x_1 - 3x_2 + 5x_3 = 0$ ricaviamo la variabile $x_1$ in funzione delle altre (<em>variabili libere</em>):</p>
+<p>$$x_1 = 3x_2 - 5x_3$$</p>
+<p>Quindi un generico vettore di $W$ ha la forma:</p>
+<p>$$\\underline{x} = (3x_2 - 5x_3, \\; x_2, \\; x_3) \\qquad \\text{con } x_2, x_3 \\in \\mathbb{R}$$</p>
+<p>Separiamo le variabili libere:</p>
+<p>$$\\underline{x} = (3x_2, \\; x_2, \\; 0) + (-5x_3, \\; 0, \\; x_3) = x_2(3, 1, 0) + x_3(-5, 0, 1)$$</p>
+<p>Concludiamo:</p>
+<p>$$\\underline{x} \\in W \\iff \\exists \\, x_2, x_3 \\in \\mathbb{R} : \\underline{x} = x_2(3, 1, 0) + x_3(-5, 0, 1)$$</p>
+<p>ovvero:</p>
+<p>$$W = \\text{Span}\\big((3, 1, 0), \\; (-5, 0, 1)\\big)$$</p>
+<p>Essendo uno span di un insieme finito, $W$ è un sottospazio vettoriale finitamente generabile.</p>`
+                },
+                {
+                    subtitle: "Metodo generale per trovare i generatori",
+                    content: `<ol>
+<li>Dall'equazione, esprimi una variabile (<em>dipendente</em>) in funzione delle altre (<em>libere</em>).</li>
+<li>Scrivi il vettore generico di $W$ in funzione delle variabili libere.</li>
+<li>Separa i contributi di ciascuna variabile libera: ogni variabile libera «tira fuori» un generatore.</li>
+<li>Il sottospazio è lo span di questi generatori.</li>
+</ol>`
+                }
+            ],
+            formulas: [
+                { label: "Generatori di W", latex: "W = \\text{Span}\\big((3, 1, 0), \\; (-5, 0, 1)\\big)" }
+            ]
+        },
+        {
+            id: "s05-indipendenza-lineare",
+            type: "section",
+            title: "Sistemi di Vettori Linearmente Indipendenti",
+            icon: "🔗",
+            content: `<p>Introduciamo ora il concetto fondamentale di <strong>indipendenza lineare</strong>, motivato dal problema dei vettori sovrabbondanti.</p>`,
+            subsections: [
+                {
+                    subtitle: "Motivazione: vettori sovrabbondanti",
+                    content: `<p>Consideriamo $W = \\text{Span}\\big((1, 1, 2), \\; (0, 2, 3), \\; (1, 3, 5)\\big)$. Se $\\underline{w} \\in W$:</p>
+<p>$$\\underline{w} = a(1, 1, 2) + b(0, 2, 3) + c(1, 3, 5)$$</p>
+<p>Ma notiamo che $(1, 3, 5) = (1, 1, 2) + (0, 2, 3)$. Quindi:</p>
+<p>$$\\underline{w} = a(1, 1, 2) + b(0, 2, 3) + c\\big((1, 1, 2) + (0, 2, 3)\\big) = (a + c)(1, 1, 2) + (b + c)(0, 2, 3)$$</p>
+<p>Il vettore $(1, 3, 5)$ è <strong>sovrabbondante</strong>: si può rimuovere senza cambiare lo span! Si ha quindi $W = \\text{Span}\\big((1, 1, 2), \\; (0, 2, 3)\\big)$.</p>
+<p>Questo fenomeno motiva la necessità di definire formalmente quando un sistema contiene vettori «di troppo».</p>`
+                },
+                {
+                    subtitle: "Definizione di relazione",
+                    content: `<p>Siano $\\underline{u}_1, \\underline{u}_2, \\dots, \\underline{u}_h \\in V$ e siano $a_1, a_2, \\dots, a_h \\in \\mathbb{R}$. Se:</p>
+<p>$$a_1\\underline{u}_1 + a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h = \\underline{0}$$</p>
+<p>allora la $h$-upla $(a_1, a_2, \\dots, a_h) \\in \\mathbb{R}^h$ si dice una <strong>relazione</strong> per i vettori $\\underline{u}_1, \\dots, \\underline{u}_h$.</p>
+<p>La $h$-upla $(0, 0, \\dots, 0)$ è sempre una relazione (basta verificare: $0\\underline{u}_1 + 0\\underline{u}_2 + \\dots + 0\\underline{u}_h = \\underline{0}$). Questa si chiama la <strong>relazione banale</strong> ed esiste per <em>qualunque</em> sistema di vettori.</p>`
+                },
+                {
+                    subtitle: "Indipendenza e dipendenza lineare",
+                    content: `<p>Sia $\\mathcal{U} = \\{\\underline{u}_1, \\underline{u}_2, \\dots, \\underline{u}_h\\}$ un sistema di vettori in $V$.</p>
+<p>$\\mathcal{U}$ è <strong>linearmente indipendente</strong> (l.i., o <strong>sistema libero</strong>) se l'unica relazione è quella banale:</p>
+<p>$$a_1\\underline{u}_1 + a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h = \\underline{0} \\Rightarrow a_1 = a_2 = \\dots = a_h = 0$$</p>
+<p>$\\mathcal{U}$ è <strong>linearmente dipendente</strong> (l.d., o <strong>sistema legato</strong>) se esiste almeno una relazione non banale, cioè se esistono $a_1, \\dots, a_h$ <strong>non tutti nulli</strong> tali che:</p>
+<p>$$a_1\\underline{u}_1 + a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h = \\underline{0}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Sistema libero (l.i.)", latex: "a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0} \\Rightarrow a_1 = \\dots = a_h = 0" },
+                { label: "Sistema legato (l.d.)", latex: "\\exists \\, (a_1, \\dots, a_h) \\neq (0, \\dots, 0) : a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}" }
+            ],
+            extra_content: `<p><strong>Come leggere la definizione:</strong></p>
+<ul>
+<li>Per dimostrare che un sistema è <strong>l.i.</strong>: parti da $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}$ e deduci che necessariamente $a_1 = a_2 = \\dots = a_h = 0$.</li>
+<li>Per dimostrare che un sistema è <strong>l.d.</strong>: trova una relazione $(a_1, \\dots, a_h) \\neq (0, \\dots, 0)$ tale che $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}$.</li>
+</ul>`
+        },
+        {
+            id: "s05-esempi-liberi-legati",
+            type: "section",
+            title: "Esempi di Sistemi Liberi e Legati",
+            icon: "🧪",
+            content: `<p>Vediamo alcuni esempi concreti per consolidare le definizioni.</p>`,
+            subsections: [
+                {
+                    subtitle: "Sistema legato in ℝ³",
+                    content: `<p>$\\underline{u}_1 = (1, 1, 2)$, $\\underline{u}_2 = (0, 2, 3)$, $\\underline{u}_3 = (1, 3, 5)$.</p>
+<p>Verifica:</p>
+<p>$$1 \\cdot (1, 1, 2) + 1 \\cdot (0, 2, 3) + (-1)(1, 3, 5) = (1 + 0 - 1, \\; 1 + 2 - 3, \\; 2 + 3 - 5) = (0, 0, 0)$$</p>
+<p>La terna $(1, 1, -1)$ è una relazione non banale. Quindi il sistema è <strong>legato</strong>.</p>`
+                },
+                {
+                    subtitle: "Sistema legato in ℝ²",
+                    content: `<p>$(1, 0)$, $(2, 0)$, $(0, 1)$, $(-7, 0)$.</p>
+<p>Verifica:</p>
+<p>$$1 \\cdot (1, 0) + 3 \\cdot (2, 0) + 0 \\cdot (0, 1) + 1 \\cdot (-7, 0) = (1 + 6 + 0 - 7, \\; 0) = (0, 0)$$</p>
+<p>La $4$-upla $(1, 3, 0, 1)$ è una relazione non banale. Quindi il sistema è <strong>legato</strong>.</p>`
+                },
+                {
+                    subtitle: "Presenza del vettore nullo",
+                    content: `<p>Se un sistema contiene il vettore nullo $\\underline{0}$, è <strong>sempre legato</strong>. Infatti, basta dare peso $1$ al vettore nullo e $0$ a tutti gli altri:</p>
+<p>$$0 \\cdot \\underline{u}_1 + \\dots + 1 \\cdot \\underline{0} + \\dots + 0 \\cdot \\underline{u}_h = \\underline{0}$$</p>
+<p>Questa è una relazione non banale (il coefficiente del vettore nullo è $1 \\neq 0$).</p>`
+                }
+            ]
+        },
+        {
+            id: "s05-catalogo-proprieta",
+            type: "section",
+            title: "Catalogo delle Proprietà",
+            icon: "📋",
+            content: `<p>Il professore ha elencato una serie di proprietà-tipo che è <strong>essenziale conoscere</strong>. Le raccogliamo in modo sistematico.</p>`,
+            subsections: [
+                {
+                    subtitle: "Casi base",
+                    content: `<p><strong>Proprietà 1:</strong> Il sistema vuoto $\\emptyset$ è, per definizione, <strong>linearmente indipendente</strong>.</p>
+<p><strong>Proprietà 2:</strong> Un sistema con un solo vettore $\\{\\underline{u}\\}$:</p>
+<p>$$\\{\\underline{u}\\} \\text{ è legato} \\iff \\underline{u} = \\underline{0} \\qquad \\qquad \\{\\underline{u}\\} \\text{ è libero} \\iff \\underline{u} \\neq \\underline{0}$$</p>
+<p><strong>Proprietà 3:</strong> Un sistema con due vettori $\\{\\underline{u}, \\underline{v}\\}$:</p>
+<p>$$\\{\\underline{u}, \\underline{v}\\} \\text{ è legato} \\iff \\text{almeno uno dei due è multiplo dell'altro}$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 2",
+                    content: `<p><strong>$(\\Rightarrow)$</strong> Se $\\{\\underline{u}\\}$ è legato, esiste $a \\neq 0$ tale che $a\\underline{u} = \\underline{0}$. Poiché $a \\neq 0$, possiamo dividere: $\\underline{u} = \\frac{1}{a} \\cdot \\underline{0} = \\underline{0}$.</p>
+<p><strong>$(\\Leftarrow)$</strong> Se $\\underline{u} = \\underline{0}$, allora $1 \\cdot \\underline{u} = 1 \\cdot \\underline{0} = \\underline{0}$, e $(1)$ è una relazione non banale.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 3",
+                    content: `<p><strong>$(\\Rightarrow)$</strong> Se $\\{\\underline{u}, \\underline{v}\\}$ è legato, esiste una relazione $(a_1, a_2) \\neq (0, 0)$ con $a_1\\underline{u} + a_2\\underline{v} = \\underline{0}$.</p>
+<p>Se $a_1 \\neq 0$: $\\underline{u} = -\\frac{a_2}{a_1}\\underline{v}$, quindi $\\underline{u}$ è multiplo di $\\underline{v}$.</p>
+<p>Se $a_1 = 0$: allora $a_2 \\neq 0$ (perché non è la relazione banale), e $a_2\\underline{v} = \\underline{0}$, da cui $\\underline{v} = \\underline{0}$, che è multiplo di qualunque vettore.</p>
+<p><strong>$(\\Leftarrow)$</strong> Supponiamo $\\underline{v} = c \\cdot \\underline{u}$. Allora:</p>
+<p>$$\\underline{v} - c\\underline{u} = \\underline{0} \\Rightarrow (-c)\\underline{u} + 1 \\cdot \\underline{v} = \\underline{0}$$</p>
+<p>La coppia $(-c, 1)$ è una relazione non banale (il secondo coefficiente è $1 \\neq 0$).</p>`
+                },
+                {
+                    subtitle: "Condizioni sufficienti per la dipendenza",
+                    content: `<ul>
+<li>Se il sistema contiene il vettore nullo $\\underline{0}$, è <strong>sempre legato</strong>.</li>
+<li>Se un vettore del sistema è combinazione lineare degli altri, il sistema è <strong>legato</strong>. (Es: se $\\underline{w} = 3\\underline{u} - 5\\underline{v}$, allora $-3\\underline{u} + 5\\underline{v} + 1 \\cdot \\underline{w} = \\underline{0}$, e $(-3, 5, 1)$ è una relazione non banale.)</li>
+<li>I vettori canonici (in $\\mathbb{R}^n$, nelle matrici, nei polinomi) sono <strong>sempre l.i.</strong></li>
+<li>Se il sistema contiene due vettori uguali ($\\underline{u}_i = \\underline{u}_j$ con $i \\neq j$), è <strong>legato</strong>.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Interpretazione geometrica",
+                    content: `<ul>
+<li>$\\{\\overrightarrow{OP}, \\overrightarrow{OQ}\\}$ è legato $\\iff$ i punti $O, P, Q$ sono <strong>allineati</strong>.</li>
+<li>$\\{\\overrightarrow{OP}, \\overrightarrow{OQ}, \\overrightarrow{OR}\\}$ è legato $\\iff$ i punti $O, P, Q, R$ sono <strong>complanari</strong>.</li>
+</ul>
+<p><strong>Intuizione geometrica:</strong> Due vettori sono dipendenti quando «puntano nella stessa direzione» (giacciono sulla stessa retta). Tre vettori sono dipendenti quando «giacciono sullo stesso piano». In entrambi i casi, uno dei vettori è «di troppo» perché non aggiunge una nuova direzione indipendente.</p>`
+                }
+            ]
+        },
+        {
+            id: "s05-caratterizzazione-fondamentale",
+            type: "section",
+            title: "La Caratterizzazione Fondamentale (Proprietà 4)",
+            icon: "⭐",
+            content: `<p><strong>Proposizione:</strong> Sia $\\mathcal{U} = \\{\\underline{u}_1, \\underline{u}_2, \\dots, \\underline{u}_h\\}$ un sistema di vettori in $V$. Allora:</p>
+<p>$$\\mathcal{U} \\text{ è legato} \\iff \\exists \\, \\underline{u}_i \\in \\mathcal{U} \\text{ tale che } \\underline{u}_i \\text{ è combinazione lineare dei rimanenti } \\underline{u}_1, \\dots, \\widehat{\\underline{u}}_i, \\dots, \\underline{u}_h$$</p>
+<p>dove $\\widehat{\\underline{u}}_i$ indica che $\\underline{u}_i$ è stato rimosso dal sistema.</p>`,
+            subsections: [
+                {
+                    subtitle: "Significato della proprietà",
+                    content: `<p>Un sistema è legato se e solo se <strong>almeno uno</strong> dei vettori è «di troppo», nel senso che si può esprimere come combinazione degli altri. Questo è il vettore <strong>sovrabbondante</strong>: si può eliminare senza cambiare lo span del sistema.</p>
+<p>Viceversa, un sistema è libero se e solo se <strong>nessun</strong> vettore è combinazione lineare degli altri: ogni vettore «aggiunge qualcosa di nuovo» allo span.</p>`
+                },
+                {
+                    subtitle: "Idea della dimostrazione",
+                    content: `<p><strong>$(\\Rightarrow)$</strong> Se il sistema è legato, esiste una relazione non banale $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}$ con almeno un $a_i \\neq 0$. Isolando $\\underline{u}_i$:</p>
+<p>$$\\underline{u}_i = -\\frac{a_1}{a_i}\\underline{u}_1 - \\dots - \\frac{a_{i-1}}{a_i}\\underline{u}_{i-1} - \\frac{a_{i+1}}{a_i}\\underline{u}_{i+1} - \\dots - \\frac{a_h}{a_i}\\underline{u}_h$$</p>
+<p><strong>$(\\Leftarrow)$</strong> Se $\\underline{u}_i$ è combinazione lineare degli altri: $\\underline{u}_i = b_1\\underline{u}_1 + \\dots + b_h\\underline{u}_h$ (senza il termine $i$), allora:</p>
+<p>$$b_1\\underline{u}_1 + \\dots + (-1)\\underline{u}_i + \\dots + b_h\\underline{u}_h = \\underline{0}$$</p>
+<p>e il coefficiente $-1$ davanti a $\\underline{u}_i$ è $\\neq 0$, quindi è una relazione non banale.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Caratterizzazione dipendenza", latex: "\\mathcal{U} \\text{ legato} \\iff \\exists \\, \\underline{u}_i \\text{ c.l. dei rimanenti}" }
+            ]
+        },
+        {
+            id: "s05-checklist",
+            type: "alert_box",
+            title: "Checklist: libero o legato?",
+            icon: "✅",
+            content: `<p>Dato un sistema $\\mathcal{U} = \\{\\underline{u}_1, \\dots, \\underline{u}_h\\}$, per decidere se è libero o legato:</p>
+<p><strong>Test rapidi</strong> (prima di fare calcoli):</p>
+<ul>
+<li>C'è il vettore nullo? $\\Rightarrow$ legato.</li>
+<li>Ci sono vettori ripetuti? $\\Rightarrow$ legato.</li>
+<li>Un vettore è visibilmente combinazione degli altri? $\\Rightarrow$ legato.</li>
+<li>Sono vettori canonici? $\\Rightarrow$ libero.</li>
+<li>Un solo vettore non nullo? $\\Rightarrow$ libero.</li>
+<li>Due vettori: uno è multiplo dell'altro? Se sì $\\Rightarrow$ legato; se no $\\Rightarrow$ libero.</li>
+</ul>
+<p><strong>Test formale</strong> (se i test rapidi non bastano):</p>
+<ol>
+<li>Scrivi l'equazione $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}$.</li>
+<li>Traduci in un sistema lineare omogeneo nelle incognite $a_1, \\dots, a_h$.</li>
+<li>Risolvi:
+<ul>
+<li>Se l'unica soluzione è $(0, \\dots, 0)$ $\\Rightarrow$ <strong>libero</strong>.</li>
+<li>Se esistono soluzioni non banali $\\Rightarrow$ <strong>legato</strong>.</li>
+</ul>
+</li>
+</ol>`
+        },
+        {
+            id: "s05-mappa-concetti",
+            type: "section",
+            title: "Mappa dei Concetti",
+            icon: "🗺️",
+            content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 3 — Mappa concettuale: Libero vs Legato</strong></p>
+  <p><em>Albero con radice «Sistema di vettori $\\underline{u}_1, \\dots, \\underline{u}_h$». Due rami: a sinistra «Libero (l.i.) — unica relazione: banale — nessun $\\underline{u}_i$ è c.l. degli altri». A destra «Legato (l.d.) — esiste relazione non banale — esiste $\\underline{u}_i$ c.l. degli altri — $\\underline{u}_i$ è sovrabbondante».</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cosa si intende per sistema linearmente indipendente (sistema libero)?",
+            back: "Un sistema $\\{\\underline{u}_1, \\dots, \\underline{u}_h\\}$ è linearmente indipendente se l'unica relazione è quella banale: $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0} \\Rightarrow a_1 = \\dots = a_h = 0$."
+        },
+        {
+            type: "definizione",
+            front: "Cosa si intende per sistema linearmente dipendente (sistema legato)?",
+            back: "Un sistema è linearmente dipendente se esistono coefficienti $a_1, \\dots, a_h$ **non tutti nulli** tali che $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}$. Cioè esiste almeno una relazione non banale."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è una relazione per un sistema di vettori?",
+            back: "Data $a_1\\underline{u}_1 + a_2\\underline{u}_2 + \\dots + a_h\\underline{u}_h = \\underline{0}$, la $h$-upla $(a_1, a_2, \\dots, a_h) \\in \\mathbb{R}^h$ si dice una **relazione** per i vettori. La relazione $(0, \\dots, 0)$ si chiama relazione banale e esiste sempre."
+        },
+        {
+            type: "domanda",
+            front: "Enuncia la caratterizzazione fondamentale della dipendenza lineare (Proprietà 4).",
+            back: "Un sistema $\\{\\underline{u}_1, \\dots, \\underline{u}_h\\}$ è legato se e solo se esiste almeno un $\\underline{u}_i$ che è combinazione lineare dei rimanenti vettori del sistema. Equivalentemente: è libero se e solo se nessun vettore è c.l. degli altri."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che se un singolo vettore forma un sistema legato, allora è il vettore nullo.",
+            back: "Se $\\{\\underline{u}\\}$ è legato, esiste $a \\neq 0$ con $a\\underline{u} = \\underline{0}$. Poiché $a \\neq 0$, moltiplichiamo per $\\frac{1}{a}$: $\\underline{u} = \\frac{1}{a} \\cdot \\underline{0} = \\underline{0}$. Viceversa, se $\\underline{u} = \\underline{0}$, allora $1 \\cdot \\underline{u} = \\underline{0}$ è una relazione non banale."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che due vettori sono linearmente dipendenti se e solo se uno è multiplo dell'altro.",
+            back: "$(\\Rightarrow)$ Se legato, $\\exists (a_1, a_2) \\neq (0,0)$ con $a_1\\underline{u} + a_2\\underline{v} = \\underline{0}$. Se $a_1 \\neq 0$: $\\underline{u} = -\\frac{a_2}{a_1}\\underline{v}$. Se $a_1 = 0$: allora $a_2 \\neq 0$ e $\\underline{v} = \\underline{0}$, multiplo di ogni vettore. $(\\Leftarrow)$ Se $\\underline{v} = c\\underline{u}$, allora $(-c)\\underline{u} + 1 \\cdot \\underline{v} = \\underline{0}$, relazione non banale."
+        },
+        {
+            type: "tranello",
+            front: "Perché la presenza del vettore nullo rende automaticamente un sistema legato?",
+            back: "Perché basta assegnare coefficiente $1$ al vettore nullo e $0$ a tutti gli altri: $0\\underline{u}_1 + \\dots + 1 \\cdot \\underline{0} + \\dots + 0\\underline{u}_h = \\underline{0}$. Questa è una relazione non banale (il coefficiente $1 \\neq 0$). Attenzione: questo vale anche se tutti gli altri vettori sono indipendenti tra loro!"
+        },
+        {
+            type: "domanda",
+            front: "Come si trovano i generatori di un sottospazio definito da un'equazione lineare (es. $x_1 - 3x_2 + 5x_3 = 0$)?",
+            back: "1) Si esprime la variabile dipendente in funzione delle libere: $x_1 = 3x_2 - 5x_3$. 2) Si scrive il vettore generico: $(3x_2 - 5x_3, x_2, x_3)$. 3) Si separa per variabile libera: $x_2(3,1,0) + x_3(-5,0,1)$. 4) I generatori sono $(3,1,0)$ e $(-5,0,1)$, e $W = \\text{Span}((3,1,0),(-5,0,1))$."
+        },
+        {
+            type: "domanda",
+            front: "Quanti generatori servono per lo spazio dei vettori geometrici su una retta, un piano e lo spazio 3D?",
+            back: "Retta: 1 vettore non nullo. Piano: 2 vettori non allineati. Spazio 3D: 3 vettori non complanari. Nota: negli spazi geometrici non esiste una scelta canonica dei generatori, a differenza di $\\mathbb{R}^n$."
+        },
+        {
+            type: "formula",
+            front: "Come si verifica formalmente se un sistema è libero o legato?",
+            back: "Si imposta $a_1\\underline{u}_1 + \\dots + a_h\\underline{u}_h = \\underline{0}$ e si traduce in un sistema lineare omogeneo nelle incognite $a_1, \\dots, a_h$. Se l'unica soluzione è $(0, \\dots, 0)$ il sistema è **libero**; se esistono soluzioni non banali è **legato**."
+        },
+        {
+            type: "domanda",
+            front: "Qual è l'interpretazione geometrica della dipendenza lineare per 2 e 3 vettori geometrici?",
+            back: "$\\{\\overrightarrow{OP}, \\overrightarrow{OQ}\\}$ è legato $\\iff$ $O, P, Q$ sono allineati (stessa direzione). $\\{\\overrightarrow{OP}, \\overrightarrow{OQ}, \\overrightarrow{OR}\\}$ è legato $\\iff$ $O, P, Q, R$ sono complanari. In ogni caso, un vettore è «di troppo» perché non aggiunge una nuova direzione."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

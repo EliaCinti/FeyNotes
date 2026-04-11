@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 7 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 7: Basi, Lemma di Steinitz e Dimensione. Definizione rigorosa di base di uno spazio vettoriale, dimostrazione del Lemma di Steinitz (sostitutivo) per assurdo, e introduzione del concetto di dimensione con le sue proprietà equivalenti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 7: Basi, Lemma di Steinitz e Dimensione — Geometria">
+  <meta property="og:description" content="Definizione rigorosa di base di uno spazio vettoriale, dimostrazione del Lemma di Steinitz (sostitutivo) per assurdo, e introduzione del concetto di dimensione con le sue proprietà equivalenti.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L07/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L07/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 7 — Basi, Lemma di Steinitz e Dimensione",
+  "description": "Definizione rigorosa di base di uno spazio vettoriale, dimostrazione del Lemma di Steinitz (sostitutivo) per assurdo, e introduzione del concetto di dimensione con le sue proprietà equivalenti.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L07/",
+  "datePublished": "2026-03-16",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 7</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L06/">← Prec.</a>
+      <a href="/geometria/lezioni/L08/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L07", date: "Lezione 07 — 16 Mar 2026",
+    title: "Basi, Lemma di Steinitz e Dimensione",
+    abstract: "Definizione rigorosa di base di uno spazio vettoriale, dimostrazione del Lemma di Steinitz (sostitutivo) per assurdo, e introduzione del concetto di dimensione con le sue proprietà equivalenti.",
+
+    sections: [
+        {
+            id: "s07-definizione-base",
+            type: "section",
+            title: "Definizione di Base ed Esempi",
+            icon: "🧱",
+            content: `<p>La nozione di <strong>base</strong> è il punto di arrivo naturale dei concetti di generatori e indipendenza lineare: una base è un sistema di vettori che è contemporaneamente generatore e libero.</p>
+<p><strong>Definizione (Base).</strong> Sia $V$ uno spazio vettoriale e sia $\\mathcal{B} = \\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ un sistema di vettori di $V$. Diremo che $\\mathcal{B}$ è una <strong>base</strong> di $V$ se valgono contemporaneamente due condizioni:</p>
+<ol>
+<li>I vettori <strong>generano</strong> $V$, ovvero $\\text{Span}(\\mathbf{b}_1, \\dots, \\mathbf{b}_n) = V$.</li>
+<li>Il sistema $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ è <strong>libero</strong> (linearmente indipendente).</li>
+</ol>
+<p><strong>Osservazione cruciale:</strong> $\\mathcal{B}$ è una base di $V$ se e solo se $\\forall\\, \\mathbf{v} \\in V$, il vettore $\\mathbf{v}$ si può scrivere in <strong>modo unico</strong> come combinazione lineare degli elementi di $\\mathcal{B}$. Questo è il vero potere di una base: garantisce esistenza (perché genera) e unicità (perché è libera) della rappresentazione.</p>`,
+            subsections: [
+                {
+                    subtitle: "Lo spazio nullo",
+                    content: `<p>Lo spazio $V = \\{\\mathbf{0}\\}$ ammette come base il <strong>sistema vuoto</strong> $\\emptyset$. Non ci sono vettori, ma le due condizioni sono soddisfatte in modo vacuo.</p>`
+                },
+                {
+                    subtitle: "La base canonica di ℝⁿ",
+                    content: `<p>Nello spazio numerico $\\mathbb{R}^n$, i vettori canonici $\\mathbf{e}_1, \\dots, \\mathbf{e}_n$ formano la <strong>base canonica</strong>. Ad esempio in $\\mathbb{R}^3$:</p>
+<p>$$\\mathbf{e}_1 = (1,0,0), \\quad \\mathbf{e}_2 = (0,1,0), \\quad \\mathbf{e}_3 = (0,0,1)$$</p>`
+                },
+                {
+                    subtitle: "Matrici e polinomi troncati",
+                    content: `<p>Lo spazio delle matrici $\\mathcal{M}(m, n)$ ha come base canonica le matrici $E_{ij}$ (con un $1$ in posizione $(i,j)$ e $0$ altrove).</p>
+<p>Lo spazio dei polinomi troncati $\\mathbb{R}[t]_{\\leq h}$ ha come base canonica i monomi $\\{1, t, t^2, \\dots, t^h\\}$.</p>`
+                },
+                {
+                    subtitle: "Vettori geometrici",
+                    content: `<p>La scelta della base dipende dalla "dimensione geometrica" dello spazio:</p>
+<ul>
+<li>In una <strong>retta</strong> $\\mathcal{V}_{O,l}$: scelto $E \\neq O$, il vettore $\\mathcal{B} = \\{\\overrightarrow{OE}\\}$ è una base (1 vettore).</li>
+<li>In un <strong>piano</strong> $\\mathcal{V}_{O,\\rho}$: scelti $P, Q$ non allineati con $O$, $\\mathcal{B} = \\{\\overrightarrow{OP}, \\overrightarrow{OQ}\\}$ è una base (2 vettori).</li>
+<li>Nello <strong>spazio fisico</strong> $\\mathcal{V}_O$: scelti $P, Q, R$ non complanari, $\\mathcal{B} = \\{\\overrightarrow{OP}, \\overrightarrow{OQ}, \\overrightarrow{OR}\\}$ è una base (3 vettori).</li>
+</ul>`
+                }
+            ],
+            extra_content: `<div class="alert-box"><p>⚠️ <strong>Attenzione:</strong> Se $V$ ammette una base (finita), allora è finitamente generabile. Questo implica che lo spazio di <em>tutti</em> i polinomi $\\mathbb{R}[t]$ <strong>non ammette basi finite</strong>, poiché non è finitamente generabile. Non confondere $\\mathbb{R}[t]$ (tutti i polinomi) con $\\mathbb{R}[t]_{\\leq h}$ (polinomi di grado al più $h$).</p></div>`
+        },
+        {
+            id: "s07-steinitz",
+            type: "section",
+            title: "Il Teorema di Esistenza e il Lemma di Steinitz",
+            icon: "⚔️",
+            content: `<p>Questa sezione contiene il risultato centrale della lezione: il <strong>Lemma di Steinitz</strong>, vero cuore della teoria della dimensione.</p>
+<p><strong>Teorema.</strong> Sia $V$ uno spazio vettoriale finitamente generabile. Allora:</p>
+<ol>
+<li><strong>Esiste</strong> almeno una base di $V$.</li>
+<li>Due basi qualsiasi di $V$ hanno <strong>lo stesso numero di elementi</strong>.</li>
+</ol>`,
+            subsections: [
+                {
+                    subtitle: "Traccia della dimostrazione dell'esistenza",
+                    content: `<p>L'idea è costruttiva. Si parte da un sistema di generatori finito:</p>
+<ul>
+<li>Se è <strong>libero</strong>, è già una base. Fine.</li>
+<li>Se è <strong>legato</strong>, si toglie un vettore "sovrabbondante" (che è combinazione lineare degli altri). L'insieme rimasto continua a generare $V$.</li>
+</ul>
+<p>Ripetendo il processo un numero finito di volte, si arriva a un sistema di generatori libero, che è per definizione una base.</p>`
+                },
+                {
+                    subtitle: "Il Lemma di Steinitz (Lemma Sostitutivo)",
+                    content: `<p>Per dimostrare che due basi hanno lo stesso numero di elementi, serve questo strumento potentissimo:</p>
+<p><strong>Lemma di Steinitz.</strong> Sia $V = \\text{Span}(\\mathbf{u}_1, \\mathbf{u}_2, \\dots, \\mathbf{u}_r)$ uno spazio vettoriale generabile con $r$ vettori. Siano $\\mathbf{w}_1, \\mathbf{w}_2, \\dots, \\mathbf{w}_s$ vettori linearmente indipendenti di $V$. Allora:</p>
+<p>$$s \\leq r$$</p>
+<p>In parole: <strong>il numero dei vettori liberi non può mai superare il numero dei generatori.</strong></p>`
+                },
+                {
+                    subtitle: "Dimostrazione per assurdo",
+                    content: `<p><strong>Passo 0 — Ipotesi per assurdo:</strong> Assumiamo $s \\gt r$.</p>
+<p><strong>Passo 1 — Prima sostituzione:</strong> Consideriamo $\\mathbf{w}_1$. Poiché gli $\\mathbf{u}_i$ generano $V$, esistono scalari (non tutti nulli) tali che:</p>
+<p>$$\\mathbf{w}_1 = a_1\\mathbf{u}_1 + a_2\\mathbf{u}_2 + \\dots + a_r\\mathbf{u}_r$$</p>
+<p>Supponiamo $a_1 \\neq 0$ (eventualmente riordinando). Allora possiamo ricavare $\\mathbf{u}_1$:</p>
+<p>$$a_1\\mathbf{u}_1 + a_2\\mathbf{u}_2 + \\dots + a_r\\mathbf{u}_r - \\mathbf{w}_1 = \\mathbf{0}$$</p>
+<p>Essendo $a_1 \\neq 0$, il vettore $\\mathbf{u}_1$ è sovrabbondante. Possiamo <strong>sostituirlo</strong> con $\\mathbf{w}_1$:</p>
+<p>$$V = \\text{Span}(\\mathbf{w}_1, \\mathbf{u}_2, \\dots, \\mathbf{u}_r)$$</p>
+<p><strong>Passo 2 — Iterazione:</strong> Ripetiamo: inseriamo $\\mathbf{w}_2$ e scartiamo un $\\mathbf{u}$, poi $\\mathbf{w}_3$ e scartiamo un altro $\\mathbf{u}$, e così via. Dopo $r$ passi, avendo esaurito tutte le $\\mathbf{u}$:</p>
+<p>$$V = \\text{Span}(\\mathbf{w}_1, \\mathbf{w}_2, \\dots, \\mathbf{w}_r)$$</p>
+<p><strong>Passo 3 — L'assurdo:</strong> Ma per ipotesi $s \\gt r$, quindi esiste almeno $\\mathbf{w}_{r+1}$ nel sistema libero iniziale. Essendo $V$ generato dai primi $r$ vettori $\\mathbf{w}$:</p>
+<p>$$\\mathbf{w}_{r+1} \\in \\text{Span}(\\mathbf{w}_1, \\dots, \\mathbf{w}_r)$$</p>
+<p>Questo significa che $\\mathbf{w}_{r+1}$ è combinazione lineare degli altri $\\mathbf{w}$. <strong>Ma questo è assurdo!</strong> Avevamo supposto che $\\mathbf{w}_1, \\dots, \\mathbf{w}_s$ fosse linearmente indipendente.</p>
+<p>L'assurdo nasce dall'aver supposto $s \\gt r$. Quindi deve valere $s \\leq r$. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Lemma di Steinitz", latex: "\\text{Se } V = \\text{Span}(\\mathbf{u}_1, \\dots, \\mathbf{u}_r) \\text{ e } \\mathbf{w}_1, \\dots, \\mathbf{w}_s \\text{ liberi} \\Rightarrow s \\leq r" }
+            ]
+        },
+        {
+            id: "s07-dimensione",
+            type: "section",
+            title: "Dimensione e le sue Proprietà",
+            icon: "📐",
+            content: `<p><strong>Definizione (Dimensione).</strong> Sia $V$ uno spazio finitamente generabile. Si definisce <strong>dimensione</strong> di $V$, indicata con $\\dim(V)$, il numero di vettori presenti in una sua qualsiasi base.</p>
+<p>Grazie al Teorema precedente e al Lemma di Steinitz, questo numero è <strong>ben definito</strong>: non dipende dalla scelta della base.</p>`,
+            subsections: [
+                {
+                    subtitle: "La Proprietà 5 — Equivalenza fondamentale",
+                    content: `<p>La proprietà più importante discussa è l'equivalenza tra tre definizioni concettuali della dimensione.</p>
+<p><strong>Proposizione.</strong> Sia $V$ uno spazio vettoriale. Le seguenti tre affermazioni sono logicamente equivalenti:</p>
+<ol>
+<li><strong>(i)</strong> $\\dim(V) = n$.</li>
+<li><strong>(ii)</strong> $n$ è il <strong>massimo numero</strong> di vettori che possono formare un sistema linearmente indipendente in $V$.</li>
+<li><strong>(iii)</strong> $n$ è il <strong>minimo numero</strong> di vettori necessari per formare un sistema di generatori per $V$.</li>
+</ol>`
+                },
+                {
+                    subtitle: "Dimostrazione: (i) ⟹ (ii)",
+                    content: `<p>Sappiamo che $\\dim(V) = n$, quindi esiste una base con $n$ vettori, che è anche un sistema di generatori con $n$ elementi.</p>
+<p>Se esistesse un sistema libero con $s$ vettori tale che $s \\gt n$, per il <strong>Lemma di Steinitz</strong> applicato alla base (che genera $V$ con $n$ vettori) avremmo $s \\leq n$: <strong>contraddizione</strong>.</p>
+<p>Quindi non possono esserci più di $n$ vettori liberi. D'altra parte la base stessa è un sistema libero con esattamente $n$ vettori, dunque $n$ è il massimo.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione: (ii) ⟹ (iii)",
+                    content: `<p>Sappiamo che $n$ è il numero massimo di vettori liberi. Sia $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ un tale sistema libero massimale.</p>
+<p>Prendiamo un qualsiasi $\\mathbf{y} \\in V$. Il sistema $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n, \\mathbf{y}\\}$ ha $n + 1$ vettori, e per la massimalità deve essere <strong>legato</strong>. Essendo i $\\mathbf{b}_i$ tra loro liberi, il vettore $\\mathbf{y}$ deve essere sovrabbondante:</p>
+<p>$$\\mathbf{y} \\in \\text{Span}(\\mathbf{b}_1, \\dots, \\mathbf{b}_n) \\quad \\forall\\, \\mathbf{y} \\in V$$</p>
+<p>Questo dimostra che i $\\mathbf{b}_i$ formano un sistema di generatori di cardinalità $n$.</p>
+<p>Inoltre, per Steinitz, non può esistere un sistema di generatori con meno di $n$ vettori (altrimenti non potremmo avere $n$ vettori liberi). Quindi $n$ è il <strong>minimo</strong> numero di generatori.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione: (iii) ⟹ (i)",
+                    content: `<p>Se $n$ è il minimo numero di generatori, prendiamo un sistema di generatori minimo $\\{\\mathbf{g}_1, \\dots, \\mathbf{g}_n\\}$.</p>
+<p>Questo sistema deve essere <strong>libero</strong>. Se fosse legato, potremmo togliere un vettore sovrabbondante e generare $V$ con $n - 1$ vettori, contraddicendo la minimalità di $n$.</p>
+<p>Dunque questo sistema di $n$ generatori è anche libero: è una <strong>base</strong>. Se la base ha $n$ vettori, allora $\\dim(V) = n$. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Dimensione", latex: "\\dim(V) = |\\mathcal{B}| \\text{ per qualsiasi base } \\mathcal{B} \\text{ di } V" },
+                { label: "Equivalenza fondamentale", latex: "\\dim(V) = n \\;\\Leftrightarrow\\; \\max\\text{(liberi)} = n \\;\\Leftrightarrow\\; \\min\\text{(generatori)} = n" }
+            ]
+        },
+        {
+            id: "s07-schema-riassuntivo",
+            type: "note_box",
+            title: "Schema Logico della Lezione",
+            icon: "🗺️",
+            content: `<p>Ecco la catena logica completa di questa lezione:</p>
+<ol>
+<li><strong>Base</strong> = sistema di generatori + sistema libero.</li>
+<li><strong>Esistenza</strong>: da un sistema di generatori finito, togliendo i sovrabbondanti, si ottiene una base.</li>
+<li><strong>Lemma di Steinitz</strong>: $s$ vettori liberi $\\leq$ $r$ generatori. Dimostrato per assurdo tramite sostituzione iterata.</li>
+<li><strong>Unicità della cardinalità</strong>: segue da Steinitz applicato in entrambe le direzioni tra due basi.</li>
+<li><strong>Dimensione</strong>: ben definita grazie al punto 4.</li>
+<li><strong>Equivalenza</strong>: $\\dim = n$ $\\Leftrightarrow$ max liberi $= n$ $\\Leftrightarrow$ min generatori $= n$.</li>
+</ol>`
+        },
+        {
+            id: "s07-alert-steinitz",
+            type: "alert_box",
+            title: "Trappola d'esame: direzione del Lemma di Steinitz",
+            icon: "🚨",
+            content: `<p>Il Lemma di Steinitz afferma che <strong>liberi $\\leq$ generatori</strong>, NON il contrario. Un errore comune è invertire la disuguaglianza.</p>
+<p>Ricorda la mnemonica: i vettori <strong>liberi</strong> sono "pochi ma buoni", i <strong>generatori</strong> possono essere "tanti e ridondanti". Quindi è sempre il numero dei liberi ad essere limitato superiormente dal numero dei generatori.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è una base di uno spazio vettoriale?",
+            back: "Un sistema $\\mathcal{B} = \\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ è una <strong>base</strong> di $V$ se soddisfa due condizioni simultanee: (1) è un sistema di <strong>generatori</strong>, cioè $\\text{Span}(\\mathcal{B}) = V$; (2) è <strong>libero</strong> (linearmente indipendente). Equivalentemente, $\\mathcal{B}$ è una base se e solo se ogni vettore $\\mathbf{v} \\in V$ si scrive in <strong>modo unico</strong> come combinazione lineare degli elementi di $\\mathcal{B}$."
+        },
+        {
+            type: "domanda",
+            front: "Perché il sistema vuoto ∅ è una base dello spazio nullo {𝟎}?",
+            back: "Lo spazio $\\{\\mathbf{0}\\}$ è generato dal sistema vuoto perché $\\text{Span}(\\emptyset) = \\{\\mathbf{0}\\}$ (la combinazione lineare vuota dà il vettore nullo). Inoltre il sistema vuoto è libero in modo vacuo (non esistono vettori da combinare per ottenere una relazione di dipendenza). Entrambe le condizioni della definizione di base sono soddisfatte."
+        },
+        {
+            type: "formula",
+            front: "Enuncia il Lemma di Steinitz.",
+            back: "Sia $V = \\text{Span}(\\mathbf{u}_1, \\dots, \\mathbf{u}_r)$ e siano $\\mathbf{w}_1, \\dots, \\mathbf{w}_s$ vettori linearmente indipendenti di $V$. Allora $s \\leq r$. In parole: il numero di vettori in un qualsiasi sistema libero non può superare il numero di vettori in un qualsiasi sistema di generatori."
+        },
+        {
+            type: "dimostrazione",
+            front: "Descrivi la struttura della dimostrazione per assurdo del Lemma di Steinitz.",
+            back: "Si assume $s \\gt r$. Poiché $\\mathbf{w}_1 \\in \\text{Span}(\\mathbf{u}_1, \\dots, \\mathbf{u}_r)$, si può sostituire uno degli $\\mathbf{u}_i$ con $\\mathbf{w}_1$ mantenendo la generazione. Iterando $r$ volte, si ottiene $V = \\text{Span}(\\mathbf{w}_1, \\dots, \\mathbf{w}_r)$. Ma allora $\\mathbf{w}_{r+1}$ (che esiste perché $s \\gt r$) sarebbe combinazione lineare di $\\mathbf{w}_1, \\dots, \\mathbf{w}_r$, contraddicendo l'indipendenza lineare del sistema $\\{\\mathbf{w}_1, \\dots, \\mathbf{w}_s\\}$."
+        },
+        {
+            type: "definizione",
+            front: "Che cos'è la dimensione di uno spazio vettoriale?",
+            back: "Sia $V$ finitamente generabile. La <strong>dimensione</strong> $\\dim(V)$ è il numero di vettori presenti in una qualsiasi base di $V$. È ben definita perché il Lemma di Steinitz garantisce che tutte le basi hanno lo stesso numero di elementi."
+        },
+        {
+            type: "domanda",
+            front: "Perché ℝ[t] (spazio di tutti i polinomi) non ammette una base finita?",
+            back: "Perché $\\mathbb{R}[t]$ non è finitamente generabile. Un qualsiasi insieme finito di polinomi ha un grado massimo $h$, quindi può generare solo $\\mathbb{R}[t]_{\\leq h}$, non tutto $\\mathbb{R}[t]$. Poiché non esiste un sistema finito di generatori, non può esistere una base finita."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che dim(V) = n implica che n è il massimo numero di vettori liberi.",
+            back: "Se $\\dim(V) = n$, esiste una base $\\mathcal{B}$ con $n$ vettori che genera $V$. Se esistesse un sistema libero con $s \\gt n$ vettori, il Lemma di Steinitz applicato a $\\mathcal{B}$ (come generatori) darebbe $s \\leq n$: contraddizione. D'altra parte la base stessa è un sistema libero con $n$ vettori, quindi il massimo è esattamente $n$."
+        },
+        {
+            type: "tranello",
+            front: "Un sistema di generatori con n vettori in uno spazio di dimensione n è necessariamente una base?",
+            back: "Sì! Se $\\dim(V) = n$ e abbiamo $n$ generatori, questo sistema deve essere libero. Se fosse legato, potremmo eliminare un vettore sovrabbondante e generare $V$ con $n-1$ vettori, ma per la Proprietà 5, il minimo numero di generatori è esattamente $n$: contraddizione. Quindi $n$ generatori in dimensione $n$ formano sempre una base."
+        },
+        {
+            type: "tranello",
+            front: "Un sistema libero con n vettori in uno spazio di dimensione n è necessariamente una base?",
+            back: "Sì! Se $\\dim(V) = n$ e abbiamo $n$ vettori liberi, questi generano $V$. Per ogni $\\mathbf{y} \\in V$, il sistema con $n+1$ vettori $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n, \\mathbf{y}\\}$ deve essere legato (il massimo di vettori liberi è $n$). Poiché i $\\mathbf{b}_i$ sono liberi, $\\mathbf{y}$ è sovrabbondante, quindi $\\mathbf{y} \\in \\text{Span}(\\mathbf{b}_1, \\dots, \\mathbf{b}_n)$. I vettori generano $V$: è una base."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

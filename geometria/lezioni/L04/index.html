@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 4 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 4: Sottospazio Generato, Proprietà dello Span e Spazi Finitamente Generabili. Definizione formale di span (sottospazio generato), esempi di calcolo, le 6 proprietà fondamentali con dimostrazioni, sistemi di generatori, spazi finitamente generabili e il caso critico di ℝ[t].">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 4: Sottospazio Generato, Proprietà dello Span e Spazi Finitamente Generabili — Geometria">
+  <meta property="og:description" content="Definizione formale di span (sottospazio generato), esempi di calcolo, le 6 proprietà fondamentali con dimostrazioni, sistemi di generatori, spazi finitamente generabili e il caso critico di ℝ[t].">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L04/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L04/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 4 — Sottospazio Generato, Proprietà dello Span e Spazi Finitamente Generabili",
+  "description": "Definizione formale di span (sottospazio generato), esempi di calcolo, le 6 proprietà fondamentali con dimostrazioni, sistemi di generatori, spazi finitamente generabili e il caso critico di ℝ[t].",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L04/",
+  "datePublished": "2026-03-09",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 4</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L03/">← Prec.</a>
+      <a href="/geometria/lezioni/L05/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L04", date: "Lezione 04 — 9 Mar 2026",
+    title: "Sottospazio Generato, Proprietà dello Span e Spazi Finitamente Generabili",
+    abstract: "Definizione formale di span (sottospazio generato), esempi di calcolo, le 6 proprietà fondamentali con dimostrazioni, sistemi di generatori, spazi finitamente generabili e il caso critico di ℝ[t].",
+
+    sections: [
+        {
+            id: "s04-definizione-span",
+            type: "section",
+            title: "Il Sottospazio Generato: Definizione Formale",
+            icon: "🎯",
+            content: `<p>Sia $V$ uno spazio vettoriale e sia $S \\subseteq V$ un sottoinsieme (non necessariamente un sottospazio). Il <strong>sottospazio generato</strong> da $S$, detto anche <strong>span</strong> di $S$, è l'insieme di tutte le possibili combinazioni lineari che si possono formare con i vettori di $S$:</p>
+<p>$$\\text{Span}(S) = \\left\\{ \\underline{u} \\in V \\;\\middle|\\; \\exists \\, \\underline{s}_1, \\dots, \\underline{s}_h \\in S, \\; \\exists \\, a_1, \\dots, a_h \\in \\mathbb{R} : \\underline{u} = a_1\\underline{s}_1 + a_2\\underline{s}_2 + \\dots + a_h\\underline{s}_h \\right\\}$$</p>
+<p>La notazione standard è $\\text{Span}(S)$. Nella letteratura più vecchia (soprattutto francese) si usava anche la notazione $\\langle S \\rangle$, ma oggi è considerata obsoleta e non viene più utilizzata.</p>`,
+            subsections: [
+                {
+                    subtitle: "Intuizione",
+                    content: `<p>Lo span di un insieme $S$ risponde alla domanda: <em>«Quali vettori posso raggiungere partendo dai vettori di $S$, usando solo somme e moltiplicazioni per scalari?»</em></p>
+<p>La risposta è: <strong>tutti quelli che sono combinazione lineare dei vettori di $S$</strong>.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Definizione di Span", latex: "\\text{Span}(S) = \\left\\{ a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h \\;\\middle|\\; \\underline{s}_i \\in S, \\; a_i \\in \\mathbb{R} \\right\\}" }
+            ]
+        },
+        {
+            id: "s04-esempi-span",
+            type: "section",
+            title: "Esempi di Calcolo dello Span",
+            icon: "📐",
+            content: `<p>Vediamo una serie di esempi concreti per familiarizzare con il concetto di span.</p>`,
+            subsections: [
+                {
+                    subtitle: "Span dell'insieme vuoto",
+                    content: `<p>$$S = \\emptyset \\Rightarrow \\text{Span}(\\emptyset) = \\{\\underline{0}\\}$$</p>
+<p>Per convenzione, lo span dell'insieme vuoto è il sottospazio banale contenente solo il vettore nullo.</p>`
+                },
+                {
+                    subtitle: "Span di un singolo vettore",
+                    content: `<p>Sia $S = \\{\\underline{s}\\}$ (un solo vettore). Allora:</p>
+<p>$$\\text{Span}(S) = \\{a \\cdot \\underline{s} : a \\in \\mathbb{R}\\}$$</p>
+<p>Perché? Ogni combinazione lineare ha la forma $\\underline{u} = a_1\\underline{s} + a_2\\underline{s} + \\dots + a_h\\underline{s} = (a_1 + a_2 + \\dots + a_h)\\underline{s} = a\\underline{s}$ per qualche $a \\in \\mathbb{R}$.</p>
+<p>Un vettore $\\underline{u}$ è <strong>multiplo</strong> di $\\underline{s}$ se esiste $a \\in \\mathbb{R}$ tale che $\\underline{u} = a\\underline{s}$. Quindi lo span di un singolo vettore è l'insieme di tutti i suoi multipli, ovvero geometricamente una <strong>retta per l'origine</strong>.</p>`
+                },
+                {
+                    subtitle: "Span di un singolo vettore in ℝ²",
+                    content: `<p>Sia $S = \\{(1, 5)\\} \\subset \\mathbb{R}^2$. Allora:</p>
+<p>$$\\text{Span}(S) = \\{a(1, 5) : a \\in \\mathbb{R}\\} = \\{(a, 5a) : a \\in \\mathbb{R}\\}$$</p>
+<p>Questo insieme può essere descritto anche come:</p>
+<p>$$\\text{Span}(S) = \\{(x_1, x_2) \\in \\mathbb{R}^2 : 5x_1 - x_2 = 0\\}$$</p>
+<p>Infatti, se $x_2 = 5x_1$, allora $5x_1 - x_2 = 0$. Geometricamente è la retta passante per l'origine con pendenza 5.</p>`
+                },
+                {
+                    subtitle: "Span di due vettori canonici in ℝ³",
+                    content: `<p>Sia $S = \\{(1, 0, 0), (0, 1, 0)\\} \\subset \\mathbb{R}^3$. Allora:</p>
+<p>$$\\text{Span}(S) = \\{a(1, 0, 0) + b(0, 1, 0) : a, b \\in \\mathbb{R}\\} = \\{(a, b, 0) : a, b \\in \\mathbb{R}\\}$$</p>
+<p>Ovvero:</p>
+<p>$$\\text{Span}(S) = \\{(x_1, x_2, x_3) \\in \\mathbb{R}^3 : x_3 = 0\\}$$</p>
+<p>Geometricamente è il <strong>piano $xy$</strong> (il piano $z = 0$) in $\\mathbb{R}^3$.</p>`
+                },
+                {
+                    subtitle: "Pattern ricorrente",
+                    content: `<p>Notiamo un pattern importante: lo span di un singolo vettore non nullo dà una <strong>retta</strong>, lo span di due vettori «indipendenti» dà un <strong>piano</strong>, lo span di tre vettori «indipendenti» in $\\mathbb{R}^3$ dà l'intero $\\mathbb{R}^3$. Questo collegamento tra numero di generatori e «dimensione» del sottospazio sarà formalizzato nelle lezioni successive.</p>`
+                }
+            ]
+        },
+        {
+            id: "s04-proprieta-span",
+            type: "section",
+            title: "Le 6 Proprietà dello Span",
+            icon: "📜",
+            content: `<p>Sia $V$ uno spazio vettoriale e siano $S, T \\subseteq V$. Valgono le seguenti proprietà fondamentali:</p>
+<ol>
+<li><strong>Span del vuoto:</strong> $\\text{Span}(\\emptyset) = \\{\\underline{0}\\}$</li>
+<li><strong>Inclusione di $S$:</strong> $S \\subseteq \\text{Span}(S)$</li>
+<li><strong>Sottospazio:</strong> $\\text{Span}(S)$ è un sottospazio vettoriale di $V$ (anche se $S$ non lo è)</li>
+<li><strong>Monotonia:</strong> Se $S \\subseteq T$, allora $\\text{Span}(S) \\subseteq \\text{Span}(T)$</li>
+<li><strong>Coincidenza:</strong> $S$ è un sottospazio vettoriale $\\iff S = \\text{Span}(S)$</li>
+<li><strong>Minimalità (proprietà di giustificazione):</strong> Se $W$ è un sottospazio di $V$ e $S \\subseteq W$, allora $\\text{Span}(S) \\subseteq W$</li>
+</ol>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione della Proprietà 1 (Span del vuoto)",
+                    content: `<p>Per definizione/convenzione: non ci sono vettori da combinare, quindi l'unica «combinazione lineare» possibile è quella vuota, che per convenzione dà $\\underline{0}$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 2 (Inclusione)",
+                    content: `<p>Sia $\\underline{s} \\in S$. Allora $\\underline{s} = 1 \\cdot \\underline{s}$ è una combinazione lineare (con un solo addendo e peso $a = 1$). Quindi $\\underline{s} \\in \\text{Span}(S)$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 3 (Sottospazio)",
+                    content: `<p>Dobbiamo verificare le tre condizioni di sottospazio:</p>
+<p><strong>Vettore nullo:</strong> Se $S \\neq \\emptyset$, esiste $\\underline{s} \\in S$ e possiamo scrivere $\\underline{0} = 0 \\cdot \\underline{s} \\in \\text{Span}(S)$. Se $S = \\emptyset$, per la proprietà 1 $\\text{Span}(\\emptyset) = \\{\\underline{0}\\}$, che contiene $\\underline{0}$.</p>
+<p><strong>Chiusura per somma:</strong> Siano $\\underline{u}, \\underline{v} \\in \\text{Span}(S)$. Allora:</p>
+<p>$$\\underline{u} = a_1\\underline{s}_1 + a_2\\underline{s}_2 + \\dots + a_h\\underline{s}_h \\qquad (\\underline{s}_i \\in S)$$</p>
+<p>$$\\underline{v} = a'_1\\underline{s}'_1 + a'_2\\underline{s}'_2 + \\dots + a'_k\\underline{s}'_k \\qquad (\\underline{s}'_j \\in S)$$</p>
+<p>La somma:</p>
+<p>$$\\underline{u} + \\underline{v} = a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h + a'_1\\underline{s}'_1 + \\dots + a'_k\\underline{s}'_k$$</p>
+<p>è ancora una combinazione lineare di vettori di $S$, quindi $\\underline{u} + \\underline{v} \\in \\text{Span}(S)$.</p>
+<p><strong>Chiusura per scalare:</strong> Sia $a \\in \\mathbb{R}$ e $\\underline{u} = a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h \\in \\text{Span}(S)$. Allora:</p>
+<p>$$a \\cdot \\underline{u} = (aa_1)\\underline{s}_1 + (aa_2)\\underline{s}_2 + \\dots + (aa_h)\\underline{s}_h \\in \\text{Span}(S)$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 4 (Monotonia)",
+                    content: `<p>Se $S \\subseteq T$, ogni combinazione lineare $a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h$ con $\\underline{s}_i \\in S$ è anche una combinazione lineare di vettori di $T$ (perché $\\underline{s}_i \\in S \\subseteq T$). Quindi $\\text{Span}(S) \\subseteq \\text{Span}(T)$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 5 (Coincidenza)",
+                    content: `<p><strong>($\\Leftarrow$)</strong> Se $S = \\text{Span}(S)$, allora $S$ è un sottospazio perché $\\text{Span}(S)$ lo è sempre (proprietà 3).</p>
+<p><strong>($\\Rightarrow$)</strong> Supponiamo che $S$ sia un sottospazio. Vogliamo dimostrare $S = \\text{Span}(S)$.</p>
+<p>L'inclusione $S \\subseteq \\text{Span}(S)$ la sappiamo già dalla proprietà 2.</p>
+<p>Rimane da provare $\\text{Span}(S) \\subseteq S$. Sia $\\underline{u} \\in \\text{Span}(S)$:</p>
+<p>$$\\underline{u} = a_1\\underline{s}_1 + a_2\\underline{s}_2 + \\dots + a_h\\underline{s}_h \\qquad (a_i \\in \\mathbb{R}, \\; \\underline{s}_i \\in S)$$</p>
+<p>Poiché $S$ è un sottospazio:</p>
+<ul>
+<li>Ogni singolo addendo $a_i\\underline{s}_i \\in S$ (chiusura per moltiplicazione scalare)</li>
+<li>La somma di tutti gli addendi è ancora in $S$ (chiusura per addizione, applicata ripetutamente)</li>
+</ul>
+<p>Quindi $\\underline{u} \\in S$, e perciò $\\text{Span}(S) \\subseteq S$. ∎</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proprietà 6 (Minimalità)",
+                    content: `<p>Sia $W$ un sottospazio di $V$ con $S \\subseteq W$. Allora, per monotonia (proprietà 4):</p>
+<p>$$S \\subseteq W \\Rightarrow \\text{Span}(S) \\subseteq \\text{Span}(W)$$</p>
+<p>Ma $W$ è un sottospazio, quindi per la proprietà 5: $\\text{Span}(W) = W$.</p>
+<p>Concludiamo: $\\text{Span}(S) \\subseteq W$. ∎</p>`
+                }
+            ],
+            formulas: [
+                { label: "Span del vuoto", latex: "\\text{Span}(\\emptyset) = \\{\\underline{0}\\}" },
+                { label: "Inclusione", latex: "S \\subseteq \\text{Span}(S)" },
+                { label: "Monotonia", latex: "S \\subseteq T \\Rightarrow \\text{Span}(S) \\subseteq \\text{Span}(T)" },
+                { label: "Coincidenza", latex: "S \\text{ sottospazio} \\iff S = \\text{Span}(S)" },
+                { label: "Minimalità", latex: "S \\subseteq W \\text{ (sottospazio)} \\Rightarrow \\text{Span}(S) \\subseteq W" }
+            ]
+        },
+        {
+            id: "s04-significato-giustificazione",
+            type: "note_box",
+            title: "Il Significato della Proprietà di Giustificazione",
+            icon: "💡",
+            content: `<p>La proprietà 6 <strong>giustifica</strong> il nome «sottospazio generato». Essa dice che $\\text{Span}(S)$ è il <strong>più piccolo sottospazio</strong> di $V$ che contiene $S$: qualunque altro sottospazio $W$ che contenga $S$ deve necessariamente contenere anche $\\text{Span}(S)$.</p>
+<p>In modo equivalente, possiamo scrivere:</p>
+<p>$$\\text{Span}(S) = \\bigcap_{\\substack{W \\text{ sottospazio di } V \\\\ S \\subseteq W}} W$$</p>
+<p>cioè $\\text{Span}(S)$ è l'intersezione di <em>tutti</em> i sottospazi di $V$ che contengono $S$.</p>`,
+            extra_content: `<p><strong>Schema logico ricorrente nelle dimostrazioni:</strong></p>
+<ol>
+<li>Si parte dalla definizione: un elemento di $\\text{Span}(S)$ è una combinazione lineare $a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h$.</li>
+<li>Si usano le proprietà di chiusura del sottospazio (per somma e per scalare) per concludere che il risultato resta nello span.</li>
+</ol>
+<p>Questo pattern si ripete costantemente: tienilo a mente!</p>`
+        },
+        {
+            id: "s04-esercizio-confronto",
+            type: "section",
+            title: "Esercizio: Confronto di Span",
+            icon: "✏️",
+            content: `<p>Siano:</p>
+<p>$$S = \\{(1, 2, 3), (-1, 4, 2)\\} \\subset \\mathbb{R}^3, \\qquad T = \\{(0, 6, 5), (2, -2, 1)\\} \\subset \\mathbb{R}^3$$</p>
+<p>Stabilire se $\\text{Span}(S) = \\text{Span}(T)$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Metodo generale",
+                    content: `<p>Si procede in due passi:</p>
+<ol>
+<li>Verificare che ogni vettore di $T$ stia in $\\text{Span}(S)$ → per monotonia $\\text{Span}(T) \\subseteq \\text{Span}(S)$</li>
+<li>Verificare che ogni vettore di $S$ stia in $\\text{Span}(T)$ → per monotonia $\\text{Span}(S) \\subseteq \\text{Span}(T)$</li>
+</ol>
+<p>Se entrambi i passi sono verificati, si conclude $\\text{Span}(S) = \\text{Span}(T)$.</p>`
+                },
+                {
+                    subtitle: "Passo 1: T ⊆ Span(S)?",
+                    content: `<p><strong>Il vettore $(0, 6, 5)$ è in $\\text{Span}(S)$?</strong></p>
+<p>Cerchiamo $a, b \\in \\mathbb{R}$ tali che $(0, 6, 5) = a(1, 2, 3) + b(-1, 4, 2)$:</p>
+<p>$$\\begin{cases} 0 = a - b \\\\ 6 = 2a + 4b \\\\ 5 = 3a + 2b \\end{cases}$$</p>
+<p>Dalla prima equazione: $a = b$. Sostituendo nella seconda: $2b + 4b = 6 \\Rightarrow b = 1$, quindi $a = 1$.</p>
+<p>Verifica nella terza: $3(1) + 2(1) = 5$ ✓</p>
+<p>Dunque $(0, 6, 5) = 1 \\cdot (1, 2, 3) + 1 \\cdot (-1, 4, 2) \\in \\text{Span}(S)$. ✓</p>
+<p><strong>Il vettore $(2, -2, 1)$ è in $\\text{Span}(S)$?</strong></p>
+<p>Osserviamo che:</p>
+<p>$$(2, -2, 1) = 1 \\cdot (1, 2, 3) + (-1) \\cdot (-1, 4, 2)$$</p>
+<p>Verifica: $(1 - (-1), \\; 2 - 4, \\; 3 - 2) = (2, -2, 1)$ ✓</p>
+<p><strong>Conclusione Passo 1:</strong> $T \\subseteq \\text{Span}(S) \\Rightarrow \\text{Span}(T) \\subseteq \\text{Span}(S)$.</p>`
+                },
+                {
+                    subtitle: "Passo 2: S ⊆ Span(T)?",
+                    content: `<p><strong>Il vettore $(1, 2, 3)$ è in $\\text{Span}(T)$?</strong></p>
+<p>Cerchiamo $a, b \\in \\mathbb{R}$ tali che $(1, 2, 3) = a(0, 6, 5) + b(2, -2, 1)$:</p>
+<p>$$\\begin{cases} 1 = 2b \\\\ 2 = 6a - 2b \\\\ 3 = 5a + b \\end{cases}$$</p>
+<p>Dalla prima: $b = \\frac{1}{2}$. Dalla terza: $5a + \\frac{1}{2} = 3 \\Rightarrow a = \\frac{1}{2}$.</p>
+<p>Verifica nella seconda: $6 \\cdot \\frac{1}{2} - 2 \\cdot \\frac{1}{2} = 3 - 1 = 2$ ✓</p>
+<p>Dunque $(1, 2, 3) = \\frac{1}{2}(0, 6, 5) + \\frac{1}{2}(2, -2, 1) \\in \\text{Span}(T)$. ✓</p>
+<p><strong>Il vettore $(-1, 4, 2)$ è in $\\text{Span}(T)$?</strong></p>
+<p>Cerchiamo $a, b \\in \\mathbb{R}$:</p>
+<p>$$\\begin{cases} -1 = 2b \\\\ 4 = 6a - 2b \\\\ 2 = 5a + b \\end{cases}$$</p>
+<p>Dalla prima: $b = -\\frac{1}{2}$. Dalla terza: $5a - \\frac{1}{2} = 2 \\Rightarrow a = \\frac{1}{2}$.</p>
+<p>Verifica nella seconda: $6 \\cdot \\frac{1}{2} - 2 \\cdot \\left(-\\frac{1}{2}\\right) = 3 + 1 = 4$ ✓</p>
+<p><strong>Conclusione Passo 2:</strong> $S \\subseteq \\text{Span}(T) \\Rightarrow \\text{Span}(S) \\subseteq \\text{Span}(T)$.</p>`
+                },
+                {
+                    subtitle: "Conclusione finale",
+                    content: `<p>$$\\text{Span}(S) = \\text{Span}(T)$$</p>
+<p>I due insiemi $S$ e $T$ generano lo <strong>stesso sottospazio</strong> di $\\mathbb{R}^3$.</p>
+<p><strong>Osservazione importante:</strong> lo stesso sottospazio può essere generato da insiemi diversi di vettori. La scelta dei generatori <strong>non è unica</strong>. Quello che è unico è il sottospazio risultante.</p>`
+                }
+            ]
+        },
+        {
+            id: "s04-generatori-fg",
+            type: "section",
+            title: "Sistemi di Generatori e Spazi Finitamente Generabili",
+            icon: "🏗️",
+            content: `<p>Due definizioni fondamentali che ci accompagneranno per tutto il corso.</p>`,
+            subsections: [
+                {
+                    subtitle: "Sistema di generatori",
+                    content: `<p>Sia $V$ uno spazio vettoriale e $S \\subseteq V$. Diciamo che $S$ è un <strong>sistema di generatori</strong> per $V$ se:</p>
+<p>$$V = \\text{Span}(S)$$</p>
+<p>In altre parole: <strong>ogni vettore di $V$ è combinazione lineare di vettori di $S$</strong>.</p>`
+                },
+                {
+                    subtitle: "Spazio finitamente generabile",
+                    content: `<p>Uno spazio vettoriale $V$ si dice <strong>finitamente generabile</strong> (f.g.) se esiste un sottoinsieme <strong>finito</strong> $S \\subseteq V$ tale che $V = \\text{Span}(S)$.</p>
+<p>La finitezza del sistema di generatori è essenziale per la computazione: se uno spazio è finitamente generabile, possiamo rappresentare e manipolare i suoi elementi con un numero finito di coordinate, rendendolo trattabile al calcolatore.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Sistema di generatori", latex: "S \\text{ è sistema di generatori per } V \\iff V = \\text{Span}(S)" }
+            ]
+        },
+        {
+            id: "s04-esempi-fg",
+            type: "section",
+            title: "Esempi di Spazi Finitamente Generabili",
+            icon: "🧩",
+            content: `<p>Passiamo in rassegna i principali spazi vettoriali e vediamo quali sono finitamente generabili.</p>`,
+            subsections: [
+                {
+                    subtitle: "Lo spazio banale",
+                    content: `<p>Se $V = \\{\\underline{0}\\}$, allora $V = \\text{Span}(\\emptyset)$, ed è finitamente generabile (zero generatori!).</p>
+<p><strong>Attenzione:</strong> per ogni spazio vettoriale $V$ vale $V = \\text{Span}(V)$ (proprietà 5, poiché $V$ è sottospazio di sé stesso). Tuttavia, questo <strong>non</strong> implica che $V$ sia finitamente generabile: $V$ stesso potrebbe non essere un insieme finito!</p>`
+                },
+                {
+                    subtitle: "Lo spazio ℝ",
+                    content: `<p>$\\mathbb{R}$ è finitamente generabile. Basta un qualunque elemento non nullo $u \\neq 0$:</p>
+<p>$$\\mathbb{R} = \\text{Span}(\\{u\\})$$</p>
+<p>perché per ogni $y \\in \\mathbb{R}$, possiamo scrivere $y = \\frac{y}{u} \\cdot u$.</p>`
+                },
+                {
+                    subtitle: "Lo spazio ℝ² e i vettori canonici",
+                    content: `<p>Lo spazio $\\mathbb{R}^2$ è finitamente generabile. I generatori più naturali sono i <strong>vettori canonici</strong>:</p>
+<p>$$\\underline{e}_1 = (1, 0), \\qquad \\underline{e}_2 = (0, 1)$$</p>
+<p>Ogni vettore $\\underline{x} = (x_1, x_2) \\in \\mathbb{R}^2$ si scrive come:</p>
+<p>$$\\underline{x} = x_1(1, 0) + x_2(0, 1) = x_1\\underline{e}_1 + x_2\\underline{e}_2$$</p>
+<p>I pesi della combinazione lineare sono esattamente le componenti del vettore!</p>
+<p>Quindi: $\\mathbb{R}^2 = \\text{Span}(\\underline{e}_1, \\underline{e}_2)$.</p>
+<p><strong>I generatori non sono unici:</strong> ad esempio, qualunque coppia di vettori non proporzionali genera tutto $\\mathbb{R}^2$. Si può dimostrare che $\\mathbb{R}^2 = \\text{Span}(\\{(1, 3), (1, 4)\\})$.</p>`
+                },
+                {
+                    subtitle: "Lo spazio ℝⁿ",
+                    content: `<p>Per ogni $n \\geq 1$, lo spazio $\\mathbb{R}^n$ è finitamente generabile con $n$ vettori canonici:</p>
+<p>$$\\underline{e}_i = (0, \\dots, \\underbrace{1}_{i\\text{-esima}}, \\dots, 0) \\qquad i = 1, \\dots, n$$</p>
+<p>Per ogni $\\underline{x} = (x_1, x_2, \\dots, x_n) \\in \\mathbb{R}^n$:</p>
+<p>$$\\underline{x} = x_1\\underline{e}_1 + x_2\\underline{e}_2 + \\dots + x_n\\underline{e}_n$$</p>`
+                },
+                {
+                    subtitle: "Lo spazio delle matrici M(m,n)",
+                    content: `<p>Ogni matrice $A \\in \\mathcal{M}(2, 2)$ si scrive come:</p>
+<p>$$A = a_{11}\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix} + a_{12}\\begin{bmatrix} 0 & 1 \\\\ 0 & 0 \\end{bmatrix} + a_{21}\\begin{bmatrix} 0 & 0 \\\\ 1 & 0 \\end{bmatrix} + a_{22}\\begin{bmatrix} 0 & 0 \\\\ 0 & 1 \\end{bmatrix}$$</p>
+<p>Le matrici $E_{11}, E_{12}, E_{21}, E_{22}$ sono le <strong>matrici canoniche</strong> $2 \\times 2$: ciascuna ha tutte le componenti nulle tranne una, pari a 1.</p>
+<p><strong>Caso generale:</strong> lo spazio $\\mathcal{M}(m, n)$ è finitamente generabile:</p>
+<p>$$\\mathcal{M}(m, n) = \\text{Span}(E_{ij} : i = 1, \\dots, m, \\; j = 1, \\dots, n)$$</p>
+<p>Le matrici canoniche $E_{ij}$ hanno un 1 in posizione $(i, j)$ e 0 ovunque. Servono $m \\cdot n$ generatori.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Decomposizione in ℝⁿ", latex: "\\underline{x} = x_1\\underline{e}_1 + x_2\\underline{e}_2 + \\dots + x_n\\underline{e}_n" },
+                { label: "Generatori di M(m,n)", latex: "\\mathcal{M}(m, n) = \\text{Span}(E_{ij}), \\quad m \\cdot n \\text{ generatori}" }
+            ]
+        },
+        {
+            id: "s04-caso-critico",
+            type: "alert_box",
+            title: "Il Caso Critico: ℝ[t] Non è Finitamente Generabile",
+            icon: "⚠️",
+            content: `<p><strong>Proposizione:</strong> Lo spazio dei polinomi $\\mathbb{R}[t]$ <strong>non</strong> è finitamente generabile.</p>
+<p><strong>Dimostrazione (per assurdo):</strong></p>
+<p>Supponiamo per assurdo che lo sia. Allora esistono polinomi $P_1(t), P_2(t), \\dots, P_h(t)$ tali che $\\mathbb{R}[t] = \\text{Span}(P_1, \\dots, P_h)$.</p>
+<p>Sia $m = \\max\\{\\deg P_1, \\deg P_2, \\dots, \\deg P_h\\}$ il grado massimo tra i generatori.</p>
+<p>Consideriamo il monomio $t^{m+1} \\in \\mathbb{R}[t]$. Se fosse nello span, potremmo scrivere:</p>
+<p>$$t^{m+1} = a_1P_1(t) + a_2P_2(t) + \\dots + a_hP_h(t)$$</p>
+<p>Ma il grado del membro destro è al più $m$ (la somma di polinomi di grado $\\leq m$ ha grado $\\leq m$), mentre il grado del membro sinistro è $m + 1 \\gt m$.</p>
+<p><strong>Contraddizione!</strong> Quindi $t^{m+1} \\notin \\text{Span}(P_1, \\dots, P_h)$, e $\\mathbb{R}[t]$ non può essere finitamente generabile. ∎</p>`,
+            extra_content: `<p><strong>Attenzione: il sottospazio troncato sì!</strong> Lo spazio dei polinomi di grado $\\leq m$, indicato $\\mathbb{R}[t]_{\\leq m}$, <strong>è</strong> finitamente generabile. I generatori naturali sono i monomi canonici:</p>
+<p>$$\\mathbb{R}[t]_{\\leq m} = \\text{Span}(1, t, t^2, \\dots, t^m)$$</p>
+<p>Servono $m + 1$ generatori (i monomi da grado 0 a grado $m$).</p>`
+        },
+        {
+            id: "s04-riepilogo",
+            type: "section",
+            title: "Riepilogo e Schema di Studio",
+            icon: "📋",
+            content: `<p>Tabella riassuntiva degli spazi finitamente generabili studiati in questa lezione.</p>`,
+            table_compare: {
+                headers: ["Spazio", "F.G.?", "Generatori canonici"],
+                rows: [
+                    ["$\\{\\underline{0}\\}$", "Sì", "$\\emptyset$ (zero generatori)"],
+                    ["$\\mathbb{R}$", "Sì", "un qualunque $u \\neq 0$"],
+                    ["$\\mathbb{R}^n$", "Sì", "$n$ vettori canonici $\\underline{e}_1, \\dots, \\underline{e}_n$"],
+                    ["$\\mathcal{M}(m, n)$", "Sì", "$m \\cdot n$ matrici canoniche $E_{ij}$"],
+                    ["$\\mathbb{R}[t]_{\\leq m}$", "Sì", "$m + 1$ monomi $1, t, \\dots, t^m$"],
+                    ["$\\mathbb{R}[t]$", "No", "nessun insieme finito basta"]
+                ]
+            },
+            extra_content: `<p><strong>Come verificare se $\\text{Span}(S) = \\text{Span}(T)$:</strong></p>
+<ol>
+<li>Per ogni $\\underline{t} \\in T$: verifica che $\\underline{t}$ sia combinazione lineare dei vettori di $S$ (risolvi il sistema lineare). Se sì per tutti $\\Rightarrow \\text{Span}(T) \\subseteq \\text{Span}(S)$.</li>
+<li>Per ogni $\\underline{s} \\in S$: verifica che $\\underline{s}$ sia combinazione lineare dei vettori di $T$. Se sì per tutti $\\Rightarrow \\text{Span}(S) \\subseteq \\text{Span}(T)$.</li>
+<li>Se entrambe le inclusioni valgono $\\Rightarrow \\text{Span}(S) = \\text{Span}(T)$.</li>
+</ol>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è lo Span (sottospazio generato) di un insieme S?",
+            back: "Dato $S \\subseteq V$, lo Span di $S$ è l'insieme di tutte le combinazioni lineari dei vettori di $S$: $$\\text{Span}(S) = \\{a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h \\mid \\underline{s}_i \\in S, \\; a_i \\in \\mathbb{R}\\}$$ Per convenzione, $\\text{Span}(\\emptyset) = \\{\\underline{0}\\}$."
+        },
+        {
+            type: "domanda",
+            front: "Perché lo Span(S) è sempre un sottospazio, anche se S non lo è?",
+            back: "Si verificano le tre condizioni: (1) $\\underline{0} = 0 \\cdot \\underline{s} \\in \\text{Span}(S)$; (2) la somma di due combinazioni lineari di vettori di $S$ è ancora una combinazione lineare di vettori di $S$; (3) uno scalare per una combinazione lineare è ancora una combinazione lineare (si moltiplicano tutti i coefficienti per lo scalare)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra la proprietà di coincidenza: S è un sottospazio ⟺ S = Span(S).",
+            back: "($\\Leftarrow$) Se $S = \\text{Span}(S)$, allora $S$ è sottospazio perché lo Span lo è sempre. ($\\Rightarrow$) Se $S$ è sottospazio: $S \\subseteq \\text{Span}(S)$ vale per la proprietà di inclusione. Per $\\text{Span}(S) \\subseteq S$: ogni $\\underline{u} = a_1\\underline{s}_1 + \\dots + a_h\\underline{s}_h$ con $\\underline{s}_i \\in S$ sta in $S$ perché $S$ è chiuso per moltiplicazione scalare (ogni $a_i\\underline{s}_i \\in S$) e per addizione (la somma resta in $S$)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra la proprietà di minimalità dello Span (proprietà 6).",
+            back: "Sia $W$ sottospazio di $V$ con $S \\subseteq W$. Per monotonia: $S \\subseteq W \\Rightarrow \\text{Span}(S) \\subseteq \\text{Span}(W)$. Ma $W$ è un sottospazio, quindi per la proprietà di coincidenza $\\text{Span}(W) = W$. Conclusione: $\\text{Span}(S) \\subseteq W$. Questo mostra che $\\text{Span}(S)$ è il più piccolo sottospazio contenente $S$."
+        },
+        {
+            type: "domanda",
+            front: "Come si verifica che Span(S) = Span(T)?",
+            back: "Si procede in due passi: (1) si verifica che ogni vettore di $T$ è combinazione lineare dei vettori di $S$ → per monotonia $\\text{Span}(T) \\subseteq \\text{Span}(S)$; (2) si verifica che ogni vettore di $S$ è combinazione lineare dei vettori di $T$ → per monotonia $\\text{Span}(S) \\subseteq \\text{Span}(T)$. Le due inclusioni danno l'uguaglianza."
+        },
+        {
+            type: "definizione",
+            front: "Quando uno spazio vettoriale si dice finitamente generabile?",
+            back: "Uno spazio vettoriale $V$ si dice finitamente generabile (f.g.) se esiste un sottoinsieme **finito** $S \\subseteq V$ tale che $V = \\text{Span}(S)$. Ad esempio $\\mathbb{R}^n$ è f.g. (servono $n$ vettori canonici), mentre $\\mathbb{R}[t]$ non lo è."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che ℝ[t] non è finitamente generabile.",
+            back: "Per assurdo: supponiamo che $\\mathbb{R}[t] = \\text{Span}(P_1, \\dots, P_h)$. Sia $m = \\max\\{\\deg P_i\\}$. Il monomio $t^{m+1}$ ha grado $m+1$, ma ogni combinazione lineare $a_1P_1 + \\dots + a_hP_h$ ha grado $\\leq m$. Quindi $t^{m+1} \\notin \\text{Span}(P_1, \\dots, P_h)$: contraddizione."
+        },
+        {
+            type: "tranello",
+            front: "V = Span(V) vale per ogni spazio vettoriale. Questo implica che V è finitamente generabile?",
+            back: "**No!** $V = \\text{Span}(V)$ è vero per la proprietà di coincidenza (ogni spazio è sottospazio di sé stesso). Ma per essere finitamente generabile serve un sottoinsieme **finito** $S$ con $V = \\text{Span}(S)$, e $V$ stesso potrebbe essere infinito. Esempio: $\\mathbb{R}[t] = \\text{Span}(\\mathbb{R}[t])$ ma $\\mathbb{R}[t]$ non è f.g."
+        },
+        {
+            type: "formula",
+            front: "Quanti generatori canonici servono per M(m,n)?",
+            back: "Lo spazio $\\mathcal{M}(m, n)$ ha bisogno di $m \\cdot n$ matrici canoniche $E_{ij}$ come generatori: $$\\mathcal{M}(m, n) = \\text{Span}(E_{ij} : i = 1, \\dots, m, \\; j = 1, \\dots, n)$$ Ogni $E_{ij}$ ha un 1 in posizione $(i,j)$ e 0 ovunque."
+        },
+        {
+            type: "domanda",
+            front: "Qual è l'interpretazione geometrica dello span di uno e due vettori?",
+            back: "Lo span di un singolo vettore non nullo $\\underline{s}$ è $\\{a\\underline{s} : a \\in \\mathbb{R}\\}$, cioè una **retta per l'origine**. Lo span di due vettori «indipendenti» è un **piano per l'origine**. In generale, il numero di vettori indipendenti determina la «dimensione» del sottospazio generato."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
