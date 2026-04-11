@@ -90,6 +90,7 @@ const COURSES = {
       { id: 'L06', num: 'Lezione 6', date: '12 Mar 2026', title: 'Proprietà dei Sistemi Liberi e Legati', abstract: 'Proprietà fondamentali dei sistemi di vettori liberi e legati: caratterizzazione tramite dipendenza lineare, vettori sovrabbondanti, unicità delle coordinate, e l\'algoritmo di scarto per estrarre generatori indipendenti.', category: 'spazi-vettoriali' },
       { id: 'L07', num: 'Lezione 7', date: '16 Mar 2026', title: 'Basi, Lemma di Steinitz e Dimensione', abstract: 'Definizione rigorosa di base di uno spazio vettoriale, dimostrazione del Lemma di Steinitz (sostitutivo) per assurdo, e introduzione del concetto di dimensione con le sue proprietà equivalenti.', category: 'spazi-vettoriali' },
       { id: 'L08', num: 'Lezione 8', date: '17 Mar 2026', title: 'Basi, Dimensione e Formula di Grassmann', abstract: 'Definizione di dimensione di uno spazio vettoriale, le 8 proprietà fondamentali di basi e dimensione, intersezione e somma di sottospazi, e dimostrazione completa della Formula di Grassmann.', category: 'spazi-vettoriali' },
+      { id: 'L09', num: 'Lezione 9', date: '19 Mar 2026', title: 'Esercizi su Grassmann, Somma Diretta e Inizio Matrici', abstract: 'Applicazione pratica della Formula di Grassmann per calcolare basi e dimensioni di somma e intersezione di sottospazi. Definizione e caratterizzazioni equivalenti della somma diretta. Introduzione al capitolo delle matrici: notazioni, trasposta, traccia e famiglie notevoli.', category: 'spazi-vettoriali' },
     ],
   },
   controlli: {

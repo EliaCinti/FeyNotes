@@ -1,0 +1,226 @@
+const LESSON = {
+    id: "L09", date: "Lezione 09 — 19 Mar 2026",
+    title: "Esercizi su Grassmann, Somma Diretta e Inizio Matrici",
+    abstract: "Applicazione pratica della Formula di Grassmann per calcolare basi e dimensioni di somma e intersezione di sottospazi. Definizione e caratterizzazioni equivalenti della somma diretta. Introduzione al capitolo delle matrici: notazioni, trasposta, traccia e famiglie notevoli.",
+
+    sections: [
+        {
+            id: "s09-esercizio-grassmann",
+            type: "section",
+            title: "Esercizio Pratico: Base, Somma e Intersezione",
+            icon: "🧮",
+            content: `<p>Questo esercizio riassume perfettamente i concetti di base, dimensione e l'applicazione pratica della Formula di Grassmann. Siano $V$ e $W$ sottospazi di $\\mathbb{R}^4$ così definiti:</p>
+<p>$$V = \\text{Span}(\\underbrace{(1, 1, 1, 1)}_{\\mathbf{v}_1},\\; \\underbrace{(2, 0, 1, 3)}_{\\mathbf{v}_2},\\; \\underbrace{(3, 1, 2, 4)}_{\\mathbf{v}_3})$$</p>
+<p>$$W = \\text{Span}(\\underbrace{(1, 0, 0, 0)}_{\\mathbf{w}_1},\\; \\underbrace{(0, 1, 0, -2)}_{\\mathbf{w}_2})$$</p>
+<p>Vogliamo calcolare base e dimensione di $V$, $W$, $V + W$ e $V \\cap W$.</p>`,
+            subsections: [
+                {
+                    subtitle: "1. Studio di V e W",
+                    content: `<p>Osserviamo subito i generatori di $V$. Notiamo che $\\mathbf{v}_3 = \\mathbf{v}_1 + \\mathbf{v}_2$. Il vettore $\\mathbf{v}_3$ è una combinazione lineare degli altri due, quindi è <strong>sovrabbondante</strong> e possiamo scartarlo. I due vettori rimasti sono linearmente indipendenti.</p>
+<p>Quindi una base per $V$ è $\\mathcal{B}_V = \\{\\mathbf{v}_1, \\mathbf{v}_2\\}$ e $\\dim(V) = 2$.</p>
+<p>Per quanto riguarda $W$, i due generatori $\\mathbf{w}_1$ e $\\mathbf{w}_2$ sono banalmente linearmente indipendenti. Quindi una base per $W$ è $\\mathcal{B}_W = \\{\\mathbf{w}_1, \\mathbf{w}_2\\}$ e $\\dim(W) = 2$.</p>`
+                },
+                {
+                    subtitle: "2. Studio della Somma V + W",
+                    content: `<p>Il sottospazio somma è generato dall'unione delle due basi:</p>
+<p>$$V + W = \\text{Span}(\\mathbf{v}_1, \\mathbf{v}_2, \\mathbf{w}_1, \\mathbf{w}_2)$$</p>
+<p>Dobbiamo capire se questi 4 vettori sono linearmente indipendenti. Impostiamo la combinazione lineare uguagliata al vettore nullo:</p>
+<p>$$x(1, 1, 1, 1) + y(2, 0, 1, 3) + z(1, 0, 0, 0) + t(0, 1, 0, -2) = (0, 0, 0, 0)$$</p>
+<p>Mettendo a sistema componente per componente:</p>
+<p>$$\\begin{cases} x + 2y + z = 0 \\\\ x + t = 0 \\\\ x + y = 0 \\\\ x + 3y - 2t = 0 \\end{cases} \\;\\Rightarrow\\; \\begin{cases} y = -x \\\\ t = -x \\\\ z = x \\\\ x - 3x + 2x = 0 \\;(\\text{identità}) \\end{cases}$$</p>
+<p>Possiamo scegliere un valore per $x$, ad esempio $x = 1$. Otteniamo la relazione non banale: $(x, y, z, t) = (1, -1, 1, -1)$. Essendoci una relazione non banale, i vettori sono <strong>legati</strong>. Un vettore è sovrabbondante e lo scartiamo. I restanti tre saranno indipendenti.</p>
+<p>Quindi $\\dim(V + W) = 3$ e una sua base è $\\{\\mathbf{v}_1, \\mathbf{v}_2, \\mathbf{w}_1\\}$.</p>`
+                },
+                {
+                    subtitle: "3. Studio dell'Intersezione V ∩ W",
+                    content: `<p>Usiamo la <strong>Formula di Grassmann</strong>:</p>
+<p>$$\\dim(V \\cap W) = \\dim(V) + \\dim(W) - \\dim(V + W) = 2 + 2 - 3 = 1$$</p>
+<p>L'intersezione ha dimensione 1: ci serve un solo vettore per descriverne la base. Da dove lo prendiamo? <strong>Dalla relazione che abbiamo appena trovato!</strong> Sostituendo i pesi $x = 1, y = -1, z = 1, t = -1$:</p>
+<p>$$1(\\mathbf{v}_1) - 1(\\mathbf{v}_2) + 1(\\mathbf{w}_1) - 1(\\mathbf{w}_2) = \\mathbf{0}$$</p>
+<p>Spostiamo i vettori di $W$ a destra dell'uguale:</p>
+<p>$$\\underbrace{\\mathbf{v}_1 - \\mathbf{v}_2}_{\\in V} = \\underbrace{-\\mathbf{w}_1 + \\mathbf{w}_2}_{\\in W}$$</p>
+<p>Calcoliamo esplicitamente questo vettore facendo il calcolo a destra:</p>
+<p>$$-\\mathbf{w}_1 + \\mathbf{w}_2 = -(1, 0, 0, 0) + (0, 1, 0, -2) = (-1, 1, 0, -2)$$</p>
+<p>Questo vettore appartiene sia a $V$ che a $W$, quindi genera $V \\cap W$. Una base per l'intersezione è $\\{(-1, 1, 0, -2)\\}$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Formula di Grassmann", latex: "\\dim(V \\cap W) = \\dim(V) + \\dim(W) - \\dim(V + W)" }
+            ]
+        },
+        {
+            id: "s09-tecnica-intersezione",
+            type: "alert_box",
+            title: "Tecnica chiave: trovare una base per V ∩ W",
+            icon: "⚠️",
+            content: `<p>La tecnica usata nell'esercizio è fondamentale e va memorizzata:</p>
+<ol>
+<li>Si imposta la combinazione lineare dei generatori di $V + W$ uguale a zero.</li>
+<li>Si trova la <strong>relazione di dipendenza</strong> tra i vettori.</li>
+<li>Si <strong>separa</strong> la relazione: vettori di $V$ da una parte, vettori di $W$ dall'altra.</li>
+<li>Il vettore risultante (uguale da entrambi i lati) appartiene a $V \\cap W$.</li>
+</ol>
+<p>Questa tecnica funziona sempre e permette di trovare esplicitamente i generatori dell'intersezione senza dover risolvere un sistema separato.</p>`
+        },
+        {
+            id: "s09-somma-diretta",
+            type: "section",
+            title: "Somma Diretta di Sottospazi",
+            icon: "⊕",
+            content: `<p>La somma diretta è un concetto fondamentale che rafforza la somma di sottospazi con una condizione aggiuntiva di "indipendenza" tra le componenti.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione di Somma Diretta",
+                    content: `<p>Sia $V$ uno spazio vettoriale e siano $U, W$ suoi sottospazi. Diremo che $V$ è <strong>somma diretta</strong> di $U$ e $W$, e scriveremo $V = U \\oplus W$, se valgono <strong>entrambe</strong> le seguenti condizioni:</p>
+<ol>
+<li>$V = U + W$ (i due sottospazi sommati generano tutto l'ambiente).</li>
+<li>$U \\cap W = \\{\\mathbf{0}\\}$ (l'unica intersezione è il vettore nullo).</li>
+</ol>
+<p>In parole povere: ogni vettore di $V$ si può scrivere come somma di un pezzo in $U$ e un pezzo in $W$, e questa decomposizione è <strong>unica</strong>.</p>`
+                },
+                {
+                    subtitle: "Le 7 caratterizzazioni equivalenti",
+                    content: `<p>Il professore ha enunciato le 7 proprietà equivalenti presenti sulle dispense, di cui è fondamentale comprendere il ciclo di implicazioni a cascata. Sia $V$ uno spazio vettoriale di dimensione finita. Le seguenti affermazioni sono <strong>tutte equivalenti</strong>:</p>
+<p><strong>(i)</strong> $V = U \\oplus W$</p>
+<p><strong>(ii)</strong> $V = U + W$ e $\\dim(V) = \\dim(U) + \\dim(W)$</p>
+<p><strong>(iii)</strong> $\\dim(V) = \\dim(U) + \\dim(W)$ e $\\dim(U \\cap W) = 0$</p>
+<p><strong>(iv)</strong> $\\dim(V) = \\dim(U) + \\dim(W)$ e $U \\cap W = \\{\\mathbf{0}\\}$</p>
+<p><strong>(v)</strong> Per ogni $\\mathbf{v} \\in V$, esistono e <strong>sono unici</strong> $\\mathbf{u} \\in U$ e $\\mathbf{w} \\in W$ tali che $\\mathbf{v} = \\mathbf{u} + \\mathbf{w}$</p>
+<p><strong>(vi)</strong> Date <strong>due basi qualsiasi</strong> di $U$ e $W$, la loro unione è una base per $V$</p>
+<p><strong>(vii)</strong> Esistono <strong>almeno una base</strong> per $U$ e una per $W$ la cui unione è una base per $V$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione a cascata",
+                    content: `<p><strong>(i) ⟹ (ii):</strong> Se per definizione $U \\cap W = \\{\\mathbf{0}\\}$, allora $\\dim(U \\cap W) = 0$. Applicando la Formula di Grassmann:</p>
+<p>$$\\dim(V) = \\dim(U + W) = \\dim(U) + \\dim(W) - 0$$</p>
+
+<p><strong>(ii) ⟹ (iii):</strong> Applicando Grassmann al contrario: siccome $\\dim(V) = \\dim(U) + \\dim(W)$ e al contempo $\\dim(V) = \\dim(U) + \\dim(W) - \\dim(U \\cap W)$, deduciamo che $\\dim(U \\cap W) = 0$.</p>
+
+<p><strong>(iii) ⟹ (iv):</strong> Dire che un sottospazio ha dimensione 0 equivale a dire che contiene solo il vettore nullo.</p>
+
+<p><strong>(iv) ⟹ (v):</strong> Da Grassmann la somma delle dimensioni fa la dimensione dell'ambiente, quindi $V = U + W$. Dunque ogni $\\mathbf{v}$ si scrive come $\\mathbf{u} + \\mathbf{w}$. Dimostriamo l'<strong>unicità</strong>: supponiamo per assurdo $\\mathbf{v} = \\mathbf{u} + \\mathbf{w} = \\mathbf{u}' + \\mathbf{w}'$. Allora:</p>
+<p>$$\\mathbf{u} - \\mathbf{u}' = \\mathbf{w}' - \\mathbf{w}$$</p>
+<p>Il termine a sinistra sta in $U$ e quello a destra in $W$. Essendo uguali, devono stare in $U \\cap W = \\{\\mathbf{0}\\}$. Quindi $\\mathbf{u} = \\mathbf{u}'$ e $\\mathbf{w} = \\mathbf{w}'$.</p>
+
+<p><strong>(v) ⟹ (vi):</strong> L'esistenza della somma per ogni $\\mathbf{v}$ garantisce che l'unione sia un sistema di generatori. L'unicità garantisce l'indipendenza lineare. Quindi l'unione è una base.</p>
+
+<p><strong>(vi) ⟹ (vii):</strong> Ovvio. Se vale per ogni coppia di basi, vale anche per almeno una.</p>
+
+<p><strong>(vii) ⟹ (i):</strong> Se l'unione delle basi è una base di $V$, i vettori sono linearmente indipendenti, il che garantisce $U \\cap W = \\{\\mathbf{0}\\}$ e $V = U + W$. Torniamo alla definizione originaria, chiudendo il ciclo.</p>`
+                }
+            ],
+            extra_content: `<p><strong>Estensione a più sottospazi:</strong> Il concetto si estende a $r$ sottospazi, scrivendo $V = U_1 \\oplus U_2 \\oplus \\dots \\oplus U_r$. In tal caso si richiede che ogni sottospazio intersechi la somma di tutti i precedenti solo nel vettore nullo.</p>`,
+            formulas: [
+                { label: "Somma diretta (definizione)", latex: "V = U \\oplus W \\iff V = U + W \\text{ e } U \\cap W = \\{\\mathbf{0}\\}" },
+                { label: "Condizione dimensionale", latex: "V = U \\oplus W \\iff \\dim(V) = \\dim(U) + \\dim(W) \\text{ e } V = U + W" }
+            ]
+        },
+        {
+            id: "s09-unicita-decomposizione",
+            type: "oral_box",
+            title: "Domanda d'esame: unicità della decomposizione",
+            icon: "🎯",
+            content: `<p><strong>Domanda tipica:</strong> "Se $V = U \\oplus W$, perché la scrittura $\\mathbf{v} = \\mathbf{u} + \\mathbf{w}$ è unica?"</p>
+<p><strong>Risposta:</strong> Supponiamo $\\mathbf{v} = \\mathbf{u} + \\mathbf{w} = \\mathbf{u}' + \\mathbf{w}'$. Allora $\\mathbf{u} - \\mathbf{u}' = \\mathbf{w}' - \\mathbf{w}$. Il membro sinistro sta in $U$, il destro in $W$. Essendo uguali, appartengono a $U \\cap W = \\{\\mathbf{0}\\}$. Quindi $\\mathbf{u} = \\mathbf{u}'$ e $\\mathbf{w} = \\mathbf{w}'$.</p>`
+        },
+        {
+            id: "s09-matrici-intro",
+            type: "section",
+            title: "Inizio Capitolo 2: Le Matrici",
+            icon: "📐",
+            content: `<p>Fissati due interi $m, n \\geq 1$, una <strong>matrice</strong> è una tabella rettangolare di numeri reali $a_{ij}$ composta da $m$ righe ed $n$ colonne. L'insieme di tutte le matrici di questo tipo si denota con $\\mathcal{M}(m, n)$.</p>
+<p>$$A = \\begin{bmatrix} a_{11} & a_{12} & \\dots & a_{1n} \\\\ a_{21} & a_{22} & \\dots & a_{2n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ a_{m1} & a_{m2} & \\dots & a_{mn} \\end{bmatrix}$$</p>
+<p><strong>Notazioni fondamentali:</strong></p>
+<ul>
+<li>$A_i$ (pedice) denota la <strong>riga</strong> $i$-esima. Essa può essere vista come un vettore in $\\mathbb{R}^n$.</li>
+<li>$A^j$ (apice) denota la <strong>colonna</strong> $j$-esima. Essa può essere vista come un vettore colonna in $\\mathbb{R}^m$.</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "La Matrice Trasposta",
+                    content: `<p>Data una matrice $A \\in \\mathcal{M}(m, n)$, definiamo la sua <strong>matrice trasposta</strong> $A^T \\in \\mathcal{M}(n, m)$ come la matrice in cui le righe di $A$ diventano le colonne di $A^T$ (e viceversa). Formalmente: l'elemento di posto $(i, j)$ di $A^T$ è l'elemento di posto $(j, i)$ di $A$.</p>
+<p>$$A = \\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\end{bmatrix}_{2 \\times 3} \\;\\Rightarrow\\; A^T = \\begin{bmatrix} 1 & 4 \\\\ 2 & 5 \\\\ 3 & 6 \\end{bmatrix}_{3 \\times 2}$$</p>`
+                },
+                {
+                    subtitle: "Matrici Quadrate e Traccia",
+                    content: `<p>Quando $m = n$, la matrice si dice <strong>quadrata</strong> di ordine $n$. Gli elementi del tipo $a_{ii}$ (ovvero $a_{11}, a_{22}, \\dots, a_{nn}$) formano la <strong>diagonale principale</strong> della matrice.</p>
+<p>La <strong>traccia</strong> di una matrice quadrata $A$, indicata con $\\text{tr}(A)$, è la somma degli elementi sulla diagonale principale:</p>
+<p>$$\\text{tr}(A) = a_{11} + a_{22} + \\dots + a_{nn}$$</p>`
+                },
+                {
+                    subtitle: "Famiglie notevoli di Matrici Quadrate",
+                    content: `<p><strong>Simmetrica:</strong> Una matrice si dice simmetrica se coincide con la sua trasposta, ovvero $A = A^T$ (cioè $a_{ij} = a_{ji}$ per ogni $i, j$).</p>
+<p><strong>Diagonale:</strong> Tutti gli elementi <em>al di fuori</em> della diagonale principale sono uguali a zero ($a_{ij} = 0$ per $i \\neq j$).</p>
+<p><strong>Triangolare Superiore:</strong> Tutti gli elementi <em>sotto</em> la diagonale principale sono zeri ($a_{ij} = 0$ se $i \\gt j$).</p>
+<p><strong>Triangolare Inferiore:</strong> Tutti gli elementi <em>sopra</em> la diagonale principale sono zeri ($a_{ij} = 0$ se $i \\lt j$). Una matrice triangolare inferiore è la trasposta di una matrice triangolare superiore.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Trasposta", latex: "(A^T)_{ij} = A_{ji}" },
+                { label: "Traccia", latex: "\\text{tr}(A) = a_{11} + a_{22} + \\dots + a_{nn}" }
+            ]
+        },
+        {
+            id: "s09-famiglie-matrici",
+            type: "note_box",
+            title: "Relazioni tra famiglie di matrici quadrate",
+            icon: "📝",
+            content: `<p>Le famiglie di matrici quadrate sono "annidate" in modo specifico:</p>
+<ul>
+<li>Ogni matrice <strong>diagonale</strong> è sia triangolare superiore che triangolare inferiore (e anche simmetrica).</li>
+<li>Una matrice <strong>simmetrica</strong> non è necessariamente diagonale.</li>
+<li>Una matrice <strong>triangolare</strong> non è necessariamente simmetrica né diagonale.</li>
+</ul>
+<p>Attenzione: la diagonale è l'intersezione delle due famiglie triangolari, non una generalizzazione!</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quando si dice che V è somma diretta di U e W?",
+            back: "Si scrive $V = U \\oplus W$ se valgono entrambe: (1) $V = U + W$ e (2) $U \\cap W = \\{\\mathbf{0}\\}$. Equivalentemente, ogni $\\mathbf{v} \\in V$ si scrive in modo unico come $\\mathbf{v} = \\mathbf{u} + \\mathbf{w}$ con $\\mathbf{u} \\in U$ e $\\mathbf{w} \\in W$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che se V = U ⊕ W allora la decomposizione v = u + w è unica.",
+            back: "Supponiamo $\\mathbf{v} = \\mathbf{u} + \\mathbf{w} = \\mathbf{u}' + \\mathbf{w}'$. Allora $\\mathbf{u} - \\mathbf{u}' = \\mathbf{w}' - \\mathbf{w}$. Il membro sinistro $\\in U$, il destro $\\in W$. Essendo uguali, appartengono a $U \\cap W = \\{\\mathbf{0}\\}$. Quindi $\\mathbf{u} - \\mathbf{u}' = \\mathbf{0}$ e $\\mathbf{w}' - \\mathbf{w} = \\mathbf{0}$, cioè $\\mathbf{u} = \\mathbf{u}'$ e $\\mathbf{w} = \\mathbf{w}'$."
+        },
+        {
+            type: "domanda",
+            front: "Elenca almeno 4 caratterizzazioni equivalenti della somma diretta V = U ⊕ W.",
+            back: "Sono equivalenti: (1) $V = U + W$ e $U \\cap W = \\{\\mathbf{0}\\}$; (2) $V = U + W$ e $\\dim(V) = \\dim(U) + \\dim(W)$; (3) ogni $\\mathbf{v}$ si decompone in modo unico come $\\mathbf{u} + \\mathbf{w}$; (4) l'unione di due basi qualsiasi di $U$ e $W$ è una base di $V$."
+        },
+        {
+            type: "domanda",
+            front: "Come si trova una base per V ∩ W nella pratica?",
+            back: "Si uniscono le basi di $V$ e $W$ e si cerca una relazione di dipendenza lineare tra i vettori. Trovata la relazione, si separano i contributi di $V$ da quelli di $W$: il vettore risultante (uguale da entrambi i lati) appartiene a $V \\cap W$. La dimensione dell'intersezione si calcola con Grassmann: $\\dim(V \\cap W) = \\dim(V) + \\dim(W) - \\dim(V + W)$."
+        },
+        {
+            type: "definizione",
+            front: "Cosa si intende per matrice trasposta?",
+            back: "Data $A \\in \\mathcal{M}(m, n)$, la trasposta $A^T \\in \\mathcal{M}(n, m)$ è definita da $(A^T)_{ij} = A_{ji}$. In pratica, le righe di $A$ diventano le colonne di $A^T$ e viceversa."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è la traccia di una matrice quadrata?",
+            back: "La traccia di $A$ quadrata di ordine $n$ è $\\text{tr}(A) = a_{11} + a_{22} + \\dots + a_{nn}$, cioè la somma degli elementi sulla diagonale principale."
+        },
+        {
+            type: "formula",
+            front: "Scrivi la Formula di Grassmann e spiega come la usi per calcolare dim(V ∩ W).",
+            back: "$\\dim(V \\cap W) = \\dim(V) + \\dim(W) - \\dim(V + W)$. Si calcolano separatamente $\\dim(V)$ e $\\dim(W)$ trovando le basi. Per $\\dim(V + W)$ si uniscono le basi e si conta quanti vettori indipendenti ci sono. Per differenza si ottiene $\\dim(V \\cap W)$."
+        },
+        {
+            type: "tranello",
+            front: "Una matrice diagonale è sempre simmetrica? E una simmetrica è sempre diagonale?",
+            back: "Sì, ogni matrice diagonale è simmetrica (gli unici elementi non nulli sono sulla diagonale, quindi $a_{ij} = 0 = a_{ji}$ per $i \\neq j$). Ma NO, una matrice simmetrica non è necessariamente diagonale: basta che $a_{ij} = a_{ji} \\neq 0$ per qualche $i \\neq j$."
+        },
+        {
+            type: "tranello",
+            front: "Nell'esercizio su V ∩ W, perché non basta usare Grassmann per trovare la base dell'intersezione?",
+            back: "Grassmann dà solo la dimensione di $V \\cap W$, non i vettori espliciti. Per trovare una base effettiva, bisogna usare la tecnica della relazione di dipendenza: si trova la combinazione lineare nulla tra i generatori di $V + W$ e si separano i contributi dei due sottospazi."
+        }
+    ]
+};
+
