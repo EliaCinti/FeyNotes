@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 12 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 12: Matrici Equivalenti per Righe, Matrice a Scala e Algoritmo di Gauss. Equivalenza per righe e conservazione dello spazio delle righe. Definizione di matrice a scala e pivot. L'algoritmo di Gauss per la riduzione a scala. Calcolo del rango, basi di sottospazi, verifica di appartenenza allo span, complementi in somma diretta e discussione del rango con parametri.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 12: Matrici Equivalenti per Righe, Matrice a Scala e Algoritmo di Gauss — Geometria">
+  <meta property="og:description" content="Equivalenza per righe e conservazione dello spazio delle righe. Definizione di matrice a scala e pivot. L'algoritmo di Gauss per la riduzione a scala. Calcolo del rango, basi di sottospazi, verifica di appartenenza allo span, complementi in somma diretta e discussione del rango con parametri.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L12/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L12/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 12 — Matrici Equivalenti per Righe, Matrice a Scala e Algoritmo di Gauss",
+  "description": "Equivalenza per righe e conservazione dello spazio delle righe. Definizione di matrice a scala e pivot. L'algoritmo di Gauss per la riduzione a scala. Calcolo del rango, basi di sottospazi, verifica di appartenenza allo span, complementi in somma diretta e discussione del rango con parametri.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L12/",
+  "datePublished": "2026-03-30",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 12</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L11/">← Prec.</a>
+      <a href="/geometria/lezioni/L13/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L12", date: "Lezione 12 — 30 Mar 2026",
+    title: "Matrici Equivalenti per Righe, Matrice a Scala e Algoritmo di Gauss",
+    abstract: "Equivalenza per righe e conservazione dello spazio delle righe. Definizione di matrice a scala e pivot. L'algoritmo di Gauss per la riduzione a scala. Calcolo del rango, basi di sottospazi, verifica di appartenenza allo span, complementi in somma diretta e discussione del rango con parametri.",
+
+    sections: [
+        {
+            id: "s12-equivalenza-righe",
+            type: "section",
+            title: "Matrici Equivalenti per Righe",
+            icon: "🔄",
+            content: `<p>L'idea centrale è trasformare una matrice «complicata» in una matrice «semplice» (a scala), <strong>senza perdere le informazioni sullo spazio generato dalle righe</strong>. Lo strumento sono le <strong>operazioni elementari</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione di equivalenza per righe",
+                    content: `<p>Siano $A$ e $B$ due matrici $m \\times n$. Diciamo che $A$ è <strong>equivalente per righe</strong> a $B$, e scriviamo $A \\sim_r B$, se $B$ si ottiene da $A$ tramite un numero finito di operazioni elementari sulle righe.</p>
+<p>Equivalentemente, $A \\sim_r B$ se e solo se esistono matrici elementari $E_1, E_2, \\dots, E_h$ tali che:</p>
+<p>$$B = E_1 \\cdot E_2 \\cdot \\dots \\cdot E_h \\cdot A$$</p>
+<p>Ricordiamo i tre tipi di operazioni elementari sulle righe:</p>
+<ul>
+<li>$p_{ij}$: scambio della riga $A_i$ con la riga $A_j$</li>
+<li>$e_{ij}(k)$: sostituzione di $A_i$ con $A_i + kA_j$ (con $i \\neq j$)</li>
+<li>$e_i(k)$: moltiplicazione della riga $A_i$ per lo scalare $k \\neq 0$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Proprietà: è una relazione di equivalenza",
+                    content: `<p>La relazione $\\sim_r$ è una <strong>relazione di equivalenza</strong> su $\\mathcal{M}(m, n)$.</p>
+<p><strong>Dimostrazione:</strong></p>
+<ol>
+<li><strong>Riflessività:</strong> Per ogni matrice $A$, possiamo scrivere $A = E_1(1) \\cdot A$ (moltiplicare la prima riga per 1 non cambia nulla), quindi $A \\sim_r A$.</li>
+<li><strong>Simmetria:</strong> Se $A \\sim_r B$, allora $B = E_1 \\dots E_h \\cdot A$. Poiché le inverse delle matrici elementari sono ancora elementari:
+<p>$$A = E_h^{-1} \\cdot E_{h-1}^{-1} \\dots E_1^{-1} \\cdot B$$</p>
+<p>e quindi $B \\sim_r A$.</p></li>
+<li><strong>Transitività:</strong> Se $A \\sim_r B$ e $B \\sim_r C$, allora:
+<p>$$C = F_1 \\dots F_k \\cdot B = F_1 \\dots F_k \\cdot E_1 \\dots E_h \\cdot A$$</p>
+<p>che è un prodotto di matrici elementari per $A$, quindi $A \\sim_r C$.</p></li>
+</ol>`
+                },
+                {
+                    subtitle: "Il fatto fondamentale: conservazione dello spazio delle righe",
+                    content: `<p>Se $A \\sim_r B$, allora lo <strong>spazio delle righe</strong> di $A$ coincide con quello di $B$:</p>
+<p>$$A \\sim_r B \\Rightarrow \\mathcal{R}_A = \\mathcal{R}_B$$</p>
+<p><strong>Perché?</strong> Se $A \\sim_r B$, le righe di $B$ sono combinazioni lineari delle righe di $A$ (per definizione di operazione elementare), quindi $\\mathcal{R}_B \\subseteq \\mathcal{R}_A$. Ma per simmetria della relazione, vale anche $\\mathcal{R}_A \\subseteq \\mathcal{R}_B$.</p>
+<p><strong>Conseguenza immediata:</strong> Poiché $\\mathcal{R}_A = \\mathcal{R}_B$, si ha $\\dim \\mathcal{R}_A = \\dim \\mathcal{R}_B$, cioè:</p>
+<p>$$A \\sim_r B \\Rightarrow \\text{rk}\\, A = \\text{rk}\\, B$$</p>
+<p><strong>Le operazioni elementari non cambiano il rango!</strong></p>`
+                },
+                {
+                    subtitle: "Equivalenza per colonne",
+                    content: `<p>Analogamente, si definisce l'<strong>equivalenza per colonne</strong>: $A \\sim_c B$ se $B$ si ottiene da $A$ con operazioni elementari sulle colonne, cioè esistono matrici elementari $E_1, \\dots, E_h$ tali che:</p>
+<p>$$B = A \\cdot E_1 \\cdot E_2 \\cdot \\dots \\cdot E_h$$</p>
+<p>Osservazioni importanti:</p>
+<ul>
+<li>$A \\sim_c B$ se e solo se $A^T \\sim_r B^T$.</li>
+<li>Le operazioni per colonne conservano lo spazio delle colonne: $A \\sim_c B \\Rightarrow \\mathcal{C}_A = \\mathcal{C}_B$.</li>
+<li>In generale, equivalenza per righe e per colonne sono relazioni <strong>diverse</strong>. Ad esempio:</li>
+</ul>
+<p>$$A = \\begin{bmatrix} 1 & 1 \\\\ 1 & 1 \\end{bmatrix}, \\quad B = \\begin{bmatrix} 1 & 1 \\\\ 0 & 0 \\end{bmatrix}$$</p>
+<p>sono equivalenti per righe ($e_{21}(-1)$ su $A$ dà $B$), ma <strong>non</strong> per colonne.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Equivalenza per righe", latex: "B = E_1 \\cdot E_2 \\cdot \\dots \\cdot E_h \\cdot A" },
+                { label: "Conservazione spazio righe", latex: "A \\sim_r B \\Rightarrow \\mathcal{R}_A = \\mathcal{R}_B" },
+                { label: "Conservazione del rango", latex: "A \\sim_r B \\Rightarrow \\text{rk}\\, A = \\text{rk}\\, B" }
+            ]
+        },
+        {
+            id: "s12-matrice-scala",
+            type: "section",
+            title: "La Matrice a Scala per Righe",
+            icon: "📐",
+            content: `<p>L'obiettivo dell'algoritmo di Gauss è trasformare una matrice qualsiasi in una <strong>matrice a scala</strong>, una forma particolarmente semplice da cui possiamo leggere il rango «a vista».</p>`,
+            subsections: [
+                {
+                    subtitle: "Il pivot",
+                    content: `<p>Sia $A_i$ una riga non nulla di una matrice $A$. Partendo da sinistra, la <strong>prima componente non nulla</strong> che appare in $A_i$ si chiama il <strong>pivot</strong> di $A_i$.</p>
+<p>Analogamente, se $A^j$ è una colonna non nulla, il suo pivot è la prima componente non nulla partendo dall'alto.</p>
+<p><strong>Esempio:</strong> Nella riga $(0, 0, 3, -1, 5)$ il pivot è $3$ (in posizione $j = 3$). Nella riga $(7, 0, 2, 0)$ il pivot è $7$ (in posizione $j = 1$).</p>`
+                },
+                {
+                    subtitle: "Definizione di matrice a scala",
+                    content: `<p>Una matrice $A$ si dice <strong>a scala per righe</strong> se soddisfa due condizioni:</p>
+<ol>
+<li><strong>Righe nulle in fondo:</strong> le eventuali righe composte interamente da zeri si trovano nelle ultime posizioni della matrice.</li>
+<li><strong>Scalino dei pivot:</strong> per ogni riga non nulla $A_i$, detto $a_{ij}$ il suo pivot, tutte le componenti della matrice che si trovano <strong>al di sotto</strong> di $a_{ij}$ (nella stessa colonna e nelle colonne precedenti) sono nulle.</li>
+</ol>
+<p>In termini più intuitivi: i pivot «scendono a scalini» da sinistra a destra, e sotto ogni pivot c'è solo zero.</p>`
+                },
+                {
+                    subtitle: "Esempi di matrici a scala",
+                    content: `<p>Le seguenti matrici sono a scala per righe:</p>
+<p>$$\\begin{bmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 2 \\\\ 0 & 0 & 0 \\end{bmatrix}, \\qquad \\begin{bmatrix} 3 & 6 & 0 & 9 \\\\ 0 & 1 & 1 & 0 \\\\ 0 & 0 & -1 & 2 \\end{bmatrix}, \\qquad \\begin{bmatrix} 1 & 0 & 5 \\\\ 0 & 0 & 2 \\end{bmatrix}$$</p>
+<p>La seguente matrice <strong>non</strong> è a scala (il pivot della seconda riga non è «più a destra» della prima):</p>
+<p>$$\\begin{bmatrix} 4 & 5 & 6 \\\\ 1 & 2 & 3 \\\\ 6 & 9 & 12 \\end{bmatrix}$$</p>
+<p><strong>Nota:</strong> Analogamente si definisce la <strong>matrice a scala per colonne</strong>: $A$ è a scala per colonne se e solo se $A^T$ è a scala per righe.</p>`
+                }
+            ]
+        },
+        {
+            id: "s12-algoritmo-gauss",
+            type: "section",
+            title: "L'Algoritmo di Gauss",
+            icon: "⚙️",
+            content: `<p>Due fatti fondamentali sulle matrici a scala:</p>
+<ol>
+<li><strong>Ogni matrice</strong> $A$ è equivalente per righe a una matrice a scala $S$. L'algoritmo di Gauss fornisce la sequenza di operazioni per arrivarci.</li>
+<li>Le <strong>righe non nulle</strong> di una matrice a scala per righe sono <strong>linearmente indipendenti</strong>. Quindi il rango si legge «a vista» contando le righe non nulle.</li>
+</ol>`,
+            subsections: [
+                {
+                    subtitle: "La procedura passo per passo",
+                    content: `<p>L'algoritmo prende in ingresso una matrice $A$ qualsiasi e produce in uscita una matrice a scala $S$ equivalente per righe ad $A$:</p>
+<p>$$A \\overset{\\text{Gauss}}{\\longrightarrow} S$$</p>
+<p><strong>Passo 1:</strong></p>
+<ul>
+<li><strong>1.1</strong> Se $A$ ha una sola riga, è già a scala. <strong>STOP</strong>.</li>
+<li><strong>1.2</strong> Individuare la <strong>colonna non nulla con indice più basso</strong> (la più a sinistra). Se non ne esistono, la matrice è nulla: <strong>STOP</strong>.</li>
+<li><strong>1.3</strong> Individuare il <strong>pivot</strong> di tale colonna (la prima componente non nulla dall'alto). Se il pivot si trova nella riga di posto $i$, <strong>scambiare</strong> la riga $i$ con la prima riga (operazione $p_{1i}$).</li>
+<li><strong>1.4</strong> <strong>Azzerare</strong> tutte le componenti sotto il pivot, sommando alle righe successive opportuni multipli della prima riga (operazioni $e_{i1}(k)$).</li>
+</ul>
+<p><strong>Passo 2:</strong> Ripetere il Passo 1 sulla sottomatrice ottenuta <strong>ignorando la prima riga</strong> (e implicitamente la colonna del pivot appena elaborata).</p>
+<p><strong>Passo 3:</strong> Continuare iterativamente fino all'esaurimento delle righe o delle colonne.</p>`
+                },
+                {
+                    subtitle: "Osservazione sulle operazioni utilizzate",
+                    content: `<p>Nell'algoritmo di Gauss «puro» si usano solo operazioni di tipo $p_{ij}$ ed $e_{ij}(k)$. Le operazioni di tipo $e_i(k)$ (moltiplicare una riga per uno scalare) <strong>non</strong> sono necessarie per Gauss, ma sono utili in pratica per evitare frazioni, e compariranno nell'algoritmo di <strong>Gauss-Jordan</strong> per il calcolo della matrice inversa.</p>`
+                },
+                {
+                    subtitle: "Esempio completo",
+                    content: `<p>Applichiamo l'algoritmo alla matrice:</p>
+<p>$$A = \\begin{bmatrix} 0 & 1 & 1 & 0 \\\\ 3 & 6 & 0 & 9 \\\\ -1 & 0 & 1 & -1 \\end{bmatrix}$$</p>
+<p><strong>Passo 1.2–1.3:</strong> La prima colonna non è nulla. Il suo pivot è $a_{21} = 3$ (seconda riga). Scambiamo la riga 1 con la riga 2:</p>
+<p>$$\\overset{p_{12}{\\longrightarrow}} \\begin{bmatrix} 3 & 6 & 0 & 9 \\\\ 0 & 1 & 1 & 0 \\\\ -1 & 0 & 1 & -1 \\end{bmatrix}$$</p>
+<p><strong>Passo 1.4:</strong> Azzeriamo sotto il pivot. L'unica componente non nulla sotto il pivot nella colonna 1 è $a_{31} = -1$. Eseguiamo $e_{31}(\\frac{1}{3})$:</p>
+<p>$$\\overset{e_{31}{\\longrightarrow}(1/3)} \\begin{bmatrix} 3 & 6 & 0 & 9 \\\\ 0 & 1 & 1 & 0 \\\\ 0 & 2 & 1 & 2 \\end{bmatrix}$$</p>
+<p><strong>Passo 2:</strong> Ci «dimentichiamo» della prima riga e lavoriamo sulla sottomatrice delle ultime due righe. La prima colonna non nulla (nella sottomatrice) è la colonna 2, con pivot 1 già in alto. Eseguiamo $e_{32}(-2)$:</p>
+<p>$$\\overset{e_{32}{\\longrightarrow}(-2)} \\begin{bmatrix} 3 & 6 & 0 & 9 \\\\ 0 & 1 & 1 & 0 \\\\ 0 & 0 & -1 & 2 \\end{bmatrix} =: S$$</p>
+<p>La matrice $S$ è a scala. Ha <strong>3 righe non nulle</strong>, quindi $\\text{rk}\\, A = 3$.</p>`
+                },
+                {
+                    subtitle: "Verifica dell'indipendenza lineare delle righe di S",
+                    content: `<p>Per confermare che le righe di $S$ sono linearmente indipendenti, supponiamo che $(x, y, z)$ sia una relazione:</p>
+<p>$$x(3, 6, 0, 9) + y(0, 1, 1, 0) + z(0, 0, -1, 2) = (0, 0, 0, 0)$$</p>
+<p>Questo equivale al sistema:</p>
+<p>$$\\begin{cases} 3x = 0 \\\\ 6x + y = 0 \\\\ y - z = 0 \\\\ 9x + 2z = 0 \\end{cases}$$</p>
+<p>Dalla prima equazione $x = 0$, dalla seconda $y = 0$, dalla terza $z = 0$. L'unica relazione è quella banale: le righe sono <strong>libere</strong>.</p>
+<p><strong>Perché funziona sempre?</strong> In una matrice a scala, la «struttura a gradini» dei pivot garantisce che ogni riga introduce una componente non nulla in una posizione dove tutte le righe precedenti hanno zero. Questo rende automaticamente impossibile qualsiasi combinazione lineare non banale che dia il vettore nullo.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Rango dalla scala", latex: "\\text{rk}\\, A = \\text{numero di righe non nulle di } S" }
+            ]
+        },
+        {
+            id: "s12-calcolo-rango",
+            type: "section",
+            title: "Il Calcolo del Rango tramite Operazioni Elementari",
+            icon: "🎯",
+            content: `<p>Sia $A$ una matrice qualsiasi, e sia $S$ una matrice a scala per righe equivalente ad $A$ (ottenuta con Gauss). Allora:</p>
+<p>$$\\text{rk}\\, A = \\text{numero di righe non nulle di } S$$</p>
+<p>Inoltre, le righe non nulle di $S$ formano una <strong>base</strong> per $\\mathcal{R}_A = \\mathcal{R}_S$.</p>
+<p>Questo metodo è molto più veloce rispetto al calcolo manuale delle relazioni tra le righe.</p>`,
+            subsections: [
+                {
+                    subtitle: "Righe sovrabbondanti",
+                    content: `<p>Le righe che diventano <strong>nulle</strong> durante il processo di Gauss corrispondono ai vettori che erano <strong>linearmente dipendenti</strong> (sovrabbondanti) nella matrice originale.</p>`
+                }
+            ]
+        },
+        {
+            id: "s12-attenzione-scambi",
+            type: "alert_box",
+            title: "Attenzione agli scambi!",
+            icon: "⚠️",
+            content: `<p>Per identificare <em>quale</em> riga della matrice originale $A$ è sovrabbondante, bisogna tenere traccia degli <strong>scambi</strong> effettuati. Se non ci sono stati scambi, la riga che diventa nulla corrisponde direttamente alla stessa posizione in $A$. Ma se ci sono stati scambi, occorre «ripercorrere» le permutazioni.</p>
+<p><strong>Esempio:</strong></p>
+<p>$$A = \\begin{bmatrix} 1 & 1 & 0 \\\\ 2 & 2 & 0 \\\\ 0 & 0 & 1 \\end{bmatrix} \\overset{e_{21}{\\longrightarrow}(-2)} \\begin{bmatrix} 1 & 1 & 0 \\\\ 0 & 0 & 0 \\\\ 0 & 0 & 1 \\end{bmatrix} \\overset{p_{23}{\\longrightarrow}} \\begin{bmatrix} 1 & 1 & 0 \\\\ 0 & 0 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix} = S$$</p>
+<p>La riga nulla in $S$ appare in terza posizione, ma la riga sovrabbondante in $A$ è la <strong>seconda</strong> riga ($(2, 2, 0) = 2 \\cdot (1, 1, 0)$). Lo scambio $p_{23}$ ha solo riordinato le righe.</p>`
+        },
+        {
+            id: "s12-esercizi-svolti",
+            type: "section",
+            title: "Esercizi Svolti",
+            icon: "✏️",
+            content: `<p>Vediamo una serie di esercizi che illustrano le principali applicazioni dell'algoritmo di Gauss.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esercizio 5.1 — Base di un sottospazio",
+                    content: `<p>Sia $W$ il sottospazio di $\\mathbb{R}^4$ generato dai vettori $(1, 1, 1, 1)$, $(1, 1, 1, 2)$, $(0, 0, 0, 1)$, $(3, 3, 3, 4)$. Determinare una base di $W$.</p>
+<p><strong>Svolgimento.</strong> Disponiamo i generatori come righe:</p>
+<p>$$A = \\begin{bmatrix} 1 & 1 & 1 & 1 \\\\ 1 & 1 & 1 & 2 \\\\ 0 & 0 & 0 & 1 \\\\ 3 & 3 & 3 & 4 \\end{bmatrix}$$</p>
+<p>Eseguiamo $e_{21}(-1)$, $e_{41}(-3)$:</p>
+<p>$$\\to \\begin{bmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 0 & 0 & 1 \\\\ 0 & 0 & 0 & 1 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$$</p>
+<p>Ora $e_{32}(-1)$ e $e_{42}(-1)$:</p>
+<p>$$\\to \\begin{bmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 0 & 0 & 1 \\\\ 0 & 0 & 0 & 0 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix} = S$$</p>
+<p>La matrice $S$ ha 2 righe non nulle, quindi $\\dim W = 2$ e una base è:</p>
+<p>$$\\{(1, 1, 1, 1), \\; (0, 0, 0, 1)\\}$$</p>`
+                },
+                {
+                    subtitle: "Esercizio 5.2 — Verifica di appartenenza allo span",
+                    content: `<p>Provare che il vettore $(2, 2, -4)$ appartiene a $\\text{Span}((1, -1, 0), \\; (0, 1, -1))$.</p>
+<p><strong>Svolgimento.</strong> Disponiamo tutti i vettori come righe:</p>
+<p>$$A = \\begin{bmatrix} 1 & -1 & 0 \\\\ 0 & 1 & -1 \\\\ 2 & 2 & -4 \\end{bmatrix}$$</p>
+<p>Eseguiamo $e_{31}(-2)$:</p>
+<p>$$\\overset{e_{31}{\\longrightarrow}(-2)} \\begin{bmatrix} 1 & -1 & 0 \\\\ 0 & 1 & -1 \\\\ 0 & 4 & -4 \\end{bmatrix} \\overset{e_{32}{\\longrightarrow}(-4)} \\begin{bmatrix} 1 & -1 & 0 \\\\ 0 & 1 & -1 \\\\ 0 & 0 & 0 \\end{bmatrix} = S$$</p>
+<p>La terza riga (corrispondente a $(2, 2, -4)$, dato che non ci sono stati scambi) è diventata nulla. Questo significa che $(2, 2, -4)$ è <strong>sovrabbondante</strong>:</p>
+<p>$$(2, 2, -4) \\in \\text{Span}((1, -1, 0), \\; (0, 1, -1)) \\quad \\checkmark$$</p>`
+                },
+                {
+                    subtitle: "Esercizio 5.3 — Base per la somma di sottospazi",
+                    content: `<p>Sia $U = \\text{Span}((1,1,1,1), (2,0,1,3), (3,1,2,4))$ e $V = \\text{Span}((1,0,0,0), (0,1,0,-2))$. Determinare una base per $U + V$.</p>
+<p><strong>Svolgimento.</strong> Ricordiamo che $U + V = \\text{Span}(\\text{generatori di } U \\cup \\text{generatori di } V)$. Disponiamo tutti i vettori come righe e riduciamo a scala:</p>
+<p>$$A = \\begin{bmatrix} 1 & 1 & 1 & 1 \\\\ 2 & 0 & 1 & 3 \\\\ 3 & 1 & 2 & 4 \\\\ 1 & 0 & 0 & 0 \\\\ 0 & 1 & 0 & -2 \\end{bmatrix}$$</p>
+<p>Dopo una serie di operazioni elementari (eliminazione con $e_{21}(-2)$, $e_{31}(-3)$, $e_{41}(-1)$, poi eliminazione rispetto alla seconda riga, e infine eliminazione tra le righe restanti), otteniamo:</p>
+<p>$$S = \\begin{bmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -2 & -1 & 1 \\\\ 0 & 0 & -\\frac{1}{2} & -\\frac{3}{2} \\\\ 0 & 0 & 0 & 0 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$$</p>
+<p>Ci sono 3 righe non nulle, quindi $\\dim(U + V) = 3$ e una base per $U + V$ è:</p>
+<p>$$\\left\\{ (1, 1, 1, 1), \\; (0, -2, -1, 1), \\; \\left(0, 0, -\\tfrac{1}{2}, -\\tfrac{3}{2}\\right) \\right\\}$$</p>`
+                },
+                {
+                    subtitle: "Esercizio 5.4 — Complemento in somma diretta",
+                    content: `<p>Sia $U = \\text{Span}((1,1,-1,1), (1,2,0,2), (1,2,0,3))$ sottospazio di $\\mathbb{R}^4$. Determinare $V$ tale che $\\mathbb{R}^4 = U \\oplus V$.</p>
+<p><strong>Svolgimento.</strong> Disponiamo i generatori di $U$ come righe e riduciamo a scala:</p>
+<p>$$A = \\begin{bmatrix} 1 & 1 & -1 & 1 \\\\ 1 & 2 & 0 & 2 \\\\ 1 & 2 & 0 & 3 \\end{bmatrix} \\overset{e_{21}{\\longrightarrow}(-1),\\, e_{31}(-1)} \\begin{bmatrix} 1 & 1 & -1 & 1 \\\\ 0 & 1 & 1 & 1 \\\\ 0 & 1 & 1 & 2 \\end{bmatrix} \\overset{e_{32}{\\longrightarrow}(-1)} \\begin{bmatrix} 1 & 1 & -1 & 1 \\\\ 0 & 1 & 1 & 1 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix} = S$$</p>
+<p>Quindi $\\dim U = 3$. I pivot di $S$ occupano le colonne 1, 2 e 4. Manca un pivot nella <strong>colonna 3</strong>. Per completare a una base di $\\mathbb{R}^4$, inseriamo il vettore canonico $\\mathbf{e}_3 = (0, 0, 1, 0)$:</p>
+<p>$$T = \\begin{bmatrix} 1 & 1 & -1 & 1 \\\\ 0 & 1 & 1 & 1 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$$</p>
+<p>$T$ è a scala con 4 righe non nulle, quindi ha rango 4. Poniamo:</p>
+<p>$$V := \\text{Span}(\\mathbf{e}_3) = \\text{Span}((0, 0, 1, 0))$$</p>
+<p><strong>Verifica:</strong> $\\dim U + \\dim V = 3 + 1 = 4 = \\dim \\mathbb{R}^4$, e $U \\cap V = \\{\\mathbf{0}\\}$ (perché $\\mathbf{e}_3$ produce un nuovo pivot).</p>`
+                }
+            ]
+        },
+        {
+            id: "s12-schema-base",
+            type: "note_box",
+            title: "Schema: trovare una base di Span(v₁, …, vₖ)",
+            icon: "📋",
+            content: `<ol>
+<li>Disporre i vettori $\\mathbf{v}_1, \\dots, \\mathbf{v}_k$ come <strong>righe</strong> di una matrice $A$.</li>
+<li>Ridurre $A$ a scala con Gauss.</li>
+<li>Le righe non nulle della matrice a scala formano la base cercata.</li>
+</ol>`
+        },
+        {
+            id: "s12-schema-span",
+            type: "note_box",
+            title: "Schema: verificare se v ∈ Span(v₁, …, vₖ)",
+            icon: "📋",
+            content: `<ol>
+<li>Costruire la matrice con righe $\\mathbf{v}_1, \\dots, \\mathbf{v}_k, \\mathbf{v}$.</li>
+<li>Ridurre a scala con Gauss.</li>
+<li>Se la riga corrispondente a $\\mathbf{v}$ diventa nulla, allora $\\mathbf{v} \\in \\text{Span}(\\mathbf{v}_1, \\dots, \\mathbf{v}_k)$.</li>
+<li>Equivalentemente: se il numero di righe non nulle non aumenta aggiungendo $\\mathbf{v}$, allora $\\mathbf{v}$ appartiene allo span.</li>
+</ol>`
+        },
+        {
+            id: "s12-schema-complemento",
+            type: "note_box",
+            title: "Schema: trovare V tale che ℝⁿ = U ⊕ V",
+            icon: "📋",
+            content: `<ol>
+<li>Ridurre a scala i generatori di $U$. Siano in colonne $j_1, \\dots, j_p$ i pivot.</li>
+<li>Le colonne «mancanti» (senza pivot) sono $j_{p+1}, \\dots, j_n$.</li>
+<li>Prendere come generatori di $V$ i vettori canonici $\\mathbf{e}_{j_{p+1}}, \\dots, \\mathbf{e}_{j_n}$.</li>
+<li>$V = \\text{Span}(\\mathbf{e}_{j_{p+1}}, \\dots, \\mathbf{e}_{j_n})$ realizza $\\mathbb{R}^n = U \\oplus V$.</li>
+</ol>`
+        },
+        {
+            id: "s12-esercizi-parametro",
+            type: "section",
+            title: "Esercizi con Parametro",
+            icon: "🔢",
+            content: `<p>Una tipologia d'esame molto frequente: discutere il rango o l'uguaglianza di sottospazi al variare di un parametro $h$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esercizio 5.5 — Uguaglianza di sottospazi con parametro",
+                    content: `<p>Al variare di $h \\in \\mathbb{R}$, sia $W_h = \\text{Span}((h, -1, 1, 1), (-1, -1, 1, 3), (-1, -2, 2, 4))$ e $U = \\text{Span}((1, -2, 2, 0), (-1, 0, 0, 2))$. Per quali valori di $h$ si ha $W_h = U$?</p>
+<p><strong>Svolgimento.</strong> Osserviamo che $\\dim U = 2$ (i due generatori sono chiaramente indipendenti) e $\\dim W_h \\geq 2$. Quindi $W_h = U$ se e solo se $\\dim(W_h + U) = 2$.</p>
+<p>Costruiamo la matrice con tutti i generatori (quelli di $U$ prima, per usarli come pivot):</p>
+<p>$$A_h = \\begin{bmatrix} 1 & -2 & 2 & 0 \\\\ -1 & 0 & 0 & 2 \\\\ -1 & -1 & 1 & 3 \\\\ -1 & -2 & 2 & 4 \\\\ h & -1 & 1 & 1 \\end{bmatrix}$$</p>
+<p>Dopo una serie di operazioni elementari (eliminazione rispetto alla prima riga, poi rispetto alla seconda), si arriva a:</p>
+<p>$$S_h = \\begin{bmatrix} 1 & -2 & 2 & 0 \\\\ 0 & -2 & 2 & 2 \\\\ 0 & 0 & 0 & 2h \\\\ 0 & 0 & 0 & 0 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$$</p>
+<p>La matrice ha rango 2 se e solo se $2h = 0$, cioè $h = 0$. Per $h \\neq 0$ il rango è 3 e $W_h \\neq U$.</p>
+<p>$$W_h = U \\iff h = 0$$</p>`
+                },
+                {
+                    subtitle: "Esercizio 5.6 — Rango con parametro (caso semplice)",
+                    content: `<p>Sia:</p>
+<p>$$A_h = \\begin{bmatrix} h & h & h \\\\ h & h & h \\\\ h & h & h \\end{bmatrix}$$</p>
+<p>Le tre righe sono tutte uguali a $(h, h, h)$.</p>
+<ul>
+<li>Se $h \\neq 0$: la prima riga è non nulla, e le altre sono multipli della prima. Quindi $\\text{rk}\\, A_h = 1$.</li>
+<li>Se $h = 0$: la matrice è nulla. Quindi $\\text{rk}\\, A_0 = 0$.</li>
+</ul>
+<p>$$\\text{rk}\\, A_h = \\begin{cases} 1 & \\text{se } h \\neq 0 \\\\ 0 & \\text{se } h = 0 \\end{cases}$$</p>`
+                },
+                {
+                    subtitle: "Esercizio 5.7 — Rango con parametro (caso articolato)",
+                    content: `<p>Sia:</p>
+<p>$$A_h = \\begin{bmatrix} 1 & 1 & 1 \\\\ 1 & h & 2 \\\\ 1 & 1 & h - 1 \\end{bmatrix}$$</p>
+<p><strong>Svolgimento.</strong> Applichiamo $e_{21}(-1)$ e $e_{31}(-1)$:</p>
+<p>$$B_h = \\begin{bmatrix} 1 & 1 & 1 \\\\ 0 & h - 1 & 1 \\\\ 0 & 0 & h - 2 \\end{bmatrix}$$</p>
+<p><strong>Caso $h \\notin \\{1, 2\\}$:</strong> $B_h$ è a scala con 3 righe non nulle, quindi $\\text{rk}\\, A_h = 3$.</p>
+<p><strong>Caso $h = 2$:</strong></p>
+<p>$$B_2 = \\begin{bmatrix} 1 & 1 & 1 \\\\ 0 & 1 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix}$$</p>
+<p>A scala con 2 righe non nulle: $\\text{rk}\\, A_2 = 2$.</p>
+<p><strong>Caso $h = 1$:</strong></p>
+<p>$$B_1 = \\begin{bmatrix} 1 & 1 & 1 \\\\ 0 & 0 & 1 \\\\ 0 & 0 & -1 \\end{bmatrix}$$</p>
+<p>Questa <strong>non</strong> è ancora a scala! Eseguiamo $e_{32}(1)$:</p>
+<p>$$\\overset{e_{32}{\\longrightarrow}(1)} \\begin{bmatrix} 1 & 1 & 1 \\\\ 0 & 0 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix}$$</p>
+<p>Ora è a scala con 2 righe non nulle: $\\text{rk}\\, A_1 = 2$.</p>
+<p>$$\\text{rk}\\, A_h = \\begin{cases} 3 & \\text{se } h \\notin \\{1, 2\\} \\\\ 2 & \\text{se } h \\in \\{1, 2\\} \\end{cases}$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s12-errore-parametri",
+            type: "alert_box",
+            title: "Errore comune con i parametri",
+            icon: "🚨",
+            content: `<p>Quando si ha un parametro sulla diagonale (come $h - 1$ o $h - 2$), bisogna <strong>discutere</strong> il caso in cui quel valore si annulla. È facile dimenticarsi che la matrice risultante potrebbe non essere ancora a scala e richiedere un <strong>ulteriore passo di riduzione</strong>.</p>
+<p>Nell'esercizio 5.7, per $h = 1$ la matrice $B_1$ ha un'entrata non nulla sotto la posizione del pivot mancante — bisogna proseguire con Gauss!</p>`
+        },
+        {
+            id: "s12-anteprima",
+            type: "note_box",
+            title: "Anteprima della prossima lezione",
+            icon: "🔮",
+            content: `<p>Nella prossima lezione (Lezione 13) si dimostrerà che:</p>
+<p>$$\\text{rk}(A \\cdot B) \\leq \\text{rk}\\, A$$</p>
+<p>per ogni matrice $A$ di tipo $m \\times n$ e $B$ di tipo $n \\times p$. L'idea chiave è che le righe nulle di una matrice a scala $S$ equivalente ad $A$ producono righe nulle nel prodotto $S \\cdot B$.</p>`
+        },
+        {
+            id: "s12-riepilogo",
+            type: "section",
+            title: "Riepilogo dei Concetti Chiave",
+            icon: "🗺️",
+            content: `<ol>
+<li><strong>Equivalenza per righe</strong> ($A \\sim_r B$): si ottiene tramite operazioni elementari. Conserva $\\mathcal{R}_A$ e il rango.</li>
+<li><strong>Matrice a scala</strong>: righe nulle in fondo, pivot a scalini verso destra. Le righe non nulle sono automaticamente linearmente indipendenti.</li>
+<li><strong>Algoritmo di Gauss</strong>: trasforma qualsiasi matrice in una equivalente a scala, usando solo $p_{ij}$ ed $e_{ij}(k)$.</li>
+<li><strong>Calcolo del rango</strong>: $\\text{rk}\\, A =$ numero di righe non nulle della forma a scala.</li>
+<li><strong>Applicazioni</strong>:
+<ul>
+<li>Base di $\\text{Span}(\\mathbf{v}_1, \\dots, \\mathbf{v}_k)$: righe non nulle della scala.</li>
+<li>$\\mathbf{v} \\in \\text{Span}$? Aggiungi come riga; se diventa nulla, $\\mathbf{v}$ è nello span.</li>
+<li>Somma diretta: completa con vettori canonici nelle colonne senza pivot.</li>
+<li>Rango con parametri: discuti i valori che annullano i pivot.</li>
+</ul></li>
+</ol>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quando diciamo che due matrici A e B sono equivalenti per righe?",
+            back: "Scriviamo $A \\sim_r B$ se $B$ si ottiene da $A$ tramite un numero finito di operazioni elementari sulle righe, cioè se esistono matrici elementari $E_1, \\dots, E_h$ tali che $B = E_1 \\cdot E_2 \\cdots E_h \\cdot A$. La relazione $\\sim_r$ è una relazione di equivalenza (riflessiva, simmetrica, transitiva)."
+        },
+        {
+            type: "domanda",
+            front: "Perché l'equivalenza per righe conserva lo spazio delle righe?",
+            back: "Se $A \\sim_r B$, le righe di $B$ sono combinazioni lineari delle righe di $A$ (per definizione di operazione elementare), quindi $\\mathcal{R}_B \\subseteq \\mathcal{R}_A$. Ma per la simmetria della relazione ($B \\sim_r A$), vale anche $\\mathcal{R}_A \\subseteq \\mathcal{R}_B$. Dunque $\\mathcal{R}_A = \\mathcal{R}_B$, e di conseguenza $\\text{rk}\\, A = \\text{rk}\\, B$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è una matrice a scala per righe?",
+            back: "Una matrice è a scala per righe se: (1) le righe nulle sono tutte in fondo; (2) per ogni riga non nulla, il pivot (prima componente non nulla) si trova in una colonna strettamente a destra del pivot della riga precedente. In pratica, i pivot «scendono a scalini» da sinistra a destra, e sotto ogni pivot c'è solo zero."
+        },
+        {
+            type: "dimostrazione",
+            front: "Perché le righe non nulle di una matrice a scala sono linearmente indipendenti?",
+            back: "Per la struttura a gradini: ogni riga non nulla ha il suo pivot in una colonna dove tutte le righe precedenti e successive hanno componente nulla (sotto il pivot ci sono zeri per definizione, e le righe precedenti hanno pivot in colonne diverse). Quindi se $x_1 R_1 + \\dots + x_r R_r = 0$, guardando la colonna del pivot di $R_1$ si ottiene $x_1 = 0$, poi dalla colonna del pivot di $R_2$ si ottiene $x_2 = 0$, e così via."
+        },
+        {
+            type: "formula",
+            front: "Come si calcola il rango di una matrice con l'algoritmo di Gauss?",
+            back: "Si riduce la matrice $A$ a scala $S$ con operazioni elementari sulle righe. Allora $\\text{rk}\\, A = \\text{numero di righe non nulle di } S$. Inoltre le righe non nulle di $S$ formano una base per lo spazio delle righe $\\mathcal{R}_A = \\mathcal{R}_S$."
+        },
+        {
+            type: "domanda",
+            front: "Come si verifica se un vettore v appartiene a Span(v₁, …, vₖ)?",
+            back: "Si costruisce la matrice con righe $\\mathbf{v}_1, \\dots, \\mathbf{v}_k, \\mathbf{v}$ e si riduce a scala. Se la riga corrispondente a $\\mathbf{v}$ diventa nulla, allora $\\mathbf{v} \\in \\text{Span}(\\mathbf{v}_1, \\dots, \\mathbf{v}_k)$. Equivalentemente: se il rango non aumenta aggiungendo $\\mathbf{v}$, allora $\\mathbf{v}$ è nello span."
+        },
+        {
+            type: "domanda",
+            front: "Come si trova un complemento V tale che ℝⁿ = U ⊕ V?",
+            back: "Si riducono a scala i generatori di $U$ e si individuano le colonne dei pivot ($j_1, \\dots, j_p$). Le colonne «mancanti» sono quelle senza pivot ($j_{p+1}, \\dots, j_n$). Si prendono i vettori canonici $\\mathbf{e}_{j_{p+1}}, \\dots, \\mathbf{e}_{j_n}$ e si pone $V = \\text{Span}(\\mathbf{e}_{j_{p+1}}, \\dots, \\mathbf{e}_{j_n})$."
+        },
+        {
+            type: "tranello",
+            front: "Qual è l'errore comune nella discussione del rango con parametro?",
+            back: "Quando un parametro $h$ appare in posizione di pivot (es. $h-1$ o $h-2$ sulla diagonale), bisogna discutere il caso in cui si annulla. Se il pivot diventa zero, la matrice risultante potrebbe non essere ancora a scala e richiedere ulteriori passi di riduzione. È l'errore di fermarsi troppo presto senza completare Gauss per quei valori critici."
+        },
+        {
+            type: "domanda",
+            front: "Equivalenza per righe e per colonne sono la stessa relazione?",
+            back: "No, sono relazioni diverse! $A \\sim_r B$ conserva lo spazio delle righe, $A \\sim_c B$ conserva lo spazio delle colonne. Esempio: $A = \\begin{bmatrix} 1 & 1 \\\\ 1 & 1 \\end{bmatrix}$ e $B = \\begin{bmatrix} 1 & 1 \\\\ 0 & 0 \\end{bmatrix}$ sono equivalenti per righe ma non per colonne."
+        },
+        {
+            type: "domanda",
+            front: "Nell'algoritmo di Gauss 'puro', quali operazioni elementari si usano?",
+            back: "Solo due tipi: $p_{ij}$ (scambio di righe) e $e_{ij}(k)$ (somma di un multiplo di una riga a un'altra). Le operazioni $e_i(k)$ (moltiplicazione di una riga per scalare non nullo) non sono necessarie per Gauss, ma servono nell'algoritmo di Gauss-Jordan per il calcolo della matrice inversa."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

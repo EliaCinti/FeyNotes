@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 13 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 13: Rango di Matrici e Introduzione al Determinante. Proprietà fondamentali del rango (effetto del prodotto e dell'invertibilità), definizione del determinante tramite sviluppo di Laplace, esempi di calcolo su matrici 3×3, e metodo di Gauss per il determinante.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 13: Rango di Matrici e Introduzione al Determinante — Geometria">
+  <meta property="og:description" content="Proprietà fondamentali del rango (effetto del prodotto e dell'invertibilità), definizione del determinante tramite sviluppo di Laplace, esempi di calcolo su matrici 3×3, e metodo di Gauss per il determinante.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L13/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L13/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 13 — Rango di Matrici e Introduzione al Determinante",
+  "description": "Proprietà fondamentali del rango (effetto del prodotto e dell'invertibilità), definizione del determinante tramite sviluppo di Laplace, esempi di calcolo su matrici 3×3, e metodo di Gauss per il determinante.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L13/",
+  "datePublished": "2026-03-31",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 13</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L12/">← Prec.</a>
+      <a href="/geometria/lezioni/L14/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L13", date: "Lezione 13 — 31 Mar 2026",
+    title: "Rango di Matrici e Introduzione al Determinante",
+    abstract: "Proprietà fondamentali del rango (effetto del prodotto e dell'invertibilità), definizione del determinante tramite sviluppo di Laplace, esempi di calcolo su matrici 3×3, e metodo di Gauss per il determinante.",
+
+    sections: [
+        {
+            id: "s13-riepilogo-rango",
+            type: "section",
+            title: "Riepilogo: Calcolo del Rango tramite Operazioni Elementari",
+            icon: "🔄",
+            content: `<p>Nelle lezioni precedenti abbiamo visto che il <strong>rango</strong> di una matrice $A$ di dimensione $m \\times n$ è la dimensione dello spazio generato dalle sue righe (o colonne).</p>
+<p>Il metodo più pratico per calcolare il rango consiste nell'applicare l'<strong>algoritmo di eliminazione di Gauss</strong>. Tramite operazioni elementari sulle righe (scambio di righe $P_{ij}$, moltiplicazione per uno scalare, somma di un multiplo di una riga a un'altra $E_{ij}(k)$), si porta la matrice $A$ in una matrice a scala $S$:</p>
+<p>$$A \\overset{\\text{op. elementari su righe}}{\\longrightarrow} S$$</p>
+<p>Ovvero $A \\sim_r S$. Le operazioni elementari non alterano lo spazio generato dalle righe, pertanto il rango rimane invariato:</p>
+<p>$$\\text{rk}(A) = \\text{rk}(S)$$</p>
+<p>Poiché $S$ è una matrice a scala, il suo rango è semplicemente calcolabile a vista:</p>
+<p>$$\\text{rk}(S) = \\#\\text{ righe non nulle di } S$$</p>`,
+            formulas: [
+                { label: "Rango da matrice a scala", latex: "\\text{rk}(A) = \\text{rk}(S) = \\#\\text{ righe non nulle di } S" }
+            ]
+        },
+        {
+            id: "s13-proprieta-rango",
+            type: "section",
+            title: "Proprietà del Rango",
+            icon: "📐",
+            content: `<p>Sfruttando l'algoritmo di Gauss e le matrici elementari, possiamo dimostrare alcune <strong>fondamentali proprietà del rango</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Proposizione: rango del prodotto",
+                    content: `<p>Siano $A$ ($m \\times n$) e $B$ ($n \\times p$) due matrici moltiplicabili. Allora:</p>
+<p>$$\\text{rk}(A \\cdot B) \\leq \\text{rk}(A)$$</p>
+<p><strong>Dimostrazione.</strong> Sia $S$ la matrice a scala equivalente ad $A$ ($A \\sim_r S$). Sappiamo che $A$ può essere ottenuta moltiplicando $S$ a sinistra per una serie di matrici elementari $E_i$:</p>
+<p>$$A = E_1 \\cdot E_2 \\cdots E_k \\cdot S$$</p>
+<p>Se moltiplichiamo entrambi i membri a destra per $B$:</p>
+<p>$$A \\cdot B = E_1 \\cdot E_2 \\cdots E_k \\cdot (SB)$$</p>
+<p>Questo significa che $AB$ si ottiene da $SB$ tramite operazioni elementari sulle righe, ovvero $AB \\sim_r SB$. Di conseguenza:</p>
+<p>$$\\text{rk}(AB) = \\text{rk}(SB)$$</p>
+<p>Ora basta dimostrare che $\\text{rk}(SB) \\leq \\text{rk}(S)$. Quando eseguiamo il prodotto $S \\cdot B$, se $S$ ha una riga <strong>completamente nulla</strong>, la corrispondente riga in $SB$ sarà anch'essa nulla. Quindi:</p>
+<p>$$\\#\\text{ righe nulle di } S \\leq \\#\\text{ righe nulle di } SB$$</p>
+<p>Poiché $\\text{rk}(S) = m - (\\#\\text{ righe nulle di } S)$ e $\\text{rk}(SB) = m - (\\#\\text{ righe nulle di } SB)$, deduciamo:</p>
+<p>$$\\text{rk}(SB) \\leq \\text{rk}(S) = \\text{rk}(A) \\quad \\blacksquare$$</p>`
+                },
+                {
+                    subtitle: "Corollario: disuguaglianza anche con rk(B)",
+                    content: `<p>Passando per le matrici trasposte (ricordando che $\\text{rk}(M) = \\text{rk}(M^T)$), si dimostra anche che:</p>
+<p>$$\\text{rk}(A \\cdot B) \\leq \\text{rk}(B)$$</p>
+<p>In sintesi, il rango del prodotto non supera <strong>mai</strong> il rango di nessuno dei due fattori.</p>`
+                },
+                {
+                    subtitle: "Corollario: moltiplicare per matrice invertibile",
+                    content: `<p>Sia $A$ una matrice $m \\times n$:</p>
+<ul>
+<li>Se $P$ è una matrice $m \\times m$ <strong>invertibile</strong>, allora $\\text{rk}(P \\cdot A) = \\text{rk}(A)$.</li>
+<li>Se $Q$ è una matrice $n \\times n$ <strong>invertibile</strong>, allora $\\text{rk}(A \\cdot Q) = \\text{rk}(A)$.</li>
+</ul>
+<p><strong>Moltiplicare per una matrice invertibile non altera il rango.</strong></p>`
+                },
+                {
+                    subtitle: "Corollario: invertibilità e rango massimo",
+                    content: `<p>Sia $A$ una matrice quadrata $n \\times n$. Allora:</p>
+<p>$$A \\text{ è invertibile} \\iff \\text{rk}(A) = n$$</p>
+<p><strong>Dimostrazione.</strong> Se $A$ è invertibile, esiste $A^{-1}$ tale che $A \\cdot A^{-1} = I_n$. Applicando la proposizione:</p>
+<p>$$n = \\text{rk}(I_n) = \\text{rk}(A \\cdot A^{-1}) \\leq \\text{rk}(A) \\leq n$$</p>
+<p>Da cui forzatamente $\\text{rk}(A) = n$.</p>
+<p>Viceversa, se $\\text{rk}(A) = n$, l'eliminazione di Gauss su $A$ non produce righe nulle, permettendoci di ricavare una matrice inversa: $A$ è prodotto di matrici elementari (tutte invertibili). $\\blacksquare$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Rango del prodotto", latex: "\\text{rk}(AB) \\leq \\min\\{\\text{rk}(A),\\, \\text{rk}(B)\\}" },
+                { label: "Invertibilità e rango", latex: "A \\text{ invertibile} \\iff \\text{rk}(A) = n" }
+            ]
+        },
+        {
+            id: "s13-alert-rango-prodotto",
+            type: "alert_box",
+            title: "⚠️ Il rango del prodotto può calare!",
+            icon: "⚠️",
+            content: `<p>Attenzione: $\\text{rk}(AB) \\leq \\text{rk}(A)$ è una <strong>disuguaglianza stretta</strong> in generale. Il prodotto può abbassare il rango! Ad esempio, se $B$ ha colonne linearmente dipendenti, il prodotto $AB$ può avere rango strettamente inferiore a quello di $A$. L'uguaglianza è garantita solo se si moltiplica per una matrice <strong>invertibile</strong>.</p>`
+        },
+        {
+            id: "s13-determinante-definizione",
+            type: "section",
+            title: "Il Determinante",
+            icon: "🧮",
+            content: `<p>Il determinante è un <strong>numero reale</strong> associato a una <strong>matrice quadrata</strong> $A_{n \\times n}$, indicato con $\\det(A)$ o $|A|$, che fornisce importantissime informazioni sulla matrice (in particolare sulla sua invertibilità).</p>`,
+            subsections: [
+                {
+                    subtitle: "Caso n = 1",
+                    content: `<p>Se $A = [a_{11}]$, allora semplicemente:</p>
+<p>$$\\det(A) = a_{11}$$</p>`
+                },
+                {
+                    subtitle: "Caso n = 2 (regola incrociata)",
+                    content: `<p>Se $A = \\begin{bmatrix} a_{11} & a_{12} \\\\ a_{21} & a_{22} \\end{bmatrix}$, il determinante si calcola con la <strong>regola incrociata</strong>:</p>
+<p>$$\\det(A) = a_{11} \\cdot a_{22} - a_{12} \\cdot a_{21}$$</p>
+<p>Prodotto della diagonale principale meno prodotto della diagonale secondaria.</p>`
+                },
+                {
+                    subtitle: "Caso n ≥ 3: Sviluppo di Laplace",
+                    content: `<p>Fissata una riga qualsiasi $i$ della matrice $A$, il determinante si calcola come:</p>
+<p>$$\\det(A) = \\sum_{j=1}^{n} a_{ij}(-1)^{i+j} \\det(A_{ij})$$</p>
+<p>dove $A_{ij}$ è la <strong>sottomatrice</strong> di dimensione $(n-1) \\times (n-1)$ ottenuta da $A$ cancellando la riga $i$-esima e la colonna $j$-esima.</p>
+<p>Il prodotto $(-1)^{i+j}\\det(A_{ij})$ si chiama <strong>complemento algebrico</strong> (o cofattore) dell'elemento $a_{ij}$.</p>`
+                },
+                {
+                    subtitle: "Scelta della riga o colonna",
+                    content: `<p>Lo sviluppo di Laplace può essere applicato rispetto a <strong>qualsiasi riga</strong> e a <strong>qualsiasi colonna</strong>. Il risultato non cambia. Per minimizzare i calcoli, conviene sempre scegliere la riga o la colonna che contiene il <strong>maggior numero di zeri</strong>.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Determinante 2×2", latex: "\\det(A) = a_{11}a_{22} - a_{12}a_{21}" },
+                { label: "Sviluppo di Laplace (riga i)", latex: "\\det(A) = \\sum_{j=1}^{n} a_{ij}(-1)^{i+j} \\det(A_{ij})" }
+            ]
+        },
+        {
+            id: "s13-esempi-determinante",
+            type: "section",
+            title: "Esempi di Calcolo del Determinante",
+            icon: "✏️",
+            content: `<p>Vediamo due esempi completi di calcolo del determinante tramite sviluppo di Laplace.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 1: Matrice 3×3 numerica",
+                    content: `<p>Calcoliamo il determinante di:</p>
+<p>$$A = \\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 0 \\\\ -1 & 2 & 1 \\end{bmatrix}$$</p>
+<p>Fissiamo la <strong>prima riga</strong> ($i = 1$) per lo sviluppo di Laplace:</p>
+<p>$$\\det(A) = a_{11}\\det(A_{11}) - a_{12}\\det(A_{12}) + a_{13}\\det(A_{13})$$</p>
+<p>$$= 1 \\cdot \\det\\begin{bmatrix} 5 & 0 \\\\ 2 & 1 \\end{bmatrix} - 2 \\cdot \\det\\begin{bmatrix} 4 & 0 \\\\ -1 & 1 \\end{bmatrix} + 3 \\cdot \\det\\begin{bmatrix} 4 & 5 \\\\ -1 & 2 \\end{bmatrix}$$</p>
+<p>$$= 1 \\cdot (5 \\cdot 1 - 0) - 2 \\cdot (4 \\cdot 1 - 0) + 3 \\cdot (4 \\cdot 2 - 5 \\cdot (-1))$$</p>
+<p>$$= 1 \\cdot 5 - 2 \\cdot 4 + 3 \\cdot (8 + 5)$$</p>
+<p>$$= 5 - 8 + 39 = \\mathbf{36}$$</p>`
+                },
+                {
+                    subtitle: "Esempio 2: Matrice parametrica (utile per autovalori)",
+                    content: `<p>Calcoliamo il determinante della matrice parametrica:</p>
+<p>$$A = \\begin{bmatrix} 2 - t & 1 & 1 \\\\ -11 & -5 - t & -4 \\\\ 7 & 3 & 2 - t \\end{bmatrix}$$</p>
+<p>Sviluppiamo lungo la <strong>prima riga</strong>:</p>
+<p>$$\\det(A) = (2-t)\\det\\begin{bmatrix} -5-t & -4 \\\\ 3 & 2-t \\end{bmatrix} - 1 \\cdot \\det\\begin{bmatrix} -11 & -4 \\\\ 7 & 2-t \\end{bmatrix} + 1 \\cdot \\det\\begin{bmatrix} -11 & -5-t \\\\ 7 & 3 \\end{bmatrix}$$</p>
+<p>Calcoliamo i tre determinanti $2 \\times 2$:</p>
+<p>$$= (2-t)[(-5-t)(2-t)+12] - [-11(2-t)+28] + [-33-7(-5-t)]$$</p>
+<p>$$= (2-t)[-10+5t-2t+t^2+12] - [-22+11t+28] + [-33+35+7t]$$</p>
+<p>$$= (2-t)[t^2+3t+2] - [11t+6] + [7t+2]$$</p>
+<p>$$= 2t^2+6t+4-t^3-3t^2-2t - 11t - 6 + 7t + 2$$</p>
+<p>$$= -t^3 - t^2 + 4t + 4 - 4t - 4$$</p>
+<p>$$= -t^3 - t^2 = \\mathbf{-t^2(t+1)}$$</p>
+<p>Questo tipo di calcolo è <strong>esattamente</strong> ciò che si farà per trovare gli autovalori: si cercano i valori di $t$ per cui $\\det(A - tI) = 0$. In questo caso: $t = 0$ (doppio) e $t = -1$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s13-note-laplace",
+            type: "note_box",
+            title: "💡 Segni nello sviluppo di Laplace",
+            icon: "💡",
+            content: `<p>I segni $(-1)^{i+j}$ nello sviluppo di Laplace seguono uno schema a scacchiera:</p>
+<p>$$\\begin{bmatrix} + & - & + & \\cdots \\\\ - & + & - & \\cdots \\\\ + & - & + & \\cdots \\\\ \\vdots & \\vdots & \\vdots & \\ddots \\end{bmatrix}$$</p>
+<p>Per la prima riga i segni sono $+, -, +, -, \\ldots$ Per la seconda riga $-, +, -, +, \\ldots$ e così via. Un errore molto comune all'esame è <strong>sbagliare il segno</strong> del cofattore!</p>`
+        },
+        {
+            id: "s13-gauss-determinante",
+            type: "section",
+            title: "Calcolo del Determinante tramite Gauss",
+            icon: "⚡",
+            content: `<p>Lo sviluppo di Laplace è computazionalmente molto oneroso: per un determinante $n \\times n$ sono necessarie circa $n!$ operazioni. Per matrici grandi questo è impraticabile. Sfruttando Gauss e le operazioni elementari, si può calcolare il determinante in circa $O(n^3)$ operazioni.</p>`,
+            subsections: [
+                {
+                    subtitle: "Matrici triangolari",
+                    content: `<p>Per una <strong>matrice triangolare</strong> (superiore o inferiore), il determinante è semplicemente il <strong>prodotto degli elementi sulla diagonale principale</strong>:</p>
+<p>$$\\det(A) = a_{11} \\cdot a_{22} \\cdots a_{nn} = \\prod_{i=1}^{n} a_{ii}$$</p>
+<p>In particolare, per la <strong>matrice identità</strong> (triangolare con tutti 1 sulla diagonale): $\\det(I) = 1$.</p>`
+                },
+                {
+                    subtitle: "Effetto delle operazioni elementari sul determinante",
+                    content: `<p>Supponiamo di operare su $A$ per ottenere $B$:</p>
+<p><strong>1. Scambio di due righe ($P_{ij}$):</strong> il determinante <strong>cambia segno</strong>.</p>
+<p>$$\\det(B) = -\\det(A)$$</p>
+<p><strong>2. Somma a una riga del multiplo di un'altra ($E_{ij}(k)$):</strong> questa operazione, la più usata in Gauss, <strong>non altera</strong> il determinante.</p>
+<p>$$\\det(B) = \\det(A)$$</p>
+<p><strong>3. Moltiplicazione di una riga per uno scalare $k$ ($E_i(k)$):</strong> il determinante risulta <strong>moltiplicato per $k$</strong>.</p>
+<p>$$\\det(B) = k \\cdot \\det(A)$$</p>`
+                },
+                {
+                    subtitle: "Formula pratica con Gauss",
+                    content: `<p>Per calcolare il determinante, applichiamo l'eliminazione di Gauss per portare $A$ in una forma a scala $S$ (triangolare superiore). Se usiamo <strong>esclusivamente</strong> scambi di riga e somme tra righe (senza moltiplicare righe per scalari, o tenendone traccia), avremo:</p>
+<p>$$\\det(A) = (-1)^{\\#\\text{ scambi}} \\cdot \\det(S)$$</p>
+<p>Poiché $S$ è triangolare, $\\det(S)$ è banalmente il <strong>prodotto dei pivot</strong> sulla sua diagonale!</p>
+<p>Il professore ha sottolineato: se il pivot è 1, non serve dividere la riga — questo semplifica i calcoli. Se possibile, conviene ottenere un pivot uguale a 1 tramite scambi di riga.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Determinante matrice triangolare", latex: "\\det(A) = \\prod_{i=1}^{n} a_{ii}" },
+                { label: "Determinante via Gauss", latex: "\\det(A) = (-1)^{\\#\\text{ scambi}} \\cdot \\prod_i \\text{pivot}_i" }
+            ]
+        },
+        {
+            id: "s13-alert-operazioni-det",
+            type: "alert_box",
+            title: "⚠️ Non confondere le operazioni!",
+            icon: "⚠️",
+            content: `<p>Attenzione alla differenza tra <strong>rango</strong> e <strong>determinante</strong> nel contesto delle operazioni elementari:</p>
+<ul>
+<li>Per il <strong>rango</strong>: tutte le operazioni elementari lo lasciano invariato.</li>
+<li>Per il <strong>determinante</strong>: solo la somma di un multiplo ($E_{ij}(k)$) lo lascia invariato. Lo scambio cambia segno, la moltiplicazione per scalare moltiplica il determinante.</li>
+</ul>
+<p>Errore classico d'esame: applicare Gauss per il determinante e dimenticarsi di contare gli scambi di riga!</p>`
+        },
+        {
+            id: "s13-altre-proprieta",
+            type: "section",
+            title: "Altre Proprietà del Determinante (Anticipazioni)",
+            icon: "🔮",
+            content: `<p>A fine lezione sono state anticipate due proprietà importanti, che verranno approfondite nella lezione successiva:</p>
+<ul>
+<li><strong>Matrice trasposta:</strong> Il determinante di una matrice è identico a quello della sua trasposta:
+<p>$$\\det(A) = \\det(A^T)$$</p>
+<p>Questa proprietà ha una conseguenza fondamentale: tutto ciò che vale per le righe (sviluppo di Laplace per riga, effetto delle operazioni sulle righe) vale <strong>identicamente</strong> per le colonne.</p></li>
+<li><strong>Linearità rispetto a una riga/colonna:</strong> Se una riga $A_i$ può essere scritta come somma di due vettori riga $\\underline{u} + \\underline{v}$, il determinante si spezza nella somma dei determinanti delle due rispettive matrici. <em>(Argomento da completare nella prossima lezione).</em></li>
+</ul>`,
+            formulas: [
+                { label: "Determinante della trasposta", latex: "\\det(A) = \\det(A^T)" }
+            ]
+        },
+        {
+            id: "s13-oral-invertibilita",
+            type: "oral_box",
+            title: "🎤 Domanda d'esame: invertibilità e determinante",
+            icon: "🎤",
+            content: `<p><strong>Domanda tipica:</strong> «Quali sono le condizioni equivalenti per l'invertibilità di una matrice quadrata?»</p>
+<p><strong>Risposta attesa:</strong> Sia $A$ una matrice $n \\times n$. Le seguenti condizioni sono equivalenti:</p>
+<ul>
+<li>$A$ è invertibile</li>
+<li>$\\text{rk}(A) = n$</li>
+<li>L'eliminazione di Gauss non produce righe nulle</li>
+<li>$\\det(A) \\neq 0$ (verrà dimostrato formalmente)</li>
+<li>$A$ è prodotto di matrici elementari</li>
+</ul>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cosa dice la proprietà del rango del prodotto?",
+            back: "Siano $A$ ($m \\times n$) e $B$ ($n \\times p$). Allora $\\text{rk}(A \\cdot B) \\leq \\text{rk}(A)$ e $\\text{rk}(A \\cdot B) \\leq \\text{rk}(B)$. In sintesi: $\\text{rk}(AB) \\leq \\min\\{\\text{rk}(A), \\text{rk}(B)\\}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che rk(AB) ≤ rk(A).",
+            back: "Si porta $A$ in forma a scala: $A = E_1 \\cdots E_k \\cdot S$. Allora $AB = E_1 \\cdots E_k \\cdot (SB)$, quindi $AB \\sim_r SB$ e $\\text{rk}(AB) = \\text{rk}(SB)$. Le righe nulle di $S$ producono righe nulle in $SB$, quindi $\\#\\text{righe nulle di }S \\leq \\#\\text{righe nulle di }SB$, da cui $\\text{rk}(SB) \\leq \\text{rk}(S) = \\text{rk}(A)$."
+        },
+        {
+            type: "domanda",
+            front: "Quando il prodotto per una matrice preserva il rango?",
+            back: "Moltiplicare $A$ per una matrice <strong>invertibile</strong> preserva il rango: se $P$ è invertibile, $\\text{rk}(PA) = \\text{rk}(A)$; se $Q$ è invertibile, $\\text{rk}(AQ) = \\text{rk}(A)$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra: A quadrata n×n è invertibile se e solo se rk(A) = n.",
+            back: "Se $A$ è invertibile: $n = \\text{rk}(I_n) = \\text{rk}(A \\cdot A^{-1}) \\leq \\text{rk}(A) \\leq n$, quindi $\\text{rk}(A) = n$. Viceversa, se $\\text{rk}(A) = n$, Gauss non produce righe nulle, la forma a scala ha $n$ pivot, e $A$ è prodotto di matrici elementari (tutte invertibili), quindi invertibile."
+        },
+        {
+            type: "definizione",
+            front: "Come si definisce il determinante con lo sviluppo di Laplace?",
+            back: "Fissata una riga $i$: $\\det(A) = \\sum_{j=1}^{n} a_{ij}(-1)^{i+j} \\det(A_{ij})$, dove $A_{ij}$ è la sottomatrice ottenuta cancellando riga $i$ e colonna $j$. Il prodotto $(-1)^{i+j}\\det(A_{ij})$ è il complemento algebrico di $a_{ij}$."
+        },
+        {
+            type: "formula",
+            front: "Qual è il determinante di una matrice 2×2?",
+            back: "Per $A = \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$: $\\det(A) = ad - bc$ (prodotto diagonale principale meno prodotto diagonale secondaria)."
+        },
+        {
+            type: "domanda",
+            front: "Qual è il determinante di una matrice triangolare?",
+            back: "È il prodotto degli elementi sulla diagonale principale: $\\det(A) = a_{11} \\cdot a_{22} \\cdots a_{nn}$. In particolare $\\det(I) = 1$."
+        },
+        {
+            type: "domanda",
+            front: "Che effetto hanno le operazioni elementari sul determinante?",
+            back: "1) <strong>Scambio di righe</strong> ($P_{ij}$): $\\det$ cambia segno. 2) <strong>Somma di multiplo</strong> ($E_{ij}(k)$): $\\det$ non cambia. 3) <strong>Moltiplicazione riga per $k$</strong>: $\\det$ viene moltiplicato per $k$."
+        },
+        {
+            type: "tranello",
+            front: "Errore classico: applicare Gauss per calcolare il determinante dimenticando qualcosa. Cosa?",
+            back: "Dimenticarsi di <strong>contare gli scambi di riga</strong>! Ogni scambio cambia il segno del determinante. Formula corretta: $\\det(A) = (-1)^{\\#\\text{scambi}} \\cdot \\prod_i \\text{pivot}_i$. Altro errore: se si moltiplica una riga per uno scalare $k$ per comodità, bisogna dividere il risultato finale per $k$."
+        },
+        {
+            type: "domanda",
+            front: "Per lo sviluppo di Laplace, come si sceglie la riga o colonna migliore?",
+            back: "Si sceglie la riga o colonna con il <strong>maggior numero di zeri</strong>, perché ogni zero annulla il corrispondente termine dello sviluppo, riducendo il numero di sottodeterminanti da calcolare."
+        },
+        {
+            type: "formula",
+            front: "Come si calcola det(A) tramite il metodo di Gauss?",
+            back: "Si riduce $A$ a forma a scala $S$ (triangolare superiore) usando solo scambi e somme di multipli. Poi: $\\det(A) = (-1)^{\\#\\text{scambi}} \\cdot \\det(S)$, dove $\\det(S) = \\prod_i a_{ii}$ è il prodotto dei pivot."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

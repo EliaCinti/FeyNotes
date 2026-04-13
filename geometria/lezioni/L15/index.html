@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 15 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 15: Algoritmo di Gauss-Jordan e Calcolo del Rango (Teorema degli Orlati). Metodo efficiente per il calcolo della matrice inversa tramite l'algoritmo di Gauss-Jordan. Calcolo del rango di una matrice qualunque tramite i minori e il potente Teorema degli Orlati.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 15: Algoritmo di Gauss-Jordan e Calcolo del Rango (Teorema degli Orlati) — Geometria">
+  <meta property="og:description" content="Metodo efficiente per il calcolo della matrice inversa tramite l'algoritmo di Gauss-Jordan. Calcolo del rango di una matrice qualunque tramite i minori e il potente Teorema degli Orlati.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L15/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L15/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 15 — Algoritmo di Gauss-Jordan e Calcolo del Rango (Teorema degli Orlati)",
+  "description": "Metodo efficiente per il calcolo della matrice inversa tramite l'algoritmo di Gauss-Jordan. Calcolo del rango di una matrice qualunque tramite i minori e il potente Teorema degli Orlati.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L15/",
+  "datePublished": "2026-04-09",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 15</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L14/">← Prec.</a>
+      <a href="/geometria/lezioni/L16/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L15", date: "Lezione 15 — 9 Apr 2026",
+    title: "Algoritmo di Gauss-Jordan e Calcolo del Rango (Teorema degli Orlati)",
+    abstract: "Metodo efficiente per il calcolo della matrice inversa tramite l'algoritmo di Gauss-Jordan. Calcolo del rango di una matrice qualunque tramite i minori e il potente Teorema degli Orlati.",
+
+    sections: [
+        {
+            id: "s15-gauss-jordan",
+            type: "section",
+            title: "Calcolo dell'inversa: Algoritmo di Gauss-Jordan",
+            icon: "🔄",
+            content: `<p>Nella lezione precedente abbiamo visto come calcolare la matrice inversa $A^{-1}$ utilizzando la matrice aggiunta: $A^{-1} = \\frac{1}{\\det(A)} A^*$. Tuttavia, come fa notare il professore, il calcolo della matrice aggiunta è un processo <strong>molto laborioso</strong> e computazionalmente pesante, specialmente per matrici di ordine superiore a $3 \\times 3$.</p>
+<p>Per questo motivo, introduciamo un metodo molto più rapido basato sulle operazioni elementari sulle righe: l'<strong>Algoritmo di Gauss-Jordan</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Differenza con l'algoritmo di Gauss classico",
+                    content: `<p>Mentre l'algoritmo di Gauss classico riduce la matrice a scala (triangolare superiore), l'algoritmo di Gauss-Jordan si spinge oltre: utilizza anche la moltiplicazione di una riga per uno scalare ($E_i(k)$) e procede <strong>dal basso verso l'alto</strong> per annullare anche i termini <em>sopra</em> i pivot, trasformando la matrice di partenza direttamente nella <strong>matrice identità</strong> $I$.</p>`
+                },
+                {
+                    subtitle: "Come funziona l'algoritmo?",
+                    content: `<p>Sia $A$ una matrice quadrata $n \\times n$ invertibile.</p>
+<ol>
+<li>Si affianca alla matrice $A$ la matrice identità $I_n$, creando una <strong>matrice a blocchi</strong> $[A \\mid I_n]$ di dimensione $n \\times 2n$.</li>
+<li>Si applicano le operazioni elementari sulle righe su <strong>tutta</strong> la matrice allargata.</li>
+<li>L'obiettivo è trasformare il blocco di sinistra (la matrice $A$) nella matrice identità $I_n$.</li>
+<li>Quando a sinistra compare $I_n$, il blocco di destra sarà diventato esattamente la matrice inversa $A^{-1}$.</li>
+</ol>
+<p>In sintesi:</p>
+<p>$$[A \\mid I_n] \\quad \\overset{\\text{Gauss-Jordan}}{\\longrightarrow} \\quad [I_n \\mid A^{-1}]$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Schema Gauss-Jordan", latex: "[A \\mid I_n] \\longrightarrow [I_n \\mid A^{-1}]" }
+            ]
+        },
+        {
+            id: "s15-esempio-gauss-jordan",
+            type: "section",
+            title: "Esempio pratico: Gauss-Jordan",
+            icon: "📝",
+            content: `<p>Vogliamo calcolare l'inversa della seguente matrice $A$:</p>
+<p>$$A = \\begin{bmatrix} 1 & 1 & 0 \\\\ 1 & 0 & 1 \\\\ 0 & -1 & 0 \\end{bmatrix}$$</p>
+<p>Verifichiamo che il determinante sia diverso da zero: sviluppando lungo l'ultima riga, $\\det(A) = -(-1)(1 \\cdot 1 - 0) = 1 \\neq 0$. La matrice è invertibile.</p>`,
+            subsections: [
+                {
+                    subtitle: "Passo 1 — Matrice allargata",
+                    content: `<p>Scriviamo la matrice allargata $[A \\mid I_3]$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 1 & 0 & 1 & 0 & 0 \\\\ 1 & 0 & 1 & 0 & 1 & 0 \\\\ 0 & -1 & 0 & 0 & 0 & 1 \\end{array}\\right]$$</p>`
+                },
+                {
+                    subtitle: "Passo 2 — Riduzione a scala (alto → basso)",
+                    content: `<p>Sostituiamo $R_2 \\leftarrow R_2 - R_1$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 1 & 0 & 1 & 0 & 0 \\\\ 0 & -1 & 1 & -1 & 1 & 0 \\\\ 0 & -1 & 0 & 0 & 0 & 1 \\end{array}\\right]$$</p>
+<p>Ora annulliamo l'elemento sotto il secondo pivot con $R_3 \\leftarrow R_3 - R_2$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 1 & 0 & 1 & 0 & 0 \\\\ 0 & -1 & 1 & -1 & 1 & 0 \\\\ 0 & 0 & -1 & 1 & -1 & 1 \\end{array}\\right]$$</p>
+<p>La matrice sinistra è ora triangolare superiore.</p>`
+                },
+                {
+                    subtitle: "Passo 3 — Pivot tutti uguali a 1",
+                    content: `<p>Moltiplichiamo la seconda e la terza riga per $-1$ ($R_2 \\leftarrow -R_2$, $R_3 \\leftarrow -R_3$):</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 1 & 0 & 1 & 0 & 0 \\\\ 0 & 1 & -1 & 1 & -1 & 0 \\\\ 0 & 0 & 1 & -1 & 1 & -1 \\end{array}\\right]$$</p>`
+                },
+                {
+                    subtitle: "Passo 4 — Annullamento sopra i pivot (basso → alto)",
+                    content: `<p>Partiamo dalla terza colonna. Annulliamo il $-1$ nella seconda riga con $R_2 \\leftarrow R_2 + R_3$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 1 & 0 & 1 & 0 & 0 \\\\ 0 & 1 & 0 & 0 & 0 & -1 \\\\ 0 & 0 & 1 & -1 & 1 & -1 \\end{array}\\right]$$</p>
+<p>Ora annulliamo l'elemento sopra il secondo pivot con $R_1 \\leftarrow R_1 - R_2$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 0 & 0 & 1 & 0 & 1 \\\\ 0 & 1 & 0 & 0 & 0 & -1 \\\\ 0 & 0 & 1 & -1 & 1 & -1 \\end{array}\\right]$$</p>
+<p>Il blocco di sinistra è diventato l'identità $I_3$. Il blocco di destra è la nostra <strong>matrice inversa</strong>:</p>
+<p>$$A^{-1} = \\begin{bmatrix} 1 & 0 & 1 \\\\ 0 & 0 & -1 \\\\ -1 & 1 & -1 \\end{bmatrix}$$</p>
+<p>È buona norma verificare calcolando $A \\cdot A^{-1} = I$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s15-giustificazione-gj",
+            type: "section",
+            title: "Perché l'algoritmo di Gauss-Jordan funziona?",
+            icon: "🎯",
+            content: `<p>Il professore dedica una parte della lezione a giustificare rigorosamente questo metodo, svelando che non si tratta di un trucco, ma di <strong>pura logica algebrica</strong>.</p>
+<p>Applicare un'operazione elementare sulle righe a una matrice $A$ equivale a moltiplicare $A$ a sinistra per una matrice elementare $E$. L'algoritmo di Gauss-Jordan applica una sequenza finita di operazioni elementari $E_1, E_2, \\dots, E_k$ tali per cui $A$ diventa l'identità:</p>
+<p>$$E_k \\cdot E_{k-1} \\cdots E_2 \\cdot E_1 \\cdot A = I_n$$</p>
+<p>Chiamiamo $E = (E_k \\cdots E_1)$ la matrice prodotto di tutte le operazioni elementari. L'equazione diventa:</p>
+<p>$$E \\cdot A = I_n$$</p>
+<p>Per un corollario del Teorema di Binet, se il prodotto di due matrici fa l'identità, esse sono l'una l'inversa dell'altra. Quindi <strong>$E = A^{-1}$</strong>.</p>
+<p>Cosa succede al blocco di destra della matrice allargata? Partiamo dall'identità $I_n$ e le applichiamo le <em>stesse identiche</em> operazioni elementari $E$. Al termine dell'algoritmo, il blocco di destra sarà diventato:</p>
+<p>$$E \\cdot I_n = E = A^{-1}$$</p>
+<p>Ecco dimostrato perché il blocco di destra si trasforma esattamente nell'inversa di $A$.</p>`,
+            formulas: [
+                { label: "Prodotto operazioni elementari", latex: "E_k \\cdot E_{k-1} \\cdots E_1 \\cdot A = I_n" },
+                { label: "Identità chiave", latex: "E \\cdot A = I_n \\Rightarrow E = A^{-1}" }
+            ]
+        },
+        {
+            id: "s15-rango-determinanti",
+            type: "section",
+            title: "Calcolo del rango tramite i Determinanti",
+            icon: "📊",
+            content: `<p>Spostiamo ora l'attenzione sulla seconda utilità del determinante: il <strong>calcolo del rango</strong>.</p>
+<p>Abbiamo già visto che per una matrice quadrata $n \\times n$:</p>
+<p>$$\\text{rk}(A) = n \\iff \\det(A) \\neq 0$$</p>
+<p>Ma cosa succede se la matrice <strong>non è quadrata</strong> (es. $M_{m \\times n}$)? Non potendo calcolare il determinante dell'intera matrice, introduciamo il concetto di sottomatrice e di minore.</p>`,
+            subsections: [
+                {
+                    subtitle: "Sottomatrice e Minore",
+                    content: `<p>Sia $A$ una matrice $m \\times n$.</p>
+<ul>
+<li>Una <strong>sottomatrice</strong> si ottiene da $A$ cancellando alcune righe e/o alcune colonne.</li>
+<li>Se la sottomatrice ottenuta è <em>quadrata</em> di ordine $q \\times q$, il suo determinante prende il nome di <strong>minore di ordine $q$</strong> della matrice $A$.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Minore singolare e non singolare",
+                    content: `<p>Un minore di ordine $q$ si dice:</p>
+<ul>
+<li><strong>Singolare</strong> se il suo determinante è pari a zero.</li>
+<li><strong>Non singolare</strong> se il suo determinante è <strong>diverso da zero</strong>.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Teorema di Kronecker — Rango via minori",
+                    content: `<p>Il rango di una matrice $A$ è pari all'<strong>ordine massimo dei suoi minori non singolari</strong>.</p>
+<p>In altre parole, $\\text{rk}(A) = p$ se e solo se:</p>
+<ol>
+<li>Esiste in $A$ almeno un minore di ordine $p$ con determinante diverso da zero.</li>
+<li>Tutti i minori di ordine strettamente maggiore di $p$ (se esistono) hanno determinante pari a zero.</li>
+</ol>`
+                }
+            ],
+            formulas: [
+                { label: "Rango matrice quadrata", latex: "\\text{rk}(A) = n \\iff \\det(A) \\neq 0" },
+                { label: "Teorema di Kronecker", latex: "\\text{rk}(A) = p \\iff \\exists\\, \\text{minore di ordine } p \\text{ non singolare, tutti quelli di ordine } p+1 \\text{ singolari}" }
+            ]
+        },
+        {
+            id: "s15-esempio-rango",
+            type: "section",
+            title: "Esempio: Rango tramite minori",
+            icon: "🔍",
+            content: `<p>Consideriamo la matrice rettangolare $3 \\times 4$:</p>
+<p>$$A = \\begin{bmatrix} 1 & 2 & -1 & 3 \\\\ 2 & 4 & -2 & 6 \\\\ 1 & 0 & -1 & 0 \\end{bmatrix}$$</p>
+<p>Qual è il rango di $A$? Sappiamo che $\\text{rk}(A) \\leq \\min(3, 4) = 3$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il rango può essere 3?",
+                    content: `<p>Se lo fosse, dovrebbe esistere almeno un minore $3 \\times 3$ con determinante non nullo. Osservando la matrice, notiamo subito che <strong>la seconda riga è il doppio della prima</strong> ($R_2 = 2R_1$).</p>
+<p>Di conseguenza, qualsiasi sottomatrice quadrata $3 \\times 3$ sceglieremo, essa conterrà inevitabilmente porzioni della prima e della seconda riga, le quali saranno linearmente dipendenti. Pertanto, <em>tutti</em> i determinanti $3 \\times 3$ estratti da questa matrice saranno pari a zero. Concludiamo che $\\text{rk}(A) \\lt 3$.</p>`
+                },
+                {
+                    subtitle: "Il rango è 2?",
+                    content: `<p>Dobbiamo cercare un minore $2 \\times 2$ non singolare. Prendiamo gli elementi delle colonne 1 e 2, righe 1 e 3:</p>
+<p>$$M = \\begin{bmatrix} 1 & 2 \\\\ 1 & 0 \\end{bmatrix} \\Rightarrow \\det(M) = 1(0) - 2(1) = -2 \\neq 0$$</p>
+<p>Avendo trovato un minore di ordine $2$ non singolare, e sapendo che non esistono minori non singolari di ordine $3$, possiamo affermare con certezza che $\\text{rk}(A) = 2$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s15-teorema-orlati",
+            type: "section",
+            title: "Il Teorema degli Orlati",
+            icon: "⚡",
+            content: `<p>Come fa notare il docente, il metodo dei minori ha un enorme difetto: la <strong>complessità computazionale</strong>. Se ho una matrice grande e voglio verificare se ha rango $3$, in teoria dovrei calcolare <em>tutti</em> i possibili minori $4 \\times 4$ per assicurarmi che siano tutti zero. Le combinazioni possibili diventano enormi.</p>
+<p>Per abbattere drasticamente i calcoli, si utilizza uno dei teoremi più potenti e utilizzati del corso: il <strong>Teorema degli Orlati</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione di Minore Orlato",
+                    content: `<p>Sia $M$ un minore di ordine $p$ di una matrice $A$. Si definisce <strong>minore orlato</strong> (o "orlato") di $M$ un minore di ordine $p+1$ ottenuto aggiungendo alla sottomatrice di $M$ <strong>una riga e una colonna</strong> della matrice originale $A$.</p>
+<p>Se la matrice $A$ è di dimensioni $m \\times n$, il numero di orlati di un minore di ordine $p$ è esattamente $(m-p) \\times (n-p)$. Questo numero è infinitamente più piccolo rispetto a tutte le possibili combinazioni di sottomatrici di ordine $p+1$.</p>`
+                },
+                {
+                    subtitle: "Enunciato del Teorema",
+                    content: `<p>Sia $A$ una matrice e sia $M$ un minore di ordine $p$ <strong>non singolare</strong> (cioè $\\det(M) \\neq 0$).</p>
+<p>Se <strong>tutti gli orlati</strong> di $M$ di ordine $p+1$ sono <strong>singolari</strong> (cioè hanno determinante uguale a zero), allora:</p>
+<p>$$\\text{rk}(A) = p$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Teorema degli Orlati", latex: "\\det(M) \\neq 0 \\text{ e tutti gli orlati singolari} \\Rightarrow \\text{rk}(A) = p" },
+                { label: "Numero di orlati", latex: "\\text{Orlati di } M_{p \\times p} = (m - p) \\times (n - p)" }
+            ]
+        },
+        {
+            id: "s15-algoritmo-kronecker",
+            type: "section",
+            title: "Algoritmo pratico per il calcolo del Rango (Metodo di Kronecker)",
+            icon: "🧮",
+            content: `<p>Nella pratica, il Teorema degli Orlati ci fornisce un algoritmo velocissimo per determinare il rango di qualsiasi matrice:</p>
+<ol>
+<li><strong>Trovo un elemento non nullo</strong> nella matrice. Quello è un minore $1 \\times 1$ non singolare ($\\text{rk} \\geq 1$).</li>
+<li>Lo <strong>"orlo"</strong> aggiungendo una riga e una colonna per formare un $2 \\times 2$. Calcolo il determinante.</li>
+<li>Se trovo un $2 \\times 2$ diverso da zero, $\\text{rk} \\geq 2$. Tengo fermo questo minore.</li>
+<li>Lo orlo formando sottomatrici $3 \\times 3$. <strong>Calcolo solo gli orlati di quel $2 \\times 2$</strong>. Se sono <em>tutti</em> zero, mi fermo: il rango è $2$. Se ne trovo uno diverso da zero, il rango è almeno $3$, e ripeto il procedimento orlando il $3 \\times 3$.</li>
+</ol>
+<p>Questo strumento si rivelerà fondamentale per lo studio dei <strong>sistemi lineari parametrici</strong> e per il <strong>Teorema di Rouché-Capelli</strong>, argomenti chiave delle prossime lezioni.</p>`
+        },
+        {
+            id: "s15-attenzione-orlati",
+            type: "alert_box",
+            title: "Attenzione: errori comuni con gli orlati",
+            icon: "⚠️",
+            content: `<p><strong>Errore n.1:</strong> Dimenticare che bisogna controllare <em>tutti</em> gli orlati di un minore, non solo uno. Se anche un solo orlato ha determinante diverso da zero, il rango è almeno $p+1$ e bisogna proseguire.</p>
+<p><strong>Errore n.2:</strong> Confondere "minore non singolare" con "minore singolare". Non singolare = determinante $\\neq 0$, singolare = determinante $= 0$.</p>
+<p><strong>Errore n.3:</strong> Cercare di orlare un minore con righe o colonne che già appartengono alla sottomatrice. L'orlatura aggiunge righe e colonne <em>esterne</em> al minore di partenza.</p>`
+        },
+        {
+            id: "s15-nota-metodi",
+            type: "note_box",
+            title: "Confronto tra i due metodi per il rango",
+            icon: "📌",
+            content: `<p>Abbiamo a disposizione <strong>due metodi</strong> per calcolare il rango:</p>`,
+            table_compare: {
+                headers: ["Metodo", "Procedura", "Pro", "Contro"],
+                rows: [
+                    ["Gauss (riduzione a scala)", "Riduco la matrice a scala e conto i pivot", "Sempre applicabile, sistematico", "Richiede operazioni sulle righe"],
+                    ["Kronecker / Orlati", "Cerco minori non singolari di ordine massimo", "Molto veloce con matrici parametriche", "Richiede calcolo di determinanti"]
+                ]
+            },
+            extra_content: `<p>Il professore sottolinea che il metodo degli orlati è particolarmente utile quando la matrice contiene <strong>parametri</strong> (es. $k$), perché permette di discutere il rango al variare del parametro analizzando quando i determinanti si annullano.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Descrivi l'algoritmo di Gauss-Jordan per il calcolo della matrice inversa.",
+            back: "Si costruisce la matrice allargata $[A \\mid I_n]$ e si applicano le operazioni elementari sulle righe per trasformare il blocco sinistro nell'identità. Al termine si ottiene $[I_n \\mid A^{-1}]$, dove il blocco destro è l'inversa di $A$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Perché l'algoritmo di Gauss-Jordan produce effettivamente la matrice inversa?",
+            back: "Ogni operazione elementare corrisponde a una moltiplicazione a sinistra per una matrice elementare $E_i$. Se $E_k \\cdots E_1 \\cdot A = I_n$, allora $E = E_k \\cdots E_1 = A^{-1}$. Applicando le stesse operazioni a $I_n$: $E \\cdot I_n = E = A^{-1}$."
+        },
+        {
+            type: "definizione",
+            front: "Cosa sono una sottomatrice e un minore di ordine $q$ di una matrice $A$?",
+            back: "Una sottomatrice si ottiene da $A$ cancellando alcune righe e/o colonne. Se la sottomatrice è quadrata $q \\times q$, il suo determinante è detto minore di ordine $q$ di $A$."
+        },
+        {
+            type: "definizione",
+            front: "Enuncia il Teorema di Kronecker sul rango tramite minori.",
+            back: "Il rango di $A$ è pari all'ordine massimo dei suoi minori non singolari. Cioè $\\text{rk}(A) = p$ se e solo se esiste un minore di ordine $p$ con $\\det \\neq 0$ e tutti i minori di ordine $p+1$ hanno $\\det = 0$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è un minore orlato?",
+            back: "Dato un minore $M$ di ordine $p$, un orlato di $M$ è un minore di ordine $p+1$ ottenuto aggiungendo alla sottomatrice di $M$ una riga e una colonna della matrice originale $A$. Il numero di orlati possibili è $(m-p)(n-p)$."
+        },
+        {
+            type: "domanda",
+            front: "Enuncia il Teorema degli Orlati e spiega perché è utile.",
+            back: "Se $M$ è un minore di ordine $p$ non singolare ($\\det(M) \\neq 0$) e tutti i suoi orlati di ordine $p+1$ sono singolari ($\\det = 0$), allora $\\text{rk}(A) = p$. È utile perché riduce drasticamente il numero di determinanti da calcolare: anziché controllare tutti i minori di ordine $p+1$, basta controllare solo gli $(m-p)(n-p)$ orlati del minore scelto."
+        },
+        {
+            type: "tranello",
+            front: "Quando uso il Teorema degli Orlati, basta trovare un orlato singolare per concludere che il rango è $p$?",
+            back: "No! Bisogna verificare che TUTTI gli orlati siano singolari. Se anche un solo orlato ha determinante diverso da zero, il rango è almeno $p+1$ e bisogna continuare l'analisi partendo da quel nuovo minore non singolare."
+        },
+        {
+            type: "domanda",
+            front: "Qual è la differenza principale tra l'algoritmo di Gauss classico e quello di Gauss-Jordan?",
+            back: "Gauss classico riduce la matrice a scala (triangolare superiore). Gauss-Jordan prosegue annullando anche gli elementi sopra i pivot e normalizzando i pivot a 1, trasformando la matrice direttamente nell'identità $I_n$."
+        },
+        {
+            type: "formula",
+            front: "Schema sintetico dell'algoritmo di Gauss-Jordan.",
+            back: "$$[A \\mid I_n] \\overset{\\text{Gauss-Jordan}}{\\longrightarrow} [I_n \\mid A^{-1}]$$"
+        },
+        {
+            type: "domanda",
+            front: "In quale situazione il metodo degli orlati è preferibile al metodo di Gauss per il calcolo del rango?",
+            back: "Quando la matrice contiene parametri (es. $k$). Il metodo degli orlati permette di discutere il rango al variare del parametro analizzando quando certi determinanti si annullano, mentre Gauss diventa complicato con i parametri a denominatore."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

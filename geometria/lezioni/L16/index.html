@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 16 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 16: Teorema degli Orlati e Sistemi Lineari. Dimostrazione completa del teorema degli orlati per il calcolo del rango. Introduzione ai sistemi di equazioni lineari: forma matriciale, compatibilità, sistemi omogenei e sottospazi affini.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 16: Teorema degli Orlati e Sistemi Lineari — Geometria">
+  <meta property="og:description" content="Dimostrazione completa del teorema degli orlati per il calcolo del rango. Introduzione ai sistemi di equazioni lineari: forma matriciale, compatibilità, sistemi omogenei e sottospazi affini.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L16/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L16/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 16 — Teorema degli Orlati e Sistemi Lineari",
+  "description": "Dimostrazione completa del teorema degli orlati per il calcolo del rango. Introduzione ai sistemi di equazioni lineari: forma matriciale, compatibilità, sistemi omogenei e sottospazi affini.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L16/",
+  "datePublished": "2026-04-13",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 16</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L15/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L16", date: "Lezione 16 — 13 Apr 2026",
+    title: "Teorema degli Orlati e Sistemi Lineari",
+    abstract: "Dimostrazione completa del teorema degli orlati per il calcolo del rango. Introduzione ai sistemi di equazioni lineari: forma matriciale, compatibilità, sistemi omogenei e sottospazi affini.",
+
+    sections: [
+        {
+            id: "s16-teorema-orlati",
+            type: "section",
+            title: "Teorema degli Orlati",
+            icon: "🧩",
+            content: `<p>Il professore riprende dall'enunciato del teorema degli orlati, lasciato in sospeso nella lezione precedente, e ne presenta la dimostrazione completa.</p>
+<p><strong>Ricordiamo:</strong> un <strong>minore fondamentale</strong> è un minore non singolare di ordine massimo. Il suo ordine coincide con il rango della matrice.</p>`,
+            subsections: [
+                {
+                    subtitle: "Enunciato del teorema",
+                    content: `<p><strong>Teorema degli Orlati:</strong> Sia $M$ un minore non singolare di una matrice $A$. Se tutti gli orlati di $M$ sono singolari, allora $M$ è un minore fondamentale di $A$.</p>
+<p>In altre parole: se troviamo un minore non singolare $M$ di ordine $p$ e tutti i minori di ordine $p+1$ che lo contengono (gli orlati) hanno determinante nullo, allora il rango della matrice è esattamente $p$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Setup",
+                    content: `<p>Sia $M$ un minore non singolare di ordine $p \\times p$, con $\\det(M) \\neq 0$. Supponiamo che $M$ si ottenga dalle componenti comuni alle righe $A_{i_1}, \\dots, A_{i_p}$ e alle colonne $A^{j_1}, \\dots, A^{j_p}$ della matrice $A$:</p>
+<p>$$M = (a_{i_k, j_h}) \\quad \\text{con } k,h \\in \\{1, \\dots, p\\}$$</p>
+<p>Poiché $M$ è non singolare, le sue righe sono linearmente indipendenti. Di conseguenza, anche le righe $A_{i_1}, \\dots, A_{i_p}$ della matrice $A$ sono linearmente indipendenti e formano un <strong>sistema libero</strong>.</p>
+<p>Per dimostrare che $M$ è un minore fondamentale, dobbiamo far vedere che $\\text{rango}(A) = p$. Questo equivale a dimostrare che <strong>ogni altra riga</strong> di $A$ può essere espressa come combinazione lineare delle righe $A_{i_1}, \\dots, A_{i_p}$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Costruzione dell'orlato",
+                    content: `<p>Sia $A_i$ una riga qualunque di $A$ con $i \\notin \\{i_1, \\dots, i_p\\}$. Sia $A^j$ una colonna qualunque di $A$. Costruiamo la matrice $N$ di ordine $(p+1) \\times (p+1)$ orlando $M$ con la riga $i$-esima e la colonna $j$-esima:</p>
+<p>$$N = \\begin{pmatrix} a_{i_1, j_1} & \\dots & a_{i_1, j_p} & a_{i_1, j} \\\\ \\vdots & \\ddots & \\vdots & \\vdots \\\\ a_{i_p, j_1} & \\dots & a_{i_p, j_p} & a_{i_p, j} \\\\ a_{i, j_1} & \\dots & a_{i, j_p} & a_{i, j} \\end{pmatrix}$$</p>
+<p>Analizziamo $\\det(N)$ in due casi:</p>
+<p><strong>Caso 1:</strong> $j \\notin \\{j_1, \\dots, j_p\\}$. Allora $N$ è un vero orlato di $M$ (riga e colonna nuove). Per ipotesi del teorema, tutti gli orlati di $M$ sono singolari, quindi $\\det(N) = 0$.</p>
+<p><strong>Caso 2:</strong> $j \\in \\{j_1, \\dots, j_p\\}$. Supponiamo $j = j_k$: la colonna $(p+1)$-esima di $N$ è identica alla colonna $k$-esima. Una matrice con due colonne uguali ha determinante nullo, quindi $\\det(N) = 0$.</p>
+<p>In <strong>ogni caso</strong>: $\\det(N) = 0$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Sviluppo di Laplace e conclusione",
+                    content: `<p>Sviluppiamo $\\det(N)$ secondo Laplace rispetto all'<strong>ultima colonna</strong>:</p>
+<p>$$\\det(N) = \\sum_{k=1}^{p} a_{i_k, j} \\, C_{k, p+1} + a_{i, j} \\, C_{p+1, p+1} = 0$$</p>
+<p>Poniamo $\\lambda_k = C_{k, p+1}$ per $k = 1, \\dots, p$ e $\\lambda = C_{p+1, p+1}$. L'equazione diventa:</p>
+<p>$$\\lambda_1 a_{i_1, j} + \\dots + \\lambda_p a_{i_p, j} + \\lambda \\, a_{i, j} = 0$$</p>
+<p><strong>Osservazione cruciale:</strong> i cofattori $\\lambda_1, \\dots, \\lambda_p, \\lambda$ <strong>non dipendono</strong> dalla colonna $j$ scelta, perché per calcolarli si elimina sempre l'ultima colonna. Essi dipendono solo dalle prime $p$ colonne di $N$ e dalle righe scelte.</p>
+<p>In particolare, il cofattore $\\lambda = C_{p+1, p+1} = (-1)^{(p+1)+(p+1)} \\det(M) = \\det(M) \\neq 0$.</p>
+<p>Poiché l'equazione vale <strong>per ogni</strong> colonna $j$, possiamo scrivere la relazione vettoriale tra righe complete:</p>
+<p>$$\\lambda_1 A_{i_1} + \\lambda_2 A_{i_2} + \\dots + \\lambda_p A_{i_p} + \\lambda A_i = \\boldsymbol{0}$$</p>
+<p>Dato che $\\lambda \\neq 0$, possiamo esplicitare $A_i$:</p>
+<p>$$A_i = -\\frac{1}{\\lambda} \\left( \\sum_{k=1}^{p} \\lambda_k A_{i_k} \\right) = \\sum_{k=1}^{p} \\left(-\\frac{\\lambda_k}{\\lambda}\\right) A_{i_k}$$</p>
+<p>Questo dimostra che <strong>ogni</strong> riga $A_i$ non appartenente al sistema libero iniziale è combinazione lineare di $A_{i_1}, \\dots, A_{i_p}$. Quindi lo spazio delle righe ha dimensione $p$, il rango di $A$ è $p$, e $M$ è un minore fondamentale. $\\blacksquare$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Sviluppo dell'orlato", latex: "\\sum_{k=1}^{p} \\lambda_k a_{i_k, j} + \\lambda \\, a_{i, j} = 0" },
+                { label: "Riga come c.l.", latex: "A_i = \\sum_{k=1}^{p} \\left(-\\frac{\\lambda_k}{\\lambda}\\right) A_{i_k}" },
+                { label: "Cofattore chiave", latex: "\\lambda = C_{p+1, p+1} = \\det(M) \\neq 0" }
+            ]
+        },
+        {
+            id: "s16-esempio-orlati",
+            type: "section",
+            title: "Esempio: Calcolo del rango con gli orlati",
+            icon: "📐",
+            content: `<p>Calcoliamo il rango della matrice $A$ applicando il teorema degli orlati passo per passo:</p>
+<p>$$A = \\begin{pmatrix} 0 & 2 & -1 & 1 & 0 \\\\ 1 & 0 & 1 & 0 & 1 \\\\ 1 & 2 & 0 & 1 & 1 \\\\ -1 & 1 & 0 & 3 & 4 \\end{pmatrix}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Passo 1 — Minore di ordine 1",
+                    content: `<p>Prendiamo $a_{2,1} = 1 \\neq 0$. Il minore $M_1 = (1)$ di ordine 1 è non singolare. Quindi $\\text{rango}(A) \\ge 1$.</p>`
+                },
+                {
+                    subtitle: "Passo 2 — Orlare per trovare un minore di ordine 2",
+                    content: `<p>Orliamo $M_1$ con la prima riga e la seconda colonna. Il minore $M_2$ formato dalle righe 1, 2 e colonne 1, 2:</p>
+<p>$$M_2 = \\begin{pmatrix} 0 & 2 \\\\ 1 & 0 \\end{pmatrix}$$</p>
+<p>$$\\det(M_2) = 0 \\cdot 0 - 2 \\cdot 1 = -2 \\neq 0$$</p>
+<p>Minore non singolare di ordine 2 trovato. Quindi $\\text{rango}(A) \\ge 2$.</p>`
+                },
+                {
+                    subtitle: "Passo 3 — Orlare per trovare un minore di ordine 3",
+                    content: `<p>Orliamo $M_2$ con la riga 3 e la colonna 3:</p>
+<p>$$M_3 = \\begin{pmatrix} 0 & 2 & -1 \\\\ 1 & 0 & 1 \\\\ 1 & 2 & 0 \\end{pmatrix}$$</p>
+<p>$$\\det(M_3) = 0 - 2(0 - 1) + (-1)(2 - 0) = 2 - 2 = 0$$</p>
+<p>Singolare! Proviamo con riga 3 e colonna 4:</p>
+<p>$$M'_3 = \\begin{pmatrix} 0 & 2 & 1 \\\\ 1 & 0 & 0 \\\\ 1 & 2 & 1 \\end{pmatrix}$$</p>
+<p>Sviluppando lungo la seconda riga: $\\det(M'_3) = -1 \\cdot \\det\\begin{pmatrix} 2 & 1 \\\\ 2 & 1 \\end{pmatrix} = -1(2-2) = 0$</p>
+<p>Ancora singolare! Proviamo con riga 4 e colonna 3:</p>
+<p>$$M''_3 = \\begin{pmatrix} 0 & 2 & -1 \\\\ 1 & 0 & 1 \\\\ -1 & 1 & 0 \\end{pmatrix}$$</p>
+<p>$$\\det(M''_3) = 0 - 2(0 - (-1)) - 1(1 - 0) = -2 - 1 = -3 \\neq 0$$</p>
+<p>Trovato un minore non singolare di ordine 3! Quindi $\\text{rango}(A) \\ge 3$.</p>`
+                },
+                {
+                    subtitle: "Passo 4 — Orlare il minore di ordine 3",
+                    content: `<p>Il minore $M''_3$ è formato dalle <strong>righe 1, 2, 4</strong> e <strong>colonne 1, 2, 3</strong>. Per orlarlo dobbiamo aggiungere la riga 3 e una delle colonne rimanenti (4 o 5).</p>
+<p><strong>Orlato 1</strong> (colonna 4):</p>
+<p>$$N_1 = \\begin{pmatrix} 0 & 2 & -1 & 1 \\\\ 1 & 0 & 1 & 0 \\\\ 1 & 2 & 0 & 1 \\\\ -1 & 1 & 0 & 3 \\end{pmatrix}$$</p>
+<p>Osserviamo che $R_3 = R_1 + R_2$, quindi le righe sono linearmente dipendenti: $\\det(N_1) = 0$.</p>
+<p><strong>Orlato 2</strong> (colonna 5):</p>
+<p>$$N_2 = \\begin{pmatrix} 0 & 2 & -1 & 0 \\\\ 1 & 0 & 1 & 1 \\\\ 1 & 2 & 0 & 1 \\\\ -1 & 1 & 0 & 4 \\end{pmatrix}$$</p>
+<p>Anche qui $R_3 = R_1 + R_2$, quindi $\\det(N_2) = 0$.</p>
+<p><strong>Tutti gli orlati sono singolari.</strong> Per il teorema degli orlati, $M''_3$ è un minore fondamentale:</p>
+<p>$$\\text{rango}(A) = 3$$</p>
+<p>Le righe 1, 2 e 4 costituiscono una base per lo spazio delle righe di $A$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s16-strategia-orlati",
+            type: "note_box",
+            title: "Strategia pratica per il teorema degli orlati",
+            icon: "💡",
+            content: `<p>La procedura per calcolare il rango con gli orlati segue sempre questo schema:</p>
+<ol>
+<li><strong>Trovare un minore non singolare</strong> di ordine 1 (basta un elemento $\\neq 0$).</li>
+<li><strong>Orlare</strong>: cercare un orlato non singolare di ordine 2. Se lo trovi, ripeti orlando a ordine 3, ecc.</li>
+<li><strong>Se tutti gli orlati di un minore sono singolari</strong>: per il teorema, quel minore è fondamentale e il suo ordine è il rango.</li>
+</ol>
+<p><strong>Attenzione:</strong> se un orlato è singolare, <em>non significa</em> che non esista un minore non singolare di quell'ordine. Bisogna provare <strong>tutti</strong> gli orlati del minore corrente. Solo se <strong>tutti</strong> sono singolari possiamo concludere.</p>
+<p>Se invece anche un solo orlato è non singolare, lo adottiamo come nuovo minore e ripetiamo.</p>`
+        },
+        {
+            id: "s16-sistemi-lineari-intro",
+            type: "section",
+            title: "Sistemi Lineari — Introduzione",
+            icon: "📊",
+            content: `<p>Iniziamo il <strong>capitolo 3 del corso</strong>. Risolvere sistemi di equazioni lineari è un problema fondamentale che si incontra in moltissimi contesti, dalla fisica all'ingegneria.</p>
+<p>Un sistema di $m$ equazioni lineari in $n$ incognite $x_1, x_2, \\dots, x_n$ ha la forma generale:</p>
+<p>$$\\begin{cases} a_{11}x_1 + a_{12}x_2 + \\dots + a_{1n}x_n = b_1 \\\\ a_{21}x_1 + a_{22}x_2 + \\dots + a_{2n}x_n = b_2 \\\\ \\vdots \\\\ a_{m1}x_1 + a_{m2}x_2 + \\dots + a_{mn}x_n = b_m \\end{cases}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Terminologia",
+                    content: `<p><strong>Definizione (Sistema Lineare):</strong></p>
+<ul>
+<li>Gli scalari $a_{ij}$ sono detti <strong>coefficienti</strong> del sistema.</li>
+<li>Le variabili $x_j$ sono dette <strong>incognite</strong>.</li>
+<li>Gli scalari $b_i$ sono detti <strong>termini noti</strong>.</li>
+</ul>`
+                }
+            ]
+        },
+        {
+            id: "s16-forma-matriciale",
+            type: "section",
+            title: "Forma Matriciale di un Sistema",
+            icon: "🔢",
+            content: `<p>Il sistema lineare può essere scritto in modo compatto usando le matrici. Definiamo tre oggetti fondamentali:</p>`,
+            subsections: [
+                {
+                    subtitle: "Matrice dei coefficienti, vettore incognite, vettore termini noti",
+                    content: `<p><strong>Matrice dei coefficienti</strong> (o matrice incompleta) $A \\in M_{m,n}(\\mathbb{R})$:</p>
+<p>$$A = (a_{ij})$$</p>
+<p><strong>Vettore delle incognite</strong> $\\boldsymbol{x} \\in \\mathbb{R}^n$ (vettore colonna):</p>
+<p>$$\\boldsymbol{x} = \\begin{pmatrix} x_1 \\\\ \\vdots \\\\ x_n \\end{pmatrix}$$</p>
+<p><strong>Vettore dei termini noti</strong> $\\boldsymbol{b} \\in \\mathbb{R}^m$ (vettore colonna):</p>
+<p>$$\\boldsymbol{b} = \\begin{pmatrix} b_1 \\\\ \\vdots \\\\ b_m \\end{pmatrix}$$</p>
+<p>Con questa notazione, il sistema si scrive in forma compatta come:</p>
+<p>$$A\\boldsymbol{x} = \\boldsymbol{b}$$</p>`
+                },
+                {
+                    subtitle: "Matrice completa",
+                    content: `<p>La <strong>matrice completa</strong> del sistema si ottiene accostando alla matrice $A$ la colonna dei termini noti $\\boldsymbol{b}$. Si indica con $B$ o $(A|\\boldsymbol{b})$:</p>
+<p>$$B = (A|\\boldsymbol{b}) = \\begin{pmatrix} a_{11} & \\dots & a_{1n} & b_1 \\\\ \\vdots & \\ddots & \\vdots & \\vdots \\\\ a_{m1} & \\dots & a_{mn} & b_m \\end{pmatrix}$$</p>
+<p>La matrice completa contiene <strong>tutta l'informazione</strong> del sistema: coefficienti e termini noti. Sarà fondamentale per l'algoritmo di Gauss.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Forma compatta", latex: "A\\boldsymbol{x} = \\boldsymbol{b}" },
+                { label: "Matrice completa", latex: "B = (A|\\boldsymbol{b})" }
+            ]
+        },
+        {
+            id: "s16-soluzioni-compatibilita",
+            type: "section",
+            title: "Soluzioni e Compatibilità",
+            icon: "✅",
+            content: `<p>Parliamo ora di cosa significa "risolvere" un sistema lineare.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione di soluzione",
+                    content: `<p>Una <strong>soluzione</strong> del sistema $A\\boldsymbol{x} = \\boldsymbol{b}$ è un vettore $\\boldsymbol{y} = (y_1, \\dots, y_n) \\in \\mathbb{R}^n$ tale che, sostituendo $x_i = y_i$ per ogni $i$, <strong>tutte</strong> le equazioni del sistema sono soddisfatte simultaneamente.</p>
+<p>In notazione matriciale: $\\boldsymbol{y}$ è soluzione se e solo se $A\\boldsymbol{y} = \\boldsymbol{b}$.</p>`
+                },
+                {
+                    subtitle: "Compatibilità e incompatibilità",
+                    content: `<p><strong>Definizione:</strong></p>
+<ul>
+<li>Un sistema si dice <strong>compatibile</strong> (o risolubile) se ammette almeno una soluzione.</li>
+<li>Un sistema si dice <strong>incompatibile</strong> (o impossibile) se non ammette alcuna soluzione.</li>
+</ul>
+<p>L'insieme delle soluzioni di un sistema $S$ si indica con $\\text{Sol}(S)$. Se il sistema è incompatibile, $\\text{Sol}(S) = \\emptyset$.</p>`
+                },
+                {
+                    subtitle: "L'insieme delle soluzioni NON è (in generale) un sottospazio",
+                    content: `<p><strong>Osservazione importante:</strong> l'insieme delle soluzioni di $A\\boldsymbol{x} = \\boldsymbol{b}$ <strong>non è</strong>, in generale, un sottospazio vettoriale di $\\mathbb{R}^n$. Lo è solo se $\\boldsymbol{b} = \\boldsymbol{0}$ (sistema omogeneo).</p>
+<p>In generale, l'insieme delle soluzioni (se non vuoto) è un <strong>sottospazio affine</strong>: una traslazione di un sottospazio vettoriale.</p>
+<p><strong>Esempio geometrico:</strong> in $\\mathbb{R}^2$, l'equazione $a_1 x_1 + a_2 x_2 = b_1$ rappresenta una retta. Questa retta passa per l'origine (ed è un sottospazio) solo se $b_1 = 0$. Altrimenti, è una retta parallela a un sottospazio, ma traslata.</p>`
+                }
+            ]
+        },
+        {
+            id: "s16-sistema-omogeneo",
+            type: "section",
+            title: "Sistemi Omogenei",
+            icon: "⭕",
+            content: `<p>Un caso speciale particolarmente importante è quello dei sistemi omogenei.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione e proprietà",
+                    content: `<p><strong>Definizione:</strong> Un sistema lineare $A\\boldsymbol{x} = \\boldsymbol{b}$ si dice <strong>omogeneo</strong> se $\\boldsymbol{b} = \\boldsymbol{0}$.</p>
+<p>Proprietà fondamentali:</p>
+<ul>
+<li>Un sistema omogeneo $A\\boldsymbol{x} = \\boldsymbol{0}$ è <strong>sempre compatibile</strong>, perché ammette almeno la <strong>soluzione banale</strong> $\\boldsymbol{x} = \\boldsymbol{0}$.</li>
+<li>L'insieme delle soluzioni di un sistema omogeneo è un <strong>sottospazio vettoriale</strong> di $\\mathbb{R}^n$.</li>
+<li>Questo sottospazio corrisponde al <strong>nucleo</strong> (Kernel) dell'applicazione lineare associata alla matrice $A$: $\\text{Sol}(A\\boldsymbol{x} = \\boldsymbol{0}) = \\ker(A)$.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Strategia risolutiva",
+                    content: `<p>La strategia per risolvere un sistema generico $A\\boldsymbol{x} = \\boldsymbol{b}$ sarà strettamente legata alla risoluzione del <strong>sistema omogeneo associato</strong> $A\\boldsymbol{x} = \\boldsymbol{0}$.</p>
+<p>In sintesi, se $\\boldsymbol{y}_0$ è una soluzione particolare del sistema completo, allora l'insieme di <strong>tutte</strong> le soluzioni è:</p>
+<p>$$\\text{Sol}(A\\boldsymbol{x} = \\boldsymbol{b}) = \\boldsymbol{y}_0 + \\ker(A)$$</p>
+<p>Cioè: <em>soluzione particolare + soluzione generale dell'omogeneo</em>. Questo schema sarà sviluppato nelle prossime lezioni con l'algoritmo di Gauss.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Sistema omogeneo", latex: "A\\boldsymbol{x} = \\boldsymbol{0}" },
+                { label: "Nucleo come soluzioni", latex: "\\text{Sol}(A\\boldsymbol{x} = \\boldsymbol{0}) = \\ker(A)" },
+                { label: "Struttura delle soluzioni", latex: "\\text{Sol}(A\\boldsymbol{x} = \\boldsymbol{b}) = \\boldsymbol{y}_0 + \\ker(A)" }
+            ]
+        },
+        {
+            id: "s16-riepilogo-struttura",
+            type: "alert_box",
+            title: "Trappola d'esame: Soluzioni e sottospazi",
+            icon: "⚠️",
+            content: `<p><strong>Errore comune:</strong> affermare che l'insieme delle soluzioni di $A\\boldsymbol{x} = \\boldsymbol{b}$ è un sottospazio vettoriale.</p>
+<p>Questo è <strong>falso</strong> se $\\boldsymbol{b} \\neq \\boldsymbol{0}$! In quel caso è un sottospazio <strong>affine</strong> (una traslazione di un sottospazio).</p>
+<p>Solo per $\\boldsymbol{b} = \\boldsymbol{0}$ (sistema omogeneo) l'insieme delle soluzioni è un sottospazio vettoriale (il nucleo di $A$).</p>
+<p><strong>Verifica rapida:</strong> il vettore nullo $\\boldsymbol{0}$ è soluzione di $A\\boldsymbol{x} = \\boldsymbol{b}$? Solo se $\\boldsymbol{b} = \\boldsymbol{0}$. Se il vettore nullo non è soluzione, l'insieme non può essere un sottospazio.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Enuncia il teorema degli orlati.",
+            back: "Sia $M$ un minore non singolare di una matrice $A$. Se tutti gli orlati di $M$ sono singolari, allora $M$ è un minore fondamentale di $A$, cioè il rango di $A$ è uguale all'ordine di $M$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Qual è l'idea chiave nella dimostrazione del teorema degli orlati?",
+            back: "Si costruisce l'orlato $N$ aggiungendo a $M$ una riga $A_i$ e una colonna $j$ qualunque. Si mostra che $\\det(N) = 0$ in ogni caso (per ipotesi se la colonna è nuova, per colonne ripetute altrimenti). Sviluppando con Laplace sull'ultima colonna si ottiene una relazione $\\sum \\lambda_k a_{i_k, j} + \\lambda a_{i,j} = 0$ dove $\\lambda = \\det(M) \\neq 0$. Poiché i cofattori non dipendono da $j$, la relazione vale componente per componente, dando $A_i = \\sum (-\\lambda_k/\\lambda) A_{i_k}$."
+        },
+        {
+            type: "domanda",
+            front: "Nella dimostrazione del teorema degli orlati, perché i cofattori $\\lambda_k$ non dipendono dalla colonna $j$ scelta?",
+            back: "Perché i cofattori $C_{k, p+1}$ si calcolano eliminando l'ultima colonna (quella della colonna $j$) e una delle prime $p$ righe. Il risultato dipende solo dalle prime $p$ colonne di $N$ (quelle di $M$) e dalle righe scelte, che sono fisse indipendentemente dalla scelta di $j$."
+        },
+        {
+            type: "tranello",
+            front: "Nel teorema degli orlati, se UN orlato è singolare, posso concludere che il rango è l'ordine del minore?",
+            back: "No! Bisogna che TUTTI gli orlati siano singolari. Se anche un solo orlato è non singolare, significa che esiste un minore non singolare di ordine superiore e il rango è maggiore. Bisogna controllare tutti gli orlati, oppure trovarne uno non singolare e continuare ad orlare."
+        },
+        {
+            type: "definizione",
+            front: "Cosa si intende per forma matriciale di un sistema lineare?",
+            back: "Il sistema $\\begin{cases} a_{11}x_1 + \\dots + a_{1n}x_n = b_1 \\\\ \\vdots \\\\ a_{m1}x_1 + \\dots + a_{mn}x_n = b_m \\end{cases}$ si scrive come $A\\boldsymbol{x} = \\boldsymbol{b}$, dove $A = (a_{ij})$ è la matrice dei coefficienti ($m \\times n$), $\\boldsymbol{x}$ è il vettore colonna delle incognite, $\\boldsymbol{b}$ è il vettore colonna dei termini noti."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è la matrice completa di un sistema lineare?",
+            back: "È la matrice $(A|\\boldsymbol{b})$ ottenuta accostando alla matrice dei coefficienti $A$ la colonna dei termini noti $\\boldsymbol{b}$. Ha dimensione $m \\times (n+1)$ e contiene tutta l'informazione del sistema."
+        },
+        {
+            type: "domanda",
+            front: "L'insieme delle soluzioni di un sistema lineare è sempre un sottospazio vettoriale?",
+            back: "No! È un sottospazio vettoriale solo se il sistema è omogeneo ($\\boldsymbol{b} = \\boldsymbol{0}$). In generale, se $\\boldsymbol{b} \\neq \\boldsymbol{0}$, l'insieme delle soluzioni (se non vuoto) è un sottospazio affine: $\\text{Sol} = \\boldsymbol{y}_0 + \\ker(A)$, dove $\\boldsymbol{y}_0$ è una soluzione particolare."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è un sistema omogeneo e perché è sempre compatibile?",
+            back: "Un sistema $A\\boldsymbol{x} = \\boldsymbol{0}$ (termini noti tutti nulli) è detto omogeneo. È sempre compatibile perché ammette almeno la soluzione banale $\\boldsymbol{x} = \\boldsymbol{0}$. L'insieme delle soluzioni è $\\ker(A)$, un sottospazio vettoriale di $\\mathbb{R}^n$."
+        },
+        {
+            type: "formula",
+            front: "Qual è la struttura generale dell'insieme delle soluzioni di $A\\boldsymbol{x} = \\boldsymbol{b}$ (se compatibile)?",
+            back: "$\\text{Sol}(A\\boldsymbol{x} = \\boldsymbol{b}) = \\boldsymbol{y}_0 + \\ker(A)$, dove $\\boldsymbol{y}_0$ è una soluzione particolare del sistema completo e $\\ker(A)$ è l'insieme delle soluzioni del sistema omogeneo associato $A\\boldsymbol{x} = \\boldsymbol{0}$."
+        },
+        {
+            type: "domanda",
+            front: "Nell'esempio della lezione, come si verifica rapidamente che $\\det(N_1) = 0$ senza calcolare il determinante $4 \\times 4$?",
+            back: "Si osserva che la terza riga è la somma delle prime due: $R_3 = R_1 + R_2$. Questo significa che le righe sono linearmente dipendenti, quindi il determinante è necessariamente nullo. Questa è una scorciatoia molto utile rispetto al calcolo diretto!"
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=12"></script>
+<script src="/js/graphs.js?v=12"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
