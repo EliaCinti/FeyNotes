@@ -1,0 +1,272 @@
+const LESSON = {
+    id: "L14", date: "Lezione 14 — 2 Apr 2026",
+    title: "Proprietà del Determinante, Teorema di Binet e Matrice Inversa",
+    abstract: "Completiamo le proprietà del determinante, dimostriamo il legame tra rango e determinante, enunciamo il Teorema Fondamentale dell'Invertibilità, il Teorema di Binet e ricaviamo la formula esplicita per la matrice inversa tramite l'aggiunta classica.",
+
+    sections: [
+        {
+            id: "s14-a-che-serve-determinante",
+            type: "section",
+            title: "A che serve il determinante?",
+            icon: "🎯",
+            content: `<p>All'inizio di questa lezione ci poniamo una domanda fondamentale: <strong>perché abbiamo introdotto il calcolo del determinante?</strong> Esso ha tre scopi principali nel nostro corso:</p>
+<ol>
+<li><strong>Calcolare l'inversa</strong> di una matrice.</li>
+<li><strong>Calcolo del rango</strong> (e quindi della dimensione degli spazi vettoriali).</li>
+<li>Fornire formule per il <strong>calcolo dell'area e del volume</strong> (applicazioni geometriche che si vedranno verso la fine del corso).</li>
+</ol>`
+        },
+        {
+            id: "s14-altre-proprieta-determinante",
+            type: "section",
+            title: "Altre proprietà del determinante",
+            icon: "📐",
+            content: `<p>Riprendiamo l'elenco delle proprietà del determinante iniziato nella lezione precedente.</p>`,
+            subsections: [
+                {
+                    subtitle: "Proprietà 5 — Determinante della Trasposta",
+                    content: `<p>Il determinante di una matrice coincide con il determinante della sua trasposta:</p>
+<p>$$\\det(A^T) = \\det(A)$$</p>
+<p>⚠️ <strong>Nota importante:</strong> Il determinante è un'operazione definita <strong>esclusivamente</strong> per le matrici quadrate $n \\times n$. Non ha senso calcolare il determinante di una matrice rettangolare.</p>`
+                },
+                {
+                    subtitle: "Proprietà 6 — Multilinearità",
+                    content: `<p>Il determinante è <strong>lineare rispetto a ciascuna colonna</strong> (o riga). Se una colonna di $A$ è scritta come somma di due vettori colonna $\\underline{u} + \\underline{w}$, il determinante si spezza nella somma di due determinanti:</p>
+<p>$$\\det\\begin{bmatrix} | & & | & & | \\\\ \\underline{v}_1 & \\dots & \\underline{u}_i + \\underline{w}_i & \\dots & \\underline{v}_n \\\\ | & & | & & | \\end{bmatrix}$$</p>
+<p>$$= \\det\\begin{bmatrix} | & & | & & | \\\\ \\underline{v}_1 & \\dots & \\underline{u}_i & \\dots & \\underline{v}_n \\\\ | & & | & & | \\end{bmatrix} + \\det\\begin{bmatrix} | & & | & & | \\\\ \\underline{v}_1 & \\dots & \\underline{w}_i & \\dots & \\underline{v}_n \\\\ | & & | & & | \\end{bmatrix}$$</p>
+<p>In altre parole, il determinante si "distribuisce" rispetto alla somma in una singola colonna, mantenendo fisse tutte le altre.</p>`
+                },
+                {
+                    subtitle: "Proprietà 7 — Legame tra Rango e Determinante",
+                    content: `<p>Sia $A$ una matrice quadrata $n \\times n$. Il rango di $A$ non è massimo se e solo se il suo determinante è zero:</p>
+<p>$$\\text{rk}(A) \\lt n \\iff \\det(A) = 0$$</p>
+<p>Equivalentemente: il rango di $A$ non è massimo $\\iff$ le sue righe/colonne sono linearmente dipendenti $\\iff \\det(A) = 0$.</p>
+<p><strong>Dimostrazione:</strong></p>
+<p>Riduciamo la matrice $A$ a una matrice a scala $S$ tramite le operazioni elementari per righe $P_{ij}$ (scambio) e $e_{ij}(k)$ (somma di un multiplo di una riga a un'altra). Sappiamo che:</p>
+<ul>
+<li>Queste operazioni non alterano il rango: $\\text{rk}(A) = \\text{rk}(S)$.</li>
+<li>Alterano il determinante al massimo per un segno: $\\det(A) = \\pm \\det(S)$.</li>
+</ul>
+<p>Essendo $S$ a scala (triangolare superiore), il suo determinante è il prodotto degli elementi diagonali: $\\det(S) = s_{11} \\cdot s_{22} \\cdots s_{nn}$.</p>
+<p><strong>$(\\Leftarrow)$</strong> Se $\\det(A) = 0 \\Rightarrow \\det(S) = 0 \\Rightarrow \\exists\\, i : s_{ii} = 0$. Poiché $S$ è a scala, se un elemento diagonale è zero, l'ultima riga di $S$ deve essere completamente nulla. Il numero di righe non nulle è strettamente minore di $n$, quindi $\\text{rk}(S) \\lt n \\Rightarrow \\text{rk}(A) \\lt n$.</p>
+<p><strong>$(\\Rightarrow)$</strong> Se $\\text{rk}(A) \\lt n \\Rightarrow \\text{rk}(S) \\lt n \\Rightarrow$ in $S$ c'è almeno una riga interamente nulla. Essendo $S$ quadrata $n \\times n$, l'elemento $s_{nn} = 0$. Il prodotto diagonale si annulla: $s_{11} \\dots s_{nn} = 0 \\Rightarrow \\det(S) = 0 \\Rightarrow \\det(A) = 0$. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Determinante della trasposta", latex: "\\det(A^T) = \\det(A)" },
+                { label: "Rango e determinante", latex: "\\text{rk}(A) < n \\iff \\det(A) = 0" }
+            ]
+        },
+        {
+            id: "s14-teorema-fondamentale-invertibilita",
+            type: "section",
+            title: "Il Teorema Fondamentale dell'Invertibilità",
+            icon: "🏛️",
+            content: `<p>Possiamo ora raccogliere tutte le nozioni viste finora in un unico, <strong>maestoso teorema</strong> che caratterizza completamente le matrici quadrate.</p>
+<p>Sia $A$ una matrice $n \\times n$. Le seguenti <strong>5 affermazioni sono totalmente equivalenti</strong>:</p>
+<ol>
+<li>$A$ è <strong>invertibile</strong>.</li>
+<li>$\\text{rk}(A) = n$ (la matrice ha rango massimo).</li>
+<li>$\\det(A) \\neq 0$.</li>
+<li>Le righe di $A$ formano una base per $\\mathbb{R}^n$.</li>
+<li>Le colonne di $A$ formano una base per $\\mathbb{R}^n$.</li>
+</ol>
+<p>Questo è uno dei risultati più importanti dell'intero corso: <strong>ognuna di queste condizioni implica tutte le altre</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Caso singolare (negazione)",
+                    content: `<p>Basta negare le affermazioni precedenti per ottenere il quadro speculare. Sia $A$ una matrice $n \\times n$. Sono equivalenti:</p>
+<ol>
+<li>$A$ <strong>non</strong> è invertibile.</li>
+<li>$\\text{rk}(A) \\lt n$.</li>
+<li>$\\det(A) = 0$.</li>
+<li>Le righe di $A$ sono linearmente dipendenti (ce n'è almeno 1 sovrabbondante).</li>
+<li>Le colonne di $A$ sono linearmente dipendenti (ce n'è almeno 1 sovrabbondante).</li>
+</ol>
+<p><em>Nota:</em> Dimostrare il Teorema principale rende il caso singolare un'ovvietà logica, e viceversa.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Invertibilità ⟺ rango massimo", latex: "A \\text{ invertibile} \\iff \\text{rk}(A) = n" },
+                { label: "Invertibilità ⟺ det non nullo", latex: "A \\text{ invertibile} \\iff \\det(A) \\neq 0" }
+            ]
+        },
+        {
+            id: "s14-alert-5-equivalenze",
+            type: "alert_box",
+            title: "⚠️ Le 5 equivalenze: domanda classica d'esame",
+            icon: "🚨",
+            content: `<p>Il Teorema Fondamentale dell'Invertibilità è uno dei risultati <strong>più chiesti all'esame orale</strong>. Dovete saperlo enunciare perfettamente con tutte e 5 le condizioni equivalenti. Un errore tipico è dimenticare la condizione sulle colonne (punto v) o confondere "rango massimo" con "rango $\\neq 0$".</p>
+<p>Ricordate: rango massimo per una matrice $n \\times n$ significa <strong>rango esattamente uguale a $n$</strong>, non semplicemente "diverso da zero".</p>`
+        },
+        {
+            id: "s14-teorema-binet",
+            type: "section",
+            title: "Il Teorema di Binet",
+            icon: "✖️",
+            content: `<p>Il determinante del prodotto di due matrici quadrate è uguale al prodotto dei rispettivi determinanti:</p>
+<p>$$\\det(A \\cdot B) = \\det(A) \\cdot \\det(B)$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione — Premessa: caso delle matrici elementari",
+                    content: `<p>Supponiamo che $A = E$ sia una <em>matrice elementare</em>. Allora la proprietà segue direttamente dalle proprietà del determinante studiate in precedenza:</p>
+<ul>
+<li>$\\det(P_{ij} \\cdot B) = -\\det(B) = \\det(P_{ij}) \\cdot \\det(B)$ (poiché $\\det(P_{ij}) = -1$).</li>
+<li>$\\det(E_{ij}(k) \\cdot B) = \\det(B) = \\det(E_{ij}(k)) \\cdot \\det(B)$ (poiché $\\det(E_{ij}(k)) = 1$).</li>
+<li>$\\det(E_i(k) \\cdot B) = k\\det(B) = \\det(E_i(k)) \\cdot \\det(B)$ (poiché $\\det(E_i(k)) = k$).</li>
+</ul>`
+                },
+                {
+                    subtitle: "Dimostrazione — Caso generale",
+                    content: `<p><strong>Se $\\text{rk}(A) = n$:</strong> $A$ è invertibile e si può scrivere come prodotto di matrici elementari: $A = E_1 \\dots E_h$. Applicando iterativamente la premessa:</p>
+<p>$$\\det(AB) = \\det(E_1 E_2 \\dots E_h B) = \\det(E_1) \\cdot \\det(E_2 \\dots E_h B) = \\dots = \\det(A)\\det(B)$$</p>
+<p><strong>Se $\\text{rk}(A) \\lt n$:</strong> sappiamo che $\\text{rk}(AB) \\leq \\text{rk}(A) \\lt n$. Quindi sia $A$ che $AB$ non hanno rango massimo. Ne consegue che $\\det(A) = 0$ e $\\det(AB) = 0$. L'uguaglianza è soddisfatta:</p>
+<p>$$0 = 0 \\cdot \\det(B) \\Rightarrow \\det(AB) = \\det(A)\\det(B) \\quad \\square$$</p>`
+                },
+                {
+                    subtitle: "Corollario: Determinante della matrice inversa",
+                    content: `<p>Sia $A$ invertibile. Sappiamo che $A \\cdot A^{-1} = I$. Applicando il Teorema di Binet:</p>
+<p>$$\\det(A \\cdot A^{-1}) = \\det(I) \\Rightarrow \\det(A) \\cdot \\det(A^{-1}) = 1$$</p>
+<p>Da questo deduciamo due cose:</p>
+<ul>
+<li>$\\det(A) \\neq 0$ (che sapevamo già dal Teorema Fondamentale).</li>
+<li>Il determinante dell'inversa è il <strong>reciproco</strong> del determinante della matrice originale:</li>
+</ul>
+<p>$$\\det(A^{-1}) = \\frac{1}{\\det(A)}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Teorema di Binet", latex: "\\det(A \\cdot B) = \\det(A) \\cdot \\det(B)" },
+                { label: "Determinante dell'inversa", latex: "\\det(A^{-1}) = \\frac{1}{\\det(A)}" }
+            ]
+        },
+        {
+            id: "s14-matrice-aggiunta",
+            type: "section",
+            title: "Calcolo esplicito dell'Inversa: La Matrice Aggiunta",
+            icon: "🧮",
+            content: `<p>Arriviamo ora alla formula esplicita per calcolare l'inversa di una matrice tramite la <strong>matrice aggiunta classica</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione di Matrice Aggiunta Classica",
+                    content: `<p>Data una matrice quadrata $A_{n \\times n}$, definiamo la matrice <strong>aggiunta classica</strong> $A^*$ (o matrice dei cofattori trasposta) come:</p>
+<p>$$A^* = C^T$$</p>
+<p>dove $C = (c_{ij})$ è la matrice i cui elementi sono i <strong>complementi algebrici</strong> di $A$:</p>
+<p>$$c_{ij} = (-1)^{i+j} \\det(A_{ij})$$</p>
+<p>In pratica: si calcola il complemento algebrico di ogni elemento, si dispongono in una matrice $C$, e poi si <strong>traspone</strong>.</p>`
+                },
+                {
+                    subtitle: "Teorema: prodotto A · A*",
+                    content: `<p>Moltiplicando la matrice $A$ per la sua aggiunta classica $A^*$ si ottiene sempre una matrice diagonale con il determinante di $A$ sulla diagonale principale:</p>
+<p>$$A \\cdot A^* = A^* \\cdot A = \\det(A) \\cdot I$$</p>`
+                },
+                {
+                    subtitle: "Formula dell'inversa",
+                    content: `<p>Se $A$ è invertibile ($\\det(A) \\neq 0$), possiamo dividere per $\\det(A)$ e ottenere la <strong>formula esplicita per l'inversa</strong>:</p>
+<p>$$A^{-1} = \\frac{1}{\\det(A)} \\, A^*$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione per n = 2",
+                    content: `<p>Sia $A = \\begin{bmatrix} a_{11} & a_{12} \\\\ a_{21} & a_{22} \\end{bmatrix}$.</p>
+<p>Calcoliamo i cofattori:</p>
+<ul>
+<li>$c_{11} = (-1)^{1+1} \\det(A_{11}) = a_{22}$</li>
+<li>$c_{12} = (-1)^{1+2} \\det(A_{12}) = -a_{21}$</li>
+<li>$c_{21} = (-1)^{2+1} \\det(A_{21}) = -a_{12}$</li>
+<li>$c_{22} = (-1)^{2+2} \\det(A_{22}) = a_{11}$</li>
+</ul>
+<p>Trasponiamo $C$ per ottenere l'aggiunta (scambiamo $c_{12}$ con $c_{21}$):</p>
+<p>$$A^* = C^T = \\begin{bmatrix} a_{22} & -a_{12} \\\\ -a_{21} & a_{11} \\end{bmatrix}$$</p>
+<p>Eseguiamo il prodotto $A \\cdot A^*$:</p>
+<p>$$\\begin{bmatrix} a_{11} & a_{12} \\\\ a_{21} & a_{22} \\end{bmatrix} \\begin{bmatrix} a_{22} & -a_{12} \\\\ -a_{21} & a_{11} \\end{bmatrix} = \\begin{bmatrix} a_{11}a_{22} - a_{12}a_{21} & 0 \\\\ 0 & a_{22}a_{11} - a_{21}a_{12} \\end{bmatrix}$$</p>
+<p>I termini fuori dalla diagonale si annullano. Sulla diagonale riconosciamo $\\det(A) = a_{11}a_{22} - a_{12}a_{21}$. Quindi:</p>
+<p>$$A \\cdot A^* = \\det(A) \\cdot I \\quad \\square$$</p>
+<p>Per una matrice $2 \\times 2$, la formula dell'inversa diventa la nota espressione:</p>
+<p>$$A^{-1} = \\frac{1}{a_{11}a_{22} - a_{12}a_{21}} \\begin{bmatrix} a_{22} & -a_{12} \\\\ -a_{21} & a_{11} \\end{bmatrix}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Matrice aggiunta classica", latex: "A^* = C^T, \\quad c_{ij} = (-1)^{i+j}\\det(A_{ij})" },
+                { label: "Prodotto A · A*", latex: "A \\cdot A^* = \\det(A) \\cdot I" },
+                { label: "Formula dell'inversa", latex: "A^{-1} = \\frac{1}{\\det(A)} \\, A^*" },
+                { label: "Inversa 2×2", latex: "A^{-1} = \\frac{1}{a_{11}a_{22}-a_{12}a_{21}}\\begin{bmatrix} a_{22} & -a_{12} \\\\ -a_{21} & a_{11} \\end{bmatrix}" }
+            ]
+        },
+        {
+            id: "s14-note-trucco-2x2",
+            type: "note_box",
+            title: "💡 Trucco mnemonico per l'inversa 2×2",
+            icon: "💡",
+            content: `<p>Per invertire una matrice $2 \\times 2$: <strong>scambia gli elementi diagonali, cambia segno agli anti-diagonali, dividi tutto per il determinante</strong>. Questo trucco vi farà risparmiare tempo prezioso negli esercizi.</p>`
+        },
+        {
+            id: "s14-gauss-jordan",
+            type: "section",
+            title: "Anticipazione: Algoritmo di Gauss-Jordan",
+            icon: "⚙️",
+            content: `<p>L'inversa di una matrice si può calcolare non solo con la formula dell'Aggiunta, ma anche operativamente tramite le <strong>operazioni elementari sulle righe</strong>. In questo caso intervengono anche le operazioni del tipo $e_i(k)$ (moltiplicazione di una riga per uno scalare non nullo).</p>
+<p>Il metodo prende il nome di <strong>Algoritmo di Gauss-Jordan</strong> e consiste nell'affiancare alla matrice $A$ la matrice identità $I$, formando la matrice aumentata $[A \\,|\\, I]$, e poi ridurre $A$ alla forma identità tramite operazioni elementari. La matrice che compare a destra sarà $A^{-1}$:</p>
+<p>$$[A \\,|\\, I] \\overset{\\text{OER}}{\\longrightarrow} [I \\,|\\, A^{-1}]$$</p>
+<p>Questo algoritmo verrà trattato in dettaglio nelle prossime lezioni.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "domanda",
+            front: "A cosa serve il determinante nel corso di Geometria?",
+            back: "Ha tre scopi principali: (1) calcolare l'<strong>inversa</strong> di una matrice, (2) calcolare il <strong>rango</strong> (e quindi la dimensione degli spazi vettoriali), (3) fornire formule per il <strong>calcolo di aree e volumi</strong>."
+        },
+        {
+            type: "definizione",
+            front: "Enunciare la proprietà del determinante della trasposta.",
+            back: "Per ogni matrice quadrata $A$ vale $\\det(A^T) = \\det(A)$. Nota: il determinante è definito esclusivamente per matrici quadrate $n \\times n$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostrare che $\\text{rk}(A) \lt n \\iff \\det(A) = 0$.",
+            back: "Si riduce $A$ a scala $S$ con operazioni $P_{ij}$ e $e_{ij}(k)$. Queste preservano il rango e cambiano il det al più di segno. $\\det(S) = s_{11}\\cdots s_{nn}$. <br>$(\\Leftarrow)$: $\\det(A)=0 \\Rightarrow \\det(S)=0 \\Rightarrow$ un $s_{ii}=0 \\Rightarrow$ riga nulla $\\Rightarrow \\text{rk} \\lt n$. <br>$(\\Rightarrow)$: $\\text{rk} \\lt n \\Rightarrow$ riga nulla in $S \\Rightarrow s_{nn}=0 \\Rightarrow \\det(S)=0 \\Rightarrow \\det(A)=0$."
+        },
+        {
+            type: "domanda",
+            front: "Enunciare il Teorema Fondamentale dell'Invertibilità (le 5 condizioni equivalenti).",
+            back: "Sia $A$ una matrice $n \\times n$. Sono equivalenti: (i) $A$ è invertibile; (ii) $\\text{rk}(A) = n$; (iii) $\\det(A) \\neq 0$; (iv) le righe di $A$ formano una base per $\\mathbb{R}^n$; (v) le colonne di $A$ formano una base per $\\mathbb{R}^n$."
+        },
+        {
+            type: "formula",
+            front: "Enunciare il Teorema di Binet.",
+            back: "Per ogni coppia di matrici quadrate $A, B$ di ordine $n$: $$\\det(A \\cdot B) = \\det(A) \\cdot \\det(B)$$"
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostrare il Teorema di Binet.",
+            back: "Se $A$ è elementare, segue dalle proprietà del det. Se $\\text{rk}(A)=n$, scriviamo $A = E_1\\dots E_h$ e applichiamo iterativamente il caso elementare. Se $\\text{rk}(A) \\lt n$, allora $\\text{rk}(AB) \\leq \\text{rk}(A) \\lt n$, quindi $\\det(A)=0$ e $\\det(AB)=0$, e l'uguaglianza $0 = 0 \\cdot \\det(B)$ è banalmente vera."
+        },
+        {
+            type: "formula",
+            front: "Qual è la formula del determinante della matrice inversa?",
+            back: "$$\\det(A^{-1}) = \\frac{1}{\\det(A)}$$ Si ottiene applicando Binet a $A \\cdot A^{-1} = I$: $\\det(A)\\cdot\\det(A^{-1}) = \\det(I) = 1$."
+        },
+        {
+            type: "definizione",
+            front: "Definire la matrice aggiunta classica $A^*$.",
+            back: "$A^* = C^T$, dove $C$ è la matrice dei complementi algebrici: $c_{ij} = (-1)^{i+j}\\det(A_{ij})$. Si calcolano tutti i cofattori, si dispongono in matrice e poi si <strong>traspone</strong>."
+        },
+        {
+            type: "formula",
+            front: "Qual è la formula esplicita per l'inversa di una matrice?",
+            back: "$$A^{-1} = \\frac{1}{\\det(A)} \\, A^*$$ dove $A^*$ è la matrice aggiunta classica (matrice dei cofattori trasposta). Vale per ogni matrice invertibile ($\\det(A) \\neq 0$)."
+        },
+        {
+            type: "tranello",
+            front: "Nella matrice aggiunta classica, qual è l'errore più comune?",
+            back: "Dimenticare la <strong>trasposizione</strong>! L'aggiunta classica è $A^* = C^T$, non $C$. Bisogna prima calcolare tutti i complementi algebrici $c_{ij}$, disporli in matrice, e poi <strong>trasporre</strong>. Se si dimentica la trasposizione, il prodotto $A \\cdot C$ non dà $\\det(A) \\cdot I$."
+        },
+        {
+            type: "formula",
+            front: "Come si inverte una matrice $2 \\times 2$?",
+            back: "Data $A = \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$, l'inversa è: $$A^{-1} = \\frac{1}{ad - bc}\\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix}$$ Trucco: scambia diagonale, cambia segno anti-diagonale, dividi per il determinante."
+        }
+    ]
+};
+
