@@ -97,6 +97,7 @@ const COURSES = {
       { id: 'L13', num: 'Lezione 13', date: '31 Mar 2026', title: 'Rango di Matrici e Introduzione al Determinante', abstract: 'Proprietà fondamentali del rango (effetto del prodotto e dell\'invertibilità), definizione del determinante tramite sviluppo di Laplace, esempi di calcolo su matrici 3×3, e metodo di Gauss per il determinante.', category: 'matrici' },
       { id: 'L14', num: 'Lezione 14', date: '2 Apr 2026', title: 'Proprietà del Determinante, Teorema di Binet e Matrice Inversa', abstract: 'Completiamo le proprietà del determinante, dimostriamo il legame tra rango e determinante, enunciamo il Teorema Fondamentale dell\'Invertibilità, il Teorema di Binet e ricaviamo la formula esplicita per la matrice inversa tramite l\'aggiunta classica.', category: 'matrici' },
       { id: 'L15', num: 'Lezione 15', date: '9 Apr 2026', title: 'Algoritmo di Gauss-Jordan e Calcolo del Rango (Teorema degli Orlati)', abstract: 'Metodo efficiente per il calcolo della matrice inversa tramite l\'algoritmo di Gauss-Jordan. Calcolo del rango di una matrice qualunque tramite i minori e il potente Teorema degli Orlati.', category: 'matrici' },
+      { id: 'L16', num: 'Lezione 16', date: '2026-04-13', title: 'Teorema degli Orlati e Sistemi Lineari', abstract: 'Dimostrazione completa del teorema degli orlati per il calcolo del rango. Introduzione ai sistemi di equazioni lineari: forma matriciale, compatibilità, sistemi omogenei e sottospazi affini.', category: 'dinamica' },
     ],
   },
   controlli: {
