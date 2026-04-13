@@ -1,0 +1,231 @@
+const LESSON = {
+    id: "L11", date: "Lezione 11 — 26 Mar 2026",
+    title: "Rango, Sottomatrici e Operazioni Elementari",
+    abstract: "Spazio delle righe e delle colonne di una matrice, Teorema del Rango con dimostrazione completa, sottomatrici e disuguaglianza sul rango, operazioni elementari sulle righe, matrici elementari e loro invertibilità, equivalenza per righe come relazione di equivalenza.",
+
+    sections: [
+        {
+            id: "s11-spazi-righe-colonne",
+            type: "section",
+            title: "Spazio delle Righe, Spazio delle Colonne e Rango",
+            icon: "📐",
+            content: `<p>Sia $A \\in \\mathcal{M}(m, n)$ una matrice con $m$ righe (indicate con $A_1, \\dots, A_m \\in \\mathbb{R}^n$) e $n$ colonne (indicate con $A^1, \\dots, A^n \\in \\mathbb{R}^m$). A partire da questa matrice definiamo due sottospazi vettoriali fondamentali:</p>
+<ul>
+<li>Lo <strong>spazio delle righe</strong> di $A$, indicato con $\\mathcal{R}_A$, è il sottospazio generato dalle sue righe:
+<p>$$\\mathcal{R}_A := \\text{Span}(A_1, \\dots, A_m) \\subseteq \\mathbb{R}^n$$</p></li>
+<li>Lo <strong>spazio delle colonne</strong> di $A$, indicato con $\\mathcal{C}_A$, è il sottospazio generato dalle sue colonne:
+<p>$$\\mathcal{C}_A := \\text{Span}(A^1, \\dots, A^n) \\subseteq \\mathbb{R}^m$$</p></li>
+</ul>
+<p>Si noti che per una matrice trasposta vale la relazione: $\\mathcal{C}_A = \\mathcal{R}_{A^T}$. Questi due spazi vivono in "mondi" diversi (uno in $\\mathbb{R}^n$, l'altro in $\\mathbb{R}^m$), eppure c'è un teorema fondamentale che li collega in modo indissolubile.</p>`,
+            subsections: [
+                {
+                    subtitle: "Teorema del Rango",
+                    content: `<p>Per qualsiasi matrice $A$, la dimensione dello spazio delle righe coincide <strong>sempre</strong> con la dimensione dello spazio delle colonne:</p>
+<p>$$\\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A$$</p>`
+                },
+                {
+                    subtitle: "Dimostrazione passo-passo del Teorema del Rango",
+                    content: `<p>Chiamiamo $\\mu = \\dim \\mathcal{R}_A$ e $\\nu = \\dim \\mathcal{C}_A$. Vogliamo dimostrare che $\\mu = \\nu$. Lo faremo dimostrando prima che $\\mu \\leq \\nu$, e poi usando la matrice trasposta per concludere.</p>
+
+<p><strong>Passo 1: Prendiamo una base per le colonne.</strong></p>
+<p>Scegliamo una base per lo spazio delle colonne $\\mathcal{C}_A$. Siccome la dimensione è $\\nu$, questa base sarà formata da $\\nu$ colonne specifiche di $A$:</p>
+<p>$$A^{j_1}, \\dots, A^{j_\\nu}$$</p>
+
+<p><strong>Passo 2: Scriviamo una colonna generica.</strong></p>
+<p>Essendo una base, una <em>qualsiasi</em> colonna $A^j$ della matrice (con $j = 1, \\dots, n$) si può scrivere come combinazione lineare di questa base. Esisteranno quindi dei pesi $k_{jl}$ tali che:</p>
+<p>$$A^j = k_{j1}A^{j_1} + k_{j2}A^{j_2} + \\dots + k_{j\\nu}A^{j_\\nu}$$</p>
+
+<p><strong>Passo 3: Esplodiamo la colonna in componenti (leggiamo per righe).</strong></p>
+<p>Scriviamo l'uguaglianza precedente concentrandoci su un singolo elemento $a_{ij}$ (la componente $i$-esima della colonna $j$-esima, che si trova sulla riga $i$):</p>
+<p>$$a_{ij} = k_{j1}a_{ij_1} + k_{j2}a_{ij_2} + \\dots + k_{j\\nu}a_{ij_\\nu}$$</p>
+<p>Questa equazione vale per ogni riga $i$ e per ogni colonna $j$. Se la leggiamo tenendo fissa la riga $i$ e facendo variare le colonne, stiamo in realtà scrivendo la <strong>riga</strong> $A_i$. Possiamo riscriverla in forma vettoriale:</p>
+<p>$$A_i = a_{ij_1}\\mathbf{k}^1 + a_{ij_2}\\mathbf{k}^2 + \\dots + a_{ij_\\nu}\\mathbf{k}^\\nu$$</p>
+<p>dove i vettori $\\mathbf{k}^l = (k_{1l}, k_{2l}, \\dots, k_{nl})$ sono vettori riga formati dai coefficienti usati prima.</p>
+
+<p><strong>Passo 4: La conclusione per $\\mu \\leq \\nu$.</strong></p>
+<p>Abbiamo scoperto che <em>ogni riga</em> $A_i$ della matrice si può scrivere come combinazione lineare di un set fisso di $\\nu$ vettori ($\\mathbf{k}^1, \\dots, \\mathbf{k}^\\nu$). Ma se le righe sono generate da $\\nu$ vettori, la dimensione dello spazio delle righe non può superare $\\nu$! Quindi:</p>
+<p>$$\\mu \\leq \\nu$$</p>
+
+<p><strong>Passo 5: Applicazione alla trasposta per concludere.</strong></p>
+<p>Applichiamo lo stesso identico ragionamento alla matrice trasposta $A^T$. La dimensione delle righe di $A^T$ è $\\nu$, la dimensione delle colonne di $A^T$ è $\\mu$. Applicando il risultato appena trovato avremo $\\nu \\leq \\mu$. Poiché $\\mu \\leq \\nu$ e $\\nu \\leq \\mu$, ne consegue logicamente che $\\mu = \\nu$. $\\blacksquare$</p>`
+                },
+                {
+                    subtitle: "Definizione di Rango",
+                    content: `<p>Il <strong>rango</strong> di una matrice $A$, indicato con $\\text{rk}(A)$, è per definizione la dimensione dello spazio delle sue righe (o, equivalentemente, dello spazio delle sue colonne):</p>
+<p>$$\\text{rk}(A) = \\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A$$</p>
+<p>Per calcolare il rango si possono usare diversi metodi: uno consiste nel cercare le righe (o colonne) sovrabbondanti tra i generatori, scartarle e contare quante ne restano nel sistema libero. Un metodo più rapido, basato sulle operazioni elementari, verrà introdotto nelle sezioni successive.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Spazio delle righe", latex: "\\mathcal{R}_A = \\text{Span}(A_1, \\dots, A_m) \\subseteq \\mathbb{R}^n" },
+                { label: "Spazio delle colonne", latex: "\\mathcal{C}_A = \\text{Span}(A^1, \\dots, A^n) \\subseteq \\mathbb{R}^m" },
+                { label: "Teorema del Rango", latex: "\\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A" },
+                { label: "Rango di A", latex: "\\text{rk}(A) = \\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A" }
+            ]
+        },
+        {
+            id: "s11-sottomatrici-rango",
+            type: "section",
+            title: "Sottomatrici e Rango",
+            icon: "✂️",
+            content: `<p>Una matrice $M$ si dice <strong>sottomatrice</strong> di $A$ se si ottiene da $A$ cancellandone qualche riga, qualche colonna, o entrambe.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio di sottomatrici",
+                    content: `<p>Se $A = \\begin{bmatrix} 4 & 5 & 6 \\\\ 1 & 2 & 3 \\\\ 6 & 9 & 12 \\\\ -1 & 0 & 4 \\end{bmatrix}$, cancellando l'ultima riga si ottiene la sottomatrice $M = \\begin{bmatrix} 4 & 5 & 6 \\\\ 1 & 2 & 3 \\\\ 6 & 9 & 12 \\end{bmatrix}$.</p>
+<p>Cancellando da $A$ la prima riga e la prima colonna si ottiene la sottomatrice $P = \\begin{bmatrix} 2 & 3 \\\\ 9 & 12 \\\\ 0 & 4 \\end{bmatrix}$.</p>`
+                },
+                {
+                    subtitle: "Proposizione: il rango di una sottomatrice",
+                    content: `<p>Se $M$ è una sottomatrice di $A$, allora il rango di $M$ non può superare il rango di $A$:</p>
+<p>$$\\text{rk}(M) \\leq \\text{rk}(A)$$</p>
+<p><strong>Spiegazione logica:</strong> Per passare da $A$ a $M$, eseguiamo idealmente due passaggi:</p>
+<ol>
+<li><strong>Cancelliamo solo delle righe.</strong> Otteniamo una matrice intermedia $N$. Poiché $N$ è formata solo da alcune delle righe di $A$, lo spazio generato dalle righe di $N$ sarà un sottospazio di quello generato dalle righe di $A$. Per le proprietà della dimensione, $\\dim(\\mathcal{R}_N) \\leq \\dim(\\mathcal{R}_A)$, ovvero $\\text{rk}(N) \\leq \\text{rk}(A)$.</li>
+<li><strong>Cancelliamo solo delle colonne</strong> da $N$. Passiamo da $N$ a $M$ cancellando delle colonne. Lo spazio delle colonne di $M$ è un sottospazio di quello di $N$, quindi $\\dim(\\mathcal{C}_M) \\leq \\dim(\\mathcal{C}_N)$, ovvero $\\text{rk}(M) \\leq \\text{rk}(N)$.</li>
+</ol>
+<p>Mettendo insieme le due disuguaglianze: $\\text{rk}(M) \\leq \\text{rk}(N) \\leq \\text{rk}(A)$. $\\blacksquare$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Rango di sottomatrice", latex: "\\text{rk}(M) \\leq \\text{rk}(A)" }
+            ]
+        },
+        {
+            id: "s11-operazioni-elementari",
+            type: "section",
+            title: "Operazioni Elementari sulle Righe",
+            icon: "🔧",
+            content: `<p>Per semplificare lo studio delle matrici (e per calcolarne il rango in modo veloce), introduciamo tre operazioni fondamentali che possiamo compiere sulle righe di una matrice <strong>senza alterare il sottospazio che esse generano</strong>:</p>
+<ul>
+<li><strong>Scambio ($p_{ij}$):</strong> Scambiare di posto la riga $A_i$ con la riga $A_j$.</li>
+<li><strong>Somma per un multiplo ($e_{ij}(k)$):</strong> Sommare alla riga $A_i$ la riga $A_j$ moltiplicata per uno scalare $k$ (con $i \\neq j$). In pratica la riga $A_i$ viene sostituita con $A_i + kA_j$.</li>
+<li><strong>Moltiplicazione ($e_i(k)$):</strong> Moltiplicare tutti gli elementi della riga $A_i$ per uno scalare $k \\neq 0$.</li>
+</ul>
+<p>Queste operazioni possono essere eseguite in cascata per trasformare matrici complesse in matrici più "pulite" (con molti zeri).</p>`
+        },
+        {
+            id: "s11-matrici-elementari",
+            type: "section",
+            title: "Le Matrici Elementari",
+            icon: "🧱",
+            content: `<p>C'è un profondo nesso algebrico tra le operazioni che facciamo "a mano" e il prodotto tra matrici.</p>
+<p>Una <strong>matrice elementare</strong> è una matrice quadrata che si ottiene dalla matrice identità $I$ applicandole <strong>una sola</strong> operazione elementare. Si indicano con $P_{ij}$, $E_{ij}(k)$, $E_i(k)$.</p>
+<p>Ad esempio, in $2 \\times 2$, se scambiamo le due righe di $I$ otteniamo:</p>
+<p>$$P_{12} = \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Il Nesso Fondamentale",
+                    content: `<p>Eseguire un'operazione elementare (chiamiamola $e$) sulle righe di una matrice $A$ equivale esattamente a <strong>moltiplicare a sinistra</strong> la matrice $A$ per la matrice elementare $E$ corrispondente:</p>
+<p>$$A \\overset{e}{\\longrightarrow} E \\cdot A$$</p>
+<p>Questo è un risultato potentissimo: trasforma le operazioni sulle righe — che sembrano "manuali" — in un prodotto matriciale, un oggetto algebrico rigoroso.</p>`
+                },
+                {
+                    subtitle: "Invertibilità delle matrici elementari",
+                    content: `<p>Tutte le matrici elementari sono <strong>invertibili</strong>. La loro inversa è l'operazione che "disfa" quello che è stato fatto:</p>
+<ul>
+<li>$(P_{ij})^{-1} = P_{ij}$ — se scambio due righe e le scambio di nuovo, torno all'inizio.</li>
+<li>$(E_{ij}(k))^{-1} = E_{ij}(-k)$ — se aggiungo $k$ volte una riga, per tornare indietro devo sottrarre $k$ volte quella riga.</li>
+<li>$(E_i(k))^{-1} = E_i(1/k)$ — se moltiplico per $k$, per tornare indietro divido per $k$.</li>
+</ul>
+<p>L'inversa di una matrice elementare è sempre, a sua volta, una matrice elementare.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Operazione come prodotto", latex: "A \\overset{e}{\\longrightarrow} E \\cdot A" },
+                { label: "Inversa di scambio", latex: "(P_{ij})^{-1} = P_{ij}" },
+                { label: "Inversa di somma", latex: "(E_{ij}(k))^{-1} = E_{ij}(-k)" },
+                { label: "Inversa di moltiplicazione", latex: "(E_i(k))^{-1} = E_i(1/k)" }
+            ]
+        },
+        {
+            id: "s11-equivalenza-righe",
+            type: "section",
+            title: "Matrici Equivalenti per Righe",
+            icon: "🔗",
+            content: `<p>Siano $A$ e $B$ due matrici dello stesso tipo $m \\times n$.</p>
+<p>Diremo che $A$ è <strong>equivalente per righe</strong> a $B$, e si scrive $A \\sim_r B$, se $B$ si ottiene da $A$ applicando un numero finito di operazioni elementari sulle righe.</p>
+<p>In modo formale, usando le matrici elementari:</p>
+<p>$$A \\sim_r B \\iff B = E_1 \\cdot E_2 \\cdot \\dots \\cdot E_h \\cdot A$$</p>
+<p>dove le $E$ sono le matrici elementari corrispondenti alle operazioni eseguite in sequenza.</p>`,
+            subsections: [
+                {
+                    subtitle: "Relazione di equivalenza",
+                    content: `<p>L'equivalenza per righe è una <strong>relazione di equivalenza</strong> nell'insieme delle matrici $\\mathcal{M}(m, n)$. L'operatore $\\sim_r$ gode di tre proprietà:</p>
+<ul>
+<li><strong>Riflessiva ($A \\sim_r A$):</strong> Possiamo sempre scrivere $A = I \\cdot A$, dove l'identità equivale all'operazione elementare $E_1(1)$ (moltiplicare la riga 1 per 1, che non cambia nulla).</li>
+<li><strong>Simmetrica (se $A \\sim_r B \\Rightarrow B \\sim_r A$):</strong> Se $B = E_1 \\dots E_h \\cdot A$, allora possiamo isolare $A$ moltiplicando entrambi i membri per le inverse delle matrici elementari: $A = (E_h^{-1} \\dots E_1^{-1}) \\cdot B$. Poiché le inverse di matrici elementari sono ancora matrici elementari, $A$ si ottiene da $B$ tramite operazioni elementari.</li>
+<li><strong>Transitiva (se $A \\sim_r B$ e $B \\sim_r C \\Rightarrow A \\sim_r C$):</strong> Se $B = E_1 \\dots E_h \\cdot A$ e $C = F_1 \\dots F_k \\cdot B$, allora $C = F_1 \\dots F_k \\cdot E_1 \\dots E_h \\cdot A$, che è un numero finito di operazioni elementari su $A$.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Equivalenza per righe", latex: "A \\sim_r B \\iff B = E_1 \\cdot E_2 \\cdot \\dots \\cdot E_h \\cdot A" }
+            ]
+        },
+        {
+            id: "s11-alert-rango",
+            type: "alert_box",
+            title: "⚠️ Attenzione: Rango per righe vs per colonne",
+            icon: "⚠️",
+            content: `<p>Un errore comune è pensare che il rango si calcoli <strong>solo</strong> dalle righe o <strong>solo</strong> dalle colonne. Il Teorema del Rango ci garantisce che i due valori coincidono <strong>sempre</strong>: $\\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A$. Scegli il metodo di calcolo che risulta più comodo caso per caso!</p>
+<p>Altro tranello: le operazioni elementari preservano lo spazio delle righe (e quindi il rango), ma <strong>non</strong> preservano necessariamente lo spazio delle colonne. Lo spazio delle colonne può cambiare, ma la sua <strong>dimensione</strong> resta invariata.</p>`
+        },
+        {
+            id: "s11-note-dimostrazione",
+            type: "note_box",
+            title: "📝 Nota sulla dimostrazione del Teorema del Rango",
+            icon: "📝",
+            content: `<p>La dimostrazione del Teorema del Rango è un classico esempio di argomento di "doppia disuguaglianza": si dimostra $\\mu \\leq \\nu$ con un ragionamento diretto, poi si applica lo stesso argomento alla matrice trasposta per ottenere $\\nu \\leq \\mu$, e si conclude $\\mu = \\nu$. Questa tecnica della trasposta per "ribaltare" un risultato è molto potente e ricorre spesso in algebra lineare.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cosa sono lo spazio delle righe e lo spazio delle colonne di una matrice?",
+            back: "Lo <strong>spazio delle righe</strong> $\\mathcal{R}_A = \\text{Span}(A_1, \\dots, A_m) \\subseteq \\mathbb{R}^n$ è il sottospazio generato dalle righe di $A$. Lo <strong>spazio delle colonne</strong> $\\mathcal{C}_A = \\text{Span}(A^1, \\dots, A^n) \\subseteq \\mathbb{R}^m$ è il sottospazio generato dalle colonne di $A$. Nota: $\\mathcal{C}_A = \\mathcal{R}_{A^T}$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è il rango di una matrice?",
+            back: "Il <strong>rango</strong> di $A$, indicato con $\\text{rk}(A)$, è la dimensione dello spazio delle sue righe (o, equivalentemente, delle sue colonne): $\\text{rk}(A) = \\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A$. L'equivalenza è garantita dal Teorema del Rango."
+        },
+        {
+            type: "dimostrazione",
+            front: "Enuncia e dimostra il Teorema del Rango.",
+            back: "Per ogni matrice $A$, $\\dim \\mathcal{R}_A = \\dim \\mathcal{C}_A$. <strong>Dim:</strong> Sia $\\mu = \\dim \\mathcal{R}_A$, $\\nu = \\dim \\mathcal{C}_A$. Si prende una base di $\\nu$ colonne di $A$, si esprime ogni colonna generica come combinazione lineare di questa base, poi si leggono le equazioni \"per righe\": ogni riga risulta combinazione lineare di $\\nu$ vettori fissati, quindi $\\mu \\leq \\nu$. Applicando lo stesso ragionamento ad $A^T$ si ottiene $\\nu \\leq \\mu$. Dunque $\\mu = \\nu$."
+        },
+        {
+            type: "domanda",
+            front: "Se $M$ è una sottomatrice di $A$, cosa si può dire del rapporto tra i loro ranghi?",
+            back: "$\\text{rk}(M) \\leq \\text{rk}(A)$. Infatti cancellando righe lo spazio delle righe può solo diminuire (o restare uguale), e cancellando colonne lo spazio delle colonne può solo diminuire (o restare uguale). Le due disuguaglianze si concatenano: $\\text{rk}(M) \\leq \\text{rk}(N) \\leq \\text{rk}(A)$ dove $N$ è la matrice intermedia."
+        },
+        {
+            type: "domanda",
+            front: "Quali sono le tre operazioni elementari sulle righe di una matrice?",
+            back: "1) <strong>Scambio</strong> ($p_{ij}$): scambiare la riga $A_i$ con la riga $A_j$. 2) <strong>Somma per un multiplo</strong> ($e_{ij}(k)$): sostituire $A_i$ con $A_i + kA_j$ (con $i \\neq j$). 3) <strong>Moltiplicazione</strong> ($e_i(k)$): moltiplicare la riga $A_i$ per uno scalare $k \\neq 0$."
+        },
+        {
+            type: "domanda",
+            front: "Cosa sono le matrici elementari e qual è il nesso con le operazioni sulle righe?",
+            back: "Una <strong>matrice elementare</strong> si ottiene dalla matrice identità $I$ applicandole una sola operazione elementare. Il nesso fondamentale è: eseguire un'operazione elementare $e$ sulle righe di $A$ equivale a moltiplicare a sinistra $A$ per la corrispondente matrice elementare $E$: $A \\overset{e}{\\longrightarrow} E \\cdot A$."
+        },
+        {
+            type: "formula",
+            front: "Quali sono le inverse delle tre matrici elementari?",
+            back: "$(P_{ij})^{-1} = P_{ij}$ (lo scambio è involutorio), $(E_{ij}(k))^{-1} = E_{ij}(-k)$ (si sottrae ciò che si era sommato), $(E_i(k))^{-1} = E_i(1/k)$ (si divide per ciò per cui si era moltiplicato). L'inversa di una matrice elementare è sempre una matrice elementare."
+        },
+        {
+            type: "domanda",
+            front: "Cosa significa che due matrici sono equivalenti per righe? È una relazione di equivalenza?",
+            back: "$A \\sim_r B$ significa che $B$ si ottiene da $A$ con un numero finito di operazioni elementari sulle righe, cioè $B = E_1 \\cdots E_h \\cdot A$. Sì, è una relazione di equivalenza: è <strong>riflessiva</strong> ($A = I \\cdot A$), <strong>simmetrica</strong> (le inverse delle matrici elementari sono ancora elementari) e <strong>transitiva</strong> (basta concatenare le operazioni)."
+        },
+        {
+            type: "tranello",
+            front: "Le operazioni elementari preservano lo spazio delle colonne?",
+            back: "<strong>No!</strong> Le operazioni elementari sulle righe preservano lo <strong>spazio delle righe</strong> $\\mathcal{R}_A$ (e quindi il rango), ma possono cambiare lo spazio delle colonne $\\mathcal{C}_A$. Ciò che resta invariato è solo la <strong>dimensione</strong> dello spazio delle colonne, non lo spazio stesso."
+        }
+    ]
+};
+

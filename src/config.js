@@ -92,6 +92,7 @@ const COURSES = {
       { id: 'L08', num: 'Lezione 8', date: '17 Mar 2026', title: 'Basi, Dimensione e Formula di Grassmann', abstract: 'Definizione di dimensione di uno spazio vettoriale, le 8 proprietà fondamentali di basi e dimensione, intersezione e somma di sottospazi, e dimostrazione completa della Formula di Grassmann.', category: 'spazi-vettoriali' },
       { id: 'L09', num: 'Lezione 9', date: '19 Mar 2026', title: 'Esercizi su Grassmann, Somma Diretta e Inizio Matrici', abstract: 'Applicazione pratica della Formula di Grassmann per calcolare basi e dimensioni di somma e intersezione di sottospazi. Definizione e caratterizzazioni equivalenti della somma diretta. Introduzione al capitolo delle matrici: notazioni, trasposta, traccia e famiglie notevoli.', category: 'spazi-vettoriali' },
       { id: 'L10', num: 'Lezione 10', date: '24 Mar 2026', title: 'Operazioni tra Matrici, Invertibilità e Trasposizione', abstract: 'Prodotto riga per colonna, algebra delle matrici quadrate, matrici invertibili con formula per il caso 2×2, e matrice trasposta con tutte le proprietà.', category: 'matrici' },
+      { id: 'L11', num: 'Lezione 11', date: '26 Mar 2026', title: 'Rango, Sottomatrici e Operazioni Elementari', abstract: 'Spazio delle righe e delle colonne di una matrice, Teorema del Rango con dimostrazione completa, sottomatrici e disuguaglianza sul rango, operazioni elementari sulle righe, matrici elementari e loro invertibilità, equivalenza per righe come relazione di equivalenza.', category: 'matrici' },
     ],
   },
   controlli: {
