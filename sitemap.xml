@@ -96,7 +96,7 @@
   </url>
   <url>
     <loc>https://eliacinti.dev/fisica1/lezioni/L15/</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -198,6 +198,12 @@
   <url>
     <loc>https://eliacinti.dev/geometria/lezioni/L16/</loc>
     <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://eliacinti.dev/geometria/lezioni/L17/</loc>
+    <lastmod>2026-04-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
