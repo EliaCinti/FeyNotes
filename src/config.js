@@ -98,6 +98,7 @@ const COURSES = {
       { id: 'L14', num: 'Lezione 14', date: '2 Apr 2026', title: 'Proprietà del Determinante, Teorema di Binet e Matrice Inversa', abstract: 'Completiamo le proprietà del determinante, dimostriamo il legame tra rango e determinante, enunciamo il Teorema Fondamentale dell\'Invertibilità, il Teorema di Binet e ricaviamo la formula esplicita per la matrice inversa tramite l\'aggiunta classica.', category: 'matrici' },
       { id: 'L15', num: 'Lezione 15', date: '9 Apr 2026', title: 'Algoritmo di Gauss-Jordan e Calcolo del Rango (Teorema degli Orlati)', abstract: 'Metodo efficiente per il calcolo della matrice inversa tramite l\'algoritmo di Gauss-Jordan. Calcolo del rango di una matrice qualunque tramite i minori e il potente Teorema degli Orlati.', category: 'matrici' },
       { id: 'L16', num: 'Lezione 16', date: '13 Apr 2026', title: 'Teorema degli Orlati e Sistemi Lineari', abstract: 'Dimostrazione completa del teorema degli orlati per il calcolo del rango. Introduzione ai sistemi di equazioni lineari: forma matriciale, compatibilità, sistemi omogenei e sottospazi affini.', category: 'sistemi-lineari' },
+      { id: 'L17', num: 'Lezione 17', date: '2026-04-14', title: 'Risoluzione di Sistemi Lineari Tramite Determinanti', abstract: 'Dal Teorema di Rouché-Capelli alla Regola di Cramer: metodi per risolvere sistemi lineari, discussione di sistemi con parametro e generalizzazione del metodo dei determinanti a sistemi rettangolari.', category: 'dinamica' },
     ],
   },
   controlli: {
