@@ -35,33 +35,33 @@ Il sistema è composto da due progetti che lavorano insieme:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│              AUDIO-TO-LATEX (pipeline)               │
-│                                                      │
-│  Audio (.m4a) ──→ Gemini 2.5 Pro ──→ LaTeX (.tex)  │
-│                                                      │
+│              AUDIO-TO-LATEX (pipeline)              │
+│                                                     │
+│  Audio (.m4a) ──→ Gemini 2.5 Pro ──→ LaTeX (.tex)   │
+│                                                     │
 │  LaTeX (.tex) ──→ Claude Sonnet ──→ Review + Score  │
-│                        │                             │
-│                   Score < 8?                         │
+│                        │                            │
+│                   Score < 8?                        │
 │                   ╭── Sì → Claude Opus migliora     │
 │                   │         ↓ Re-review             │
 │                   ╰── No → Procedi                  │
-│                                                      │
+│                                                     │
 │  LaTeX (.tex) ──→ Claude Opus 4.6 ──→ .js           │
-│                                                      │
+│                                                     │
 │  .js ──→ Validator (auto-fix) ──→ .js pulito        │
-│                                                      │
+│                                                     │
 │  .js + config.js update ──→ git push                │
 └───────────────────────┬─────────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────────┐
-│                FEYNOTES (sito web)                    │
-│                                                      │
-│  GitHub Actions:                                     │
-│    build.js ──→ genera HTML statici                  │
-│    rsync ──→ deploy su Hetzner                       │
-│                                                      │
-│  eliacinti.dev 🚀                                    │
+│                FEYNOTES (sito web)                  │
+│                                                     │
+│  GitHub Actions:                                    │
+│    build.js ──→ genera HTML statici                 │
+│    rsync ──→ deploy su Hetzner                      │
+│                                                     │
+│  eliacinti.dev 🚀                                   │
 └─────────────────────────────────────────────────────┘
 ```
 
