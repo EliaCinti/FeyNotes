@@ -1,5 +1,5 @@
 const LESSON = {
-    id: "L17", date: "Lezione 18 — 17 Apr 2026",
+    id: "L17", date: "Lezione 17 — 14 Apr 2026",
     title: "Sistemi Lineari e Determinanti",
     abstract: "Teorema di Rouché-Capelli per la compatibilità dei sistemi lineari, discussione di sistemi con parametro e teorema di Cramer per la risoluzione tramite determinanti.",
 
