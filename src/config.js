@@ -102,6 +102,7 @@ const COURSES = {
       { id: 'L16', num: 'Lezione 16', date: '13 Apr 2026', title: 'Teorema degli Orlati e Sistemi Lineari', abstract: 'Dimostrazione completa del teorema degli orlati con esempio dettagliato di calcolo del rango. Introduzione ai sistemi lineari: definizioni, forma matriciale, teorema di Rouché-Capelli e algoritmo di eliminazione di Gauss con sostituzione all\'indietro.', category: 'sistemi-lineari' },
       { id: 'L17', num: 'Lezione 17', date: '14 Apr 2026', title: 'Sistemi Lineari e Determinanti', abstract: 'Teorema di Rouché-Capelli per la compatibilità dei sistemi lineari, discussione di sistemi con parametro e teorema di Cramer per la risoluzione tramite determinanti.', category: 'sistemi-lineari' },
       { id: 'L18', num: 'Lezione 18', date: '19 Apr 2026', title: 'Applicazioni del Teorema di Cramer e Rappresentazioni di Sottospazi', abstract: 'Come usare la regola di Cramer per risolvere sistemi rettangolari riducendoli a sistemi quadrati, e come passare tra rappresentazione parametrica e cartesiana di un sottospazio vettoriale.', category: 'sistemi-lineari' },
+      { id: 'L19', num: 'Lezione 19', date: '16 Apr 2026', title: 'Sistemi Lineari Rettangolari e Rappresentazioni di Sottospazi', abstract: 'Come usare Cramer anche per sistemi non quadrati, l\'algoritmo generale di risoluzione, e il passaggio tra rappresentazione cartesiana e parametrica di un sottospazio vettoriale.', category: 'sistemi-lineari' },
     ],
   },
   controlli: {
