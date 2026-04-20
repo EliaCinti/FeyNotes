@@ -1,7 +1,7 @@
 const LESSON = {
     id: "L18", date: "Lezione 18 — 16 Apr 2026",
     title: "Sistemi Lineari Rettangolari e Rappresentazioni di Sottospazi",
-    abstract: "Come usare Cramer anche su sistemi non quadrati: riduzione tramite minore fondamentale, variabili libere come parametri. Rappresentazioni cartesiane e parametriche di sottospazi vettoriali e algoritmi per passare dall'una all'altra.",
+    abstract: "Come risolvere sistemi rettangolari con Cramer, l'algoritmo generale di riduzione, e il passaggio tra rappresentazione cartesiana e parametrica di sottospazi vettoriali.",
 
     sections: [
         {
@@ -9,149 +9,203 @@ const LESSON = {
             type: "section",
             title: "Cramer per Sistemi Rettangolari",
             icon: "🔧",
-            content: `<p>Il Teorema di Cramer si applica direttamente solo a sistemi quadrati ($n$ equazioni, $n$ incognite, determinante non nullo). Ma possiamo estenderne l'uso a <strong>sistemi rettangolari</strong> ($m$ equazioni, $n$ incognite con $m \\neq n$), a patto che siano compatibili.</p>
-<p>La strategia: <strong>ridurre</strong> il sistema rettangolare a un sistema di Cramer equivalente, trattando alcune incognite come parametri.</p>`,
+            content: `<p>Il Teorema di Cramer si applica direttamente solo a sistemi quadrati. Tuttavia, possiamo usarlo anche per sistemi rettangolari (più incognite che equazioni, o viceversa), a patto che il sistema sia compatibile. La strategia è: <strong>ridurre il sistema a un sistema di Cramer equivalente</strong>, trattando alcune incognite come parametri liberi.</p>`,
             subsections: [
                 {
-                    subtitle: "Esempio completo: sistema 3×4",
+                    subtitle: "Esempio: sistema 3×4",
                     content: `<p>Consideriamo il sistema:</p>
 <p>$$S: \\begin{cases} 2x_1 + x_2 + x_3 + x_4 = 1 \\\\ x_1 - x_2 - x_3 + 3x_4 = 0 \\\\ 3x_1 + 4x_4 = 1 \\end{cases}$$</p>
-<p>Questo è un sistema di 3 equazioni in 4 incognite: <strong>non è quadrato</strong>, quindi Cramer non si applica direttamente.</p>
-
-<p><strong>Passo 1 — Analisi del rango e compatibilità.</strong></p>
-<p>Scriviamo la matrice incompleta $A$ e la matrice completa $B$:</p>
+<p>È un sistema di 3 equazioni in 4 incognite: non possiamo applicare direttamente Cramer.</p>`
+                },
+                {
+                    subtitle: "Analisi del Rango e Compatibilità",
+                    content: `<p>Scriviamo la matrice incompleta $A$ e la matrice completa $B$:</p>
 <p>$$A = \\begin{pmatrix} 2 & 1 & 1 & 1 \\\\ 1 & -1 & -1 & 3 \\\\ 3 & 0 & 0 & 4 \\end{pmatrix}$$</p>
-<p>Il minore $M$ formato dalle prime due righe e dalle prime due colonne ha determinante non nullo:</p>
-<p>$$\\det \\begin{pmatrix} 2 & 1 \\\\ 1 & -1 \\end{pmatrix} = -2 - 1 = -3 \\neq 0$$</p>
-<p>Questo è un minore fondamentale di ordine 2. Per verificare che il rango non sia 3, calcoliamo il minore $3 \\times 3$ formato dalle colonne 1, 2, 3:</p>
-<p>$$\\det \\begin{pmatrix} 2 & 1 & 1 \\\\ 1 & -1 & -1 \\\\ 3 & 0 & 0 \\end{pmatrix} = 2(0) - 1(0 - (-3)) + 1(0 - (-3)) = 0 - 3 + 3 = 0$$</p>
-<p>Analogamente si verifica che tutti gli altri minori $3 \\times 3$ di $A$ hanno determinante nullo (e lo stesso vale per gli orlati della matrice completa $B$). Dunque $\\text{rango}(A) = \\text{rango}(B) = 2$.</p>
-<p>Per il <strong>Teorema di Rouché-Capelli</strong>, il sistema è compatibile.</p>
-
-<p><strong>Passo 2 — Riduzione del sistema.</strong></p>
-<p>Il rango è 2 e il minore fondamentale coinvolge le prime due righe: la terza riga è <strong>sovrabbondante</strong>. Verifichiamolo: sommando la prima e la seconda equazione:</p>
-<p>$$(2x_1 + x_2 + x_3 + x_4) + (x_1 - x_2 - x_3 + 3x_4) = 1 + 0 \\;\\Rightarrow\\; 3x_1 + 4x_4 = 1$$</p>
-<p>che è esattamente la terza equazione. Il sistema è equivalente a:</p>
-<p>$$S': \\begin{cases} 2x_1 + x_2 + x_3 + x_4 = 1 \\\\ x_1 - x_2 - x_3 + 3x_4 = 0 \\end{cases}$$</p>
-
-<p><strong>Passo 3 — Riorganizzazione come sistema di Cramer.</strong></p>
-<p>Il sistema $S'$ ha 2 equazioni e 4 incognite. Le colonne del minore fondamentale corrispondono a $x_1$ e $x_2$: queste sono le <strong>incognite principali</strong>. Le altre, $x_3$ e $x_4$, sono i <strong>parametri liberi</strong> ($n - p = 4 - 2 = 2$). Spostiamo i termini con $x_3$ e $x_4$ al secondo membro:</p>
-<p>$$\\begin{cases} 2x_1 + x_2 = 1 - x_3 - x_4 \\\\ x_1 - x_2 = x_3 - 3x_4 \\end{cases}$$</p>
-<p>Ora abbiamo un sistema di <strong>Cramer $2 \\times 2$</strong> nelle incognite $x_1, x_2$, con matrice dei coefficienti uguale al minore fondamentale (determinante $-3$). Per ogni scelta dei parametri $x_3, x_4$, il sistema ha soluzione unica. Poiché ci sono 2 parametri liberi, il sistema avrà $\\infty^2$ soluzioni.</p>
-
-<p><strong>Passo 4 — Risoluzione con la regola di Cramer.</strong></p>
-<p>Per $x_1$:</p>
-<p>$$x_1 = \\frac{1}{-3} \\det \\begin{pmatrix} 1 - x_3 - x_4 & 1 \\\\ x_3 - 3x_4 & -1 \\end{pmatrix}$$</p>
-<p>$$\\det(A_1) = (1 - x_3 - x_4)(-1) - 1(x_3 - 3x_4) = -1 + x_3 + x_4 - x_3 + 3x_4 = 4x_4 - 1$$</p>
+<p>Consideriamo il minore $M$ formato dalle prime due righe e dalle prime due colonne:</p>
+<p>$$\\det \\begin{pmatrix} 2 & 1 \\\\ 1 & -1 \\end{pmatrix} = (-2) - 1 = -3 \\neq 0$$</p>
+<p>Questo è un minore di ordine 2 con determinante non nullo. Per stabilire se il rango è esattamente 2, verifichiamo che tutti gli orlati (minori di ordine 3) abbiano determinante nullo. Ad esempio, con le colonne 1, 2, 3:</p>
+<p>$$\\det \\begin{pmatrix} 2 & 1 & 1 \\\\ 1 & -1 & -1 \\\\ 3 & 0 & 0 \\end{pmatrix} = 2 \\cdot 0 - 1 \\cdot(0-(-3)) + 1 \\cdot(0-(-3)) = 0 - 3 + 3 = 0$$</p>
+<p>Analogamente per le altre combinazioni. Dunque $\\text{rango}(A) = 2$.</p>
+<p>Per la matrice completa, orliamo il minore fondamentale aggiungendo la colonna dei termini noti e la terza riga:</p>
+<p>$$\\det \\begin{pmatrix} 2 & 1 & 1 \\\\ 1 & -1 & 0 \\\\ 3 & 0 & 1 \\end{pmatrix} = 2(-1-0) - 1(1-0) + 1(0-(-3)) = -2 - 1 + 3 = 0$$</p>
+<p>Quindi $\\text{rango}(B) = 2$. Per il <strong>teorema di Rouché-Capelli</strong>, il sistema è compatibile.</p>`
+                },
+                {
+                    subtitle: "Riduzione del Sistema",
+                    content: `<p>Il rango è 2 e il minore fondamentale coinvolge le prime due righe, quindi la <strong>terza riga è sovrabbondante</strong> (combinazione lineare delle prime due). Verifichiamolo: sommando la prima e la seconda equazione si ottiene esattamente la terza:</p>
+<p>$$(2x_1+x_2+x_3+x_4)+(x_1-x_2-x_3+3x_4) = 3x_1+4x_4 \\quad \\text{e} \\quad 1+0=1$$</p>
+<p>Il sistema è equivalente a:</p>
+<p>$$S': \\begin{cases} 2x_1 + x_2 = 1 - x_3 - x_4 \\\\ x_1 - x_2 = x_3 - 3x_4 \\end{cases}$$</p>`
+                },
+                {
+                    subtitle: "Riorganizzazione come Sistema di Cramer",
+                    content: `<p>Le colonne del minore fondamentale corrispondono a $x_1$ e $x_2$: queste sono le <strong>incognite principali</strong>. Le variabili $x_3$ e $x_4$ diventano <strong>parametri liberi</strong> e vengono spostate al secondo membro.</p>
+<p>Otteniamo un sistema di Cramer $2 \\times 2$. La matrice dei coefficienti è proprio quella del minore fondamentale (determinante $-3$), e il vettore dei termini noti dipende dai parametri:</p>
+<p>$$\\boldsymbol{b}' = \\begin{pmatrix} 1 - x_3 - x_4 \\\\ x_3 - 3x_4 \\end{pmatrix}$$</p>
+<p>Per ogni scelta di $x_3$ e $x_4$, il sistema ha soluzione unica per $x_1$ e $x_2$. Poiché abbiamo $n - p = 4 - 2 = 2$ parametri liberi, il sistema avrà $\\infty^2$ soluzioni.</p>`
+                },
+                {
+                    subtitle: "Risoluzione con la Regola di Cramer",
+                    content: `<p><strong>Calcolo di $x_1$:</strong></p>
+<p>$$x_1 = \\frac{\\det(A_1)}{\\det(A)} = \\frac{1}{-3} \\det \\begin{pmatrix} 1 - x_3 - x_4 & 1 \\\\ x_3 - 3x_4 & -1 \\end{pmatrix}$$</p>
+<p>Sviluppiamo il numeratore:</p>
+<p>$$\\det(A_1) = (1-x_3-x_4)(-1) - 1(x_3-3x_4) = -1+x_3+x_4-x_3+3x_4 = 4x_4 - 1$$</p>
+<p>Quindi:</p>
 <p>$$x_1 = \\frac{4x_4 - 1}{-3} = \\frac{1 - 4x_4}{3}$$</p>
-<p>Per $x_2$:</p>
-<p>$$x_2 = \\frac{1}{-3} \\det \\begin{pmatrix} 2 & 1 - x_3 - x_4 \\\\ 1 & x_3 - 3x_4 \\end{pmatrix}$$</p>
-<p>$$\\det(A_2) = 2(x_3 - 3x_4) - 1(1 - x_3 - x_4) = 2x_3 - 6x_4 - 1 + x_3 + x_4 = 3x_3 - 5x_4 - 1$$</p>
-<p>$$x_2 = \\frac{3x_3 - 5x_4 - 1}{-3} = \\frac{-3x_3 + 5x_4 + 1}{3}$$</p>
-
-<p><strong>Passo 5 — Soluzione parametrica.</strong></p>
-<p>$$\\begin{cases} x_1 = \\frac{1}{3} - \\frac{4}{3}x_4 \\\\[4pt] x_2 = \\frac{1}{3} - x_3 + \\frac{5}{3}x_4 \\\\[4pt] x_3 = x_3 \\quad (\\text{parametro libero}) \\\\[4pt] x_4 = x_4 \\quad (\\text{parametro libero}) \\end{cases}$$</p>
-
-<p><strong>Passo 6 — Forma vettoriale.</strong></p>
-<p>Separando la parte costante dai coefficienti dei parametri:</p>
+<p><strong>Calcolo di $x_2$:</strong></p>
+<p>$$x_2 = \\frac{\\det(A_2)}{\\det(A)} = \\frac{1}{-3} \\det \\begin{pmatrix} 2 & 1 - x_3 - x_4 \\\\ 1 & x_3 - 3x_4 \\end{pmatrix}$$</p>
+<p>Sviluppiamo il numeratore:</p>
+<p>$$\\det(A_2) = 2(x_3-3x_4) - 1(1-x_3-x_4) = 2x_3-6x_4-1+x_3+x_4 = 3x_3 - 5x_4 - 1$$</p>
+<p>Quindi:</p>
+<p>$$x_2 = \\frac{3x_3 - 5x_4 - 1}{-3} = \\frac{-3x_3 + 5x_4 + 1}{3}$$</p>`
+                },
+                {
+                    subtitle: "Soluzione Parametrica e Forma Vettoriale",
+                    content: `<p>L'insieme delle soluzioni è:</p>
+<p>$$\\begin{cases} x_1 = \\dfrac{1}{3} - \\dfrac{4}{3}\\,x_4 \\\\[6pt] x_2 = \\dfrac{1}{3} - x_3 + \\dfrac{5}{3}\\,x_4 \\\\[6pt] x_3 = x_3 \\quad (\\text{parametro libero}) \\\\[4pt] x_4 = x_4 \\quad (\\text{parametro libero}) \\end{cases}$$</p>
+<p>In forma vettoriale, separando la parte costante dai coefficienti dei parametri:</p>
 <p>$$\\begin{pmatrix} x_1 \\\\ x_2 \\\\ x_3 \\\\ x_4 \\end{pmatrix} = \\begin{pmatrix} 1/3 \\\\ 1/3 \\\\ 0 \\\\ 0 \\end{pmatrix} + x_3 \\begin{pmatrix} 0 \\\\ -1 \\\\ 1 \\\\ 0 \\end{pmatrix} + x_4 \\begin{pmatrix} -4/3 \\\\ 5/3 \\\\ 0 \\\\ 1 \\end{pmatrix}$$</p>
-<p>Questa forma evidenzia che lo <strong>spazio delle soluzioni è uno spazio affine</strong>: una soluzione particolare più un sottospazio vettoriale di dimensione 2.</p>`
+<p>Questa forma evidenzia che lo <strong>spazio delle soluzioni è uno spazio affine</strong>: una traslazione (il vettore costante, che è una soluzione particolare) più un sottospazio vettoriale di dimensione 2 (generato dai due vettori associati ai parametri liberi).</p>`
                 }
             ],
             formulas: [
-                { label: "Determinante minore fondamentale", latex: "\\det \\begin{pmatrix} 2 & 1 \\\\ 1 & -1 \\end{pmatrix} = -3" },
-                { label: "Soluzione vettoriale", latex: "\\boldsymbol{x} = \\begin{pmatrix} 1/3 \\\\ 1/3 \\\\ 0 \\\\ 0 \\end{pmatrix} + x_3 \\begin{pmatrix} 0 \\\\ -1 \\\\ 1 \\\\ 0 \\end{pmatrix} + x_4 \\begin{pmatrix} -4/3 \\\\ 5/3 \\\\ 0 \\\\ 1 \\end{pmatrix}" }
+                { label: "Cramer per x₁", latex: "x_1 = \\frac{1 - 4x_4}{3}" },
+                { label: "Cramer per x₂", latex: "x_2 = \\frac{-3x_3 + 5x_4 + 1}{3}" }
             ]
         },
         {
-            id: "s18-algoritmo-rettangolari",
-            type: "alert_box",
+            id: "s18-algoritmo-generale",
+            type: "section",
             title: "Algoritmo Generale per Sistemi Rettangolari",
             icon: "📋",
-            content: `<p>Il procedimento dell'esempio precedente si generalizza a <strong>qualsiasi sistema lineare</strong> $S: A\\boldsymbol{x} = \\boldsymbol{b}$ di $m$ equazioni in $n$ incognite. Questo è l'algoritmo centrale della lezione, da saper applicare meccanicamente.</p>
-<p><strong>1. Verifica compatibilità:</strong> Calcolare $\\text{rango}(A)$ e $\\text{rango}(B)$ (matrice completa). Se $\\text{rango}(A) \\neq \\text{rango}(B)$, il sistema è <strong>incompatibile</strong> (Rouché-Capelli). Se $\\text{rango}(A) = \\text{rango}(B) = p$, il sistema è compatibile.</p>
-<p><strong>2. Individuazione minore fondamentale:</strong> Trovare un minore $M$ di $A$ di ordine $p$ con determinante non nullo.</p>
-<p><strong>3. Riduzione del sistema:</strong> Eliminare le $m - p$ equazioni sovrabbondanti (quelle le cui righe non concorrono a formare $M$). Restano $p$ equazioni in $n$ incognite.</p>
-<p><strong>4. Scelta variabili libere:</strong> Le $n - p$ incognite che <strong>non</strong> corrispondono alle colonne di $M$ diventano parametri liberi.</p>
-<p><strong>5. Riorganizzazione:</strong> Spostare i parametri liberi al secondo membro. Si ottiene un sistema quadrato $p \\times p$ la cui matrice dei coefficienti è proprio $M$.</p>
-<p><strong>6. Risoluzione con Cramer:</strong> Risolvere il sistema $p \\times p$, esprimendo le $p$ incognite principali in funzione degli $n - p$ parametri. Questo fornisce la <strong>rappresentazione parametrica</strong> di tutte le soluzioni.</p>`,
-            formulas: [
-                { label: "Numero parametri liberi", latex: "\\text{parametri liberi} = n - p" },
-                { label: "Cardinalità soluzioni", latex: "\\infty^{n-p} \\text{ soluzioni}" }
+            content: `<p>Il procedimento visto nell'esempio si generalizza in un algoritmo per risolvere <strong>qualsiasi</strong> sistema lineare $S$ di $m$ equazioni in $n$ incognite.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione: equazione sovrabbondante",
+                    content: `<p>Un'equazione si dice <strong>sovrabbondante</strong> se è combinazione lineare delle altre equazioni del sistema, cioè è ridondante ai fini della determinazione dell'insieme delle soluzioni. La sua eliminazione non modifica lo spazio delle soluzioni.</p>`
+                },
+                {
+                    subtitle: "Passo 1 — Verifica Compatibilità",
+                    content: `<p>Si calcola il rango della matrice incompleta $A$ e della matrice completa $B$. Se $\\text{rango}(A) \\neq \\text{rango}(B)$, il sistema è <strong>incompatibile</strong> (Rouché-Capelli). Se $\\text{rango}(A) = \\text{rango}(B) = p$, il sistema è compatibile.</p>`
+                },
+                {
+                    subtitle: "Passo 2 — Individuazione Minore Fondamentale",
+                    content: `<p>Si identifica un minore $M$ di $A$ di ordine $p$ con determinante non nullo. Questo minore è formato da $p$ righe e $p$ colonne specifiche della matrice $A$.</p>`
+                },
+                {
+                    subtitle: "Passo 3 — Riduzione del Sistema",
+                    content: `<p>Si eliminano le $m - p$ equazioni sovrabbondanti, cioè quelle le cui righe <strong>non concorrono a formare</strong> il minore $M$.</p>
+<p><strong>Perché funziona?</strong> Il rango della matrice è $p$, il che significa che ogni insieme di $p+1$ righe è linearmente dipendente. Pertanto ciascuna riga esclusa dal minore fondamentale è necessariamente combinazione lineare delle $p$ righe che lo compongono.</p>
+<p><strong>Nota pratica:</strong> il minore fondamentale non è necessariamente formato dalle prime $p$ righe! Se ad esempio in una matrice $5 \\times 4$ il minore fondamentale di ordine 3 è formato dalle righe 1, 3 e 5 (e da tre colonne opportune), allora le righe da eliminare sono la 2 e la 4, indipendentemente dalla loro posizione. Si identificano semplicemente per esclusione: <em>tutte le righe che non fanno parte del minore fondamentale vengono eliminate</em>.</p>
+<p>Il sistema si riduce così a $p$ equazioni in $n$ incognite.</p>`
+                },
+                {
+                    subtitle: "Passo 4 — Scelta Variabili Libere",
+                    content: `<p>Le $n - p$ incognite che <strong>non</strong> corrispondono alle colonne del minore $M$ vengono scelte come parametri liberi.</p>`
+                },
+                {
+                    subtitle: "Passo 5 — Riorganizzazione",
+                    content: `<p>Si spostano i termini contenenti le variabili libere al secondo membro. Si ottiene un sistema quadrato $p \\times p$ nelle restanti $p$ incognite, la cui matrice dei coefficienti è proprio $M$.</p>`
+                },
+                {
+                    subtitle: "Passo 6 — Risoluzione",
+                    content: `<p>Si risolve il sistema $p \\times p$ con la <strong>regola di Cramer</strong>, esprimendo le $p$ incognite principali in funzione degli $n - p$ parametri liberi. Il risultato è la <strong>rappresentazione parametrica</strong> di tutte le soluzioni del sistema originale.</p>`
+                }
             ]
+        },
+        {
+            id: "s18-alert-righe-sovrabbondanti",
+            type: "alert_box",
+            title: "Attenzione: quali righe eliminare?",
+            icon: "⚠️",
+            content: `<p>Un errore frequente è pensare che le righe sovrabbondanti siano sempre "le ultime". <strong>Non è così!</strong> Le righe da eliminare sono quelle che non fanno parte del minore fondamentale scelto.</p>
+<p><strong>Esempio:</strong> Se la matrice $A$ è $4 \\times 3$ e il minore fondamentale di ordine 2 è formato dalle righe 2 e 4 (e da due colonne), allora le righe sovrabbondanti sono la 1 e la 3. Le equazioni corrispondenti vengono eliminate.</p>
+<p>La regola è semplice: <em>individua le righe del minore fondamentale → tutto il resto si elimina</em>.</p>`
         },
         {
             id: "s18-omogenei-sottospazi",
             type: "section",
             title: "Sistemi Omogenei e Sottospazi Vettoriali",
             icon: "🎯",
-            content: `<p>Un sistema lineare $A\\boldsymbol{x} = \\boldsymbol{b}$ si dice <strong>omogeneo</strong> se $\\boldsymbol{b} = \\boldsymbol{0}$. Questa distinzione è cruciale perché determina la struttura geometrica delle soluzioni.</p>`,
+            content: `<p>Un sistema lineare $A\\boldsymbol{x} = \\boldsymbol{b}$ si dice <strong>omogeneo</strong> se $\\boldsymbol{b} = \\boldsymbol{0}$. La domanda fondamentale è: quando l'insieme delle soluzioni forma un sottospazio vettoriale?</p>`,
             subsections: [
                 {
-                    subtitle: "Caratterizzazione fondamentale",
-                    content: `<p><strong>Proposizione:</strong> L'insieme delle soluzioni di un sistema lineare $A\\boldsymbol{x} = \\boldsymbol{b}$ forma un <strong>sottospazio vettoriale</strong> di $\\mathbb{R}^n$ se e solo se il sistema è omogeneo ($\\boldsymbol{b} = \\boldsymbol{0}$).</p>
-<p><strong>Dimostrazione ($\\Rightarrow$):</strong> Se $\\text{Sol}(S)$ è un sottospazio vettoriale, deve contenere $\\boldsymbol{0}$. Sostituendo $\\boldsymbol{x} = \\boldsymbol{0}$ nel sistema: $A\\boldsymbol{0} = \\boldsymbol{b}$, ma $A\\boldsymbol{0} = \\boldsymbol{0}$, quindi $\\boldsymbol{b} = \\boldsymbol{0}$.</p>
-<p><strong>Dimostrazione ($\\Leftarrow$):</strong> Se $\\boldsymbol{b} = \\boldsymbol{0}$, verifichiamo le tre proprietà per $U = \\text{Sol}(S)$:</p>
-<p><strong>1)</strong> $A\\boldsymbol{0} = \\boldsymbol{0}$ ✓, quindi $\\boldsymbol{0} \\in U$.</p>
-<p><strong>2)</strong> Se $\\boldsymbol{x}, \\boldsymbol{y} \\in U$, allora $A(\\boldsymbol{x} + \\boldsymbol{y}) = A\\boldsymbol{x} + A\\boldsymbol{y} = \\boldsymbol{0} + \\boldsymbol{0} = \\boldsymbol{0}$, quindi $\\boldsymbol{x} + \\boldsymbol{y} \\in U$ ✓.</p>
-<p><strong>3)</strong> Se $\\boldsymbol{x} \\in U$ e $c \\in \\mathbb{R}$, allora $A(c\\boldsymbol{x}) = c(A\\boldsymbol{x}) = c\\boldsymbol{0} = \\boldsymbol{0}$, quindi $c\\boldsymbol{x} \\in U$ ✓. $\\square$</p>`
+                    subtitle: "Proposizione: soluzioni = sottospazio ⟺ sistema omogeneo",
+                    content: `<p><strong>Enunciato:</strong> L'insieme delle soluzioni di un sistema lineare $A\\boldsymbol{x} = \\boldsymbol{b}$ forma un sottospazio vettoriale di $\\mathbb{R}^n$ se e solo se il sistema è omogeneo.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione (⇒): se è sottospazio, allora è omogeneo",
+                    content: `<p>Se $\\text{Sol}(S)$ è un sottospazio vettoriale, deve contenere il vettore nullo $\\boldsymbol{0} \\in \\mathbb{R}^n$. Sostituendo $\\boldsymbol{x} = \\boldsymbol{0}$ nel sistema otteniamo $A\\boldsymbol{0} = \\boldsymbol{b}$. Ma $A\\boldsymbol{0} = \\boldsymbol{0}$, quindi deve essere $\\boldsymbol{b} = \\boldsymbol{0}$: il sistema è omogeneo.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione (⇐): se è omogeneo, allora è sottospazio",
+                    content: `<p>Supponiamo $A\\boldsymbol{x} = \\boldsymbol{0}$. Sia $U = \\text{Sol}(S)$. Verifichiamo le tre proprietà:</p>
+<p><strong>1. Vettore nullo:</strong> $A\\boldsymbol{0} = \\boldsymbol{0}$, quindi $\\boldsymbol{0} \\in U$. ✓</p>
+<p><strong>2. Chiusura per somma:</strong> Se $\\boldsymbol{x}, \\boldsymbol{y} \\in U$, allora $A\\boldsymbol{x} = \\boldsymbol{0}$ e $A\\boldsymbol{y} = \\boldsymbol{0}$. Quindi:</p>
+<p>$$A(\\boldsymbol{x} + \\boldsymbol{y}) = A\\boldsymbol{x} + A\\boldsymbol{y} = \\boldsymbol{0} + \\boldsymbol{0} = \\boldsymbol{0}$$</p>
+<p>Dunque $\\boldsymbol{x} + \\boldsymbol{y} \\in U$. ✓</p>
+<p><strong>3. Chiusura per scalare:</strong> Se $\\boldsymbol{x} \\in U$ e $c \\in \\mathbb{R}$, allora:</p>
+<p>$$A(c\\boldsymbol{x}) = c(A\\boldsymbol{x}) = c(\\boldsymbol{0}) = \\boldsymbol{0}$$</p>
+<p>Dunque $c\\boldsymbol{x} \\in U$. ✓</p>`
+                },
+                {
+                    subtitle: "Esempio: perché serve l'omogeneità",
+                    content: `<p>Per capire intuitivamente perché la condizione è necessaria, consideriamo $x + y = 1$. Le soluzioni $(1,0)$ e $(0,1)$ appartengono a $\\text{Sol}(S)$, ma la loro somma $(1,1)$ <strong>non</strong> è soluzione: $1 + 1 = 2 \\neq 1$. Dunque $\\text{Sol}(S)$ non è chiuso rispetto alla somma e <strong>non è un sottospazio vettoriale</strong>.</p>`
                 }
             ]
         },
         {
-            id: "s18-definizioni-repr",
+            id: "s18-rappresentazioni",
             type: "section",
-            title: "Rappresentazioni Cartesiane e Parametriche",
-            icon: "📐",
-            content: `<p>Ogni sottospazio vettoriale può essere descritto in due modi equivalenti. Capire la differenza e saper passare dall'uno all'altro è una competenza fondamentale.</p>`,
+            title: "Rappresentazione Cartesiana e Parametrica",
+            icon: "🗺️",
+            content: `<p>Esistono due modi fondamentali per descrivere un sottospazio vettoriale: tramite <strong>equazioni</strong> (cartesiana) o tramite <strong>generatori</strong> (parametrica). Sono due facce della stessa medaglia.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Cartesiano vs Parametrico in ℝ³</strong></p>
+  <p><em>Un piano passante per l'origine in $\\mathbb{R}^3$. Rappresentazione cartesiana: un'equazione $ax + by + cz = 0$ che "taglia" lo spazio. Rappresentazione parametrica: due vettori $\\boldsymbol{u}_1, \\boldsymbol{u}_2$ che "generano" il piano come $\\text{Span}(\\boldsymbol{u}_1, \\boldsymbol{u}_2)$. La cartesiana descrive il piano come luogo di zeri; la parametrica lo descrive come luogo raggiunto variando i parametri.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`,
             subsections: [
                 {
                     subtitle: "Rappresentazione Cartesiana",
                     content: `<p>Un sistema lineare omogeneo $S: A\\boldsymbol{x} = \\boldsymbol{0}$ si dice <strong>rappresentazione cartesiana</strong> di un sottospazio vettoriale $U \\subseteq \\mathbb{R}^n$ se:</p>
-<p>$$U = \\text{Sol}(S) = \\{\\boldsymbol{x} \\in \\mathbb{R}^n \\mid A\\boldsymbol{x} = \\boldsymbol{0}\\}$$</p>
-<p>In pratica, il sottospazio è descritto come l'insieme dei vettori che soddisfano certe <strong>equazioni</strong> (vincoli).</p>`
+<p>$$U = \\text{Sol}(S) = \\{ \\boldsymbol{x} \\in \\mathbb{R}^n \\mid A\\boldsymbol{x} = \\boldsymbol{0} \\}$$</p>
+<p>In pratica, il sottospazio è descritto come l'insieme dei vettori che <strong>soddisfano certe equazioni</strong>.</p>`
                 },
                 {
                     subtitle: "Rappresentazione Parametrica",
-                    content: `<p>Sia $U$ un sottospazio vettoriale di $\\mathbb{R}^n$ di dimensione $h$, e sia $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ una <strong>base</strong> di $U$. Una <strong>rappresentazione parametrica</strong> di $U$ è l'applicazione:</p>
+                    content: `<p>Sia $U$ un sottospazio di $\\mathbb{R}^n$ di dimensione $h$, con base $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$. Una <strong>rappresentazione parametrica</strong> è un'applicazione biiettiva $\\rho: \\mathbb{R}^h \\to U$:</p>
 <p>$$\\rho(\\lambda_1, \\dots, \\lambda_h) = \\lambda_1 \\boldsymbol{u}_1 + \\lambda_2 \\boldsymbol{u}_2 + \\dots + \\lambda_h \\boldsymbol{u}_h$$</p>
-<p>dove $\\lambda_1, \\dots, \\lambda_h$ sono i parametri.</p>
-<p><strong>Nota importante:</strong> $\\rho$ è biiettiva <strong>se e solo se</strong> $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ è una base di $U$ (vettori linearmente indipendenti). Se si usasse un sistema di generatori non indipendente, la rappresentazione sarebbe surgettiva ma non iniettiva.</p>
-<p>Scrivendo per componenti, se $\\boldsymbol{x} = (x_1, \\dots, x_n)$:</p>
-<p>$$\\begin{cases} x_1 = \\lambda_1 u_{11} + \\lambda_2 u_{21} + \\dots + \\lambda_h u_{h1} \\\\ x_2 = \\lambda_1 u_{12} + \\lambda_2 u_{22} + \\dots + \\lambda_h u_{h2} \\\\ \\vdots \\\\ x_n = \\lambda_1 u_{1n} + \\lambda_2 u_{2n} + \\dots + \\lambda_h u_{hn} \\end{cases}$$</p>`
+<p><strong>Notazione:</strong> indichiamo con $(\\boldsymbol{u}_k)_i$ la $i$-esima componente del $k$-esimo vettore base $\\boldsymbol{u}_k$. Con questa notazione, scrivendo per componenti si ottiene:</p>
+<p>$$\\begin{cases} x_1 = \\lambda_1 (\\boldsymbol{u}_1)_1 + \\lambda_2 (\\boldsymbol{u}_2)_1 + \\dots + \\lambda_h (\\boldsymbol{u}_h)_1 \\\\ x_2 = \\lambda_1 (\\boldsymbol{u}_1)_2 + \\lambda_2 (\\boldsymbol{u}_2)_2 + \\dots + \\lambda_h (\\boldsymbol{u}_h)_2 \\\\ \\vdots \\\\ x_n = \\lambda_1 (\\boldsymbol{u}_1)_n + \\lambda_2 (\\boldsymbol{u}_2)_n + \\dots + \\lambda_h (\\boldsymbol{u}_h)_n \\end{cases}$$</p>
+<p>In pratica, il sottospazio è descritto come l'insieme dei vettori che si <strong>raggiungono</strong> variando i parametri $\\lambda_1, \\dots, \\lambda_h$.</p>`
                 }
-            ],
-            table_compare: {
-                headers: ["Caratteristica", "Cartesiana", "Parametrica"],
-                rows: [
-                    ["Forma", "Ax = 0 (equazioni)", "x = λ₁u₁ + ... + λₕuₕ (combinazioni)"],
-                    ["Descrive U tramite", "Vincoli che i vettori devono soddisfare", "Generatori con cui costruire i vettori"],
-                    ["N. equazioni/parametri", "n − h equazioni indipendenti", "h parametri liberi"],
-                    ["Verifica appartenenza", "Semplice: sostituire e controllare", "Richiede risolvere un sistema"],
-                    ["Trovare una base", "Richiede risolvere il sistema", "Immediata: i vettori uᵢ"]
-                ]
-            }
+            ]
         },
         {
             id: "s18-dimensione-soluzioni",
             type: "section",
             title: "Dimensione dello Spazio delle Soluzioni",
-            icon: "📏",
-            content: `<p><strong>Proposizione:</strong> Sia $S: A\\boldsymbol{x} = \\boldsymbol{0}$ un sistema lineare omogeneo con $n$ incognite e sia $p = \\text{rango}(A)$. Allora:</p>
-<p>$$\\dim(\\text{Sol}(S)) = n - p$$</p>`,
+            icon: "📐",
+            content: `<p>La relazione fondamentale tra il numero di incognite, il rango e la dimensione dello spazio delle soluzioni.</p>`,
             subsections: [
                 {
+                    subtitle: "Proposizione: dim(Sol) = n − p",
+                    content: `<p><strong>Enunciato:</strong> Sia $S: A\\boldsymbol{x} = \\boldsymbol{0}$ un sistema omogeneo con $n$ incognite e $p = \\text{rango}(A)$. Allora:</p>
+<p>$$\\dim(\\text{Sol}(S)) = n - p$$</p>`
+                },
+                {
                     subtitle: "Dimostrazione",
-                    content: `<p>Dall'algoritmo di risoluzione, il sistema ridotto ha $p$ equazioni con $p$ incognite principali e $n - p$ parametri liberi. La soluzione generale si scrive:</p>
-<p>$$\\boldsymbol{x} = \\lambda_1 \\boldsymbol{v}_1 + \\lambda_2 \\boldsymbol{v}_2 + \\dots + \\lambda_{n-p} \\boldsymbol{v}_{n-p}$$</p>
-<p>dove $\\boldsymbol{v}_k$ è il vettore ottenuto ponendo il $k$-esimo parametro libero uguale a 1 e tutti gli altri a 0.</p>
-<p><strong>Perché questi vettori formano una base?</strong> Per costruzione, ciascun $\\boldsymbol{v}_k$ ha la componente corrispondente alla $k$-esima variabile libera uguale a 1, mentre tutti gli altri $\\boldsymbol{v}_j$ (con $j \\neq k$) hanno 0 in quella stessa componente. Se $c_1\\boldsymbol{v}_1 + \\dots + c_{n-p}\\boldsymbol{v}_{n-p} = \\boldsymbol{0}$, guardando la componente della $k$-esima variabile libera si ottiene immediatamente $c_k = 0$ per ogni $k$.</p>
-<p>Dunque $\\{\\boldsymbol{v}_1, \\dots, \\boldsymbol{v}_{n-p}\\}$ è un sistema di generatori <strong>linearmente indipendente</strong> per $\\text{Sol}(S)$, quindi è una base. $\\square$</p>`
+                    content: `<p>Dall'algoritmo di risoluzione, le $n-p$ variabili libere diventano parametri e le $p$ variabili principali vengono espresse in funzione di questi tramite Cramer. La soluzione generale si scrive:</p>
+<p>$$\\boldsymbol{x} = \\lambda_1 \\boldsymbol{u}_1 + \\lambda_2 \\boldsymbol{u}_2 + \\dots + \\lambda_{n-p} \\boldsymbol{u}_{n-p}$$</p>
+<p>dove i vettori $\\boldsymbol{u}_k$ si ottengono assegnando ai parametri liberi i <strong>valori canonici</strong>: per $\\boldsymbol{u}_k$ si pone il $k$-esimo parametro uguale a 1 e tutti gli altri uguali a 0.</p>
+<p><strong>Indipendenza lineare:</strong> Il vettore $\\boldsymbol{u}_k$ ha la componente corrispondente alla $k$-esima variabile libera uguale a 1, mentre tutti gli altri $\\boldsymbol{u}_j$ (con $j \\neq k$) hanno tale componente uguale a 0. Nessuna combinazione lineare non banale degli altri vettori può riprodurre $\\boldsymbol{u}_k$.</p>
+<p><strong>Generano Sol(S):</strong> Ogni soluzione si ottiene per una scelta dei parametri liberi, quindi i vettori generano tutto $\\text{Sol}(S)$.</p>
+<p>Essendo un sistema di generatori linearmente indipendenti, formano una <strong>base</strong>, e dunque $\\dim(\\text{Sol}(S)) = n - p$.</p>`
                 }
             ],
             formulas: [
-                { label: "Dimensione spazio soluzioni", latex: "\\dim(\\text{Sol}(S)) = n - p" },
-                { label: "Relazione complementare", latex: "h + (n - h) = n" }
+                { label: "Dimensione soluzioni", latex: "\\dim(\\text{Sol}(S)) = n - p" }
             ]
         },
         {
@@ -159,200 +213,182 @@ const LESSON = {
             type: "section",
             title: "Dal Cartesiano al Parametrico: Esempio",
             icon: "➡️",
-            content: `<p>Risolvere un sistema lineare omogeneo (rappresentazione cartesiana) equivale a trovare la rappresentazione parametrica del sottospazio delle soluzioni. Vediamolo con un esempio completo.</p>
-<p><em>Nota:</em> in questo esempio usiamo le variabili $(x, y, z, t)$ in luogo della notazione $(x_1, x_2, x_3, x_4)$; le due notazioni sono del tutto equivalenti.</p>`,
+            content: `<p>Risolvere un sistema omogeneo (cartesiano) equivale a trovare la sua rappresentazione parametrica. Vediamolo con un esempio completo.</p>`,
             subsections: [
                 {
-                    subtitle: "Il sistema omogeneo",
-                    content: `<p>$$S: \\begin{cases} 2x + y + z + t = 0 \\\\ x - y - z + 3t = 0 \\\\ 3x + 4t = 0 \\\\ x + z + t = 0 \\end{cases}$$</p>
+                    subtitle: "Il sistema omogeneo 4×4",
+                    content: `<p>Consideriamo:</p>
+<p>$$S: \\begin{cases} 2x + y + z + t = 0 \\\\ x - y - z + 3t = 0 \\\\ 3x + 4t = 0 \\\\ x + z + t = 0 \\end{cases}$$</p>
 <p>La matrice dei coefficienti è:</p>
 <p>$$A = \\begin{pmatrix} 2 & 1 & 1 & 1 \\\\ 1 & -1 & -1 & 3 \\\\ 3 & 0 & 0 & 4 \\\\ 1 & 0 & 1 & 1 \\end{pmatrix}$$</p>`
                 },
                 {
-                    subtitle: "Passo 1 — Calcolo del rango",
-                    content: `<p>Il minore formato dalle prime due righe e colonne ha determinante:</p>
-<p>$$\\det \\begin{pmatrix} 2 & 1 \\\\ 1 & -1 \\end{pmatrix} = -3 \\neq 0$$</p>
-<p>Il rango è almeno 2. Verifichiamo se è almeno 3 calcolando un orlato $3 \\times 3$. Prendiamo le righe 1, 2, 4 e le colonne 1, 2, 3:</p>
-<p>$$\\det \\begin{pmatrix} 2 & 1 & 1 \\\\ 1 & -1 & -1 \\\\ 1 & 0 & 1 \\end{pmatrix} = 2(-1 - 0) - 1(1 - (-1)) + 1(0 - (-1)) = -2 - 2 + 1 = -3 \\neq 0$$</p>
-<p>Il rango è almeno 3. Verifichiamo se è 4 calcolando $\\det(A)$. Sviluppiamo lungo la seconda colonna:</p>
-<p>$$\\det(A) = 1 \\cdot (-1)^{1+2}\\det\\begin{pmatrix}1&-1&3\\\\3&0&4\\\\1&1&1\\end{pmatrix} + (-1)\\cdot(-1)^{2+2}\\det\\begin{pmatrix}2&1&1\\\\3&0&4\\\\1&1&1\\end{pmatrix} + 0 + 0$$</p>
-<p>I due determinanti $3 \\times 3$:</p>
-<p>$$\\det\\begin{pmatrix}1&-1&3\\\\3&0&4\\\\1&1&1\\end{pmatrix} = 1(0-4)+1(3-4)+3(3-0) = -4 -1 + 9 = 4$$</p>
-<p>$$\\det\\begin{pmatrix}2&1&1\\\\3&0&4\\\\1&1&1\\end{pmatrix} = 2(0-4)-1(3-4)+1(3-0) = -8+1+3 = -4$$</p>
-<p>Quindi:</p>
-<p>$$\\det(A) = 1 \\cdot (-1) \\cdot 4 + (-1) \\cdot 1 \\cdot (-4) = -4 + 4 = 0$$</p>
-<p>Poiché esiste un minore $3 \\times 3$ non nullo ma $\\det(A) = 0$, concludiamo: $\\text{rango}(A) = 3$.</p>`
+                    subtitle: "Calcolo del rango",
+                    content: `<p>Calcoliamo il determinante della matrice $4 \\times 4$ sviluppando lungo la terza riga (che ha due zeri, il che semplifica i conti):</p>
+<p>$$\\det(A) = 3 \\cdot C_{31} + 0 + 0 + 4 \\cdot C_{34}$$</p>
+<p>dove $C_{31}$ e $C_{34}$ sono i cofattori corrispondenti. Svolgendo i calcoli (che il professore lascia come verifica), si ottiene $\\det(A) = 0$. Dunque $\\text{rango}(A) \\lt 4$.</p>
+<p>Cerchiamo un minore di ordine 3 non nullo. Consideriamo il minore formato dalle righe 1, 2, 4 e colonne 1, 2, 4:</p>
+<p>$$\\det \\begin{pmatrix} 2 & 1 & 1 \\\\ 1 & -1 & 3 \\\\ 1 & 0 & 1 \\end{pmatrix} = 2(-1-0) - 1(1-3) + 1(0-(-1)) = -2 + 2 + 1 = 1 \\neq 0$$</p>
+<p>Dunque $\\text{rango}(A) = 3$. La dimensione dello spazio delle soluzioni è $n - p = 4 - 3 = 1$: <strong>un solo parametro libero</strong>.</p>`
                 },
                 {
-                    subtitle: "Passo 2 — Scelta del minore fondamentale e riduzione",
-                    content: `<p>Il minore fondamentale di ordine 3 trovato sopra coinvolge le <strong>righe 1, 2, 4</strong> e le <strong>colonne 1, 2, 3</strong>. La terza equazione ($3x + 4t = 0$) è sovrabbondante e viene eliminata. Il sistema si riduce a:</p>
-<p>$$S': \\begin{cases} 2x + y + z + t = 0 \\\\ x - y - z + 3t = 0 \\\\ x + z + t = 0 \\end{cases}$$</p>`
+                    subtitle: "Riduzione per eliminazione gaussiana",
+                    content: `<p>Scegliamo la quarta equazione $x + z + t = 0$ come pivot perché ha il coefficiente 1 davanti a $x$, il che semplifica i calcoli. La scelta del pivot è arbitraria purché il coefficiente della variabile da eliminare sia non nullo.</p>
+<p>Dalla quarta equazione: $x = -z - t$. Sostituiamo nelle altre:</p>
+<p><strong>Prima equazione:</strong> $2(-z-t) + y + z + t = 0 \\Rightarrow y - z - t = 0$</p>
+<p><strong>Seconda equazione:</strong> $(-z-t) - y - z + 3t = 0 \\Rightarrow -y - 2z + 2t = 0 \\Rightarrow y + 2z - 2t = 0$</p>
+<p><strong>Terza equazione:</strong> $3(-z-t) + 4t = 0 \\Rightarrow -3z + t = 0 \\Rightarrow t = 3z$</p>
+<p>Per eliminare le variabili e ricavare $y$, sommiamo le due equazioni ridotte $y - z - t = 0$ e $y + 2z - 2t = 0$:</p>
+<p>$$2y + z - 3t = 0$$</p>
+<p>Sostituendo $t = 3z$: $2y + z - 9z = 0 \\Rightarrow 2y - 8z = 0 \\Rightarrow y = 4z$.</p>
+<p>Verifica nella prima ridotta: $4z - z - 3z = 0$ ✓</p>`
                 },
                 {
-                    subtitle: "Passo 3 — Riorganizzazione e risoluzione con Cramer",
-                    content: `<p>Le <strong>variabili principali</strong> (colonne del minore fondamentale) sono $x, y, z$. La <strong>variabile libera</strong> è $t$ ($n - p = 4 - 3 = 1$ parametro). Spostiamo $t$ al secondo membro:</p>
-<p>$$\\begin{cases} 2x + y + z = -t \\\\ x - y - z = -3t \\\\ x + z = -t \\end{cases}$$</p>
-<p>La matrice dei coefficienti è il minore fondamentale:</p>
-<p>$$M = \\begin{pmatrix} 2 & 1 & 1 \\\\ 1 & -1 & -1 \\\\ 1 & 0 & 1 \\end{pmatrix}, \\quad \\det(M) = -3 \\neq 0$$</p>
-<p>Applichiamo Cramer. Per $x$:</p>
-<p>$$x = \\frac{1}{-3}\\det\\begin{pmatrix} -t & 1 & 1 \\\\ -3t & -1 & -1 \\\\ -t & 0 & 1 \\end{pmatrix}$$</p>
-<p>$$= \\frac{1}{-3}\\big[-t(-1-0) - 1(-3t-(-1)(-t)) + 1(0-(-1)(-t))\\big]$$</p>
-<p>$$= \\frac{1}{-3}\\big[t - 1(-3t - t) + (0 - t)\\big] = \\frac{1}{-3}\\big[t + 4t - t\\big] = \\frac{4t}{-3} = -\\frac{4}{3}t$$</p>
-<p>Per $y$:</p>
-<p>$$y = \\frac{1}{-3}\\det\\begin{pmatrix} 2 & -t & 1 \\\\ 1 & -3t & -1 \\\\ 1 & -t & 1 \\end{pmatrix}$$</p>
-<p>$$= \\frac{1}{-3}\\big[2(-3t-t) + t(1-(-1)) + 1(-t+3t)\\big] = \\frac{1}{-3}\\big[-8t + 2t + 2t\\big] = \\frac{-4t}{-3} = \\frac{4}{3}t$$</p>
-<p>Per $z$:</p>
-<p>$$z = \\frac{1}{-3}\\det\\begin{pmatrix} 2 & 1 & -t \\\\ 1 & -1 & -3t \\\\ 1 & 0 & -t \\end{pmatrix}$$</p>
-<p>$$= \\frac{1}{-3}\\big[2(t - 0) - 1(-t + 3t) + (-t)(0 + 1)\\big] = \\frac{1}{-3}\\big[2t - 2t - t\\big] = \\frac{-t}{-3} = \\frac{1}{3}t$$</p>`
-                },
-                {
-                    subtitle: "Passo 4 — Soluzione parametrica e base",
-                    content: `<p>La soluzione parametrica è:</p>
-<p>$$\\begin{cases} x = -\\frac{4}{3}t \\\\[4pt] y = \\frac{4}{3}t \\\\[4pt] z = \\frac{1}{3}t \\\\[4pt] t = t \\quad (\\text{parametro libero}) \\end{cases}$$</p>
-<p>La dimensione è $n - p = 4 - 3 = 1$. Ponendo $t = 3$ (per eliminare i denominatori):</p>
-<p>$$\\boldsymbol{u}_1 = (-4, 4, 1, 3)$$</p>
-<p>Una base per lo spazio delle soluzioni è $\\{(-4, 4, 1, 3)\\}$.</p>
-<p><strong>Verifica.</strong> Sostituiamo nel sistema originale (tutte e 4 le equazioni):</p>
-<p>$2(-4) + 4 + 1 + 3 = -8 + 8 = 0$ ✓</p>
-<p>$(-4) - 4 - 1 + 9 = 0$ ✓</p>
-<p>$3(-4) + 12 = 0$ ✓</p>
-<p>$(-4) + 1 + 3 = 0$ ✓</p>`
+                    subtitle: "Base dello spazio delle soluzioni",
+                    content: `<p>Il sistema equivalente è:</p>
+<p>$$\\begin{cases} x = -z - 3z = -4z \\\\ y = 4z \\\\ z = z \\quad (\\text{parametro libero}) \\\\ t = 3z \\end{cases}$$</p>
+<p>Ponendo $z = 1$ otteniamo il vettore base:</p>
+<p>$$\\boldsymbol{u}_1 = (-4, \\, 4, \\, 1, \\, 3)$$</p>
+<p>Lo spazio delle soluzioni è:</p>
+<p>$$\\text{Sol}(S) = \\text{Span}(\\boldsymbol{u}_1) = \\left\\{ \\lambda \\begin{pmatrix} -4 \\\\ 4 \\\\ 1 \\\\ 3 \\end{pmatrix} : \\lambda \\in \\mathbb{R} \\right\\}$$</p>
+<p>Questo è un sottospazio di dimensione 1 (una retta per l'origine in $\\mathbb{R}^4$).</p>`
                 }
-            ],
-            formulas: [
-                { label: "Rango della matrice", latex: "\\text{rango}(A) = 3" },
-                { label: "Dimensione Sol(S)", latex: "\\dim(\\text{Sol}(S)) = 4 - 3 = 1" },
-                { label: "Base dello spazio soluzioni", latex: "\\{(-4, 4, 1, 3)\\}" }
             ]
         },
         {
             id: "s18-parametrico-cartesiano",
             type: "section",
-            title: "Dal Parametrico al Cartesiano: Algoritmo ed Esempio",
+            title: "Dal Parametrico al Cartesiano: Algoritmo",
             icon: "⬅️",
-            content: `<p>Il passaggio inverso — dalla rappresentazione parametrica a quella cartesiana — richiede un algoritmo specifico basato sul <strong>Teorema degli Orlati</strong>.</p>`,
+            content: `<p>Il passaggio inverso: data una base del sottospazio, come trovare le equazioni che lo descrivono? L'idea chiave è usare la <strong>condizione di dipendenza lineare</strong> e il <strong>Teorema degli Orlati</strong>.</p>`,
             subsections: [
                 {
-                    subtitle: "L'algoritmo",
-                    content: `<p>Data una base $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ di un sottospazio $U \\subseteq \\mathbb{R}^n$:</p>
-<p><strong>1.</strong> Un generico $\\boldsymbol{x} = (x_1, \\dots, x_n) \\in U$ se e solo se $\\{\\boldsymbol{x}, \\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ è linearmente dipendente.</p>
-<p><strong>2.</strong> Costruire la matrice $M$ con colonne $\\boldsymbol{x}, \\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h$ (matrice $n \\times (h+1)$).</p>
-<p><strong>3.</strong> La condizione di dipendenza è $\\text{rango}(M) = h$ (non $h+1$).</p>
-<p><strong>4.</strong> Poiché $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ è una base, esiste un minore fondamentale di ordine $h$ nelle ultime $h$ colonne con determinante non nullo.</p>
-<p><strong>5.</strong> Per il <strong>Teorema degli Orlati</strong>, imporre che tutti i minori di ordine $h+1$ che orlano il minore fondamentale abbiano determinante nullo.</p>
-<p><strong>6.</strong> Ogni equazione $\\det(\\text{orlato}) = 0$, sviluppata lungo la colonna di $\\boldsymbol{x}$, produce un'equazione lineare omogenea in $x_1, \\dots, x_n$. L'insieme di queste equazioni è la rappresentazione cartesiana.</p>`
+                    subtitle: "L'algoritmo passo per passo",
+                    content: `<p><strong>1.</strong> Si parte da una base $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ del sottospazio $U \\subseteq \\mathbb{R}^n$.</p>
+<p><strong>2.</strong> Un vettore $\\boldsymbol{x} = (x_1, \\dots, x_n)$ appartiene a $U$ se e solo se $\\boldsymbol{x} \\in \\text{Span}(\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h)$, cioè se l'insieme $\\{\\boldsymbol{x}, \\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ è linearmente dipendente.</p>
+<p><strong>3.</strong> Si costruisce la matrice $M$ con colonne $\\boldsymbol{x}, \\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h$ (matrice $n \\times (h+1)$).</p>
+<p><strong>4.</strong> La condizione è $\\text{rango}(M) = h$ (e non $h+1$).</p>
+<p><strong>5.</strong> Si trova un minore di ordine $h$ non nullo nelle colonne $\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h$ (esiste perché formano una base, quindi sono l.i.). Si impone che tutti gli orlati di ordine $h+1$ (aggiungendo la colonna di $\\boldsymbol{x}$ e una riga esclusa) abbiano determinante nullo.</p>
+<p><strong>6.</strong> Le equazioni $\\det(\\text{orlato}) = 0$ sono <strong>lineari</strong> in $x_1, \\dots, x_n$ e omogenee: sono la rappresentazione cartesiana di $U$.</p>`
                 },
                 {
-                    subtitle: "Esempio completo",
-                    content: `<p>Prendiamo il sottospazio direzionale dell'Esempio 1 (sistema non omogeneo), con base:</p>
-<p>$$\\boldsymbol{u}_1 = (0, -1, 1, 0), \\quad \\boldsymbol{u}_2 = (-4/3, 5/3, 0, 1)$$</p>
-<p>Per comodità, moltiplichiamo $\\boldsymbol{u}_2$ per 3 (il sottospazio generato non cambia):</p>
-<p>$$\\boldsymbol{u}_1 = (0, -1, 1, 0), \\quad \\boldsymbol{u}_2 = (-4, 5, 0, 3)$$</p>
-
-<p><strong>Passo 1.</strong> Costruiamo la matrice $M$ con colonne $\\boldsymbol{x}, \\boldsymbol{u}_1, \\boldsymbol{u}_2$:</p>
-<p>$$M = \\begin{pmatrix} x_1 & 0 & -4 \\\\ x_2 & -1 & 5 \\\\ x_3 & 1 & 0 \\\\ x_4 & 0 & 3 \\end{pmatrix}$$</p>
-
-<p><strong>Passo 2.</strong> La base ha $h = 2$ vettori. Cerchiamo un minore fondamentale $2 \\times 2$ nelle ultime due colonne. Prendendo le righe 2 e 3:</p>
-<p>$$\\det\\begin{pmatrix} -1 & 5 \\\\ 1 & 0 \\end{pmatrix} = 0 - 5 = -5 \\neq 0$$</p>
-
-<p><strong>Passo 3.</strong> Per il Teorema degli Orlati, $\\text{rango}(M) = 2$ se e solo se tutti i minori $3 \\times 3$ che orlano questo minore hanno determinante nullo. Gli orlati si ottengono aggiungendo la riga 1 o la riga 4 (non nel minore) e la colonna 1 (di $\\boldsymbol{x}$).</p>
-
-<p><strong>Orlato con riga 1:</strong></p>
-<p>$$\\det\\begin{pmatrix} x_1 & 0 & -4 \\\\ x_2 & -1 & 5 \\\\ x_3 & 1 & 0 \\end{pmatrix} = 0$$</p>
-<p>Sviluppando lungo la prima colonna:</p>
-<p>$$x_1(-5) - x_2(0+4) + x_3(0-4) = -5x_1 - 4x_2 - 4x_3 = 0$$</p>
-<p>Dividendo per $-1$: $\\;5x_1 + 4x_2 + 4x_3 = 0$.</p>
-
-<p><strong>Orlato con riga 4:</strong></p>
-<p>$$\\det\\begin{pmatrix} x_2 & -1 & 5 \\\\ x_3 & 1 & 0 \\\\ x_4 & 0 & 3 \\end{pmatrix} = 0$$</p>
-<p>Sviluppando lungo la prima colonna:</p>
-<p>$$x_2(3) - x_3(-3-0) + x_4(-5) = 3x_2 + 3x_3 - 5x_4 = 0$$</p>
-
-<p><strong>Risultato:</strong> la rappresentazione cartesiana è:</p>
-<p>$$U = \\left\\{\\boldsymbol{x} \\in \\mathbb{R}^4 \\;\\middle|\\; \\begin{cases} 5x_1 + 4x_2 + 4x_3 = 0 \\\\ 3x_2 + 3x_3 - 5x_4 = 0 \\end{cases}\\right\\}$$</p>
-<p>Abbiamo $n - h = 4 - 2 = 2$ equazioni linearmente indipendenti, come previsto dal corollario.</p>`
+                    subtitle: "Esempio: dal parametrico al cartesiano",
+                    content: `<p>Sia $U \\subseteq \\mathbb{R}^4$ il sottospazio con base:</p>
+<p>$$\\boldsymbol{u}_1 = \\begin{pmatrix} 0 \\\\ -1 \\\\ 1 \\\\ 0 \\end{pmatrix}, \\quad \\boldsymbol{u}_2 = \\begin{pmatrix} -4/3 \\\\ 5/3 \\\\ 0 \\\\ 1 \\end{pmatrix}$$</p>
+<p>(Sono i vettori trovati nell'Esempio 1, che generano la parte omogenea della soluzione.)</p>
+<p><strong>Costruzione di $M$:</strong></p>
+<p>$$M = \\begin{pmatrix} x_1 & 0 & -4/3 \\\\ x_2 & -1 & 5/3 \\\\ x_3 & 1 & 0 \\\\ x_4 & 0 & 1 \\end{pmatrix}$$</p>
+<p>Matrice $4 \\times 3$, con $h = 2$.</p>`
+                },
+                {
+                    subtitle: "Minore fondamentale e calcolo degli orlati",
+                    content: `<p>Cerchiamo un minore $2 \\times 2$ non nullo nelle colonne 2 e 3 (quelle di $\\boldsymbol{u}_1, \\boldsymbol{u}_2$). Con le righe 3 e 4:</p>
+<p>$$\\det \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} = 1 \\neq 0$$</p>
+<p>Minore fondamentale trovato (righe 3–4, colonne 2–3). Ora orliamo aggiungendo la colonna 1 ($\\boldsymbol{x}$) e ciascuna riga esclusa (righe 1 e 2).</p>
+<p><strong>Orlato con riga 1</strong> (righe 1, 3, 4):</p>
+<p>$$\\det \\begin{pmatrix} x_1 & 0 & -4/3 \\\\ x_3 & 1 & 0 \\\\ x_4 & 0 & 1 \\end{pmatrix} = x_1(1) + \\frac{4}{3}x_4 = 0$$</p>
+<p>Moltiplicando per 3: $\\quad 3x_1 + 4x_4 = 0$</p>
+<p><strong>Orlato con riga 2</strong> (righe 2, 3, 4):</p>
+<p>$$\\det \\begin{pmatrix} x_2 & -1 & 5/3 \\\\ x_3 & 1 & 0 \\\\ x_4 & 0 & 1 \\end{pmatrix} = x_2 + x_3 - \\frac{5}{3}x_4 = 0$$</p>
+<p>Moltiplicando per 3: $\\quad 3x_2 + 3x_3 - 5x_4 = 0$</p>`
+                },
+                {
+                    subtitle: "Risultato: rappresentazione cartesiana",
+                    content: `<p>La rappresentazione cartesiana di $U$ è:</p>
+<p>$$U: \\begin{cases} 3x_1 + 4x_4 = 0 \\\\ 3x_2 + 3x_3 - 5x_4 = 0 \\end{cases}$$</p>
+<p><strong>Verifica:</strong></p>
+<p>$\\boldsymbol{u}_1 = (0,-1,1,0)$: $3(0)+4(0) = 0$ ✓; $3(-1)+3(1)-5(0) = 0$ ✓</p>
+<p>$\\boldsymbol{u}_2 = (-4/3, 5/3, 0, 1)$: $3(-4/3)+4(1) = -4+4 = 0$ ✓; $3(5/3)+3(0)-5(1) = 5-5 = 0$ ✓</p>
+<p>Il sottospazio $U$ ha dimensione $h = 2$ e la rappresentazione cartesiana consiste in $n - h = 4 - 2 = 2$ equazioni linearmente indipendenti.</p>`
                 }
-            ],
-            formulas: [
-                { label: "Condizione di appartenenza", latex: "\\boldsymbol{x} \\in U \\;\\Leftrightarrow\\; \\text{rango}(M) = h" },
-                { label: "Equazione cartesiana 1", latex: "5x_1 + 4x_2 + 4x_3 = 0" },
-                { label: "Equazione cartesiana 2", latex: "3x_2 + 3x_3 - 5x_4 = 0" }
             ]
         },
         {
-            id: "s18-corollario-dualita",
-            type: "note_box",
-            title: "Dualità Dimensione–Equazioni",
-            icon: "💡",
-            content: `<p><strong>Corollario:</strong> Un sottospazio vettoriale $U \\subseteq \\mathbb{R}^n$ di dimensione $h$ può essere descritto come l'insieme delle soluzioni di un sistema lineare omogeneo di $n - h$ equazioni linearmente indipendenti.</p>
-<p><strong>Intuizione:</strong> ogni equazione lineare omogenea indipendente impone un vincolo che <strong>riduce la dimensione dello spazio di 1</strong>. Partendo da $\\mathbb{R}^n$ (dimensione $n$), per "ritagliare" un sottospazio di dimensione $h$ servono esattamente $n - h$ equazioni indipendenti:</p>
-<p>$$\\underbrace{h}_{\\text{dim. di } U} + \\underbrace{(n-h)}_{\\text{n. equazioni}} = n$$</p>
-<p><strong>Esempi concreti in $\\mathbb{R}^3$:</strong></p>
-<p>• Un <strong>piano</strong> (dim. 2): descritto da $3 - 2 = 1$ equazione (es. $ax + by + cz = 0$).</p>
-<p>• Una <strong>retta</strong> (dim. 1): descritta da $3 - 1 = 2$ equazioni (intersezione di due piani).</p>
-<p>• L'<strong>origine</strong> (dim. 0): descritta da $3 - 0 = 3$ equazioni indipendenti.</p>`
+            id: "s18-corollario-n-h",
+            type: "section",
+            title: "Corollario: n − h equazioni per un sottospazio di dimensione h",
+            icon: "🏛️",
+            content: `<p><strong>Enunciato:</strong> Un sottospazio vettoriale $U \\subseteq \\mathbb{R}^n$ di dimensione $h$ può essere descritto come l'insieme delle soluzioni di un sistema omogeneo di <strong>$n - h$ equazioni linearmente indipendenti</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Sia $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$ una base di $U$. L'algoritmo parametrico → cartesiano costruisce la matrice $M$ di dimensione $n \\times (h+1)$ e impone l'annullamento dei minori di ordine $h+1$ che orlano un minore fondamentale di ordine $h$.</p>
+<p>Il minore fondamentale è formato dalle colonne dei vettori della base e da $h$ righe selezionate. Le righe rimanenti sono $n - h$, e ciascuna produce un'equazione (un orlato).</p>
+<p><strong>Perché sono indipendenti?</strong> Consideriamo l'equazione ottenuta dall'orlato che aggiunge la riga $i$-esima (una riga non inclusa nel minore fondamentale). In questa equazione, la componente $x_i$ compare con coefficiente uguale al <strong>determinante del minore fondamentale</strong>, che è non nullo. Al contrario, nelle altre equazioni (ottenute orlando con righe $j \\neq i$), il coefficiente di $x_i$ è 0, perché la riga $i$ non compare in quegli orlati.</p>
+<p>Questo produce una <strong>struttura triangolare</strong> nella matrice dei coefficienti delle $n-h$ equazioni (rispetto alle variabili $x_i$ corrispondenti alle righe escluse), che garantisce l'indipendenza lineare.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Numero equazioni cartesiane", latex: "\\text{numero equazioni} = n - h = n - \\dim(U)" }
+            ]
         },
         {
-            id: "s18-trappola-omogeneo",
+            id: "s18-dualita",
+            type: "note_box",
+            title: "Dualità tra le due rappresentazioni",
+            icon: "🔄",
+            content: `<p>Le due rappresentazioni sono <strong>duali</strong>:</p>
+<p><strong>Cartesiana → Parametrica:</strong> Si risolve il sistema omogeneo con l'algoritmo generale (Sezione 2), ottenendo la soluzione come combinazione lineare di $n - p$ vettori base con parametri liberi.</p>
+<p><strong>Parametrica → Cartesiana:</strong> Data una base di $h$ vettori, si costruisce la matrice $M$, si calcolano gli orlati e si ottengono $n - h$ equazioni omogenee indipendenti.</p>
+<p>In entrambi i casi, se il sottospazio ha dimensione $h$ in $\\mathbb{R}^n$:</p>
+<p>$$\\text{Parametrica: } h \\text{ vettori base} \\qquad \\longleftrightarrow \\qquad \\text{Cartesiana: } n - h \\text{ equazioni}$$</p>
+<p>Le due quantità sono <strong>complementari</strong>: la loro somma è sempre $n$.</p>`
+        },
+        {
+            id: "s18-oral-riepilogo",
             type: "oral_box",
-            title: "Sottospazio solo se omogeneo!",
-            icon: "⚠️",
-            content: `<p><strong>Domanda tipica:</strong> "L'insieme delle soluzioni di un sistema lineare è sempre un sottospazio vettoriale?"</p>
-<p><strong>Risposta:</strong> <strong>No!</strong> È un sottospazio se e solo se il sistema è omogeneo ($\\boldsymbol{b} = \\boldsymbol{0}$). Se $\\boldsymbol{b} \\neq \\boldsymbol{0}$ e il sistema è compatibile, le soluzioni formano uno <strong>spazio affine</strong> (traslazione di un sottospazio), che non contiene il vettore nullo e quindi non è un sottospazio.</p>
-<p>L'esempio del sistema $3 \\times 4$ (primo esempio della lezione) lo mostra chiaramente: le soluzioni hanno la forma "soluzione particolare + sottospazio", non "sottospazio".</p>`
+            title: "Domanda orale classica: struttura delle soluzioni",
+            icon: "🎤",
+            content: `<p><strong>Domanda:</strong> "Quando l'insieme delle soluzioni di un sistema lineare è un sottospazio vettoriale?"</p>
+<p><strong>Risposta attesa:</strong> Se e solo se il sistema è omogeneo. La necessità segue dal fatto che un sottospazio contiene $\\boldsymbol{0}$, e sostituendo si ottiene $\\boldsymbol{b} = \\boldsymbol{0}$. La sufficienza si dimostra verificando le tre proprietà di sottospazio, usando la linearità del prodotto matrice-vettore.</p>`
         }
     ],
 
     oral_cards: [
         {
             type: "definizione",
-            front: "Quando l'insieme delle soluzioni di un sistema lineare è un sottospazio vettoriale?",
-            back: "Se e solo se il sistema è <strong>omogeneo</strong> ($A\\boldsymbol{x} = \\boldsymbol{0}$). Se $\\boldsymbol{b} \\neq \\boldsymbol{0}$, le soluzioni non contengono il vettore nullo e quindi non formano un sottospazio."
+            front: "Cosa si intende per equazione sovrabbondante in un sistema lineare?",
+            back: "Un'equazione è <strong>sovrabbondante</strong> se è combinazione lineare delle altre equazioni del sistema. La sua eliminazione non modifica lo spazio delle soluzioni. Le equazioni sovrabbondanti sono quelle le cui righe non fanno parte del minore fondamentale."
+        },
+        {
+            type: "domanda",
+            front: "Quando l'insieme delle soluzioni di $A\\boldsymbol{x} = \\boldsymbol{b}$ è un sottospazio vettoriale di $\\mathbb{R}^n$?",
+            back: "Se e solo se il sistema è <strong>omogeneo</strong>, cioè $\\boldsymbol{b} = \\boldsymbol{0}$. La necessità segue dal fatto che un sottospazio contiene il vettore nullo. La sufficienza si dimostra verificando chiusura per somma e per prodotto scalare, usando la linearità: $A(\\boldsymbol{x}+\\boldsymbol{y}) = A\\boldsymbol{x}+A\\boldsymbol{y}$ e $A(c\\boldsymbol{x}) = cA\\boldsymbol{x}$."
         },
         {
             type: "formula",
             front: "Qual è la dimensione dello spazio delle soluzioni di un sistema omogeneo $A\\boldsymbol{x} = \\boldsymbol{0}$ con $n$ incognite e $\\text{rango}(A) = p$?",
-            back: "$\\dim(\\text{Sol}(S)) = n - p$. I $n - p$ vettori ottenuti ponendo ciascun parametro libero uguale a 1 e gli altri a 0 sono linearmente indipendenti per costruzione e formano una base."
+            back: "$$\\dim(\\text{Sol}(S)) = n - p$$I $n-p$ vettori base si ottengono assegnando ai parametri liberi i valori canonici (un parametro = 1, gli altri = 0). Sono linearmente indipendenti perché ciascuno ha un 1 in una posizione dove gli altri hanno 0."
         },
         {
-            type: "domanda",
-            front: "Descrivi l'algoritmo per risolvere un sistema rettangolare compatibile con la regola di Cramer.",
-            back: "1) Verificare compatibilità con Rouché-Capelli: $\\text{rango}(A) = \\text{rango}(B) = p$. 2) Trovare un minore fondamentale $M$ di ordine $p$. 3) Eliminare le $m - p$ equazioni sovrabbondanti. 4) Le $n - p$ incognite fuori dalle colonne di $M$ diventano parametri liberi. 5) Spostare i parametri al secondo membro: si ottiene un sistema di Cramer $p \\times p$. 6) Risolvere con Cramer."
+            type: "dimostrazione",
+            front: "Descrivi l'algoritmo per risolvere un sistema rettangolare $m \\times n$ compatibile con Cramer.",
+            back: "1. Verificare compatibilità: $\\text{rango}(A) = \\text{rango}(B) = p$. 2. Trovare un minore fondamentale $M$ di ordine $p$ con $\\det(M) \\neq 0$. 3. Eliminare le $m-p$ equazioni sovrabbondanti (righe non nel minore). 4. Le $n-p$ incognite fuori dalle colonne di $M$ diventano parametri liberi. 5. Spostare i parametri a destra → sistema di Cramer $p \\times p$. 6. Risolvere con Cramer: le $p$ incognite principali sono espresse in funzione degli $n-p$ parametri."
         },
         {
             type: "definizione",
-            front: "Qual è la differenza tra rappresentazione cartesiana e parametrica di un sottospazio?",
-            back: "<strong>Cartesiana:</strong> $U = \\{\\boldsymbol{x} \\in \\mathbb{R}^n \\mid A\\boldsymbol{x} = \\boldsymbol{0}\\}$ — equazioni che i vettori devono soddisfare. <strong>Parametrica:</strong> $\\boldsymbol{x} = \\lambda_1\\boldsymbol{u}_1 + \\dots + \\lambda_h\\boldsymbol{u}_h$ — combinazioni lineari di una base. Per un sottospazio di dimensione $h$ in $\\mathbb{R}^n$: la cartesiana usa $n - h$ equazioni, la parametrica usa $h$ parametri."
+            front: "Cosa sono la rappresentazione cartesiana e quella parametrica di un sottospazio vettoriale?",
+            back: "<strong>Cartesiana:</strong> sistema omogeneo $A\\boldsymbol{x} = \\boldsymbol{0}$ tale che $U = \\text{Sol}(S)$ (equazioni che il sottospazio soddisfa). <strong>Parametrica:</strong> espressione $\\boldsymbol{x} = \\lambda_1\\boldsymbol{u}_1 + \\dots + \\lambda_h\\boldsymbol{u}_h$ dove $\\{\\boldsymbol{u}_1,\\dots,\\boldsymbol{u}_h\\}$ è una base di $U$ (generatori del sottospazio). Per $U$ di dimensione $h$ in $\\mathbb{R}^n$: servono $h$ vettori base (parametrica) e $n-h$ equazioni (cartesiana)."
         },
         {
             type: "dimostrazione",
-            front: "Come si passa dalla rappresentazione parametrica a quella cartesiana di un sottospazio?",
-            back: "Data la base $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$: 1) Costruire la matrice $M$ con colonne $\\boldsymbol{x}, \\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h$ (matrice $n \\times (h+1)$). 2) Trovare un minore fondamentale di ordine $h$ nelle ultime $h$ colonne. 3) Per il Teorema degli Orlati, imporre $\\det(\\text{orlato}) = 0$ per tutti gli orlati di ordine $h+1$. 4) Sviluppando lungo la colonna di $\\boldsymbol{x}$, ogni orlato dà un'equazione lineare omogenea nelle $x_i$."
+            front: "Come si passa da una rappresentazione parametrica a una cartesiana?",
+            back: "Data la base $\\{\\boldsymbol{u}_1,\\dots,\\boldsymbol{u}_h\\}$, si costruisce la matrice $M$ con colonne $\\boldsymbol{x}, \\boldsymbol{u}_1,\\dots,\\boldsymbol{u}_h$ ($n \\times (h+1)$). Si trova un minore di ordine $h$ non nullo nelle colonne dei $\\boldsymbol{u}_k$. Si calcolano tutti gli orlati di ordine $h+1$ (aggiungendo la colonna di $\\boldsymbol{x}$ e ciascuna riga esclusa) e si impone $\\det(\\text{orlato}) = 0$. Le $n-h$ equazioni risultanti formano la rappresentazione cartesiana."
         },
         {
             type: "tranello",
-            front: "Perché non si può applicare direttamente Cramer a un sistema rettangolare?",
-            back: "La regola di Cramer richiede un sistema <strong>quadrato</strong> ($n$ equazioni, $n$ incognite) con determinante della matrice dei coefficienti $\\neq 0$. Un sistema rettangolare ha $m \\neq n$: bisogna prima ridurlo eliminando le equazioni sovrabbondanti, poi trattare le variabili extra come parametri per ottenere un sistema quadrato."
+            front: "Un sistema non omogeneo $x + y = 1$ ha soluzioni che formano un sottospazio vettoriale?",
+            back: "<strong>No!</strong> Le soluzioni $(1,0)$ e $(0,1)$ appartengono a $\\text{Sol}(S)$, ma la loro somma $(1,1)$ non è soluzione ($1+1=2 \\neq 1$). La chiusura per somma fallisce. Inoltre, il vettore nullo $(0,0)$ non è soluzione. L'insieme delle soluzioni di un sistema non omogeneo è uno <strong>spazio affine</strong>, non un sottospazio vettoriale."
         },
         {
             type: "domanda",
-            front: "Enuncia il corollario sulla dualità dimensione–equazioni e dai un esempio.",
-            back: "Un sottospazio $U \\subseteq \\mathbb{R}^n$ di dimensione $h$ è descritto da $n - h$ equazioni lineari omogenee indipendenti. Ogni equazione indipendente abbassa la dimensione di 1. Esempio: un piano in $\\mathbb{R}^3$ ha dimensione 2 e serve $3 - 2 = 1$ equazione; una retta in $\\mathbb{R}^3$ ha dimensione 1 e servono $3 - 1 = 2$ equazioni."
-        },
-        {
-            type: "dimostrazione",
-            front: "Dimostra che l'insieme delle soluzioni di un sistema omogeneo è un sottospazio vettoriale.",
-            back: "Sia $U = \\{\\boldsymbol{x} \\mid A\\boldsymbol{x} = \\boldsymbol{0}\\}$. 1) $\\boldsymbol{0} \\in U$: $A\\boldsymbol{0} = \\boldsymbol{0}$ ✓. 2) Chiusura per somma: se $A\\boldsymbol{x} = \\boldsymbol{0}$ e $A\\boldsymbol{y} = \\boldsymbol{0}$, allora $A(\\boldsymbol{x}+\\boldsymbol{y}) = A\\boldsymbol{x} + A\\boldsymbol{y} = \\boldsymbol{0}$ ✓. 3) Chiusura per scalare: $A(c\\boldsymbol{x}) = c(A\\boldsymbol{x}) = c\\boldsymbol{0} = \\boldsymbol{0}$ ✓."
+            front: "Quante equazioni linearmente indipendenti servono per descrivere un sottospazio di dimensione $h$ in $\\mathbb{R}^n$?",
+            back: "Servono esattamente $n - h$ equazioni linearmente indipendenti. Ad esempio, una retta ($h=1$) in $\\mathbb{R}^3$ richiede $3-1=2$ equazioni; un piano ($h=2$) in $\\mathbb{R}^3$ richiede $3-2=1$ equazione (un iperpiano)."
         },
         {
             type: "tranello",
-            front: "Nella dimostrazione che $\\dim(\\text{Sol}(S)) = n - p$, perché non basta dire 'ci sono $n - p$ parametri liberi'?",
-            back: "Bisogna dimostrare che i vettori corrispondenti ai parametri sono <strong>linearmente indipendenti</strong> (e non solo generatori). Per costruzione, il $k$-esimo vettore $\\boldsymbol{v}_k$ ha 1 nella posizione della $k$-esima variabile libera e 0 nelle posizioni delle altre variabili libere. Quindi se $c_1\\boldsymbol{v}_1 + \\dots + c_{n-p}\\boldsymbol{v}_{n-p} = \\boldsymbol{0}$, guardando la componente della variabile libera $k$-esima si ottiene subito $c_k = 0$."
-        },
-        {
-            type: "formula",
-            front: "In un sistema omogeneo 4×4 con rango della matrice uguale a 3, qual è la struttura dello spazio delle soluzioni?",
-            back: "Lo spazio delle soluzioni ha dimensione $n - p = 4 - 3 = 1$: è una <strong>retta</strong> passante per l'origine in $\\mathbb{R}^4$. C'è un solo parametro libero e la base è formata da un singolo vettore. Ad esempio, nell'esempio della lezione: $U = \\text{Span}\\{(-4, 4, 1, 3)\\}$."
+            front: "Nell'algoritmo di riduzione, le righe sovrabbondanti sono sempre le ultime?",
+            back: "<strong>No!</strong> Le righe sovrabbondanti sono quelle che <strong>non fanno parte del minore fondamentale</strong>. Se il minore fondamentale è formato dalle righe 1, 3 e 5, allora le righe sovrabbondanti sono la 2 e la 4, indipendentemente dalla loro posizione nel sistema."
         }
     ]
 };
