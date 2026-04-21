@@ -1,0 +1,329 @@
+const LESSON = {
+    id: "L19", date: "Lezione 19 — 20 Apr 2026",
+    title: "Rappresentazione Cartesiana e Sistemi Lineari",
+    abstract: "Dalla rappresentazione parametrica a quella cartesiana di un sottospazio vettoriale: algoritmo costruttivo, calcolo di intersezioni tramite equazioni, sistema omogeneo associato, struttura delle soluzioni come sottospazio affine e proprietà fondamentali dei sottospazi affini.",
+
+    sections: [
+        {
+            id: "s19-intro",
+            type: "note_box",
+            title: "Panoramica della lezione",
+            icon: "🗺️",
+            content: `<p>In questa lezione colleghiamo due modi di descrivere un sottospazio vettoriale: la <strong>rappresentazione parametrica</strong> (tramite generatori/base) e la <strong>rappresentazione cartesiana</strong> (tramite equazioni). Vedremo un algoritmo costruttivo per passare dalla prima alla seconda, applicheremo il metodo al calcolo di intersezioni, e infine studieremo la struttura dell'insieme delle soluzioni di un sistema lineare compatibile, scoprendo che ha la forma di un <strong>sottospazio affine</strong>.</p>`
+        },
+        {
+            id: "s19-esistenza-cartesiana",
+            type: "section",
+            title: "Rappresentazione Cartesiana di un Sottospazio",
+            icon: "📐",
+            content: `<p>L'obiettivo è stabilire che ogni sottospazio $U$ di $\\mathbb{R}^n$ ammette una descrizione tramite equazioni lineari omogenee, e fornire un <strong>algoritmo pratico</strong> per trovarle a partire da una base.</p>
+<p><strong>Proposizione (Esistenza della rappresentazione cartesiana):</strong> Dato un sottospazio $U$ di $\\mathbb{R}^n$, esiste una sua rappresentazione cartesiana.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione costruttiva",
+                    content: `<p>La dimostrazione è <strong>costruttiva</strong>: descrive esattamente come calcolare le equazioni. Sia $\\{\\vec{u}_1, \\dots, \\vec{u}_h\\}$ una base di $U$, con $h = \\dim(U)$. Prendiamo un generico vettore $\\vec{x} = (x_1, \\dots, x_n)^T \\in \\mathbb{R}^n$.</p>
+<p>Il vettore $\\vec{x}$ appartiene a $U$ se e solo se è combinazione lineare dei vettori della base. Costruiamo la matrice $M$ con colonne $\\vec{u}_1, \\dots, \\vec{u}_h, \\vec{x}$:</p>
+<p>$$M = \\begin{pmatrix} | & & | & | \\\\ \\vec{u}_1 & \\cdots & \\vec{u}_h & \\vec{x} \\\\ | & & | & | \\end{pmatrix}$$</p>
+<p>Questa è una matrice $n \\times (h+1)$. Per il <strong>teorema di Rouché-Capelli</strong>, $\\vec{x}$ è combinazione lineare di $\\vec{u}_1, \\dots, \\vec{u}_h$ se e solo se il rango di $M$ è uguale al rango della sottomatrice formata dalle prime $h$ colonne. Poiché $\\vec{u}_1, \\dots, \\vec{u}_h$ sono linearmente indipendenti (formano una base), il rango di quella sottomatrice è esattamente $h$. Quindi:</p>
+<p>$$\\vec{x} \\in U \\iff \\operatorname{rk}(M) = h$$</p>
+<p>Applichiamo ora l'<strong>eliminazione di Gauss</strong> a $M$ per ridurla a scala, ottenendo $S$. Le prime $h$ colonne sono linearmente indipendenti, quindi le prime $h$ righe di $S$ conterranno $h$ pivot. La struttura di $S$ è:</p>
+<p>$$S = \\begin{pmatrix} \\text{pivot}_1 & \\star & \\cdots & \\star & \\star \\\\ 0 & \\text{pivot}_2 & \\cdots & \\star & \\star \\\\ \\vdots & & \\ddots & \\vdots & \\vdots \\\\ 0 & \\cdots & 0 & \\text{pivot}_h & \\star \\\\ 0 & \\cdots & 0 & 0 & l_{h+1}(\\vec{x}) \\\\ \\vdots & & \\vdots & \\vdots & \\vdots \\\\ 0 & \\cdots & 0 & 0 & l_n(\\vec{x}) \\end{pmatrix}$$</p>
+<p>dove le posizioni segnate con $\\star$ possono contenere valori qualsiasi (non necessariamente nulli), come è convenzione per le matrici a scala.</p>
+<p>Le componenti $l_j(\\vec{x})$ per $j = h+1, \\dots, n$ sono <strong>funzioni lineari omogenee</strong> nelle componenti di $\\vec{x}$. Questo perché le operazioni elementari di riga sono combinazioni lineari delle righe di $M$, e l'ultima colonna di $M$ contiene le variabili $x_1, \\dots, x_n$ — dunque ogni elemento dell'ultima colonna di $S$ è una combinazione lineare di $x_1, \\dots, x_n$ senza termine costante.</p>
+<p>La condizione $\\operatorname{rk}(S) = h$ è soddisfatta se e solo se le ultime $n - h$ righe sono nulle, cioè:</p>
+<p>$$\\begin{cases} l_{h+1}(\\vec{x}) = 0 \\\\ l_{h+2}(\\vec{x}) = 0 \\\\ \\vdots \\\\ l_n(\\vec{x}) = 0 \\end{cases}$$</p>
+<p>Questo sistema di $n - h$ equazioni lineari omogenee è la <strong>rappresentazione cartesiana</strong> di $U$. $\\blacksquare$</p>`
+                },
+                {
+                    subtitle: "Codimensione e caso degli iperpiani",
+                    content: `<p><strong>(i)</strong> Se $\\dim(U) = h$, allora $U$ è descritto da $n - h$ equazioni cartesiane. Il numero $n - h$ è detto <strong>codimensione</strong> di $U$.</p>
+<p><strong>(ii)</strong> Un caso particolarmente importante è quello degli <strong>iperpiani</strong>, cioè sottospazi di dimensione $n - 1$. In questo caso $h = n - 1$, e la matrice $M$ è quadrata $n \\times n$. La condizione $\\operatorname{rk}(M) = n - 1$ equivale a:</p>
+<p>$$\\det(M) = 0$$</p>
+<p>Questa <strong>singola equazione</strong> è la rappresentazione cartesiana dell'iperpiano. Questo metodo è molto comodo perché evita completamente la riduzione di Gauss.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Condizione di appartenenza", latex: "\\vec{x} \\in U \\iff \\operatorname{rk}(M) = h" },
+                { label: "Numero equazioni cartesiane", latex: "\\text{codimensione} = n - \\dim(U)" },
+                { label: "Iperpiano (dim n−1)", latex: "\\det(M) = 0" }
+            ]
+        },
+        {
+            id: "s19-esempi-cartesiana",
+            type: "section",
+            title: "Esempi di Calcolo della Rappresentazione Cartesiana",
+            icon: "✏️",
+            content: `<p>Vediamo due esempi concreti: uno con il metodo di Gauss generale e uno con il metodo del determinante per gli iperpiani.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 1: Sottospazio di R⁴ (metodo di Gauss)",
+                    content: `<p>Trovare una rappresentazione cartesiana di $U \\subset \\mathbb{R}^4$ generato da $\\vec{u}_1 = (-1, 0, 1, 0)^T$ e $\\vec{u}_2 = (-1, 0, 0, 1)^T$.</p>
+<p>Qui $n = 4$, $h = 2$ (i due vettori sono linearmente indipendenti). Ci aspettiamo $n - h = 2$ equazioni. Sia $\\vec{x} = (x, y, z, t)^T$. Costruiamo $M$:</p>
+<p>$$M = \\begin{pmatrix} -1 & -1 & x \\\\ 0 & 0 & y \\\\ 1 & 0 & z \\\\ 0 & 1 & t \\end{pmatrix}$$</p>
+<p><strong>Passo 1:</strong> $R_3 \\leftarrow R_3 + R_1$:</p>
+<p>$$\\begin{pmatrix} -1 & -1 & x \\\\ 0 & 0 & y \\\\ 0 & -1 & x+z \\\\ 0 & 1 & t \\end{pmatrix}$$</p>
+<p><strong>Passo 2:</strong> Scambiamo $R_2 \\leftrightarrow R_3$ per portare il pivot in posizione corretta:</p>
+<p>$$\\begin{pmatrix} -1 & -1 & x \\\\ 0 & -1 & x+z \\\\ 0 & 0 & y \\\\ 0 & 1 & t \\end{pmatrix}$$</p>
+<p><strong>Passo 3:</strong> $R_4 \\leftarrow R_4 + R_2$:</p>
+<p>$$S = \\begin{pmatrix} -1 & -1 & x \\\\ 0 & -1 & x+z \\\\ 0 & 0 & y \\\\ 0 & 0 & x+z+t \\end{pmatrix}$$</p>
+<p>I pivot sono nelle posizioni $(1,1)$ e $(2,2)$, confermando $\\operatorname{rk} = 2$. Imponendo che le ultime due righe siano nulle:</p>
+<p>$$\\begin{cases y = 0 \\\\ x + z + t = 0 \\end{cases}}$$</p>
+<p>Questa è la rappresentazione cartesiana di $U$.</p>`
+                },
+                {
+                    subtitle: "Esempio 2: Piano in R³ (metodo del determinante)",
+                    content: `<p>Trovare una rappresentazione cartesiana di $U \\subset \\mathbb{R}^3$ generato da $(1, -1, 3)^T$ e $(2, 1, 1)^T$.</p>
+<p>Qui $n = 3$, $h = 2$: siamo nel caso di un <strong>iperpiano</strong> (un piano in $\\mathbb{R}^3$). Ci aspettiamo una sola equazione. Sia $\\vec{x} = (x, y, z)^T$. Imponiamo:</p>
+<p>$$\\det \\begin{pmatrix} 1 & 2 & x \\\\ -1 & 1 & y \\\\ 3 & 1 & z \\end{pmatrix} = 0$$</p>
+<p>Sviluppiamo rispetto alla <strong>prima riga</strong> con lo sviluppo di Laplace. Calcoliamo i tre cofattori:</p>
+<p>$$C_{11} = +\\det \\begin{pmatrix} 1 & y \\\\ 1 & z \\end{pmatrix} = z - y$$</p>
+<p>$$C_{12} = -\\det \\begin{pmatrix} -1 & y \\\\ 3 & z \\end{pmatrix} = -(-z - 3y) = z + 3y$$</p>
+<p>$$C_{13} = +\\det \\begin{pmatrix} -1 & 1 \\\\ 3 & 1 \\end{pmatrix} = -1 - 3 = -4$$</p>
+<p>Lo sviluppo dà:</p>
+<p>$$1 \\cdot (z - y) + 2 \\cdot (z + 3y) + x \\cdot (-4) = 0$$</p>
+<p>$$z - y + 2z + 6y - 4x = 0$$</p>
+<p>$$-4x + 5y + 3z = 0 \\quad \\Rightarrow \\quad 4x - 5y - 3z = 0$$</p>
+<p>Questa è l'equazione cartesiana del piano $U$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s19-intersezione",
+            type: "section",
+            title: "Intersezione di Sottospazi Vettoriali",
+            icon: "∩",
+            content: `<p>La rappresentazione cartesiana è particolarmente potente per calcolare l'<strong>intersezione</strong> di sottospazi: un vettore appartiene all'intersezione se e solo se soddisfa contemporaneamente le equazioni di entrambi i sottospazi.</p>
+<p><strong>Proposizione:</strong> Una rappresentazione cartesiana per $U \\cap V$ si ottiene <strong>mettendo a sistema</strong> le equazioni cartesiane di $U$ con quelle di $V$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio: intersezione di due piani in R³",
+                    content: `<p>In $\\mathbb{R}^3$ consideriamo:</p>
+<p>$$U = \\operatorname{span}\\{(1, -1, 3),\\, (2, 1, 1)\\}, \\qquad V = \\operatorname{span}\\{(0, 1, 2),\\, (2, 0, 1)\\}$$</p>
+<p>Dall'esempio precedente: <strong>equazione cartesiana di $U$:</strong> $4x - 5y - 3z = 0$.</p>
+<p>Calcoliamo l'equazione di $V$. Essendo un piano, usiamo il determinante:</p>
+<p>$$\\det \\begin{pmatrix} 0 & 2 & x \\\\ 1 & 0 & y \\\\ 2 & 1 & z \\end{pmatrix} = 0$$</p>
+<p>Sviluppando rispetto alla prima riga:</p>
+<p>$$0 \\cdot \\det \\begin{pmatrix} 0 & y \\\\ 1 & z \\end{pmatrix} - 2 \\cdot \\det \\begin{pmatrix} 1 & y \\\\ 2 & z \\end{pmatrix} + x \\cdot \\det \\begin{pmatrix} 1 & 0 \\\\ 2 & 1 \\end{pmatrix} = 0$$</p>
+<p>$$-2(z - 2y) + x(1) = 0 \\quad \\Rightarrow \\quad x + 4y - 2z = 0$$</p>
+<p>La rappresentazione cartesiana di $U \\cap V$ è il sistema:</p>
+<p>$$\\begin{cases} 4x - 5y - 3z = 0 \\\\ x + 4y - 2z = 0 \\end{cases}$$</p>
+<p>Dalla seconda equazione: $x = 2z - 4y$. Sostituendo nella prima:</p>
+<p>$$4(2z - 4y) - 5y - 3z = 0 \\quad \\Rightarrow \\quad 5z - 21y = 0 \\quad \\Rightarrow \\quad z = \\frac{21}{5}y$$</p>
+<p>Poniamo $y = 5s$ per evitare frazioni. Allora $z = 21s$ e $x = 2(21s) - 4(5s) = 22s$. La soluzione generale è:</p>
+<p>$$(x, y, z) = s\\,(22, 5, 21), \\quad s \\in \\mathbb{R}$$</p>
+<p>Quindi $\\dim(U \\cap V) = 1$ e una base è $\\{(22, 5, 21)\\}$.</p>
+<p><strong>Verifica:</strong></p>
+<ul>
+<li>$4 \\cdot 22 - 5 \\cdot 5 - 3 \\cdot 21 = 88 - 25 - 63 = 0$ ✓</li>
+<li>$22 + 4 \\cdot 5 - 2 \\cdot 21 = 22 + 20 - 42 = 0$ ✓</li>
+</ul>`
+                },
+                {
+                    subtitle: "Metodo alternativo: eguagliare combinazioni lineari",
+                    content: `<p>Esiste un metodo alternativo: eguagliare le combinazioni lineari dei generatori. Un vettore $\\vec{z} \\in U \\cap V$ si scrive come:</p>
+<p>$$\\vec{z} = a(1, -1, 3) + b(2, 1, 1) = c(0, 1, 2) + d(2, 0, 1)$$</p>
+<p>Questa uguaglianza porta a un sistema nelle incognite $a, b, c, d$. <strong>Attenzione:</strong> il sistema in $a, b, c, d$ <strong>non è</strong> una rappresentazione cartesiana di $U \\cap V$ — le equazioni cartesiane sono sempre nelle coordinate dello spazio ambiente ($x, y, z$). Il metodo delle equazioni cartesiane è generalmente più diretto.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Intersezione via equazioni", latex: "U \\cap V: \\text{sistema delle eq. cartesiane di } U \\text{ e } V" }
+            ]
+        },
+        {
+            id: "s19-alert-metodo-intersezione",
+            type: "alert_box",
+            title: "⚠️ Non confondere i due sistemi!",
+            icon: "⚠️",
+            content: `<p>Quando calcoli $U \\cap V$, il sistema ausiliario nelle incognite $a, b, c, d$ (ottenuto eguagliando le combinazioni lineari) <strong>non è la rappresentazione cartesiana</strong> dell'intersezione. Le equazioni cartesiane sono sempre nelle variabili $x_1, \\dots, x_n$ dello spazio ambiente. Confondere i due sistemi è un errore comune all'esame.</p>`
+        },
+        {
+            id: "s19-sistema-omogeneo",
+            type: "section",
+            title: "Il Sistema Omogeneo Associato",
+            icon: "🔗",
+            content: `<p>Passiamo ora a studiare la struttura dell'insieme delle soluzioni di un sistema lineare <strong>non necessariamente omogeneo</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione",
+                    content: `<p><strong>Definizione:</strong> Dato un sistema lineare $S: A\\vec{x} = \\vec{b}$, il sistema</p>
+<p>$$S^*: A\\vec{x} = \\vec{0}$$</p>
+<p>ottenuto ponendo il vettore dei termini noti uguale a $\\vec{0}$, si chiama <strong>sistema lineare omogeneo associato</strong> a $S$.</p>`
+                },
+                {
+                    subtitle: "Teorema: struttura dell'insieme delle soluzioni",
+                    content: `<p><strong>Teorema:</strong> Sia $S: A\\vec{x} = \\vec{b}$ un sistema lineare compatibile e sia $\\vec{y}_0$ una sua soluzione particolare. Allora:</p>
+<p>$$\\operatorname{Sol}(S) = \\{\\vec{y}_0 + \\vec{u} \\mid \\vec{u} \\in \\operatorname{Sol}(S^*)\\}$$</p>
+<p>In parole: la <strong>soluzione generale</strong> di $S$ si ottiene sommando una soluzione particolare $\\vec{y}_0$ alla soluzione generale del sistema omogeneo associato.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Dimostriamo la doppia inclusione.</p>
+<p><strong>($\\subseteq$)</strong> Sia $\\vec{y}$ una soluzione di $S$, cioè $A\\vec{y} = \\vec{b}$. Poiché anche $A\\vec{y}_0 = \\vec{b}$, sottraiamo:</p>
+<p>$$A\\vec{y} - A\\vec{y}_0 = \\vec{b} - \\vec{b} = \\vec{0}$$</p>
+<p>Per la linearità del prodotto matrice-vettore: $A(\\vec{y} - \\vec{y}_0) = \\vec{0}$. Quindi $\\vec{u} := \\vec{y} - \\vec{y}_0 \\in \\operatorname{Sol}(S^*)$, e $\\vec{y} = \\vec{y}_0 + \\vec{u}$.</p>
+<p><strong>($\\supseteq$)</strong> Sia $\\vec{y} = \\vec{y}_0 + \\vec{u}$ con $\\vec{u} \\in \\operatorname{Sol}(S^*)$. Allora:</p>
+<p>$$A\\vec{y} = A(\\vec{y}_0 + \\vec{u}) = A\\vec{y}_0 + A\\vec{u} = \\vec{b} + \\vec{0} = \\vec{b}$$</p>
+<p>Quindi $\\vec{y}$ è soluzione di $S$. $\\blacksquare$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Sistema omogeneo associato", latex: "S^*: A\\vec{x} = \\vec{0}" },
+                { label: "Struttura delle soluzioni", latex: "\\operatorname{Sol}(S) = \\vec{y}_0 + \\operatorname{Sol}(S^*)" },
+                { label: "Dimensione Sol(S*)", latex: "\\dim(\\operatorname{Sol}(S^*)) = n - \\operatorname{rk}(A)" }
+            ]
+        },
+        {
+            id: "s19-sottospazio-affine",
+            type: "section",
+            title: "Sottospazi Affini",
+            icon: "↗️",
+            content: `<p>L'insieme delle soluzioni di un sistema lineare compatibile ha una struttura geometrica precisa: è un <strong>sottospazio affine</strong>, cioè una copia traslata di un sottospazio vettoriale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio illustrativo in R²",
+                    content: `<p>Consideriamo il sistema $S: x_1 + x_2 = 3$ in $\\mathbb{R}^2$.</p>
+<p>Una soluzione particolare è $\\vec{y}_0 = (3, 0)^T$. Il sistema omogeneo associato è:</p>
+<p>$$S^*: x_1 + x_2 = 0 \\quad \\Rightarrow \\quad x_1 = -x_2$$</p>
+<p>Le soluzioni di $S^*$ formano $\\operatorname{Sol}(S^*) = \\{t(-1, 1)^T \\mid t \\in \\mathbb{R}\\}$: una <strong>retta passante per l'origine</strong> con direzione $(-1, 1)^T$.</p>
+<p>Per il teorema:</p>
+<p>$$\\operatorname{Sol}(S) = \\left\\{\\begin{pmatrix} 3 \\\\ 0 \\end{pmatrix} + t\\begin{pmatrix} -1 \\\\ 1 \\end{pmatrix} \\;\\middle|\\; t \\in \\mathbb{R}\\right\\} = \\left\\{\\begin{pmatrix} 3 - t \\\\ t \\end{pmatrix} \\;\\middle|\\; t \\in \\mathbb{R}\\right\\}$$</p>
+<p>Geometricamente, $\\operatorname{Sol}(S)$ è la retta $x_1 + x_2 = 3$, che <strong>non passa per l'origine</strong>. È ottenuta traslando la retta $x_1 + x_2 = 0$ del vettore $\\vec{y}_0 = (3, 0)^T$.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Sottospazio affine come retta traslata in R²</strong></p>
+  <p><em>Mostrare il piano cartesiano con due rette parallele: la retta $x_1 + x_2 = 0$ (passante per l'origine, in tratteggio) e la retta $x_1 + x_2 = 3$ (traslata, in linea continua). Evidenziare il vettore di traslazione $\\vec{y}_0 = (3, 0)$ come freccia dall'origine al punto $(3, 0)$ sulla retta traslata.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Questo è un <strong>sottospazio affine</strong>: non è un sottospazio vettoriale (non contiene l'origine), ma è ottenuto traslando un sottospazio vettoriale di un vettore fissato.</p>`
+                },
+                {
+                    subtitle: "Dimensione di un sottospazio affine",
+                    content: `<p>La <strong>dimensione</strong> del sottospazio affine $\\operatorname{Sol}(S) = \\vec{y}_0 + \\operatorname{Sol}(S^*)$ si definisce come la dimensione di $\\operatorname{Sol}(S^*)$, ed è uguale a $n - \\operatorname{rk}(A)$.</p>
+<p>Il sottospazio affine ha la stessa "forma" e "dimensione" del sottospazio vettoriale $\\operatorname{Sol}(S^*)$, ma in generale non passa per l'origine.</p>`
+                }
+            ]
+        },
+        {
+            id: "s19-proprieta-affini",
+            type: "section",
+            title: "Proprietà dei Sottospazi Affini",
+            icon: "🔍",
+            content: `<p>Studiamo ora quando due sottospazi affini coincidono. Come conseguenza, mostreremo che la dimensione di un sottospazio affine è un invariante: non dipende dalla scelta della soluzione particolare né dal sistema che lo descrive.</p>`,
+            subsections: [
+                {
+                    subtitle: "Proposizione: uguaglianza di sottospazi affini",
+                    content: `<p><strong>Proposizione:</strong> Siano $\\vec{y}_0, \\vec{z}_0 \\in \\mathbb{R}^n$ e $U, W$ sottospazi di $\\mathbb{R}^n$. Allora:</p>
+<ol>
+<li>$\\vec{y}_0 \\in \\vec{y}_0 + U$.</li>
+<li>$\\vec{y}_0 + U = \\vec{z}_0 + W \\iff U = W$ e $\\vec{y}_0 - \\vec{z}_0 \\in U$.</li>
+</ol>
+<p><strong>Significato intuitivo del punto 2:</strong> due traslati di sottospazi coincidono se e solo se i sottospazi sono gli stessi <em>e</em> la differenza dei punti di traslazione appartiene al sottospazio.</p>`
+                },
+                {
+                    subtitle: "Esempio geometrico in R²",
+                    content: `<p>In $\\mathbb{R}^2$, consideriamo $U = \\operatorname{span}\\{(1,1)\\}$. Allora:</p>
+<p>$$(1, 0) + \\operatorname{span}\\{(1, 1)\\} = (3, -2) + \\operatorname{span}\\{(1, 1)\\}$$</p>
+<p>perché $(1, 0) - (3, -2) = (-2, 2) = -2 \\cdot (1, 1) \\in \\operatorname{span}\\{(1, 1)\\}$.</p>
+<p>Geometricamente: entrambi descrivono la stessa retta, ottenuta traslando la retta $y = x$ in due modi diversi. I due "punti base" $(1, 0)$ e $(3, -2)$ sono entrambi sulla stessa retta traslata.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p><strong>Punto 1:</strong> Poiché $\\vec{0} \\in U$ (essendo $U$ sottospazio), $\\vec{y}_0 = \\vec{y}_0 + \\vec{0} \\in \\vec{y}_0 + U$.</p>
+<p><strong>Punto 2, direzione ($\\Rightarrow$):</strong> Supponiamo $\\vec{y}_0 + U = \\vec{z}_0 + W$.</p>
+<p><em>Mostriamo che $\\vec{y}_0 - \\vec{z}_0 \\in U$:</em> dal punto 1, $\\vec{y}_0 \\in \\vec{y}_0 + U = \\vec{z}_0 + W$, quindi esiste $\\vec{w} \\in W$ con $\\vec{y}_0 = \\vec{z}_0 + \\vec{w}$, cioè $\\vec{y}_0 - \\vec{z}_0 = \\vec{w} \\in W$. Simmetricamente, $\\vec{z}_0 \\in \\vec{z}_0 + W = \\vec{y}_0 + U$, quindi esiste $\\vec{u} \\in U$ con $\\vec{z}_0 = \\vec{y}_0 + \\vec{u}$, cioè $\\vec{z}_0 - \\vec{y}_0 = \\vec{u} \\in U$. Poiché $\\vec{z}_0 - \\vec{y}_0 \\in U$ e $U$ è un sottospazio (chiuso per moltiplicazione scalare), anche $-(\\vec{z}_0 - \\vec{y}_0) = \\vec{y}_0 - \\vec{z}_0 \\in U$.</p>
+<p><em>Mostriamo $U = W$:</em> sia $\\vec{u} \\in U$. Allora $\\vec{y}_0 + \\vec{u} \\in \\vec{y}_0 + U = \\vec{z}_0 + W$, quindi esiste $\\vec{w} \\in W$ con $\\vec{y}_0 + \\vec{u} = \\vec{z}_0 + \\vec{w}$. Da qui $\\vec{u} = (\\vec{z}_0 - \\vec{y}_0) + \\vec{w}$. Poiché $\\vec{z}_0 - \\vec{y}_0 \\in W$ (mostrato sopra, dato che $\\vec{y}_0 - \\vec{z}_0 \\in W$ e $W$ è chiuso per opposti) e $\\vec{w} \\in W$, la somma $\\vec{u} \\in W$. Quindi $U \\subseteq W$. La dimostrazione di $W \\subseteq U$ è analoga.</p>
+<p><strong>Direzione ($\\Leftarrow$):</strong> Supponiamo $U = W$ e $\\vec{y}_0 - \\vec{z}_0 \\in U$. Sia $\\vec{x} \\in \\vec{y}_0 + U$, cioè $\\vec{x} = \\vec{y}_0 + \\vec{u}$ per qualche $\\vec{u} \\in U$. Scriviamo:</p>
+<p>$$\\vec{x} = \\vec{z}_0 + (\\vec{y}_0 - \\vec{z}_0) + \\vec{u} = \\vec{z}_0 + \\underbrace{((\\vec{y}_0 - \\vec{z}_0) + \\vec{u})}_{\\in U = W}$$</p>
+<p>Quindi $\\vec{x} \\in \\vec{z}_0 + W$. L'inclusione opposta è simmetrica. $\\blacksquare$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Uguaglianza sottospazi affini", latex: "\\vec{y}_0 + U = \\vec{z}_0 + W \\iff U = W \\text{ e } \\vec{y}_0 - \\vec{z}_0 \\in U" }
+            ]
+        },
+        {
+            id: "s19-corollario-rango",
+            type: "section",
+            title: "Invarianza del Rango per Sottospazi Affini",
+            icon: "🎯",
+            content: `<p>Come conseguenza della proposizione precedente, possiamo dimostrare che la dimensione di un sottospazio affine è un <strong>invariante</strong>: non dipende dal sistema di equazioni scelto per descriverlo.</p>`,
+            subsections: [
+                {
+                    subtitle: "Corollario",
+                    content: `<p><strong>Corollario:</strong> Se due sistemi lineari compatibili $S$ e $T$ (con $n$ incognite) hanno lo stesso insieme di soluzioni, $\\operatorname{Sol}(S) = \\operatorname{Sol}(T)$, allora hanno lo <strong>stesso rango</strong>.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Scriviamo $\\operatorname{Sol}(S) = \\vec{y}_0 + U$ e $\\operatorname{Sol}(T) = \\vec{z}_0 + W$, dove $U = \\operatorname{Sol}(S^*)$ e $W = \\operatorname{Sol}(T^*)$.</p>
+<p>Dall'ipotesi $\\vec{y}_0 + U = \\vec{z}_0 + W$, la proposizione precedente garantisce $U = W$.</p>
+<p>Quindi $\\dim(U) = \\dim(W)$, cioè $n - \\operatorname{rk}(S) = n - \\operatorname{rk}(T)$, che implica $\\operatorname{rk}(S) = \\operatorname{rk}(T)$. $\\blacksquare$</p>`
+                },
+                {
+                    subtitle: "Significato geometrico",
+                    content: `<p>Il corollario ci dice che se due sistemi compatibili descrivono lo <strong>stesso sottoinsieme</strong> di $\\mathbb{R}^n$ (la stessa retta, lo stesso piano, ecc.), allora la "dimensione" di tale sottoinsieme è <strong>ben definita</strong>: è $n - \\operatorname{rk}(A)$, indipendentemente dal sistema scelto per descriverlo. Questa è una proprietà fondamentale che giustifica la definizione di dimensione di un sottospazio affine.</p>`
+                }
+            ]
+        },
+        {
+            id: "s19-oral-riepilogo",
+            type: "oral_box",
+            title: "Domanda orale tipica: Rappresentazione cartesiana",
+            icon: "🎤",
+            content: `<p><strong>"Come si passa dalla rappresentazione parametrica a quella cartesiana di un sottospazio?"</strong></p>
+<p>Risposta attesa: si costruisce la matrice $M$ con colonne i generatori e il vettore generico $\\vec{x}$, si riduce a scala con Gauss, e si impone che le ultime $n - h$ componenti dell'ultima colonna siano nulle. Per iperpiani ($h = n - 1$), basta imporre $\\det(M) = 0$.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cos'è la codimensione di un sottospazio $U$ di $\\mathbb{R}^n$?",
+            back: "La codimensione è il numero $n - \\dim(U)$, ovvero il numero di equazioni cartesiane necessarie per descrivere $U$. Se $\\dim(U) = h$, servono $n - h$ equazioni."
+        },
+        {
+            type: "dimostrazione",
+            front: "Descrivi l'algoritmo per trovare la rappresentazione cartesiana di un sottospazio $U \\subset \\mathbb{R}^n$ a partire da una sua base.",
+            back: "Si costruisce la matrice $M$ con colonne $\\vec{u}_1, \\dots, \\vec{u}_h, \\vec{x}$ (base + vettore generico). Si riduce $M$ a scala con Gauss. Le prime $h$ righe hanno pivot; le ultime $n - h$ righe contengono funzioni lineari $l_j(\\vec{x})$ nell'ultima colonna. La condizione $\\operatorname{rk}(M) = h$ impone $l_j(\\vec{x}) = 0$ per $j = h+1, \\dots, n$: queste sono le equazioni cartesiane."
+        },
+        {
+            type: "formula",
+            front: "Come si trova l'equazione cartesiana di un iperpiano (sottospazio di dimensione $n - 1$)?",
+            back: "La matrice $M$ è quadrata $n \\times n$. La condizione di appartenenza diventa $\\det(M) = 0$. Questa singola equazione è la rappresentazione cartesiana dell'iperpiano."
+        },
+        {
+            type: "domanda",
+            front: "Come si calcola una rappresentazione cartesiana dell'intersezione $U \\cap V$?",
+            back: "Si mettono a sistema le equazioni cartesiane di $U$ con quelle di $V$. Un vettore $\\vec{x} \\in U \\cap V$ se e solo se soddisfa contemporaneamente tutte le equazioni di entrambi i sottospazi."
+        },
+        {
+            type: "tranello",
+            front: "Se trovi $U \\cap V$ eguagliando le combinazioni lineari dei generatori ($a\\vec{u}_1 + b\\vec{u}_2 = c\\vec{v}_1 + d\\vec{v}_2$), il sistema in $a, b, c, d$ è la rappresentazione cartesiana dell'intersezione?",
+            back: "No! Il sistema in $a, b, c, d$ è un sistema ausiliario. Le equazioni cartesiane di $U \\cap V$ devono essere nelle coordinate dello spazio ambiente ($x_1, \\dots, x_n$). Il metodo delle equazioni cartesiane è più diretto e fornisce direttamente il risultato corretto."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è il sistema lineare omogeneo associato a $S: A\\vec{x} = \\vec{b}$?",
+            back: "È il sistema $S^*: A\\vec{x} = \\vec{0}$, ottenuto ponendo il vettore dei termini noti uguale al vettore nullo."
+        },
+        {
+            type: "dimostrazione",
+            front: "Enuncia e dimostra il teorema sulla struttura delle soluzioni di un sistema lineare compatibile.",
+            back: "Se $\\vec{y}_0$ è una soluzione particolare di $S: A\\vec{x} = \\vec{b}$, allora $\\operatorname{Sol}(S) = \\{\\vec{y}_0 + \\vec{u} \\mid \\vec{u} \\in \\operatorname{Sol}(S^*)\\}$. Dim: ($\\subseteq$) se $A\\vec{y} = \\vec{b}$, allora $A(\\vec{y} - \\vec{y}_0) = \\vec{0}$, quindi $\\vec{y} = \\vec{y}_0 + \\vec{u}$ con $\\vec{u} \\in \\operatorname{Sol}(S^*)$. ($\\supseteq$) se $\\vec{u} \\in \\operatorname{Sol}(S^*)$, allora $A(\\vec{y}_0 + \\vec{u}) = \\vec{b} + \\vec{0} = \\vec{b}$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è un sottospazio affine? Qual è la sua dimensione?",
+            back: "Un sottospazio affine è un insieme della forma $\\vec{y}_0 + U = \\{\\vec{y}_0 + \\vec{u} \\mid \\vec{u} \\in U\\}$, dove $U$ è un sottospazio vettoriale e $\\vec{y}_0$ è un vettore fissato. È una copia traslata di $U$. La sua dimensione è $\\dim(U) = n - \\operatorname{rk}(A)$. In generale non è un sottospazio vettoriale (non contiene l'origine se $\\vec{y}_0 \\notin U$)."
+        },
+        {
+            type: "domanda",
+            front: "Quando due sottospazi affini $\\vec{y}_0 + U$ e $\\vec{z}_0 + W$ sono uguali?",
+            back: "Se e solo se $U = W$ (stesso sottospazio di direzione) e $\\vec{y}_0 - \\vec{z}_0 \\in U$ (la differenza dei punti di traslazione appartiene al sottospazio). Esempio: in $\\mathbb{R}^2$, $(1,0) + \\operatorname{span}\\{(1,1)\\} = (3,-2) + \\operatorname{span}\\{(1,1)\\}$ perché $(1,0) - (3,-2) = (-2,2) = -2(1,1) \\in \\operatorname{span}\\{(1,1)\\}$."
+        },
+        {
+            type: "domanda",
+            front: "Se due sistemi compatibili hanno lo stesso insieme di soluzioni, cosa si può dire dei loro ranghi?",
+            back: "Hanno lo stesso rango. Infatti $\\operatorname{Sol}(S) = \\vec{y}_0 + U$ e $\\operatorname{Sol}(T) = \\vec{z}_0 + W$; dall'uguaglianza dei sottospazi affini segue $U = W$, quindi $n - \\operatorname{rk}(S) = \\dim(U) = \\dim(W) = n - \\operatorname{rk}(T)$, cioè $\\operatorname{rk}(S) = \\operatorname{rk}(T)$. La dimensione del sottospazio affine è un invariante."
+        }
+    ]
+};
+
