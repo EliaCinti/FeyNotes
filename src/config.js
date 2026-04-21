@@ -103,6 +103,7 @@ const COURSES = {
       { id: 'L17', num: 'Lezione 17', date: '14 Apr 2026', title: 'Sistemi Lineari e Determinanti', abstract: 'Teorema di Rouché-Capelli per la compatibilità dei sistemi lineari, discussione di sistemi con parametro e teorema di Cramer per la risoluzione tramite determinanti.', category: 'sistemi-lineari' },
       { id: 'L18', num: 'Lezione 18', date: '16 Apr 2026', title: 'Sistemi Lineari Rettangolari e Rappresentazioni di Sottospazi', abstract: 'Come risolvere sistemi rettangolari con Cramer, l\'algoritmo generale di riduzione, e il passaggio tra rappresentazione cartesiana e parametrica di sottospazi vettoriali.', category: 'sistemi-lineari' },
       { id: 'L19', num: 'Lezione 19', date: '20 Apr 2026', title: 'Rappresentazione Cartesiana e Sistemi Lineari', abstract: 'Dalla rappresentazione parametrica a quella cartesiana di un sottospazio vettoriale: algoritmo costruttivo, calcolo di intersezioni tramite equazioni, sistema omogeneo associato, struttura delle soluzioni come sottospazio affine e proprietà fondamentali dei sottospazi affini.', category: 'sistemi-lineari' },
+      { id: 'L20', num: 'Lezione 20', date: '21 Apr 2026', title: 'Coordinate e Matrice del Cambiamento di Base', abstract: 'Definizione formale delle coordinate di un vettore rispetto a una base, matrice del cambiamento di base con le sue proprietà (invertibilità, composizione, identità), e l\'applicazione delle coordinate come isomorfismo lineare tra V e ℝⁿ.', category: 'applicazioni-lineari' },
     ],
   },
   controlli: {
