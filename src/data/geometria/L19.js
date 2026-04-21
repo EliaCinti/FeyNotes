@@ -67,7 +67,7 @@ const LESSON = {
 <p><strong>Passo 3:</strong> $R_4 \\leftarrow R_4 + R_2$:</p>
 <p>$$S = \\begin{pmatrix} -1 & -1 & x \\\\ 0 & -1 & x+z \\\\ 0 & 0 & y \\\\ 0 & 0 & x+z+t \\end{pmatrix}$$</p>
 <p>I pivot sono nelle posizioni $(1,1)$ e $(2,2)$, confermando $\\operatorname{rk} = 2$. Imponendo che le ultime due righe siano nulle:</p>
-<p>$$\\begin{cases y = 0 \\\\ x + z + t = 0 \\end{cases}}$$</p>
+<p>$$\\begin{cases} y = 0 \\\\ x + z + t = 0 \\end{cases}$$</p>
 <p>Questa è la rappresentazione cartesiana di $U$.</p>`
                 },
                 {
