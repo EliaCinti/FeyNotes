@@ -1,0 +1,411 @@
+const LESSON = {
+    id: "L19", date: "Lezione 21 — 20 Apr 2026",
+    title: "Moti Relativi e Forze Apparenti",
+    abstract: "Cinematica e dinamica dei moti relativi: formula di Poisson, composizione di velocità e accelerazioni tra sistemi di riferimento, forze apparenti (trascinamento, centrifuga, Coriolis) nei sistemi non inerziali.",
+
+    sections: [
+      {
+        id: "s21-riepilogo-pendolo",
+        type: "section",
+        title: "Riepilogo e Motivazioni: Lo Studio del Pendolo",
+        icon: "🔄",
+        content: `<p>Nelle lezioni precedenti abbiamo studiato il moto del pendolo semplice da diversi punti di vista. Prima di introdurre i moti relativi, riepiloghiamo brevemente questi approcci, poiché ci forniranno la motivazione per un'analisi più generale.</p>`,
+        subsections: [
+          {
+            subtitle: "Approccio Dinamico",
+            content: `<p>Applicando le leggi della dinamica alla massa del pendolo (forza peso e tensione del filo), si deriva l'equazione del moto. Per <strong>piccole oscillazioni</strong>, si ottiene l'equazione dell'oscillatore armonico semplice:</p>
+<p>$$\\frac{d^2\\theta}{dt^2} + \\frac{g}{L}\\theta = 0$$</p>
+<p>Le soluzioni sono funzioni armoniche (seno e coseno), che descrivono il moto periodico del pendolo.</p>`
+          },
+          {
+            subtitle: "Approccio Energetico",
+            content: `<p>Nel pendolo semplice ideale (senza attriti), l'unica forza che compie lavoro è la forza peso, che è conservativa. La tensione del filo, essendo sempre perpendicolare allo spostamento, <strong>non compie lavoro</strong>.</p>
+<p>Poiché agiscono solo forze conservative (o forze che non compiono lavoro), l'energia meccanica totale si conserva:</p>
+<p>$$E_{\\text{mecc}} = E_k + U = \\frac{1}{2}mv^2 + mgh = \\text{costante}$$</p>
+<p>L'energia potenziale è massima ai punti di massima elongazione (dove $v = 0$), mentre l'energia cinetica è massima nel punto più basso della traiettoria (dove $v$ è massima). Utilizzando la conservazione dell'energia per trovare la velocità in ogni punto, possiamo anche determinare l'andamento della tensione del filo lungo l'oscillazione.</p>
+<p><strong>Nota sulle forze non conservative:</strong> L'energia meccanica si conserva solo se le forze che compiono lavoro sono conservative. Le forze dissipative (attrito) fanno diminuire l'energia meccanica. Un pendolo reale si comporta come un <strong>oscillatore smorzato</strong>, la cui ampiezza decresce nel tempo.</p>`
+          },
+          {
+            subtitle: "Approccio Rotazionale",
+            content: `<p>Dal punto di vista del fulcro $O$, il moto della massa è puramente rotatorio. Questo suggerisce di usare la <strong>seconda equazione cardinale</strong>:</p>
+<p>$$\\frac{d\\vec{L}_O}{dt} = \\sum \\vec{M}_O^{(\\text{est})}$$</p>
+<p>Le forze agenti sono la tensione $\\vec{T}$ e il peso $\\vec{P}$:</p>
+<ul>
+<li>Il momento della tensione rispetto a $O$ è <strong>nullo</strong>, perché $\\vec{r}$ e $\\vec{T}$ sono anti-paralleli: $\\vec{M}_T = \\vec{r} \\times \\vec{T} = \\vec{0}$.</li>
+<li>Il momento del peso è $\\vec{M}_P = \\vec{r} \\times \\vec{P}$, con modulo $|M_P| = -mgL\\sin\\theta$.</li>
+</ul>
+<p>Il momento angolare ha modulo $|L_O| = mL^2 \\dot{\\theta}$, quindi $\\frac{dL_O}{dt} = mL^2 \\ddot{\\theta}$. Uguagliando al momento della forza peso:</p>
+<p>$$mL^2 \\ddot{\\theta} = -mgL\\sin\\theta \\quad \\Rightarrow \\quad \\ddot{\\theta} + \\frac{g}{L}\\sin\\theta = 0$$</p>
+<p>Si ritrova l'equazione del moto del pendolo, identica a quella ottenuta con l'approccio dinamico.</p>`
+          }
+        ],
+        extra_content: `<div style="border-left: 3px solid var(--accent); padding-left: 15px; margin: 20px 0; background: var(--bg-alt); border-radius: 0 8px 8px 0; padding: 15px;">
+<p><strong>🔑 Dai sistemi inerziali ai sistemi non inerziali</strong></p>
+<p>Tutti e tre gli approcci assumono un osservatore fermo in un sistema di riferimento <strong>inerziale</strong>. Ma cosa succederebbe se il punto di sospensione fosse in moto — ad esempio montato su un treno in accelerazione o su una giostra in rotazione? Per rispondere dobbiamo studiare come cambiano le leggi del moto quando l'osservatore stesso è in moto: questo ci porta alla <strong>cinematica e alla dinamica dei moti relativi</strong>.</p>
+</div>`
+      },
+
+      {
+        id: "s21-cinematica-relativi",
+        type: "section",
+        title: "Cinematica dei Moti Relativi",
+        icon: "📐",
+        content: `<p>Consideriamo due sistemi di riferimento:</p>
+<ul>
+<li>Un sistema $S$, con origine $O$ e assi $(x, y, z)$, che consideriamo <strong>fisso</strong> (inerziale).</li>
+<li>Un sistema $S'$, con origine $O'$ e assi $(x', y', z')$, <strong>mobile</strong> rispetto a $S$. Il moto di $S'$ può essere una combinazione di traslazione e rotazione.</li>
+</ul>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Sistemi di riferimento fisso e mobile</strong></p>
+  <p><em>Il sistema fisso $S$ con assi $(x,y,z)$ centrato in $O$; il sistema mobile $S'$ con assi $(x',y',z')$ centrato in $O'$, ruotato rispetto a $S$. L'asse di rotazione istantaneo è indicato tratteggiato con il vettore $\\vec{\\omega}$ allineato ad esso. Un punto materiale $M$ è collegato da: $\\vec{r}$ (da $O$ a $M$, rosso), $\\vec{r}'$ (da $O'$ a $M$, verde), $\\vec{OO'}$ (da $O$ a $O'$, arancione). Il vettore $\\vec{\\omega}$ deve essere esattamente parallelo all'asse tratteggiato.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p><em>Il vettore $\\vec{\\omega}$ indica la direzione dell'asse di rotazione istantaneo di $S'$ rispetto a $S$; il suo verso è determinato dalla regola della mano destra.</em></p>
+<p>Un punto materiale $M$ si muove nello spazio. La sua posizione, velocità e accelerazione saranno descritte in modo diverso dai due osservatori.</p>`,
+        subsections: [
+          {
+            subtitle: "Legge di Composizione delle Posizioni",
+            content: `<p>La relazione tra i vettori posizione è la semplice somma vettoriale:</p>
+<p>$$\\vec{r} = \\vec{OO'} + \\vec{r}'$$</p>
+<p>dove:</p>
+<ul>
+<li>$\\vec{r}$ è il vettore posizione di $M$ nel sistema fisso $S$.</li>
+<li>$\\vec{r}'$ è il vettore posizione di $M$ nel sistema mobile $S'$.</li>
+<li>$\\vec{OO'}$ è il vettore posizione dell'origine $O'$ rispetto a $O$.</li>
+</ul>`
+          },
+          {
+            subtitle: "La Formula di Poisson",
+            content: `<p>Per derivare le leggi di composizione delle velocità e accelerazioni, dobbiamo capire come si calcola la <strong>derivata temporale nel sistema fisso</strong> $S$ di un vettore $\\vec{u}$ le cui componenti sono espresse nel sistema mobile $S'$.</p>
+<p><strong>Teorema (Formula di Poisson):</strong> Sia $\\vec{u}$ un qualunque vettore e $\\vec{\\omega}$ la velocità angolare istantanea di $S'$ rispetto a $S$. Allora:</p>
+<p>$$\\frac{d\\vec{u}}{dt}|_{S} = \\frac{d\\vec{u}}{dt}|_{S'} + \\vec{\\omega} \\times \\vec{u}$$</p>
+
+<p><strong>Derivazione della formula di Poisson:</strong></p>
+<p>Scriviamo il vettore $\\vec{u}$ nelle componenti del sistema mobile:</p>
+<p>$$\\vec{u} = u_{x'} \\hat{e}_{x'} + u_{y'} \\hat{e}_{y'} + u_{z'} \\hat{e}_{z'}$$</p>
+<p>Deriviamo nel sistema fisso $S$ usando la <strong>regola del prodotto</strong>:</p>
+<p>$$\\frac{d\\vec{u}}{dt}|_{S} = \\dot{u}_{x'} \\hat{e}_{x'} + \\dot{u}_{y'} \\hat{e}_{y'} + \\dot{u}_{z'} \\hat{e}_{z'} + u_{x'} \\frac{d\\hat{e}_{x'}}{dt}|_{S} + u_{y'} \\frac{d\\hat{e}_{y'}}{dt}|_{S} + u_{z'} \\frac{d\\hat{e}_{z'}}{dt}|_{S}$$</p>
+<p>La prima riga (derivate delle componenti scalari) è esattamente $\\frac{d\\vec{u}}{dt}\\big|_{S'}$, cioè la derivata come la vedrebbe l'osservatore mobile.</p>
+<p>Per la seconda riga, ciascun versore $\\hat{e}_{i'}$ è <strong>fisso</strong> nel sistema mobile (le sue componenti in $S'$ non cambiano), quindi la sua derivata in $S'$ è zero. Ma nel sistema fisso $S$, il versore ruota con $S'$. La derivata di un versore che ruota con velocità angolare $\\vec{\\omega}$ è:</p>
+<p>$$\\frac{d\\hat{e}_{i'}}{dt}|_{S} = \\vec{\\omega} \\times \\hat{e}_{i'}$$</p>
+<p>Sostituendo:</p>
+<p>$$u_{x'}(\\vec{\\omega} \\times \\hat{e}_{x'}) + u_{y'}(\\vec{\\omega} \\times \\hat{e}_{y'}) + u_{z'}(\\vec{\\omega} \\times \\hat{e}_{z'}) = \\vec{\\omega} \\times (u_{x'} \\hat{e}_{x'} + u_{y'} \\hat{e}_{y'} + u_{z'} \\hat{e}_{z'}) = \\vec{\\omega} \\times \\vec{u}$$</p>
+<p>Mettendo insieme i due contributi si ottiene la formula di Poisson. ∎</p>
+
+<p><strong>Interpretazione intuitiva:</strong> Anche se un vettore $\\vec{u}$ è <em>fisso</em> nel sistema mobile $S'$ (derivata in $S'$ nulla), esso appare comunque variabile nel sistema fisso $S$, perché $S'$ sta ruotando. La variazione dovuta esclusivamente alla rotazione è $\\vec{\\omega} \\times \\vec{u}$.</p>
+<p>Ad esempio, per un versore $\\hat{e}_{x'}$ solidale con $S'$:</p>
+<p>$$\\frac{d\\hat{e}_{x'}}{dt}|_{S} = \\vec{\\omega} \\times \\hat{e}_{x'}$$</p>
+<p>La derivata totale nel sistema fisso è la somma di: (1) la variazione intrinseca nel sistema mobile (<em>termine relativo</em>) e (2) la variazione dovuta alla rotazione del sistema mobile (<em>termine rotazionale</em> $\\vec{\\omega} \\times \\vec{u}$).</p>`
+          },
+          {
+            subtitle: "Legge di Composizione delle Velocità",
+            content: `<p>Deriviamo rispetto al tempo (nel sistema fisso $S$) la legge di composizione delle posizioni:</p>
+<p>$$\\frac{d\\vec{r}}{dt} = \\frac{d(\\vec{OO'})}{dt} + \\frac{d\\vec{r}'}{dt}|_{S}$$</p>
+<p>Analizziamo i termini:</p>
+<ul>
+<li>$\\vec{v} = \\frac{d\\vec{r}}{dt}$: <strong>velocità assoluta</strong> di $M$ nel sistema fisso.</li>
+<li>$\\vec{v}_{O'} = \\frac{d(\\vec{OO'})}{dt}$: velocità dell'origine $O'$ rispetto a $O$.</li>
+<li>Per $\\vec{r}'$ (definito nel sistema mobile), usiamo la formula di Poisson:</li>
+</ul>
+<p>$$\\frac{d\\vec{r}'}{dt}|_{S} = \\frac{d\\vec{r}'}{dt}|_{S'} + \\vec{\\omega} \\times \\vec{r}' = \\vec{v}' + \\vec{\\omega} \\times \\vec{r}'$$</p>
+<p>dove $\\vec{v}' = \\frac{d\\vec{r}'}{dt}\\big|_{S'}$ è la <strong>velocità relativa</strong> (misurata dall'osservatore mobile).</p>
+
+<p><strong>Teorema delle Velocità Relative:</strong></p>
+<p>$$\\vec{v}_a = \\vec{v}_r + \\vec{v}_t$$</p>
+<p>con la formula completa:</p>
+<p>$$\\vec{v} = \\vec{v}' + \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'$$</p>
+<p>dove:</p>
+<ul>
+<li>$\\vec{v}_a = \\vec{v}$: velocità assoluta.</li>
+<li>$\\vec{v}_r = \\vec{v}'$: velocità relativa.</li>
+<li>$\\vec{v}_t = \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'$: <strong>velocità di trascinamento</strong> — la velocità che $M$ avrebbe se fosse solidale con il sistema mobile (cioè "trascinato" da esso).</li>
+</ul>
+
+<p><strong>Casi particolari:</strong></p>
+<ul>
+<li><strong>Pura traslazione</strong> ($\\vec{\\omega} = \\vec{0}$): $\\vec{v} = \\vec{v}' + \\vec{v}_{O'}$</li>
+<li><strong>Pura rotazione</strong> attorno a $O = O'$ ($\\vec{v}_{O'} = \\vec{0}$): $\\vec{v} = \\vec{v}' + \\vec{\\omega} \\times \\vec{r}'$</li>
+</ul>`
+          },
+          {
+            subtitle: "Legge di Composizione delle Accelerazioni",
+            content: `<p>Deriviamo la legge di composizione delle velocità nel sistema fisso $S$:</p>
+<p>$$\\vec{a} = \\frac{d\\vec{v}}{dt} = \\frac{d\\vec{v}_{O'}}{dt} + \\frac{d\\vec{v}'}{dt}|_{S} + \\frac{d}{dt}(\\vec{\\omega} \\times \\vec{r}')|_{S}$$</p>
+
+<p><strong>Primo termine:</strong> $\\frac{d\\vec{v}_{O'}}{dt} = \\vec{a}_{O'}$, accelerazione dell'origine $O'$ rispetto al sistema fisso.</p>
+
+<p><strong>Secondo termine:</strong> $\\vec{v}'$ è definito nel sistema mobile, quindi applichiamo Poisson:</p>
+<p>$$\\frac{d\\vec{v}'}{dt}|_{S} = \\frac{d\\vec{v}'}{dt}|_{S'} + \\vec{\\omega} \\times \\vec{v}' = \\vec{a}' + \\vec{\\omega} \\times \\vec{v}'$$</p>
+
+<p><strong>Terzo termine:</strong> Sviluppiamo con la regola di Leibniz:</p>
+<p>$$\\frac{d}{dt}(\\vec{\\omega} \\times \\vec{r}')|_{S} = \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times \\frac{d\\vec{r}'}{dt}|_{S}$$</p>
+<p>Per il secondo fattore, applichiamo nuovamente Poisson a $\\vec{r}'$:</p>
+<p>$$\\frac{d\\vec{r}'}{dt}|_{S} = \\vec{v}' + \\vec{\\omega} \\times \\vec{r}'$$</p>
+<p>Sostituendo:</p>
+<p>$$\\frac{d}{dt}(\\vec{\\omega} \\times \\vec{r}')|_{S} = \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times \\vec{v}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$$</p>
+
+<p><strong>Raccogliendo tutti i termini:</strong></p>
+<p>$$\\vec{a} = \\underbrace{\\vec{a}'}_{\\text{acc. relativa}} + \\underbrace{\\vec{a}_{O'} + \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')}_{\\text{acc. di trascinamento}} + \\underbrace{2\\,\\vec{\\omega} \\times \\vec{v}'}_{\\text{acc. di Coriolis}}$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Composizione posizioni", latex: "\\vec{r} = \\vec{OO'} + \\vec{r}'" },
+          { label: "Formula di Poisson", latex: "\\frac{d\\vec{u}}{dt}|_{S} = \\frac{d\\vec{u}}{dt}|_{S'} + \\vec{\\omega} \\times \\vec{u}" },
+          { label: "Composizione velocità", latex: "\\vec{v} = \\vec{v}' + \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'" },
+          { label: "Composizione accelerazioni", latex: "\\vec{a} = \\vec{a}' + \\vec{a}_{O'} + \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') + 2\\,\\vec{\\omega} \\times \\vec{v}'" }
+        ]
+      },
+
+      {
+        id: "s21-coriolis-fattore2",
+        type: "alert_box",
+        title: "⚠️ Origine del Fattore 2 nell'Accelerazione di Coriolis",
+        icon: "⚠️",
+        content: `<p>Il termine $\\vec{\\omega} \\times \\vec{v}'$ compare <strong>due volte</strong> nella derivazione, con origini distinte:</p>
+<ol>
+<li>Dalla derivata di $\\vec{v}'$ nel sistema fisso (<strong>secondo termine</strong>), tramite la formula di Poisson applicata alla velocità relativa.</li>
+<li>Dalla derivata di $\\vec{\\omega} \\times \\vec{r}'$ (<strong>terzo termine</strong>), quando la formula di Poisson viene applicata a $\\vec{r}'$.</li>
+</ol>
+<p>La somma di questi due contributi identici produce il fattore $2$ caratteristico: $\\vec{a}_c = 2\\,\\vec{\\omega} \\times \\vec{v}'$.</p>
+<p><strong>Trappola d'esame:</strong> Non dimenticare il fattore 2! È l'errore più frequente nel calcolo dell'accelerazione di Coriolis.</p>`
+      },
+
+      {
+        id: "s21-accelerazione-trascinamento",
+        type: "note_box",
+        title: "Significato Fisico dei Termini dell'Accelerazione di Trascinamento",
+        icon: "🧭",
+        content: `<p>L'accelerazione di trascinamento $\\vec{a}_t$ contiene tre contributi con significati fisici distinti:</p>
+<ul>
+<li><strong>$\\vec{a}_{O'}$</strong>: accelerazione lineare dell'origine del sistema mobile. Contribuisce quando $O'$ stesso è accelerato rispetto al sistema fisso.</li>
+<li><strong>$\\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}'$</strong>: <strong>accelerazione di Eulero</strong> (o tangenziale), dovuta alla variazione della velocità angolare. È perpendicolare sia a $\\vec{r}'$ sia a $\\frac{d\\vec{\\omega}}{dt}$. <em>Questo termine è analogo all'accelerazione tangenziale $a_t = \\alpha r$ nel moto circolare non uniforme: se il sistema mobile accelera o decelera la sua rotazione, un punto "trascinato" subisce un'accelerazione tangenziale proporzionale alla distanza dall'asse e all'accelerazione angolare $\\alpha$.</em></li>
+<li><strong>$\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$</strong>: <strong>accelerazione centripeta</strong> del punto di trascinamento. Punta verso l'asse di rotazione con modulo $\\omega^2 r_{\\perp}$, dove $r_{\\perp}$ è la distanza dall'asse.</li>
+</ul>`
+      },
+
+      {
+        id: "s21-teorema-accelerazioni",
+        type: "section",
+        title: "Teorema delle Accelerazioni Relative",
+        icon: "🎯",
+        content: `<p><strong>L'accelerazione assoluta</strong> $\\vec{a}_a$ di un punto è la somma di tre contributi:</p>
+<p>$$\\vec{a}_a = \\vec{a}_r + \\vec{a}_t + \\vec{a}_c$$</p>
+<p>dove:</p>
+<ul>
+<li>$\\vec{a}_a = \\vec{a} = \\frac{d\\vec{v}}{dt}$: accelerazione assoluta.</li>
+<li>$\\vec{a}_r = \\vec{a}' = \\frac{d\\vec{v}'}{dt}\\big|_{S'}$: accelerazione relativa.</li>
+<li>$\\vec{a}_t = \\vec{a}_{O'} + \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$: <strong>accelerazione di trascinamento</strong>.</li>
+<li>$\\vec{a}_c = 2\\,\\vec{\\omega} \\times \\vec{v}'$: <strong>accelerazione di Coriolis</strong>.</li>
+</ul>`,
+        formulas: [
+          { label: "Accelerazione assoluta (completa)", latex: "\\vec{a} = \\vec{a}' + \\vec{a}_{O'} + \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') + 2\\,\\vec{\\omega} \\times \\vec{v}'" },
+          { label: "Accelerazione di Coriolis", latex: "\\vec{a}_c = 2\\,\\vec{\\omega} \\times \\vec{v}'" }
+        ]
+      },
+
+      {
+        id: "s21-esempio-numerico-disco",
+        type: "section",
+        title: "Esempio: Punto su Disco Rotante",
+        icon: "💡",
+        content: `<p>Questo esempio mostra come applicare concretamente la composizione di velocità e accelerazioni — il tipo di esercizio più frequente all'esame.</p>`,
+        subsections: [
+          {
+            subtitle: "Dati del problema",
+            content: `<p>Un punto si muove lungo il raggio di un disco rotante con velocità relativa $v' = 1\\;\\text{m/s}$ verso l'esterno. Il disco ruota con velocità angolare costante $\\omega = 2\\;\\text{rad/s}$ attorno al proprio centro $O = O'$. Al momento considerato, il punto si trova a distanza $r' = 0.5\\;\\text{m}$ dal centro.</p>
+<p>Calcoliamo velocità assoluta e accelerazione assoluta.</p>`
+          },
+          {
+            subtitle: "Velocità assoluta",
+            content: `<p>Scegliamo $\\vec{\\omega} = \\omega\\,\\hat{k}$ (asse $z$ verso l'alto), e il punto si muove in direzione radiale $\\hat{r}$.</p>
+<p>Poiché $O = O'$ (asse fisso), $\\vec{v}_{O'} = \\vec{0}$. La composizione delle velocità dà:</p>
+<p>$$\\vec{v} = \\vec{v}' + \\vec{\\omega} \\times \\vec{r}'$$</p>
+<ul>
+<li>$\\vec{v}' = v'\\,\\hat{r} = 1\\,\\hat{r}\\;\\text{m/s}$ (radiale verso l'esterno)</li>
+<li>$\\vec{\\omega} \\times \\vec{r}' = \\omega r'\\,\\hat{\\theta} = 2 \\times 0.5\\,\\hat{\\theta} = 1\\,\\hat{\\theta}\\;\\text{m/s}$ (tangenziale)</li>
+</ul>
+<p>$$\\vec{v} = 1\\,\\hat{r} + 1\\,\\hat{\\theta}$$</p>
+<p>$$|\\vec{v}| = \\sqrt{1^2 + 1^2} = \\sqrt{2} \\approx 1.41\\;\\text{m/s}$$</p>
+<p>La velocità assoluta ha una componente radiale (moto relativo) e una tangenziale (trascinamento rotazionale).</p>`
+          },
+          {
+            subtitle: "Accelerazione assoluta",
+            content: `<p>Con $\\omega = \\text{cost}$ e $O = O'$ fisso: $\\vec{a}_{O'} = \\vec{0}$ e $\\frac{d\\vec{\\omega}}{dt} = \\vec{0}$.</p>
+<p>$$\\vec{a} = \\vec{a}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') + 2\\,\\vec{\\omega} \\times \\vec{v}'$$</p>
+<p><strong>Accelerazione relativa:</strong> Il punto si muove a velocità costante lungo il raggio, quindi $\\vec{a}' = \\vec{0}$.</p>
+<p><strong>Accelerazione centripeta (trascinamento):</strong></p>
+<p>$$\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') = -\\omega^2 r'\\,\\hat{r} = -(2)^2 \\times 0.5\\,\\hat{r} = -2\\,\\hat{r}\\;\\text{m/s}^2$$</p>
+<p>(diretta verso il centro)</p>
+<p><strong>Accelerazione di Coriolis:</strong></p>
+<p>$$2\\,\\vec{\\omega} \\times \\vec{v}' = 2\\omega v'\\,\\hat{\\theta} = 2 \\times 2 \\times 1\\,\\hat{\\theta} = 4\\,\\hat{\\theta}\\;\\text{m/s}^2$$</p>
+<p>(diretta in senso tangenziale)</p>
+<p><strong>Risultato:</strong></p>
+<p>$$\\vec{a} = -2\\,\\hat{r} + 4\\,\\hat{\\theta}\\;\\text{m/s}^2$$</p>
+<p>$$|\\vec{a}| = \\sqrt{4 + 16} = \\sqrt{20} \\approx 4.47\\;\\text{m/s}^2$$</p>
+<p>Si noti come l'accelerazione di Coriolis sia il contributo <strong>dominante</strong> in questo caso.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s21-dinamica-non-inerziali",
+        type: "section",
+        title: "Dinamica nei Sistemi Non Inerziali",
+        icon: "⚡",
+        content: `<p>Colleghiamo la cinematica dei moti relativi alla dinamica. La seconda legge di Newton $\\vec{F} = m\\vec{a}$ è valida <strong>solo nei sistemi inerziali</strong>. Per l'osservatore nel sistema fisso $S$ vale:</p>
+<p>$$\\sum \\vec{F}_{\\text{vere}} = m\\vec{a}_a$$</p>
+<p>Cosa succede per l'osservatore nel sistema mobile $S'$, in generale non inerziale? Sostituiamo la composizione delle accelerazioni:</p>
+<p>$$\\sum \\vec{F}_{\\text{vere}} = m(\\vec{a}_r + \\vec{a}_t + \\vec{a}_c)$$</p>
+<p>Riordinando per isolare $m\\vec{a}_r$:</p>
+<p>$$m\\vec{a}_r = \\sum \\vec{F}_{\\text{vere}} - m\\vec{a}_t - m\\vec{a}_c$$</p>
+<p>Per l'osservatore in $S'$, l'accelerazione relativa non è causata solo dalle forze reali, ma anche da termini aggiuntivi che dipendono dal moto del sistema di riferimento.</p>`,
+        subsections: [
+          {
+            subtitle: "Forze Apparenti o Fittizie",
+            content: `<p>Per preservare la forma della seconda legge di Newton nel sistema non inerziale, si introducono le <strong>forze apparenti</strong> (o fittizie).</p>
+<p><strong>Definizione:</strong> Le forze apparenti non derivano da interazioni fisiche, ma dall'accelerazione del sistema di riferimento. Si definiscono:</p>
+<p><strong>Forza di trascinamento:</strong></p>
+<p>$$\\vec{F}_t = -m\\vec{a}_t = -m \\left( \\vec{a}_{O'} + \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') \\right)$$</p>
+<p><strong>Forza di Coriolis:</strong></p>
+<p>$$\\vec{F}_c = -m\\vec{a}_c = -2m\\,(\\vec{\\omega} \\times \\vec{v}')$$</p>
+<p>Con queste definizioni, la legge del moto nel sistema non inerziale diventa:</p>
+<p>$$m\\vec{a}_r = \\sum \\vec{F}_{\\text{vere}} + \\vec{F}_t + \\vec{F}_c$$</p>
+<p><strong>Attenzione:</strong> Le forze apparenti sono una "correzione" matematica. Un osservatore inerziale non misura né ha bisogno di queste forze: per lui esistono solo le forze reali.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Newton in sistema non inerziale", latex: "m\\vec{a}_r = \\sum \\vec{F}_{\\text{vere}} + \\vec{F}_t + \\vec{F}_c" },
+          { label: "Forza di trascinamento", latex: "\\vec{F}_t = -m\\vec{a}_t" },
+          { label: "Forza di Coriolis", latex: "\\vec{F}_c = -2m\\,(\\vec{\\omega} \\times \\vec{v}')" }
+        ]
+      },
+
+      {
+        id: "s21-forza-centrifuga",
+        type: "section",
+        title: "La Forza Centrifuga",
+        icon: "🌀",
+        content: `<p>Il caso più importante nelle applicazioni è un sistema $S'$ in <strong>rotazione uniforme</strong> ($\\vec{\\omega} = \\text{costante}$, $\\frac{d\\vec{\\omega}}{dt} = \\vec{0}$) attorno a un asse fisso passante per $O = O'$ ($\\vec{a}_{O'} = \\vec{0}$). La forza di trascinamento si riduce al solo termine:</p>
+<p>$$\\vec{F}_{\\text{centrifuga}} = -m\\,\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$$</p>`,
+        subsections: [
+          {
+            subtitle: "Direzione della forza centrifuga: identità BAC-CAB",
+            content: `<p>Perché la forza centrifuga è diretta radialmente verso l'esterno? Non è affatto ovvio dalla formula $-m\\,\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$. Serve l'identità del <strong>doppio prodotto vettoriale</strong> (regola BAC-CAB):</p>
+<p>$$\\vec{A} \\times (\\vec{B} \\times \\vec{C}) = \\vec{B}(\\vec{A} \\cdot \\vec{C}) - \\vec{C}(\\vec{A} \\cdot \\vec{B})$$</p>
+<p>Applichiamola con $\\vec{A} = \\vec{\\omega}$, $\\vec{B} = \\vec{\\omega}$, $\\vec{C} = \\vec{r}'$:</p>
+<p>$$\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') = \\vec{\\omega}(\\vec{\\omega} \\cdot \\vec{r}') - \\vec{r}'(\\vec{\\omega} \\cdot \\vec{\\omega}) = \\vec{\\omega}(\\vec{\\omega} \\cdot \\vec{r}') - \\omega^2 \\vec{r}'$$</p>
+<p>Consideriamo il caso tipico: asse di rotazione lungo $z$ ($\\vec{\\omega} = \\omega\\,\\hat{k}$) e il punto nel piano $xy$ ($\\vec{r}' = r'\\,\\hat{r}$, perpendicolare a $\\vec{\\omega}$). Allora $\\vec{\\omega} \\cdot \\vec{r}' = 0$ e:</p>
+<p>$$\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') = -\\omega^2 \\vec{r}'$$</p>
+<p>Cambiando segno per la forza centrifuga:</p>
+<p>$$\\vec{F}_{\\text{centrifuga}} = -m(-\\omega^2 \\vec{r}') = +m\\omega^2 \\vec{r}'$$</p>
+<p>Quindi la forza centrifuga è diretta come $\\vec{r}'$, cioè <strong>radialmente verso l'esterno</strong>, con modulo:</p>
+<p>$$|\\vec{F}_{\\text{centrifuga}}| = m\\omega^2 r_{\\perp}$$</p>
+<p>dove $r_{\\perp}$ è la distanza dall'asse di rotazione.</p>
+<p><em>Nel caso generale in cui $\\vec{r}'$ non è perpendicolare a $\\vec{\\omega}$, si scompone $\\vec{r}' = \\vec{r}_{\\parallel} + \\vec{r}_{\\perp}$: il termine $\\vec{\\omega}(\\vec{\\omega} \\cdot \\vec{r}')$ cancella esattamente la componente parallela all'asse, e la forza centrifuga punta sempre radialmente verso l'esterno rispetto all'asse.</em></p>`
+          },
+          {
+            subtitle: "Esempio: la forza centrifuga su una giostra",
+            content: `<p>Una giostra ruota con $\\omega = 2\\;\\text{rad/s}$ attorno a un asse verticale. Un bambino di massa $m = 30\\;\\text{kg}$ è seduto a $r_{\\perp} = 2\\;\\text{m}$ dall'asse.</p>
+<p><strong>Per l'osservatore sulla giostra</strong> (sistema non inerziale $S'$): il bambino è fermo ($\\vec{v}' = \\vec{0}$, quindi $\\vec{F}_c = \\vec{0}$). L'unica forza apparente è la forza centrifuga:</p>
+<p>$$F_{\\text{centrifuga}} = m\\omega^2 r_{\\perp} = 30 \\times (2)^2 \\times 2 = 240\\;\\text{N}$$</p>
+<p>Questa forza è diretta radialmente verso l'esterno e deve essere bilanciata dalla reazione vincolare (la barra del seggiolino) affinché il bambino resti in equilibrio.</p>
+<p><strong>Per l'osservatore a terra</strong> (sistema inerziale $S$): non esiste nessuna forza centrifuga! Il bambino si muove su una traiettoria circolare e la forza della barra è la <strong>forza centripeta</strong> necessaria al moto circolare:</p>
+<p>$$F_{\\text{centripeta}} = m\\omega^2 r_{\\perp} = 240\\;\\text{N}$$</p>
+<p>Le due descrizioni sono perfettamente coerenti: la stessa forza di contatto ($240\\;\\text{N}$) viene interpretata come "forza centripeta" nel sistema inerziale e come "reazione alla forza centrifuga" nel sistema rotante.</p>`
+          },
+          {
+            subtitle: "La forza di Coriolis sulla giostra",
+            content: `<p>Se un oggetto si muove nel sistema rotante ($\\vec{v}' \\neq \\vec{0}$), interviene anche la <strong>forza di Coriolis</strong>. Per l'osservatore sulla giostra, gli oggetti in moto subiscono una deviazione laterale apparente, inspiegabile senza invocare $\\vec{F}_c = -2m(\\vec{\\omega} \\times \\vec{v}')$.</p>
+<p><strong>Esempio qualitativo:</strong> Se il bambino lancia una palla radialmente verso il centro della giostra, l'osservatore sulla giostra la vede deviare lateralmente (a causa di Coriolis). L'osservatore a terra spiega lo stesso fenomeno con il principio di inerzia: la palla mantiene la sua componente di velocità tangenziale, ma la giostra ruota sotto di essa.</p>
+<p>La forza di Coriolis è sempre <strong>perpendicolare</strong> alla velocità relativa $\\vec{v}'$, quindi <em>non compie lavoro</em> nel sistema rotante, ma modifica la direzione del moto.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Forza centrifuga", latex: "\\vec{F}_{\\text{centrifuga}} = -m\\,\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')" },
+          { label: "Modulo forza centrifuga", latex: "|\\vec{F}_{\\text{centrifuga}}| = m\\omega^2 r_{\\perp}" },
+          { label: "Identità BAC-CAB", latex: "\\vec{A} \\times (\\vec{B} \\times \\vec{C}) = \\vec{B}(\\vec{A} \\cdot \\vec{C}) - \\vec{C}(\\vec{A} \\cdot \\vec{B})" }
+        ]
+      },
+
+      {
+        id: "s21-riepilogo-formule",
+        type: "section",
+        title: "Riepilogo e Confronto Sinottico",
+        icon: "📋",
+        content: `<p>Le relazioni fondamentali dei moti relativi a colpo d'occhio:</p>`,
+        table_compare: {
+          headers: ["Grandezza", "Formula di composizione", "Note"],
+          rows: [
+            ["Posizione", "$\\vec{r} = \\vec{OO'} + \\vec{r}'$", "Somma vettoriale diretta"],
+            ["Velocità", "$\\vec{v} = \\vec{v}' + \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'$", "$\\vec{v}_t = \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'$"],
+            ["Accelerazione", "$\\vec{a} = \\vec{a}' + \\vec{a}_t + 2\\vec{\\omega} \\times \\vec{v}'$", "Tre contributi distinti"],
+            ["Acc. trascinamento", "$\\vec{a}_t = \\vec{a}_{O'} + \\dot{\\vec{\\omega}} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$", "Tre sotto-termini"],
+            ["Newton (non inerz.)", "$m\\vec{a}_r = \\sum\\vec{F}_{\\text{vere}} + \\vec{F}_t + \\vec{F}_c$", "Forze fittizie aggiunte"]
+          ]
+        }
+      },
+
+      {
+        id: "s21-domanda-orale",
+        type: "oral_box",
+        title: "Domanda Tipica: Differenza tra Forze Reali e Apparenti",
+        icon: "🎤",
+        content: `<p><strong>"Qual è la differenza fondamentale tra forze reali e forze apparenti?"</strong></p>
+<p>Le forze <strong>reali</strong> derivano da interazioni fisiche fondamentali (gravitazionale, elettromagnetica, ecc.) e sono presenti in qualsiasi sistema di riferimento. Le forze <strong>apparenti</strong> (o fittizie) non derivano da interazioni fisiche, ma dall'accelerazione del sistema di riferimento: un osservatore inerziale non le misura e non ne ha bisogno. Sono una "correzione matematica" che permette di scrivere $m\\vec{a}_r = \\sum\\vec{F}$ anche in un sistema non inerziale.</p>
+<p><strong>Un esempio chiave:</strong> la forza centrifuga non esiste per l'osservatore a terra; per lui c'è solo la forza centripeta (reale) che curva la traiettoria. L'osservatore rotante, invece, ha bisogno della forza centrifuga per spiegare l'equilibrio di un oggetto fermo nel suo sistema.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "formula",
+        front: "Scrivi la formula di Poisson e spiega il significato di ogni termine.",
+        back: "$$\\frac{d\\vec{u}}{dt}|_{S} = \\frac{d\\vec{u}}{dt}|_{S'} + \\vec{\\omega} \\times \\vec{u}$$\nIl primo termine è la derivata nel sistema mobile (variazione intrinseca), il secondo è la variazione dovuta alla rotazione del sistema mobile. Anche un vettore fisso in $S'$ varia in $S$ a causa della rotazione."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra la formula di Poisson a partire dalla decomposizione di un vettore nei versori del sistema mobile.",
+        back: "Si scrive $\\vec{u} = u_{x'}\\hat{e}_{x'} + u_{y'}\\hat{e}_{y'} + u_{z'}\\hat{e}_{z'}$ e si deriva nel sistema fisso con la regola del prodotto. Le derivate delle componenti scalari danno $\\frac{d\\vec{u}}{dt}\\big|_{S'}$. I versori $\\hat{e}_{i'}$ sono fissi in $S'$ ma ruotano in $S$, quindi $\\frac{d\\hat{e}_{i'}}{dt}\\big|_S = \\vec{\\omega} \\times \\hat{e}_{i'}$. Sommando: $u_{x'}(\\vec{\\omega} \\times \\hat{e}_{x'}) + \\ldots = \\vec{\\omega} \\times \\vec{u}$."
+      },
+      {
+        type: "formula",
+        front: "Scrivi il teorema delle velocità relative (composizione completa).",
+        back: "$$\\vec{v} = \\vec{v}' + \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'$$\nDove $\\vec{v}$ è la velocità assoluta, $\\vec{v}'$ è la velocità relativa, e $\\vec{v}_t = \\vec{v}_{O'} + \\vec{\\omega} \\times \\vec{r}'$ è la velocità di trascinamento."
+      },
+      {
+        type: "formula",
+        front: "Scrivi il teorema delle accelerazioni relative con tutti i termini espliciti.",
+        back: "$$\\vec{a} = \\vec{a}' + \\vec{a}_{O'} + \\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}' + \\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') + 2\\,\\vec{\\omega} \\times \\vec{v}'$$\nI termini sono: accelerazione relativa, accelerazione lineare di $O'$, accelerazione di Eulero (angolare), accelerazione centripeta, accelerazione di Coriolis."
+      },
+      {
+        type: "domanda",
+        front: "Perché nell'accelerazione di Coriolis compare il fattore 2?",
+        back: "Il termine $\\vec{\\omega} \\times \\vec{v}'$ compare due volte con origini diverse: (1) dalla formula di Poisson applicata alla derivata di $\\vec{v}'$, e (2) dalla formula di Poisson applicata a $\\vec{r}'$ nella derivata di $\\vec{\\omega} \\times \\vec{r}'$. La somma dei due contributi identici dà il fattore 2."
+      },
+      {
+        type: "definizione",
+        front: "Cosa sono le forze apparenti? Elenca quelle principali.",
+        back: "Le forze apparenti (o fittizie) sono termini aggiunti alla somma delle forze reali per applicare $\\vec{F} = m\\vec{a}$ in un sistema non inerziale. Non derivano da interazioni fisiche. Le principali sono: la **forza di trascinamento** $\\vec{F}_t = -m\\vec{a}_t$ e la **forza di Coriolis** $\\vec{F}_c = -2m(\\vec{\\omega} \\times \\vec{v}')$."
+      },
+      {
+        type: "tranello",
+        front: "La forza centrifuga e la forza centripeta sono la stessa forza?",
+        back: "No! La **forza centripeta** è una forza reale (nel sistema inerziale) diretta verso il centro che mantiene il moto circolare. La **forza centrifuga** è una forza apparente (nel sistema rotante) diretta verso l'esterno. Hanno lo stesso modulo $m\\omega^2 r_\\perp$ ma significati diversi: la centripeta è un'interazione fisica, la centrifuga è una correzione matematica per il sistema non inerziale."
+      },
+      {
+        type: "domanda",
+        front: "Dimostra con l'identità BAC-CAB che la forza centrifuga è diretta radialmente verso l'esterno.",
+        back: "Usando $\\vec{A} \\times (\\vec{B} \\times \\vec{C}) = \\vec{B}(\\vec{A} \\cdot \\vec{C}) - \\vec{C}(\\vec{A} \\cdot \\vec{B})$, si ha $\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') = \\vec{\\omega}(\\vec{\\omega} \\cdot \\vec{r}') - \\vec{r}'\\omega^2$. Se $\\vec{\\omega} \\perp \\vec{r}'$ (punto nel piano perpendicolare all'asse), allora $\\vec{\\omega} \\cdot \\vec{r}' = 0$ e $\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}') = -\\omega^2\\vec{r}'$. Cambiando segno: $\\vec{F}_{\\text{centr}} = +m\\omega^2\\vec{r}'$, diretta radialmente verso l'esterno."
+      },
+      {
+        type: "domanda",
+        front: "Quali sono i tre contributi dell'accelerazione di trascinamento e il loro significato fisico?",
+        back: "1) $\\vec{a}_{O'}$: accelerazione lineare dell'origine del sistema mobile. 2) $\\frac{d\\vec{\\omega}}{dt} \\times \\vec{r}'$: accelerazione di Eulero, dovuta alla variazione di $\\omega$ (analoga a $\\alpha r$ nel moto circolare non uniforme). 3) $\\vec{\\omega} \\times (\\vec{\\omega} \\times \\vec{r}')$: accelerazione centripeta di trascinamento, diretta verso l'asse con modulo $\\omega^2 r_\\perp$."
+      },
+      {
+        type: "domanda",
+        front: "Scrivi la seconda legge di Newton in un sistema di riferimento non inerziale.",
+        back: "$$m\\vec{a}_r = \\sum \\vec{F}_{\\text{vere}} + \\vec{F}_t + \\vec{F}_c$$\nDove $\\vec{a}_r$ è l'accelerazione relativa, $\\vec{F}_t = -m\\vec{a}_t$ è la forza di trascinamento e $\\vec{F}_c = -2m(\\vec{\\omega} \\times \\vec{v}')$ è la forza di Coriolis. Le forze apparenti vanno sommate alle forze reali."
+      }
+    ]
+};

@@ -113,6 +113,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://eliacinti.dev/fisica1/lezioni/L19/</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://eliacinti.dev/geometria/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -216,6 +222,24 @@
   <url>
     <loc>https://eliacinti.dev/geometria/lezioni/L17/</loc>
     <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://eliacinti.dev/geometria/lezioni/L18/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://eliacinti.dev/geometria/lezioni/L19/</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://eliacinti.dev/geometria/lezioni/L20/</loc>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
