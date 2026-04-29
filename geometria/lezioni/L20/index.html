@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 20 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 20: Coordinate e Matrice del Cambiamento di Base. Definizione formale delle coordinate di un vettore rispetto a una base, matrice del cambiamento di base con le sue proprietà (invertibilità, composizione, identità), e l'applicazione delle coordinate come isomorfismo lineare tra V e ℝⁿ.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 20: Coordinate e Matrice del Cambiamento di Base — Geometria">
+  <meta property="og:description" content="Definizione formale delle coordinate di un vettore rispetto a una base, matrice del cambiamento di base con le sue proprietà (invertibilità, composizione, identità), e l'applicazione delle coordinate come isomorfismo lineare tra V e ℝⁿ.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L20/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L20/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=13">
+  <link rel="stylesheet" href="/css/style.css?v=13">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 20 — Coordinate e Matrice del Cambiamento di Base",
+  "description": "Definizione formale delle coordinate di un vettore rispetto a una base, matrice del cambiamento di base con le sue proprietà (invertibilità, composizione, identità), e l'applicazione delle coordinate come isomorfismo lineare tra V e ℝⁿ.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L20/",
+  "datePublished": "2026-04-21",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 20</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L19/">← Prec.</a>
+      <a href="/geometria/lezioni/L21/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L20", date: "Lezione 20 — 21 Apr 2026",
+    title: "Coordinate e Matrice del Cambiamento di Base",
+    abstract: "Definizione formale delle coordinate di un vettore rispetto a una base, matrice del cambiamento di base con le sue proprietà (invertibilità, composizione, identità), e l'applicazione delle coordinate come isomorfismo lineare tra V e ℝⁿ.",
+
+    sections: [
+        {
+            id: "s20-intro-intuitiva",
+            type: "section",
+            title: "Introduzione Intuitiva alle Coordinate",
+            icon: "📐",
+            content: `<p>Prima di dare una definizione formale, facciamo un commento intuitivo per comprendere il concetto di coordinate.</p>
+<p>Consideriamo un vettore geometrico nel piano, ad esempio un vettore $\\vec{v}$ che parte dall'origine $O$ e arriva al punto $P$:</p>
+<p>$$\\vec{v} = \\vec{OP}$$</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Vettore OP nel piano cartesiano</strong></p>
+  <p><em>Assi x e y con origine O, punto P nel primo quadrante, vettore OP disegnato come freccia da O a P. Proiezioni tratteggiate sugli assi: la proiezione sull'asse x etichettata "x", la proiezione sull'asse y etichettata "y". Vettori unitari $\\vec{e}_1$ lungo l'asse x e $\\vec{e}_2$ lungo l'asse y.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Un vettore geometrico è un oggetto che esiste <strong>indipendentemente</strong> da un sistema di riferimento numerico. Tuttavia, in molte circostanze, è conveniente associare a questo vettore una coppia di numeri. Questo si ottiene introducendo un sistema di riferimento cartesiano, con un'origine, un asse delle ascisse (asse $x$) e un asse delle ordinate (asse $y$).</p>
+<p>Una volta fissato il sistema di riferimento, il punto $P$ avrà un'ascissa $x$ e un'ordinata $y$. In questo modo, il vettore $\\vec{OP}$ viene univocamente identificato dalla coppia di numeri $(x,y)$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Vettore vs. coordinate: una distinzione fondamentale",
+                    content: `<p><strong>Osservazione importante:</strong> concettualmente, il vettore e la coppia di numeri che lo rappresenta sono due oggetti distinti. Il primo è un <strong>ente geometrico</strong>, la seconda è una <strong>rappresentazione algebrica</strong> di tale ente.</p>
+<p>Possiamo riformulare questo concetto dal punto di vista degli spazi vettoriali. Fissiamo un vettore $\\vec{e}_1$ di lunghezza unitaria lungo l'asse $x$ e un vettore $\\vec{e}_2$ di lunghezza unitaria lungo l'asse $y$. L'insieme $B = \\{\\vec{e}_1, \\vec{e}_2\\}$ costituisce una base del piano. Per la regola del parallelogramma, ogni vettore $\\vec{OP}$ può essere scritto come combinazione lineare dei vettori della base:</p>
+<p>$$\\vec{OP} = x\\,\\vec{e}_1 + y\\,\\vec{e}_2$$</p>
+<p>I numeri $x$ e $y$ sono chiamati le <strong>coordinate</strong> del vettore $\\vec{OP}$ rispetto alla base $B$.</p>`
+                },
+                {
+                    subtitle: "Le coordinate dipendono dalla base scelta",
+                    content: `<p>Le coordinate di un vettore dipendono <strong>crucialmente</strong> dalla base scelta. Se scegliessimo una base diversa, le coordinate dello stesso vettore cambierebbero.</p>
+<p><strong>Esempio:</strong> manteniamo il vettore $\\vec{OP}$ con coordinate $(x,y)$ rispetto alla base $B = \\{\\vec{e}_1, \\vec{e}_2\\}$. Consideriamo una nuova base $C = \\{\\vec{f}_1, \\vec{f}_2\\}$ dove $\\vec{f}_1 = \\vec{e}_1$ e $\\vec{f}_2 = -\\vec{e}_2$ (cioè il secondo asse è ribaltato).</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Confronto tra basi B e C</strong></p>
+  <p><em>Due sistemi di riferimento sovrapposti: la base B con $\\vec{e}_2$ verso l'alto e la base C con $\\vec{f}_2 = -\\vec{e}_2$ verso il basso. Stesso vettore OP mostrato con coordinate $(x,y)$ in B e $(x,-y)$ in C.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Per esprimere $\\vec{OP}$ in termini della base $C$, scriviamo:</p>
+<p>$$\\vec{OP} = x\\,\\vec{e}_1 + y\\,\\vec{e}_2 = x\\,\\vec{f}_1 + (-y)(-\\vec{e}_2) = x\\,\\vec{f}_1 + (-y)\\vec{f}_2$$</p>
+<p>Le coordinate di $\\vec{OP}$ rispetto alla base $C$ sono quindi $(x, -y)$.</p>
+<p><strong>Osservazione:</strong> il fatto che le coordinate cambino al variare della base può sembrare uno svantaggio. Tuttavia, questa flessibilità è anche un punto di forza. L'idea di associare coordinate ai vettori, introdotta da Cartesio (da cui il nome "coordinate cartesiane"), crea un <strong>ponte tra la geometria e l'algebra</strong>. Questo permette di tradurre un problema geometrico in un problema algebrico e, viceversa, di interpretare geometricamente un problema algebrico.</p>`
+                }
+            ]
+        },
+        {
+            id: "s20-definizione-coordinate",
+            type: "section",
+            title: "Definizione Formale di Coordinate",
+            icon: "🎯",
+            content: `<p>Generalizziamo ora il concetto di coordinate a uno spazio vettoriale qualsiasi.</p>
+<p><strong>Definizione (Coordinate di un vettore):</strong> Sia $V$ uno spazio vettoriale di dimensione $n$ e sia $B = \\{\\vec{v}_1, \\vec{v}_2, \\dots, \\vec{v}_n\\}$ una sua base. Per ogni vettore $\\vec{u} \\in V$, esistono e sono <strong>unici</strong> gli scalari $x_1, x_2, \\dots, x_n \\in \\mathbb{R}$ tali che:</p>
+<p>$$\\vec{u} = x_1\\,\\vec{v}_1 + x_2\\,\\vec{v}_2 + \\dots + x_n\\,\\vec{v}_n$$</p>
+<p>La $n$-upla ordinata di scalari $(x_1, x_2, \\dots, x_n)$ è chiamata <strong>vettore delle coordinate</strong> di $\\vec{u}$ rispetto alla base $B$.</p>
+<p>Per convenzione, rappresenteremo sempre il vettore delle coordinate come un <strong>vettore colonna</strong>. Utilizzeremo la seguente notazione:</p>
+<p>$$[\\vec{u}]_B = \\begin{pmatrix} x_1 \\\\ x_2 \\\\ \\vdots \\\\ x_n \\end{pmatrix} \\in \\mathbb{R}^n$$</p>
+<p>Questa notazione stabilisce una <strong>corrispondenza biunivoca</strong> tra i vettori dello spazio astratto $V$ e i vettori numerici dello spazio $\\mathbb{R}^n$.</p>`,
+            formulas: [
+                { label: "Coordinate rispetto a B", latex: "[\\vec{u}]_B = \\begin{pmatrix} x_1 \\\\ \\vdots \\\\ x_n \\end{pmatrix} \\quad \\text{dove } \\vec{u} = \\sum_{i=1}^n x_i \\vec{v}_i" }
+            ],
+            subsections: [
+                {
+                    subtitle: "Esempio: coordinate nella base canonica",
+                    content: `<p>Sia $V = \\mathbb{R}^n$ e sia $E = \\{\\vec{e}_1, \\vec{e}_2, \\dots, \\vec{e}_n\\}$ la base canonica. Se prendiamo un vettore $\\vec{u} = (u_1, u_2, \\dots, u_n) \\in \\mathbb{R}^n$, la sua espressione come combinazione lineare dei vettori di $E$ è:</p>
+<p>$$\\vec{u} = u_1\\,\\vec{e}_1 + u_2\\,\\vec{e}_2 + \\dots + u_n\\,\\vec{e}_n$$</p>
+<p>Le coordinate di $\\vec{u}$ rispetto alla base canonica sono quindi le sue stesse componenti, disposte in un vettore colonna:</p>
+<p>$$[\\vec{u}]_E = \\begin{pmatrix} u_1 \\\\ u_2 \\\\ \\vdots \\\\ u_n \\end{pmatrix}$$</p>
+<p>Questo è il caso più semplice: nella base canonica, coordinate e componenti coincidono.</p>`
+                },
+                {
+                    subtitle: "L'ordine della base conta!",
+                    content: `<p><strong>Osservazione fondamentale:</strong> quando definiamo una base, l'ordine in cui elenchiamo i vettori è <strong>fondamentale</strong>. Una base non è semplicemente un insieme di vettori, ma una <strong>sequenza ordinata</strong>.</p>
+<p><strong>Esempio:</strong> Sia $B = \\{\\vec{v}_1, \\vec{v}_2, \\vec{v}_3\\}$ una base di $V$. Le coordinate del vettore $\\vec{v}_1$ rispetto alla base $B$ sono:</p>
+<p>$$[\\vec{v}_1]_B = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} \\quad \\text{poiché} \\quad \\vec{v}_1 = 1 \\cdot \\vec{v}_1 + 0 \\cdot \\vec{v}_2 + 0 \\cdot \\vec{v}_3$$</p>
+<p>Se ora consideriamo la base $C = \\{\\vec{v}_3, \\vec{v}_2, \\vec{v}_1\\}$, che contiene gli <strong>stessi vettori</strong> ma in ordine diverso, le coordinate di $\\vec{v}_1$ rispetto a $C$ diventano:</p>
+<p>$$[\\vec{v}_1]_C = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} \\quad \\text{poiché} \\quad \\vec{v}_1 = 0 \\cdot \\vec{v}_3 + 0 \\cdot \\vec{v}_2 + 1 \\cdot \\vec{v}_1$$</p>
+<p><strong>Regola generale:</strong> per una base $B = \\{\\vec{v}_1, \\dots, \\vec{v}_n\\}$, le coordinate dell'$i$-esimo vettore della base rispetto alla base stessa sono l'$i$-esimo vettore della base canonica di $\\mathbb{R}^n$:</p>
+<p>$$[\\vec{v}_i]_B = \\vec{e}_i$$</p>
+<p>Questo fatto, apparentemente banale, sarà cruciale nei calcoli successivi.</p>`
+                }
+            ]
+        },
+        {
+            id: "s20-alert-ordine",
+            type: "alert_box",
+            title: "Trappola d'esame: coordinate di un vettore di base",
+            icon: "⚠️",
+            content: `<p>Ricorda: per definizione, le coordinate del $j$-esimo vettore di una base $B$ rispetto alla base stessa sono il $j$-esimo vettore canonico $\\vec{e}_j$. Questo perché $\\vec{v}_j = 0 \\cdot \\vec{v}_1 + \\dots + 1 \\cdot \\vec{v}_j + \\dots + 0 \\cdot \\vec{v}_n$, dove il coefficiente $1$ appare solo in posizione $j$.</p>
+<p>Un errore comune è confondere le <strong>componenti</strong> di un vettore (che dipendono dalla sua rappresentazione in $\\mathbb{R}^n$) con le sue <strong>coordinate</strong> rispetto a una base non canonica. Le due cose coincidono <strong>solo</strong> quando la base è quella canonica.</p>`
+        },
+        {
+            id: "s20-matrice-cambio-base",
+            type: "section",
+            title: "Matrice del Cambiamento di Base",
+            icon: "🔄",
+            content: `<p>Abbiamo visto che le coordinate di un vettore dipendono dalla base scelta. Sorge naturale la domanda: <strong>esiste una relazione tra le coordinate di uno stesso vettore rispetto a due basi diverse?</strong> La risposta è affermativa e questa relazione è data da una matrice speciale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio motivante in ℝ²",
+                    content: `<p>Consideriamo lo spazio $V = \\mathbb{R}^2$ con due basi: la base canonica $E = \\{\\vec{e}_1, \\vec{e}_2\\}$ e la base $B = \\{\\vec{v}_1, \\vec{v}_2\\} = \\{(1,1), (1,2)\\}$. Sia $\\vec{u} = (u_1, u_2)$ un vettore generico.</p>
+<p>Le sue coordinate rispetto a $E$ sono $[\\vec{u}]_E = \\begin{pmatrix} u_1 \\\\ u_2 \\end{pmatrix}$.</p>
+<p>Per trovare le coordinate $[\\vec{u}]_B = \\begin{pmatrix} x_1 \\\\ x_2 \\end{pmatrix}$ rispetto a $B$, dobbiamo risolvere:</p>
+<p>$$(u_1, u_2) = x_1(1,1) + x_2(1,2)$$</p>
+<p>Questo equivale al sistema lineare:</p>
+<p>$$\\begin{cases} x_1 + x_2 = u_1 \\\\ x_1 + 2x_2 = u_2 \\end{cases}$$</p>
+<p>Sottraendo la prima dalla seconda: $x_2 = u_2 - u_1$. Sostituendo nella prima: $x_1 = u_1 - x_2 = 2u_1 - u_2$.</p>
+<p>Le coordinate rispetto a $B$ sono quindi:</p>
+<p>$$[\\vec{u}]_B = \\begin{pmatrix} 2u_1 - u_2 \\\\ -u_1 + u_2 \\end{pmatrix}$$</p>
+<p>Questa relazione può essere espressa in <strong>forma matriciale</strong>:</p>
+<p>$$[\\vec{u}]_B = \\begin{pmatrix} 2 & -1 \\\\ -1 & 1 \\end{pmatrix} \\begin{pmatrix} u_1 \\\\ u_2 \\end{pmatrix} = \\begin{pmatrix} 2 & -1 \\\\ -1 & 1 \\end{pmatrix} [\\vec{u}]_E$$</p>
+<p>La matrice $P = \\begin{pmatrix} 2 & -1 \\\\ -1 & 1 \\end{pmatrix}$ è la <strong>matrice del cambiamento di base</strong> dalla base $E$ alla base $B$.</p>`
+                },
+                {
+                    subtitle: "Definizione formale",
+                    content: `<p>Prima della definizione, introduciamo una notazione: indichiamo con $\\text{id}_V$ l'<strong>applicazione identità</strong> su $V$, cioè l'applicazione che manda ogni vettore in sé stesso ($\\text{id}_V(\\vec{u}) = \\vec{u}$ per ogni $\\vec{u} \\in V$). La matrice del cambiamento di base è essenzialmente la matrice di questa applicazione espressa tra due basi diverse.</p>
+<p><strong>Definizione:</strong> Siano $B = \\{\\vec{v}_1, \\dots, \\vec{v}_n\\}$ e $B' = \\{\\vec{v}'_1, \\dots, \\vec{v}'_n\\}$ due basi di uno spazio vettoriale $V$. La <strong>matrice del cambiamento di base</strong> dalla base $B$ alla base $B'$, denotata con $M_{B' \\leftarrow B}(\\text{id}_V)$, è la matrice $n \\times n$ la cui $j$-esima colonna è il vettore delle coordinate di $\\vec{v}_j$ rispetto alla base $B'$:</p>
+<p>$$M_{B' \\leftarrow B}(\\text{id}_V) = \\left( [\\vec{v}_1]_{B'} \\mid [\\vec{v}_2]_{B'} \\mid \\dots \\mid [\\vec{v}_n]_{B'} \\right)$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Matrice del cambiamento di base", latex: "M_{B' \\leftarrow B}(\\text{id}_V) = \\left( [\\vec{v}_1]_{B'} \\mid \\dots \\mid [\\vec{v}_n]_{B'} \\right)" }
+            ]
+        },
+        {
+            id: "s20-proprieta-cambio-base",
+            type: "section",
+            title: "Proprietà della Matrice del Cambiamento di Base",
+            icon: "📜",
+            content: `<p>La matrice del cambiamento di base gode di quattro proprietà fondamentali che la rendono uno strumento potente dell'algebra lineare.</p>`,
+            subsections: [
+                {
+                    subtitle: "1. Formula del cambiamento di base",
+                    content: `<p><strong>Proposizione:</strong> Siano $B$ e $B'$ due basi di $V$. Per ogni vettore $\\vec{u} \\in V$ vale:</p>
+<p>$$[\\vec{u}]_{B'} = M_{B' \\leftarrow B}(\\text{id}_V) \\cdot [\\vec{u}]_B$$</p>
+<p><strong>Dimostrazione:</strong> Sia $P = M_{B' \\leftarrow B}(\\text{id}_V)$ e sia $[\\vec{u}]_B = \\boldsymbol{x} = \\begin{pmatrix} x_1 \\\\ \\vdots \\\\ x_n \\end{pmatrix}$. Per definizione, $\\vec{u} = \\sum_{i=1}^n x_i\\,\\vec{v}_i$.</p>
+<p>Vogliamo calcolare $[\\vec{u}]_{B'}$. L'applicazione delle coordinate è lineare (lo dimostreremo nella sezione successiva), quindi:</p>
+<p>$$[\\vec{u}]_{B'} = \\left[\\sum_{i=1}^n x_i\\,\\vec{v}_i\\right]_{B'} = \\sum_{i=1}^n x_i\\,[\\vec{v}_i]_{B'}$$</p>
+<p>Per definizione della matrice $P$, il vettore $[\\vec{v}_i]_{B'}$ è la $i$-esima colonna di $P$, che indichiamo con $\\boldsymbol{p}_i$. L'espressione diventa:</p>
+<p>$$\\sum_{i=1}^n x_i\\,\\boldsymbol{p}_i = P \\cdot \\boldsymbol{x}$$</p>
+<p>che è esattamente il prodotto matrice-vettore. Abbiamo quindi dimostrato la tesi. $\\square$</p>`
+                },
+                {
+                    subtitle: "2. Invertibilità",
+                    content: `<p><strong>Proposizione:</strong> La matrice del cambiamento di base $M_{B' \\leftarrow B}(\\text{id}_V)$ è sempre <strong>invertibile</strong> e la sua inversa è la matrice del cambiamento nella direzione opposta:</p>
+<p>$$\\left( M_{B' \\leftarrow B}(\\text{id}_V) \\right)^{-1} = M_{B \\leftarrow B'}(\\text{id}_V)$$</p>
+<p><strong>Dimostrazione:</strong> Siano $P = M_{B' \\leftarrow B}(\\text{id}_V)$ e $Q = M_{B \\leftarrow B'}(\\text{id}_V)$. Dalla proprietà precedente, per ogni $\\vec{u} \\in V$ valgono:</p>
+<p>$$[\\vec{u}]_{B'} = P \\cdot [\\vec{u}]_B \\quad \\text{e} \\quad [\\vec{u}]_B = Q \\cdot [\\vec{u}]_{B'}$$</p>
+<p>Sostituendo la prima nella seconda:</p>
+<p>$$[\\vec{u}]_B = Q \\cdot (P \\cdot [\\vec{u}]_B) = (QP) \\cdot [\\vec{u}]_B$$</p>
+<p>Questa uguaglianza deve valere per <strong>ogni</strong> vettore $\\vec{u} \\in V$, il che significa che $[\\vec{u}]_B$ può essere un qualsiasi vettore di $\\mathbb{R}^n$. Scegliendo $[\\vec{u}]_B = \\vec{e}_i$, otteniamo $\\vec{e}_i = (QP)\\vec{e}_i$, cioè la $i$-esima colonna di $QP$ è $\\vec{e}_i$. Poiché questo vale per ogni $i$:</p>
+<p>$$QP = I$$</p>
+<p>Analogamente, sostituendo la seconda relazione nella prima, si ottiene $PQ = I$. Quindi $P$ e $Q$ sono inverse l'una dell'altra. $\\square$</p>`
+                },
+                {
+                    subtitle: "3. Composizione (Relazione di Chasles)",
+                    content: `<p><strong>Proposizione:</strong> Siano $B, B', B''$ tre basi di $V$. Vale la relazione di composizione:</p>
+<p>$$M_{B'' \\leftarrow B}(\\text{id}_V) = M_{B'' \\leftarrow B'}(\\text{id}_V) \\cdot M_{B' \\leftarrow B}(\\text{id}_V)$$</p>
+<p><strong>Dimostrazione:</strong> Per ogni $\\vec{u} \\in V$:</p>
+<p>$$[\\vec{u}]_{B''} = M_{B'' \\leftarrow B'}(\\text{id}_V) \\cdot [\\vec{u}]_{B'} = M_{B'' \\leftarrow B'}(\\text{id}_V) \\cdot \\left( M_{B' \\leftarrow B}(\\text{id}_V) \\cdot [\\vec{u}]_B \\right)$$</p>
+<p>$$= \\left( M_{B'' \\leftarrow B'}(\\text{id}_V) \\cdot M_{B' \\leftarrow B}(\\text{id}_V) \\right) \\cdot [\\vec{u}]_B$$</p>
+<p>D'altra parte, per definizione: $[\\vec{u}]_{B''} = M_{B'' \\leftarrow B}(\\text{id}_V) \\cdot [\\vec{u}]_B$.</p>
+<p>Confrontando le due espressioni, poiché l'uguaglianza vale per ogni $[\\vec{u}]_B \\in \\mathbb{R}^n$, le matrici devono essere uguali. $\\square$</p>
+<p><strong>Nota:</strong> questa proprietà è particolarmente utile in pratica. Quando si deve passare da $B$ a $B''$, si può usare una base intermedia $B'$ (tipicamente la base canonica) per semplificare i calcoli.</p>`
+                },
+                {
+                    subtitle: "4. Identità",
+                    content: `<p><strong>Proposizione:</strong> La matrice del cambiamento di base da una base $B$ a sé stessa è la matrice identità:</p>
+<p>$$M_{B \\leftarrow B}(\\text{id}_V) = I$$</p>
+<p><strong>Dimostrazione:</strong> La $j$-esima colonna di $M_{B \\leftarrow B}(\\text{id}_V)$ è il vettore $[\\vec{v}_j]_B$. Come già osservato, $[\\vec{v}_j]_B = \\vec{e}_j$. Una matrice le cui colonne sono i vettori della base canonica $\\vec{e}_1, \\dots, \\vec{e}_n$ è, per definizione, la matrice identità. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Formula del cambiamento", latex: "[\\vec{u}]_{B'} = M_{B' \\leftarrow B}(\\text{id}_V) \\cdot [\\vec{u}]_B" },
+                { label: "Invertibilità", latex: "\\left( M_{B' \\leftarrow B} \\right)^{-1} = M_{B \\leftarrow B'}" },
+                { label: "Composizione (Chasles)", latex: "M_{B'' \\leftarrow B} = M_{B'' \\leftarrow B'} \\cdot M_{B' \\leftarrow B}" },
+                { label: "Identità", latex: "M_{B \\leftarrow B} = I" }
+            ]
+        },
+        {
+            id: "s20-note-base-canonica",
+            type: "note_box",
+            title: "Trucco pratico: usare la base canonica come ponte",
+            icon: "💡",
+            content: `<p>Quando la base di arrivo è la base canonica $E$, la matrice del cambiamento di base si ottiene semplicemente <strong>accostando come colonne i vettori della base di partenza</strong>. Infatti $[\\vec{v}_j]_E$ sono le componenti standard di $\\vec{v}_j$.</p>
+<p>Questo significa che $M_{E \\leftarrow B}$ è la matrice che ha per colonne i vettori di $B$, ed è immediatamente costruibile. Per la matrice inversa $M_{B \\leftarrow E}$, basta invertire questa matrice.</p>
+<p>Per passare tra due basi arbitrarie $B$ e $B'$, si usa la base canonica come intermediaria:</p>
+<p>$$M_{B' \\leftarrow B} = M_{B' \\leftarrow E} \\cdot M_{E \\leftarrow B} = (M_{E \\leftarrow B'})^{-1} \\cdot M_{E \\leftarrow B}$$</p>`
+        },
+        {
+            id: "s20-esempi-calcolo",
+            type: "section",
+            title: "Esempi di Calcolo",
+            icon: "✏️",
+            content: `<p>Vediamo una serie di esempi che coprono le situazioni tipiche d'esame.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 1: Cambio tra base canonica e base B in ℝ²",
+                    content: `<p>Riprendiamo l'esempio con la base canonica $E = \\{\\vec{e}_1, \\vec{e}_2\\}$ e la base $B = \\{(1,1), (1,2)\\}$ in $\\mathbb{R}^2$.</p>
+<p><strong>Calcolo di $M_{E \\leftarrow B}$:</strong> Le colonne sono $[\\vec{v}_1]_E$ e $[\\vec{v}_2]_E$. Poiché $E$ è la base canonica, le coordinate sono le componenti stesse:</p>
+<p>$$M_{E \\leftarrow B} = \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix}$$</p>
+<p><strong>Calcolo di $M_{B \\leftarrow E}$:</strong> Per l'invertibilità, questa è l'inversa della precedente:</p>
+<p>$$M_{B \\leftarrow E} = (M_{E \\leftarrow B})^{-1} = \\begin{pmatrix} 2 & -1 \\\\ -1 & 1 \\end{pmatrix}$$</p>
+<p><strong>Verifica:</strong></p>
+<p>$$M_{E \\leftarrow B} \\cdot M_{B \\leftarrow E} = \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix} \\begin{pmatrix} 2 & -1 \\\\ -1 & 1 \\end{pmatrix} = \\begin{pmatrix} 2-1 & -1+1 \\\\ 2-2 & -1+2 \\end{pmatrix} = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} = I \\quad \\checkmark$$</p>`
+                },
+                {
+                    subtitle: "Esempio 2: Spazio astratto con base B e B'",
+                    content: `<p>Sia $V$ uno spazio vettoriale con base $B = \\{\\vec{b}_1, \\vec{b}_2, \\vec{b}_3\\}$ e sia $B' = \\{\\vec{b}'_1, \\vec{b}'_2, \\vec{b}'_3\\}$ definita da:</p>
+<p>$$\\vec{b}'_1 = \\vec{b}_1, \\quad \\vec{b}'_2 = \\vec{b}_2 + 5\\vec{b}_3, \\quad \\vec{b}'_3 = \\vec{b}_2 + 6\\vec{b}_3$$</p>
+<p>Sia $\\vec{u} = -2\\vec{b}_1 + 3\\vec{b}_2 - \\vec{b}_3$. Calcolare $M_{B \\leftarrow B'}$, $M_{B' \\leftarrow B}$, $[\\vec{u}]_B$ e $[\\vec{u}]_{B'}$.</p>
+<p><strong>Coordinate di $\\vec{u}$ rispetto a $B$:</strong> date direttamente dalla definizione: $[\\vec{u}]_B = \\begin{pmatrix} -2 \\\\ 3 \\\\ -1 \\end{pmatrix}$.</p>
+<p><strong>Calcolo di $M_{B \\leftarrow B'}$:</strong> scriviamo le coordinate dei vettori di $B'$ rispetto a $B$:</p>
+<p>$$[\\vec{b}'_1]_B = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}, \\quad [\\vec{b}'_2]_B = \\begin{pmatrix} 0 \\\\ 1 \\\\ 5 \\end{pmatrix}, \\quad [\\vec{b}'_3]_B = \\begin{pmatrix} 0 \\\\ 1 \\\\ 6 \\end{pmatrix}$$</p>
+<p>$$M_{B \\leftarrow B'} = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 1 \\\\ 0 & 5 & 6 \\end{pmatrix}$$</p>
+<p><strong>Calcolo di $M_{B' \\leftarrow B}$:</strong> dobbiamo invertire $M_{B \\leftarrow B'}$. La matrice è triangolare a blocchi: il blocco $(1,1)$ è $1$ e il blocco $2 \\times 2$ in basso a destra è $\\begin{pmatrix} 1 & 1 \\\\ 5 & 6 \\end{pmatrix}$.</p>
+<p>Il determinante è $\\det = 1 \\cdot (1 \\cdot 6 - 1 \\cdot 5) = 1 \\cdot 1 = 1$.</p>
+<p>Calcoliamo l'inversa con il metodo dei cofattori. La matrice dei cofattori è:</p>
+<p>$$C_{11} = +(6-5) = 1, \\quad C_{12} = -(0-0) = 0, \\quad C_{13} = +(0-0) = 0$$</p>
+<p>$$C_{21} = -(0-0) = 0, \\quad C_{22} = +(6-0) = 6, \\quad C_{23} = -(5-0) = -5$$</p>
+<p>$$C_{31} = +(0-0) = 0, \\quad C_{32} = -(1-0) = -1, \\quad C_{33} = +(1-0) = 1$$</p>
+<p>L'inversa è la trasposta della matrice dei cofattori divisa per il determinante (che è 1):</p>
+<p>$$M_{B' \\leftarrow B} = (M_{B \\leftarrow B'})^{-1} = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 6 & -1 \\\\ 0 & -5 & 1 \\end{pmatrix}$$</p>
+<p><strong>Verifica rapida:</strong> $M_{B' \\leftarrow B} \\cdot M_{B \\leftarrow B'} = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 6 & -1 \\\\ 0 & -5 & 1 \\end{pmatrix} \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 1 \\\\ 0 & 5 & 6 \\end{pmatrix} = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 6-5 & 6-6 \\\\ 0 & -5+5 & -5+6 \\end{pmatrix} = I \\quad \\checkmark$</p>
+<p><strong>Calcolo di $[\\vec{u}]_{B'}$:</strong></p>
+<p>$$[\\vec{u}]_{B'} = M_{B' \\leftarrow B} \\cdot [\\vec{u}]_B = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 6 & -1 \\\\ 0 & -5 & 1 \\end{pmatrix} \\begin{pmatrix} -2 \\\\ 3 \\\\ -1 \\end{pmatrix} = \\begin{pmatrix} -2 \\\\ 18+1 \\\\ -15-1 \\end{pmatrix} = \\begin{pmatrix} -2 \\\\ 19 \\\\ -16 \\end{pmatrix}$$</p>`
+                },
+                {
+                    subtitle: "Esempio 3: Cambio tra due basi non canoniche in ℝ²",
+                    content: `<p>In $\\mathbb{R}^2$, siano $B = \\{(2,2), (2,3)\\}$ e $B' = \\{(1,1), (5,6)\\}$. Un vettore $\\vec{u}$ ha coordinate $[\\vec{u}]_B = \\begin{pmatrix} 5 \\\\ -4 \\end{pmatrix}$. Calcolare $[\\vec{u}]_{B'}$.</p>
+<p>Usiamo la base canonica $E$ come intermediaria: $M_{B' \\leftarrow B} = M_{B' \\leftarrow E} \\cdot M_{E \\leftarrow B}$.</p>
+<p><strong>Passo 1:</strong> $M_{E \\leftarrow B}$ (colonne = vettori di $B$):</p>
+<p>$$M_{E \\leftarrow B} = \\begin{pmatrix} 2 & 2 \\\\ 2 & 3 \\end{pmatrix}$$</p>
+<p><strong>Passo 2:</strong> $M_{B' \\leftarrow E} = (M_{E \\leftarrow B'})^{-1}$. Il determinante di $M_{E \\leftarrow B'} = \\begin{pmatrix} 1 & 5 \\\\ 1 & 6 \\end{pmatrix}$ è $6-5 = 1$, quindi:</p>
+<p>$$M_{B' \\leftarrow E} = \\begin{pmatrix} 6 & -5 \\\\ -1 & 1 \\end{pmatrix}$$</p>
+<p><strong>Passo 3:</strong> Moltiplichiamo:</p>
+<p>$$M_{B' \\leftarrow B} = \\begin{pmatrix} 6 & -5 \\\\ -1 & 1 \\end{pmatrix} \\begin{pmatrix} 2 & 2 \\\\ 2 & 3 \\end{pmatrix} = \\begin{pmatrix} 12-10 & 12-15 \\\\ -2+2 & -2+3 \\end{pmatrix} = \\begin{pmatrix} 2 & -3 \\\\ 0 & 1 \\end{pmatrix}$$</p>
+<p><strong>Passo 4:</strong> Calcoliamo le coordinate:</p>
+<p>$$[\\vec{u}]_{B'} = \\begin{pmatrix} 2 & -3 \\\\ 0 & 1 \\end{pmatrix} \\begin{pmatrix} 5 \\\\ -4 \\end{pmatrix} = \\begin{pmatrix} 10+12 \\\\ 0-4 \\end{pmatrix} = \\begin{pmatrix} 22 \\\\ -4 \\end{pmatrix}$$</p>`
+                },
+                {
+                    subtitle: "Esempio 4: Determinare B' da una relazione tra coordinate",
+                    content: `<p>In $\\mathbb{R}^3$, sia data la base $B = \\{(0,1,1), (0,1,2), (1,1,1)\\}$. Sia $B'$ una base incognita. Per ogni vettore $\\vec{u} \\in \\mathbb{R}^3$, se $\\boldsymbol{x} = [\\vec{u}]_B$ e $\\boldsymbol{x}' = [\\vec{u}]_{B'}$, vale:</p>
+<p>$$\\begin{cases} x'_1 = x_1 \\\\ x'_2 = 2x_2 + 5x_3 \\\\ x'_3 = x_2 + 3x_3 \\end{cases}$$</p>
+<p>Determinare i vettori della base $B'$.</p>
+<p>La relazione data definisce la matrice:</p>
+<p>$$M_{B' \\leftarrow B} = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 2 & 5 \\\\ 0 & 1 & 3 \\end{pmatrix}$$</p>
+<p><strong>Idea chiave:</strong> per definizione, le coordinate del $j$-esimo vettore di una base rispetto alla propria base sono il $j$-esimo vettore canonico. Cioè $[\\vec{b}'_i]_{B'} = \\vec{e}_i$. Questo perché $\\vec{b}'_j = 0 \\cdot \\vec{b}'_1 + \\dots + 1 \\cdot \\vec{b}'_j + \\dots + 0 \\cdot \\vec{b}'_n$.</p>
+<p>Quindi, per trovare $[\\vec{b}'_i]_B$ (le coordinate dei vettori di $B'$ nella base $B$), usiamo la relazione inversa:</p>
+<p>$$[\\vec{b}'_i]_B = M_{B \\leftarrow B'} \\cdot [\\vec{b}'_i]_{B'} = M_{B \\leftarrow B'} \\cdot \\vec{e}_i$$</p>
+<p>cioè le colonne di $M_{B \\leftarrow B'} = (M_{B' \\leftarrow B})^{-1}$.</p>
+<p>Calcoliamo l'inversa:</p>
+<p>$$M_{B \\leftarrow B'} = (M_{B' \\leftarrow B})^{-1} = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 3 & -5 \\\\ 0 & -1 & 2 \\end{pmatrix}$$</p>
+<p><strong>Per $\\vec{b}'_1$:</strong> $[\\vec{b}'_1]_B = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}$, quindi $\\vec{b}'_1 = 1 \\cdot \\vec{b}_1 = (0,1,1)$.</p>
+<p><strong>Per $\\vec{b}'_2$:</strong> $[\\vec{b}'_2]_B = \\begin{pmatrix} 0 \\\\ 3 \\\\ -1 \\end{pmatrix}$, quindi $\\vec{b}'_2 = 3\\vec{b}_2 - \\vec{b}_3 = 3(0,1,2) - (1,1,1) = (-1,2,5)$.</p>
+<p><strong>Per $\\vec{b}'_3$:</strong> $[\\vec{b}'_3]_B = \\begin{pmatrix} 0 \\\\ -5 \\\\ 2 \\end{pmatrix}$, quindi $\\vec{b}'_3 = -5\\vec{b}_2 + 2\\vec{b}_3 = -5(0,1,2) + 2(1,1,1) = (2,-3,-8)$.</p>
+<p>La base cercata è $B' = \\{(0,1,1),\\, (-1,2,5),\\, (2,-3,-8)\\}$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s20-applicazione-coordinate",
+            type: "section",
+            title: "L'Applicazione delle Coordinate",
+            icon: "🔗",
+            content: `<p>Fissata una base $B$ di uno spazio vettoriale $V$ di dimensione $n$, possiamo considerare l'applicazione:</p>
+<p>$$[\\cdot]_B : V \\to \\mathbb{R}^n, \\quad \\vec{u} \\mapsto [\\vec{u}]_B$$</p>
+<p>Questa è detta <strong>applicazione delle coordinate</strong> di $V$ rispetto alla base $B$. Il suo interesse risiede nel fatto che permette di "identificare" lo spazio vettoriale astratto $V$ con lo spazio numerico $\\mathbb{R}^n$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Proprietà fondamentali (con dimostrazione)",
+                    content: `<p><strong>Proposizione (Proprietà dell'applicazione delle coordinate):</strong> L'applicazione $[\\cdot]_B$ gode delle seguenti proprietà:</p>
+<p><strong>1. Biettività:</strong> $[\\cdot]_B$ è biiettiva (ogni vettore di $\\mathbb{R}^n$ corrisponde a un unico vettore di $V$).</p>
+<p><strong>2. Additività:</strong> Per ogni $\\vec{u}, \\vec{w} \\in V$, si ha $[\\vec{u}+\\vec{w}]_B = [\\vec{u}]_B + [\\vec{w}]_B$.</p>
+<p><strong>3. Omogeneità:</strong> Per ogni $\\vec{u} \\in V$ e ogni scalare $a \\in \\mathbb{R}$, si ha $[a\\vec{u}]_B = a[\\vec{u}]_B$.</p>
+<p>Le proprietà 2 e 3 insieme ci dicono che l'applicazione delle coordinate è un'<strong>applicazione lineare</strong>. Insieme alla proprietà 1, questo significa che $[\\cdot]_B$ è un <strong>isomorfismo</strong> tra $V$ e $\\mathbb{R}^n$.</p>
+<p><strong>Dimostrazione di 2 e 3:</strong> Siano $\\vec{u}, \\vec{w} \\in V$ con coordinate:</p>
+<p>$$\\vec{u} = \\sum_{i=1}^n x_i\\,\\vec{v}_i \\quad \\text{e} \\quad \\vec{w} = \\sum_{i=1}^n y_i\\,\\vec{v}_i$$</p>
+<p>Per l'<strong>additività</strong>: sommando le due espressioni si ottiene:</p>
+<p>$$\\vec{u} + \\vec{w} = \\sum_{i=1}^n x_i\\,\\vec{v}_i + \\sum_{i=1}^n y_i\\,\\vec{v}_i = \\sum_{i=1}^n (x_i + y_i)\\,\\vec{v}_i$$</p>
+<p>Per l'unicità delle coordinate, questo significa che $[\\vec{u}+\\vec{w}]_B = \\begin{pmatrix} x_1+y_1 \\\\ \\vdots \\\\ x_n+y_n \\end{pmatrix} = [\\vec{u}]_B + [\\vec{w}]_B$.</p>
+<p>Per l'<strong>omogeneità</strong>: moltiplicando per lo scalare $a$:</p>
+<p>$$a\\vec{u} = a\\sum_{i=1}^n x_i\\,\\vec{v}_i = \\sum_{i=1}^n (ax_i)\\,\\vec{v}_i$$</p>
+<p>Dunque $[a\\vec{u}]_B = \\begin{pmatrix} ax_1 \\\\ \\vdots \\\\ ax_n \\end{pmatrix} = a\\begin{pmatrix} x_1 \\\\ \\vdots \\\\ x_n \\end{pmatrix} = a[\\vec{u}]_B$. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Applicazione delle coordinate", latex: "[\\cdot]_B : V \\to \\mathbb{R}^n, \\quad \\vec{u} \\mapsto [\\vec{u}]_B" },
+                { label: "Linearità", latex: "[\\vec{u}+\\vec{w}]_B = [\\vec{u}]_B + [\\vec{w}]_B, \\quad [a\\vec{u}]_B = a[\\vec{u}]_B" }
+            ]
+        },
+        {
+            id: "s20-oral-riepilogo",
+            type: "oral_box",
+            title: "Domanda tipica d'esame orale",
+            icon: "🎤",
+            content: `<p><strong>"Enunci e dimostri la formula del cambiamento di base."</strong></p>
+<p>Questa domanda è molto frequente. Il professore si aspetta che:</p>
+<p>1. Si enunci la formula: $[\\vec{u}]_{B'} = M_{B' \\leftarrow B}(\\text{id}_V) \\cdot [\\vec{u}]_B$.</p>
+<p>2. Si ricordi la definizione: la $j$-esima colonna di $M_{B' \\leftarrow B}$ è $[\\vec{v}_j]_{B'}$.</p>
+<p>3. Si usi la linearità delle coordinate per scomporre $[\\sum x_i \\vec{v}_i]_{B'} = \\sum x_i [\\vec{v}_i]_{B'}$.</p>
+<p>4. Si riconosca che $\\sum x_i \\boldsymbol{p}_i = P\\boldsymbol{x}$ è il prodotto matrice-vettore.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cosa si intende per coordinate di un vettore $\\vec{u}$ rispetto a una base $B$?",
+            back: "Se $B = \\{\\vec{v}_1, \\dots, \\vec{v}_n\\}$ è base di $V$ e $\\vec{u} = x_1\\vec{v}_1 + \\dots + x_n\\vec{v}_n$, allora $[\\vec{u}]_B = \\begin{pmatrix} x_1 \\\\ \\vdots \\\\ x_n \\end{pmatrix}$ è il vettore delle coordinate. Gli scalari $x_1, \\dots, x_n$ esistono e sono unici perché $B$ è una base."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è la matrice del cambiamento di base $M_{B' \\leftarrow B}(\\text{id}_V)$?",
+            back: "È la matrice $n \\times n$ la cui $j$-esima colonna è $[\\vec{v}_j]_{B'}$, cioè le coordinate del $j$-esimo vettore della base $B$ rispetto alla base $B'$. Qui $\\text{id}_V$ indica l'applicazione identità su $V$."
+        },
+        {
+            type: "formula",
+            front: "Enuncia la formula del cambiamento di base.",
+            back: "Per ogni $\\vec{u} \\in V$: $$[\\vec{u}]_{B'} = M_{B' \\leftarrow B}(\\text{id}_V) \\cdot [\\vec{u}]_B$$ La matrice moltiplica le coordinate 'vecchie' (in $B$) per ottenere le coordinate 'nuove' (in $B'$)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra la formula del cambiamento di base.",
+            back: "Sia $[\\vec{u}]_B = (x_1, \\dots, x_n)^T$. Allora $\\vec{u} = \\sum x_i \\vec{v}_i$. Per la linearità delle coordinate: $[\\vec{u}]_{B'} = \\sum x_i [\\vec{v}_i]_{B'}$. Ma $[\\vec{v}_i]_{B'}$ è la $i$-esima colonna di $P = M_{B' \\leftarrow B}$, quindi $\\sum x_i \\boldsymbol{p}_i = P \\cdot \\boldsymbol{x}$."
+        },
+        {
+            type: "domanda",
+            front: "Perché la matrice del cambiamento di base è sempre invertibile? Qual è la sua inversa?",
+            back: "Se $P = M_{B' \\leftarrow B}$ e $Q = M_{B \\leftarrow B'}$, allora $[\\vec{u}]_B = QP[\\vec{u}]_B$ per ogni $\\vec{u}$. Poiché $[\\vec{u}]_B$ percorre tutto $\\mathbb{R}^n$, si ha $QP = I$. Analogamente $PQ = I$. Quindi $(M_{B' \\leftarrow B})^{-1} = M_{B \\leftarrow B'}$."
+        },
+        {
+            type: "formula",
+            front: "Enuncia la relazione di composizione (Chasles) per le matrici del cambiamento di base.",
+            back: "Se $B, B', B''$ sono tre basi di $V$: $$M_{B'' \\leftarrow B} = M_{B'' \\leftarrow B'} \\cdot M_{B' \\leftarrow B}$$ In pratica, si può usare una base intermedia (tipicamente la base canonica) per calcolare il cambio tra due basi qualsiasi."
+        },
+        {
+            type: "tranello",
+            front: "Quando la base di arrivo è la base canonica $E$, come si costruisce facilmente $M_{E \\leftarrow B}$?",
+            back: "Si mettono semplicemente i vettori della base $B$ come colonne: $M_{E \\leftarrow B} = (\\vec{v}_1 \\mid \\dots \\mid \\vec{v}_n)$. Attenzione: questo funziona SOLO quando la base di arrivo è la canonica! Per $M_{B \\leftarrow E}$ bisogna invertire la matrice."
+        },
+        {
+            type: "domanda",
+            front: "Perché l'ordine dei vettori in una base è importante?",
+            back: "Perché le coordinate dipendono dall'ordine. Se $B = \\{\\vec{v}_1, \\vec{v}_2, \\vec{v}_3\\}$, allora $[\\vec{v}_1]_B = (1,0,0)^T$. Ma se $C = \\{\\vec{v}_3, \\vec{v}_2, \\vec{v}_1\\}$, allora $[\\vec{v}_1]_C = (0,0,1)^T$. Una base è una sequenza ordinata, non un semplice insieme."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che l'applicazione delle coordinate $[\\cdot]_B$ è lineare.",
+            back: "Siano $\\vec{u} = \\sum x_i \\vec{v}_i$ e $\\vec{w} = \\sum y_i \\vec{v}_i$. Allora $\\vec{u}+\\vec{w} = \\sum (x_i+y_i)\\vec{v}_i$, quindi $[\\vec{u}+\\vec{w}]_B = [\\vec{u}]_B + [\\vec{w}]_B$ (additività). Inoltre $a\\vec{u} = \\sum (ax_i)\\vec{v}_i$, quindi $[a\\vec{u}]_B = a[\\vec{u}]_B$ (omogeneità)."
+        },
+        {
+            type: "tranello",
+            front: "Quali sono le coordinate del $j$-esimo vettore di base $\\vec{v}_j$ rispetto alla propria base $B$?",
+            back: "Sono il $j$-esimo vettore canonico: $[\\vec{v}_j]_B = \\vec{e}_j$. Infatti $\\vec{v}_j = 0\\vec{v}_1 + \\dots + 1\\vec{v}_j + \\dots + 0\\vec{v}_n$, con coefficiente 1 solo in posizione $j$. Conseguenza: $M_{B \\leftarrow B} = I$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=13"></script>
+<script src="/js/graphs.js?v=13"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 22 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 22: Forze Centrali e Gravitazione Universale. Dimostrazione delle tre proprietà fondamentali delle forze centrali (conservazione del momento angolare, legge delle aree, conservatività), formulazione della legge di gravitazione universale di Newton, distinzione tra massa inerziale e gravitazionale, e derivazione dell'energia potenziale gravitazionale.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 22: Forze Centrali e Gravitazione Universale — Fisica 1">
+  <meta property="og:description" content="Dimostrazione delle tre proprietà fondamentali delle forze centrali (conservazione del momento angolare, legge delle aree, conservatività), formulazione della legge di gravitazione universale di Newton, distinzione tra massa inerziale e gravitazionale, e derivazione dell'energia potenziale gravitazionale.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/lezioni/L22/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/lezioni/L22/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=13">
+  <link rel="stylesheet" href="/css/style.css?v=13">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 22 — Forze Centrali e Gravitazione Universale",
+  "description": "Dimostrazione delle tre proprietà fondamentali delle forze centrali (conservazione del momento angolare, legge delle aree, conservatività), formulazione della legge di gravitazione universale di Newton, distinzione tra massa inerziale e gravitazionale, e derivazione dell'energia potenziale gravitazionale.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/lezioni/L22/",
+  "datePublished": "2026-04-23",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 22</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/lezioni/L20/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L22", date: "Lezione 22 — 23 Apr 2026",
+    title: "Forze Centrali e Gravitazione Universale",
+    abstract: "Dimostrazione delle tre proprietà fondamentali delle forze centrali (conservazione del momento angolare, legge delle aree, conservatività), formulazione della legge di gravitazione universale di Newton, distinzione tra massa inerziale e gravitazionale, e derivazione dell'energia potenziale gravitazionale.",
+
+    sections: [
+        {
+            id: "s22-forze-centrali-definizione",
+            type: "section",
+            title: "Definizione di Forza Centrale",
+            icon: "🎯",
+            content: `<p>Riprendiamo il discorso sulle forze centrali iniziato nella lezione precedente, partendo dalla definizione formale.</p>
+<p>Una forza si definisce <strong>centrale</strong> se ha la forma:</p>
+<p>$$\\vec{F}_c = F(r)\\,\\hat{u}_r$$</p>
+<p>dove:</p>
+<ul>
+<li>Il modulo $F(r)$ dipende <strong>unicamente</strong> dalla distanza $r$ tra il punto materiale $M$ e un punto fisso $O_c$, detto <strong>centro della forza</strong>.</li>
+<li>La direzione è sempre lungo la congiungente tra $O_c$ e $M$, rappresentata dal versore radiale $\\hat{u}_r$.</li>
+</ul>
+<p>Il vettore posizione relativa è $\\vec{r} = \\overrightarrow{O_c M}$, con modulo $r = \\|\\overrightarrow{O_c M}\\|$, e il versore è definito come $\\hat{u}_r = \\dfrac{\\vec{r}}{r}$.</p>
+<p>La caratteristica fondamentale è che la direzione di azione giace <strong>sempre</strong> sulla congiungente tra centro e punto materiale:</p>
+<ul>
+<li>$F(r) \\gt 0$ → forza <strong>repulsiva</strong> (diretta come $\\hat{u}_r$, verso l'esterno)</li>
+<li>$F(r) \\lt 0$ → forza <strong>attrattiva</strong> (diretta verso il centro $O_c$)</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "Esempi di forze centrali",
+                    content: `<ul>
+<li><strong>Forza gravitazionale</strong>: $\\vec{F} = -G\\dfrac{m_1 m_2}{r^2}\\hat{u}_r$, con $F(r) \\lt 0$ (attrattiva).</li>
+<li><strong>Forza elastica</strong> (molla ideale con un estremo fisso): $\\vec{F} = -k\\,r\\,\\hat{u}_r$, con $F(r) \\lt 0$ (attrattiva, diretta verso il centro).</li>
+<li><strong>Forza coulombiana</strong>: $\\vec{F} = k_e\\dfrac{q_1 q_2}{r^2}\\hat{u}_r$, attrattiva o repulsiva a seconda del segno delle cariche.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Forza centrale (forma generale)", latex: "\\vec{F}_c = F(r)\\,\\hat{u}_r" }
+            ],
+            extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Geometria di una forza centrale</strong></p>
+  <p><em>Centro della forza $O_c$ a sinistra, punto materiale $M$ in alto a destra. Vettore $\\vec{r}$ da $O_c$ a $M$ (blu), versore $\\hat{u}_r$ più corto nella stessa direzione (rosso). Freccia arancione continua da $M$ verso $O_c$ per il caso attrattivo ($F(r) \\lt 0$), freccia arancione tratteggiata da $M$ in direzione opposta per il caso repulsivo ($F(r) \\gt 0$).</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+        },
+        {
+            id: "s22-riepilogo-proprieta",
+            type: "note_box",
+            title: "Riepilogo: le tre proprietà delle forze centrali",
+            icon: "📋",
+            content: `<p>Le forze centrali godono di tre proprietà fondamentali, introdotte nella lezione precedente e ora dimostrate in dettaglio:</p>
+<ol>
+<li><strong>Conservazione del momento angolare</strong>: $\\vec{L}_O = \\text{costante}$, il che implica che il moto è piano.</li>
+<li><strong>Legge delle aree</strong> (seconda legge di Keplero): la velocità areolare $\\dfrac{dA}{dt} = \\text{costante}$.</li>
+<li><strong>Conservatività</strong>: ogni forza centrale è conservativa, quindi esiste un'energia potenziale $E_p(r)$.</li>
+</ol>
+<p>Queste proprietà sono interconnesse e hanno profonde conseguenze sulla dinamica del moto.</p>`
+        },
+        {
+            id: "s22-conservazione-momento-angolare",
+            type: "section",
+            title: "Proprietà 1: Conservazione del Momento Angolare",
+            icon: "🔄",
+            content: `<p>Sotto l'azione di una forza centrale, il momento angolare $\\vec{L}_O$ del punto materiale, calcolato rispetto a un polo $O$ coincidente con il centro della forza $O_c$, è <strong>costante</strong>:</p>
+<p>$$\\vec{L}_O = \\text{costante}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Dal teorema del momento angolare:</p>
+<p>$$\\frac{d\\vec{L}_O}{dt} = \\vec{M}_O$$</p>
+<p>Il momento della forza centrale $\\vec{F}_c$ è:</p>
+<p>$$\\vec{M}_O = \\vec{r} \\times \\vec{F}_c = \\vec{r} \\times \\left( F(r)\\,\\hat{u}_r \\right) = F(r)\\left( \\vec{r} \\times \\hat{u}_r \\right)$$</p>
+<p>Poiché $\\vec{r}$ e $\\hat{u}_r$ sono paralleli per definizione (infatti $\\vec{r} = r\\,\\hat{u}_r$), il loro prodotto vettoriale è nullo:</p>
+<p>$$\\vec{r} \\times \\hat{u}_r = r\\,\\hat{u}_r \\times \\hat{u}_r = \\vec{0}$$</p>
+<p>Di conseguenza:</p>
+<p>$$\\vec{M}_O = \\vec{0} \\quad \\Rightarrow \\quad \\frac{d\\vec{L}_O}{dt} = \\vec{0} \\quad \\Rightarrow \\quad \\vec{L}_O = \\text{costante}$$</p>`
+                },
+                {
+                    subtitle: "Conseguenza: il moto è piano",
+                    content: `<p>La conservazione di $\\vec{L}_O$ come <strong>vettore</strong> implica che la sua direzione è fissa nello spazio. Poiché $\\vec{L}_O = m\\,\\vec{r} \\times \\vec{v}$, sia $\\vec{r}$ sia $\\vec{v}$ sono in ogni istante perpendicolari a $\\vec{L}_O$.</p>
+<p>Ciò significa che il moto si svolge interamente in un <strong>piano fisso</strong> passante per il centro della forza e perpendicolare a $\\vec{L}_O$. Questo riduce il problema da tridimensionale a <strong>bidimensionale</strong>.</p>`
+                },
+                {
+                    subtitle: "Modulo del momento angolare",
+                    content: `<p>Scomponiamo il vettore velocità $\\vec{v}$ in una componente radiale $\\vec{v}_r$ (lungo $\\vec{r}$) e una trasversale $\\vec{v}_\\theta$ (ortogonale a $\\vec{r}$):</p>
+<p>$$\\vec{v} = \\vec{v}_r + \\vec{v}_\\theta$$</p>
+<p>Il modulo del momento angolare è:</p>
+<p>$$|\\vec{L}_O| = |\\vec{r} \\times m(\\vec{v}_r + \\vec{v}_\\theta)| = |m(\\vec{r} \\times \\vec{v}_r) + m(\\vec{r} \\times \\vec{v}_\\theta)|$$</p>
+<p>Il termine $\\vec{r} \\times \\vec{v}_r = \\vec{0}$ perché i due vettori sono paralleli. Il termine $\\vec{r} \\times \\vec{v}_\\theta$ ha modulo $r\\,v_\\theta$ perché i vettori sono ortogonali. Quindi:</p>
+<p>$$|\\vec{L}_O| = m\\,r\\,v_\\theta = \\text{costante}$$</p>
+<p>Il modulo del momento angolare dipende solo dalla <strong>componente trasversale</strong> della velocità. Se non ci sono spostamenti trasversali ($\\vec{v}_\\theta = \\vec{0}$), il momento angolare è nullo e il moto è puramente radiale.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Momento angolare conservato", latex: "\\vec{L}_O = \\text{costante}" },
+                { label: "Modulo del momento angolare", latex: "|\\vec{L}_O| = m\\,r\\,v_\\theta = \\text{costante}" }
+            ]
+        },
+        {
+            id: "s22-legge-aree",
+            type: "section",
+            title: "Proprietà 2: Legge delle Aree",
+            icon: "📐",
+            content: `<p>La seconda proprietà, conseguenza diretta della prima, afferma che la <strong>velocità areolare</strong> — la rapidità con cui il vettore posizione $\\vec{r}$ spazza un'area — è costante:</p>
+<p>$$\\frac{dA}{dt} = \\text{costante}$$</p>
+<p>Questa è nota anche come la <strong>seconda legge di Keplero</strong> nel contesto del moto planetario.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Consideriamo l'area infinitesima $dA$ spazzata dal vettore posizione $\\vec{r}$ in un tempo $dt$. Il punto si sposta di $d\\vec{s}$, e l'area del triangolo formato da $\\vec{r}$ e $d\\vec{s}$ è:</p>
+<p>$$dA = \\frac{1}{2}|\\vec{r} \\times d\\vec{s}|$$</p>
+<p>Sia $\\alpha$ l'angolo tra $\\vec{r}$ e $d\\vec{s}$:</p>
+<p>$$dA = \\frac{1}{2}\\,r\\,|d\\vec{s}|\\,\\sin\\alpha$$</p>
+<p>La componente di $d\\vec{s}$ perpendicolare a $\\vec{r}$ è $ds_\\theta = |d\\vec{s}|\\sin\\alpha$, quindi:</p>
+<p>$$dA = \\frac{1}{2}\\,r\\,ds_\\theta$$</p>
+<p>Dividendo per $dt$:</p>
+<p>$$\\frac{dA}{dt} = \\frac{1}{2}\\,r\\,\\frac{ds_\\theta}{dt} = \\frac{1}{2}\\,r\\,v_\\theta$$</p>
+<p>Dalla proprietà 1 sappiamo che $r\\,v_\\theta = \\dfrac{|\\vec{L}_O|}{m}$, e poiché sia $|\\vec{L}_O|$ che $m$ sono costanti:</p>
+<p>$$\\frac{dA}{dt} = \\frac{|\\vec{L}_O|}{2m} = \\text{costante}$$</p>`
+                },
+                {
+                    subtitle: "Significato fisico",
+                    content: `<p>La legge delle aree ha un significato molto intuitivo:</p>
+<ul>
+<li>Quando il punto è <strong>più vicino</strong> al centro ($r$ piccolo), la velocità trasversale $v_\\theta$ deve essere <strong>più grande</strong> per mantenere costante $r\\,v_\\theta$.</li>
+<li>Quando è <strong>più lontano</strong> ($r$ grande), si muove <strong>più lentamente</strong> in direzione trasversale.</li>
+</ul>
+<p>Nel contesto planetario: i pianeti si muovono <strong>più velocemente</strong> al perielio (punto più vicino al Sole) e <strong>più lentamente</strong> all'afelio (punto più lontano).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Velocità areolare", latex: "\\frac{dA}{dt} = \\frac{|\\vec{L}_O|}{2m} = \\text{costante}" }
+            ]
+        },
+        {
+            id: "s22-conservativita",
+            type: "section",
+            title: "Proprietà 3: Le Forze Centrali sono Conservative",
+            icon: "⚡",
+            content: `<p>La terza proprietà è che <strong>ogni forza centrale è conservativa</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Una forza è conservativa se il lavoro da A a B non dipende dal percorso. Calcoliamo:</p>
+<p>$$W_{A \\to B} = \\int_A^B \\vec{F}_c \\cdot d\\vec{s} = \\int_A^B F(r)\\,\\hat{u}_r \\cdot d\\vec{s}$$</p>
+<p>Il prodotto scalare $\\hat{u}_r \\cdot d\\vec{s}$ rappresenta la proiezione dello spostamento infinitesimo lungo la direzione radiale. Per giustificare che questa proiezione è esattamente $dr$, ricordiamo che in coordinate polari:</p>
+<p>$$d\\vec{s} = dr\\,\\hat{u}_r + r\\,d\\theta\\,\\hat{u}_\\theta$$</p>
+<p>Quindi:</p>
+<p>$$\\hat{u}_r \\cdot d\\vec{s} = dr\\,(\\hat{u}_r \\cdot \\hat{u}_r) + r\\,d\\theta\\,(\\hat{u}_r \\cdot \\hat{u}_\\theta) = dr$$</p>
+<p>poiché $\\hat{u}_r \\cdot \\hat{u}_r = 1$ e $\\hat{u}_r \\cdot \\hat{u}_\\theta = 0$. L'integrale diventa:</p>
+<p>$$W_{A \\to B} = \\int_{r_A}^{r_B} F(r)\\,dr$$</p>
+<p>Poiché l'integrale dipende <strong>solo dagli estremi</strong> $r_A$ e $r_B$ (le distanze dal centro) e <strong>non dal cammino</strong>, la forza è conservativa. ∎</p>`
+                }
+            ],
+            formulas: [
+                { label: "Lavoro di una forza centrale", latex: "W_{A \\to B} = \\int_{r_A}^{r_B} F(r)\\,dr" }
+            ]
+        },
+        {
+            id: "s22-riepilogo-tre-proprieta",
+            type: "note_box",
+            title: "Riepilogo delle tre proprietà",
+            icon: "🔗",
+            content: `<p>Le tre proprietà sono strettamente collegate:</p>
+<ol>
+<li><strong>Conservazione del momento angolare</strong> $\\vec{L}_O = \\text{cost.}$ → il moto è piano.</li>
+<li><strong>Legge delle aree</strong> $\\dfrac{dA}{dt} = \\text{cost.}$ ← conseguenza diretta della proprietà 1.</li>
+<li><strong>Conservatività</strong> → esiste un'energia potenziale $E_p(r)$ e si conserva l'energia meccanica totale.</li>
+</ol>`
+        },
+        {
+            id: "s22-gravitazione-universale",
+            type: "section",
+            title: "La Legge di Gravitazione Universale",
+            icon: "🌍",
+            content: `<p>Sulla base delle proprietà delle forze centrali e delle osservazioni astronomiche — in particolare le leggi di Keplero — Newton formulò la sua legge di gravitazione universale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Contesto storico e intuizione di Newton",
+                    content: `<p>Newton capì che la forza che tiene i pianeti in orbita attorno al Sole è della <strong>stessa natura</strong> della forza che fa cadere gli oggetti sulla Terra. Questa fu una delle grandi unificazioni della fisica: la meccanica celeste e la meccanica terrestre obbediscono alla stessa legge.</p>
+<p>Ma come arrivò alla forma $1/r^2$? Il ragionamento, almeno qualitativamente, segue dalla <strong>terza legge di Keplero</strong> ($T^2 \\propto r^3$) combinata con il moto circolare uniforme. Per un'orbita circolare di raggio $r$, la forza centripeta necessaria è $F = m\\omega^2 r = m\\frac{4\\pi^2}{T^2}r$. Se $T^2 \\propto r^3$, allora:</p>
+<p>$$F \\propto \\frac{r}{r^3} = \\frac{1}{r^2}$$</p>
+<p>Newton scoprì così che la forza gravitazionale è centrale, attrattiva, e la sua intensità decresce con il <strong>quadrato della distanza</strong>.</p>`
+                },
+                {
+                    subtitle: "Enunciato della Legge",
+                    content: `<p>Due corpi puntiformi di massa $m_1$ e $m_2$, posti a distanza $r$, si attraggono reciprocamente con una forza direttamente proporzionale al prodotto delle masse e inversamente proporzionale al quadrato della distanza:</p>
+<p>$$\\vec{F}_{1 \\to 2} = -G\\frac{m_1 m_2}{r^2}\\hat{u}_r$$</p>
+<p>dove:</p>
+<ul>
+<li>$G \\approx 6{,}67 \\times 10^{-11}\\,\\text{N}\\cdot\\text{m}^2/\\text{kg}^2$ è la <strong>costante di gravitazione universale</strong>.</li>
+<li>$r$ è la distanza tra le due masse.</li>
+<li>$\\hat{u}_r$ è il versore che punta da $m_1$ a $m_2$.</li>
+<li>Il segno meno indica che la forza è <strong>attrattiva</strong>: diretta da $m_2$ verso $m_1$.</li>
+</ul>
+<p>Per il terzo principio di Newton: $\\vec{F}_{2 \\to 1} = -\\vec{F}_{1 \\to 2}$.</p>`
+                },
+                {
+                    subtitle: "Sulla costante G",
+                    content: `<p>La costante $G$ fu misurata per la prima volta da <strong>Henry Cavendish nel 1798</strong>, circa un secolo dopo la formulazione della legge di Newton, mediante un esperimento con una bilancia a torsione.</p>
+<p>Il valore estremamente piccolo di $G$ spiega perché la forza gravitazionale tra oggetti quotidiani è impercettibile: diventa significativa solo quando almeno una delle masse è molto grande (un pianeta, una stella).</p>`
+                },
+                {
+                    subtitle: "Esempio: forza gravitazionale tra due persone",
+                    content: `<p>Calcoliamo la forza tra due persone di massa $m_1 = 70\\,\\text{kg}$ e $m_2 = 80\\,\\text{kg}$ a distanza $r = 1\\,\\text{m}$:</p>
+<p>$$|\\vec{F}| = G\\frac{m_1 m_2}{r^2} = 6{,}67 \\times 10^{-11} \\cdot \\frac{70 \\times 80}{1^2} \\approx 3{,}7 \\times 10^{-7}\\,\\text{N}$$</p>
+<p>Si tratta di circa $0{,}37$ micronewton, del tutto trascurabile. Per confronto, il peso di una delle due persone è circa $700\\,\\text{N}$, cioè circa $2 \\times 10^9$ volte maggiore.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Legge di Gravitazione Universale", latex: "\\vec{F}_{1 \\to 2} = -G\\frac{m_1 m_2}{r^2}\\hat{u}_r" }
+            ]
+        },
+        {
+            id: "s22-massa-inerziale-gravitazionale",
+            type: "section",
+            title: "Massa Inerziale e Massa Gravitazionale",
+            icon: "⚖️",
+            content: `<p>A questo punto è fondamentale introdurre una distinzione concettuale tra due ruoli apparentemente diversi della massa:</p>
+<ul>
+<li>La <strong>massa inerziale</strong> ($m_i$) compare nella seconda legge di Newton ($\\vec{F} = m_i\\vec{a}$). Misura la resistenza di un corpo a essere accelerato. È una proprietà <em>passiva</em>: descrive come il corpo <em>risponde</em> a una forza.</li>
+<li>La <strong>massa gravitazionale</strong> ($m_g$) compare nella legge di gravitazione universale. Misura la capacità di un corpo di generare e subire un'interazione gravitazionale. È una proprietà <em>attiva</em>: descrive come il corpo <em>genera</em> e <em>risente</em> del campo gravitazionale.</li>
+</ul>
+<p>A priori, non c'è motivo per cui queste due grandezze debbano essere legate. Tuttavia, la natura ci riserva una coincidenza profonda.</p>`,
+            subsections: [
+                {
+                    subtitle: "La forza peso come caso particolare",
+                    content: `<p>Consideriamo un oggetto sulla superficie della Terra. La forza gravitazionale che la Terra esercita sull'oggetto è:</p>
+<p>$$\\vec{F}_G = -G\\frac{M_T\\,m_g}{R_T^2}\\hat{u}_r$$</p>
+<p>dove $M_T \\approx 5{,}97 \\times 10^{24}\\,\\text{kg}$ e $R_T \\approx 6{,}37 \\times 10^{6}\\,\\text{m}$, e $m_g$ è la massa gravitazionale dell'oggetto.</p>
+<p>Applicando la seconda legge di Newton $\\vec{F} = m_i\\vec{a}$ alla caduta libera:</p>
+<p>$$G\\frac{M_T\\,m_g}{R_T^2} = m_i\\,a \\quad \\Rightarrow \\quad a = \\frac{m_g}{m_i}\\cdot\\frac{G\\,M_T}{R_T^2}$$</p>
+<p>Se il rapporto $m_g/m_i$ dipendesse dalla composizione del corpo, una palla di piombo e una di legno cadrebbero con accelerazioni diverse. L'esperimento mostra che ciò <strong>non accade</strong>: tutti i corpi cadono con la stessa accelerazione, il che implica $m_g = m_i$.</p>
+<p>Definiamo ora il vettore <strong>accelerazione di gravità</strong> raggruppando i termini costanti:</p>
+<p>$$\\vec{g} = -G\\frac{M_T}{R_T^2}\\hat{u}_r$$</p>
+<p>Il suo modulo vale:</p>
+<p>$$|\\vec{g}| = G\\frac{M_T}{R_T^2} = \\frac{6{,}67 \\times 5{,}97}{(6{,}37)^2} \\times 10^{-11+24-12} \\approx \\frac{39{,}8}{40{,}6} \\times 10 \\approx 9{,}81\\,\\text{m/s}^2$$</p>
+<p>La forza peso si scrive nella forma compatta:</p>
+<p>$$\\vec{P} = m\\vec{g}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Accelerazione di gravità", latex: "\\vec{g} = -G\\frac{M_T}{R_T^2}\\hat{u}_r" },
+                { label: "Forza peso", latex: "\\vec{P} = m\\vec{g}" }
+            ]
+        },
+        {
+            id: "s22-principio-equivalenza",
+            type: "alert_box",
+            title: "Principio di Equivalenza",
+            icon: "⚠️",
+            content: `<p>Nella forza peso $\\vec{P} = m_g\\vec{g}$, la massa è <em>gravitazionale</em>. Nella seconda legge $\\vec{F} = m_i\\vec{a}$, la massa è <em>inerziale</em>. Uguagliando:</p>
+<p>$$m_g\\vec{g} = m_i\\vec{a} \\quad \\Rightarrow \\quad \\vec{a} = \\frac{m_g}{m_i}\\vec{g}$$</p>
+<p>L'esperimento mostra che <strong>tutti</strong> i corpi, indipendentemente dalla composizione, cadono con la stessa accelerazione $\\vec{a} = \\vec{g}$ (nel vuoto). Verificato fin dai tempi di Galileo e confermato con precisione fino a una parte su $10^{13}$:</p>
+<p>$$\\frac{m_g}{m_i} = 1 \\quad \\Rightarrow \\quad m_g = m_i$$</p>
+<p>Questa uguaglianza, nota come <strong>Principio di Equivalenza debole</strong>, fu elevata da Einstein a fondamento della Relatività Generale. Per questo motivo, da ora in poi parleremo semplicemente di "massa" $m$.</p>`,
+            formulas: [
+                { label: "Principio di Equivalenza", latex: "m_g = m_i" }
+            ]
+        },
+        {
+            id: "s22-energia-potenziale-gravitazionale",
+            type: "section",
+            title: "Energia Potenziale Gravitazionale",
+            icon: "📉",
+            content: `<p>Poiché la forza di gravitazione universale è una forza centrale, essa è conservativa (Proprietà 3). Possiamo quindi associarle un'energia potenziale $E_p$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Derivazione dell'energia potenziale",
+                    content: `<p>Il lavoro compiuto dalla forza gravitazionale per spostare $m_2$ da A a B nel campo di $m_1$:</p>
+<p>$$W_{A \\to B} = \\int_{r_A}^{r_B} \\left(-G\\frac{m_1 m_2}{r^2}\\right)dr = -G\\,m_1\\,m_2 \\int_{r_A}^{r_B} r^{-2}\\,dr$$</p>
+<p>$$= -G\\,m_1\\,m_2 \\left[-\\frac{1}{r}\\right]_{r_A}^{r_B} = G\\,m_1\\,m_2\\left(\\frac{1}{r_B} - \\frac{1}{r_A}\\right)$$</p>
+<p>Per una forza conservativa, il lavoro è anche $W_{A \\to B} = E_{p,A} - E_{p,B}$. Confrontando:</p>
+<p>$$E_{p,A} - E_{p,B} = G\\,m_1\\,m_2\\left(\\frac{1}{r_B} - \\frac{1}{r_A}\\right) = \\left(-G\\frac{m_1 m_2}{r_A}\\right) - \\left(-G\\frac{m_1 m_2}{r_B}\\right)$$</p>
+<p>Identificando termine a termine:</p>
+<p>$$E_p(r) = -G\\frac{m_1\\,m_2}{r} + C$$</p>
+<p>Fissando $E_p(r \\to \\infty) = 0$, si ottiene $C = 0$.</p>`
+                },
+                {
+                    subtitle: "Segno dell'energia potenziale",
+                    content: `<p>Si noti che $E_p(r) \\lt 0$ per ogni valore finito di $r$, poiché $G$, $m_1$, $m_2$ e $r$ sono tutti positivi.</p>
+<p>Questo è coerente con il fatto che due masse legate gravitazionalmente formano uno <strong>stato legato</strong>: occorre fornire energia (lavoro positivo dall'esterno) per separarle, cioè per portare $E_p$ da un valore negativo a zero.</p>`
+                },
+                {
+                    subtitle: "Verifica di coerenza: allontanamento dalla Terra",
+                    content: `<p>Se allontano un oggetto dalla Terra, la sua energia potenziale deve aumentare (devo compiere lavoro contro la gravità). Verifichiamolo con $r_f \\gt r_i$:</p>
+<p>$$\\Delta E_p = -G\\frac{m\\,M_T}{r_f} + G\\frac{m\\,M_T}{r_i} = G\\,m\\,M_T\\left(\\frac{1}{r_i} - \\frac{1}{r_f}\\right)$$</p>
+<p>Poiché $r_f \\gt r_i$ implica $\\frac{1}{r_i} \\gt \\frac{1}{r_f}$, il termine in parentesi è positivo. Quindi $\\Delta E_p \\gt 0$: l'energia potenziale aumenta quando ci si allontana. ✓</p>`
+                }
+            ],
+            formulas: [
+                { label: "Energia potenziale gravitazionale", latex: "E_p(r) = -G\\frac{m_1\\,m_2}{r}" }
+            ],
+            extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Grafico di $E_p(r) = -Gm_1m_2/r$</strong></p>
+  <p><em>Asse orizzontale: distanza $r$. Asse verticale: $E_p$. Curva blu che parte da $-\\infty$ per $r \\to 0$ e tende asintoticamente a $0$ per $r \\to \\infty$. Una linea orizzontale tratteggiata a un'altezza negativa fissa (es. $E = -0{,}6$ in unità arbitrarie) etichettata "$E = \\text{cost} \\lt 0$: stato legato" indica il livello energetico di un corpo in orbita chiusa. L'asse $E_p = 0$ è etichettato "$E = 0$: limite di separazione".</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+        },
+        {
+            id: "s22-scelta-zero-ep",
+            type: "note_box",
+            title: "Sulla scelta dello zero dell'energia potenziale",
+            icon: "📝",
+            content: `<p>La scelta dello zero per $E_p$ è arbitraria: contano le <strong>variazioni</strong>. Porre $E_p(\\infty) = 0$ è una convenzione comoda in astrofisica e nei problemi in cui i corpi possono trovarsi a distanze arbitrariamente grandi.</p>
+<p>Questa convenzione è <strong>diversa</strong> da quella usata nei problemi "terrestri", dove si pone spesso $E_p = 0$ alla superficie terrestre e si usa $E_p \\approx mgh$. Quest'ultima è valida solo per dislivelli $h \\ll R_T$.</p>`
+        },
+        {
+            id: "s22-energia-meccanica-orbite",
+            type: "section",
+            title: "Energia Meccanica Totale e Tipo di Orbita",
+            icon: "🪐",
+            content: `<p>Poiché la forza gravitazionale è conservativa, l'energia meccanica totale si conserva:</p>
+<p>$$E = E_k + E_p = \\frac{1}{2}mv^2 - G\\frac{m_1 m_2}{r} = \\text{costante}$$</p>
+<p>Il <strong>segno di $E$</strong> determina il tipo di orbita:</p>`,
+            table_compare: {
+                headers: ["Energia", "Condizione", "Tipo di orbita", "Descrizione"],
+                rows: [
+                    ["$E \\lt 0$", "Stato legato", "Ellittica (o circolare)", "Il corpo è confinato in una regione finita"],
+                    ["$E = 0$", "Limite di fuga", "Parabolica", "Raggiunge $r \\to \\infty$ con $v \\to 0$"],
+                    ["$E \\gt 0$", "Stato libero", "Iperbolica", "Sfugge con velocità residua positiva"]
+                ]
+            },
+            extra_content: `<p>Fisicamente: se $E \\lt 0$, l'energia cinetica non è sufficiente a portare il corpo a $r \\to \\infty$ (dove $E_p = 0$), poiché ciò richiederebbe un'energia cinetica negativa, che è impossibile. Il corpo resta <strong>confinato</strong>.</p>
+<p>La classificazione completa delle orbite e la derivazione delle traiettorie coniche saranno trattate nello studio delle orbite kepleriane nelle prossime lezioni.</p>`,
+            formulas: [
+                { label: "Energia meccanica totale", latex: "E = \\frac{1}{2}mv^2 - G\\frac{m_1 m_2}{r} = \\text{costante}" }
+            ]
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cosa si intende per forza centrale? Qual è la sua forma generale?",
+            back: "Una forza centrale ha la forma $\\vec{F}_c = F(r)\\,\\hat{u}_r$, dove il modulo $F(r)$ dipende solo dalla distanza $r$ dal centro della forza $O_c$, e la direzione è sempre lungo la congiungente tra $O_c$ e il punto materiale. Se $F(r) \\gt 0$ la forza è repulsiva, se $F(r) \\lt 0$ è attrattiva."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che sotto l'azione di una forza centrale il momento angolare si conserva.",
+            back: "Dal teorema del momento angolare: $\\frac{d\\vec{L}_O}{dt} = \\vec{M}_O = \\vec{r} \\times \\vec{F}_c = \\vec{r} \\times F(r)\\hat{u}_r = F(r)(\\vec{r} \\times \\hat{u}_r)$. Poiché $\\vec{r} = r\\hat{u}_r$, si ha $\\vec{r} \\times \\hat{u}_r = r(\\hat{u}_r \\times \\hat{u}_r) = \\vec{0}$. Quindi $\\frac{d\\vec{L}_O}{dt} = \\vec{0}$, e $\\vec{L}_O = \\text{costante}$. Conseguenza: il moto è piano (perpendicolare a $\\vec{L}_O$)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra la legge delle aree (seconda legge di Keplero) a partire dalla conservazione del momento angolare.",
+            back: "L'area infinitesima spazzata è $dA = \\frac{1}{2}|\\vec{r} \\times d\\vec{s}| = \\frac{1}{2}r\\,ds_\\theta = \\frac{1}{2}r\\,v_\\theta\\,dt$. Dalla conservazione del momento angolare, $|\\vec{L}_O| = m\\,r\\,v_\\theta = \\text{cost}$, quindi $r\\,v_\\theta = \\frac{|\\vec{L}_O|}{m}$. Allora $\\frac{dA}{dt} = \\frac{|\\vec{L}_O|}{2m} = \\text{costante}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che ogni forza centrale è conservativa.",
+            back: "Il lavoro è $W = \\int_A^B F(r)\\hat{u}_r \\cdot d\\vec{s}$. In coordinate polari $d\\vec{s} = dr\\,\\hat{u}_r + r\\,d\\theta\\,\\hat{u}_\\theta$, quindi $\\hat{u}_r \\cdot d\\vec{s} = dr$. L'integrale diventa $W = \\int_{r_A}^{r_B} F(r)\\,dr$, che dipende solo dalle distanze iniziale e finale, non dal percorso. Quindi la forza è conservativa."
+        },
+        {
+            type: "formula",
+            front: "Scrivi la legge di gravitazione universale e spiega il significato di ogni termine.",
+            back: "$\\vec{F}_{1 \\to 2} = -G\\frac{m_1 m_2}{r^2}\\hat{u}_r$. $G \\approx 6{,}67 \\times 10^{-11}\\,\\text{N}\\cdot\\text{m}^2/\\text{kg}^2$ è la costante di gravitazione universale, $r$ la distanza, $\\hat{u}_r$ il versore da $m_1$ a $m_2$. Il segno meno indica che la forza è attrattiva (diretta verso $m_1$)."
+        },
+        {
+            type: "domanda",
+            front: "Qual è la differenza concettuale tra massa inerziale e massa gravitazionale? Perché possiamo trattarle come uguali?",
+            back: "La massa inerziale $m_i$ misura la resistenza all'accelerazione ($\\vec{F} = m_i\\vec{a}$). La massa gravitazionale $m_g$ misura la capacità di generare/subire interazione gravitazionale. L'esperimento mostra che tutti i corpi cadono con la stessa accelerazione $\\vec{g}$, indipendentemente dalla composizione: $a = \\frac{m_g}{m_i}g = g$ implica $m_g = m_i$. Questo è il Principio di Equivalenza debole, fondamento della Relatività Generale."
+        },
+        {
+            type: "dimostrazione",
+            front: "Deriva l'espressione dell'energia potenziale gravitazionale $E_p(r)$ e giustifica la scelta dello zero.",
+            back: "Il lavoro è $W = \\int_{r_A}^{r_B}(-G\\frac{m_1m_2}{r^2})dr = Gm_1m_2(\\frac{1}{r_B} - \\frac{1}{r_A})$. Poiché $W = E_{p,A} - E_{p,B}$, confrontando: $E_p(r) = -G\\frac{m_1m_2}{r} + C$. Scegliendo $E_p(\\infty) = 0$ si ha $C = 0$: $E_p(r) = -G\\frac{m_1m_2}{r}$. Questa convenzione è comoda perché $E_p \\lt 0$ indica stato legato."
+        },
+        {
+            type: "tranello",
+            front: "Perché l'energia potenziale gravitazionale è sempre negativa? Non dovrebbe essere zero alla superficie terrestre?",
+            back: "Dipende dalla convenzione! Con $E_p(\\infty) = 0$, $E_p(r) = -Gm_1m_2/r \\lt 0$ sempre. Questo indica che il sistema è in uno stato legato: serve energia per separare le masse. La convenzione $E_p = 0$ alla superficie terrestre con $E_p \\approx mgh$ è un'approssimazione valida solo per $h \\ll R_T$. Le due convenzioni sono entrambe corrette perché conta solo $\\Delta E_p$, non il valore assoluto."
+        },
+        {
+            type: "domanda",
+            front: "Come il segno dell'energia meccanica totale determina il tipo di orbita gravitazionale?",
+            back: "$E = \\frac{1}{2}mv^2 - G\\frac{m_1m_2}{r}$. Se $E \\lt 0$: orbita chiusa (ellittica o circolare), stato legato. Se $E = 0$: orbita parabolica, limite di fuga (velocità nulla all'infinito). Se $E \\gt 0$: orbita iperbolica, il corpo sfugge con velocità residua. Il punto chiave: per $E \\lt 0$, raggiungere $r \\to \\infty$ (dove $E_p = 0$) richiederebbe $E_k \\lt 0$, impossibile."
+        },
+        {
+            type: "domanda",
+            front: "Spiega il significato fisico della legge delle aree nel contesto del moto planetario.",
+            back: "La velocità areolare $\\frac{dA}{dt} = \\frac{|\\vec{L}_O|}{2m} = \\text{cost}$ implica che il raggio vettore spazza aree uguali in tempi uguali. Conseguenza: quando un pianeta è vicino al Sole (perielio, $r$ piccolo), $v_\\theta$ deve essere grande per mantenere $rv_\\theta = \\text{cost}$, quindi il pianeta si muove velocemente. All'afelio ($r$ grande), si muove lentamente. È la seconda legge di Keplero."
+        },
+        {
+            type: "domanda",
+            front: "Come si ricava che la forza gravitazionale decresce con $1/r^2$ dalle leggi di Keplero?",
+            back: "Per un'orbita circolare di raggio $r$, la forza centripeta è $F = m\\omega^2 r = m\\frac{4\\pi^2}{T^2}r$. Dalla terza legge di Keplero, $T^2 \\propto r^3$, quindi $F \\propto \\frac{r}{r^3} = \\frac{1}{r^2}$. Newton usò questo ragionamento per dedurre la dipendenza $1/r^2$ della forza gravitazionale."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=13"></script>
+<script src="/js/graphs.js?v=13"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>

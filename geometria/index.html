@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://eliacinti.dev/geometria/">
   <link rel="canonical" href="https://eliacinti.dev/geometria/">
-  <link rel="stylesheet" href="/css/base.css?v=12">
+  <link rel="stylesheet" href="/css/base.css?v=13">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script type="application/ld+json">{
@@ -38,6 +38,7 @@
     }
   }
 }</script>
+  <script src="/js/theme.js"></script>
 </head>
 <body>
 
@@ -50,6 +51,7 @@
   <nav class="header-nav">
     <a href="/geometria/" class="active">Lezioni</a>
   </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
 </header>
 
 <div class="fn-page">
@@ -84,10 +86,6 @@
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// applicazioni lineari</div>
     <div class="fn-grid" id="applicazioni-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di applicazioni lineari saranno aggiunte man mano che il corso procede.</div>
-      </div>
     </div>
   </div>
 
@@ -281,6 +279,42 @@ const LESSON_INDEX = [
     "abstract": "Teorema di Rouché-Capelli per la compatibilità dei sistemi lineari, discussione di sistemi con parametro e teorema di Cramer per la risoluzione tramite determinanti.",
     "category": "sistemi-lineari",
     "file": "/geometria/lezioni/L17/"
+  },
+  {
+    "id": "L18",
+    "num": "Lezione 18",
+    "date": "16 Apr 2026",
+    "title": "Sistemi Lineari Rettangolari e Rappresentazioni di Sottospazi",
+    "abstract": "Come risolvere sistemi rettangolari con Cramer, l'algoritmo generale di riduzione, e il passaggio tra rappresentazione cartesiana e parametrica di sottospazi vettoriali.",
+    "category": "sistemi-lineari",
+    "file": "/geometria/lezioni/L18/"
+  },
+  {
+    "id": "L19",
+    "num": "Lezione 19",
+    "date": "20 Apr 2026",
+    "title": "Rappresentazione Cartesiana e Sistemi Lineari",
+    "abstract": "Dalla rappresentazione parametrica a quella cartesiana di un sottospazio vettoriale: algoritmo costruttivo, calcolo di intersezioni tramite equazioni, sistema omogeneo associato, struttura delle soluzioni come sottospazio affine e proprietà fondamentali dei sottospazi affini.",
+    "category": "sistemi-lineari",
+    "file": "/geometria/lezioni/L19/"
+  },
+  {
+    "id": "L20",
+    "num": "Lezione 20",
+    "date": "21 Apr 2026",
+    "title": "Coordinate e Matrice del Cambiamento di Base",
+    "abstract": "Definizione formale delle coordinate di un vettore rispetto a una base, matrice del cambiamento di base con le sue proprietà (invertibilità, composizione, identità), e l'applicazione delle coordinate come isomorfismo lineare tra V e ℝⁿ.",
+    "category": "applicazioni-lineari",
+    "file": "/geometria/lezioni/L20/"
+  },
+  {
+    "id": "L21",
+    "num": "Lezione 21",
+    "date": "23 Apr 2026",
+    "title": "Applicazione delle Coordinate e Applicazioni Lineari",
+    "abstract": "Dall'applicazione delle coordinate (biettiva e lineare) che traduce qualsiasi spazio vettoriale in ℝⁿ, alle applicazioni lineari: definizione, proprietà di calcolo, esempi fondamentali e controesempi.",
+    "category": "applicazioni-lineari",
+    "file": "/geometria/lezioni/L21/"
   }
 ];
 

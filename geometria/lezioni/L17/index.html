@@ -19,8 +19,8 @@
   <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L17/">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/css/base.css?v=12">
-  <link rel="stylesheet" href="/css/style.css?v=12">
+  <link rel="stylesheet" href="/css/base.css?v=13">
+  <link rel="stylesheet" href="/css/style.css?v=13">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 
@@ -47,6 +47,7 @@
     }
   }
 }</script>
+  <script src="/js/theme.js"></script>
 </head>
 <body>
 
@@ -63,6 +64,7 @@
   <nav class="header-nav">
     <a href="/geometria/" class="active">Lezioni</a>
   </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
 </header>
 
 <!-- ─── Lesson Layout ─── -->
@@ -73,7 +75,7 @@
     <div id="lesson-sidebar-links"></div>
     <div class="sidebar-nav-buttons">
       <a href="/geometria/lezioni/L16/">← Prec.</a>
-      <a href="#" style="opacity:0.3">Succ. →</a>
+      <a href="/geometria/lezioni/L18/">Succ. →</a>
     </div>
   </aside>
 
@@ -85,7 +87,7 @@
 <!-- ─── Lesson Data ─── -->
 <script>
 const LESSON = {
-    id: "L17", date: "Lezione 18 — 17 Apr 2026",
+    id: "L17", date: "Lezione 17 — 14 Apr 2026",
     title: "Sistemi Lineari e Determinanti",
     abstract: "Teorema di Rouché-Capelli per la compatibilità dei sistemi lineari, discussione di sistemi con parametro e teorema di Cramer per la risoluzione tramite determinanti.",
 
@@ -408,8 +410,8 @@ const LESSON = {
 </script>
 
 <!-- ─── Renderer & Graphs ─── -->
-<script src="/js/renderer.js?v=12"></script>
-<script src="/js/graphs.js?v=12"></script>
+<script src="/js/renderer.js?v=13"></script>
+<script src="/js/graphs.js?v=13"></script>
 
 <!-- ─── Sidebar Toggle ─── -->
 <script>
