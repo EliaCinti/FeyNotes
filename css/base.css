@@ -29,6 +29,9 @@
   --accent-dim: #6b6b6b;
   --accent-glow: rgba(139,139,139,0.12);
   --accent-glow-strong: rgba(139,139,139,0.25);
+  --header-bg: rgba(11, 13, 20, 0.85);
+  --teal: #63e6be;
+  --teal-dim: rgba(99,230,190,0.10);
 
   /* Semantic colors (always available) */
   --gold: #f0c050;
@@ -662,26 +665,45 @@ a:hover { color: var(--text-primary); }
   --purple-dim: rgba(139,108,193,0.10);
   --blue: #4a90c4;
   --blue-dim: rgba(74,144,196,0.10);
+  --header-bg: rgba(244, 244, 240, 0.92);
+  --teal: #2a9d8f;
+  --teal-dim: rgba(42,157,143,0.10);
 }
  
 [data-mode="light"] #site-header {
   background: rgba(244,244,240,0.92);
   border-bottom-color: var(--border);
+  --header-bg: rgba(244, 244, 240, 0.92);
+  --teal: #2a9d8f;
+  --teal-dim: rgba(42,157,143,0.10);
 }
  
 [data-mode="light"] .fn-card {
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --header-bg: rgba(244, 244, 240, 0.92);
+  --teal: #2a9d8f;
+  --teal-dim: rgba(42,157,143,0.10);
 }
  
-[data-mode="light"] .katex { color: var(--text-primary); }
+[data-mode="light"] .katex { color: var(--text-primary);
+--header-bg: rgba(244, 244, 240, 0.92);
+--teal: #2a9d8f;
+--teal-dim: rgba(42,157,143,0.10);
+ }
  
 [data-mode="light"] ::selection {
   background: var(--accent);
   color: #ffffff;
+  --header-bg: rgba(244, 244, 240, 0.92);
+  --teal: #2a9d8f;
+  --teal-dim: rgba(42,157,143,0.10);
 }
  
 [data-mode="light"] code, [data-mode="light"] pre {
   background: var(--bg-secondary);
+  --header-bg: rgba(244, 244, 240, 0.92);
+  --teal: #2a9d8f;
+  --teal-dim: rgba(42,157,143,0.10);
 }
  
 .theme-toggle {
