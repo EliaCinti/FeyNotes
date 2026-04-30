@@ -277,17 +277,17 @@ a:hover { color: var(--text-primary); }
   line-height: 1.9;
   max-width: 720px;
 }
-.fn-about-text .hl { color: #ffffff; font-weight: 600; }
+.fn-about-text .hl { color: var(--text-primary); font-weight: 600; }
 .fn-about-text a.hl {
   text-decoration: none;
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 600;
-  border-bottom: 1px dashed rgba(255,255,255,0.4);
+  border-bottom: 1px dashed var(--border-light);
   transition: border-color var(--transition-fast);
 }
 .fn-about-text a.hl:hover {
   border-bottom-style: solid;
-  border-color: #ffffff;
+  border-color: var(--text-primary);
 }
 .fn-about-block { margin-bottom: 28px; }
 .fn-about-block:last-child { margin-bottom: 0; }
@@ -693,7 +693,7 @@ a:hover { color: var(--text-primary); }
  
 [data-mode="light"] ::selection {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--text-primary);
   --header-bg: rgba(244, 244, 240, 0.92);
   --teal: #2a9d8f;
   --teal-dim: rgba(42,157,143,0.10);
