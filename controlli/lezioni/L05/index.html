@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="controlli">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida 5 — Fondamenti di Controlli — FeyNotes</title>
+  <meta name="description" content="Fondamenti di Controlli, Guida 5: Risoluzione delle Equazioni Differenziali (Blocco 6). Procedura completa per risolvere p(Δ)y = u: soluzione omogenea con la tabella dei modi, soluzione particolare (metodo classico, ingresso esponenziale, risonanza), soluzione generale non omogenea con calcolo delle costanti C, risposta libera e forzata.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guida 5: Risoluzione delle Equazioni Differenziali (Blocco 6) — Fondamenti di Controlli">
+  <meta property="og:description" content="Procedura completa per risolvere p(Δ)y = u: soluzione omogenea con la tabella dei modi, soluzione particolare (metodo classico, ingresso esponenziale, risonanza), soluzione generale non omogenea con calcolo delle costanti C, risposta libera e forzata.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/controlli/lezioni/L05/">
+  <link rel="canonical" href="https://eliacinti.dev/controlli/lezioni/L05/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Guida 5 — Risoluzione delle Equazioni Differenziali (Blocco 6)",
+  "description": "Procedura completa per risolvere p(Δ)y = u: soluzione omogenea con la tabella dei modi, soluzione particolare (metodo classico, ingresso esponenziale, risonanza), soluzione generale non omogenea con calcolo delle costanti C, risposta libera e forzata.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/controlli/lezioni/L05/",
+  "datePublished": "2026-05-05",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fondamenti di Controlli",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/controlli/" class="header-logo">
+
+    Fondamenti di Controlli
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Guida 5</span>
+  <nav class="header-nav">
+    <a href="/controlli/" class="active">Guide</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/controlli/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/controlli/lezioni/L04/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L05", date: "Guida 5 — 5 Mag 2026",
+    title: "Risoluzione delle Equazioni Differenziali (Blocco 6)",
+    abstract: "Procedura completa per risolvere p(Δ)y = u: soluzione omogenea con la tabella dei modi, soluzione particolare (metodo classico, ingresso esponenziale, risonanza), soluzione generale non omogenea con calcolo delle costanti C, risposta libera e forzata.",
+
+    sections: [
+        {
+            id: "s05-obiettivo",
+            type: "note_box",
+            title: "Obiettivo della Lezione",
+            icon: "🎯",
+            content: `<p><strong>Obiettivo:</strong> Data un'equazione del tipo $p(\\Delta)\\, y(t) = u(t)$, trovare la soluzione completa $Y(t)$, la <strong>risposta libera</strong> $Y_L$ e la <strong>risposta forzata</strong> $Y_F$.</p>
+<p>La procedura si articola in 5 passi: omogenea $\\rightarrow$ particolare $\\rightarrow$ generale non omogenea (calcolo delle $C$) $\\rightarrow$ separazione di $Y_L$ e $Y_F$.</p>`
+        },
+        {
+            id: "s05-tabella-modi",
+            type: "section",
+            title: "Tabella Generale dei Modi (omogenea)",
+            icon: "📋",
+            content: `<p>Una volta trovate le radici di $p(\\Delta) = 0$, la tabella seguente associa ad ogni radice (con la sua molteplicità) il <strong>fattore</strong> di $p(\\Delta)$ e i <strong>modi</strong> da inserire nella soluzione omogenea.</p>`,
+            table_compare: {
+                headers: ["Radici (molt.)", "Fattore", "Modi"],
+                rows: [
+                    ["a ∈ ℝ (1)", "Δ − a", "eᵃᵗ"],
+                    ["a ∈ ℝ (m)", "(Δ − a)ᵐ", "eᵃᵗ, t eᵃᵗ, …, tᵐ⁻¹ eᵃᵗ"],
+                    ["0 (1)", "Δ", "1"],
+                    ["0 (m)", "Δᵐ", "1, t, t², …, tᵐ⁻¹"],
+                    ["±i b (1)", "Δ² + b²", "cos(bt), sin(bt)"],
+                    ["±i b (m)", "(Δ² + b²)ᵐ", "cos(bt), sin(bt), …, tᵐ⁻¹ cos(bt), tᵐ⁻¹ sin(bt)"],
+                    ["a ± i b (1)", "(Δ − a)² + b²", "eᵃᵗ cos(bt), eᵃᵗ sin(bt)"],
+                    ["a ± i b (m)", "((Δ − a)² + b²)ᵐ", "eᵃᵗ cos(bt), eᵃᵗ sin(bt), …, tᵐ⁻¹ eᵃᵗ cos(bt), tᵐ⁻¹ eᵃᵗ sin(bt)"]
+                ]
+            }
+        },
+        {
+            id: "s05-step1-omogenea",
+            type: "section",
+            title: "STEP 1 — Soluzione Generale Omogenea Y_g,o",
+            icon: "🧩",
+            content: `<p>La soluzione omogenea descrive il comportamento del sistema "lasciato a sé stesso", con ingresso nullo. La procedura è meccanica:</p>
+<ol>
+<li>Prendi $p(\\Delta)$ e <strong>poni l'ingresso pari a 0</strong>.</li>
+<li>Calcola le radici di $p(\\Delta) = 0$.</li>
+<li>Confronta le radici con la <strong>tabella dei modi</strong> e ricava i modi corrispondenti.</li>
+<li>Combina i modi con costanti arbitrarie $c_1, c_2, \\dots$ per formare $Y_{g,o}(t)$.</li>
+</ol>`,
+            subsections: [
+                {
+                    subtitle: "Regole rapide per le radici reali a ≠ 0",
+                    content: `<ul>
+<li><strong>Molteplicità 1</strong> $\\Rightarrow$ 1 modo: $e^{at}$</li>
+<li><strong>Molteplicità 2</strong> $\\Rightarrow$ 2 modi: $e^{at}, \\; t\\, e^{at}$</li>
+<li><strong>Molteplicità 3</strong> $\\Rightarrow$ 3 modi: $e^{at}, \\; t\\, e^{at}, \\; t^2 e^{at}$</li>
+<li><strong>Molteplicità n</strong> $\\Rightarrow$ n modi: $e^{at}, \\; t\\, e^{at}, \\; t^2 e^{at}, \\; \\dots, \\; t^{n-1} e^{at}$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Caso speciale a = 0",
+                    content: `<ul>
+<li><strong>Molteplicità 1</strong> $\\Rightarrow$ 1 modo: $1$</li>
+<li><strong>Molteplicità 2</strong> $\\Rightarrow$ 2 modi: $1, \\; t$</li>
+<li><strong>Molteplicità n</strong> $\\Rightarrow$ n modi: $1, \\; t, \\; t^2, \\; \\dots, \\; t^{n-1}$</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Forma della soluzione omogenea", latex: "Y_{g,o}(t) = c_1 \\, m_1(t) + c_2 \\, m_2(t) + \\dots + c_n \\, m_n(t)" },
+                { label: "Radice reale semplice", latex: "a \\in \\mathbb{R} \\;(\\text{molt. } 1) \\Rightarrow e^{at}" },
+                { label: "Radice complessa coniugata", latex: "a \\pm i b \\Rightarrow e^{at}\\cos(bt), \\; e^{at}\\sin(bt)" }
+            ]
+        },
+        {
+            id: "s05-step2-particolare",
+            type: "section",
+            title: "STEP 2 — Soluzione Particolare Y_p (senza risonanza)",
+            icon: "🎯",
+            content: `<p>La particolare dipende dalla <strong>forma dell'ingresso</strong>. Prima di partire, fai un controllo fondamentale.</p>
+<p><strong>Check risonanza:</strong> guarda i modi dell'omogenea. Se l'ingresso $u(t)$ ha la stessa forma di uno dei modi presenti in $Y_{g,o}$ $\\Rightarrow$ <strong>risonanza</strong>: vai allo STEP 2.1. Altrimenti procedi qui.</p>`,
+            subsections: [
+                {
+                    subtitle: "Scorciatoia: ingresso esponenziale puro",
+                    content: `<p>Se $u(t) = e^{bt}$ <strong>e</strong> $b$ <strong>non è una radice</strong> di $p(\\Delta)$, allora la particolare si calcola con una sola sostituzione:</p>
+<p>$$Y_p = \\frac{1}{p(b)}\\, e^{bt}$$</p>
+<p>dove $p(b)$ significa "sostituisci $b$ al posto di $\\Delta$ nel polinomio". Niente derivate, niente sistemi.</p>`
+                },
+                {
+                    subtitle: "Metodo classico — ipotesi e sostituzione",
+                    content: `<p>Quando l'ingresso non è un esponenziale puro (polinomio in $t$, sinusoide, miscela…) si usa il metodo dei <strong>coefficienti indeterminati</strong>:</p>
+<ol>
+<li><strong>Ipotizza</strong> $Y_p$ come un polinomio generico dello <strong>stesso grado e forma</strong> dell'ingresso, con coefficienti incogniti (lettere $A, B, C, \\dots$).</li>
+<li>Sia $n$ il grado di $p(\\Delta)$. Calcola le <strong>$n$ derivate</strong> di $Y_p$.</li>
+<li><strong>Sostituisci</strong> in $p(\\Delta)$:
+<ul>
+<li>$\\Delta \\;\\rightarrow\\;$ derivata prima di $Y_p$</li>
+<li>$\\Delta^2 \\;\\rightarrow\\;$ derivata seconda di $Y_p$</li>
+<li>$\\Delta^k \\;\\rightarrow\\;$ derivata $k$-esima di $Y_p$</li>
+<li>costante $\\;\\rightarrow\\;$ $Y_p$ non derivata</li>
+</ul></li>
+<li>Eguaglia il risultato all'<strong>ingresso</strong> $u(t)$ e costruisci un sistema lineare per trovare le lettere.</li>
+<li>Sostituisci i valori trovati nell'ipotesi: ottieni $Y_p$.</li>
+</ol>`
+                },
+                {
+                    subtitle: "Caso ingresso sinusoidale",
+                    content: `<p>Se l'ingresso è $\\sin(\\omega t)$ oppure $\\cos(\\omega t)$, l'ipotesi <strong>deve contenere entrambi</strong> i termini, anche se in ingresso ne compare uno solo:</p>
+<p>$$Y_p = A \\cos(\\omega t) + B \\sin(\\omega t)$$</p>
+<p>L'argomento di $\\cos$ e $\\sin$ deve essere lo <strong>stesso</strong> dell'ingresso ($\\omega$ uguale).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Scorciatoia esponenziale (no risonanza)", latex: "u(t) = e^{bt} \\;\\Rightarrow\\; Y_p = \\tfrac{1}{p(b)}\\, e^{bt}" },
+                { label: "Ipotesi per ingresso sinusoidale", latex: "Y_p = A \\cos(\\omega t) + B \\sin(\\omega t)" },
+                { label: "Sostituzione operatore Δ", latex: "\\Delta^k \\;\\longleftrightarrow\\; \\tfrac{d^k}{dt^k}" }
+            ]
+        },
+        {
+            id: "s05-trappola-sinusoide",
+            type: "alert_box",
+            title: "Trappola: ingresso sin(ωt) richiede SEMPRE anche cos(ωt)",
+            icon: "⚠️",
+            content: `<p>Anche se l'ingresso contiene solo $\\sin(\\omega t)$, la particolare ipotizzata <strong>deve includere entrambi</strong> $\\cos(\\omega t)$ e $\\sin(\\omega t)$. Il motivo è che derivando un seno compaiono coseni (e viceversa): se ipotizzi solo il seno, il sistema lineare risulta inconsistente.</p>
+<p>Stesso argomento per il coseno in ingresso: scrivi sempre l'ipotesi completa con due lettere.</p>`
+        },
+        {
+            id: "s05-step2-risonanza",
+            type: "method_box",
+            title: "STEP 2.1 — Particolare con Risonanza",
+            icon: "🔁",
+            content: `<p>C'è risonanza quando un modo dell'ingresso è già presente in $Y_{g,o}$. In quel caso il metodo classico fallisce: bisogna correggere l'<strong>ipotesi</strong> moltiplicandola per $t$ tante volte quante necessarie.</p>`,
+            steps: [
+                "Ipotizza $Y_p$ come se non ci fosse risonanza (stessa forma e grado dell'ingresso).",
+                "Moltiplica l'ipotesi per $t$.",
+                "Check: il modo che provoca risonanza, dopo la moltiplicazione, è ancora uguale a uno dei modi di $Y_{g,o}$? Se <strong>sì</strong>, torna allo step 2 e moltiplica ancora per $t$. Se <strong>no</strong>, l'ipotesi è corretta.",
+                "Da qui in poi prosegui col metodo classico (derivate, sostituzione in $p(\\Delta)$, sistema, lettere)."
+            ]
+        },
+        {
+            id: "s05-step3-generale",
+            type: "section",
+            title: "STEP 3 — Soluzione Generale Non Omogenea Y_g,no",
+            icon: "🔧",
+            content: `<p>Una volta trovate $Y_{g,o}$ e $Y_p$, la generale non omogenea è la loro <strong>somma</strong>:</p>
+<p>$$Y_{g,no}(t) = Y_{g,o}(t) + Y_p(t)$$</p>
+<p>Restano da determinare le costanti $c_1, c_2, \\dots, c_n$ usando le <strong>condizioni iniziali</strong> $y_0, y_1, \\dots, y_{n-1}$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Costruzione del sistema per le C",
+                    content: `<p>Sia $n$ il grado di $p(\\Delta)$. Procedi così:</p>
+<ol>
+<li>Calcola le <strong>$n-1$ derivate</strong> di $Y_{g,no}$.</li>
+<li>Costruisci un sistema di $n$ equazioni:
+<ul>
+<li>$Y_{g,no}(t) = y_0$</li>
+<li>$\\dot{Y}_{g,no}(t) = y_1$</li>
+<li>$\\ddot{Y}_{g,no}(t) = y_2$</li>
+<li>$\\dots$</li>
+<li>$Y_{g,no}^{(n-1)}(t) = y_{n-1}$</li>
+</ul></li>
+<li><strong>Poni $t = 0$</strong> in tutte le equazioni.</li>
+<li>Risolvi il sistema lineare per le costanti $c_i$.</li>
+<li>Sostituisci i valori trovati in $Y_{g,no}$: questa è la soluzione finale $Y(t)$.</li>
+</ol>`
+                }
+            ],
+            formulas: [
+                { label: "Generale non omogenea", latex: "Y_{g,no}(t) = Y_{g,o}(t) + Y_p(t)" },
+                { label: "Sistema condizioni iniziali", latex: "\\left.Y_{g,no}^{(k)}(t)\\right|_{t=0} = y_k, \\quad k = 0, 1, \\dots, n-1" }
+            ]
+        },
+        {
+            id: "s05-step4-libera",
+            type: "section",
+            title: "STEP 4 — Risposta Libera Y_L",
+            icon: "🆓",
+            content: `<p>La <strong>risposta libera</strong> è la parte di $Y(t)$ che dipende solo dalle condizioni iniziali $y_k$. Si ottiene con una regola semplice:</p>
+<ol>
+<li>Parti da $Y(t)$.</li>
+<li><strong>Tieni solo i pezzi che contengono le $y_k$</strong> (le condizioni iniziali) e <strong>scarta i termini costanti</strong> e quelli generati dall'ingresso.</li>
+</ol>
+<p>In altre parole: $Y_L$ è ciò che rimane se l'ingresso fosse stato nullo ma le condizioni iniziali fossero quelle date.</p>`,
+            formulas: [
+                { label: "Risposta libera", latex: "Y_L(t) = Y(t)\\big|_{u(t)=0}" }
+            ]
+        },
+        {
+            id: "s05-step5-forzata",
+            type: "section",
+            title: "STEP 5 — Risposta Forzata Y_F",
+            icon: "📡",
+            content: `<p>La <strong>risposta forzata</strong> è la parte di $Y(t)$ che dipende solo dall'ingresso $u(t)$. Anche qui la regola è meccanica:</p>
+<ol>
+<li>Parti da $Y(t)$.</li>
+<li><strong>Poni tutte le $y_k = 0$</strong> (azzera tutte le condizioni iniziali).</li>
+</ol>
+<p>Ciò che resta è $Y_F(t)$.</p>`,
+            formulas: [
+                { label: "Risposta forzata", latex: "Y_F(t) = Y(t)\\big|_{y_0 = y_1 = \\dots = 0}" }
+            ]
+        },
+        {
+            id: "s05-verifica",
+            type: "note_box",
+            title: "Verifica finale: Y_L + Y_F = Y(t)",
+            icon: "✅",
+            content: `<p>La somma delle due risposte deve restituire la soluzione completa:</p>
+<p>$$Y_L(t) + Y_F(t) = Y(t)$$</p>
+<p>Se i conti tornano, il procedimento è corretto. È un controllo veloce e gratuito da fare sempre prima di consegnare.</p>`
+        },
+        {
+            id: "s05-riepilogo",
+            type: "section",
+            title: "Riepilogo della Procedura Completa",
+            icon: "🗺️",
+            content: `<p>Checklist da tenere a portata di mano in esame:</p>
+<ol>
+<li><strong>STEP 1:</strong> Annulla l'ingresso, trova le radici di $p(\\Delta) = 0$, leggi i modi dalla tabella, scrivi $Y_{g,o}$ con le costanti $c_i$.</li>
+<li><strong>STEP 2:</strong> Verifica risonanza. Se ingresso $= e^{bt}$ senza risonanza usa $Y_p = \\tfrac{1}{p(b)} e^{bt}$. Altrimenti ipotizza, deriva $n$ volte, sostituisci in $p(\\Delta)$, costruisci il sistema e trova le lettere.</li>
+<li><strong>STEP 2.1 (se risonanza):</strong> Moltiplica l'ipotesi per $t$ finché il modo non collide più con quelli di $Y_{g,o}$, poi prosegui col metodo classico.</li>
+<li><strong>STEP 3:</strong> $Y_{g,no} = Y_{g,o} + Y_p$. Calcola $n-1$ derivate, imponi le condizioni iniziali in $t = 0$, risolvi il sistema per le $c_i$, sostituisci $\\rightarrow$ ottieni $Y(t)$.</li>
+<li><strong>STEP 4:</strong> $Y_L$ = solo i pezzi con le $y_k$.</li>
+<li><strong>STEP 5:</strong> $Y_F$ = $Y(t)$ con tutte le $y_k = 0$.</li>
+<li><strong>Verifica:</strong> $Y_L + Y_F = Y(t)$.</li>
+</ol>`
+        },
+        {
+            id: "s05-orale-tipica",
+            type: "oral_box",
+            title: "Domanda tipica d'esame orale",
+            icon: "🎤",
+            content: `<p><strong>"Risolvere $(\\Delta^2 - 3\\Delta + 2)\\, y(t) = e^{3t}$ con condizioni iniziali $y(0) = 0, \\; \\dot{y}(0) = 1$."</strong></p>
+<p>Risposta attesa:</p>
+<ol>
+<li><strong>Omogenea:</strong> radici $1$ e $2$ $\\Rightarrow$ $Y_{g,o} = c_1 e^{t} + c_2 e^{2t}$.</li>
+<li><strong>Particolare:</strong> ingresso $e^{3t}$, $b = 3$ non è radice $\\Rightarrow$ scorciatoia: $p(3) = 9 - 9 + 2 = 2$, quindi $Y_p = \\tfrac{1}{2} e^{3t}$.</li>
+<li><strong>Generale:</strong> $Y_{g,no} = c_1 e^{t} + c_2 e^{2t} + \\tfrac{1}{2} e^{3t}$. Imposta $y(0) = 0$ e $\\dot{y}(0) = 1$ $\\rightarrow$ sistema $\\rightarrow$ $c_1, c_2$.</li>
+<li><strong>Y_L</strong> = pezzi con $y_0, y_1$. <strong>Y_F</strong> = $Y(t)$ con $y_0 = y_1 = 0$.</li>
+</ol>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quali sono i 5 step per risolvere p(Δ) y(t) = u(t)?",
+            back: "1) Soluzione omogenea $Y_{g,o}$ (radici di $p(\\Delta)=0$ + tabella modi). 2) Particolare $Y_p$ (scorciatoia esponenziale o metodo classico, attenzione alla risonanza). 3) Generale non omogenea $Y_{g,no} = Y_{g,o} + Y_p$ + sistema con condizioni iniziali. 4) Risposta libera $Y_L$. 5) Risposta forzata $Y_F$. Verifica: $Y_L + Y_F = Y(t)$."
+        },
+        {
+            type: "formula",
+            front: "Quanti modi associo a una radice reale a ≠ 0 con molteplicità m?",
+            back: "$m$ modi: $e^{at}, \\; t\\, e^{at}, \\; t^2 e^{at}, \\; \\dots, \\; t^{m-1} e^{at}$. Se invece $a = 0$ con molteplicità $m$, i modi diventano $1, t, t^2, \\dots, t^{m-1}$."
+        },
+        {
+            type: "formula",
+            front: "A quali modi corrisponde una radice complessa coniugata a ± i b?",
+            back: "Molteplicità 1: $e^{at}\\cos(bt), \\; e^{at}\\sin(bt)$. Molteplicità $m$: si ripete la coppia moltiplicata per $1, t, \\dots, t^{m-1}$. Se $a = 0$ (radici puramente immaginarie $\\pm i b$): $\\cos(bt), \\sin(bt)$."
+        },
+        {
+            type: "formula",
+            front: "Scorciatoia per ingresso esponenziale puro u(t) = e^(bt) senza risonanza?",
+            back: "$Y_p = \\dfrac{1}{p(b)}\\, e^{bt}$, dove $p(b)$ significa sostituire $b$ al posto di $\\Delta$ nel polinomio. Vale solo se $b$ <strong>non</strong> è radice di $p(\\Delta) = 0$ (altrimenti c'è risonanza e $p(b) = 0$ porta a divisione per zero)."
+        },
+        {
+            type: "tranello",
+            front: "Ingresso sin(ωt): cosa devo ipotizzare per Y_p?",
+            back: "<strong>Sempre entrambi</strong>: $Y_p = A \\cos(\\omega t) + B \\sin(\\omega t)$, con la stessa $\\omega$ dell'ingresso. Errore frequente: ipotizzare solo $B \\sin(\\omega t)$ — derivando compaiono coseni e il sistema risulta inconsistente."
+        },
+        {
+            type: "domanda",
+            front: "Cos'è la risonanza e come si tratta?",
+            back: "Risonanza = l'ingresso $u(t)$ ha la stessa forma di un modo di $Y_{g,o}$. Trattamento: ipotizza $Y_p$ come se non ci fosse risonanza, poi <strong>moltiplica per $t$</strong> finché il modo non coincide più con nessuno di quelli omogenei. Poi prosegui con derivate e sistema."
+        },
+        {
+            type: "domanda",
+            front: "Come si calcolano le costanti c_i nella generale non omogenea?",
+            back: "Sia $n$ il grado di $p(\\Delta)$. Calcolo $n-1$ derivate di $Y_{g,no}$, costruisco un sistema con $Y_{g,no}^{(k)}(0) = y_k$ per $k = 0, \\dots, n-1$, pongo $t = 0$ e risolvo il sistema lineare. I valori trovati si sostituiscono in $Y_{g,no}$ per ottenere $Y(t)$."
+        },
+        {
+            type: "definizione",
+            front: "Differenza tra risposta libera Y_L e risposta forzata Y_F?",
+            back: "<strong>$Y_L$</strong>: parte di $Y(t)$ dovuta alle condizioni iniziali (ingresso nullo, condizioni iniziali date). Si ottiene da $Y(t)$ tenendo solo i termini con le $y_k$. <strong>$Y_F$</strong>: parte dovuta all'ingresso (condizioni iniziali nulle, ingresso dato). Si ottiene da $Y(t)$ ponendo tutte le $y_k = 0$. Verifica: $Y_L + Y_F = Y(t)$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Esempio: $(\\Delta^2 - 3\\Delta + 2)\\, y(t) = e^{3t}$. Trova Y_{g,no}.",
+            back: "Omogenea: $\\Delta^2 - 3\\Delta + 2 = (\\Delta - 1)(\\Delta - 2)$, radici $1, 2$ $\\Rightarrow$ $Y_{g,o} = c_1 e^{t} + c_2 e^{2t}$. Particolare: $b = 3$ non è radice, $p(3) = 9 - 9 + 2 = 2$ $\\Rightarrow$ $Y_p = \\tfrac{1}{2} e^{3t}$. Generale non omogenea: $Y_{g,no} = c_1 e^{t} + c_2 e^{2t} + \\tfrac{1}{2} e^{3t}$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
