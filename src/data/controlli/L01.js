@@ -38,7 +38,23 @@ const LESSON = {
 <p>La regola è: cancellare il $(t+1)$ a sinistra e lasciare la lettera da sola. In pratica si pone:</p>
 <p>$$x_i = f_i(x, u_e)$$</p>
 <p>Si sostituisce $u$ con $u_e$ fornito dall'esercizio e si risolvono le equazioni per trovare $x_{e_1}, x_{e_2}, \\dots, x_{e_n}$.</p>`
+          },
+          {
+            subtitle: "Il vettore di equilibrio x_e",
+            content: `<p>I valori $x_{e_1}, x_{e_2}, \\dots, x_{e_n}$ trovati risolvendo il sistema <strong>non sono numeri sciolti</strong>: insieme formano il <strong>vettore di equilibrio dello stato</strong>:</p>
+<p>$$\\boldsymbol{x_e} = \\begin{bmatrix} x_{e_1} \\\\ x_{e_2} \\\\ \\vdots \\\\ x_{e_n} \\end{bmatrix}$$</p>
+<p>È questo vettore (insieme a $u_e$) il punto in cui si linearizza il sistema. Quando in seguito si parlerà di "sostituire i valori di equilibrio" nelle matrici $A$, $B$, $C$, $D$, ci si riferisce alle componenti di $\\boldsymbol{x_e}$ e al valore $u_e$.</p>`
+          },
+          {
+            subtitle: "Equilibrio dell'uscita y_e (se richiesto)",
+            content: `<p>Se il testo dell'esercizio fornisce un'equazione di uscita $y(t) = h(x, u)$ <strong>e</strong> chiede esplicitamente $y_e$, il calcolo è immediato: si <strong>sostituiscono</strong> $\\boldsymbol{x_e}$ e $u_e$ nella formula <em>originale</em> (non lineare) di $y(t)$:</p>
+<p>$$y_e = h(\\boldsymbol{x_e}, u_e)$$</p>
+<p><strong>ATTENZIONE:</strong> $y_e$ si calcola sull'equazione $y(t)$ così com'è, <em>non</em> sulla matrice $C$ (quella serve per la dinamica linearizzata $\\delta y$, non per il valore di equilibrio).</p>`
           }
+        ],
+        formulas: [
+          { label: "Vettore di equilibrio dello stato", latex: "\\boldsymbol{x_e} = (x_{e_1}, x_{e_2}, \\dots, x_{e_n})^T" },
+          { label: "Uscita all'equilibrio", latex: "y_e = h(\\boldsymbol{x_e}, u_e)" }
         ]
       },
       {
@@ -148,12 +164,12 @@ const LESSON = {
         icon: "📋",
         content: `<p>Il procedimento di linearizzazione si riassume in <strong>6 passi</strong>:</p>
 <ol>
-<li><strong>Punto di equilibrio:</strong> poni $\\dot{x} = 0$ (TC) oppure $x(t+1) = x(t)$ (TD), sostituisci $u_e$ e risolvi per $x_e$</li>
+<li><strong>Punto di equilibrio:</strong> poni $\\dot{x} = 0$ (TC) oppure $x(t+1) = x(t)$ (TD), sostituisci $u_e$ e risolvi per ottenere il <strong>vettore</strong> $\\boldsymbol{x_e} = (x_{e_1}, \\dots, x_{e_n})^T$. Se richiesto, calcola anche $y_e = h(\\boldsymbol{x_e}, u_e)$ sostituendo nella formula originale di $y(t)$.</li>
 <li><strong>Matrice A:</strong> derivate parziali delle equazioni di stato rispetto alle $x$</li>
 <li><strong>Matrice B:</strong> derivate parziali delle equazioni di stato rispetto a $u$</li>
 <li><strong>Matrice C:</strong> derivate parziali dell'equazione di uscita $y$ rispetto alle $x$</li>
 <li><strong>Matrice D:</strong> derivata parziale dell'equazione di uscita $y$ rispetto a $u$</li>
-<li><strong>Sostituzione:</strong> rimpiazza le lettere nelle matrici con i valori numerici di $x_e$ e $u_e$</li>
+<li><strong>Sostituzione:</strong> rimpiazza le lettere nelle matrici con i valori numerici di $\\boldsymbol{x_e}$ e $u_e$</li>
 </ol>
 <p>Il risultato finale è il sistema lineare:</p>
 <p>$$\\dot{\\delta x} = A\\,\\delta x + B\\,\\delta u, \\qquad \\delta y = C\\,\\delta x + D\\,\\delta u$$</p>`
@@ -220,7 +236,17 @@ const LESSON = {
       {
         type: "tranello",
         front: "Quando si calcolano le derivate parziali per A e B, si usa $u_e$ o $u$ generica?",
-        back: "Si usano le equazioni con la $u$ generica! Le derivate parziali si fanno PRIMA della sostituzione. Solo dopo aver ottenuto le espressioni delle matrici si sostituiscono i valori numerici di $x_e$ e $u_e$."
+        back: "Si usano le equazioni con la $u$ generica! Le derivate parziali si fanno PRIMA della sostituzione. Solo dopo aver ottenuto le espressioni delle matrici si sostituiscono i valori numerici di $\\boldsymbol{x_e}$ e $u_e$."
+      },
+      {
+        type: "definizione",
+        front: "Cos'è il vettore di equilibrio $\\boldsymbol{x_e}$?",
+        back: "È il vettore $\\boldsymbol{x_e} = (x_{e_1}, x_{e_2}, \\dots, x_{e_n})^T$ formato dai valori delle variabili di stato che annullano le equazioni dinamiche con ingresso $u_e$. Insieme a $u_e$ identifica il punto $(\\boldsymbol{x_e}, u_e)$ in cui si linearizza il sistema."
+      },
+      {
+        type: "domanda",
+        front: "Come si calcola il valore di equilibrio $y_e$ dell'uscita?",
+        back: "Si sostituisce direttamente $\\boldsymbol{x_e}$ e $u_e$ nell'equazione <em>originale</em> (non lineare) dell'uscita: $y_e = h(\\boldsymbol{x_e}, u_e)$. Non si usa la matrice $C$ — quella serve solo per la dinamica linearizzata $\\delta y$, non per il valore di equilibrio."
       }
     ]
 };
