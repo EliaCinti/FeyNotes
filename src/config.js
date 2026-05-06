@@ -134,7 +134,7 @@ const COURSES = {
       { id: 'blocco-4', label: 'blocco 4 — dalla soluzione al sistema', gridId: 'blocco4-grid' },
       { id: 'blocco-5', label: 'blocco 5 — fratti semplici', gridId: 'blocco5-grid' },
       { id: 'blocco-6', label: 'blocco 6 — equazioni differenziali', gridId: 'blocco6-grid' },
-      { id: 'blocco-7', label: 'blocco 7', gridId: 'blocco7-grid' },
+      { id: 'blocco-7', label: 'blocco 7 — equazioni alle differenze', gridId: 'blocco7-grid' },
       { id: 'blocco-8', label: 'blocco 8', gridId: 'blocco8-grid' },
       { id: 'blocco-9', label: 'blocco 9', gridId: 'blocco9-grid' },
       { id: 'blocco-10', label: 'blocco 10', gridId: 'blocco10-grid' },
@@ -145,6 +145,7 @@ const COURSES = {
       { id: 'L03', num: 'Guida 3', date: '6 Apr 2026', title: 'Dalla Soluzione al Sistema (Blocco 4)', abstract: 'Dato y(t) con costanti arbitrarie, ricostruire l\'equazione differenziale (o alle differenze) originale del sistema usando l\'operatore Δ. Procedura in 4 step: individuare i poli nascosti, costruire il polinomio caratteristico, calcolare la forzante e scrivere l\'equazione finale.', category: 'blocco-4' },
       { id: 'L04', num: 'Guida 4', date: '6 Apr 2026', title: 'Decomposizione in Fratti Semplici', abstract: 'Come spezzare una frazione', category: 'blocco-5' },
       { id: 'L05', num: 'Guida 5', date: '5 Mag 2026', title: 'Risoluzione delle Equazioni Differenziali', abstract: 'Procedura completa per risolvere $p(\\Delta)\\, y(t) = u(t)$: soluzione omogenea con la tabella dei modi, soluzione particolare (metodo classico, ingresso esponenziale, risonanza), generale non omogenea con calcolo delle costanti $C$, risposta libera e forzata.', category: 'blocco-6' },
+      { id: 'L06', num: 'Guida 6', date: '6 Mag 2026', title: 'Risoluzione delle Equazioni alle Differenze', abstract: 'Versione discreta del Blocco 6: tabella dei modi con $a^t$, impulso $\\delta_0$ e radici complesse $\\rho e^{\\pm i\\omega}$, scorciatoia $Y_p = b^t/p(b)$, metodo classico via shift $\\Delta^k \\to t+k$, risonanza (incluso il caso speciale delle radici nulle), condizioni iniziali $Y(k) = y_k$, risposta libera e forzata.', category: 'blocco-7' },
     ],
   },
 };

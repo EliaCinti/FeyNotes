@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="controlli">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida 6 — Fondamenti di Controlli — FeyNotes</title>
+  <meta name="description" content="Fondamenti di Controlli, Guida 6: Risoluzione delle Equazioni alle Differenze. Versione discreta del Blocco 6: tabella dei modi con $a^t$, impulso $\delta_0$ e radici complesse $\rho e^{\pm i\omega}$, scorciatoia $Y_p = b^t/p(b)$, metodo classico via shift $\Delta^k \to t+k$, risonanza (incluso il caso speciale delle radici nulle), condizioni iniziali $Y(k) = y_k$, risposta libera e forzata.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guida 6: Risoluzione delle Equazioni alle Differenze — Fondamenti di Controlli">
+  <meta property="og:description" content="Versione discreta del Blocco 6: tabella dei modi con $a^t$, impulso $\delta_0$ e radici complesse $\rho e^{\pm i\omega}$, scorciatoia $Y_p = b^t/p(b)$, metodo classico via shift $\Delta^k \to t+k$, risonanza (incluso il caso speciale delle radici nulle), condizioni iniziali $Y(k) = y_k$, risposta libera e forzata.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/controlli/lezioni/L06/">
+  <link rel="canonical" href="https://eliacinti.dev/controlli/lezioni/L06/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Guida 6 — Risoluzione delle Equazioni alle Differenze",
+  "description": "Versione discreta del Blocco 6: tabella dei modi con $a^t$, impulso $\\delta_0$ e radici complesse $\\rho e^{\\pm i\\omega}$, scorciatoia $Y_p = b^t/p(b)$, metodo classico via shift $\\Delta^k \\to t+k$, risonanza (incluso il caso speciale delle radici nulle), condizioni iniziali $Y(k) = y_k$, risposta libera e forzata.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/controlli/lezioni/L06/",
+  "datePublished": "2026-05-06",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fondamenti di Controlli",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/controlli/" class="header-logo">
+    
+    Fondamenti di Controlli
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Guida 6</span>
+  <nav class="header-nav">
+    <a href="/controlli/" class="active">Guide</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/controlli/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/controlli/lezioni/L05/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L06", date: "Guida 6 — 6 Mag 2026",
+    title: "Risoluzione delle Equazioni alle Differenze (Blocco 7)",
+    abstract: "Procedura completa per risolvere p(Δ)y(t) = u(t) nel caso discreto: tabella dei modi (con impulso δ₀ e radici in forma polare ρe^(±iω)), particolare con scorciatoia b^t e metodo classico via shift, risonanza (anche per radici nulle), generale non omogenea con condizioni iniziali a t=0,1,…,n−1, risposta libera e forzata.",
+
+    sections: [
+        {
+            id: "s06-obiettivo",
+            type: "note_box",
+            title: "Obiettivo della Lezione",
+            icon: "🎯",
+            content: `<p><strong>Obiettivo:</strong> Data un'equazione alle differenze del tipo $p(\\Delta)\\, y(t) = u(t)$, trovare la soluzione completa $Y(t)$, la <strong>risposta libera</strong> $Y_L$ e la <strong>risposta forzata</strong> $Y_F$.</p>
+<p>La struttura della procedura è la stessa del Blocco 6, ma cambiano i <strong>modi</strong> (compaiono $a^t$ e l'impulso $\\delta_0$) e cambia il significato dell'operatore $\\Delta$: nel discreto $\\Delta$ è uno <strong>shift</strong> $t \\to t+1$, non una derivata.</p>`
+        },
+        {
+            id: "s06-tabella-modi",
+            type: "section",
+            title: "Tabella Generale dei Modi (omogenea)",
+            icon: "📋",
+            content: `<p>Una volta trovate le radici di $p(\\Delta) = 0$, la tabella associa ad ogni radice (con la sua molteplicità) il <strong>fattore</strong> di $p(\\Delta)$ e i <strong>modi</strong> da inserire nella soluzione omogenea.</p>
+<p><strong>Nota:</strong> $\\delta_0(t)$ è l'<strong>impulso unitario discreto</strong>: vale $1$ in $t=0$ e $0$ altrove. Più in generale $\\delta_0(t-k)$ vale $1$ se $t=k$ e $0$ altrimenti.</p>`,
+            table_compare: {
+                headers: ["Radici (molt.)", "Fattore", "Modi"],
+                rows: [
+                    ["a ∈ ℝ (1)", "Δ − a", "aᵗ"],
+                    ["a ∈ ℝ (m)", "(Δ − a)ᵐ", "aᵗ, t aᵗ, …, tᵐ⁻¹ aᵗ"],
+                    ["0 (1)", "Δ", "δ₀(t)"],
+                    ["0 (m)", "Δᵐ", "δ₀(t), δ₀(t−1), …, δ₀(t−m+1)"],
+                    ["ρ e^(±iω) (1)", "Δ² − 2ρ cos(ω) Δ + ρ²", "ρᵗ cos(ωt), ρᵗ sin(ωt)"],
+                    ["ρ e^(±iω) (m)", "(Δ² − 2ρ cos(ω) Δ + ρ²)ᵐ", "ρᵗ cos(ωt), ρᵗ sin(ωt), …, tᵐ⁻¹ ρᵗ cos(ωt), tᵐ⁻¹ ρᵗ sin(ωt)"]
+                ]
+            }
+        },
+        {
+            id: "s06-step1-omogenea",
+            type: "section",
+            title: "STEP 1 — Soluzione Generale Omogenea Y_g,o",
+            icon: "🧩",
+            content: `<p>La soluzione omogenea descrive il comportamento del sistema con ingresso nullo. La procedura è meccanica:</p>
+<ol>
+<li>Prendi $p(\\Delta)$ e <strong>poni l'ingresso pari a 0</strong>.</li>
+<li>Calcola le radici di $p(\\Delta) = 0$.</li>
+<li>Confronta le radici con la <strong>tabella dei modi</strong> e ricava i modi corrispondenti.</li>
+<li>Combina i modi con costanti arbitrarie $c_1, c_2, \\dots$ per formare $Y_{g,o}(t)$.</li>
+</ol>`,
+            subsections: [
+                {
+                    subtitle: "Regole rapide per le radici reali a ≠ 0",
+                    content: `<ul>
+<li><strong>Molteplicità 1</strong> $\\Rightarrow$ 1 modo: $a^t$</li>
+<li><strong>Molteplicità 2</strong> $\\Rightarrow$ 2 modi: $a^t, \\; t\\, a^t$</li>
+<li><strong>Molteplicità 3</strong> $\\Rightarrow$ 3 modi: $a^t, \\; t\\, a^t, \\; t^2 a^t$</li>
+<li><strong>Molteplicità n</strong> $\\Rightarrow$ n modi: $a^t, \\; t\\, a^t, \\; t^2 a^t, \\; \\dots, \\; t^{n-1} a^t$</li>
+</ul>`
+                },
+                {
+                    subtitle: "Caso speciale a = 0 (impulso discreto)",
+                    content: `<p>Quando $a = 0$ il modo non è $0^t$ ma l'<strong>impulso unitario</strong> $\\delta_0$, eventualmente <strong>ritardato</strong>:</p>
+<ul>
+<li><strong>Molteplicità 1</strong> $\\Rightarrow$ 1 modo: $\\delta_0(t)$</li>
+<li><strong>Molteplicità 2</strong> $\\Rightarrow$ 2 modi: $\\delta_0(t), \\; \\delta_0(t-1)$</li>
+<li><strong>Molteplicità n</strong> $\\Rightarrow$ n modi: $\\delta_0(t), \\; \\delta_0(t-1), \\; \\dots, \\; \\delta_0(t-n+1)$</li>
+</ul>
+<p>Ricorda: $\\delta_0(t-k) = 1$ solo per $t=k$, altrimenti vale $0$.</p>`
+                },
+                {
+                    subtitle: "Radici complesse ρ e^(±iω)",
+                    content: `<p>Le radici complesse coniugate si scrivono in <strong>forma polare</strong> con modulo $\\rho$ e fase $\\omega$. I modi associati sono:</p>
+<ul>
+<li><strong>Molteplicità 1</strong>: $\\rho^t \\cos(\\omega t), \\; \\rho^t \\sin(\\omega t)$</li>
+<li><strong>Molteplicità m</strong>: la coppia di sopra moltiplicata per $1, t, \\dots, t^{m-1}$</li>
+</ul>
+<p>Caso particolare $\\rho = 1$ (radici sul cerchio unitario): i modi diventano $\\cos(\\omega t), \\sin(\\omega t)$ — oscillazioni pure non smorzate.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Forma della soluzione omogenea", latex: "Y_{g,o}(t) = c_1 \\, m_1(t) + c_2 \\, m_2(t) + \\dots + c_n \\, m_n(t)" },
+                { label: "Radice reale semplice (a ≠ 0)", latex: "a \\in \\mathbb{R} \\;(\\text{molt. } 1) \\Rightarrow a^t" },
+                { label: "Radice complessa (forma polare)", latex: "\\rho \\, e^{\\pm i\\omega} \\Rightarrow \\rho^t \\cos(\\omega t), \\; \\rho^t \\sin(\\omega t)" }
+            ]
+        },
+        {
+            id: "s06-step2-particolare",
+            type: "section",
+            title: "STEP 2 — Soluzione Particolare Y_p (senza risonanza)",
+            icon: "🎯",
+            content: `<p>La particolare dipende dalla <strong>forma dell'ingresso</strong>. Prima di partire, fai sempre il check della risonanza.</p>
+<p><strong>Check risonanza:</strong> guarda i modi dell'omogenea. Se l'ingresso $u(t)$ ha la stessa forma di uno dei modi presenti in $Y_{g,o}$ $\\Rightarrow$ <strong>risonanza</strong>: vai allo STEP 2.1. Altrimenti procedi qui.</p>`,
+            subsections: [
+                {
+                    subtitle: "Scorciatoia: ingresso esponenziale b^t",
+                    content: `<p>Se $u(t) = b^t$ <strong>e</strong> $b$ <strong>non è una radice</strong> di $p(\\Delta)$, allora la particolare si calcola con una sola sostituzione:</p>
+<p>$$Y_p = \\frac{1}{p(b)}\\, b^t$$</p>
+<p>dove $p(b)$ significa "sostituisci $b$ al posto di $\\Delta$ nel polinomio". Niente shift, niente sistemi: è la versione discreta della stessa scorciatoia che si usa nel continuo con $e^{bt}$.</p>`
+                },
+                {
+                    subtitle: "Metodo classico — ipotesi e shift",
+                    content: `<p>Quando l'ingresso non è un esponenziale puro $b^t$ (polinomio in $t$, sinusoide, miscela…) si usa il metodo dei <strong>coefficienti indeterminati</strong>, ma con una differenza fondamentale rispetto al continuo: $\\Delta$ <strong>non è una derivata</strong>, è uno <strong>shift</strong>.</p>
+<ol>
+<li><strong>Ipotizza</strong> $Y_p$ come un'espressione generica dello <strong>stesso grado e forma</strong> dell'ingresso, con coefficienti incogniti (lettere $A, B, C, \\dots$).</li>
+<li>Sia $n$ il grado di $p(\\Delta)$. Per ogni potenza di $\\Delta$ in $p(\\Delta)$ esegui la sostituzione:
+<ul>
+<li>$\\Delta \\;\\rightarrow\\;$ in $Y_p$ sostituisci $t$ con $t+1$</li>
+<li>$\\Delta^2 \\;\\rightarrow\\;$ in $Y_p$ sostituisci $t$ con $t+2$</li>
+<li>$\\Delta^k \\;\\rightarrow\\;$ in $Y_p$ sostituisci $t$ con $t+k$</li>
+<li>costante $\\;\\rightarrow\\;$ lascia $Y_p$ non shiftata</li>
+</ul></li>
+<li>Combina i pezzi shiftati come dice $p(\\Delta)$ e <strong>uguaglia all'ingresso</strong> $u(t)$.</li>
+<li>Costruisci un sistema lineare nelle lettere $A, B, C, \\dots$ e risolvilo.</li>
+<li>Sostituisci i valori trovati nell'ipotesi: ottieni $Y_p$.</li>
+</ol>`
+                },
+                {
+                    subtitle: "Caso ingresso sinusoidale",
+                    content: `<p>Se l'ingresso è $\\sin(\\omega t)$ oppure $\\cos(\\omega t)$, l'ipotesi <strong>deve contenere entrambi</strong> i termini, anche se in ingresso ne compare uno solo:</p>
+<p>$$Y_p = A \\cos(\\omega t) + B \\sin(\\omega t)$$</p>
+<p>L'argomento di $\\cos$ e $\\sin$ deve essere lo <strong>stesso</strong> dell'ingresso ($\\omega$ uguale). La ragione qui è la formula di addizione: $\\sin(\\omega(t+1)) = \\sin(\\omega t)\\cos\\omega + \\cos(\\omega t)\\sin\\omega$, lo shift mescola seno e coseno esattamente come la derivata nel continuo.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Scorciatoia esponenziale (no risonanza)", latex: "u(t) = b^t \\;\\Rightarrow\\; Y_p = \\tfrac{1}{p(b)}\\, b^t" },
+                { label: "Ipotesi per ingresso sinusoidale", latex: "Y_p = A \\cos(\\omega t) + B \\sin(\\omega t)" },
+                { label: "Sostituzione operatore Δ (shift discreto)", latex: "\\Delta^k \\, f(t) \\;=\\; f(t+k)" }
+            ]
+        },
+        {
+            id: "s06-trappola-sinusoide",
+            type: "alert_box",
+            title: "Trappola: ingresso sin(ωt) richiede SEMPRE anche cos(ωt)",
+            icon: "⚠️",
+            content: `<p>Anche se l'ingresso contiene solo $\\sin(\\omega t)$, la particolare ipotizzata <strong>deve includere entrambi</strong> $\\cos(\\omega t)$ e $\\sin(\\omega t)$. Lo shift $t \\to t+k$ trasforma $\\sin(\\omega t)$ in una combinazione di seno e coseno (formule di addizione): se ipotizzi solo il seno, il sistema lineare risulta inconsistente.</p>
+<p>Stesso argomento per il coseno in ingresso: scrivi sempre l'ipotesi completa con due lettere.</p>`
+        },
+        {
+            id: "s06-step2-risonanza",
+            type: "method_box",
+            title: "STEP 2.1 — Particolare con Risonanza",
+            icon: "🔁",
+            content: `<p>C'è risonanza quando un modo dell'ingresso è già presente in $Y_{g,o}$. In quel caso il metodo classico fallisce: bisogna correggere l'<strong>ipotesi</strong> moltiplicandola per $t$ tante volte quante necessarie.</p>`,
+            steps: [
+                "Ipotizza $Y_p$ come se non ci fosse risonanza (stessa forma e grado dell'ingresso).",
+                "Moltiplica l'ipotesi per $t$.",
+                "Check: il modo che provoca risonanza, dopo la moltiplicazione, è ancora uguale a uno dei modi di $Y_{g,o}$? Se <strong>sì</strong>, torna allo step 2 e moltiplica ancora per $t$. Se <strong>no</strong>, l'ipotesi è corretta.",
+                "Da qui in poi prosegui col metodo classico (shift in $p(\\Delta)$, sistema, lettere)."
+            ]
+        },
+        {
+            id: "s06-trappola-risonanza-nulla",
+            type: "alert_box",
+            title: "ATTENZIONE: risonanza con radici nulle (impulso δ₀)",
+            icon: "⚠️",
+            content: `<p>Se la risonanza coinvolge una <strong>radice nulla</strong> (modi $\\delta_0$), il meccanismo è <strong>diverso</strong>: <strong>non si moltiplica per $t$</strong>, ma si <strong>aumenta l'ordine del ritardo</strong> dell'impulso.</p>
+<ul>
+<li>Se $\\delta_0(t)$ è già nei modi omogenei $\\Rightarrow$ ipotizza $\\delta_0(t-1)$.</li>
+<li>Se anche $\\delta_0(t-1)$ è già presente $\\Rightarrow$ ipotizza $\\delta_0(t-2)$, e così via.</li>
+</ul>
+<p>In pratica si "sposta in avanti nel tempo" l'impulso fino a uscire dai modi della $Y_{g,o}$. (Vedi Esempio 26 del professore.)</p>`
+        },
+        {
+            id: "s06-step3-generale",
+            type: "section",
+            title: "STEP 3 — Soluzione Generale Non Omogenea Y_g,no",
+            icon: "🔧",
+            content: `<p>Una volta trovate $Y_{g,o}$ e $Y_p$, la generale non omogenea è la loro <strong>somma</strong>:</p>
+<p>$$Y_{g,no}(t) = Y_{g,o}(t) + Y_p(t)$$</p>
+<p>Restano da determinare le costanti $c_1, c_2, \\dots, c_n$ usando le <strong>condizioni iniziali</strong> $y_0, y_1, \\dots, y_{n-1}$. Nel discreto le condizioni iniziali si impongono <strong>valutando</strong> $Y_{g,no}$ in $t = 0, 1, \\dots, n-1$ (non si calcolano derivate!).</p>`,
+            subsections: [
+                {
+                    subtitle: "Costruzione del sistema per le C",
+                    content: `<p>Sia $n$ il grado di $p(\\Delta)$. Procedi così:</p>
+<ol>
+<li>Costruisci un sistema di $n$ equazioni valutando $Y_{g,no}$ in punti consecutivi:
+<ul>
+<li>$Y_{g,no}(0) = y_0$</li>
+<li>$Y_{g,no}(1) = y_1$</li>
+<li>$Y_{g,no}(2) = y_2$</li>
+<li>$\\dots$</li>
+<li>$Y_{g,no}(n-1) = y_{n-1}$</li>
+</ul></li>
+<li>Sostituisci i valori di $t$ nelle espressioni e risolvi il sistema lineare per le costanti $c_i$.</li>
+<li>Sostituisci i valori trovati in $Y_{g,no}$: questa è la soluzione finale $Y(t)$.</li>
+</ol>
+<p><strong>Identità utili</strong> per semplificare i conti:</p>
+<ul>
+<li>$a^0 = 1$ per ogni $a \\neq 0$</li>
+<li>$\\delta_0(0) = 1$, $\\delta_0(k) = 0$ per $k \\neq 0$</li>
+<li>$\\cos(0) = 1$, $\\sin(0) = 0$</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Generale non omogenea", latex: "Y_{g,no}(t) = Y_{g,o}(t) + Y_p(t)" },
+                { label: "Sistema condizioni iniziali (caso discreto)", latex: "Y_{g,no}(k) = y_k, \\quad k = 0, 1, \\dots, n-1" }
+            ]
+        },
+        {
+            id: "s06-step4-libera",
+            type: "section",
+            title: "STEP 4 — Risposta Libera Y_L",
+            icon: "🆓",
+            content: `<p>La <strong>risposta libera</strong> è la parte di $Y(t)$ che dipende solo dalle condizioni iniziali $y_k$. Si ottiene con una regola semplice:</p>
+<ol>
+<li>Parti da $Y(t)$.</li>
+<li><strong>Tieni solo i pezzi che contengono le $y_k$</strong> e <strong>scarta i termini costanti</strong> e quelli generati dall'ingresso.</li>
+</ol>
+<p>In altre parole: $Y_L$ è ciò che rimane se l'ingresso fosse stato nullo ma le condizioni iniziali fossero quelle date.</p>`,
+            formulas: [
+                { label: "Risposta libera", latex: "Y_L(t) = Y(t)\\big|_{u(t)=0}" }
+            ]
+        },
+        {
+            id: "s06-step5-forzata",
+            type: "section",
+            title: "STEP 5 — Risposta Forzata Y_F",
+            icon: "📡",
+            content: `<p>La <strong>risposta forzata</strong> è la parte di $Y(t)$ che dipende solo dall'ingresso $u(t)$. Anche qui la regola è meccanica:</p>
+<ol>
+<li>Parti da $Y(t)$.</li>
+<li><strong>Poni tutte le $y_k = 0$</strong> (azzera tutte le condizioni iniziali).</li>
+</ol>
+<p>Ciò che resta è $Y_F(t)$.</p>`,
+            formulas: [
+                { label: "Risposta forzata", latex: "Y_F(t) = Y(t)\\big|_{y_0 = y_1 = \\dots = 0}" }
+            ]
+        },
+        {
+            id: "s06-verifica",
+            type: "note_box",
+            title: "Verifica finale: Y_L + Y_F = Y(t)",
+            icon: "✅",
+            content: `<p>La somma delle due risposte deve restituire la soluzione completa:</p>
+<p>$$Y_L(t) + Y_F(t) = Y(t)$$</p>
+<p>Se i conti tornano, il procedimento è corretto. È un controllo veloce e gratuito da fare sempre prima di consegnare.</p>`
+        },
+        {
+            id: "s06-confronto-blocco6",
+            type: "note_box",
+            title: "Confronto rapido con il caso continuo (Blocco 6)",
+            icon: "🔄",
+            content: `<p>La struttura della procedura è <strong>identica</strong> a quella del Blocco 6: cambia solo la "tabella di conversione" tra simboli e operazioni:</p>
+<ul>
+<li><strong>Modi reali:</strong> $e^{at}$ (continuo) $\\;\\leftrightarrow\\;$ $a^t$ (discreto)</li>
+<li><strong>Radici nulle:</strong> $1, t, t^2, \\dots$ (continuo) $\\;\\leftrightarrow\\;$ $\\delta_0(t), \\delta_0(t-1), \\dots$ (discreto)</li>
+<li><strong>Radici complesse:</strong> $a \\pm ib$ con modi $e^{at}\\cos(bt)$ (continuo) $\\;\\leftrightarrow\\;$ $\\rho e^{\\pm i\\omega}$ con modi $\\rho^t \\cos(\\omega t)$ (discreto)</li>
+<li><strong>Operatore $\\Delta$:</strong> derivata $\\frac{d}{dt}$ (continuo) $\\;\\leftrightarrow\\;$ shift $t \\to t+1$ (discreto)</li>
+<li><strong>Condizioni iniziali:</strong> $Y^{(k)}(0) = y_k$ (continuo) $\\;\\leftrightarrow\\;$ $Y(k) = y_k$ (discreto)</li>
+<li><strong>Risonanza nulla:</strong> moltiplica per $t$ (continuo) $\\;\\leftrightarrow\\;$ aumenta il ritardo $\\delta_0(t-k)$ (discreto)</li>
+</ul>`
+        },
+        {
+            id: "s06-riepilogo",
+            type: "section",
+            title: "Riepilogo della Procedura Completa",
+            icon: "🗺️",
+            content: `<p>Checklist da tenere a portata di mano in esame:</p>
+<ol>
+<li><strong>STEP 1:</strong> Annulla l'ingresso, trova le radici di $p(\\Delta) = 0$, leggi i modi dalla tabella ($a^t$, $\\delta_0(t-k)$, $\\rho^t\\cos/\\sin$), scrivi $Y_{g,o}$ con le costanti $c_i$.</li>
+<li><strong>STEP 2:</strong> Verifica risonanza. Se ingresso $= b^t$ senza risonanza usa $Y_p = \\tfrac{1}{p(b)} b^t$. Altrimenti ipotizza, applica gli shift $\\Delta^k \\to t+k$, costruisci il sistema e trova le lettere.</li>
+<li><strong>STEP 2.1 (se risonanza):</strong> Moltiplica l'ipotesi per $t$ finché il modo non collide più con quelli di $Y_{g,o}$. <strong>Eccezione:</strong> se la risonanza è su radice nulla, aumenta il ritardo dell'impulso $\\delta_0(t-k)$.</li>
+<li><strong>STEP 3:</strong> $Y_{g,no} = Y_{g,o} + Y_p$. Imponi $Y_{g,no}(k) = y_k$ per $k = 0, 1, \\dots, n-1$, risolvi il sistema per le $c_i$, sostituisci $\\rightarrow$ ottieni $Y(t)$.</li>
+<li><strong>STEP 4:</strong> $Y_L$ = solo i pezzi con le $y_k$.</li>
+<li><strong>STEP 5:</strong> $Y_F$ = $Y(t)$ con tutte le $y_k = 0$.</li>
+<li><strong>Verifica:</strong> $Y_L + Y_F = Y(t)$.</li>
+</ol>`
+        },
+        {
+            id: "s06-orale-tipica",
+            type: "oral_box",
+            title: "Domanda tipica d'esame orale",
+            icon: "🎤",
+            content: `<p><strong>"Risolvere $(\\Delta^2 - 3\\Delta + 2)\\, y(t) = 3^t$ con condizioni iniziali $y(0) = 0, \\; y(1) = 1$."</strong></p>
+<p>Risposta attesa:</p>
+<ol>
+<li><strong>Omogenea:</strong> radici $1$ e $2$ $\\Rightarrow$ $Y_{g,o} = c_1 \\cdot 1^t + c_2 \\cdot 2^t = c_1 + c_2 \\cdot 2^t$.</li>
+<li><strong>Particolare:</strong> ingresso $3^t$, $b = 3$ non è radice $\\Rightarrow$ scorciatoia: $p(3) = 9 - 9 + 2 = 2$, quindi $Y_p = \\tfrac{1}{2} \\cdot 3^t$.</li>
+<li><strong>Generale:</strong> $Y_{g,no} = c_1 + c_2 \\cdot 2^t + \\tfrac{1}{2} \\cdot 3^t$. Imposta $Y_{g,no}(0) = 0$ e $Y_{g,no}(1) = 1$ $\\rightarrow$ sistema $\\rightarrow$ $c_1, c_2$.</li>
+<li><strong>Y_L</strong> = pezzi con $y_0, y_1$. <strong>Y_F</strong> = $Y(t)$ con $y_0 = y_1 = 0$.</li>
+</ol>
+<p><strong>Differenza chiave dal Blocco 6:</strong> le condizioni iniziali si impongono valutando $Y_{g,no}$ in $t = 0$ e $t = 1$, non calcolando $Y(0)$ e $\\dot Y(0)$.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quali sono i 5 step per risolvere p(Δ) y(t) = u(t) nel discreto?",
+            back: "Stessa struttura del continuo: 1) Soluzione omogenea $Y_{g,o}$ (radici di $p(\\Delta)=0$ + tabella modi del Blocco 7). 2) Particolare $Y_p$ (scorciatoia $b^t$ o metodo classico via shift, attenzione alla risonanza). 3) Generale non omogenea $Y_{g,no} = Y_{g,o} + Y_p$ + sistema con $Y_{g,no}(k) = y_k$. 4) Risposta libera $Y_L$. 5) Risposta forzata $Y_F$. Verifica: $Y_L + Y_F = Y(t)$."
+        },
+        {
+            type: "formula",
+            front: "Quali sono i modi associati a una radice reale a ≠ 0 con molteplicità m nel discreto?",
+            back: "$m$ modi: $a^t, \\; t\\, a^t, \\; t^2 a^t, \\; \\dots, \\; t^{m-1} a^t$. Differenza dal continuo: al posto di $e^{at}$ compare $a^t$ (potenza, non esponenziale)."
+        },
+        {
+            type: "formula",
+            front: "Cosa succede quando una radice è nulla (a = 0)?",
+            back: "I modi <strong>non</strong> sono $0^t$, ma l'<strong>impulso unitario discreto</strong> $\\delta_0$ con ritardi crescenti. Molteplicità $m$ $\\Rightarrow$ $m$ modi: $\\delta_0(t), \\delta_0(t-1), \\dots, \\delta_0(t-m+1)$. Ricorda: $\\delta_0(t-k) = 1$ se $t = k$, altrimenti $0$."
+        },
+        {
+            type: "formula",
+            front: "Modi associati a una radice complessa ρ e^(±iω)?",
+            back: "Molteplicità 1: $\\rho^t \\cos(\\omega t), \\; \\rho^t \\sin(\\omega t)$. Molteplicità $m$: la coppia moltiplicata per $1, t, \\dots, t^{m-1}$. Caso $\\rho = 1$: oscillazioni pure $\\cos(\\omega t), \\sin(\\omega t)$."
+        },
+        {
+            type: "formula",
+            front: "Scorciatoia per ingresso esponenziale puro u(t) = b^t senza risonanza?",
+            back: "$Y_p = \\dfrac{1}{p(b)}\\, b^t$, dove $p(b)$ significa sostituire $b$ al posto di $\\Delta$ nel polinomio. Vale solo se $b$ <strong>non</strong> è radice di $p(\\Delta) = 0$ (altrimenti $p(b) = 0$ e si va in divisione per zero)."
+        },
+        {
+            type: "domanda",
+            front: "Cos'è l'operatore Δ nel caso discreto e come si applica nel metodo classico?",
+            back: "$\\Delta$ è uno <strong>shift</strong>: $\\Delta f(t) = f(t+1)$, $\\Delta^k f(t) = f(t+k)$. Nel metodo classico, quando in $p(\\Delta)$ vedi $\\Delta^k$, sostituisci $t$ con $t+k$ nella $Y_p$ ipotizzata. Le costanti lasciano $Y_p$ invariata. Differenza dal continuo: lì $\\Delta$ era la derivata, qui è uno shift."
+        },
+        {
+            type: "tranello",
+            front: "Risonanza con radice nulla: come si tratta?",
+            back: "<strong>Non</strong> si moltiplica per $t$. Si <strong>aumenta il ritardo</strong> dell'impulso: se $\\delta_0(t)$ è già in $Y_{g,o}$, ipotizza $\\delta_0(t-1)$; se anche quello è presente, ipotizza $\\delta_0(t-2)$, ecc. È l'unico caso speciale di risonanza nel Blocco 7."
+        },
+        {
+            type: "tranello",
+            front: "Ingresso sin(ωt) discreto: cosa devo ipotizzare per Y_p?",
+            back: "<strong>Sempre entrambi</strong>: $Y_p = A \\cos(\\omega t) + B \\sin(\\omega t)$, con la stessa $\\omega$ dell'ingresso. Lo shift $t \\to t+k$ trasforma $\\sin(\\omega t)$ in una combinazione di seno e coseno (formule di addizione): se ipotizzi solo il seno, il sistema risulta inconsistente."
+        },
+        {
+            type: "domanda",
+            front: "Come si calcolano le costanti c_i nel discreto?",
+            back: "Sia $n$ il grado di $p(\\Delta)$. Costruisco un sistema di $n$ equazioni valutando $Y_{g,no}$ nei primi $n$ istanti: $Y_{g,no}(0) = y_0, \\, Y_{g,no}(1) = y_1, \\, \\dots, \\, Y_{g,no}(n-1) = y_{n-1}$. Risolvo il sistema lineare e sostituisco. <strong>Differenza dal continuo:</strong> niente derivate, solo valutazioni in $t = 0, 1, \\dots, n-1$."
+        },
+        {
+            type: "definizione",
+            front: "Differenza tra risposta libera Y_L e risposta forzata Y_F?",
+            back: "<strong>$Y_L$</strong>: parte di $Y(t)$ dovuta alle condizioni iniziali (ingresso nullo, condizioni iniziali date). Si ottiene da $Y(t)$ tenendo solo i termini con le $y_k$. <strong>$Y_F$</strong>: parte dovuta all'ingresso (condizioni iniziali nulle, ingresso dato). Si ottiene da $Y(t)$ ponendo tutte le $y_k = 0$. Verifica: $Y_L + Y_F = Y(t)$. Vale identica nel continuo e nel discreto."
+        },
+        {
+            type: "dimostrazione",
+            front: "Esempio: $(\\Delta^2 - 3\\Delta + 2)\\, y(t) = 3^t$. Trova Y_{g,no}.",
+            back: "Omogenea: $\\Delta^2 - 3\\Delta + 2 = (\\Delta - 1)(\\Delta - 2)$, radici $1, 2$ $\\Rightarrow$ $Y_{g,o} = c_1 + c_2 \\cdot 2^t$ (perché $1^t = 1$). Particolare: $b = 3$ non è radice, $p(3) = 9 - 9 + 2 = 2$ $\\Rightarrow$ $Y_p = \\tfrac{1}{2} \\cdot 3^t$. Generale non omogenea: $Y_{g,no} = c_1 + c_2 \\cdot 2^t + \\tfrac{1}{2} \\cdot 3^t$."
+        }
+    ]
+};
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
