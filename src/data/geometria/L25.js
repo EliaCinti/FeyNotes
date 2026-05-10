@@ -173,10 +173,28 @@ const LESSON = {
 <p>$$F(e_1) = e_1 \\qquad F(e_2) = -e_2$$</p>
 <p>La matrice rappresentativa è:</p>
 <p>$$\\mathcal{M}_B(F) = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$$</p>
-<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-  <p><strong>📊 Diagramma 1 — Riflessione rispetto alla retta r</strong></p>
-  <p><em>Asse orizzontale: retta $r$. Vettore $e_1$ lungo $r$ (blu, freccia solida) con etichetta "$e_1 = F(e_1)$" (resta invariato). Vettore $e_2$ verso l'alto (rosso, freccia solida). Vettore $F(e_2) = -e_2$ verso il basso (rosso, freccia tratteggiata). Origine $O$ al centro.</em></p>
-  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 16px; margin: 20px 0; text-align: center;">
+  <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" style="max-width: 480px; width: 100%; height: auto; font-family: 'Inter', system-ui, sans-serif; font-size: 14px;" role="img" aria-label="Riflessione rispetto alla retta r: e1 resta invariato, e2 viene mandato in meno e2">
+    <defs>
+      <marker id="arrow-blue-L25" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#3b82f6"/>
+      </marker>
+      <marker id="arrow-red-L25" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#ef4444"/>
+      </marker>
+    </defs>
+    <line x1="30" y1="120" x2="370" y2="120" stroke="var(--text-muted)" stroke-width="1.2" stroke-dasharray="2 4"/>
+    <text x="378" y="124" fill="currentColor" font-style="italic">r</text>
+    <circle cx="200" cy="120" r="2.8" fill="currentColor"/>
+    <text x="188" y="138" fill="currentColor" font-style="italic">O</text>
+    <line x1="200" y1="120" x2="295" y2="120" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#arrow-blue-L25)"/>
+    <text x="247" y="108" fill="#3b82f6" text-anchor="middle" font-style="italic">e₁ = F(e₁)</text>
+    <line x1="200" y1="120" x2="200" y2="45" stroke="#ef4444" stroke-width="2.4" marker-end="url(#arrow-red-L25)"/>
+    <text x="210" y="50" fill="#ef4444" font-style="italic">e₂</text>
+    <line x1="200" y1="120" x2="200" y2="195" stroke="#ef4444" stroke-width="2.4" stroke-dasharray="6 4" marker-end="url(#arrow-red-L25)"/>
+    <text x="210" y="206" fill="#ef4444" font-style="italic">F(e₂) = −e₂</text>
+  </svg>
+  <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">Riflessione rispetto a $r$: $e_1$ giace su $r$ ed è fissato, $e_2$ ortogonale viene mandato in $-e_2$.</p>
 </div>
 <p>Il punto chiave è la <strong>scelta della base</strong>: $e_1$ viene "fissato" dalla riflessione, $e_2$ viene "ribaltato". Ogni vettore di base viene semplicemente <strong>scalato</strong> ($\\times 1$ per $e_1$ e $\\times(-1)$ per $e_2$), il che corrisponde a una matrice diagonale. Questi vettori si chiamano <strong>autovettori</strong>.</p>`
                 },
