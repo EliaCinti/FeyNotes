@@ -9,30 +9,30 @@ const LESSON = {
             type: "section",
             title: "Proprietà degli Isomorfismi",
             icon: "🔄",
-            content: `<p>Riprendiamo il concetto di <strong>isomorfismo lineare</strong>. Un'applicazione lineare $F: V \\to V'$ è un isomorfismo se è biiettiva (iniettiva e suriettiva). La proprietà fondamentale è che gli isomorfismi <strong>preservano le basi</strong>.</p>
-<p><strong>Proposizione.</strong> Sia $F: V \\to V'$ un isomorfismo. Un sistema $\\{v_1, \\dots, v_n\\}$ è una base di $V$ se e solo se $\\{F(v_1), \\dots, F(v_n)\\}$ è una base di $V'$.</p>`,
+            content: `<p>Riprendiamo il concetto di <strong>isomorfismo lineare</strong>. Un'applicazione lineare $f: V \\to V'$ è un isomorfismo se è biiettiva (iniettiva e suriettiva). La proprietà fondamentale è che gli isomorfismi <strong>preservano le basi</strong>.</p>
+<p><strong>Proposizione.</strong> Sia $f: V \\to V'$ un isomorfismo. Un sistema $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ è una base di $V$ se e solo se $\\{f(\\mathbf{b}_1), \\dots, f(\\mathbf{b}_n)\\}$ è una base di $V'$.</p>`,
             subsections: [
                 {
                     subtitle: "Dimostrazione (⇒): base di V implica base di V'",
-                    content: `<p>Assumiamo che $\\{v_1, \\dots, v_n\\}$ sia una base di $V$. Dobbiamo verificare indipendenza lineare e generazione per $\\{F(v_1), \\dots, F(v_n)\\}$.</p>
+                    content: `<p>Assumiamo che $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ sia una base di $V$. Dobbiamo verificare indipendenza lineare e generazione per $\\{f(\\mathbf{b}_1), \\dots, f(\\mathbf{b}_n)\\}$.</p>
 <p><strong>Indipendenza lineare.</strong> Consideriamo una combinazione lineare nulla:</p>
-<p>$$a_1 F(v_1) + \\dots + a_n F(v_n) = \\boldsymbol{0}_{V'}$$</p>
-<p>Per la linearità di $F$:</p>
-<p>$$F(a_1 v_1 + \\dots + a_n v_n) = \\boldsymbol{0}_{V'}$$</p>
-<p>Poiché $F$ è <strong>iniettiva</strong>, l'unico vettore mandato in $\\boldsymbol{0}_{V'}$ è $\\boldsymbol{0}_V$, quindi:</p>
-<p>$$a_1 v_1 + \\dots + a_n v_n = \\boldsymbol{0}_V$$</p>
-<p>Ma $\\{v_1, \\dots, v_n\\}$ è una base, dunque linearmente indipendente, il che forza $a_1 = a_2 = \\dots = a_n = 0$.</p>
-<p><strong>Generazione.</strong> Sia $v' \\in V'$ un vettore generico. Per la <strong>suriettività</strong> di $F$, esiste $v \\in V$ tale che $F(v) = v'$. Poiché $\\{v_1, \\dots, v_n\\}$ è base di $V$:</p>
-<p>$$v = a_1 v_1 + \\dots + a_n v_n$$</p>
-<p>Applicando $F$ e usando la linearità:</p>
-<p>$$v' = F(v) = a_1 F(v_1) + \\dots + a_n F(v_n)$$</p>
-<p>Quindi $\\{F(v_1), \\dots, F(v_n)\\}$ genera $V'$. ∎</p>`
+<p>$$a_1 f(\\mathbf{b}_1) + \\dots + a_n f(\\mathbf{b}_n) = \\boldsymbol{0}_{V'}$$</p>
+<p>Per la linearità di $f$:</p>
+<p>$$f(a_1 \\mathbf{b}_1 + \\dots + a_n \\mathbf{b}_n) = \\boldsymbol{0}_{V'}$$</p>
+<p>Poiché $f$ è <strong>iniettiva</strong>, l'unico vettore mandato in $\\boldsymbol{0}_{V'}$ è $\\boldsymbol{0}_V$, quindi:</p>
+<p>$$a_1 \\mathbf{b}_1 + \\dots + a_n \\mathbf{b}_n = \\boldsymbol{0}_V$$</p>
+<p>Ma $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ è una base, dunque linearmente indipendente, il che forza $a_1 = a_2 = \\dots = a_n = 0$.</p>
+<p><strong>Generazione.</strong> Sia $\\mathbf{u}' \\in V'$ un vettore generico. Per la <strong>suriettività</strong> di $f$, esiste $\\mathbf{u} \\in V$ tale che $f(\\mathbf{u}) = \\mathbf{u}'$. Poiché $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ è base di $V$:</p>
+<p>$$\\mathbf{u} = a_1 \\mathbf{b}_1 + \\dots + a_n \\mathbf{b}_n$$</p>
+<p>Applicando $f$ e usando la linearità:</p>
+<p>$$\\mathbf{u}' = f(\\mathbf{u}) = a_1 f(\\mathbf{b}_1) + \\dots + a_n f(\\mathbf{b}_n)$$</p>
+<p>Quindi $\\{f(\\mathbf{b}_1), \\dots, f(\\mathbf{b}_n)\\}$ genera $V'$. ∎</p>`
                 },
                 {
                     subtitle: "Dimostrazione (⇐): base di V' implica base di V",
-                    content: `<p>Assumiamo che $\\{F(v_1), \\dots, F(v_n)\\}$ sia una base di $V'$. Poiché $F$ è un isomorfismo, anche $F^{-1}: V' \\to V$ è un isomorfismo.</p>
-<p>Applichiamo il risultato appena dimostrato (direzione $\\Rightarrow$) all'isomorfismo $F^{-1}$ e alla base $\\{F(v_1), \\dots, F(v_n)\\}$ di $V'$:</p>
-<p>$$\\{F^{-1}(F(v_1)), \\dots, F^{-1}(F(v_n))\\} = \\{v_1, \\dots, v_n\\}$$</p>
+                    content: `<p>Assumiamo che $\\{f(\\mathbf{b}_1), \\dots, f(\\mathbf{b}_n)\\}$ sia una base di $V'$. Poiché $f$ è un isomorfismo, anche $f^{-1}: V' \\to V$ è un isomorfismo.</p>
+<p>Applichiamo il risultato appena dimostrato (direzione $\\Rightarrow$) all'isomorfismo $f^{-1}$ e alla base $\\{f(\\mathbf{b}_1), \\dots, f(\\mathbf{b}_n)\\}$ di $V'$:</p>
+<p>$$\\{f^{-1}(f(\\mathbf{b}_1)), \\dots, f^{-1}(f(\\mathbf{b}_n))\\} = \\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$$</p>
 <p>è una base di $V$. ∎</p>`
                 }
             ]
@@ -44,28 +44,28 @@ const LESSON = {
             icon: "🏷️",
             content: `<p>La relazione "essere isomorfi" tra spazi vettoriali è una <strong>relazione di equivalenza</strong>:</p>
 <ul>
-<li><strong>Riflessiva:</strong> $V \\cong V$ tramite l'identità $Id_V$.</li>
-<li><strong>Simmetrica:</strong> se $F: V \\to V'$ è isomorfismo, allora $F^{-1}: V' \\to V$ è isomorfismo.</li>
-<li><strong>Transitiva:</strong> se $F: V \\to V'$ e $G: V' \\to V''$ sono isomorfismi, la composizione $G \\circ F: V \\to V''$ è isomorfismo.</li>
+<li><strong>Riflessiva:</strong> $V \\cong V$ tramite l'identità $\\text{id}_V$.</li>
+<li><strong>Simmetrica:</strong> se $f: V \\to V'$ è isomorfismo, allora $f^{-1}: V' \\to V$ è isomorfismo.</li>
+<li><strong>Transitiva:</strong> se $f: V \\to V'$ e $g: V' \\to V''$ sono isomorfismi, la composizione $g \\circ f: V \\to V''$ è isomorfismo.</li>
 </ul>
 <p>Questa relazione ci permette di <strong>classificare completamente</strong> gli spazi vettoriali di dimensione finita.</p>`,
             subsections: [
                 {
                     subtitle: "Teorema: ogni spazio n-dimensionale è isomorfo a ℝⁿ",
                     content: `<p><strong>Teorema.</strong> Ogni spazio vettoriale $V$ di dimensione finita $n$ è isomorfo a $\\mathbb{R}^n$.</p>
-<p><strong>Dimostrazione.</strong> Fissiamo una base $B = \\{v_1, \\dots, v_n\\}$ di $V$. L'applicazione delle coordinate:</p>
-<p>$$[\\cdot]_B : V \\to \\mathbb{R}^n, \\qquad v = a_1 v_1 + \\dots + a_n v_n \\mapsto \\begin{pmatrix} a_1 \\\\ \\vdots \\\\ a_n \\end{pmatrix}$$</p>
+<p><strong>Dimostrazione.</strong> Fissiamo una base $\\mathcal{B} = \\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ di $V$. L'applicazione delle coordinate:</p>
+<p>$$[\\,\\cdot\\,]_{\\mathcal{B}} : V \\to \\mathbb{R}^n, \\qquad \\mathbf{u} = a_1 \\mathbf{b}_1 + \\dots + a_n \\mathbf{b}_n \\mapsto \\begin{pmatrix} a_1 \\\\ \\vdots \\\\ a_n \\end{pmatrix}$$</p>
 <p>è un isomorfismo. Infatti:</p>
 <ul>
-<li><strong>Linearità:</strong> le coordinate di $a \\cdot v + b \\cdot w$ sono $a \\cdot [v]_B + b \\cdot [w]_B$, per la definizione di combinazione lineare in termini di base.</li>
+<li><strong>Linearità:</strong> le coordinate di $a \\cdot \\mathbf{u} + b \\cdot \\mathbf{w}$ sono $a \\cdot [\\mathbf{u}]_{\\mathcal{B}} + b \\cdot [\\mathbf{w}]_{\\mathcal{B}}$, per la definizione di combinazione lineare in termini di base.</li>
 <li><strong>Iniettività:</strong> un vettore ha coordinate nulle se e solo se è il vettore nullo (per l'unicità della rappresentazione in base).</li>
-<li><strong>Suriettività:</strong> per ogni $n$-upla $(a_1, \\dots, a_n) \\in \\mathbb{R}^n$, il vettore $a_1 v_1 + \\dots + a_n v_n \\in V$ ha esattamente quelle coordinate. ∎</li>
+<li><strong>Suriettività:</strong> per ogni $n$-upla $(a_1, \\dots, a_n) \\in \\mathbb{R}^n$, il vettore $a_1 \\mathbf{b}_1 + \\dots + a_n \\mathbf{b}_n \\in V$ ha esattamente quelle coordinate. ∎</li>
 </ul>`
                 },
                 {
                     subtitle: "Corollario: la dimensione classifica tutto",
                     content: `<p><strong>Corollario.</strong> Due spazi vettoriali di dimensione finita sono isomorfi <strong>se e solo se</strong> hanno la stessa dimensione.</p>
-<p><strong>Dimostrazione (⇒).</strong> Se $F: V \\to V'$ è un isomorfismo e $\\{v_1, \\dots, v_n\\}$ è base di $V$, per la proposizione precedente $\\{F(v_1), \\dots, F(v_n)\\}$ è base di $V'$. Dunque $\\dim(V') = n = \\dim(V)$.</p>
+<p><strong>Dimostrazione (⇒).</strong> Se $f: V \\to V'$ è un isomorfismo e $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ è base di $V$, per la proposizione precedente $\\{f(\\mathbf{b}_1), \\dots, f(\\mathbf{b}_n)\\}$ è base di $V'$. Dunque $\\dim(V') = n = \\dim(V)$.</p>
 <p><strong>Dimostrazione (⇐).</strong> Se $\\dim(V) = \\dim(V') = n$, allora $V \\cong \\mathbb{R}^n$ e $V' \\cong \\mathbb{R}^n$. Per transitività e simmetria, $V \\cong V'$. ∎</p>
 <p>Questo risultato è potentissimo: <strong>a meno di isomorfismo, per ogni $n \\in \\mathbb{N}_0$ esiste un unico spazio vettoriale di dimensione $n$</strong>. La mappa $[V] \\mapsto \\dim(V) \\in \\mathbb{N}_0$ è una biiezione tra classi di equivalenza e numeri naturali.</p>`
                 }
@@ -76,42 +76,45 @@ const LESSON = {
             type: "section",
             title: "Lo Spazio delle Applicazioni Lineari Hom(V, V')",
             icon: "📐",
-            content: `<p>Siano $V$ e $V'$ spazi vettoriali. L'insieme $Hom(V, V')$ di tutte le applicazioni lineari da $V$ a $V'$ è esso stesso uno <strong>spazio vettoriale</strong> con le operazioni:</p>
+            content: `<p>Siano $V$ e $V'$ spazi vettoriali. L'insieme $\\text{Hom}(V, V')$ di tutte le applicazioni lineari da $V$ a $V'$ è esso stesso uno <strong>spazio vettoriale</strong> con le operazioni:</p>
 <ul>
-<li><strong>Somma:</strong> $(F + G)(v) = F(v) + G(v)$ per ogni $v \\in V$</li>
-<li><strong>Prodotto per scalare:</strong> $(cF)(v) = c \\cdot F(v)$ per ogni $v \\in V$</li>
+<li><strong>Somma:</strong> $(f + g)(\\mathbf{u}) = f(\\mathbf{u}) + g(\\mathbf{u})$ per ogni $\\mathbf{u} \\in V$</li>
+<li><strong>Prodotto per scalare:</strong> $(c f)(\\mathbf{u}) = c \\cdot f(\\mathbf{u})$ per ogni $\\mathbf{u} \\in V$</li>
 </ul>
-<p>L'elemento nullo è l'applicazione nulla $v \\mapsto \\boldsymbol{0}_{V'}$, e l'opposto di $F$ è $(-F)(v) = -F(v)$.</p>`,
+<p>L'elemento nullo è l'applicazione nulla $\\mathbf{u} \\mapsto \\boldsymbol{0}_{V'}$, e l'opposto di $f$ è $(-f)(\\mathbf{u}) = -f(\\mathbf{u})$.</p>
+<p><strong>Convenzione di notazione (prof. Di Gennaro).</strong> Per la matrice rappresentativa di $f: V \\to V'$ rispetto a una base $\\mathcal{B}$ di $V$ (partenza) e $\\mathcal{B}'$ di $V'$ (arrivo) usiamo:</p>
+<p>$$M_{\\mathcal{B}'}^{\\mathcal{B}}(f)$$</p>
+<p>dove l'<em>apice</em> $\\mathcal{B}$ indica la base di partenza, il <em>pedice</em> $\\mathcal{B}'$ la base di arrivo.</p>`,
             subsections: [
                 {
                     subtitle: "Isomorfismo con lo spazio delle matrici",
-                    content: `<p><strong>Proposizione.</strong> Se $\\dim(V) = n$ e $\\dim(V') = m$, allora $Hom(V, V') \\cong M_{m,n}(\\mathbb{R})$.</p>
-<p><strong>Dimostrazione.</strong> Fissiamo una base $B$ di $V$ e una base $B'$ di $V'$. L'applicazione che associa a ogni funzione lineare la sua matrice rappresentativa:</p>
-<p>$$\\mathcal{M}_{B, B'}: Hom(V, V') \\to M_{m,n}(\\mathbb{R})$$</p>
+                    content: `<p><strong>Proposizione.</strong> Se $\\dim(V) = n$ e $\\dim(V') = m$, allora $\\text{Hom}(V, V') \\cong \\mathcal{M}(m,n)$.</p>
+<p><strong>Dimostrazione.</strong> Fissiamo una base $\\mathcal{B}$ di $V$ e una base $\\mathcal{B}'$ di $V'$. L'applicazione che associa a ogni funzione lineare la sua matrice rappresentativa:</p>
+<p>$$M_{\\mathcal{B}'}^{\\mathcal{B}}: \\text{Hom}(V, V') \\to \\mathcal{M}(m,n)$$</p>
 <p>è lineare. Le proprietà di linearità:</p>
-<p>$$\\mathcal{M}_{B, B'}(F+G) = \\mathcal{M}_{B, B'}(F) + \\mathcal{M}_{B, B'}(G)$$</p>
-<p>$$\\mathcal{M}_{B, B'}(cF) = c \\cdot \\mathcal{M}_{B, B'}(F)$$</p>
-<p>seguono direttamente dalla definizione di matrice rappresentativa: la $j$-esima colonna di $\\mathcal{M}_{B,B'}(F)$ è $[F(v_j)]_{B'}$, e le coordinate sono lineari.</p>
+<p>$$M_{\\mathcal{B}'}^{\\mathcal{B}}(f+g) = M_{\\mathcal{B}'}^{\\mathcal{B}}(f) + M_{\\mathcal{B}'}^{\\mathcal{B}}(g)$$</p>
+<p>$$M_{\\mathcal{B}'}^{\\mathcal{B}}(c f) = c \\cdot M_{\\mathcal{B}'}^{\\mathcal{B}}(f)$$</p>
+<p>seguono direttamente dalla definizione di matrice rappresentativa: la $j$-esima colonna di $M_{\\mathcal{B}'}^{\\mathcal{B}}(f)$ è $[f(\\mathbf{b}_j)]_{\\mathcal{B}'}$, e l'applicazione delle coordinate è lineare.</p>
 <p>Per mostrare che è un isomorfismo, costruiamo l'<strong>inversa</strong>. Definiamo:</p>
-<p>$$\\mathcal{F}_{B, B'}(A) = [\\cdot]_{B'}^{-1} \\circ L_A \\circ [\\cdot]_B$$</p>
-<p>dove $L_A: \\mathbb{R}^n \\to \\mathbb{R}^m$ è la moltiplicazione per $A$, e $[\\cdot]_{B'}^{-1}: \\mathbb{R}^m \\to V'$ è l'applicazione che, dato un vettore di coordinate $(a_1, \\dots, a_m)$, restituisce il vettore $a_1 w_1 + \\dots + a_m w_m \\in V'$ (con $B' = \\{w_1, \\dots, w_m\\}$).</p>
-<p><strong>Verifica che sono inverse.</strong> Dato $F \\in Hom(V,V')$, per ogni $v \\in V$:</p>
-<p>$$\\mathcal{F}_{B,B'}(\\mathcal{M}_{B,B'}(F))(v) = [\\cdot]_{B'}^{-1}\\bigl(\\mathcal{M}_{B,B'}(F) \\cdot [v]_B\\bigr) = [\\cdot]_{B'}^{-1}\\bigl([F(v)]_{B'}\\bigr) = F(v)$$</p>
-<p>dove abbiamo usato che $\\mathcal{M}_{B,B'}(F) \\cdot [v]_B = [F(v)]_{B'}$ per definizione. Analogamente $\\mathcal{M}_{B,B'}(\\mathcal{F}_{B,B'}(A)) = A$, poiché $\\mathcal{F}_{B,B'}(A)$ manda $v_j$ nel vettore le cui coordinate rispetto a $B'$ sono la $j$-esima colonna di $A$. ∎</p>`
+<p>$$f^{\\mathcal{B}}_{\\mathcal{B}'}(A) := [\\,\\cdot\\,]_{\\mathcal{B}'}^{-1} \\circ L_A \\circ [\\,\\cdot\\,]_{\\mathcal{B}}$$</p>
+<p>dove $L_A: \\mathbf{x} \\in \\mathbb{R}^n \\mapsto A \\cdot \\mathbf{x} \\in \\mathbb{R}^m$ è la moltiplicazione per $A$, e $[\\,\\cdot\\,]_{\\mathcal{B}'}^{-1}: \\mathbb{R}^m \\to V'$ è l'inversa dell'applicazione delle coordinate (data un'$m$-upla $(a_1, \\dots, a_m)$, restituisce il vettore $a_1 \\mathbf{b}'_1 + \\dots + a_m \\mathbf{b}'_m \\in V'$).</p>
+<p><strong>Verifica che sono inverse.</strong> Dato $f \\in \\text{Hom}(V,V')$, per ogni $\\mathbf{u} \\in V$:</p>
+<p>$$f^{\\mathcal{B}}_{\\mathcal{B}'}(M_{\\mathcal{B}'}^{\\mathcal{B}}(f))(\\mathbf{u}) = [\\,\\cdot\\,]_{\\mathcal{B}'}^{-1}\\bigl(M_{\\mathcal{B}'}^{\\mathcal{B}}(f) \\cdot [\\mathbf{u}]_{\\mathcal{B}}\\bigr) = [\\,\\cdot\\,]_{\\mathcal{B}'}^{-1}\\bigl([f(\\mathbf{u})]_{\\mathcal{B}'}\\bigr) = f(\\mathbf{u})$$</p>
+<p>dove abbiamo usato la relazione fondamentale $M_{\\mathcal{B}'}^{\\mathcal{B}}(f) \\cdot [\\mathbf{u}]_{\\mathcal{B}} = [f(\\mathbf{u})]_{\\mathcal{B}'}$. Analogamente $M_{\\mathcal{B}'}^{\\mathcal{B}}(f^{\\mathcal{B}}_{\\mathcal{B}'}(A)) = A$, poiché $f^{\\mathcal{B}}_{\\mathcal{B}'}(A)$ manda $\\mathbf{b}_j$ nel vettore le cui coordinate rispetto a $\\mathcal{B}'$ sono la $j$-esima colonna di $A$. ∎</p>`
                 },
                 {
                     subtitle: "L'algebra degli endomorfismi End(V)",
-                    content: `<p>Quando $V' = V$, lo spazio $Hom(V, V)$ si denota $End(V)$ (<strong>endomorfismi</strong> di $V$). Oltre alla somma e al prodotto per scalare, in $End(V)$ è definita anche la <strong>composizione</strong> di funzioni, che agisce come una moltiplicazione interna.</p>
+                    content: `<p>Quando $V' = V$, lo spazio $\\text{Hom}(V, V)$ si denota $\\text{End}(V)$ (<strong>endomorfismi</strong> di $V$). Oltre alla somma e al prodotto per scalare, in $\\text{End}(V)$ è definita anche la <strong>composizione</strong> di funzioni, che agisce come una moltiplicazione interna.</p>
 <p>Questa struttura — spazio vettoriale con una moltiplicazione interna compatibile — si chiama <strong>algebra</strong>.</p>
-<p>Fissata una base $B$ di $V$, l'isomorfismo:</p>
-<p>$$\\mathcal{M}_B: End(V) \\to M_{n,n}(\\mathbb{R})$$</p>
+<p>Fissata una base $\\mathcal{B}$ di $V$, possiamo prendere la stessa base in partenza e in arrivo. Denotiamo allora $M_{\\mathcal{B}}^{\\mathcal{B}}(f)$ la matrice rappresentativa, e l'isomorfismo:</p>
+<p>$$M_{\\mathcal{B}}^{\\mathcal{B}}: \\text{End}(V) \\to \\mathcal{M}(n,n)$$</p>
 <p>è un <strong>isomorfismo di algebre</strong>, poiché preserva anche la moltiplicazione:</p>
-<p>$$\\mathcal{M}_B(G \\circ F) = \\mathcal{M}_B(G) \\cdot \\mathcal{M}_B(F)$$</p>`
+<p>$$M_{\\mathcal{B}}^{\\mathcal{B}}(g \\circ f) = M_{\\mathcal{B}}^{\\mathcal{B}}(g) \\cdot M_{\\mathcal{B}}^{\\mathcal{B}}(f)$$</p>`
                 }
             ],
             formulas: [
-                { label: "Isomorfismo Hom ↔ Matrici", latex: "\\mathcal{M}_{B,B'}: Hom(V,V') \\overset{\\sim}{\\to} M_{m,n}(\\mathbb{R})" },
-                { label: "Composizione ↔ Prodotto", latex: "\\mathcal{M}_B(G \\circ F) = \\mathcal{M}_B(G) \\cdot \\mathcal{M}_B(F)" }
+                { label: "Isomorfismo Hom ↔ Matrici", latex: "M_{\\mathcal{B}'}^{\\mathcal{B}}: \\text{Hom}(V,V') \\overset{\\sim}{\\to} \\mathcal{M}(m,n)" },
+                { label: "Composizione ↔ Prodotto", latex: "M_{\\mathcal{B}}^{\\mathcal{B}}(g \\circ f) = M_{\\mathcal{B}}^{\\mathcal{B}}(g) \\cdot M_{\\mathcal{B}}^{\\mathcal{B}}(f)" }
             ]
         },
         {
@@ -120,33 +123,33 @@ const LESSON = {
             title: "Cambio di Base e Matrici Simili",
             icon: "🔀",
             content: `<p>Ci chiediamo: <strong>come cambia la matrice rappresentativa di un endomorfismo al variare della base?</strong></p>
-<p>Sia $F \\in End(V)$ e siano $B, B'$ due basi di $V$. Scriviamo $F = Id_V \\circ F \\circ Id_V$ e applichiamo la proprietà fondamentale della composizione.</p>`,
+<p>Sia $f \\in \\text{End}(V)$ e siano $\\mathcal{B}, \\mathcal{B}'$ due basi di $V$. Scriviamo $f = \\text{id}_V \\circ f \\circ \\text{id}_V$ e applichiamo la proprietà fondamentale della composizione.</p>`,
             subsections: [
                 {
                     subtitle: "Proprietà chiave: indici di base nella composizione",
-                    content: `<p>Se $G: V_1 \\to V_2$ e $H: V_2 \\to V_3$ sono applicazioni lineari con basi $B_1, B_2, B_3$, allora:</p>
-<p>$$\\mathcal{M}_{B_1, B_3}(H \\circ G) = \\mathcal{M}_{B_2, B_3}(H) \\cdot \\mathcal{M}_{B_1, B_2}(G)$$</p>
-<p>Gli <strong>indici di base intermedi devono coincidere</strong>: la base di arrivo della prima matrice (a destra) deve essere uguale alla base di partenza della seconda (a sinistra).</p>`
+                    content: `<p>Se $g: V_1 \\to V_2$ e $h: V_2 \\to V_3$ sono applicazioni lineari con basi $\\mathcal{B}_1, \\mathcal{B}_2, \\mathcal{B}_3$, allora:</p>
+<p>$$M_{\\mathcal{B}_3}^{\\mathcal{B}_1}(h \\circ g) = M_{\\mathcal{B}_3}^{\\mathcal{B}_2}(h) \\cdot M_{\\mathcal{B}_2}^{\\mathcal{B}_1}(g)$$</p>
+<p>Gli <strong>indici di base intermedi devono coincidere</strong>: la base in apice della prima matrice (a destra) deve essere uguale alla base in pedice della seconda (a sinistra), per "saldare" la composizione.</p>`
                 },
                 {
                     subtitle: "Derivazione della formula A' = P⁻¹AP",
-                    content: `<p>Applichiamo questa proprietà a $F = Id_V \\circ F \\circ Id_V$, dove vogliamo esprimere $F$ nella base $B'$. Inseriamo $B$ come base intermedia:</p>
-<p>$$\\mathcal{M}_{B'}(F) = \\mathcal{M}_{B, B'}(Id_V) \\cdot \\mathcal{M}_B(F) \\cdot \\mathcal{M}_{B', B}(Id_V)$$</p>
+                    content: `<p>Applichiamo questa proprietà a $f = \\text{id}_V \\circ f \\circ \\text{id}_V$, dove vogliamo esprimere $f$ nella base $\\mathcal{B}'$. Inseriamo $\\mathcal{B}$ come base intermedia:</p>
+<p>$$M_{\\mathcal{B}'}^{\\mathcal{B}'}(f) = M_{\\mathcal{B}'}^{\\mathcal{B}}(\\text{id}_V) \\cdot M_{\\mathcal{B}}^{\\mathcal{B}}(f) \\cdot M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V)$$</p>
 <p>Poniamo:</p>
 <ul>
-<li>$A = \\mathcal{M}_B(F)$ — matrice di $F$ nella base $B$</li>
-<li>$A' = \\mathcal{M}_{B'}(F)$ — matrice di $F$ nella base $B'$</li>
-<li>$P = \\mathcal{M}_{B', B}(Id_V)$ — matrice di cambiamento di base da $B'$ a $B$</li>
+<li>$A = M_{\\mathcal{B}}^{\\mathcal{B}}(f)$ — matrice di $f$ nella base $\\mathcal{B}$</li>
+<li>$A' = M_{\\mathcal{B}'}^{\\mathcal{B}'}(f)$ — matrice di $f$ nella base $\\mathcal{B}'$</li>
+<li>$P = M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V)$ — matrice di cambiamento di coordinate dalla base $\\mathcal{B}'$ alla base $\\mathcal{B}$</li>
 </ul>
-<p>Poiché $Id_V \\circ Id_V = Id_V$, abbiamo $\\mathcal{M}_{B',B}(Id_V) \\cdot \\mathcal{M}_{B,B'}(Id_V) = \\mathcal{M}_{B',B'}(Id_V) = I$, il che implica $\\mathcal{M}_{B,B'}(Id_V) = P^{-1}$. La formula diventa:</p>
+<p>Dalla proprietà delle composizioni segue $M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V) \\cdot M_{\\mathcal{B}'}^{\\mathcal{B}}(\\text{id}_V) = M_{\\mathcal{B}}^{\\mathcal{B}}(\\text{id}_V) = I$, dunque $M_{\\mathcal{B}'}^{\\mathcal{B}}(\\text{id}_V) = P^{-1}$. La formula diventa:</p>
 <p>$$A' = P^{-1} A P$$</p>`
                 },
                 {
                     subtitle: "Matrici simili",
-                    content: `<p><strong>Definizione.</strong> Due matrici quadrate $A, A' \\in M_{n,n}(\\mathbb{R})$ si dicono <strong>simili</strong> se esiste una matrice invertibile $P$ tale che $A' = P^{-1} A P$.</p>
+                    content: `<p><strong>Definizione.</strong> Due matrici quadrate $A, A' \\in \\mathcal{M}(n,n)$ si dicono <strong>simili</strong> (o <em>coniugate</em>) se esiste una matrice invertibile $P$ tale che $A' = P^{-1} A P$.</p>
 <p>La similitudine è una <strong>relazione di equivalenza</strong>:</p>
 <ul>
-<li><strong>Riflessiva:</strong> $A = I^{-1} A I$</li>
+<li><strong>Riflessiva:</strong> $A = I^{-1} A \\, I$</li>
 <li><strong>Simmetrica:</strong> se $A' = P^{-1}AP$, allora $A = (P^{-1})^{-1} A' (P^{-1})$</li>
 <li><strong>Transitiva:</strong> se $A' = P^{-1}AP$ e $A'' = Q^{-1}A'Q$, allora $A'' = (PQ)^{-1} A (PQ)$</li>
 </ul>
@@ -155,7 +158,7 @@ const LESSON = {
             ],
             formulas: [
                 { label: "Cambio di base per endomorfismi", latex: "A' = P^{-1} A P" },
-                { label: "Matrice di cambio base", latex: "P = \\mathcal{M}_{B', B}(Id_V)" }
+                { label: "Matrice di cambio base", latex: "P = M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V)" }
             ]
         },
         {
@@ -163,16 +166,16 @@ const LESSON = {
             type: "section",
             title: "Diagonalizzabilità",
             icon: "⬜",
-            content: `<p><strong>Definizione.</strong> Un endomorfismo $F: V \\to V$ si dice <strong>diagonalizzabile</strong> se esiste una base $B$ di $V$ tale che $\\mathcal{M}_B(F)$ sia una matrice diagonale.</p>
-<p><strong>Definizione equivalente.</strong> Una matrice quadrata $A$ si dice <strong>diagonalizzabile</strong> se è simile a una matrice diagonale, cioè se esiste $P$ invertibile tale che $P^{-1}AP$ sia diagonale.</p>
-<p>Le due definizioni sono equivalenti: un endomorfismo $F$ è diagonalizzabile se e solo se una (e quindi ogni) sua matrice rappresentativa è diagonalizzabile.</p>`,
+            content: `<p><strong>Definizione (endomorfismo diagonalizzabile).</strong> Un endomorfismo $f: V \\to V$ si dice <strong>diagonalizzabile</strong> se esiste una base $\\mathcal{A}$ di $V$ tale che $M_{\\mathcal{A}}^{\\mathcal{A}}(f)$ sia una matrice diagonale.</p>
+<p><strong>Definizione (matrice diagonalizzabile).</strong> Una matrice quadrata $A$ si dice <strong>diagonalizzabile</strong> se è simile a una matrice diagonale, cioè se esiste $P$ invertibile tale che $P^{-1}AP$ sia diagonale.</p>
+<p>Le due definizioni sono equivalenti: un endomorfismo $f$ è diagonalizzabile se e solo se una (e quindi ogni) sua matrice rappresentativa è diagonalizzabile.</p>`,
             subsections: [
                 {
                     subtitle: "Esempio 1: la riflessione nel piano",
-                    content: `<p>Consideriamo la <strong>riflessione</strong> $F$ nel piano rispetto a una retta $r$. Scegliamo la base $B = \\{e_1, e_2\\}$ dove $e_1$ è direttore di $r$ e $e_2$ è ortogonale a $r$:</p>
-<p>$$F(e_1) = e_1 \\qquad F(e_2) = -e_2$$</p>
+                    content: `<p>Consideriamo la <strong>riflessione</strong> $f$ nel piano rispetto a una retta $r$. Scegliamo la base $\\mathcal{A} = \\{\\mathbf{e}_1, \\mathbf{e}_2\\}$ dove $\\mathbf{e}_1$ è direttore di $r$ e $\\mathbf{e}_2$ è ortogonale a $r$:</p>
+<p>$$f(\\mathbf{e}_1) = \\mathbf{e}_1 \\qquad f(\\mathbf{e}_2) = -\\mathbf{e}_2$$</p>
 <p>La matrice rappresentativa è:</p>
-<p>$$\\mathcal{M}_B(F) = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$$</p>
+<p>$$M_{\\mathcal{A}}^{\\mathcal{A}}(f) = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$$</p>
 <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 16px; margin: 20px 0; text-align: center;">
   <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" style="max-width: 480px; width: 100%; height: auto; font-family: 'Inter', system-ui, sans-serif; font-size: 14px;" role="img" aria-label="Riflessione rispetto alla retta r: e1 resta invariato, e2 viene mandato in meno e2">
     <defs>
@@ -188,32 +191,33 @@ const LESSON = {
     <circle cx="200" cy="120" r="2.8" fill="currentColor"/>
     <text x="188" y="138" fill="currentColor" font-style="italic">O</text>
     <line x1="200" y1="120" x2="295" y2="120" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#arrow-blue-L25)"/>
-    <text x="247" y="108" fill="#3b82f6" text-anchor="middle" font-style="italic">e₁ = F(e₁)</text>
+    <text x="247" y="108" fill="#3b82f6" text-anchor="middle" font-style="italic">e₁ = f(e₁)</text>
     <line x1="200" y1="120" x2="200" y2="45" stroke="#ef4444" stroke-width="2.4" marker-end="url(#arrow-red-L25)"/>
     <text x="210" y="50" fill="#ef4444" font-style="italic">e₂</text>
     <line x1="200" y1="120" x2="200" y2="195" stroke="#ef4444" stroke-width="2.4" stroke-dasharray="6 4" marker-end="url(#arrow-red-L25)"/>
-    <text x="210" y="206" fill="#ef4444" font-style="italic">F(e₂) = −e₂</text>
+    <text x="210" y="206" fill="#ef4444" font-style="italic">f(e₂) = −e₂</text>
   </svg>
-  <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">Riflessione rispetto a $r$: $e_1$ giace su $r$ ed è fissato, $e_2$ ortogonale viene mandato in $-e_2$.</p>
+  <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">Riflessione rispetto a $r$: $\\mathbf{e}_1$ giace su $r$ ed è fissato, $\\mathbf{e}_2$ ortogonale viene mandato in $-\\mathbf{e}_2$.</p>
 </div>
-<p>Il punto chiave è la <strong>scelta della base</strong>: $e_1$ viene "fissato" dalla riflessione, $e_2$ viene "ribaltato". Ogni vettore di base viene semplicemente <strong>scalato</strong> ($\\times 1$ per $e_1$ e $\\times(-1)$ per $e_2$), il che corrisponde a una matrice diagonale. Questi vettori si chiamano <strong>autovettori</strong>.</p>`
+<p>Il punto chiave è la <strong>scelta della base</strong>: $\\mathbf{e}_1$ viene "fissato" dalla riflessione, $\\mathbf{e}_2$ viene "ribaltato". Ogni vettore di base viene semplicemente <strong>scalato</strong> ($\\times 1$ per $\\mathbf{e}_1$ e $\\times(-1)$ per $\\mathbf{e}_2$), il che corrisponde a una matrice diagonale. Questi vettori si chiamano <strong>autovettori</strong>.</p>`
                 },
                 {
                     subtitle: "Esempio 2: diagonalizzazione di un operatore su ℝ³",
-                    content: `<p>Consideriamo $F: \\mathbb{R}^3 \\to \\mathbb{R}^3$ definito da:</p>
-<p>$$F(x,y,z) = (3x+3y-z, \\; -4x-2y+2z, \\; -2x+2y+2z)$$</p>
-<p>La matrice nella base canonica è $A = \\begin{pmatrix} 3 & 3 & -1 \\\\ -4 & -2 & 2 \\\\ -2 & 2 & 2 \\end{pmatrix}$.</p>
-<p>Consideriamo la base $B = \\{v_1, v_2, v_3\\}$ con $v_1 = (-2,1,-3)$, $v_2 = (1,0,2)$, $v_3 = (1,1,4)$. Calcoliamo le immagini:</p>
-<p>$$F(v_1) = F(-2,1,-3) = (0,0,0) = 0 \\cdot v_1$$</p>
-<p>$$F(v_2) = F(1,0,2) = (1,0,2) = 1 \\cdot v_2$$</p>
-<p>$$F(v_3) = F(1,1,4) = (2,2,8) = 2 \\cdot v_3$$</p>
+                    content: `<p>Consideriamo $f: \\mathbb{R}^3 \\to \\mathbb{R}^3$ definito da:</p>
+<p>$$f(x,y,z) = (3x+3y-z, \\; -4x-2y+2z, \\; -2x+2y+2z)$$</p>
+<p>Sia $\\mathcal{E}$ la base canonica di $\\mathbb{R}^3$. La matrice rappresentativa di $f$ rispetto a $\\mathcal{E}$ è:</p>
+<p>$$M_{\\mathcal{E}}^{\\mathcal{E}}(f) = A = \\begin{pmatrix} 3 & 3 & -1 \\\\ -4 & -2 & 2 \\\\ -2 & 2 & 2 \\end{pmatrix}$$</p>
+<p>Consideriamo ora la base $\\mathcal{A} = \\{\\mathbf{v}_1, \\mathbf{v}_2, \\mathbf{v}_3\\}$ con $\\mathbf{v}_1 = (-2,1,-3)$, $\\mathbf{v}_2 = (1,0,2)$, $\\mathbf{v}_3 = (1,1,4)$. Calcoliamo le immagini:</p>
+<p>$$f(\\mathbf{v}_1) = f(-2,1,-3) = (0,0,0) = 0 \\cdot \\mathbf{v}_1$$</p>
+<p>$$f(\\mathbf{v}_2) = f(1,0,2) = (1,0,2) = 1 \\cdot \\mathbf{v}_2$$</p>
+<p>$$f(\\mathbf{v}_3) = f(1,1,4) = (2,2,8) = 2 \\cdot \\mathbf{v}_3$$</p>
 <p>Ogni vettore di base viene semplicemente <strong>scalato</strong>! La matrice rappresentativa è diagonale:</p>
-<p>$$\\mathcal{M}_B(F) = D = \\begin{pmatrix} 0 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 2 \\end{pmatrix}$$</p>
-<p>Quindi $F$ (e anche $A$) è diagonalizzabile.</p>`
+<p>$$M_{\\mathcal{A}}^{\\mathcal{A}}(f) = D = \\begin{pmatrix} 0 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 2 \\end{pmatrix}$$</p>
+<p>Quindi $f$ (e anche $A$) è diagonalizzabile.</p>`
                 },
                 {
                     subtitle: "Verifica: AP = PD",
-                    content: `<p>La matrice di cambio base è $P = \\begin{pmatrix} -2 & 1 & 1 \\\\ 1 & 0 & 1 \\\\ -3 & 2 & 4 \\end{pmatrix}$ (colonne = coordinate dei $v_i$ nella base canonica).</p>
+                    content: `<p>La matrice di cambio base è $P = M_{\\mathcal{E}}^{\\mathcal{A}}(\\text{id}_{\\mathbb{R}^3}) = \\begin{pmatrix} -2 & 1 & 1 \\\\ 1 & 0 & 1 \\\\ -3 & 2 & 4 \\end{pmatrix}$ (colonne = coordinate dei $\\mathbf{v}_i$ nella base canonica $\\mathcal{E}$).</p>
 <p>La relazione $A = PDP^{-1}$ equivale a $AP = PD$. Verifichiamolo calcolando la prima colonna di $AP$:</p>
 <p>$$A \\cdot \\begin{pmatrix} -2 \\\\ 1 \\\\ -3 \\end{pmatrix} = \\begin{pmatrix} 3(-2)+3(1)+(-1)(-3) \\\\ -4(-2)+(-2)(1)+2(-3) \\\\ -2(-2)+2(1)+2(-3) \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 0 \\end{pmatrix}$$</p>
 <p>Analogamente per le altre colonne. Il risultato completo:</p>
@@ -241,12 +245,12 @@ const LESSON = {
             title: "⚠️ Non tutte le matrici sono diagonalizzabili!",
             icon: "🚫",
             content: `<p>Consideriamo la matrice $A = \\begin{pmatrix} 1 & -1 \\\\ 1 & -1 \\end{pmatrix}$.</p>
-<p>Le due righe sono uguali, quindi $\\text{rk}(A) = 1$. L'applicazione $F_A(x,y) = (x-y, \\, x-y)$ ha:</p>
+<p>Le due righe sono uguali, quindi $\\text{rk}(A) = 1$. L'operatore $L_A: \\mathbb{R}^2 \\to \\mathbb{R}^2$, $L_A(x,y) = (x-y, \\, x-y)$, ha:</p>
 <ul>
-<li>$\\mathrm{Im}(F_A) = \\{(t,t) : t \\in \\mathbb{R}\\}$ — la retta $y = x$</li>
-<li>$\\ker(F_A) = \\{(t,t) : t \\in \\mathbb{R}\\}$ — la stessa retta!</li>
+<li>$\\text{Im}(L_A) = \\{(t,t) : t \\in \\mathbb{R}\\}$ — la retta $y = x$</li>
+<li>$\\ker(L_A) = \\{(t,t) : t \\in \\mathbb{R}\\}$ — la stessa retta!</li>
 </ul>
-<p><strong>Perché non è diagonalizzabile?</strong> Per diagonalizzare servirebbe una base $\\{w_1, w_2\\}$ con $F_A(w_i) = \\lambda_i w_i$ (autovettori). L'unico autovalore possibile è $\\lambda = 0$ (nucleo unidimensionale). Per $\\lambda \\neq 0$ servirebbe $F_A(w) = \\lambda w$ con $\\lambda w$ sulla retta $y = x$, il che forza $w$ sulla stessa retta, cioè nel nucleo: <strong>contraddizione</strong> con $\\lambda \\neq 0$.</p>
+<p><strong>Perché non è diagonalizzabile?</strong> Per diagonalizzare servirebbe una base $\\{\\mathbf{w}_1, \\mathbf{w}_2\\}$ con $L_A(\\mathbf{w}_i) = \\lambda_i \\mathbf{w}_i$ (autovettori). L'unico autovalore possibile è $\\lambda = 0$ (nucleo unidimensionale). Per $\\lambda \\neq 0$ servirebbe $L_A(\\mathbf{w}) = \\lambda \\mathbf{w}$ con $\\lambda \\mathbf{w}$ sulla retta $y = x$, il che forza $\\mathbf{w}$ sulla stessa retta, cioè nel nucleo: <strong>contraddizione</strong> con $\\lambda \\neq 0$.</p>
 <p>L'autospazio è unidimensionale: non si trovano 2 autovettori linearmente indipendenti in $\\mathbb{R}^2$. La matrice <strong>non è diagonalizzabile</strong>.</p>
 <p>Nelle prossime lezioni vedremo un metodo sistematico basato sul <strong>polinomio caratteristico</strong>.</p>`
         },
@@ -258,7 +262,7 @@ const LESSON = {
             content: `<p>In questa lezione abbiamo costruito un'architettura concettuale potente:</p>
 <ol>
 <li><strong>Classificazione:</strong> la dimensione classifica completamente gli spazi vettoriali a meno di isomorfismo.</li>
-<li><strong>$Hom(V,V') \\cong M_{m,n}(\\mathbb{R})$:</strong> studiare applicazioni lineari equivale a studiare matrici (una volta fissate le basi).</li>
+<li><strong>$\\text{Hom}(V,V') \\cong \\mathcal{M}(m,n)$:</strong> studiare applicazioni lineari equivale a studiare matrici (una volta fissate le basi).</li>
 <li><strong>$A' = P^{-1}AP$:</strong> cambiare base in un endomorfismo corrisponde a coniugare la matrice. La similitudine è una relazione di equivalenza.</li>
 <li><strong>Diagonalizzabilità:</strong> trovare una base in cui la matrice è diagonale — il caso più semplice e computazionalmente potente. Non sempre possibile!</li>
 </ol>`
@@ -274,7 +278,7 @@ const LESSON = {
 <li><strong>(⇒)</strong> usa la proposizione sulle basi: un isomorfismo manda basi in basi.</li>
 <li><strong>(⇐)</strong> usa il fatto che entrambi sono isomorfi a $\\mathbb{R}^n$ e la transitività.</li>
 </ul>
-<p>Un'altra domanda frequente: <em>"Perché $A' = P^{-1}AP$? Derivi la formula."</em> Parti da $F = Id \\circ F \\circ Id$ e usa la proprietà della composizione con le basi intermedie.</p>`
+<p>Un'altra domanda frequente: <em>"Perché $A' = P^{-1}AP$? Derivi la formula."</em> Parti da $f = \\text{id}_V \\circ f \\circ \\text{id}_V$ e usa la proprietà della composizione con le basi intermedie.</p>`
         }
     ],
 
@@ -282,12 +286,12 @@ const LESSON = {
         {
             type: "definizione",
             front: "Quando due spazi vettoriali si dicono isomorfi?",
-            back: "Due spazi vettoriali $V$ e $V'$ sono isomorfi se esiste un'applicazione lineare $F: V \\to V'$ che sia biiettiva (iniettiva e suriettiva). Tale $F$ si chiama isomorfismo."
+            back: "Due spazi vettoriali $V$ e $V'$ sono isomorfi se esiste un'applicazione lineare $f: V \\to V'$ che sia biiettiva (iniettiva e suriettiva). Tale $f$ si chiama isomorfismo."
         },
         {
             type: "dimostrazione",
             front: "Dimostra che un isomorfismo manda basi in basi.",
-            back: "Sia $F: V \\to V'$ isomorfismo e $\\{v_1, \\dots, v_n\\}$ base di $V$. **Indipendenza:** se $\\sum a_i F(v_i) = \\boldsymbol{0}$, per linearità $F(\\sum a_i v_i) = \\boldsymbol{0}$; per iniettività $\\sum a_i v_i = \\boldsymbol{0}$; per indipendenza dei $v_i$, tutti $a_i = 0$. **Generazione:** per ogni $v' \\in V'$, per suriettività esiste $v = \\sum a_i v_i$ con $F(v) = v'$, dunque $v' = \\sum a_i F(v_i)$."
+            back: "Sia $f: V \\to V'$ isomorfismo e $\\{\\mathbf{b}_1, \\dots, \\mathbf{b}_n\\}$ base di $V$. **Indipendenza:** se $\\sum a_i f(\\mathbf{b}_i) = \\boldsymbol{0}$, per linearità $f(\\sum a_i \\mathbf{b}_i) = \\boldsymbol{0}$; per iniettività $\\sum a_i \\mathbf{b}_i = \\boldsymbol{0}$; per indipendenza dei $\\mathbf{b}_i$, tutti $a_i = 0$. **Generazione:** per ogni $\\mathbf{u}' \\in V'$, per suriettività esiste $\\mathbf{u} = \\sum a_i \\mathbf{b}_i$ con $f(\\mathbf{u}) = \\mathbf{u}'$, dunque $\\mathbf{u}' = \\sum a_i f(\\mathbf{b}_i)$."
         },
         {
             type: "domanda",
@@ -297,17 +301,17 @@ const LESSON = {
         {
             type: "definizione",
             front: "Cos'è Hom(V, V') e che struttura ha?",
-            back: "$Hom(V, V')$ è l'insieme di tutte le applicazioni lineari da $V$ a $V'$. Con la somma $(F+G)(v) = F(v) + G(v)$ e il prodotto per scalare $(cF)(v) = cF(v)$, è uno **spazio vettoriale**. Se $\\dim V = n$ e $\\dim V' = m$, allora $Hom(V,V') \\cong M_{m,n}(\\mathbb{R})$."
+            back: "$\\text{Hom}(V, V')$ è l'insieme di tutte le applicazioni lineari da $V$ a $V'$. Con la somma $(f+g)(\\mathbf{u}) = f(\\mathbf{u}) + g(\\mathbf{u})$ e il prodotto per scalare $(cf)(\\mathbf{u}) = cf(\\mathbf{u})$, è uno **spazio vettoriale**. Se $\\dim V = n$ e $\\dim V' = m$, allora $\\text{Hom}(V,V') \\cong \\mathcal{M}(m,n)$ tramite l'applicazione $M_{\\mathcal{B}'}^{\\mathcal{B}}$."
         },
         {
             type: "definizione",
             front: "Cos'è End(V) e perché si chiama 'algebra'?",
-            back: "$End(V) = Hom(V, V)$ è lo spazio degli endomorfismi. Oltre a somma e prodotto per scalare, ha anche la **composizione** come moltiplicazione interna. Questa struttura (spazio vettoriale + moltiplicazione compatibile) si chiama **algebra**. È isomorfo come algebra a $M_{n,n}(\\mathbb{R})$."
+            back: "$\\text{End}(V) = \\text{Hom}(V, V)$ è lo spazio degli endomorfismi. Oltre a somma e prodotto per scalare, ha anche la **composizione** come moltiplicazione interna. Questa struttura (spazio vettoriale + moltiplicazione compatibile) si chiama **algebra**. È isomorfo come algebra a $\\mathcal{M}(n,n)$ tramite $M_{\\mathcal{B}}^{\\mathcal{B}}$."
         },
         {
             type: "formula",
             front: "Scrivi la formula del cambio di base per un endomorfismo e spiega cosa rappresenta P.",
-            back: "$$A' = P^{-1} A P$$ dove $A = \\mathcal{M}_B(F)$, $A' = \\mathcal{M}_{B'}(F)$, e $P = \\mathcal{M}_{B',B}(Id_V)$ è la matrice di cambiamento di base da $B'$ a $B$ (le colonne di $P$ sono le coordinate dei vettori di $B'$ espressi nella base $B$)."
+            back: "$$A' = P^{-1} A P$$ dove $A = M_{\\mathcal{B}}^{\\mathcal{B}}(f)$, $A' = M_{\\mathcal{B}'}^{\\mathcal{B}'}(f)$, e $P = M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V)$ è la matrice di cambiamento di coordinate dalla base $\\mathcal{B}'$ alla base $\\mathcal{B}$ (le colonne di $P$ sono le coordinate dei vettori di $\\mathcal{B}'$ espressi nella base $\\mathcal{B}$)."
         },
         {
             type: "definizione",
@@ -317,7 +321,7 @@ const LESSON = {
         {
             type: "definizione",
             front: "Cosa significa che una matrice (o un endomorfismo) è diagonalizzabile?",
-            back: "Un endomorfismo $F$ è **diagonalizzabile** se esiste una base $B$ in cui $\\mathcal{M}_B(F)$ è diagonale. Equivalentemente, una matrice $A$ è diagonalizzabile se è simile a una matrice diagonale: $\\exists P$ invertibile t.c. $P^{-1}AP = D$ diagonale."
+            back: "Un endomorfismo $f$ è **diagonalizzabile** se esiste una base $\\mathcal{A}$ in cui $M_{\\mathcal{A}}^{\\mathcal{A}}(f)$ è diagonale. Equivalentemente, una matrice $A$ è diagonalizzabile se è simile a una matrice diagonale: $\\exists P$ invertibile t.c. $P^{-1}AP = D$ diagonale."
         },
         {
             type: "domanda",
@@ -332,7 +336,7 @@ const LESSON = {
         {
             type: "dimostrazione",
             front: "Deriva la formula A' = P⁻¹AP dal concetto di composizione.",
-            back: "Scrivi $F = Id_V \\circ F \\circ Id_V$. Usa la proprietà $\\mathcal{M}_{B_1,B_3}(H \\circ G) = \\mathcal{M}_{B_2,B_3}(H) \\cdot \\mathcal{M}_{B_1,B_2}(G)$ con basi intermedie: $\\mathcal{M}_{B'}(F) = \\mathcal{M}_{B,B'}(Id) \\cdot \\mathcal{M}_B(F) \\cdot \\mathcal{M}_{B',B}(Id)$. Ponendo $P = \\mathcal{M}_{B',B}(Id)$, si ha $\\mathcal{M}_{B,B'}(Id) = P^{-1}$ (poiché $P \\cdot P^{-1} = \\mathcal{M}_{B',B'}(Id) = I$), da cui $A' = P^{-1}AP$."
+            back: "Scrivi $f = \\text{id}_V \\circ f \\circ \\text{id}_V$. Usa la proprietà $M_{\\mathcal{B}_3}^{\\mathcal{B}_1}(h \\circ g) = M_{\\mathcal{B}_3}^{\\mathcal{B}_2}(h) \\cdot M_{\\mathcal{B}_2}^{\\mathcal{B}_1}(g)$ con basi intermedie: $M_{\\mathcal{B}'}^{\\mathcal{B}'}(f) = M_{\\mathcal{B}'}^{\\mathcal{B}}(\\text{id}) \\cdot M_{\\mathcal{B}}^{\\mathcal{B}}(f) \\cdot M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id})$. Ponendo $P = M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id})$, si ha $M_{\\mathcal{B}'}^{\\mathcal{B}}(\\text{id}) = P^{-1}$ (poiché $P^{-1} P = M_{\\mathcal{B}'}^{\\mathcal{B}'}(\\text{id}) = I$), da cui $A' = P^{-1}AP$."
         }
     ]
 };
