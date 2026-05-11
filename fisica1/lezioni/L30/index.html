@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 25 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 25: Momento Angolare ed Energia Cinetica nei Sistemi di Riferimento: I Teoremi di König. Derivazione completa dei due Teoremi di König: scomposizione del momento angolare in contributo orbitale e proprio, scomposizione dell'energia cinetica in contributo del centro di massa e interno. Applicazione alla classificazione degli urti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 25: Momento Angolare ed Energia Cinetica nei Sistemi di Riferimento: I Teoremi di König — Fisica 1">
+  <meta property="og:description" content="Derivazione completa dei due Teoremi di König: scomposizione del momento angolare in contributo orbitale e proprio, scomposizione dell'energia cinetica in contributo del centro di massa e interno. Applicazione alla classificazione degli urti.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/lezioni/L30/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/lezioni/L30/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 25 — Momento Angolare ed Energia Cinetica nei Sistemi di Riferimento: I Teoremi di König",
+  "description": "Derivazione completa dei due Teoremi di König: scomposizione del momento angolare in contributo orbitale e proprio, scomposizione dell'energia cinetica in contributo del centro di massa e interno. Applicazione alla classificazione degli urti.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/lezioni/L30/",
+  "datePublished": "2026-05-04",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 25</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/lezioni/L29/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L30", date: "Lezione 25 — 04 Mag 2026",
+    title: "Momento Angolare ed Energia Cinetica nei Sistemi di Riferimento: I Teoremi di König",
+    abstract: "Derivazione completa dei due Teoremi di König: scomposizione del momento angolare in contributo orbitale e proprio, scomposizione dell'energia cinetica in contributo del centro di massa e interno. Applicazione alla classificazione degli urti.",
+
+    sections: [
+        {
+            id: "s30-intro-cm",
+            type: "section",
+            title: "Introduzione e Richiamo sul Centro di Massa",
+            icon: "🎯",
+            content: `<p>Nelle lezioni precedenti abbiamo introdotto il concetto di sistema di riferimento del centro di massa. Ora vogliamo approfondire come la descrizione di un fenomeno meccanico — in particolare per le proprietà rotazionali ed energetiche — cambi a seconda del sistema di riferimento scelto.</p>
+<p>Considereremo due osservatori:</p>
+<ul>
+<li>Un osservatore solidale con un <strong>sistema di riferimento inerziale</strong>, il cui polo (origine) chiameremo $O$.</li>
+<li>Un osservatore solidale con il <strong>centro di massa (CM)</strong> del sistema di punti materiali, che in generale è un sistema di riferimento non inerziale.</li>
+</ul>
+<p>Il nostro obiettivo è confrontare le descrizioni fornite da questi due osservatori e trovare una relazione tra le grandezze da loro misurate, come il momento angolare e l'energia cinetica.</p>`,
+            subsections: [
+                {
+                    subtitle: "Diagramma dei vettori posizione e velocità",
+                    content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Vettori posizione e velocità nel sistema fisso e del CM</strong></p>
+  <p><em>Sistema di riferimento fisso con polo O e assi x, y. Il centro di massa CM (polo O') è indicato in rosso. Una massa $m_i$ è rappresentata come punto. Vettori: $\\vec{r}_i$ (blu, da O a $m_i$), $\\vec{r}_{CM}$ (rosso, da O a CM), $\\vec{r}'_i$ (verde, da CM a $m_i$). Per le velocità: $\\vec{v}_i$ (blu, da $m_i$), $\\vec{v}_{CM}$ (rosso, da CM), $\\vec{v}'_i$ (verde, da $m_i$). Importante: i tre vettori velocità soddisfano la relazione $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}'_i$ (composizione vettoriale). Si può verificare graficamente che la punta di $\\vec{v}_{CM}$ traslato in $m_i$ sommata a $\\vec{v}'_i$ dà $\\vec{v}_i$.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+                },
+                {
+                    subtitle: "Leggi di trasformazione delle coordinate",
+                    content: `<p>Ricordiamo le relazioni fondamentali che legano coordinate e velocità nei due sistemi di riferimento (trasformazioni di Galileo per un sistema in moto traslatorio):</p>
+<p><strong>Posizione:</strong> il vettore posizione $\\vec{r}_i$ della massa $i$-esima nel sistema fisso è la somma del vettore posizione del centro di massa $\\vec{r}_{CM}$ e del vettore posizione della massa rispetto al centro di massa $\\vec{r}'_i$:</p>
+<p>$$\\vec{r}_i = \\vec{r}'_i + \\vec{r}_{CM}$$</p>
+<p><strong>Velocità:</strong> derivando rispetto al tempo, otteniamo la legge di composizione delle velocità. La velocità assoluta $\\vec{v}_i$ è la somma della velocità relativa $\\vec{v}'_i$ e della velocità di trascinamento (la velocità del centro di massa $\\vec{v}_{CM}$):</p>
+<p>$$\\vec{v}_i = \\vec{v}'_i + \\vec{v}_{CM}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà fondamentali del sistema del centro di massa",
+                    content: `<p>Dalla definizione di centro di massa segue una proprietà cruciale che verrà utilizzata <strong>ripetutamente</strong> nelle dimostrazioni dei teoremi di König. Il centro di massa è definito come:</p>
+<p>$$\\vec{r}_{CM} = \\frac{\\sum_{i} m_i \\vec{r}_i}{\\sum_{i} m_i} = \\frac{1}{M} \\sum_{i} m_i \\vec{r}_i$$</p>
+<p>Ne segue che le posizioni relative al centro di massa, $\\vec{r}'_i = \\vec{r}_i - \\vec{r}_{CM}$, soddisfano:</p>
+<p>$$\\sum_{i} m_i \\vec{r}'_i = \\sum_{i} m_i (\\vec{r}_i - \\vec{r}_{CM}) = \\sum_{i} m_i \\vec{r}_i - M \\vec{r}_{CM} = M \\vec{r}_{CM} - M \\vec{r}_{CM} = \\vec{0}$$</p>
+<p>Questa relazione afferma che il <strong>momento statico</strong> (primo momento di massa) del sistema rispetto al proprio centro di massa è identicamente nullo.</p>
+<p>Derivando rispetto al tempo, poiché le masse sono costanti, otteniamo immediatamente:</p>
+<p>$$\\frac{d}{dt} \\sum_{i} m_i \\vec{r}'_i = \\sum_{i} m_i \\vec{v}'_i = \\vec{0}$$</p>
+<p>Ciò significa che la <strong>quantità di moto totale del sistema nel riferimento del centro di massa è sempre nulla</strong>. Questa proprietà è una conseguenza diretta della definizione di centro di massa e non richiede alcuna ipotesi sulle forze agenti.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Trasformazione posizione", latex: "\\vec{r}_i = \\vec{r}'_i + \\vec{r}_{CM}" },
+                { label: "Trasformazione velocità", latex: "\\vec{v}_i = \\vec{v}'_i + \\vec{v}_{CM}" },
+                { label: "Momento statico nullo", latex: "\\sum_{i} m_i \\vec{r}'_i = \\vec{0}" },
+                { label: "Quantità di moto interna nulla", latex: "\\sum_{i} m_i \\vec{v}'_i = \\vec{0}" }
+            ]
+        },
+        {
+            id: "s30-primo-konig",
+            type: "section",
+            title: "Primo Teorema di König: Momento Angolare",
+            icon: "🌀",
+            content: `<p>La prima questione che affrontiamo è: quale relazione esiste tra il momento angolare totale del sistema calcolato rispetto al polo fisso $O$, indicato con $\\vec{L}_O$, e il momento angolare calcolato rispetto al centro di massa, $\\vec{L}_{CM}$?</p>
+<p>Partiamo dalla definizione di momento angolare totale rispetto al polo $O$:</p>
+<p>$$\\vec{L}_O = \\sum_{i} \\vec{r}_i \\times (m_i \\vec{v}_i)$$</p>
+<p>Sostituiamo le espressioni dalle leggi di trasformazione:</p>
+<p>$$\\vec{L}_O = \\sum_{i} (\\vec{r}'_i + \\vec{r}_{CM}) \\times \\left( m_i (\\vec{v}'_i + \\vec{v}_{CM}) \\right)$$</p>
+<p>Sviluppiamo il prodotto vettoriale utilizzando la proprietà distributiva. Otteniamo <strong>quattro termini</strong>:</p>
+<p>$$\\vec{L}_O = \\underbrace{\\sum_{i} \\vec{r}'_i \\times m_i \\vec{v}'_i}_{(1)} + \\underbrace{\\sum_{i} \\vec{r}'_i \\times m_i \\vec{v}_{CM}}_{(2)} + \\underbrace{\\sum_{i} \\vec{r}_{CM} \\times m_i \\vec{v}'_i}_{(3)} + \\underbrace{\\sum_{i} \\vec{r}_{CM} \\times m_i \\vec{v}_{CM}}_{(4)}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Analisi dei quattro termini",
+                    content: `<p><strong>Termine (1):</strong> $\\sum_{i} \\vec{r}'_i \\times m_i \\vec{v}'_i$</p>
+<p>Questa è esattamente la definizione di momento angolare del sistema calcolato rispetto al centro di massa. Lo chiamiamo <strong>momento angolare proprio</strong> o <strong>interno</strong>:</p>
+<p>$$\\sum_{i} \\vec{r}'_i \\times m_i \\vec{v}'_i = \\vec{L}_{CM}$$</p>
+<p><strong>Termine (2):</strong> $\\sum_{i} \\vec{r}'_i \\times m_i \\vec{v}_{CM}$</p>
+<p>Poiché $\\vec{v}_{CM}$ è costante rispetto alla sommatoria su $i$, possiamo raccoglierlo fuori mantenendo l'ordine dei fattori nel prodotto vettoriale (che non è commutativo):</p>
+<p>$$\\left( \\sum_{i} m_i \\vec{r}'_i \\right) \\times \\vec{v}_{CM}$$</p>
+<p>L'espressione in parentesi è il momento statico rispetto al centro di massa, che è <strong>identicamente nullo</strong>. Quindi il termine (2) è zero.</p>
+<p><strong>Termine (3):</strong> $\\sum_{i} \\vec{r}_{CM} \\times m_i \\vec{v}'_i$</p>
+<p>Portiamo fuori il vettore costante $\\vec{r}_{CM}$:</p>
+<p>$$\\vec{r}_{CM} \\times \\left( \\sum_{i} m_i \\vec{v}'_i \\right)$$</p>
+<p>L'espressione in parentesi è la quantità di moto totale nel sistema del centro di massa, che è <strong>nulla</strong>. Quindi il termine (3) è zero.</p>
+<p><strong>Termine (4):</strong> $\\sum_{i} \\vec{r}_{CM} \\times m_i \\vec{v}_{CM}$</p>
+<p>Qui entrambi i vettori $\\vec{r}_{CM}$ e $\\vec{v}_{CM}$ sono costanti rispetto alla sommatoria. Utilizzando la linearità del prodotto vettoriale rispetto ai fattori scalari, possiamo estrarre sia $\\vec{r}_{CM}$ che $\\vec{v}_{CM}$ dalla sommatoria in un unico passaggio:</p>
+<p>$$\\sum_i \\vec{r}_{CM} \\times m_i \\vec{v}_{CM} = \\vec{r}_{CM} \\times \\vec{v}_{CM} \\sum_i m_i = \\vec{r}_{CM} \\times (M \\vec{v}_{CM})$$</p>
+<p>Questo rappresenta il momento angolare del centro di massa stesso, considerato come un punto materiale di massa $M$. Lo chiamiamo <strong>momento angolare orbitale</strong>.</p>`
+                },
+                {
+                    subtitle: "Enunciato del Primo Teorema di König",
+                    content: `<p>Mettendo insieme i risultati, otteniamo il <strong>Primo Teorema di König per il Momento Angolare</strong>:</p>
+<p>Il momento angolare totale di un sistema di punti materiali rispetto a un polo fisso $O$ ($\\vec{L}_O$) è dato dalla somma del momento angolare del sistema rispetto al suo centro di massa ($\\vec{L}_{CM}$, detto momento angolare proprio o interno) e del momento angolare del centro di massa rispetto al polo $O$ (detto momento angolare orbitale):</p>
+<p>$$\\vec{L}_O = \\vec{L}_{CM} + \\vec{r}_{CM} \\times (M \\vec{v}_{CM})$$</p>
+<p>Questo teorema è fondamentale perché ci permette di <strong>separare</strong> il moto del sistema in due componenti indipendenti:</p>
+<ul>
+<li>Il moto <strong>del</strong> centro di massa (moto d'insieme o traslatorio), il cui contributo rotazionale è il momento angolare orbitale.</li>
+<li>Il moto <strong>attorno</strong> al centro di massa (moto interno o rotatorio), descritto dal momento angolare proprio $\\vec{L}_{CM}$.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Primo Teorema di König", latex: "\\vec{L}_O = \\vec{L}_{CM} + \\vec{r}_{CM} \\times (M \\vec{v}_{CM})" }
+            ]
+        },
+        {
+            id: "s30-esempio-konig1",
+            type: "section",
+            title: "Esempio: Due Masse su Asta Rigida",
+            icon: "📐",
+            content: `<p>Consideriamo due masse uguali $m_1 = m_2 = m$, collegate da un'asta rigida di lunghezza $2d$ e massa trascurabile. Il centro di massa si trova nel punto medio dell'asta.</p>
+<p>Supponiamo che il sistema si muova nel piano $xy$ con:</p>
+<ul>
+<li>Il centro di massa che trasla con velocità $\\vec{v}_{CM}$ lungo l'asse $x$.</li>
+<li>Il sistema che ruota attorno al centro di massa con velocità angolare $\\omega$.</li>
+</ul>
+<p>Scegliamo un istante in cui il CM si trova alla posizione $\\vec{r}_{CM} = (x_0, 0)$ e l'asta è orientata lungo l'asse $y$. Le due masse si trovano, rispetto al CM, a distanza $d$:</p>
+<p>$$\\vec{r}'_1 = (0, +d), \\qquad \\vec{r}'_2 = (0, -d)$$</p>
+<p>Le velocità relative al CM sono tangenziali alla rotazione:</p>
+<p>$$\\vec{v}'_1 = (-\\omega d, 0), \\qquad \\vec{v}'_2 = (+\\omega d, 0)$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Momento angolare proprio (interno)",
+                    content: `<p>$$\\vec{L}_{CM} = m \\, \\vec{r}'_1 \\times \\vec{v}'_1 + m \\, \\vec{r}'_2 \\times \\vec{v}'_2$$</p>
+<p>Calcolando le componenti $z$ dei prodotti vettoriali:</p>
+<p>$$\\vec{L}_{CM} = m \\left[ (0)(0) - (d)(-\\omega d) \\right] \\hat{z} + m \\left[ (0)(0) - (-d)(\\omega d) \\right] \\hat{z} = 2 m d^2 \\omega \\, \\hat{z}$$</p>`
+                },
+                {
+                    subtitle: "Momento angolare orbitale",
+                    content: `<p>$$\\vec{r}_{CM} \\times (M \\vec{v}_{CM}) = (x_0, 0, 0) \\times (2m \\, v_{CM}, 0, 0) = \\vec{0}$$</p>
+<p>In questo caso il momento orbitale è <strong>nullo</strong> perché $\\vec{r}_{CM}$ e $\\vec{v}_{CM}$ sono paralleli (entrambi lungo $x$). Pertanto:</p>
+<p>$$\\vec{L}_O = \\vec{L}_{CM} = 2 m d^2 \\omega \\, \\hat{z}$$</p>
+<p>Se invece il CM avesse una componente di velocità lungo $y$ (ad esempio $\\vec{v}_{CM} = (v_x, v_y, 0)$), il contributo orbitale sarebbe non nullo: $\\vec{r}_{CM} \\times (M \\vec{v}_{CM}) = M(x_0 v_y - 0 \\cdot v_x)\\hat{z} = M x_0 v_y \\, \\hat{z}$, e si sommerebbe a $\\vec{L}_{CM}$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s30-secondo-konig",
+            type: "section",
+            title: "Secondo Teorema di König: Energia Cinetica",
+            icon: "⚡",
+            content: `<p>Passiamo ora a considerare l'energia. Quale relazione esiste tra l'energia cinetica totale del sistema misurata nel sistema fisso, $E_k$, e quella misurata nel sistema del centro di massa, $E'_k$?</p>
+<p>L'energia cinetica totale nel sistema fisso è:</p>
+<p>$$E_k = \\sum_{i} \\frac{1}{2} m_i v_i^2 = \\sum_{i} \\frac{1}{2} m_i (\\vec{v}_i \\cdot \\vec{v}_i)$$</p>
+<p>Sostituiamo la legge di composizione delle velocità $\\vec{v}_i = \\vec{v}'_i + \\vec{v}_{CM}$:</p>
+<p>$$E_k = \\sum_{i} \\frac{1}{2} m_i (\\vec{v}'_i + \\vec{v}_{CM}) \\cdot (\\vec{v}'_i + \\vec{v}_{CM})$$</p>
+<p>Sviluppiamo il prodotto scalare e otteniamo <strong>tre termini</strong>:</p>
+<p>$$E_k = \\underbrace{\\sum_{i} \\frac{1}{2} m_i (\\vec{v}'_i \\cdot \\vec{v}'_i)}_{(1)} + \\underbrace{\\sum_{i} m_i (\\vec{v}'_i \\cdot \\vec{v}_{CM})}_{(2)} + \\underbrace{\\sum_{i} \\frac{1}{2} m_i (\\vec{v}_{CM} \\cdot \\vec{v}_{CM})}_{(3)}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Analisi dei tre termini",
+                    content: `<p><strong>Termine (1):</strong> $\\sum_{i} \\frac{1}{2} m_i (v'_i)^2$</p>
+<p>Questa è la definizione di <strong>energia cinetica del sistema nel riferimento del centro di massa</strong> (energia cinetica interna):</p>
+<p>$$\\sum_{i} \\frac{1}{2} m_i (v'_i)^2 = E'_k$$</p>
+<p><strong>Termine (2):</strong> $\\sum_{i} m_i (\\vec{v}'_i \\cdot \\vec{v}_{CM})$</p>
+<p>Portiamo fuori dalla sommatoria il vettore costante $\\vec{v}_{CM}$:</p>
+<p>$$\\left( \\sum_{i} m_i \\vec{v}'_i \\right) \\cdot \\vec{v}_{CM}$$</p>
+<p>La quantità in parentesi è la quantità di moto totale nel sistema del centro di massa, che è <strong>nulla</strong>. Pertanto il termine (2) è zero.</p>
+<p><strong>Termine (3):</strong> $\\sum_{i} \\frac{1}{2} m_i v_{CM}^2$</p>
+<p>Portiamo fuori dalla sommatoria i termini costanti $\\frac{1}{2}$ e $v_{CM}^2$:</p>
+<p>$$\\frac{1}{2} v_{CM}^2 \\sum_{i} m_i = \\frac{1}{2} M v_{CM}^2$$</p>
+<p>Questa è l'<strong>energia cinetica del centro di massa</strong>, considerato come un punto materiale di massa $M$.</p>`
+                },
+                {
+                    subtitle: "Enunciato del Secondo Teorema di König",
+                    content: `<p>Combinando i risultati, otteniamo il <strong>Secondo Teorema di König per l'Energia Cinetica</strong>:</p>
+<p>L'energia cinetica totale di un sistema di punti materiali rispetto a un sistema di riferimento fisso ($E_k$) è data dalla somma dell'energia cinetica del sistema rispetto al suo centro di massa ($E'_k$, detta energia cinetica interna) e dell'energia cinetica del centro di massa rispetto al sistema fisso:</p>
+<p>$$E_k = E'_k + \\frac{1}{2} M v_{CM}^2$$</p>
+<p>Anche questo teorema permette di <strong>separare</strong> l'energia totale in due contributi:</p>
+<ul>
+<li>L'energia cinetica <strong>del</strong> centro di massa, associata al moto d'insieme del sistema.</li>
+<li>L'energia cinetica <strong>interna</strong>, associata ai moti dei punti materiali <strong>rispetto</strong> al centro di massa.</li>
+</ul>
+<p>Questa scomposizione è estremamente utile, in particolare nello studio dei fenomeni d'urto.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Secondo Teorema di König", latex: "E_k = E'_k + \\frac{1}{2} M v_{CM}^2" }
+            ]
+        },
+        {
+            id: "s30-classificazione-urti",
+            type: "section",
+            title: "Applicazione alla Classificazione degli Urti",
+            icon: "💥",
+            content: `<p>I teoremi di König, e in particolare il secondo, sono fondamentali per classificare gli urti. Assumendo che la quantità di moto totale si conservi (forze esterne nulle o trascurabili), la classificazione si basa su ciò che accade all'energia cinetica.</p>`,
+            subsections: [
+                {
+                    subtitle: "Conservazione separata dei contributi energetici",
+                    content: `<p>Se la quantità di moto totale si conserva, allora $\\vec{p}_{\\text{tot}} = M \\vec{v}_{CM} = \\text{costante}$, e quindi la velocità del centro di massa $\\vec{v}_{CM}$ rimane costante. Di conseguenza, l'energia cinetica del centro di massa</p>
+<p>$$\\frac{1}{2} M v_{CM}^2$$</p>
+<p>è una <strong>quantità conservata, indipendentemente dal tipo di urto</strong>.</p>
+<p>Per il secondo teorema di König, se anche l'energia cinetica totale $E_k$ si conserva (urto elastico), allora per differenza si conserva anche l'energia cinetica interna:</p>
+<p>$$E'_k = E_k - \\frac{1}{2} M v_{CM}^2 = \\text{costante}$$</p>
+<p>Viceversa, in un urto anelastico, poiché $\\frac{1}{2} M v_{CM}^2$ è comunque costante, <strong>tutta la variazione di energia cinetica è a carico dell'energia cinetica interna</strong> $E'_k$. L'energia dissipata è dunque:</p>
+<p>$$\\Delta E = E'_{k, \\text{iniziale}} - E'_{k, \\text{finale}}$$</p>
+<p>Poiché in un urto anelastico l'energia cinetica interna diminuisce ($E'_{k, \\text{finale}} \\lt E'_{k, \\text{iniziale}}$), si ha $\\Delta E \\gt 0$, che rappresenta l'energia dissipata (convertita in calore, deformazione, ecc.).</p>`
+                },
+                {
+                    subtitle: "Classificazione degli urti",
+                    content: `<p>Questa è una <strong>tassonomia fondamentale da memorizzare</strong>:</p>
+<ul>
+<li><strong>Urto elastico:</strong> l'energia cinetica totale del sistema si conserva ($E_k = \\text{costante}$). Poiché l'energia cinetica del centro di massa si conserva (per conservazione della quantità di moto), ne segue che anche l'energia cinetica interna si conserva separatamente. Nessuna energia viene dissipata.</li>
+<li><strong>Urto anelastico:</strong> l'energia cinetica totale del sistema <strong>non</strong> si conserva (generalmente diminuisce). L'energia cinetica del centro di massa resta costante, quindi è l'energia cinetica interna $E'_k$ che viene <strong>parzialmente dissipata</strong> in altre forme di energia (calore, deformazione permanente, ecc.).</li>
+<li><strong>Urto completamente anelastico:</strong> è il caso limite di <strong>massima dissipazione</strong> di energia. Dopo l'urto, i corpi rimangono attaccati e si muovono insieme. Questo significa che i moti interni cessano, e l'energia cinetica interna finale è zero ($E'_{k, \\text{finale}} = 0$). Tutta l'energia cinetica interna iniziale è stata dissipata. L'energia cinetica residua del sistema è esclusivamente quella del centro di massa: $E_{k, \\text{finale}} = \\frac{1}{2} M v_{CM}^2$.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Energia dissipata nell'urto", latex: "\\Delta E = E'_{k, \\text{iniziale}} - E'_{k, \\text{finale}}" },
+                { label: "Energia finale (urto compl. anelastico)", latex: "E_{k, \\text{finale}} = \\frac{1}{2} M v_{CM}^2" }
+            ]
+        },
+        {
+            id: "s30-alert-urti",
+            type: "alert_box",
+            title: "⚠️ Trappola d'esame: cosa si conserva sempre in un urto?",
+            icon: "⚠️",
+            content: `<p>Un errore molto comune è confondere cosa si conserva e cosa no:</p>
+<ul>
+<li><strong>La quantità di moto totale si conserva SEMPRE</strong> (se le forze esterne sono nulle o trascurabili).</li>
+<li>Di conseguenza, <strong>l'energia cinetica del centro di massa si conserva SEMPRE</strong>, qualunque sia il tipo di urto.</li>
+<li>L'energia cinetica <strong>totale</strong> si conserva <strong>solo negli urti elastici</strong>.</li>
+<li>Negli urti anelastici, è <strong>solo la componente interna</strong> $E'_k$ che diminuisce.</li>
+</ul>
+<p>Il professore ha sottolineato che molti studenti all'esame scrivono erroneamente che "nell'urto anelastico l'energia del centro di massa diminuisce". <strong>No!</strong> Il centro di massa non cambia velocità: è l'energia dei moti relativi che viene dissipata.</p>`
+        },
+        {
+            id: "s30-esempio-urto",
+            type: "section",
+            title: "Esempio Numerico: Urto Completamente Anelastico",
+            icon: "🔢",
+            content: `<p>Consideriamo un corpo di massa $m_1 = 2 \\; \\text{kg}$ che si muove con velocità $v_1 = 3 \\; \\text{m/s}$ lungo l'asse $x$ e colpisce un corpo di massa $m_2 = 1 \\; \\text{kg}$ inizialmente fermo ($v_2 = 0$). L'urto è completamente anelastico: dopo l'urto i due corpi procedono uniti.</p>`,
+            subsections: [
+                {
+                    subtitle: "Passo 1: Velocità del centro di massa",
+                    content: `<p>Per la conservazione della quantità di moto (e per definizione di CM):</p>
+<p>$$v_{CM} = \\frac{m_1 v_1 + m_2 v_2}{m_1 + m_2} = \\frac{(2)(3) + (1)(0)}{2 + 1} = \\frac{6}{3} = 2 \\; \\text{m/s}$$</p>
+<p>Questa velocità <strong>resta invariata</strong> prima e dopo l'urto.</p>`
+                },
+                {
+                    subtitle: "Passo 2: Energia cinetica totale iniziale",
+                    content: `<p>$$E_{k, \\text{in}} = \\frac{1}{2} m_1 v_1^2 + \\frac{1}{2} m_2 v_2^2 = \\frac{1}{2} (2)(3)^2 + 0 = 9 \\; \\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Passo 3: Energia cinetica del centro di massa",
+                    content: `<p>Questa è costante e vale:</p>
+<p>$$\\frac{1}{2} M v_{CM}^2 = \\frac{1}{2} (3)(2)^2 = 6 \\; \\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Passo 4: Energia cinetica interna iniziale",
+                    content: `<p>Utilizzando il secondo teorema di König:</p>
+<p>$$E'_{k, \\text{in}} = E_{k, \\text{in}} - \\frac{1}{2} M v_{CM}^2 = 9 - 6 = 3 \\; \\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Passo 5: Stato dopo l'urto",
+                    content: `<p>Nell'urto completamente anelastico, i due corpi si muovono insieme con velocità $v_{CM} = 2 \\; \\text{m/s}$. Nel sistema del centro di massa non c'è più alcun moto relativo, quindi:</p>
+<p>$$E'_{k, \\text{fin}} = 0$$</p>`
+                },
+                {
+                    subtitle: "Passo 6: Energia cinetica finale e energia dissipata",
+                    content: `<p>$$E_{k, \\text{fin}} = E'_{k, \\text{fin}} + \\frac{1}{2} M v_{CM}^2 = 0 + 6 = 6 \\; \\text{J}$$</p>
+<p>L'energia dissipata nell'urto è:</p>
+<p>$$\\Delta E = E_{k, \\text{in}} - E_{k, \\text{fin}} = 9 - 6 = 3 \\; \\text{J}$$</p>
+<p>che coincide esattamente con l'energia cinetica interna iniziale $E'_{k, \\text{in}} = 3 \\; \\text{J}$.</p>
+<p><strong>Come previsto dalla teoria:</strong> nell'urto completamente anelastico tutta l'energia cinetica interna viene dissipata, mentre l'energia cinetica del centro di massa si conserva.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Velocità CM (esempio)", latex: "v_{CM} = \\frac{m_1 v_1 + m_2 v_2}{m_1 + m_2} = 2 \\; \\text{m/s}" },
+                { label: "Energia dissipata (esempio)", latex: "\\Delta E = E'_{k, \\text{in}} = 3 \\; \\text{J}" }
+            ]
+        },
+        {
+            id: "s30-riepilogo-konig",
+            type: "note_box",
+            title: "📝 Riepilogo: I due Teoremi di König a confronto",
+            icon: "📝",
+            content: `<p>Entrambi i teoremi sfruttano la stessa tecnica matematica: sostituire le trasformazioni di Galileo, sviluppare i prodotti, e osservare che i termini misti si annullano grazie alla proprietà $\\sum_i m_i \\vec{r}'_i = \\vec{0}$ e $\\sum_i m_i \\vec{v}'_i = \\vec{0}$.</p>`,
+            table_compare: {
+                headers: ["", "Primo Teorema (Momento Angolare)", "Secondo Teorema (Energia Cinetica)"],
+                rows: [
+                    ["Grandezza", "Momento angolare $\\vec{L}_O$", "Energia cinetica $E_k$"],
+                    ["Contributo interno", "$\\vec{L}_{CM}$ (momento angolare proprio)", "$E'_k$ (energia cinetica interna)"],
+                    ["Contributo del CM", "$\\vec{r}_{CM} \\times (M \\vec{v}_{CM})$ (orbitale)", "$\\frac{1}{2} M v_{CM}^2$ (traslazionale)"],
+                    ["Formula", "$\\vec{L}_O = \\vec{L}_{CM} + \\vec{r}_{CM} \\times (M \\vec{v}_{CM})$", "$E_k = E'_k + \\frac{1}{2} M v_{CM}^2$"],
+                    ["Termini misti", "Si annullano (momento statico e QdM interna nulli)", "Si annullano (QdM interna nulla)"]
+                ]
+            }
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Enuncia il Primo Teorema di König per il momento angolare.",
+            back: "Il momento angolare totale rispetto a un polo fisso $O$ è: $$\\vec{L}_O = \\vec{L}_{CM} + \\vec{r}_{CM} \\times (M \\vec{v}_{CM})$$ dove $\\vec{L}_{CM}$ è il momento angolare proprio (interno, calcolato rispetto al CM) e $\\vec{r}_{CM} \\times (M \\vec{v}_{CM})$ è il momento angolare orbitale del centro di massa."
+        },
+        {
+            type: "definizione",
+            front: "Enuncia il Secondo Teorema di König per l'energia cinetica.",
+            back: "L'energia cinetica totale nel sistema fisso è: $$E_k = E'_k + \\frac{1}{2} M v_{CM}^2$$ dove $E'_k$ è l'energia cinetica interna (misurata nel riferimento del CM) e $\\frac{1}{2} M v_{CM}^2$ è l'energia cinetica del centro di massa."
+        },
+        {
+            type: "dimostrazione",
+            front: "Quali proprietà del centro di massa vengono usate per dimostrare i Teoremi di König, e perché i termini misti si annullano?",
+            back: "Si usano due proprietà fondamentali che derivano dalla definizione di CM: (1) $\\sum_i m_i \\vec{r}'_i = \\vec{0}$ (momento statico nullo rispetto al CM), e (2) $\\sum_i m_i \\vec{v}'_i = \\vec{0}$ (quantità di moto nulla nel riferimento del CM). La (2) si ottiene derivando la (1). Quando si sostituiscono le trasformazioni di Galileo e si espandono i prodotti, i termini misti contengono queste somme come fattori, e quindi si annullano identicamente."
+        },
+        {
+            type: "domanda",
+            front: "In un urto (con forze esterne nulle), quale parte dell'energia cinetica si conserva sempre, indipendentemente dal tipo di urto?",
+            back: "L'energia cinetica del centro di massa $\\frac{1}{2} M v_{CM}^2$ si conserva sempre, perché se la quantità di moto totale $\\vec{p}_{\\text{tot}} = M \\vec{v}_{CM}$ è costante, anche $v_{CM}$ è costante. La parte che può variare è solo l'energia cinetica interna $E'_k$."
+        },
+        {
+            type: "domanda",
+            front: "Cosa distingue un urto completamente anelastico dagli altri tipi di urto dal punto di vista energetico?",
+            back: "Nell'urto completamente anelastico i corpi rimangono attaccati dopo l'urto, quindi non c'è più moto relativo tra di essi. L'energia cinetica interna finale è $E'_{k, \\text{fin}} = 0$: tutta l'energia cinetica interna iniziale viene dissipata. L'energia cinetica residua è solo quella del CM: $E_{k, \\text{fin}} = \\frac{1}{2} M v_{CM}^2$. È il caso di massima dissipazione possibile."
+        },
+        {
+            type: "tranello",
+            front: "Uno studente afferma: 'Nell'urto anelastico l'energia cinetica del centro di massa diminuisce.' È corretto?",
+            back: "No, è sbagliato! Se le forze esterne sono nulle, la quantità di moto totale $M \\vec{v}_{CM}$ si conserva, quindi $\\vec{v}_{CM}$ è costante e l'energia cinetica del CM $\\frac{1}{2} M v_{CM}^2$ è invariata. Ciò che diminuisce è l'energia cinetica interna $E'_k$, ovvero l'energia associata ai moti relativi delle masse rispetto al CM."
+        },
+        {
+            type: "formula",
+            front: "Scrivi le due proprietà fondamentali del sistema del centro di massa usate nei Teoremi di König.",
+            back: "$$\\sum_{i} m_i \\vec{r}'_i = \\vec{0} \\quad \\text{(momento statico nullo)}$$ $$\\sum_{i} m_i \\vec{v}'_i = \\vec{0} \\quad \\text{(quantità di moto interna nulla)}$$ La seconda si ottiene derivando la prima rispetto al tempo."
+        },
+        {
+            type: "domanda",
+            front: "Nel Primo Teorema di König, come si interpretano fisicamente i due contributi al momento angolare?",
+            back: "Il termine $\\vec{L}_{CM}$ (momento angolare proprio o interno) descrive la rotazione del sistema attorno al proprio centro di massa. Il termine $\\vec{r}_{CM} \\times (M \\vec{v}_{CM})$ (momento angolare orbitale) descrive il contributo rotazionale del moto di traslazione del CM attorno al polo $O$. È analogo alla distinzione tra rotazione di un pianeta attorno al proprio asse (proprio) e rivoluzione attorno al Sole (orbitale)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra il Secondo Teorema di König partendo dalla definizione di energia cinetica.",
+            back: "Si parte da $E_k = \\sum_i \\frac{1}{2} m_i v_i^2$ e si sostituisce $\\vec{v}_i = \\vec{v}'_i + \\vec{v}_{CM}$. Sviluppando il prodotto scalare $|\\vec{v}'_i + \\vec{v}_{CM}|^2 = v'^2_i + 2\\vec{v}'_i \\cdot \\vec{v}_{CM} + v_{CM}^2$, si ottengono tre somme. La prima dà $E'_k$, la terza dà $\\frac{1}{2} M v_{CM}^2$, e la seconda è $\\vec{v}_{CM} \\cdot (\\sum_i m_i \\vec{v}'_i) = \\vec{v}_{CM} \\cdot \\vec{0} = 0$. Risulta: $E_k = E'_k + \\frac{1}{2} M v_{CM}^2$."
+        },
+        {
+            type: "domanda",
+            front: "Nell'esempio dell'urto completamente anelastico ($m_1 = 2$ kg, $v_1 = 3$ m/s, $m_2 = 1$ kg fermo), quanta energia viene dissipata e quale frazione dell'energia iniziale rappresenta?",
+            back: "L'energia cinetica iniziale è $E_{k,\\text{in}} = 9$ J. La velocità del CM è $v_{CM} = 2$ m/s, quindi l'energia del CM è $\\frac{1}{2}(3)(4) = 6$ J. L'energia interna iniziale è $9 - 6 = 3$ J, che viene interamente dissipata. Si perde $\\frac{3}{9} = \\frac{1}{3}$ dell'energia cinetica iniziale, pari al 33%."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
