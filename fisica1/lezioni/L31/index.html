@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 26 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 26: Dinamica dei sistemi di punti e fenomeni d'urto. Dalle equazioni cardinali della dinamica dei sistemi alla classificazione completa dei fenomeni d'urto: conservazione della quantità di moto, urti elastici e anelastici, teoremi di König e applicazioni.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 26: Dinamica dei sistemi di punti e fenomeni d'urto — Fisica 1">
+  <meta property="og:description" content="Dalle equazioni cardinali della dinamica dei sistemi alla classificazione completa dei fenomeni d'urto: conservazione della quantità di moto, urti elastici e anelastici, teoremi di König e applicazioni.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/lezioni/L31/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/lezioni/L31/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 26 — Dinamica dei sistemi di punti e fenomeni d'urto",
+  "description": "Dalle equazioni cardinali della dinamica dei sistemi alla classificazione completa dei fenomeni d'urto: conservazione della quantità di moto, urti elastici e anelastici, teoremi di König e applicazioni.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/lezioni/L31/",
+  "datePublished": "2026-05-06",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 26</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/lezioni/L30/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L31", date: "Lezione 26 — 06 Mag 2026",
+    title: "Dinamica dei sistemi di punti e fenomeni d'urto",
+    abstract: "Dalle equazioni cardinali della dinamica dei sistemi alla classificazione completa dei fenomeni d'urto: conservazione della quantità di moto, urti elastici e anelastici, teoremi di König e applicazioni.",
+
+    sections: [
+        {
+            id: "s31-stato-dinamico",
+            type: "section",
+            title: "Riepilogo: stato dinamico di un sistema di punti",
+            icon: "📐",
+            content: `<p>Prima di affrontare i fenomeni d'urto, è indispensabile riprendere e sistematizzare le grandezze che descrivono lo stato di un sistema di punti materiali.</p>`,
+            subsections: [
+                {
+                    subtitle: "La quantità di moto come stato dinamico",
+                    content: `<p>In cinematica, lo stato di moto di un punto materiale è descritto dalla velocità istantanea $\\vec{v}$. In dinamica, invece, vogliamo mettere in relazione lo stato di moto con le cause che lo possono far variare (le forze) e con l'inerzia del corpo. La grandezza che descrive lo <strong>stato dinamico</strong> di un punto è quindi la quantità di moto $\\vec{p} = m\\vec{v}$.</p>
+<p>Dato un sistema di $N$ punti materiali di masse $m_i$ e velocità $\\vec{v}_i$, si definisce <strong>quantità di moto totale</strong> del sistema il vettore:</p>
+<p>$$\\vec{P} = \\sum_i \\vec{p}_i = \\sum_i m_i \\vec{v}_i$$</p>
+<p>Introducendo il centro di massa, di posizione</p>
+<p>$$\\vec{r}_{CM} = \\frac{1}{M}\\sum_i m_i \\vec{r}_i, \\qquad M = \\sum_i m_i$$</p>
+<p>e velocità $\\vec{v}_{CM} = d\\vec{r}_{CM}/dt$, si verifica immediatamente che:</p>
+<p>$$\\vec{P} = M\\vec{v}_{CM}$$</p>
+<p>La quantità di moto totale del sistema coincide dunque con quella del centro di massa, inteso come punto virtuale in cui sia concentrata l'intera massa $M$.</p>`
+                },
+                {
+                    subtitle: "Quantità di moto nel sistema del centro di massa",
+                    content: `<p>Introduciamo le grandezze relative al centro di massa:</p>
+<p>$$\\vec{r}_i\\,' = \\vec{r}_i - \\vec{r}_{CM}, \\qquad \\vec{v}_i\\,' = \\vec{v}_i - \\vec{v}_{CM}$$</p>
+<p>La quantità di moto associata ai moti interni è:</p>
+<p>$$\\vec{P}\\,' = \\sum_i m_i \\vec{v}_i\\,' = \\sum_i m_i(\\vec{v}_i - \\vec{v}_{CM}) = \\vec{P} - M\\vec{v}_{CM} = \\vec{0}$$</p>
+<p><strong>Nel sistema del centro di massa la quantità di moto totale dei moti interni è identicamente nulla:</strong> $\\vec{P}\\,' = \\vec{0}$.</p>
+<p>Il centro di massa è quel punto particolare nello spazio (geometrico, virtuale, non materiale) tale che:</p>
+<ul>
+<li>il suo moto rappresenta sinteticamente lo stato di moto d'insieme dell'intero sistema;</li>
+<li>ponendosi su di esso, non si possono percepire variazioni dello stato dinamico d'insieme del sistema, perché dal centro di massa la quantità di moto risultante dei moti interni è nulla.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Quantità di moto totale", latex: "\\vec{P} = \\sum_i m_i \\vec{v}_i = M\\vec{v}_{CM}" },
+                { label: "Posizione del CM", latex: "\\vec{r}_{CM} = \\frac{1}{M}\\sum_i m_i \\vec{r}_i" },
+                { label: "Quantità di moto interna", latex: "\\vec{P}\\,' = \\vec{0}" }
+            ]
+        },
+        {
+            id: "s31-konig",
+            type: "section",
+            title: "I teoremi di König",
+            icon: "👑",
+            content: `<p>Per descrivere lo stato rotatorio e l'energia cinetica di un sistema rispetto a un polo $O$, i teoremi di König forniscono una <strong>decomposizione cruciale</strong> tra il moto d'insieme (rappresentato dal centro di massa) e i moti interni.</p>`,
+            subsections: [
+                {
+                    subtitle: "Primo teorema di König: momento angolare",
+                    content: `<p>Il momento angolare totale $\\vec{L}_O$ di un sistema di punti rispetto a un polo $O$ si decompone come:</p>
+<p>$$\\vec{L}_O = \\vec{r}_{CM} \\times M\\vec{v}_{CM} + \\vec{L}\\,'$$</p>
+<p>dove $\\vec{L}\\,' = \\sum_i \\vec{r}_i\\,' \\times m_i \\vec{v}_i\\,'$ è il momento angolare calcolato rispetto al centro di massa.</p>
+<p>La dimostrazione è analoga a quella del secondo teorema: si scrive $\\vec{r}_i = \\vec{r}_{CM} + \\vec{r}_i\\,'$ e $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i\\,'$, si espande il prodotto vettoriale $\\vec{r}_i \\times m_i\\vec{v}_i$ e i termini misti si annullano perché $\\sum_i m_i \\vec{r}_i\\,' = \\vec{0}$ e $\\sum_i m_i \\vec{v}_i\\,' = \\vec{0}$.</p>`
+                },
+                {
+                    subtitle: "Secondo teorema di König: energia cinetica",
+                    content: `<p>L'energia cinetica totale di un sistema si decompone come:</p>
+<p>$$E_k = \\tfrac{1}{2} M v_{CM}^2 + E_k', \\qquad E_k' = \\sum_i \\tfrac{1}{2} m_i {v_i\\,'}^2$$</p>
+<p><strong>Dimostrazione.</strong> Scriviamo $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i\\,'$. Allora:</p>
+<p>$$E_k = \\sum_i \\tfrac{1}{2}m_i v_i^2 = \\sum_i \\tfrac{1}{2}m_i (\\vec{v}_{CM}+\\vec{v}_i\\,')\\cdot(\\vec{v}_{CM}+\\vec{v}_i\\,')$$</p>
+<p>$$= \\tfrac{1}{2}\\left(\\sum_i m_i\\right)v_{CM}^2 + \\vec{v}_{CM}\\cdot\\sum_i m_i \\vec{v}_i\\,' + \\sum_i \\tfrac{1}{2}m_i {v_i\\,'}^2$$</p>
+<p>Poiché $\\sum_i m_i \\vec{v}_i\\,' = \\vec{P}\\,' = \\vec{0}$, il <strong>termine misto si annulla</strong>, da cui la tesi.</p>
+<p>L'energia cinetica totale è dunque la somma di due contributi: l'energia cinetica del moto d'insieme (centro di massa) e l'energia cinetica dei moti interni. Mettendosi nel centro di massa si vede solo il secondo contributo.</p>`
+                }
+            ],
+            formulas: [
+                { label: "König — Momento angolare", latex: "\\vec{L}_O = \\vec{r}_{CM} \\times M\\vec{v}_{CM} + \\vec{L}\\,'" },
+                { label: "König — Energia cinetica", latex: "E_k = \\tfrac{1}{2} M v_{CM}^2 + E_k'" }
+            ]
+        },
+        {
+            id: "s31-equazioni-cardinali",
+            type: "section",
+            title: "Le equazioni cardinali della dinamica dei sistemi",
+            icon: "⚖️",
+            content: `<p>Il punto chiave della dinamica dei sistemi è il seguente: la risultante delle forze interne è <strong>sempre</strong> nulla, per il terzo principio di Newton. Solo le forze <strong>esterne</strong> possono modificare lo stato di moto d'insieme del sistema.</p>
+<p>Nella dinamica del singolo punto materiale, il terzo principio non interviene quasi mai, perché descrive un'interazione <em>tra</em> punti. Appena si passa ai sistemi di punti, il terzo principio diventa centrale: da esso segue che $\\vec{R}^{(i)} = \\vec{0}$ e tutta la struttura della dinamica dei sistemi.</p>`,
+            subsections: [
+                {
+                    subtitle: "L'astronauta e il barcaiolo",
+                    content: `<p>Un astronauta isolato nello spazio non può modificare lo stato di moto del sistema costituito da sé stesso e dal suo zainetto: può agitare braccia e gambe quanto vuole, ma il centro di massa del sistema prosegue imperturbato il proprio moto.</p>
+<p>Analogamente, se un barcaiolo cammina sulla barca (trascurando gli attriti), la barca si muove in senso opposto, ma il centro di massa del sistema barca-barcaiolo non si sposta. Per spostare la barca occorre interagire con l'esterno, ad esempio tirando i remi nell'acqua.</p>`
+                },
+                {
+                    subtitle: "Prima equazione cardinale",
+                    content: `<p>La risultante delle forze esterne agenti su un sistema è uguale alla derivata temporale della quantità di moto totale:</p>
+<p>$$\\vec{R}^{(e)} = \\frac{d\\vec{P}}{dt} = M\\vec{a}_{CM}$$</p>
+<p><strong>Dimostrazione.</strong> Per ciascun punto vale $m_i \\vec{a}_i = \\vec{F}_i^{(e)} + \\vec{F}_i^{(i)}$. Sommando su tutti i punti e ricordando che $\\sum_i \\vec{F}_i^{(i)} = \\vec{0}$, si ha $\\sum_i m_i \\vec{a}_i = \\vec{R}^{(e)}$. D'altra parte, derivando due volte la definizione di $\\vec{r}_{CM}$, si ottiene $\\sum_i m_i \\vec{a}_i = M\\vec{a}_{CM}$. La tesi segue immediatamente.</p>`
+                },
+                {
+                    subtitle: "Seconda equazione cardinale",
+                    content: `<p>Per un polo $O$ vale:</p>
+<p>$$\\vec{M}^{(e)}_O = \\frac{d\\vec{L}_O}{dt} + \\vec{v}_O \\times M\\vec{v}_{CM}$$</p>
+<p>Il termine aggiuntivo $\\vec{v}_O \\times M\\vec{v}_{CM}$ emerge dalla derivazione del momento angolare quando il polo $O$ è in moto: derivando $\\vec{L}_O = \\sum_i (\\vec{r}_i - \\vec{r}_O) \\times m_i \\vec{v}_i$ compare un contributo legato alla velocità del polo stesso.</p>
+<p>Se $\\vec{v}_O = \\vec{0}$ (polo fisso) oppure $\\vec{v}_O \\parallel \\vec{v}_{CM}$, il termine aggiuntivo si annulla e si ottiene la forma semplice:</p>
+<p>$$\\vec{M}^{(e)}_O = \\frac{d\\vec{L}_O}{dt}$$</p>`
+                },
+                {
+                    subtitle: "Lavoro ed energia cinetica per un sistema",
+                    content: `<p>La variazione di energia cinetica di un sistema è uguale alla somma del lavoro compiuto dalle forze esterne e di quello compiuto dalle forze interne:</p>
+<p>$$W^{(e)} + W^{(i)} = \\Delta E_k$$</p>
+<p><strong>Attenzione:</strong> a differenza della quantità di moto, l'energia cinetica può variare anche per effetto delle forze interne, le quali, pur avendo risultante nulla, possono compiere lavoro complessivo non nullo. Esempi tipici: un razzo che esplode (forze chimiche interne), due masse separate da una molla compressa che viene rilasciata, una "scimmietta" ideale che allunga le braccia con un meccanismo interno.</p>`
+                }
+            ],
+            formulas: [
+                { label: "I equazione cardinale", latex: "\\vec{R}^{(e)} = \\frac{d\\vec{P}}{dt} = M\\vec{a}_{CM}" },
+                { label: "II equazione cardinale (polo generico)", latex: "\\vec{M}^{(e)}_O = \\frac{d\\vec{L}_O}{dt} + \\vec{v}_O \\times M\\vec{v}_{CM}" },
+                { label: "Teorema lavoro-energia (sistemi)", latex: "W^{(e)} + W^{(i)} = \\Delta E_k" }
+            ],
+            extra_content: `<p><strong>Strategia risolutiva.</strong> Davanti a un problema sui sistemi di punti, ci si chieda:</p>
+<ul>
+<li>Lo stato di moto cambia? → Applicare la <strong>prima equazione cardinale</strong>.</li>
+<li>Lo stato rotatorio cambia? → Applicare la <strong>seconda equazione cardinale</strong>.</li>
+<li>L'energia cinetica cambia? → Applicare il <strong>teorema lavoro–energia cinetica</strong>.</li>
+<li>Se servono ulteriori relazioni, usare i <strong>teoremi di König</strong>.</li>
+</ul>`
+        },
+        {
+            id: "s31-fenomeni-urto",
+            type: "section",
+            title: "Fenomeni d'urto: definizione e caratteristiche",
+            icon: "💥",
+            content: `<p>Un <strong>urto</strong> (o collisione) è un fenomeno di interazione tra punti materiali, tra sistemi di punti, o tra punti e sistemi, caratterizzato da:</p>
+<ul>
+<li><strong>Breve durata</strong> (intervallo $\\tau$ tipicamente dell'ordine dei millisecondi);</li>
+<li><strong>Forte intensità</strong> (forze impulsive, capaci di produrre variazioni macroscopiche dello stato di moto);</li>
+<li>Ruolo dominante (e spesso esclusivo) delle <strong>forze interne</strong>.</li>
+</ul>
+<p>Un urto non richiede contatto fisico. Due cariche elettriche che si avvicinano e deviano per repulsione coulombiana realizzano un urto, pur senza toccarsi. In meccanica macroscopica, comunque, gli urti vengono modellizzati come collisioni con contatto.</p>
+<p>Durante un urto le forze interne sono impulsive, cioè agiscono per un tempo $\\tau$ molto breve con intensità tale da produrre variazioni significative della quantità di moto, secondo il teorema dell'impulso:</p>
+<p>$$\\Delta \\vec{p} = \\vec{J} = \\int_0^\\tau \\vec{F}\\,dt$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Ruolo delle forze esterne durante un urto",
+                    content: `<p>Quando è legittimo trascurare le forze esterne durante un urto? Una forza esterna influenza significativamente un urto solo se è <strong>a sua volta impulsiva e concomitante</strong>. Un'azione blanda non può competere con la dinamica drammatica delle forze interne impulsive: se $\\tau$ è piccolo e $\\vec{F}^{(e)}$ non è grande, l'impulso $\\int_0^\\tau \\vec{F}^{(e)}\\,dt$ è trascurabile.</p>
+<p><strong>Esempio:</strong> durante l'urto tra due palle da biliardo agiscono forza peso e reazione normale del piano. Tuttavia queste forze non diventano improvvisamente intense durante l'urto: non sono impulsive. Il loro impulso durante i pochi millisecondi $\\tau$ è trascurabile, e la quantità di moto orizzontale del sistema si può considerare conservata.</p>`
+                },
+                {
+                    subtitle: "Reazioni vincolari impulsive",
+                    content: `<p>L'unica categoria di forze esterne che può entrare nella dinamica di un urto è quella delle <strong>reazioni vincolari</strong>: per loro natura sono concomitanti all'azione e di intensità comparabile. Pensate a una corda fissata a un chiodo: a una trazione debole il chiodo reagisce debolmente, a uno strappo intenso reagisce intensamente (finché il vincolo regge). Quindi in un urto vincolato la reazione del vincolo può essere una forza esterna impulsiva.</p>`
+                },
+                {
+                    subtitle: "Conservazione della quantità di moto negli urti",
+                    content: `<p>Se durante un urto non agiscono forze esterne impulsive (oppure le forze esterne sono trascurabili), la quantità di moto totale del sistema si conserva:</p>
+<p>$$\\vec{P}_{\\text{prima}} = \\vec{P}_{\\text{dopo}}$$</p>
+<p><strong>Dimostrazione.</strong> Consideriamo un urto tra due punti $1$ e $2$. Per il teorema dell'impulso applicato al punto $1$:</p>
+<p>$$\\Delta \\vec{p}_1 = \\vec{J}_{21} = \\int_0^\\tau \\vec{F}_{21}\\,dt$$</p>
+<p>Analogamente per il punto $2$:</p>
+<p>$$\\Delta \\vec{p}_2 = \\vec{J}_{12} = \\int_0^\\tau \\vec{F}_{12}\\,dt$$</p>
+<p>Per il terzo principio $\\vec{F}_{12} = -\\vec{F}_{21}$, quindi $\\vec{J}_{12} = -\\vec{J}_{21}$ e:</p>
+<p>$$\\Delta\\vec{p}_2 = -\\Delta\\vec{p}_1 \\quad \\Rightarrow \\quad \\Delta\\vec{P} = \\Delta\\vec{p}_1 + \\Delta\\vec{p}_2 = \\vec{0}$$</p>
+<p>Le due particelle si scambiano quantità di moto, ma la somma totale resta invariata.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Teorema dell'impulso", latex: "\\Delta \\vec{p} = \\vec{J} = \\int_0^\\tau \\vec{F}\\,dt" },
+                { label: "Conservazione di P negli urti", latex: "\\vec{P}_{\\text{prima}} = \\vec{P}_{\\text{dopo}}" }
+            ]
+        },
+        {
+            id: "s31-attenzione-terminologia",
+            type: "alert_box",
+            title: "Attenzione alla terminologia dei libri",
+            icon: "⚠️",
+            content: `<p>Si trova spesso scritto che "un urto è un fenomeno in cui si conserva la quantità di moto". Questa affermazione è <strong>imprecisa</strong>: la conservazione di $\\vec{P}$ è una proprietà frequente ma <strong>non definisce</strong> un urto.</p>
+<p>Negli <strong>urti vincolati</strong> con reazioni impulsive, $\\vec{P}$ può non conservarsi; in tali casi spesso si conserva il <strong>momento angolare</strong> rispetto a un polo opportuno (tipicamente il punto in cui agisce il vincolo, dove la reazione vincolare ha momento nullo).</p>`
+        },
+        {
+            id: "s31-classificazione-urti",
+            type: "section",
+            title: "Classificazione degli urti",
+            icon: "🏷️",
+            content: `<p>Assumiamo d'ora in poi che $\\vec{P}$ si conservi. La classificazione degli urti si basa allora sul comportamento dell'<strong>energia cinetica</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Perché l'energia cinetica e non quella meccanica?",
+                    content: `<p>In tutti i problemi di meccanica si studia la conservazione dell'energia meccanica $E_m = E_k + E_p$. Perché negli urti ci si concentra solo su $E_k$?</p>
+<p>L'energia potenziale dipende dalla configurazione spaziale del sistema. Durante l'urto, di durata $\\tau$ molto breve, le posizioni macroscopiche dei corpi cambiano in modo trascurabile: la configurazione rimane praticamente invariata. Quindi:</p>
+<p>$$\\Delta E_p \\approx 0 \\quad \\Rightarrow \\quad \\Delta E_m \\approx \\Delta E_k$$</p>
+<p>Studiare la variazione di $E_k$ equivale dunque a studiare la variazione dell'energia meccanica.</p>
+<p><strong>Precisazione importante:</strong> questo argomento vale rigorosamente per urti con <strong>contatto fisico</strong> (meccanica macroscopica), dove le forze di contatto sono a cortissimo raggio e l'energia potenziale associata è nulla sia prima che dopo l'urto. Per urti coulombiani (senza contatto), l'energia potenziale cambia durante l'avvicinamento, ma anche in quel caso è nulla all'infinito, prima e dopo l'urto.</p>`
+                },
+                {
+                    subtitle: "Riduzione all'energia cinetica nel sistema del CM",
+                    content: `<p>Per il secondo teorema di König:</p>
+<p>$$\\Delta E_k = \\Delta E_k' + \\Delta E_{k,CM}$$</p>
+<p>Se $\\vec{P}$ è costante, allora $\\vec{v}_{CM}$ è costante e:</p>
+<p>$$E_{k,CM} = \\tfrac{1}{2} M v_{CM}^2 = \\text{costante}, \\qquad \\Delta E_{k,CM} = 0$$</p>
+<p>Quindi, sotto l'ipotesi $\\vec{P} = \\text{costante}$:</p>
+<p>$$\\Delta E_k = \\Delta E_k'$$</p>
+<p>Le variazioni di energia cinetica totale coincidono con quelle dell'energia cinetica calcolata nel riferimento del centro di massa.</p>`
+                },
+                {
+                    subtitle: "Le tre classi di urti",
+                    content: `<p><strong>Urto elastico:</strong> l'energia cinetica totale si conserva:</p>
+<p>$$\\Delta E_k = 0, \\qquad E_{k,\\text{in}} = E_{k,\\text{fin}}$$</p>
+<p>Sotto l'ipotesi $\\vec{P}$ costante, questo equivale a $E_{k,\\text{in}}' = E_{k,\\text{fin}}'$.</p>
+<p><strong>Urto anelastico:</strong> l'energia cinetica non si conserva: $\\Delta E_k \\neq 0$.</p>
+<p><strong>Urto completamente anelastico:</strong> dopo l'urto i corpi rimangono uniti, muovendosi con la stessa velocità. Non vi sono più moti relativi al centro di massa, quindi $E_{k,\\text{fin}}' = 0$ e:</p>
+<p>$$\\Delta E_k = -E_{k,\\text{in}}'$$</p>
+<p>Tutta l'energia cinetica relativa al centro di massa viene dissipata.</p>`
+                }
+            ],
+            extra_content: `
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Classificazione degli urti nel sistema del CM</strong></p>
+  <p><em>Tre colonne (elastico, anelastico, completamente anelastico) con due righe (prima/dopo). In ogni caso: due masse con frecce proporzionali alle velocità nel sistema del CM. Elastico: le frecce dopo hanno stessa lunghezza totale di prima. Anelastico: frecce dopo più corte. Completamente anelastico: dopo l'urto un unico blocco fermo nel CM.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p><strong>Visualizzazione dal centro di massa.</strong> Mettendosi nel sistema del centro di massa si vede una scena molto semplice:</p>
+<ul>
+<li><strong>Urto elastico:</strong> prima dell'urto le due masse si avvicinano, dopo si allontanano con la stessa energia cinetica complessiva.</li>
+<li><strong>Urto anelastico:</strong> si avvicinano e poi si allontanano, ma l'energia cinetica relativa è diminuita.</li>
+<li><strong>Urto completamente anelastico:</strong> si avvicinano, si fondono e restano ferme rispetto al centro di massa.</li>
+</ul>
+<p>In tutti i casi il centro di massa prosegue il suo moto rettilineo uniforme con velocità $\\vec{v}_{CM}$. Un'<strong>esplosione</strong> è in qualche modo il fenomeno inverso di un urto completamente anelastico: prima dell'esplosione $E_k' = 0$ (se i frammenti erano uniti), dopo $E_k' \\gt 0$, grazie al lavoro di forze interne (chimiche).</p>`,
+            formulas: [
+                { label: "Urto elastico", latex: "\\Delta E_k = 0" },
+                { label: "Urto completamente anelastico", latex: "\\Delta E_k = -E_{k,\\text{in}}'" },
+                { label: "Variazione E_k nel CM", latex: "\\Delta E_k = \\Delta E_k'" }
+            ]
+        },
+        {
+            id: "s31-urti-completamente-anelastici",
+            type: "section",
+            title: "Urti completamente anelastici",
+            icon: "🧱",
+            content: `<p>Consideriamo un urto completamente anelastico tra due punti materiali di masse $m_1$ e $m_2$, con velocità iniziali $\\vec{v}_1$ e $\\vec{v}_2$. Assumiamo l'assenza di forze esterne impulsive, per cui $\\vec{P}$ si conserva. Dopo l'urto i due punti restano uniti, muovendosi con velocità comune $\\vec{v}_f$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Velocità finale",
+                    content: `<p>Dalla conservazione della quantità di moto:</p>
+<p>$$m_1 \\vec{v}_1 + m_2 \\vec{v}_2 = (m_1 + m_2)\\vec{v}_f$$</p>
+<p>da cui:</p>
+<p>$$\\vec{v}_f = \\frac{m_1 \\vec{v}_1 + m_2 \\vec{v}_2}{m_1 + m_2} = \\vec{v}_{CM}$$</p>
+<p>Il risultato non sorprende: se $\\vec{P}$ si conserva, allora $\\vec{v}_{CM}$ è costante, e dopo l'urto i corpi uniti si muovono solidalmente al centro di massa.</p>`
+                },
+                {
+                    subtitle: "Variazione dell'energia cinetica",
+                    content: `<p>Per il secondo teorema di König:</p>
+<p>$$E_{k,\\text{in}} = E_{k,\\text{in}}' + \\tfrac{1}{2}(m_1 + m_2) v_{CM}^2$$</p>
+<p>Dopo l'urto, essendo $\\vec{v}_f = \\vec{v}_{CM}$:</p>
+<p>$$E_{k,\\text{fin}} = \\tfrac{1}{2}(m_1 + m_2) v_{CM}^2$$</p>
+<p>La variazione è:</p>
+<p>$$\\Delta E_k = E_{k,\\text{fin}} - E_{k,\\text{in}} = -E_{k,\\text{in}}' \\lt 0$$</p>
+<p>Tutta l'energia cinetica associata ai moti relativi al centro di massa viene dissipata.</p>`
+                },
+                {
+                    subtitle: "Esempio: bersaglio inizialmente fermo",
+                    content: `<p>Sia $m_1$ una massa con velocità $v_1$ che urta in modo completamente anelastico una massa $m_2$ inizialmente ferma ($v_2 = 0$). Dalla conservazione della quantità di moto:</p>
+<p>$$m_1 v_1 = (m_1 + m_2) v_f \\quad \\Rightarrow \\quad v_f = \\frac{m_1}{m_1 + m_2} v_1$$</p>
+<p>Calcoliamo la variazione di energia cinetica:</p>
+<p>$$\\Delta E_k = \\tfrac{1}{2}(m_1+m_2) v_f^2 - \\tfrac{1}{2} m_1 v_1^2$$</p>
+<p>$$= \\tfrac{1}{2}(m_1+m_2)\\frac{m_1^2 v_1^2}{(m_1+m_2)^2} - \\tfrac{1}{2} m_1 v_1^2$$</p>
+<p>$$= \\tfrac{1}{2} m_1 v_1^2 \\left[\\frac{m_1}{m_1+m_2} - 1\\right]$$</p>
+<p>$$= -\\frac{m_1 m_2}{2(m_1+m_2)} v_1^2$$</p>
+<p>Il segno negativo conferma la dissipazione di energia cinetica.</p>
+<p><strong>Caso particolare $m_1 = m_2 = m$.</strong> Si ha $v_f = v_1/2$: la massa raddoppia e la velocità si dimezza. L'energia dissipata vale:</p>
+<p>$$|\\Delta E_k| = \\frac{m^2}{2 \\cdot 2m}\\,v_1^2 = \\tfrac{1}{4} m v_1^2 = \\tfrac{1}{2} E_{k,\\text{in}}$$</p>
+<p>cioè <strong>metà dell'energia cinetica iniziale viene persa</strong>.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Velocità finale (anelastico)", latex: "\\vec{v}_f = \\frac{m_1 \\vec{v}_1 + m_2 \\vec{v}_2}{m_1 + m_2} = \\vec{v}_{CM}" },
+                { label: "Energia dissipata (bersaglio fermo)", latex: "\\Delta E_k = -\\frac{m_1 m_2}{2(m_1+m_2)} v_1^2" }
+            ]
+        },
+        {
+            id: "s31-urti-elastici",
+            type: "section",
+            title: "Urti elastici",
+            icon: "🔄",
+            content: `<p>In un urto elastico, in assenza di forze esterne impulsive, valgono <strong>due</strong> leggi di conservazione: quella dell'energia cinetica (definizione di urto elastico) e quella della quantità di moto (assenza di forze esterne impulsive).</p>
+<p>Indichiamo con $\\vec{v}_1, \\vec{v}_2$ le velocità <em>prima</em> dell'urto e con $\\vec{V}_1, \\vec{V}_2$ quelle <em>dopo</em> l'urto. Le due leggi si scrivono:</p>
+<p>$$m_1 \\vec{v}_1 + m_2 \\vec{v}_2 = m_1 \\vec{V}_1 + m_2 \\vec{V}_2$$</p>
+<p>$$\\tfrac{1}{2} m_1 v_1^2 + \\tfrac{1}{2} m_2 v_2^2 = \\tfrac{1}{2} m_1 V_1^2 + \\tfrac{1}{2} m_2 V_2^2$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Numero di equazioni e incognite",
+                    content: `<p><strong>Urto completamente anelastico:</strong> una sola incognita ($\\vec{v}_f$ comune), basta la conservazione di $\\vec{P}$. L'energia cinetica non si conserva, e infatti non si può usare.</p>
+<p><strong>Urto elastico:</strong> due incognite ($\\vec{V}_1, \\vec{V}_2$), servono due equazioni. Per fortuna entrambe le conservazioni sono valide.</p>`
+                },
+                {
+                    subtitle: "Urto centrale (unidimensionale)",
+                    content: `<p>Restringiamoci agli <strong>urti centrali</strong>, in cui le due particelle si muovono lungo una stessa retta. Le velocità diventano scalari con segno.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Urto elastico centrale: prima e dopo</strong></p>
+  <p><em>Riga superiore (PRIMA): due rettangoli etichettati $m_1$ e $m_2$ su una retta orizzontale, con frecce $v_1$ (verso destra) e $v_2$ (verso sinistra o nulla). Riga inferiore (DOPO): stessi rettangoli con frecce $V_1$ e $V_2$ nelle nuove direzioni. Indicare chiaramente l'asse x positivo.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Riscriviamo le due conservazioni raggruppando i termini relativi a ciascuna massa:</p>
+<p>$$m_1(v_1 - V_1) = -m_2(v_2 - V_2) \\quad \\text{(quantità di moto)}$$</p>
+<p>$$m_1(v_1^2 - V_1^2) = -m_2(v_2^2 - V_2^2) \\quad \\text{(energia cinetica)}$$</p>
+<p>Usando l'identità $a^2 - b^2 = (a-b)(a+b)$, riscriviamo la seconda:</p>
+<p>$$m_1(v_1 - V_1)(v_1+V_1) = -m_2(v_2 - V_2)(v_2+V_2)$$</p>
+<p>Dividendo per la prima equazione (nel caso non banale in cui le velocità effettivamente cambiano):</p>
+<p>$$v_1 + V_1 = v_2 + V_2$$</p>
+<p>ovvero:</p>
+<p>$$v_1 - v_2 = -(V_1 - V_2)$$</p>
+<p>Questa è una relazione di importante significato fisico: <strong>in un urto elastico unidimensionale la velocità relativa di avvicinamento prima dell'urto è uguale, in modulo e opposta in segno, alla velocità relativa di allontanamento dopo l'urto.</strong></p>`
+                },
+                {
+                    subtitle: "Derivazione delle formule generali",
+                    content: `<p>Abbiamo il sistema di due equazioni nelle due incognite $V_1$ e $V_2$:</p>
+<p>$$\\begin{cases} m_1 v_1 + m_2 v_2 = m_1 V_1 + m_2 V_2 \\\\ v_1 + V_1 = v_2 + V_2 \\end{cases}$$</p>
+<p>Dalla seconda equazione ricaviamo $V_2 = v_1 + V_1 - v_2$. Sostituendo nella prima:</p>
+<p>$$m_1 v_1 + m_2 v_2 = m_1 V_1 + m_2(v_1 + V_1 - v_2)$$</p>
+<p>$$m_1 v_1 + m_2 v_2 = (m_1 + m_2) V_1 + m_2 v_1 - m_2 v_2$$</p>
+<p>$$(m_1 - m_2) v_1 + 2m_2 v_2 = (m_1 + m_2) V_1$$</p>
+<p>Da cui:</p>
+<p>$$V_1 = \\frac{m_1 - m_2}{m_1 + m_2}\\,v_1 + \\frac{2 m_2}{m_1 + m_2}\\,v_2$$</p>
+<p>Analogamente, sostituendo nella seconda equazione si ottiene:</p>
+<p>$$V_2 = \\frac{2 m_1}{m_1 + m_2}\\,v_1 + \\frac{m_2 - m_1}{m_1 + m_2}\\,v_2$$</p>
+<p><strong>Strategia pratica:</strong> queste formule sono di laboriosa memorizzazione. È più efficace, nei singoli problemi, scrivere le due equazioni di conservazione e applicarle alle condizioni specifiche (una massa ferma, masse uguali, ecc.), che semplificano drasticamente il sistema.</p>`
+                },
+                {
+                    subtitle: "Caso particolare: masse uguali e bersaglio fermo",
+                    content: `<p>Una massa $m_1 = m$ si muove con velocità $v_1$ e urta elasticamente in modo centrale una massa $m_2 = m$ inizialmente ferma ($v_2 = 0$). Sostituendo:</p>
+<p>$$V_1 = \\frac{m - m}{m + m}\\,v_1 + \\frac{2m}{m+m}\\cdot 0 = 0$$</p>
+<p>$$V_2 = \\frac{2m}{m + m}\\,v_1 + \\frac{m - m}{m+m}\\cdot 0 = v_1$$</p>
+<p>Dopo l'urto, la massa $m_1$ si <strong>ferma</strong> e la massa $m_2$ riparte con la stessa velocità $v_1$ che aveva $m_1$: è come se le due masse si scambiassero la velocità, <strong>trasferendo integralmente quantità di moto ed energia cinetica</strong>.</p>`
+                },
+                {
+                    subtitle: "Il pendolo di Newton",
+                    content: `<p>Il risultato precedente spiega il funzionamento del celebre giocattolo formato da più sfere d'acciaio identiche sospese a fili.</p>
+<p>Se si solleva la prima sfera e la si lascia cadere, essa arriva con una certa velocità $v_1$ a urtare la seconda. Per l'urto elastico tra masse uguali, la prima si ferma e trasferisce tutta la velocità alla seconda. La seconda urta la terza e si ferma, e così via in catena fino all'ultima sfera: non avendo nessuno a cui ritrasferire l'energia, essa si stacca e sale fino a una quota uguale a quella di partenza.</p>
+<p>Le sfere intermedie restano praticamente immobili: trasmettono l'energia tramite onde elastiche compressive microscopiche, senza accumularla. Sollevando due sfere ne partono due dall'altro lato, con tre ne partono tre.</p>
+<p><strong>Verifica per $N=3$ sfere uguali (massa $m$).</strong> La sfera 1 arriva con velocità $v_1$:</p>
+<ul>
+<li><strong>Urto 1→2:</strong> per le formule con masse uguali, dopo l'urto $V_1 = 0$ e la sfera 2 parte con $v_1$.</li>
+<li><strong>Urto 2→3:</strong> la sfera 2 (con velocità $v_1$) urta la sfera 3 ferma. Di nuovo: $V_2 = 0$ e la sfera 3 parte con $v_1$.</li>
+</ul>
+<p>Risultato: le sfere 1 e 2 sono ferme, la sfera 3 parte con velocità $v_1$. Il trasferimento è totale e sequenziale.</p>
+<p>In pratica il moto si smorza per piccole dissipazioni (deformazioni microscopiche, attriti dell'aria, riscaldamento), ma in un'idealizzazione perfetta il moto continuerebbe indefinitamente.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Velocità relativa (urto elastico 1D)", latex: "v_1 - v_2 = -(V_1 - V_2)" },
+                { label: "V₁ dopo urto elastico centrale", latex: "V_1 = \\frac{m_1 - m_2}{m_1 + m_2}\\,v_1 + \\frac{2 m_2}{m_1 + m_2}\\,v_2" },
+                { label: "V₂ dopo urto elastico centrale", latex: "V_2 = \\frac{2 m_1}{m_1 + m_2}\\,v_1 + \\frac{m_2 - m_1}{m_1 + m_2}\\,v_2" },
+                { label: "Masse uguali, bersaglio fermo", latex: "V_1 = 0, \\quad V_2 = v_1" }
+            ]
+        },
+        {
+            id: "s31-strategia-urti",
+            type: "note_box",
+            title: "Strategia pratica per la risoluzione di problemi d'urto",
+            icon: "📋",
+            content: `<ol>
+<li><strong>Identificare il tipo di urto</strong> (elastico, anelastico, completamente anelastico).</li>
+<li><strong>Verificare se $\\vec{P}$ si conserva</strong>: ci sono forze esterne impulsive? Reazioni vincolari impulsive?</li>
+<li><strong>Scrivere le equazioni</strong>:
+<ul>
+<li>Completamente anelastico: solo conservazione di $\\vec{P}$ (una incognita: $\\vec{v}_f$).</li>
+<li>Elastico 1D: conservazione di $\\vec{P}$ + relazione velocità relativa $v_1 - v_2 = -(V_1 - V_2)$.</li>
+<li>Elastico 2D/3D: conservazione di $\\vec{P}$ (componenti) + conservazione di $E_k$.</li>
+</ul></li>
+<li><strong>Calcolare $\\Delta E_k$</strong> se richiesto, usando König: $\\Delta E_k = \\Delta E_k'$.</li>
+</ol>`
+        },
+
+        {
+            id: "s31-orale-equazioni",
+            type: "oral_box",
+            title: "Domanda orale tipica: equazioni cardinali e König",
+            icon: "🎯",
+            content: `<p><strong>"Enunci le equazioni cardinali della dinamica dei sistemi e i teoremi di König, evidenziando le ipotesi."</strong></p>
+<p>Punti chiave da toccare nella risposta:</p>
+<ul>
+<li>Prima cardinale: $\\vec{R}^{(e)} = M\\vec{a}_{CM}$ — solo le forze esterne contano (III principio → risultante interne nulla).</li>
+<li>Seconda cardinale: il termine $\\vec{v}_O \\times M\\vec{v}_{CM}$ si annulla solo per polo fisso o $\\vec{v}_O \\parallel \\vec{v}_{CM}$.</li>
+<li>König energia: la chiave è $\\vec{P}\\,' = \\vec{0}$ che annulla il termine misto.</li>
+<li>König momento angolare: decomposizione analoga, stessa proprietà $\\sum m_i \\vec{r}_i\\,' = \\vec{0}$.</li>
+</ul>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cos'è la quantità di moto totale di un sistema e come si relaziona al centro di massa?",
+            back: "La quantità di moto totale è $\\vec{P} = \\sum_i m_i \\vec{v}_i = M\\vec{v}_{CM}$. Coincide con la quantità di moto del centro di massa, punto virtuale in cui si concentra l'intera massa $M$. Nel sistema del CM, la quantità di moto dei moti interni è identicamente nulla: $\\vec{P}\\,' = \\vec{0}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra il secondo teorema di König (energia cinetica).",
+            back: "Si scrive $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i\\,'$ e si espande: $E_k = \\sum_i \\frac{1}{2}m_i |\\vec{v}_{CM} + \\vec{v}_i\\,'|^2 = \\frac{1}{2}Mv_{CM}^2 + \\vec{v}_{CM} \\cdot \\sum_i m_i \\vec{v}_i\\,' + \\sum_i \\frac{1}{2}m_i v_i'^2$. Il termine misto si annulla perché $\\sum_i m_i \\vec{v}_i\\,' = \\vec{P}\\,' = \\vec{0}$. Risulta $E_k = \\frac{1}{2}Mv_{CM}^2 + E_k'$."
+        },
+        {
+            type: "definizione",
+            front: "Definisci un urto e le sue tre caratteristiche fondamentali.",
+            back: "Un urto è un fenomeno di interazione caratterizzato da: (1) breve durata $\\tau$ (millisecondi), (2) forte intensità delle forze (impulsive), (3) ruolo dominante delle forze interne. Non richiede necessariamente contatto fisico (es. repulsione coulombiana)."
+        },
+        {
+            type: "domanda",
+            front: "Perché negli urti si studia la conservazione dell'energia cinetica anziché dell'energia meccanica?",
+            back: "Durante l'urto, di durata $\\tau$ brevissima, le posizioni macroscopiche dei corpi cambiano in modo trascurabile, quindi $\\Delta E_p \\approx 0$ e $\\Delta E_m \\approx \\Delta E_k$. Questo vale rigorosamente per urti con contatto fisico (forze a cortissimo raggio, $E_p = 0$ prima e dopo). Inoltre, se $\\vec{P}$ si conserva, per König: $\\Delta E_k = \\Delta E_k'$ (la variazione è tutta nei moti interni)."
+        },
+        {
+            type: "tranello",
+            front: "È corretto dire che 'un urto è un fenomeno in cui si conserva la quantità di moto'?",
+            back: "No! La conservazione di $\\vec{P}$ è una proprietà frequente ma NON definisce un urto. Negli urti vincolati con reazioni impulsive, $\\vec{P}$ può non conservarsi. In tali casi spesso si conserva il momento angolare $\\vec{L}$ rispetto al punto del vincolo (dove la reazione ha momento nullo)."
+        },
+        {
+            type: "formula",
+            front: "Scrivi le formule generali per le velocità dopo un urto elastico centrale tra masse $m_1$ e $m_2$.",
+            back: "$V_1 = \\frac{m_1 - m_2}{m_1 + m_2}v_1 + \\frac{2m_2}{m_1 + m_2}v_2$ e $V_2 = \\frac{2m_1}{m_1 + m_2}v_1 + \\frac{m_2 - m_1}{m_1 + m_2}v_2$. Derivano dal sistema: conservazione di $\\vec{P}$ + relazione $v_1 - v_2 = -(V_1 - V_2)$ (velocità relativa si inverte)."
+        },
+        {
+            type: "domanda",
+            front: "In un urto elastico unidimensionale, qual è la relazione tra la velocità relativa prima e dopo l'urto?",
+            back: "$v_1 - v_2 = -(V_1 - V_2)$. La velocità relativa di avvicinamento è uguale in modulo e opposta in segno a quella di allontanamento. Si ricava dividendo la conservazione dell'energia (fattorizzata con $a^2 - b^2$) per quella della quantità di moto."
+        },
+        {
+            type: "domanda",
+            front: "Cosa succede in un urto elastico centrale tra masse uguali con bersaglio fermo?",
+            back: "Le masse si 'scambiano' la velocità: $V_1 = 0$ e $V_2 = v_1$. La massa incidente si ferma completamente e il bersaglio riparte con la stessa velocità. Quantità di moto ed energia cinetica vengono trasferite integralmente. È il principio del pendolo di Newton."
+        },
+        {
+            type: "formula",
+            front: "Quanta energia cinetica si perde in un urto completamente anelastico con bersaglio fermo?",
+            back: "$\\Delta E_k = -\\frac{m_1 m_2}{2(m_1+m_2)}v_1^2$. Nel caso di masse uguali si perde esattamente metà dell'energia cinetica iniziale: $|\\Delta E_k| = \\frac{1}{2}E_{k,\\text{in}}$. Tutta l'energia cinetica relativa al CM viene dissipata."
+        },
+        {
+            type: "domanda",
+            front: "Perché le forze interne possono variare l'energia cinetica di un sistema ma non la quantità di moto?",
+            back: "Le forze interne hanno risultante nulla ($\\vec{R}^{(i)} = \\vec{0}$ per il III principio), quindi non modificano $\\vec{P}$. Tuttavia possono compiere lavoro netto non nullo (i punti di applicazione si muovono in modo diverso). Esempi: un'esplosione interna, una molla compressa rilasciata. Per questo $W^{(e)} + W^{(i)} = \\Delta E_k$ contiene anche il lavoro interno."
+        },
+        {
+            type: "domanda",
+            front: "Nella seconda equazione cardinale, quando si può omettere il termine $\\vec{v}_O \\times M\\vec{v}_{CM}$?",
+            back: "Il termine aggiuntivo si annulla quando: (1) il polo $O$ è fisso ($\\vec{v}_O = \\vec{0}$), oppure (2) la velocità del polo è parallela a quella del CM ($\\vec{v}_O \\parallel \\vec{v}_{CM}$), dato che il prodotto vettoriale di vettori paralleli è nullo. In questi casi: $\\vec{M}_O^{(e)} = d\\vec{L}_O/dt$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
