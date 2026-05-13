@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="geometria">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 26 — Geometria — FeyNotes</title>
+  <meta name="description" content="Geometria, Lezione 26: Autovalori, autovettori e polinomio caratteristico. Il problema centrale della diagonalizzazione: quando un endomorfismo ammette una base di autovettori? Definiamo autovalori, autovettori e polinomio caratteristico, e introduciamo le molteplicità algebrica e geometrica come strumenti per rispondere a questa domanda.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 26: Autovalori, autovettori e polinomio caratteristico — Geometria">
+  <meta property="og:description" content="Il problema centrale della diagonalizzazione: quando un endomorfismo ammette una base di autovettori? Definiamo autovalori, autovettori e polinomio caratteristico, e introduciamo le molteplicità algebrica e geometrica come strumenti per rispondere a questa domanda.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/geometria/lezioni/L26/">
+  <link rel="canonical" href="https://eliacinti.dev/geometria/lezioni/L26/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 26 — Autovalori, autovettori e polinomio caratteristico",
+  "description": "Il problema centrale della diagonalizzazione: quando un endomorfismo ammette una base di autovettori? Definiamo autovalori, autovettori e polinomio caratteristico, e introduciamo le molteplicità algebrica e geometrica come strumenti per rispondere a questa domanda.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/geometria/lezioni/L26/",
+  "datePublished": "2026-05-05",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Geometria",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/geometria/" class="header-logo">
+    
+    Geometria
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 26</span>
+  <nav class="header-nav">
+    <a href="/geometria/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/geometria/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/geometria/lezioni/L25/">← Prec.</a>
+      <a href="/geometria/lezioni/L32/">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L26", date: "Lezione 26 — 05 Mag 2026",
+    title: "Autovalori, autovettori e polinomio caratteristico",
+    abstract: "Il problema centrale della diagonalizzazione: quando un endomorfismo ammette una base di autovettori? Definiamo autovalori, autovettori e polinomio caratteristico, e introduciamo le molteplicità algebrica e geometrica come strumenti per rispondere a questa domanda.",
+
+    sections: [
+        {
+            id: "s26-diagonalizzazione-cambio-base",
+            type: "section",
+            title: "Diagonalizzazione: cambiamento di base e potenze",
+            icon: "🔄",
+            content: `<p>Prima di entrare nella teoria generale, riprendiamo un esempio concreto per mettere in evidenza due aspetti fondamentali: il <strong>cambiamento di base</strong> che realizza la diagonalizzazione, e l'utilità della diagonalizzazione nel <strong>calcolo delle potenze</strong> di una matrice.</p>`,
+            subsections: [
+                {
+                    subtitle: "Cambiamento di coordinate e diagonalizzazione",
+                    content: `<p>Sia $f: \\mathbb{R}^3 \\to \\mathbb{R}^3$ l'endomorfismo la cui matrice rispetto alla base canonica $\\mathcal{E}$ è:</p>
+<p>$$A = M_{\\mathcal{E}}^{\\mathcal{E}}(f) = \\begin{pmatrix} 3 & 3 & -1 \\\\ -4 & -2 & 2 \\\\ -2 & 2 & 2 \\end{pmatrix}$$</p>
+<p>Negli esempi precedenti abbiamo verificato che $f$ è diagonalizzabile: esiste una base $\\mathcal{A} = \\{\\boldsymbol{b}_1, \\boldsymbol{b}_2, \\boldsymbol{b}_3\\}$ di $\\mathbb{R}^3$ rispetto alla quale:</p>
+<p>$$M_{\\mathcal{A}}^{\\mathcal{A}}(f) = \\begin{pmatrix} 0 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 2 \\end{pmatrix}$$</p>
+<p>La <strong>formula generale del cambiamento di base</strong> per un endomorfismo (come dimostrato nella lezione sul cambiamento di base) afferma:</p>
+<p>$$M_{\\mathcal{A}}^{\\mathcal{A}}(f) = M_{\\mathcal{A}}^{\\mathcal{E}}(\\operatorname{id}) \\cdot M_{\\mathcal{E}}^{\\mathcal{E}}(f) \\cdot M_{\\mathcal{E}}^{\\mathcal{A}}(\\operatorname{id})$$</p>
+<p>La logica è: <em>cambio base $\\mathcal{A} \\to \\mathcal{E}$</em>, poi <em>applico $f$ in base $\\mathcal{E}$</em>, poi <em>torno alla base $\\mathcal{A}$</em>.</p>
+<p>Posto:</p>
+<p>$$P := M_{\\mathcal{E}}^{\\mathcal{A}}(\\operatorname{id}) = \\begin{pmatrix} -2 & 1 & 1 \\\\ 1 & 0 & 1 \\\\ -3 & 2 & 4 \\end{pmatrix}$$</p>
+<p>la matrice $P$ ha per colonne le componenti dei vettori $\\boldsymbol{b}_1, \\boldsymbol{b}_2, \\boldsymbol{b}_3$ rispetto alla base canonica. Si ottiene la <strong>relazione di similitudine</strong>:</p>
+<p>$$D = P^{-1} \\cdot A \\cdot P \\qquad \\text{ovvero} \\qquad A = P \\cdot D \\cdot P^{-1}$$</p>
+<p><strong>Osservazione importante:</strong> <em>diagonalizzare</em> un endomorfismo $f$ rappresentato dalla matrice $A$ significa trovare <strong>contemporaneamente</strong>:</p>
+<ul>
+<li>una matrice diagonale $D$ simile ad $A$;</li>
+<li>una matrice invertibile $P$ tale che $A = P \\cdot D \\cdot P^{-1}$.</li>
+</ul>
+<p>La sola conoscenza di $D$ è in genere <strong>insufficiente</strong> per le applicazioni: serve anche $P$.</p>`
+                },
+                {
+                    subtitle: "Calcolo delle potenze di una matrice diagonalizzabile",
+                    content: `<p>Una delle motivazioni storiche e applicative più forti della diagonalizzazione è il <strong>calcolo delle potenze</strong> di una matrice (situazione tipica nello studio di sistemi dinamici discreti, catene di Markov, equazioni alle differenze).</p>
+<p>Se $A = P \\cdot D \\cdot P^{-1}$, allora:</p>
+<p>$$A^2 = (PDP^{-1})(PDP^{-1}) = PD(P^{-1}P)DP^{-1} = PD^2P^{-1}$$</p>
+<p>$$A^3 = A^2 \\cdot A = (PD^2P^{-1})(PDP^{-1}) = PD^3P^{-1}$$</p>
+<p>e per induzione si ottiene la <strong>formula fondamentale</strong>:</p>
+<p>$$A^h = P \\cdot D^h \\cdot P^{-1}$$</p>
+<p>Il vantaggio è enorme: $D$ è diagonale, e la potenza di una matrice diagonale si calcola <strong>elemento per elemento</strong>:</p>
+<p>$$D^h = \\begin{pmatrix} 0^h & 0 & 0 \\\\ 0 & 1^h & 0 \\\\ 0 & 0 & 2^h \\end{pmatrix} = \\begin{pmatrix} 0 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 2^h \\end{pmatrix}$$</p>`
+                },
+                {
+                    subtitle: "Esempio: calcolo esplicito di A^h",
+                    content: `<p>Calcoliamo esplicitamente $A^h$ nell'esempio precedente. L'inversa di $P$ è:</p>
+<p>$$P^{-1} = \\begin{pmatrix} 2 & 2 & -1 \\\\ 7 & 5 & -3 \\\\ -2 & -1 & 1 \\end{pmatrix}$$</p>
+<p><strong>Passo 1: calcoliamo $P \\cdot D^h$.</strong> Poiché $D^h$ è diagonale, il prodotto è semplice — ogni colonna di $P$ viene moltiplicata per l'elemento diagonale corrispondente:</p>
+<p>$$P \\cdot D^h = \\begin{pmatrix} -2 & 1 & 1 \\\\ 1 & 0 & 1 \\\\ -3 & 2 & 4 \\end{pmatrix} \\begin{pmatrix} 0 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 2^h \\end{pmatrix} = \\begin{pmatrix} 0 & 1 & 2^h \\\\ 0 & 0 & 2^h \\\\ 0 & 2 & 2^{h+2} \\end{pmatrix}$$</p>
+<p>(La prima colonna si annulla perché è moltiplicata per $0^h = 0$, la seconda resta invariata perché moltiplicata per $1$, la terza viene moltiplicata per $2^h$.)</p>
+<p><strong>Passo 2: calcoliamo $(P \\cdot D^h) \\cdot P^{-1}$.</strong></p>
+<p>$$A^h = \\begin{pmatrix} 0 & 1 & 2^h \\\\ 0 & 0 & 2^h \\\\ 0 & 2 & 2^{h+2} \\end{pmatrix} \\begin{pmatrix} 2 & 2 & -1 \\\\ 7 & 5 & -3 \\\\ -2 & -1 & 1 \\end{pmatrix}$$</p>
+<p><strong>Verifica per $h = 1$:</strong> $A^1$ deve essere $A$ stessa. Calcoliamo ad esempio l'elemento $(1,1)$:</p>
+<p>$$a_{11} = 0 \\cdot 2 + 1 \\cdot 7 + 2^1 \\cdot (-2) = 0 + 7 - 4 = 3 \\quad \\checkmark$$</p>
+<p>Il risultato generale è:</p>
+<p>$$A^h = \\begin{pmatrix} 7 - 2^{h+1} & 5 - 2^h & 2^h - 3 \\\\ -2^{h+1} & -2^h & 2^h \\\\ 14 - 2^{h+3} & 10 - 2^{h+2} & 2^{h+2} - 6 \\end{pmatrix}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Relazione di similitudine", latex: "D = P^{-1} A P \\quad \\Leftrightarrow \\quad A = P D P^{-1}" },
+                { label: "Potenza h-esima", latex: "A^h = P \\cdot D^h \\cdot P^{-1}" },
+                { label: "Potenza di matrice diagonale", latex: "D^h = \\operatorname{diag}(\\lambda_1^h, \\lambda_2^h, \\ldots, \\lambda_n^h)" }
+            ],
+            extra_content: `<p><strong>Osservazione critica:</strong> per il calcolo di $A^h$ <strong>non basta</strong> sapere che $A$ è simile a una matrice diagonale $D$: occorre conoscere esplicitamente la matrice $P$. Inoltre, non sarebbe sufficiente una fattorizzazione con basi <em>diverse</em> in dominio e codominio, perché verrebbe meno la <strong>struttura telescopica</strong> $P^{-1}P = I$ che permette di semplificare i termini centrali.</p>`
+        },
+
+        {
+            id: "s26-non-diagonalizzabile-esempio",
+            type: "alert_box",
+            title: "Non tutte le matrici sono diagonalizzabili!",
+            icon: "⚠️",
+            content: `<p>La matrice:</p>
+<p>$$\\begin{pmatrix} 1 & -1 \\\\ 1 & -1 \\end{pmatrix}$$</p>
+<p>è un esempio di matrice <strong>non diagonalizzabile</strong>. Vediamo perché: il suo polinomio caratteristico è:</p>
+<p>$$p(t) = \\det\\begin{pmatrix} 1-t & -1 \\\\ 1 & -1-t \\end{pmatrix} = (1-t)(-1-t)+1 = -1-t+t+t^2+1 = t^2$$</p>
+<p>Quindi $\\lambda = 0$ è l'unico autovalore, con molteplicità algebrica $m_a(0) = 2$. Tuttavia, il sistema $(A - 0 \\cdot I)\\boldsymbol{x} = \\boldsymbol{0}$, cioè $A\\boldsymbol{x} = \\boldsymbol{0}$, ha rango $1$ (le due righe sono proporzionali), quindi lo spazio delle soluzioni ha dimensione $2 - 1 = 1$: esiste un solo autovettore linearmente indipendente. Non è possibile formare una base di $\\mathbb{R}^2$ con autovettori.</p>
+<p><strong>Conclusione:</strong> occorre sviluppare criteri precisi per stabilire quando un endomorfismo è diagonalizzabile.</p>`
+        },
+
+        {
+            id: "s26-autovalori-autovettori",
+            type: "section",
+            title: "Autovalori e autovettori",
+            icon: "🎯",
+            content: `<p>Partiamo dalla domanda: se $f$ è diagonalizzabile, che proprietà hanno i vettori della base che diagonalizza?</p>`,
+            subsections: [
+                {
+                    subtitle: "La condizione di diagonalizzabilità in forma puntuale",
+                    content: `<p>Supponiamo che $f: V \\to V$ sia diagonalizzabile, e sia $\\mathcal{A} = \\{\\boldsymbol{b}_1, \\ldots, \\boldsymbol{b}_n\\}$ una base tale che $M_{\\mathcal{A}}^{\\mathcal{A}}(f)$ sia diagonale con $(\\lambda_1, \\ldots, \\lambda_n)$ sulla diagonale:</p>
+<p>$$M_{\\mathcal{A}}^{\\mathcal{A}}(f) = \\begin{pmatrix} \\lambda_1 & 0 & \\cdots & 0 \\\\ 0 & \\lambda_2 & \\cdots & 0 \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 0 & 0 & \\cdots & \\lambda_n \\end{pmatrix}$$</p>
+<p>Ricordando che la $j$-esima colonna contiene le componenti di $f(\\boldsymbol{b}_j)$ rispetto a $\\mathcal{A}$, leggendo le colonne otteniamo:</p>
+<p>$$f(\\boldsymbol{b}_1) = \\lambda_1 \\boldsymbol{b}_1, \\quad f(\\boldsymbol{b}_2) = \\lambda_2 \\boldsymbol{b}_2, \\quad \\ldots, \\quad f(\\boldsymbol{b}_n) = \\lambda_n \\boldsymbol{b}_n$$</p>
+<p><strong>Ogni vettore della base viene mandato da $f$ in un suo multiplo scalare.</strong> Questa proprietà merita un nome.</p>`
+                },
+                {
+                    subtitle: "Definizione di autovalore e autovettore",
+                    content: `<p><strong>Definizione.</strong> Sia $f: V \\to V$ un endomorfismo. Un numero $\\lambda \\in \\mathbb{R}$ si dice <strong>autovalore</strong> di $f$ se esiste un vettore non nullo $\\boldsymbol{b} \\in V$, $\\boldsymbol{b} \\neq \\boldsymbol{0}$, tale che:</p>
+<p>$$f(\\boldsymbol{b}) = \\lambda \\boldsymbol{b}$$</p>
+<p>Un tale vettore $\\boldsymbol{b}$ si chiama <strong>autovettore</strong> di $f$ relativo all'autovalore $\\lambda$.</p>
+<p><strong>Perché si richiede $\\boldsymbol{b} \\neq \\boldsymbol{0}$?</strong> Se ammettessimo il vettore nullo, allora <em>ogni</em> $\\lambda \\in \\mathbb{R}$ sarebbe autovalore, perché per linearità $f(\\boldsymbol{0}) = \\boldsymbol{0} = \\lambda \\cdot \\boldsymbol{0}$ per qualsiasi $\\lambda$, e la nozione perderebbe ogni significato.</p>
+<p><strong>Si ammette invece $\\lambda = 0$:</strong> basta che esista qualche vettore non nullo nel nucleo di $f$. Quindi:</p>
+<p>$$0 \\text{ è autovalore di } f \\iff \\ker(f) \\neq \\{\\boldsymbol{0}\\} \\iff f \\text{ non è iniettivo}$$</p>`
+                },
+                {
+                    subtitle: "Criterio di diagonalizzabilità tramite autovettori",
+                    content: `<p><strong>Teorema.</strong> Un endomorfismo $f: V \\to V$ è diagonalizzabile <strong>se e solo se</strong> esiste una base di $V$ formata da autovettori di $f$.</p>
+<p>In tal caso, detta $\\mathcal{A}$ tale base, la matrice $M_{\\mathcal{A}}^{\\mathcal{A}}(f)$ è diagonale, e sulla diagonale principale appaiono esattamente gli autovalori corrispondenti, nello stesso ordine.</p>
+<p><strong>Dimostrazione.</strong></p>
+<p><em>($\\Rightarrow$)</em> Se $f$ è diagonalizzabile, esiste una base $\\mathcal{A} = \\{\\boldsymbol{b}_1, \\ldots, \\boldsymbol{b}_n\\}$ tale che $f(\\boldsymbol{b}_i) = \\lambda_i \\boldsymbol{b}_i$ per ogni $i$. Poiché i vettori di una base sono non nulli, ciascun $\\boldsymbol{b}_i$ è un autovettore.</p>
+<p><em>($\\Leftarrow$)</em> Sia $\\mathcal{A} = \\{\\boldsymbol{b}_1, \\ldots, \\boldsymbol{b}_n\\}$ una base di autovettori con $f(\\boldsymbol{b}_i) = \\lambda_i \\boldsymbol{b}_i$. Le coordinate di $f(\\boldsymbol{b}_i)$ rispetto a $\\mathcal{A}$ sono il vettore con $\\lambda_i$ all'$i$-esima posizione e zero altrove. Pertanto $M_{\\mathcal{A}}^{\\mathcal{A}}(f)$ è diagonale. $\\square$</p>
+<p>In particolare, condizione <strong>necessaria</strong> per la diagonalizzabilità è che $f$ ammetta almeno un autovettore.</p>`
+                },
+                {
+                    subtitle: "Esempio: rotazioni del piano",
+                    content: `<p>Questa osservazione è già sufficiente per concludere che una rotazione del piano $\\mathbb{R}^2$ di angolo $\\alpha$ <strong>non è diagonalizzabile</strong>, a meno che $\\alpha = 0$ oppure $\\alpha = \\pi$.</p>
+<p>Un autovettore è un vettore non nullo che viene trasformato in un vettore <strong>parallelo a se stesso</strong>. Ma una rotazione di angolo $\\alpha$ con $\\alpha \\neq 0, \\pi$ cambia la direzione di ogni vettore non nullo.</p>
+
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Rotazioni e autovettori nel piano</strong></p>
+  <p><em>Due casi affiancati: (1) Rotazione di angolo α generico (α ≠ 0, π): un vettore v e la sua immagine R(v) formano angolo α — il vettore ha cambiato direzione, quindi non è autovettore. (2) Rotazione di angolo α = π: un vettore v viene mandato in -v (direzione opposta, antiparallelo) — è autovettore con autovalore λ = -1.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+
+<p>Le uniche eccezioni:</p>
+<ul>
+<li>$\\alpha = 0$ (l'identità): ogni vettore non nullo è autovettore con $\\lambda = 1$;</li>
+<li>$\\alpha = \\pi$ (simmetria centrale): ogni vettore non nullo è autovettore con $\\lambda = -1$.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Condizione di autovettore", latex: "f(\\boldsymbol{b}) = \\lambda \\boldsymbol{b}, \\quad \\boldsymbol{b} \\neq \\boldsymbol{0}" },
+                { label: "0 è autovalore ⟺", latex: "0 \\in \\operatorname{spec}(f) \\iff \\ker(f) \\neq \\{\\boldsymbol{0}\\}" }
+            ]
+        },
+
+        {
+            id: "s26-polinomio-caratteristico",
+            type: "section",
+            title: "Il polinomio caratteristico",
+            icon: "📐",
+            content: `<p>Il criterio degli autovettori è teoricamente perfetto, ma operativamente inutile finché non sappiamo <strong>come</strong> determinare gli autovalori. Traduciamo ora il problema in termini matriciali.</p>`,
+            subsections: [
+                {
+                    subtitle: "Traduzione matriciale",
+                    content: `<p>Fissiamo $f: V \\to V$ con $\\dim V = n$, una base $\\mathcal{B}$ qualsiasi, e sia $A = M_{\\mathcal{B}}^{\\mathcal{B}}(f)$.</p>
+<p>Per definizione, $\\lambda$ è autovalore di $f$ se esiste $\\boldsymbol{b} \\neq \\boldsymbol{0}$ tale che $f(\\boldsymbol{b}) = \\lambda \\boldsymbol{b}$. Passando alle componenti $\\boldsymbol{x} := [\\boldsymbol{b}]_{\\mathcal{B}} \\in \\mathbb{R}^n$:</p>
+<p>$$A \\cdot \\boldsymbol{x} = \\lambda \\cdot \\boldsymbol{x}, \\qquad \\boldsymbol{x} \\neq \\boldsymbol{0}$$</p>
+<p>Riscriviamo portando tutto a primo membro e usando $\\lambda \\boldsymbol{x} = \\lambda I \\boldsymbol{x}$:</p>
+<p>$$(A - \\lambda I) \\cdot \\boldsymbol{x} = \\boldsymbol{0}$$</p>
+<p>Quindi $\\lambda$ è autovalore se e solo se il <strong>sistema lineare omogeneo</strong> $(A - \\lambda I)\\boldsymbol{x} = \\boldsymbol{0}$ ammette una soluzione <strong>non nulla</strong>.</p>
+<p>Dalla teoria dei sistemi lineari: lo spazio delle soluzioni ha dimensione $n - \\operatorname{rk}(A - \\lambda I)$. Quindi l'esistenza di una soluzione non nulla equivale a $\\operatorname{rk}(A - \\lambda I) \\lt n$, cioè $A - \\lambda I$ non è invertibile, cioè:</p>
+<p>$$\\det(A - \\lambda I) = 0$$</p>
+<p>Considerando $\\lambda$ come variabile $t$, $\\det(A - tI)$ è un <strong>polinomio</strong> in $t$.</p>`
+                },
+                {
+                    subtitle: "Definizione del polinomio caratteristico",
+                    content: `<p><strong>Definizione.</strong> Sia $f: V \\to V$ un endomorfismo, $\\mathcal{B}$ una base di $V$, $A = M_{\\mathcal{B}}^{\\mathcal{B}}(f)$. Si definisce <strong>polinomio caratteristico</strong> di $f$:</p>
+<p>$$p_f(t) := \\det(A - t \\cdot I)$$</p>
+<p><strong>Nota sulla convenzione:</strong> alcuni testi definiscono $p_f(t) = \\det(tI - A)$. Le due definizioni differiscono per il fattore $(-1)^n$, ma <strong>hanno le stesse radici</strong>. In questo corso usiamo la convenzione $\\det(A - tI)$.</p>
+<p><strong>Teorema (caratterizzazione degli autovalori).</strong> Gli autovalori di $f$ sono <strong>tutte e sole</strong> le radici reali del suo polinomio caratteristico:</p>
+<p>$$\\lambda \\text{ è autovalore di } f \\iff p_f(\\lambda) = 0$$</p>`
+                },
+                {
+                    subtitle: "Proprietà fondamentali",
+                    content: `<p><strong>Grado e forma.</strong> Se $n = \\dim V$, allora $p_f(t)$ è un polinomio di grado $n$:</p>
+<p>$$p_f(t) = a_0 + a_1 t + \\cdots + a_{n-1} t^{n-1} + (-1)^n t^n$$</p>
+<p>Il coefficiente direttore è $(-1)^n$ (il polinomio è <em>monico a meno del segno</em>). Il termine noto vale:</p>
+<p>$$a_0 = p_f(0) = \\det(A - 0 \\cdot I) = \\det(A)$$</p>
+<p>Quindi il <strong>termine noto del polinomio caratteristico è il determinante della matrice</strong>.</p>
+<p>Poiché $p_f(t)$ ha grado $n$, un endomorfismo su uno spazio di dimensione $n$ può avere <strong>al massimo $n$ autovalori distinti</strong>.</p>`
+                },
+                {
+                    subtitle: "Invarianza per cambiamento di base",
+                    content: `<p><strong>Teorema.</strong> Il polinomio caratteristico di $f$ <strong>non dipende dalla base scelta</strong> per rappresentare $f$.</p>
+<p><strong>Dimostrazione.</strong> Siano $A$ e $A'$ matrici rappresentative di $f$ rispetto a basi diverse. Sappiamo che $A' = P^{-1}AP$ per una matrice invertibile $P$. Osservando che $tI = P^{-1}(tI)P$:</p>
+<p>$$A' - tI = P^{-1}AP - P^{-1}(tI)P = P^{-1}(A - tI)P$$</p>
+<p>Applicando il Teorema di Binet:</p>
+<p>$$\\det(A' - tI) = \\det(P^{-1}) \\cdot \\det(A - tI) \\cdot \\det(P) = \\det(A - tI)$$</p>
+<p>perché $\\det(P^{-1}) \\cdot \\det(P) = 1$. I due polinomi coincidono. $\\square$</p>
+<p><strong>Conseguenza:</strong> <em>matrici simili hanno lo stesso polinomio caratteristico.</em></p>`
+                },
+                {
+                    subtitle: "Spettro e caso diagonalizzabile",
+                    content: `<p><strong>Definizione.</strong> L'insieme degli autovalori di $f$ si chiama <strong>spettro</strong> di $f$:</p>
+<p>$$\\operatorname{spec}(f) = \\{\\lambda \\in \\mathbb{R} : p_f(\\lambda) = 0\\}$$</p>
+<p><strong>Caso diagonalizzabile.</strong> Se $f$ è diagonalizzabile e $D = \\operatorname{diag}(\\lambda_1, \\ldots, \\lambda_n)$, allora $D - tI$ è diagonale con $\\lambda_i - t$ sulla diagonale, e:</p>
+<p>$$p_f(t) = (\\lambda_1 - t)(\\lambda_2 - t)\\cdots(\\lambda_n - t) = (-1)^n(t - \\lambda_1)(t - \\lambda_2)\\cdots(t - \\lambda_n)$$</p>
+<p>Il passaggio si spiega così: poiché $(\\lambda_i - t) = -(t - \\lambda_i)$, raccogliendo il segno meno da ciascuno degli $n$ fattori si ottiene il fattore globale $(-1)^n$.</p>
+<p><strong>Conseguenza fondamentale:</strong> se $f$ è diagonalizzabile, il suo polinomio caratteristico si decompone completamente in fattori di primo grado. Viceversa: <strong>se $p_f(t)$ non si decompone completamente su $\\mathbb{R}$, allora $f$ non è diagonalizzabile su $\\mathbb{R}$.</strong></p>`
+                }
+            ],
+            formulas: [
+                { label: "Polinomio caratteristico", latex: "p_f(t) = \\det(A - tI)" },
+                { label: "Condizione sugli autovalori", latex: "\\lambda \\text{ autovalore} \\iff \\det(A - \\lambda I) = 0" },
+                { label: "Termine noto", latex: "p_f(0) = \\det(A)" },
+                { label: "Caso diagonalizzabile", latex: "p_f(t) = (-1)^n(t - \\lambda_1)(t - \\lambda_2)\\cdots(t - \\lambda_n)" }
+            ]
+        },
+
+        {
+            id: "s26-note-convenzione",
+            type: "note_box",
+            title: "Notazione: polinomio caratteristico di una matrice",
+            icon: "📝",
+            content: `<p>Il polinomio $\\det(A - tI)$ si chiama anche <strong>polinomio caratteristico della matrice $A$</strong>, e si denota con $p_A(t)$. Abbiamo dimostrato che matrici simili hanno lo stesso polinomio caratteristico. Naturalmente $p_A(t)$ coincide con il polinomio caratteristico di qualunque endomorfismo rappresentato da $A$.</p>
+<p>In alcune fonti si usa la convenzione $p_A(t) = \\det(tI - A)$, che dà un polinomio <strong>monico</strong> (coefficiente direttore $+1$). Le radici sono identiche. In questo corso usiamo $\\det(A - tI)$, che ha coefficiente direttore $(-1)^n$.</p>`
+        },
+
+        {
+            id: "s26-molteplicita",
+            type: "section",
+            title: "Molteplicità algebrica e molteplicità geometrica",
+            icon: "⚖️",
+            content: `<p>Quando si studiano le radici di un polinomio, una stessa radice può comparire più volte. Lo stesso accade per gli autovalori. Esistono <strong>due nozioni distinte</strong> di molteplicità, entrambe fondamentali per la diagonalizzazione.</p>`,
+            subsections: [
+                {
+                    subtitle: "Molteplicità algebrica",
+                    content: `<p><strong>Definizione.</strong> Sia $\\lambda$ un autovalore di $f$. Per il Teorema di Ruffini, $p_f(t)$ è divisibile per $(t - \\lambda)$. Si chiama <strong>molteplicità algebrica</strong> di $\\lambda$, denotata $m_a(\\lambda)$, la massima potenza $k$ tale che $(t - \\lambda)^k$ divide $p_f(t)$.</p>
+<p>In altre parole, $m_a(\\lambda)$ è la molteplicità di $\\lambda$ come radice del polinomio caratteristico.</p>`
+                },
+                {
+                    subtitle: "Esempio: polinomio già fattorizzato",
+                    content: `<p>Se $p_f(t) = t^3(t - 8)^5$, allora $f$ possiede esattamente due autovalori:</p>
+<p>$$m_a(0) = 3, \\qquad m_a(8) = 5$$</p>`
+                },
+                {
+                    subtitle: "Esempio: polinomio da fattorizzare",
+                    content: `<p>Supponiamo $p_f(t) = -t - 2t^2 - t^3$. Il polinomio non appare fattorizzato, ma possiamo raccogliere $-t$:</p>
+<p>$$p_f(t) = -t(1 + 2t + t^2) = -t(t+1)^2$$</p>
+<p>Spettro: $\\operatorname{spec}(f) = \\{0, -1\\}$ con:</p>
+<p>$$m_a(0) = 1, \\qquad m_a(-1) = 2$$</p>
+<p><strong>Attenzione:</strong> prima di leggere autovalori e molteplicità, occorre <strong>sempre</strong> portare il polinomio caratteristico in forma fattorizzata!</p>`
+                },
+                {
+                    subtitle: "Esempio: lettura diretta dalla forma diagonale",
+                    content: `<p>Se $f$ è rappresentabile dalla matrice diagonale:</p>
+<p>$$D = \\begin{pmatrix} -5 & 0 & 0 & 0 \\\\ 0 & -2 & 0 & 0 \\\\ 0 & 0 & -2 & 0 \\\\ 0 & 0 & 0 & 1 \\end{pmatrix}$$</p>
+<p>allora:</p>
+<p>$$p_f(t) = (t + 5)(t + 2)^2(t - 1)$$</p>
+<p>con $\\operatorname{spec}(f) = \\{-5, -2, 1\\}$ e:</p>
+<p>$$m_a(-5) = 1, \\quad m_a(-2) = 2, \\quad m_a(1) = 1$$</p>
+<p><strong>Fatto generale:</strong> sulla diagonale di $D$ troviamo tutti gli autovalori di $f$, e la molteplicità algebrica di ciascuno coincide con il <strong>numero di volte</strong> che appare sulla diagonale.</p>
+<p>In particolare: <strong>se $p_f(t)$ non si decompone completamente in fattori di primo grado su $\\mathbb{R}$, allora $f$ non è diagonalizzabile su $\\mathbb{R}$.</strong></p>`
+                },
+                {
+                    subtitle: "Molteplicità geometrica",
+                    content: `<p><strong>Definizione (autospazio).</strong> Sia $\\lambda$ un autovalore di $f$. L'<strong>autospazio</strong> relativo a $\\lambda$ è:</p>
+<p>$$V_\\lambda := \\ker(f - \\lambda \\cdot \\operatorname{Id}) = \\{\\boldsymbol{v} \\in V : f(\\boldsymbol{v}) = \\lambda \\boldsymbol{v}\\}$$</p>
+<p>In coordinate, se $A$ è la matrice di $f$: $V_\\lambda = \\{\\boldsymbol{x} \\in \\mathbb{R}^n : (A - \\lambda I)\\boldsymbol{x} = \\boldsymbol{0}\\}$.</p>
+<p><strong>Definizione (molteplicità geometrica).</strong> Si chiama <strong>molteplicità geometrica</strong> di $\\lambda$, denotata $m_g(\\lambda)$, la dimensione dell'autospazio $V_\\lambda$:</p>
+<p>$$m_g(\\lambda) = \\dim(V_\\lambda) = \\dim\\ker(A - \\lambda I) = n - \\operatorname{rk}(A - \\lambda I)$$</p>
+<p>Equivalentemente, $m_g(\\lambda)$ è il massimo numero di autovettori di $f$ relativi a $\\lambda$ che siano linearmente indipendenti.</p>`
+                },
+                {
+                    subtitle: "Esempio: calcolo di m_g per la matrice iniziale",
+                    content: `<p>Consideriamo la matrice $A$ dell'esempio iniziale con autovalore $\\lambda = 0$. Calcoliamo $m_g(0) = \\dim\\ker(A - 0 \\cdot I) = \\dim\\ker(A)$:</p>
+<p>$$A = \\begin{pmatrix} 3 & 3 & -1 \\\\ -4 & -2 & 2 \\\\ -2 & 2 & 2 \\end{pmatrix}$$</p>
+<p>Riducendo $A$ per righe si ottiene $\\operatorname{rk}(A) = 2$ (dettaglio che abbiamo già verificato nelle lezioni precedenti). Quindi:</p>
+<p>$$m_g(0) = 3 - \\operatorname{rk}(A) = 3 - 2 = 1$$</p>
+<p>Esiste un solo autovettore linearmente indipendente associato a $\\lambda = 0$, che è il vettore $\\boldsymbol{b}_1 = (-2, 1, -3)^T$ della base $\\mathcal{A}$.</p>`
+                },
+                {
+                    subtitle: "Confronto tra le due molteplicità",
+                    content: `<p>Le due molteplicità hanno natura diversa:</p>
+<ul>
+<li>$m_a(\\lambda)$: si legge dal <strong>polinomio caratteristico</strong> (è la molteplicità di $\\lambda$ come radice);</li>
+<li>$m_g(\\lambda)$: si calcola risolvendo un <strong>sistema lineare</strong> (è la dimensione di $\\ker(A - \\lambda I)$).</li>
+</ul>
+<p>Le due nozioni sono in generale <strong>diverse</strong>, e il confronto tra esse sarà <strong>decisivo</strong> per stabilire se un endomorfismo è diagonalizzabile, come vedremo nella prossima lezione.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Molteplicità algebrica", latex: "m_a(\\lambda) = \\max\\{k : (t - \\lambda)^k \\mid p_f(t)\\}" },
+                { label: "Autospazio", latex: "V_\\lambda = \\ker(A - \\lambda I) = \\{\\boldsymbol{x} : (A - \\lambda I)\\boldsymbol{x} = \\boldsymbol{0}\\}" },
+                { label: "Molteplicità geometrica", latex: "m_g(\\lambda) = \\dim(V_\\lambda) = n - \\operatorname{rk}(A - \\lambda I)" }
+            ]
+        },
+
+        {
+            id: "s26-riepilogo-metodo",
+            type: "note_box",
+            title: "Riepilogo: il metodo operativo (finora)",
+            icon: "🗺️",
+            content: `<p>Dato un endomorfismo $f: V \\to V$ con matrice $A$, il percorso per studiare la diagonalizzazione è:</p>
+<ol>
+<li><strong>Calcolare $p_f(t) = \\det(A - tI)$</strong> — polinomio caratteristico.</li>
+<li><strong>Trovare le radici</strong> $\\lambda_1, \\ldots, \\lambda_k$ di $p_f(t)$ — sono gli autovalori.</li>
+<li><strong>Determinare $m_a(\\lambda_i)$</strong> per ogni autovalore — molteplicità algebrica.</li>
+<li><strong>Determinare $m_g(\\lambda_i) = n - \\operatorname{rk}(A - \\lambda_i I)$</strong> — molteplicità geometrica.</li>
+<li><strong>Confrontare $m_a$ e $m_g$</strong> — il criterio preciso verrà nella prossima lezione.</li>
+</ol>
+<p><strong>Condizione necessaria già nota:</strong> se $p_f(t)$ non si decompone completamente in fattori di primo grado su $\\mathbb{R}$, allora $f$ <strong>non è diagonalizzabile</strong>.</p>`
+        },
+
+        {
+            id: "s26-oral-diagonalizzazione",
+            type: "oral_box",
+            title: "Domanda tipica: perché serve P e non solo D?",
+            icon: "🎤",
+            content: `<p><strong>Domanda:</strong> "Abbiamo trovato che $A$ è simile alla matrice diagonale $D$. È sufficiente per calcolare $A^h$?"</p>
+<p><strong>Risposta attesa:</strong> No, non basta conoscere $D$. Per calcolare $A^h = P D^h P^{-1}$ serve conoscere esplicitamente la matrice di passaggio $P$ (le cui colonne sono le componenti degli autovettori nella base originale) e la sua inversa $P^{-1}$. Inoltre, la formula $A^h = P D^h P^{-1}$ funziona solo perché usiamo la <strong>stessa base</strong> in dominio e codominio (similitudine), il che garantisce la struttura telescopica $P^{-1}P = I$ nei termini centrali.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è un autovalore di un endomorfismo f?",
+            back: "Un numero $\\lambda \\in \\mathbb{R}$ è <strong>autovalore</strong> di $f$ se esiste un vettore <strong>non nullo</strong> $\\boldsymbol{b} \\neq \\boldsymbol{0}$ tale che $f(\\boldsymbol{b}) = \\lambda \\boldsymbol{b}$. Il vettore $\\boldsymbol{b}$ si chiama <strong>autovettore</strong> relativo a $\\lambda$. La richiesta $\\boldsymbol{b} \\neq \\boldsymbol{0}$ è essenziale: altrimenti ogni $\\lambda$ sarebbe autovalore."
+        },
+        {
+            type: "domanda",
+            front: "Quando 0 è autovalore di un endomorfismo f?",
+            back: "$0$ è autovalore di $f$ se e solo se $\\ker(f) \\neq \\{\\boldsymbol{0}\\}$, cioè se e solo se $f$ <strong>non è iniettivo</strong>. Infatti $f(\\boldsymbol{b}) = 0 \\cdot \\boldsymbol{b} = \\boldsymbol{0}$ significa esattamente $\\boldsymbol{b} \\in \\ker(f)$."
+        },
+        {
+            type: "formula",
+            front: "Come si definisce il polinomio caratteristico di f? Come si trovano gli autovalori?",
+            back: "Il polinomio caratteristico è $p_f(t) = \\det(A - tI)$, dove $A$ è la matrice di $f$ in una base qualsiasi. Ha grado $n = \\dim V$ e non dipende dalla base scelta. Gli <strong>autovalori</strong> sono tutte e sole le radici reali: $\\lambda$ è autovalore $\\iff p_f(\\lambda) = 0$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Perché il polinomio caratteristico non dipende dalla base scelta?",
+            back: "Se $A' = P^{-1}AP$ (matrici simili), allora $A' - tI = P^{-1}(A - tI)P$. Per il Teorema di Binet: $\\det(A' - tI) = \\det(P^{-1}) \\cdot \\det(A - tI) \\cdot \\det(P) = \\det(A - tI)$ perché $\\det(P^{-1})\\det(P) = 1$."
+        },
+        {
+            type: "domanda",
+            front: "Enunciare il criterio di diagonalizzabilità tramite autovettori.",
+            back: "Un endomorfismo $f: V \\to V$ è diagonalizzabile <strong>se e solo se</strong> esiste una base di $V$ formata da autovettori di $f$. In tal caso, la matrice rispetto a tale base è diagonale con gli autovalori corrispondenti sulla diagonale."
+        },
+        {
+            type: "formula",
+            front: "Come si calcolano le potenze di una matrice diagonalizzabile?",
+            back: "Se $A = PDP^{-1}$ con $D$ diagonale, allora $A^h = PD^hP^{-1}$. La potenza $D^h$ si calcola elemento per elemento: $D^h = \\operatorname{diag}(\\lambda_1^h, \\ldots, \\lambda_n^h)$. Servono <strong>sia $D$ che $P$ e $P^{-1}$</strong>."
+        },
+        {
+            type: "definizione",
+            front: "Qual è la differenza tra molteplicità algebrica e geometrica di un autovalore?",
+            back: "La <strong>molteplicità algebrica</strong> $m_a(\\lambda)$ è la molteplicità di $\\lambda$ come radice di $p_f(t)$, cioè il massimo $k$ tale che $(t-\\lambda)^k | p_f(t)$. La <strong>molteplicità geometrica</strong> $m_g(\\lambda) = \\dim V_\\lambda = \\dim\\ker(A - \\lambda I) = n - \\operatorname{rk}(A - \\lambda I)$ è la dimensione dell'autospazio. In generale $m_g(\\lambda) \\leq m_a(\\lambda)$."
+        },
+        {
+            type: "tranello",
+            front: "Se p_f(t) non si decompone completamente in fattori di primo grado su ℝ, che si conclude?",
+            back: "Allora $f$ <strong>non è diagonalizzabile su $\\mathbb{R}$</strong>. Esempio: se $p_f(t) = t^2 + 1$, non ha radici reali, quindi non ha autovalori reali e $f$ non è diagonalizzabile su $\\mathbb{R}$. Attenzione: la decomposizione completa è condizione <strong>necessaria</strong> ma non sufficiente per la diagonalizzabilità!"
+        },
+        {
+            type: "domanda",
+            front: "Perché una rotazione del piano di angolo α ≠ 0, π non è diagonalizzabile?",
+            back: "Un autovettore deve essere mandato in un vettore parallelo a sé stesso ($f(\\boldsymbol{b}) = \\lambda\\boldsymbol{b}$). Ma una rotazione di angolo $\\alpha \\neq 0, \\pi$ <strong>cambia la direzione</strong> di ogni vettore non nullo, quindi non esistono autovettori. Senza autovettori, non può esistere una base di autovettori, e $f$ non è diagonalizzabile."
+        },
+        {
+            type: "tranello",
+            front: "Il vettore nullo è un autovettore?",
+            back: "<strong>No!</strong> Per definizione, un autovettore deve essere $\\boldsymbol{b} \\neq \\boldsymbol{0}$. Se ammettessimo $\\boldsymbol{0}$, allora $f(\\boldsymbol{0}) = \\boldsymbol{0} = \\lambda \\cdot \\boldsymbol{0}$ per ogni $\\lambda$, e ogni scalare sarebbe autovalore — la nozione sarebbe vuota. Attenzione: $\\lambda = 0$ <strong>può</strong> essere autovalore (basta che il nucleo sia non banale), ma il vettore nullo non è mai autovettore."
+        },
+        {
+            type: "domanda",
+            front: "Qual è il termine noto del polinomio caratteristico? Come si giustifica?",
+            back: "Il termine noto è $a_0 = p_f(0) = \\det(A - 0 \\cdot I) = \\det(A)$. Quindi il <strong>termine noto del polinomio caratteristico è il determinante della matrice</strong>. Conseguenza utile: se $\\det(A) = 0$, allora $p_f(0) = 0$, cioè $\\lambda = 0$ è autovalore."
+        },
+        {
+            type: "dimostrazione",
+            front: "Nel caso diagonalizzabile, perché p_f(t) = (-1)^n(t-λ₁)···(t-λₙ)?",
+            back: "Se $D = \\operatorname{diag}(\\lambda_1, \\ldots, \\lambda_n)$, allora $D - tI$ è diagonale con $\\lambda_i - t$ sulla diagonale. Il determinante è il prodotto: $p_f(t) = (\\lambda_1 - t)\\cdots(\\lambda_n - t)$. Poiché $(\\lambda_i - t) = -(t - \\lambda_i)$, raccogliendo il segno meno da ciascuno degli $n$ fattori: $p_f(t) = (-1)^n(t - \\lambda_1)\\cdots(t - \\lambda_n)$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
