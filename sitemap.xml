@@ -334,6 +334,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://eliacinti.dev/geometria/lezioni/L34/</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://eliacinti.dev/controlli/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
