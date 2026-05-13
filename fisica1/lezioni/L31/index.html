@@ -77,7 +77,7 @@
     <div id="lesson-sidebar-links"></div>
     <div class="sidebar-nav-buttons">
       <a href="/fisica1/lezioni/L30/">← Prec.</a>
-      <a href="#" style="opacity:0.3">Succ. →</a>
+      <a href="/fisica1/lezioni/L33/">Succ. →</a>
     </div>
   </aside>
 
@@ -115,10 +115,10 @@ const LESSON = {
                 {
                     subtitle: "Quantità di moto nel sistema del centro di massa",
                     content: `<p>Introduciamo le grandezze relative al centro di massa:</p>
-<p>$$\\vec{r}_i\\,' = \\vec{r}_i - \\vec{r}_{CM}, \\qquad \\vec{v}_i\\,' = \\vec{v}_i - \\vec{v}_{CM}$$</p>
+<p>$$\\vec{r}_i' = \\vec{r}_i - \\vec{r}_{CM}, \\qquad \\vec{v}_i' = \\vec{v}_i - \\vec{v}_{CM}$$</p>
 <p>La quantità di moto associata ai moti interni è:</p>
-<p>$$\\vec{P}\\,' = \\sum_i m_i \\vec{v}_i\\,' = \\sum_i m_i(\\vec{v}_i - \\vec{v}_{CM}) = \\vec{P} - M\\vec{v}_{CM} = \\vec{0}$$</p>
-<p><strong>Nel sistema del centro di massa la quantità di moto totale dei moti interni è identicamente nulla:</strong> $\\vec{P}\\,' = \\vec{0}$.</p>
+<p>$$\\vec{P}' = \\sum_i m_i \\vec{v}_i' = \\sum_i m_i(\\vec{v}_i - \\vec{v}_{CM}) = \\vec{P} - M\\vec{v}_{CM} = \\vec{0}$$</p>
+<p><strong>Nel sistema del centro di massa la quantità di moto totale dei moti interni è identicamente nulla:</strong> $\\vec{P}' = \\vec{0}$.</p>
 <p>Il centro di massa è quel punto particolare nello spazio (geometrico, virtuale, non materiale) tale che:</p>
 <ul>
 <li>il suo moto rappresenta sinteticamente lo stato di moto d'insieme dell'intero sistema;</li>
@@ -129,7 +129,7 @@ const LESSON = {
             formulas: [
                 { label: "Quantità di moto totale", latex: "\\vec{P} = \\sum_i m_i \\vec{v}_i = M\\vec{v}_{CM}" },
                 { label: "Posizione del CM", latex: "\\vec{r}_{CM} = \\frac{1}{M}\\sum_i m_i \\vec{r}_i" },
-                { label: "Quantità di moto interna", latex: "\\vec{P}\\,' = \\vec{0}" }
+                { label: "Quantità di moto interna", latex: "\\vec{P}' = \\vec{0}" }
             ]
         },
         {
@@ -142,23 +142,23 @@ const LESSON = {
                 {
                     subtitle: "Primo teorema di König: momento angolare",
                     content: `<p>Il momento angolare totale $\\vec{L}_O$ di un sistema di punti rispetto a un polo $O$ si decompone come:</p>
-<p>$$\\vec{L}_O = \\vec{r}_{CM} \\times M\\vec{v}_{CM} + \\vec{L}\\,'$$</p>
-<p>dove $\\vec{L}\\,' = \\sum_i \\vec{r}_i\\,' \\times m_i \\vec{v}_i\\,'$ è il momento angolare calcolato rispetto al centro di massa.</p>
-<p>La dimostrazione è analoga a quella del secondo teorema: si scrive $\\vec{r}_i = \\vec{r}_{CM} + \\vec{r}_i\\,'$ e $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i\\,'$, si espande il prodotto vettoriale $\\vec{r}_i \\times m_i\\vec{v}_i$ e i termini misti si annullano perché $\\sum_i m_i \\vec{r}_i\\,' = \\vec{0}$ e $\\sum_i m_i \\vec{v}_i\\,' = \\vec{0}$.</p>`
+<p>$$\\vec{L}_O = \\vec{r}_{CM} \\times M\\vec{v}_{CM} + \\vec{L}'$$</p>
+<p>dove $\\vec{L}' = \\sum_i \\vec{r}_i' \\times m_i \\vec{v}_i'$ è il momento angolare calcolato rispetto al centro di massa.</p>
+<p>La dimostrazione è analoga a quella del secondo teorema: si scrive $\\vec{r}_i = \\vec{r}_{CM} + \\vec{r}_i'$ e $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i'$, si espande il prodotto vettoriale $\\vec{r}_i \\times m_i\\vec{v}_i$ e i termini misti si annullano perché $\\sum_i m_i \\vec{r}_i' = \\vec{0}$ e $\\sum_i m_i \\vec{v}_i' = \\vec{0}$.</p>`
                 },
                 {
                     subtitle: "Secondo teorema di König: energia cinetica",
                     content: `<p>L'energia cinetica totale di un sistema si decompone come:</p>
-<p>$$E_k = \\tfrac{1}{2} M v_{CM}^2 + E_k', \\qquad E_k' = \\sum_i \\tfrac{1}{2} m_i {v_i\\,'}^2$$</p>
-<p><strong>Dimostrazione.</strong> Scriviamo $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i\\,'$. Allora:</p>
-<p>$$E_k = \\sum_i \\tfrac{1}{2}m_i v_i^2 = \\sum_i \\tfrac{1}{2}m_i (\\vec{v}_{CM}+\\vec{v}_i\\,')\\cdot(\\vec{v}_{CM}+\\vec{v}_i\\,')$$</p>
-<p>$$= \\tfrac{1}{2}\\left(\\sum_i m_i\\right)v_{CM}^2 + \\vec{v}_{CM}\\cdot\\sum_i m_i \\vec{v}_i\\,' + \\sum_i \\tfrac{1}{2}m_i {v_i\\,'}^2$$</p>
-<p>Poiché $\\sum_i m_i \\vec{v}_i\\,' = \\vec{P}\\,' = \\vec{0}$, il <strong>termine misto si annulla</strong>, da cui la tesi.</p>
+<p>$$E_k = \\tfrac{1}{2} M v_{CM}^2 + E_k', \\qquad E_k' = \\sum_i \\tfrac{1}{2} m_i {v_i'}^2$$</p>
+<p><strong>Dimostrazione.</strong> Scriviamo $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i'$. Allora:</p>
+<p>$$E_k = \\sum_i \\tfrac{1}{2}m_i v_i^2 = \\sum_i \\tfrac{1}{2}m_i (\\vec{v}_{CM}+\\vec{v}_i')\\cdot(\\vec{v}_{CM}+\\vec{v}_i')$$</p>
+<p>$$= \\tfrac{1}{2}\\left(\\sum_i m_i\\right)v_{CM}^2 + \\vec{v}_{CM}\\cdot\\sum_i m_i \\vec{v}_i' + \\sum_i \\tfrac{1}{2}m_i {v_i'}^2$$</p>
+<p>Poiché $\\sum_i m_i \\vec{v}_i' = \\vec{P}' = \\vec{0}$, il <strong>termine misto si annulla</strong>, da cui la tesi.</p>
 <p>L'energia cinetica totale è dunque la somma di due contributi: l'energia cinetica del moto d'insieme (centro di massa) e l'energia cinetica dei moti interni. Mettendosi nel centro di massa si vede solo il secondo contributo.</p>`
                 }
             ],
             formulas: [
-                { label: "König — Momento angolare", latex: "\\vec{L}_O = \\vec{r}_{CM} \\times M\\vec{v}_{CM} + \\vec{L}\\,'" },
+                { label: "König — Momento angolare", latex: "\\vec{L}_O = \\vec{r}_{CM} \\times M\\vec{v}_{CM} + \\vec{L}'" },
                 { label: "König — Energia cinetica", latex: "E_k = \\tfrac{1}{2} M v_{CM}^2 + E_k'" }
             ]
         },
@@ -463,8 +463,8 @@ const LESSON = {
 <ul>
 <li>Prima cardinale: $\\vec{R}^{(e)} = M\\vec{a}_{CM}$ — solo le forze esterne contano (III principio → risultante interne nulla).</li>
 <li>Seconda cardinale: il termine $\\vec{v}_O \\times M\\vec{v}_{CM}$ si annulla solo per polo fisso o $\\vec{v}_O \\parallel \\vec{v}_{CM}$.</li>
-<li>König energia: la chiave è $\\vec{P}\\,' = \\vec{0}$ che annulla il termine misto.</li>
-<li>König momento angolare: decomposizione analoga, stessa proprietà $\\sum m_i \\vec{r}_i\\,' = \\vec{0}$.</li>
+<li>König energia: la chiave è $\\vec{P}' = \\vec{0}$ che annulla il termine misto.</li>
+<li>König momento angolare: decomposizione analoga, stessa proprietà $\\sum m_i \\vec{r}_i' = \\vec{0}$.</li>
 </ul>`
         }
     ],
@@ -473,12 +473,12 @@ const LESSON = {
         {
             type: "definizione",
             front: "Cos'è la quantità di moto totale di un sistema e come si relaziona al centro di massa?",
-            back: "La quantità di moto totale è $\\vec{P} = \\sum_i m_i \\vec{v}_i = M\\vec{v}_{CM}$. Coincide con la quantità di moto del centro di massa, punto virtuale in cui si concentra l'intera massa $M$. Nel sistema del CM, la quantità di moto dei moti interni è identicamente nulla: $\\vec{P}\\,' = \\vec{0}$."
+            back: "La quantità di moto totale è $\\vec{P} = \\sum_i m_i \\vec{v}_i = M\\vec{v}_{CM}$. Coincide con la quantità di moto del centro di massa, punto virtuale in cui si concentra l'intera massa $M$. Nel sistema del CM, la quantità di moto dei moti interni è identicamente nulla: $\\vec{P}' = \\vec{0}$."
         },
         {
             type: "dimostrazione",
             front: "Dimostra il secondo teorema di König (energia cinetica).",
-            back: "Si scrive $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i\\,'$ e si espande: $E_k = \\sum_i \\frac{1}{2}m_i |\\vec{v}_{CM} + \\vec{v}_i\\,'|^2 = \\frac{1}{2}Mv_{CM}^2 + \\vec{v}_{CM} \\cdot \\sum_i m_i \\vec{v}_i\\,' + \\sum_i \\frac{1}{2}m_i v_i'^2$. Il termine misto si annulla perché $\\sum_i m_i \\vec{v}_i\\,' = \\vec{P}\\,' = \\vec{0}$. Risulta $E_k = \\frac{1}{2}Mv_{CM}^2 + E_k'$."
+            back: "Si scrive $\\vec{v}_i = \\vec{v}_{CM} + \\vec{v}_i'$ e si espande: $E_k = \\sum_i \\frac{1}{2}m_i |\\vec{v}_{CM} + \\vec{v}_i'|^2 = \\frac{1}{2}Mv_{CM}^2 + \\vec{v}_{CM} \\cdot \\sum_i m_i \\vec{v}_i' + \\sum_i \\frac{1}{2}m_i v_i'^2$. Il termine misto si annulla perché $\\sum_i m_i \\vec{v}_i' = \\vec{P}' = \\vec{0}$. Risulta $E_k = \\frac{1}{2}Mv_{CM}^2 + E_k'$."
         },
         {
             type: "definizione",

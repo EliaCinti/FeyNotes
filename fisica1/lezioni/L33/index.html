@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 27 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 27: Classificazione degli Urti e Coefficiente di Restituzione. Classificazione degli urti in base alla conservazione dell'energia cinetica: urti elastici, completamente anelastici e anelastici. Introduzione del coefficiente di restituzione e derivazione della relazione tra velocità relative. Applicazioni: palla che rimbalza, pendolo balistico e culla di Newton.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 27: Classificazione degli Urti e Coefficiente di Restituzione — Fisica 1">
+  <meta property="og:description" content="Classificazione degli urti in base alla conservazione dell'energia cinetica: urti elastici, completamente anelastici e anelastici. Introduzione del coefficiente di restituzione e derivazione della relazione tra velocità relative. Applicazioni: palla che rimbalza, pendolo balistico e culla di Newton.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/lezioni/L33/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/lezioni/L33/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 27 — Classificazione degli Urti e Coefficiente di Restituzione",
+  "description": "Classificazione degli urti in base alla conservazione dell'energia cinetica: urti elastici, completamente anelastici e anelastici. Introduzione del coefficiente di restituzione e derivazione della relazione tra velocità relative. Applicazioni: palla che rimbalza, pendolo balistico e culla di Newton.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/lezioni/L33/",
+  "datePublished": "2026-05-07",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 27</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/lezioni/L31/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L33", date: "Lezione 27 — 07 Mag 2026",
+    title: "Classificazione degli Urti e Coefficiente di Restituzione",
+    abstract: "Classificazione degli urti in base alla conservazione dell'energia cinetica: urti elastici, completamente anelastici e anelastici. Introduzione del coefficiente di restituzione e derivazione della relazione tra velocità relative. Applicazioni: palla che rimbalza, pendolo balistico e culla di Newton.",
+
+    sections: [
+        {
+            id: "s33-teorema-konig",
+            type: "section",
+            title: "Teorema di König per l'Energia Cinetica",
+            icon: "⚡",
+            content: `<p>Prima di classificare gli urti, richiamiamo un risultato fondamentale che sarà il pilastro concettuale dell'intera trattazione.</p>
+<p>Il <strong>Teorema di König</strong> afferma che l'energia cinetica totale di un sistema di particelle si può decomporre nella somma di due contributi:</p>
+<p>$$E_k = E_k' + E_{k,CM}$$</p>
+<p>dove:</p>
+<ul>
+<li>$E_{k,CM} = \\frac{1}{2}M_{tot}\\, v_{CM}^2$ è l'<strong>energia cinetica del centro di massa</strong>, trattato come un punto materiale con tutta la massa del sistema;</li>
+<li>$E_k'$ è l'<strong>energia cinetica interna</strong> (o relativa), cioè l'energia cinetica delle particelle calcolata nel sistema di riferimento del centro di massa.</li>
+</ul>
+<p>Questa decomposizione è cruciale: quando la quantità di moto totale si conserva ($\\vec{p} = \\text{costante}$), la velocità del centro di massa $v_{CM}$ non cambia, e quindi $E_{k,CM}$ rimane invariata. L'unica quota di energia cinetica che può variare durante un urto è quella interna $E_k'$, legata ai moti relativi tra i corpi.</p>`,
+            formulas: [
+                { label: "Teorema di König", latex: "E_k = E_k' + E_{k,CM}" },
+                { label: "Energia cinetica del CM", latex: "E_{k,CM} = \\frac{1}{2}M_{tot}\\, v_{CM}^2" }
+            ]
+        },
+        {
+            id: "s33-urto-elastico",
+            type: "section",
+            title: "Urto Elastico",
+            icon: "🔵",
+            content: `<p><strong>Definizione:</strong> Un urto si definisce <strong>elastico</strong> se durante l'interazione l'energia cinetica totale del sistema si conserva:</p>
+<p>$$E_k = \\text{costante} \\quad \\Rightarrow \\quad \\Delta E_k = 0$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Conseguenze nel sistema del centro di massa",
+                    content: `<p>Se oltre all'energia cinetica si conserva anche la quantità di moto totale del sistema ($\\vec{p} = \\text{costante}$), allora anche l'energia cinetica del centro di massa si conserva ($\\Delta E_{k,CM} = 0$).</p>
+<p>Dal Teorema di König:</p>
+<p>$$E_k = E_k' + E_{k,CM}$$</p>
+<p>Se $\\Delta E_k = 0$ e $\\Delta E_{k,CM} = 0$, ne consegue che anche la variazione dell'energia cinetica relativa al centro di massa è nulla:</p>
+<p>$$\\Delta E_k' = \\Delta E_k - \\Delta E_{k,CM} = 0 - 0 = 0$$</p>
+<p>Questo significa che, nel sistema di riferimento del centro di massa, l'energia cinetica dei corpi prima e dopo l'urto rimane la stessa. Ad esempio, due sferette che si avvicinano e poi si riallontanano dopo l'urto, lo fanno con la stessa energia cinetica totale nel sistema del centro di massa.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Urto elastico", latex: "\\Delta E_k = 0" },
+                { label: "Conservazione energia interna", latex: "\\Delta E_k' = 0" }
+            ]
+        },
+        {
+            id: "s33-urto-anelastico-completo",
+            type: "section",
+            title: "Urto Completamente Anelastico",
+            icon: "🔴",
+            content: `<p><strong>Definizione:</strong> Un urto si definisce <strong>completamente anelastico</strong> se, dopo la collisione, i corpi rimangono attaccati e si muovono insieme come un unico corpo.</p>
+<p>In questo caso, dopo l'urto non ci sono più moti relativi rispetto al centro di massa. L'energia cinetica finale relativa al centro di massa è quindi nulla: $E'_{k, \\text{finale}} = 0$.</p>
+<p>La variazione di energia cinetica relativa al centro di massa è:</p>
+<p>$$\\Delta E'_k = E'_{k, \\text{finale}} - E'_{k, \\text{iniziale}} = 0 - E'_{k, \\text{iniziale}} = -E'_{k, \\text{iniziale}}$$</p>
+<p>Tutta l'energia cinetica associata ai moti relativi al centro di massa viene <strong>dissipata</strong>.</p>
+<p>Se la quantità di moto si conserva, $\\Delta E_{k,CM} = 0$, e la variazione totale di energia cinetica del sistema è:</p>
+<p>$$\\Delta E_k = \\Delta E'_k = -E'_{k, \\text{iniziale}}$$</p>
+<p>Questa rappresenta la <strong>massima perdita di energia cinetica possibile</strong> in un urto.</p>`,
+            subsections: [
+                {
+                    subtitle: "Perché la perdita è massima",
+                    content: `<p>Poiché la quantità di moto totale si conserva, l'energia cinetica del centro di massa $E_{k,CM}$ <strong>non può essere dissipata</strong>: essa è fissata dalla quantità di moto e dalla massa totale del sistema. L'unica quota di energia cinetica che può essere persa è quella relativa al centro di massa, $E_k'$, associata ai moti relativi tra i corpi.</p>
+<p>Nell'urto completamente anelastico, i corpi si muovono insieme dopo l'urto, il che significa che <em>tutta</em> l'energia relativa al centro di massa viene dissipata ($E'_{k,\\text{finale}}=0$). Non è possibile perdere di più, perché $E_{k,CM}$ è vincolata dalla conservazione della quantità di moto.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Variazione energia cinetica", latex: "\\Delta E_k = -E'_{k, \\text{iniziale}}" }
+            ]
+        },
+        {
+            id: "s33-coefficiente-restituzione",
+            type: "section",
+            title: "Coefficiente di Restituzione",
+            icon: "📏",
+            content: `<p>Un urto anelastico è un caso intermedio tra l'urto elastico e quello completamente anelastico. L'energia cinetica non si conserva, ma i corpi non rimangono necessariamente attaccati.</p>
+<p>Gli urti che consideriamo in meccanica sono generalmente <strong>dissipativi</strong>, ovvero comportano una perdita di energia cinetica ($\\Delta E_k \\lt 0$). Processi come le esplosioni, invece, possono fornire energia al sistema ($\\Delta E_k \\gt 0$).</p>
+<p>Per quantificare il grado di elasticità di un urto, si introduce una grandezza adimensionale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione",
+                    content: `<p>Il <strong>coefficiente di restituzione</strong>, indicato con $e$, quantifica il grado di elasticità di un urto. La sua versione al quadrato, $e^2$, mette in relazione l'energia cinetica relativa al centro di massa finale e iniziale:</p>
+<p>$$E'_{k, \\text{finale}} = e^2 \\, E'_{k, \\text{iniziale}}$$</p>
+<p>dove $0 \\le e \\le 1$.</p>
+<p>A seconda del valore di $e$, possiamo classificare l'urto:</p>
+<ul>
+<li>Se $e=1$ ($e^2=1$): $E'_{k, \\text{finale}} = E'_{k, \\text{iniziale}}$, quindi $\\Delta E'_k = 0$. L'urto è <strong>elastico</strong>.</li>
+<li>Se $e=0$ ($e^2=0$): $E'_{k, \\text{finale}} = 0$. L'urto è <strong>completamente anelastico</strong>.</li>
+<li>Se $0 \\lt e \\lt 1$ ($0 \\lt e^2 \\lt 1$): l'urto è <strong>anelastico</strong> (o parzialmente elastico).</li>
+</ul>`
+                },
+                {
+                    subtitle: "Significato fisico",
+                    content: `<p>Il termine «restituzione» si riferisce alla frazione di energia cinetica (relativa al centro di massa) che viene «restituita» al sistema dopo l'urto. Se $e=1$, tutta l'energia viene restituita. Se $e=0$, nessuna energia viene restituita.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Coefficiente di restituzione", latex: "E'_{k,\\text{finale}} = e^2 \\, E'_{k,\\text{iniziale}}" }
+            ]
+        },
+        {
+            id: "s33-relazione-velocita-relative",
+            type: "section",
+            title: "Relazione tra Velocità Relative",
+            icon: "🔄",
+            content: `<p>Dal coefficiente di restituzione si può derivare una relazione fondamentale tra le velocità relative dei corpi prima e dopo l'urto (in una dimensione).</p>`,
+            subsections: [
+                {
+                    subtitle: "Energia cinetica e massa ridotta",
+                    content: `<p>Nel sistema del centro di massa, l'energia cinetica relativa si esprime in termini della <strong>massa ridotta</strong> $\\mu = \\frac{m_1 m_2}{m_1 + m_2}$ e della <strong>velocità relativa</strong> $v_{\\text{rel}} = v_1 - v_2$:</p>
+<p>$$E'_k = \\frac{1}{2}\\,\\mu\\, v_{\\text{rel}}^2$$</p>
+<p><strong>Da dove viene questa formula?</strong> Nel sistema del CM, le velocità delle due particelle sono $v_1' = v_1 - v_{CM}$ e $v_2' = v_2 - v_{CM}$. L'energia cinetica nel sistema del CM è:</p>
+<p>$$E_k' = \\frac{1}{2}m_1 v_1'^2 + \\frac{1}{2}m_2 v_2'^2$$</p>
+<p>Sostituendo $v_{CM} = \\frac{m_1 v_1 + m_2 v_2}{m_1+m_2}$ e raccogliendo, si verifica (dopo un po' di algebra) che questa espressione si riduce esattamente a $\\frac{1}{2}\\mu\\,(v_1-v_2)^2$, dove $\\mu = \\frac{m_1 m_2}{m_1+m_2}$ è la massa ridotta del sistema.</p>`
+                },
+                {
+                    subtitle: "Derivazione della relazione",
+                    content: `<p>Applichiamo la definizione del coefficiente di restituzione:</p>
+<p>$$E'_{k,\\text{finale}} = e^2\\, E'_{k,\\text{iniziale}} \\quad \\Rightarrow \\quad \\frac{1}{2}\\,\\mu\\,(V_1 - V_2)^2 = e^2 \\cdot \\frac{1}{2}\\,\\mu\\,(v_1 - v_2)^2$$</p>
+<p>Semplificando $\\frac{1}{2}\\mu$ da entrambi i lati e prendendo la radice quadrata:</p>
+<p>$$|V_1 - V_2| = e\\,|v_1 - v_2|$$</p>
+<p>Ora occorre determinare il <strong>segno</strong>. Prima dell'urto i corpi si avvicinano: se il corpo 1 insegue il corpo 2, allora $v_1 \\gt v_2$ e quindi $(v_1 - v_2) \\gt 0$. Dopo l'urto i corpi si allontanano: il corpo 1 è più lento del corpo 2 (o va all'indietro), quindi $V_1 \\lt V_2$ e $(V_1 - V_2) \\lt 0$. La velocità relativa cambia segno, e pertanto il segno meno è necessario:</p>
+<p>$$V_1 - V_2 = -e\\,(v_1 - v_2)$$</p>
+<p>dove $v_1, v_2$ sono le velocità prima dell'urto e $V_1, V_2$ sono le velocità dopo l'urto.</p>`
+                },
+                {
+                    subtitle: "Caso particolare: urto elastico",
+                    content: `<p>Per un urto elastico ($e=1$):</p>
+<p>$$V_1 - V_2 = -(v_1 - v_2)$$</p>
+<p>La velocità relativa di allontanamento è l'opposto della velocità relativa di avvicinamento. In altre parole, i corpi "rimbalzano" con la stessa velocità relativa.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Energia cinetica relativa", latex: "E'_k = \\frac{1}{2}\\,\\mu\\, v_{\\text{rel}}^2" },
+                { label: "Massa ridotta", latex: "\\mu = \\frac{m_1 m_2}{m_1 + m_2}" },
+                { label: "Relazione velocità relative", latex: "V_1 - V_2 = -e\\,(v_1 - v_2)" }
+            ]
+        },
+        {
+            id: "s33-alert-segno",
+            type: "alert_box",
+            title: "Attenzione al Segno nella Relazione delle Velocità Relative",
+            icon: "⚠️",
+            content: `<p>La formula $V_1 - V_2 = -e(v_1 - v_2)$ ha un <strong>segno meno</strong> che non è arbitrario: deriva dal fatto che la velocità relativa cambia verso tra prima e dopo l'urto.</p>
+<ul>
+<li><strong>Prima dell'urto:</strong> $v_1 \\gt v_2$ (i corpi si avvicinano) → $(v_1 - v_2) \\gt 0$</li>
+<li><strong>Dopo l'urto:</strong> $V_1 \\lt V_2$ (i corpi si allontanano) → $(V_1 - V_2) \\lt 0$</li>
+</ul>
+<p>Un errore frequente all'esame è dimenticare il segno meno o confondere il modulo con la formula vettoriale. La formula con i moduli è $|V_1 - V_2| = e|v_1 - v_2|$, ma quella con il segno è più potente perché tiene conto della direzione.</p>`
+        },
+        {
+            id: "s33-palla-rimbalza",
+            type: "section",
+            title: "Esempio: Palla che Rimbalza",
+            icon: "🏀",
+            content: `<p>Una palla viene lasciata cadere da ferma da un'altezza $H$ su un pavimento orizzontale. Dopo il rimbalzo, risale fino a un'altezza massima $h \\lt H$. Calcoliamo il coefficiente di restituzione $e$.</p>
+<p>Consideriamo il pavimento come un corpo di massa infinita, la cui velocità è sempre nulla ($v_2 = V_2 = 0$). In questo caso la relazione sulle velocità relative si riduce a: $V_1 = -e\\,v_1$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Velocità di impatto",
+                    content: `<p>Usando la conservazione dell'energia meccanica durante la caduta:</p>
+<p>$$mgH = \\frac{1}{2}mv_1^2 \\quad \\Rightarrow \\quad |v_1| = \\sqrt{2gH}$$</p>
+<p>Scegliendo un asse $y$ verticale verso l'alto, la velocità di impatto è $v_1 = -\\sqrt{2gH}$ (diretta verso il basso).</p>`
+                },
+                {
+                    subtitle: "Velocità di rimbalzo",
+                    content: `<p>Usando la conservazione dell'energia meccanica durante la risalita:</p>
+<p>$$\\frac{1}{2}mV_1^2 = mgh \\quad \\Rightarrow \\quad |V_1| = \\sqrt{2gh}$$</p>
+<p>La velocità subito dopo il rimbalzo è $V_1 = +\\sqrt{2gh}$ (diretta verso l'alto).</p>`
+                },
+                {
+                    subtitle: "Calcolo del coefficiente di restituzione",
+                    content: `<p>Applichiamo la formula delle velocità relative con $v_2 = V_2 = 0$:</p>
+<p>$$V_1 - 0 = -e\\,(v_1 - 0)$$</p>
+<p>$$\\sqrt{2gh} = -e\\,(-\\sqrt{2gH}) = e\\sqrt{2gH}$$</p>
+<p>Da cui:</p>
+<p>$$e = \\frac{\\sqrt{2gh}}{\\sqrt{2gH}} = \\sqrt{\\frac{h}{H}}$$</p>
+<p>Se ad esempio $H = 1.27\\,\\text{m}$ e $h = 0.88\\,\\text{m}$, si ottiene $e \\approx 0.83$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Coefficiente di restituzione (rimbalzo)", latex: "e = \\sqrt{\\frac{h}{H}}" }
+            ]
+        },
+        {
+            id: "s33-pendolo-balistico",
+            type: "section",
+            title: "Esempio: Pendolo Balistico",
+            icon: "🎯",
+            content: `<p>Un proiettile di massa $m$ e velocità orizzontale $v$ colpisce un blocco di legno di massa $M$, appeso come un pendolo. Il proiettile si conficca nel blocco e il sistema combinato oscilla fino a raggiungere un'altezza massima $h$. Determiniamo la velocità iniziale $v$ del proiettile.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Le tre fasi del pendolo balistico</strong></p>
+  <p><em>Stato iniziale: proiettile di massa m con velocità v verso il blocco M appeso al pendolo. Subito dopo l'urto: sistema (m+M) in moto orizzontale con velocità V_f. Altezza massima: il pendolo ha oscillato fino all'altezza h, con il sistema fermo. L'altezza h è misurata tra il centro di massa del sistema nella posizione di equilibrio e nella posizione di massima oscillazione.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`,
+            subsections: [
+                {
+                    subtitle: "Analisi delle due fasi",
+                    content: `<p>È <strong>fondamentale</strong> analizzare separatamente le due fasi del fenomeno:</p>
+<ol>
+<li><strong>L'urto:</strong> è un processo molto rapido in cui il proiettile si conficca nel blocco. Durante questo brevissimo intervallo di tempo, le forze esterne (tensione del filo, gravità) non sono impulsive. Possiamo quindi considerare la <strong>quantità di moto del sistema come conservata</strong> lungo la direzione orizzontale. L'energia meccanica, invece, <strong>non si conserva</strong> poiché l'urto è completamente anelastico.</li>
+<li><strong>L'oscillazione:</strong> dopo l'urto, il sistema (blocco + proiettile) oscilla verso l'alto. Le forze agenti sono la gravità (conservativa) e la tensione del filo (che non compie lavoro). Pertanto, l'<strong>energia meccanica del sistema si conserva</strong>. La quantità di moto, invece, non si conserva a causa della forza esterna del vincolo.</li>
+</ol>`
+                },
+                {
+                    subtitle: "Fase 1: Urto (conservazione della quantità di moto)",
+                    content: `<p>L'urto è completamente anelastico. La quantità di moto orizzontale prima dell'urto è data solo dal proiettile. Dopo l'urto, il sistema si muove con una velocità comune $V_f$:</p>
+<p>$$mv = (m+M)V_f$$</p>`
+                },
+                {
+                    subtitle: "Fase 2: Oscillazione (conservazione dell'energia meccanica)",
+                    content: `<p>L'energia cinetica del sistema subito dopo l'urto si converte interamente in energia potenziale gravitazionale all'altezza massima $h$:</p>
+<p>$$\\frac{1}{2}(m+M)V_f^2 = (m+M)gh$$</p>
+<p>Da cui:</p>
+<p>$$V_f = \\sqrt{2gh}$$</p>`
+                },
+                {
+                    subtitle: "Combinazione dei risultati",
+                    content: `<p>Sostituiamo l'espressione di $V_f$ trovata nella Fase 2 nell'equazione della Fase 1:</p>
+<p>$$mv = (m+M)\\sqrt{2gh}$$</p>
+<p>Risolvendo per la velocità iniziale del proiettile:</p>
+<p>$$v = \\frac{m+M}{m}\\sqrt{2gh}$$</p>
+<p>Misurando le masse $m$, $M$ e l'altezza $h$, è possibile determinare la velocità del proiettile. Il pendolo balistico è storicamente uno dei primi strumenti per la misura della velocità dei proiettili.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Conservazione quantità di moto", latex: "mv = (m+M)V_f" },
+                { label: "Conservazione energia meccanica", latex: "\\frac{1}{2}(m+M)V_f^2 = (m+M)gh" },
+                { label: "Velocità del proiettile", latex: "v = \\frac{m+M}{m}\\sqrt{2gh}" }
+            ]
+        },
+        {
+            id: "s33-note-pendolo",
+            type: "note_box",
+            title: "Le Due Fasi Usano Principi Diversi",
+            icon: "📝",
+            content: `<p>Nell'esercizio del pendolo balistico, uno degli errori più comuni è applicare la conservazione dell'energia meccanica all'urto, oppure la conservazione della quantità di moto all'oscillazione.</p>
+<ul>
+<li><strong>Durante l'urto:</strong> quantità di moto conservata ✅, energia meccanica NON conservata ❌</li>
+<li><strong>Durante l'oscillazione:</strong> energia meccanica conservata ✅, quantità di moto NON conservata ❌</li>
+</ul>
+<p>Il professore ha sottolineato che riconoscere quale principio applicare in ciascuna fase è la chiave per risolvere correttamente il problema.</p>`
+        },
+        {
+            id: "s33-culla-newton",
+            type: "section",
+            title: "Esempio: Culla di Newton",
+            icon: "⚖️",
+            content: `<p>La culla di Newton è un dispositivo composto da una serie di sferette d'acciaio identiche, sospese e a contatto tra loro. Se si solleva una sferetta da un'estremità e la si lascia urtare le altre, una sola sferetta si solleva dall'estremità opposta. Se se ne sollevano due, due si sollevano. Perché?</p>
+<p>Il fenomeno si spiega imponendo la <strong>simultanea conservazione dell'energia cinetica e della quantità di moto</strong>. Gli urti tra le sferette d'acciaio sono quasi perfettamente elastici.</p>`,
+            subsections: [
+                {
+                    subtitle: "Caso 1: Una sferetta in ingresso",
+                    content: `<p>Una sferetta di massa $m$ urta la catena con velocità $v$.</p>
+<ul>
+<li>Energia cinetica iniziale: $E_{k,i} = \\frac{1}{2}mv^2$</li>
+<li>Quantità di moto iniziale: $p_i = mv$</li>
+</ul>
+<p>Analizziamo le possibili uscite:</p>
+<p><strong>Ipotesi A — Una sferetta esce con velocità $v$:</strong></p>
+<ul>
+<li>$p_f = mv$ ✅ (conservata)</li>
+<li>$E_{k,f} = \\frac{1}{2}mv^2$ ✅ (conservata)</li>
+</ul>
+<p><strong>Questa è la soluzione che si osserva.</strong></p>
+<p><strong>Ipotesi B — Due sferette escono con velocità $v/2$:</strong></p>
+<ul>
+<li>$p_f = 2m \\cdot \\frac{v}{2} = mv$ ✅ (conservata)</li>
+<li>$E_{k,f} = \\frac{1}{2}(2m)\\left(\\frac{v}{2}\\right)^2 = \\frac{1}{4}mv^2 \\neq \\frac{1}{2}mv^2$ ❌ (NON conservata)</li>
+</ul>
+<p>Questa soluzione non è fisicamente possibile per un urto elastico.</p>`
+                },
+                {
+                    subtitle: "Caso 2: Due sferette in ingresso",
+                    content: `<p>Due sferette di massa totale $2m$ urtano la catena con velocità $v$.</p>
+<ul>
+<li>Energia cinetica iniziale: $E_{k,i} = \\frac{1}{2}(2m)v^2 = mv^2$</li>
+<li>Quantità di moto iniziale: $p_i = 2mv$</li>
+</ul>
+<p><strong>Ipotesi A — Due sferette escono con velocità $v$:</strong></p>
+<ul>
+<li>$p_f = 2mv$ ✅ (conservata)</li>
+<li>$E_{k,f} = \\frac{1}{2}(2m)v^2 = mv^2$ ✅ (conservata)</li>
+</ul>
+<p><strong>Questa è la soluzione che si osserva.</strong></p>
+<p><strong>Ipotesi B — Una sferetta esce con velocità $2v$:</strong></p>
+<ul>
+<li>$p_f = m(2v) = 2mv$ ✅ (conservata)</li>
+<li>$E_{k,f} = \\frac{1}{2}m(2v)^2 = 2mv^2 \\neq mv^2$ ❌ (NON conservata)</li>
+</ul>
+<p>Anche in questo caso, la conservazione della quantità di moto da sola non basta: serve anche la conservazione dell'energia cinetica per selezionare la soluzione corretta.</p>`
+                },
+                {
+                    subtitle: "Meccanismo fisico della propagazione dell'impulso",
+                    content: `<p>Il risultato si spiega considerando che l'impulso si propaga attraverso le sferette a contatto tramite una <strong>catena di urti elastici binari</strong> successivi. Quando la prima sferetta colpisce la seconda, avviene un urto elastico tra due masse uguali: in questo caso speciale, la sferetta incidente si ferma completamente e trasferisce tutta la sua quantità di moto e la sua energia cinetica alla sferetta urtata.</p>
+<p>Questo processo si ripete identicamente per ogni coppia di sferette adiacenti lungo la catena, fino a raggiungere l'ultima sferetta, che — non avendo più sferette a contatto davanti a sé — si stacca e si solleva con la stessa velocità della sferetta incidente originale.</p>
+<p>Il principio fondamentale è che <strong>solo le configurazioni di uscita che conservano sia l'energia cinetica sia la quantità di moto sono permesse</strong> in un urto elastico.</p>`
+                }
+            ],
+            table_compare: {
+                headers: ["Configurazione", "p conservata?", "E_k conservata?", "Osservata?"],
+                rows: [
+                    ["1 in → 1 esce a v", "✅", "✅", "✅"],
+                    ["1 in → 2 escono a v/2", "✅", "❌", "❌"],
+                    ["2 in → 2 escono a v", "✅", "✅", "✅"],
+                    ["2 in → 1 esce a 2v", "✅", "❌", "❌"]
+                ]
+            }
+        },
+        {
+            id: "s33-riepilogo",
+            type: "section",
+            title: "Riepilogo: Classificazione degli Urti",
+            icon: "📋",
+            content: `<p>Riassumiamo la classificazione degli urti in base al coefficiente di restituzione $e$:</p>`,
+            table_compare: {
+                headers: ["Tipo di urto", "e", "ΔE'_k", "Caratteristica"],
+                rows: [
+                    ["Elastico", "e = 1", "0", "Energia cinetica conservata"],
+                    ["Anelastico", "0 < e < 1", "< 0", "Parte dell'energia dissipata"],
+                    ["Completamente anelastico", "e = 0", "-E'_{k,iniz}", "Massima dissipazione, corpi uniti"]
+                ]
+            },
+            formulas: [
+                { label: "Definizione di e²", latex: "E'_{k,\\text{finale}} = e^2\\,E'_{k,\\text{iniziale}}" },
+                { label: "Relazione velocità relative (1D)", latex: "V_1 - V_2 = -e(v_1 - v_2)" }
+            ]
+        },
+        {
+            id: "s33-oral-domande",
+            type: "oral_box",
+            title: "Domande Tipiche d'Esame sugli Urti",
+            icon: "🎓",
+            content: `<p>All'orale il professore chiede spesso:</p>
+<ul>
+<li>«Classifichi i diversi tipi di urto e dica qual è la massima perdita di energia cinetica possibile.»</li>
+<li>«Derivi la relazione tra velocità relative usando il coefficiente di restituzione.»</li>
+<li>«Risolva il problema del pendolo balistico, spiegando perché si usano principi diversi nelle due fasi.»</li>
+<li>«Perché nella culla di Newton non possono uscire 2 sferette a velocità dimezzata?»</li>
+</ul>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è il coefficiente di restituzione e quali valori può assumere?",
+            back: "Il coefficiente di restituzione $e$ è una grandezza adimensionale che quantifica il grado di elasticità di un urto: $E'_{k,\\text{finale}} = e^2\\,E'_{k,\\text{iniziale}}$, con $0 \\le e \\le 1$. Per $e=1$ l'urto è elastico, per $e=0$ è completamente anelastico, per $0 \\lt e \\lt 1$ è anelastico."
+        },
+        {
+            type: "definizione",
+            front: "Enuncia il Teorema di König per l'energia cinetica.",
+            back: "L'energia cinetica totale di un sistema si decompone in: $E_k = E_k' + E_{k,CM}$, dove $E_{k,CM} = \\frac{1}{2}M_{tot}v_{CM}^2$ è l'energia cinetica del centro di massa e $E_k'$ è l'energia cinetica calcolata nel sistema del centro di massa (energia cinetica interna)."
+        },
+        {
+            type: "domanda",
+            front: "Perché nell'urto completamente anelastico la perdita di energia cinetica è massima?",
+            back: "La quantità di moto si conserva, quindi $E_{k,CM}$ è fissata e non può essere dissipata. L'unica quota dissipabile è $E_k'$ (energia relativa al CM). Nell'urto completamente anelastico i corpi si muovono insieme ($v_{rel}=0$), quindi $E'_{k,\\text{finale}}=0$ e tutta l'energia interna viene persa: $\\Delta E_k = -E'_{k,\\text{iniziale}}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Deriva la relazione tra le velocità relative prima e dopo un urto unidimensionale.",
+            back: "Si parte da $E'_k = \\frac{1}{2}\\mu v_{rel}^2$ con $\\mu = \\frac{m_1 m_2}{m_1+m_2}$. Dalla definizione $E'_{k,f} = e^2 E'_{k,i}$ si ottiene $\\frac{1}{2}\\mu(V_1-V_2)^2 = e^2 \\frac{1}{2}\\mu(v_1-v_2)^2$. Semplificando: $|V_1-V_2| = e|v_1-v_2|$. Poiché prima dell'urto $(v_1-v_2) \\gt 0$ (avvicinamento) e dopo $(V_1-V_2) \\lt 0$ (allontanamento), il segno cambia: $V_1 - V_2 = -e(v_1-v_2)$."
+        },
+        {
+            type: "formula",
+            front: "Come si calcola il coefficiente di restituzione di una palla che rimbalza, partendo dalle altezze?",
+            back: "Se la palla cade da altezza $H$ e rimbalza fino a $h$: la velocità di impatto è $|v_1| = \\sqrt{2gH}$ e quella di rimbalzo $|V_1| = \\sqrt{2gh}$. Dalla relazione $V_1 = -e\\,v_1$ (con pavimento fermo) si ricava: $e = \\sqrt{\\frac{h}{H}}$."
+        },
+        {
+            type: "domanda",
+            front: "Nel pendolo balistico, perché si usano principi di conservazione diversi nelle due fasi?",
+            back: "Fase 1 (urto): è completamente anelastico, quindi l'energia meccanica NON si conserva. Ma l'urto è rapido e le forze esterne non sono impulsive, quindi la quantità di moto si conserva: $mv = (m+M)V_f$. Fase 2 (oscillazione): agiscono gravità (conservativa) e tensione (lavoro nullo), quindi l'energia meccanica si conserva: $\\frac{1}{2}(m+M)V_f^2 = (m+M)gh$. La quantità di moto non si conserva per la tensione del filo."
+        },
+        {
+            type: "formula",
+            front: "Scrivi la formula per la velocità del proiettile nel pendolo balistico.",
+            back: "Combinando le due fasi: $v = \\frac{m+M}{m}\\sqrt{2gh}$, dove $m$ è la massa del proiettile, $M$ quella del blocco e $h$ l'altezza massima raggiunta dal sistema."
+        },
+        {
+            type: "tranello",
+            front: "Nella culla di Newton, una sferetta entra con velocità v. Perché non possono uscire due sferette con velocità v/2 ciascuna?",
+            back: "La quantità di moto sarebbe conservata: $p_f = 2m \\cdot \\frac{v}{2} = mv$ ✅. Ma l'energia cinetica NO: $E_{k,f} = \\frac{1}{2}(2m)(\\frac{v}{2})^2 = \\frac{1}{4}mv^2 \\neq \\frac{1}{2}mv^2$ ❌. In un urto elastico devono conservarsi ENTRAMBE. La conservazione della sola quantità di moto non è sufficiente."
+        },
+        {
+            type: "domanda",
+            front: "Che cos'è la massa ridotta e a cosa serve negli urti?",
+            back: "La massa ridotta è $\\mu = \\frac{m_1 m_2}{m_1 + m_2}$. Permette di esprimere l'energia cinetica nel sistema del CM in forma compatta: $E_k' = \\frac{1}{2}\\mu\\,v_{rel}^2$, dove $v_{rel} = v_1 - v_2$. È la grandezza chiave per collegare il coefficiente di restituzione alla relazione tra velocità relative."
+        },
+        {
+            type: "tranello",
+            front: "Nella formula $V_1 - V_2 = -e(v_1 - v_2)$, perché c'è il segno meno?",
+            back: "Prima dell'urto i corpi si avvicinano: $v_1 \\gt v_2$, quindi $(v_1 - v_2) \\gt 0$. Dopo l'urto si allontanano: $V_1 \\lt V_2$, quindi $(V_1 - V_2) \\lt 0$. Il segno meno tiene conto di questa inversione. Senza il meno, la formula direbbe che i corpi continuano ad avvicinarsi dopo l'urto!"
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
