@@ -15,22 +15,22 @@ const LESSON = {
                     subtitle: "Forma bilineare simmetrica",
                     content: `<p>Sia $V$ uno spazio vettoriale su $\\mathbb{R}$. Una <strong>forma bilineare simmetrica</strong> su $V$ è una funzione</p>
 <p>$$\\phi: V \\times V \\to \\mathbb{R}$$</p>
-<p>che associa a ogni coppia di vettori $(\\vec{u}, \\vec{v})$ uno scalare $\\phi(\\vec{u}, \\vec{v})$, soddisfacendo due proprietà:</p>
-<p><strong>1. Linearità a sinistra</strong>: per ogni $\\vec{u}, \\vec{v}, \\vec{w} \\in V$ e per ogni $a, b \\in \\mathbb{R}$:</p>
-<p>$$\\phi(a\\vec{u} + b\\vec{v},\\; \\vec{w}) = a\\,\\phi(\\vec{u}, \\vec{w}) + b\\,\\phi(\\vec{v}, \\vec{w})$$</p>
-<p><strong>2. Simmetria</strong>: per ogni $\\vec{u}, \\vec{v} \\in V$:</p>
-<p>$$\\phi(\\vec{u}, \\vec{v}) = \\phi(\\vec{v}, \\vec{u})$$</p>`
+<p>che associa a ogni coppia di vettori $(\\mathbf{u}, \\mathbf{v})$ uno scalare $\\phi(\\mathbf{u}, \\mathbf{v})$, soddisfacendo due proprietà:</p>
+<p><strong>1. Linearità a sinistra</strong>: per ogni $\\mathbf{u}, \\mathbf{v}, \\mathbf{w} \\in V$ e per ogni $a, b \\in \\mathbb{R}$:</p>
+<p>$$\\phi(a\\mathbf{u} + b\\mathbf{v},\\; \\mathbf{w}) = a\\,\\phi(\\mathbf{u}, \\mathbf{w}) + b\\,\\phi(\\mathbf{v}, \\mathbf{w})$$</p>
+<p><strong>2. Simmetria</strong>: per ogni $\\mathbf{u}, \\mathbf{v} \\in V$:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = \\phi(\\mathbf{v}, \\mathbf{u})$$</p>`
                 },
                 {
                     subtitle: "Linearità a destra (conseguenza automatica)",
-                    content: `<p>La combinazione di linearità a sinistra e simmetria implica anche la <strong>linearità a destra</strong>. Per ogni $\\vec{u}, \\vec{v}, \\vec{w} \\in V$ e $a, b \\in \\mathbb{R}$:</p>
-<p>$$\\phi(\\vec{u},\\; a\\vec{v} + b\\vec{w}) = \\phi(a\\vec{v} + b\\vec{w},\\; \\vec{u}) = a\\,\\phi(\\vec{v}, \\vec{u}) + b\\,\\phi(\\vec{w}, \\vec{u}) = a\\,\\phi(\\vec{u}, \\vec{v}) + b\\,\\phi(\\vec{u}, \\vec{w})$$</p>
+                    content: `<p>La combinazione di linearità a sinistra e simmetria implica anche la <strong>linearità a destra</strong>. Per ogni $\\mathbf{u}, \\mathbf{v}, \\mathbf{w} \\in V$ e $a, b \\in \\mathbb{R}$:</p>
+<p>$$\\phi(\\mathbf{u},\\; a\\mathbf{v} + b\\mathbf{w}) = \\phi(a\\mathbf{v} + b\\mathbf{w},\\; \\mathbf{u}) = a\\,\\phi(\\mathbf{v}, \\mathbf{u}) + b\\,\\phi(\\mathbf{w}, \\mathbf{u}) = a\\,\\phi(\\mathbf{u}, \\mathbf{v}) + b\\,\\phi(\\mathbf{u}, \\mathbf{w})$$</p>
 <p>Il primo passaggio usa la simmetria, il secondo la linearità a sinistra, il terzo nuovamente la simmetria. Una funzione lineare in <strong>entrambi</strong> gli argomenti si dice <strong>bilineare</strong>.</p>`
                 }
             ],
             formulas: [
-                { label: "Linearità a sinistra", latex: "\\phi(a\\vec{u} + b\\vec{v},\\, \\vec{w}) = a\\,\\phi(\\vec{u}, \\vec{w}) + b\\,\\phi(\\vec{v}, \\vec{w})" },
-                { label: "Simmetria", latex: "\\phi(\\vec{u}, \\vec{v}) = \\phi(\\vec{v}, \\vec{u})" }
+                { label: "Linearità a sinistra", latex: "\\phi(a\\mathbf{u} + b\\mathbf{v},\\, \\mathbf{w}) = a\\,\\phi(\\mathbf{u}, \\mathbf{w}) + b\\,\\phi(\\mathbf{v}, \\mathbf{w})" },
+                { label: "Simmetria", latex: "\\phi(\\mathbf{u}, \\mathbf{v}) = \\phi(\\mathbf{v}, \\mathbf{u})" }
             ]
         },
         {
@@ -54,21 +54,21 @@ const LESSON = {
                 },
                 {
                     subtitle: "Esempio 2: Forme bilineari su ℝⁿ con matrice simmetrica",
-                    content: `<p>Fissiamo una matrice simmetrica $G \\in M_{n,n}(\\mathbb{R})$ (cioè $G^T = G$). Definiamo $\\phi: \\mathbb{R}^n \\times \\mathbb{R}^n \\to \\mathbb{R}$ come:</p>
-<p>$$\\phi(\\vec{x}, \\vec{y}) = \\vec{x}^T G\\, \\vec{y}$$</p>
-<p>dove $\\vec{x}$ e $\\vec{y}$ sono vettori colonna. Il risultato è una matrice $1 \\times 1$, che identifichiamo con il suo unico elemento reale (uno scalare).</p>
+                    content: `<p>Fissiamo una matrice simmetrica $G \\in \\mathcal{M}(n, n)$ (cioè $G^T = G$). Definiamo $\\phi: \\mathbb{R}^n \\times \\mathbb{R}^n \\to \\mathbb{R}$ come:</p>
+<p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = \\mathbf{x}^T G\\, \\mathbf{y}$$</p>
+<p>dove $\\mathbf{x}$ e $\\mathbf{y}$ sono vettori colonna. Il risultato è una matrice $1 \\times 1$, che identifichiamo con il suo unico elemento reale (uno scalare).</p>
 <p><strong>Linearità a sinistra</strong>:</p>
-<p>$$\\phi(a\\vec{x} + b\\vec{y},\\, \\vec{z}) = (a\\vec{x} + b\\vec{y})^T G\\,\\vec{z} = (a\\vec{x}^T + b\\vec{y}^T)G\\,\\vec{z} = a(\\vec{x}^T G\\,\\vec{z}) + b(\\vec{y}^T G\\,\\vec{z})$$</p>
-<p><strong>Simmetria</strong>: poiché $\\phi(\\vec{x}, \\vec{y})$ è uno scalare, coincide con la sua trasposta:</p>
-<p>$$\\phi(\\vec{x}, \\vec{y}) = (\\vec{x}^T G\\,\\vec{y})^T = \\vec{y}^T G^T \\vec{x} = \\vec{y}^T G\\,\\vec{x} = \\phi(\\vec{y}, \\vec{x})$$</p>
+<p>$$\\phi(a\\mathbf{x} + b\\mathbf{y},\\, \\mathbf{z}) = (a\\mathbf{x} + b\\mathbf{y})^T G\\,\\mathbf{z} = (a\\mathbf{x}^T + b\\mathbf{y}^T)G\\,\\mathbf{z} = a(\\mathbf{x}^T G\\,\\mathbf{z}) + b(\\mathbf{y}^T G\\,\\mathbf{z})$$</p>
+<p><strong>Simmetria</strong>: poiché $\\phi(\\mathbf{x}, \\mathbf{y})$ è uno scalare, coincide con la sua trasposta:</p>
+<p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = (\\mathbf{x}^T G\\,\\mathbf{y})^T = \\mathbf{y}^T G^T \\mathbf{x} = \\mathbf{y}^T G\\,\\mathbf{x} = \\phi(\\mathbf{y}, \\mathbf{x})$$</p>
 <p>dove nell'ultimo passaggio abbiamo usato $G^T = G$.</p>
 <p>Per $n=2$, con $G = \\begin{pmatrix} g_{11} & g_{12} \\\\ g_{12} & g_{22} \\end{pmatrix}$, la forma diventa il polinomio omogeneo:</p>
-<p>$$\\phi(\\vec{x}, \\vec{y}) = g_{11}x_1y_1 + g_{12}(x_1y_2 + x_2y_1) + g_{22}x_2y_2$$</p>`
+<p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = g_{11}x_1y_1 + g_{12}(x_1y_2 + x_2y_1) + g_{22}x_2y_2$$</p>`
                 }
             ],
             formulas: [
                 { label: "Forma su ℝ", latex: "\\phi(x,y) = g\\,xy \\quad\\text{con } g = \\phi(1,1)" },
-                { label: "Forma su ℝⁿ", latex: "\\phi(\\vec{x}, \\vec{y}) = \\vec{x}^T G\\, \\vec{y}" }
+                { label: "Forma su ℝⁿ", latex: "\\phi(\\mathbf{x}, \\mathbf{y}) = \\mathbf{x}^T G\\, \\mathbf{y}" }
             ]
         },
         {
@@ -80,24 +80,24 @@ const LESSON = {
             subsections: [
                 {
                     subtitle: "Definizione",
-                    content: `<p>Sia $\\phi$ una forma bilineare simmetrica su $V$ di dimensione $n$, e sia $B = \\{\\vec{b}_1, \\vec{b}_2, \\dots, \\vec{b}_n\\}$ una base di $V$. La <strong>matrice di Gram</strong> di $\\phi$ rispetto a $B$, denotata $G_B(\\phi)$ o semplicemente $G_B$, è la matrice $n \\times n$ con componenti:</p>
-<p>$$g_{ij} = \\phi(\\vec{b}_i, \\vec{b}_j)$$</p>
+                    content: `<p>Sia $\\phi$ una forma bilineare simmetrica su $V$ di dimensione $n$, e sia $\\mathcal{B} = \\{\\mathbf{b}_1, \\mathbf{b}_2, \\dots, \\mathbf{b}_n\\}$ una base di $V$. La <strong>matrice di Gram</strong> di $\\phi$ rispetto a $\\mathcal{B}$, denotata $G_{\\mathcal{B}}(\\phi)$ o semplicemente $G_{\\mathcal{B}}$, è la matrice $n \\times n$ con componenti:</p>
+<p>$$g_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j)$$</p>
 <p>La matrice di Gram è sempre <strong>simmetrica</strong>, per la simmetria di $\\phi$:</p>
-<p>$$g_{ij} = \\phi(\\vec{b}_i, \\vec{b}_j) = \\phi(\\vec{b}_j, \\vec{b}_i) = g_{ji}$$</p>`
+<p>$$g_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j) = \\phi(\\mathbf{b}_j, \\mathbf{b}_i) = g_{ji}$$</p>`
                 },
                 {
                     subtitle: "Calcolo della forma tramite coordinate",
-                    content: `<p><strong>Proposizione.</strong> Per ogni coppia di vettori $\\vec{u}, \\vec{v} \\in V$, se $\\vec{x} = [\\vec{u}]_B$ e $\\vec{y} = [\\vec{v}]_B$ sono i vettori delle coordinate rispetto a $B$, allora:</p>
-<p>$$\\phi(\\vec{u}, \\vec{v}) = \\vec{x}^T G_B\\, \\vec{y}$$</p>
-<p><strong>Dimostrazione.</strong> Scriviamo $\\vec{u} = \\sum_{i=1}^n x_i \\vec{b}_i$ e $\\vec{v} = \\sum_{j=1}^n y_j \\vec{b}_j$. Usando la bilinearità:</p>
-<p>$$\\phi(\\vec{u}, \\vec{v}) = \\phi\\!\\left(\\sum_i x_i \\vec{b}_i,\\; \\sum_j y_j \\vec{b}_j\\right) = \\sum_i x_i \\sum_j y_j\\, \\phi(\\vec{b}_i, \\vec{b}_j) = \\sum_{i,j} x_i\\, g_{ij}\\, y_j$$</p>
-<p>Questa doppia sommatoria è esattamente il prodotto matriciale $\\vec{x}^T G_B\\, \\vec{y}$. $\\square$</p>
+                    content: `<p><strong>Proposizione.</strong> Per ogni coppia di vettori $\\mathbf{u}, \\mathbf{v} \\in V$, se $\\mathbf{x} = [\\mathbf{u}]_{\\mathcal{B}}$ e $\\mathbf{y} = [\\mathbf{v}]_{\\mathcal{B}}$ sono i vettori delle coordinate rispetto a $\\mathcal{B}$, allora:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T G_{\\mathcal{B}}\\, \\mathbf{y}$$</p>
+<p><strong>Dimostrazione.</strong> Scriviamo $\\mathbf{u} = \\sum_{i=1}^n x_i \\mathbf{b}_i$ e $\\mathbf{v} = \\sum_{j=1}^n y_j \\mathbf{b}_j$. Usando la bilinearità:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = \\phi\\!\\left(\\sum_i x_i \\mathbf{b}_i,\\; \\sum_j y_j \\mathbf{b}_j\\right) = \\sum_i x_i \\sum_j y_j\\, \\phi(\\mathbf{b}_i, \\mathbf{b}_j) = \\sum_{i,j} x_i\\, g_{ij}\\, y_j$$</p>
+<p>Questa doppia sommatoria è esattamente il prodotto matriciale $\\mathbf{x}^T G_{\\mathcal{B}}\\, \\mathbf{y}$. $\\square$</p>
 <p>Questo risultato è fondamentale: la matrice di Gram <strong>codifica completamente</strong> la forma bilineare rispetto a una data base.</p>`
                 }
             ],
             formulas: [
-                { label: "Componenti della matrice di Gram", latex: "g_{ij} = \\phi(\\vec{b}_i, \\vec{b}_j)" },
-                { label: "Calcolo con coordinate", latex: "\\phi(\\vec{u}, \\vec{v}) = \\vec{x}^T G_B\\, \\vec{y}" }
+                { label: "Componenti della matrice di Gram", latex: "g_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j)" },
+                { label: "Calcolo con coordinate", latex: "\\phi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T G_{\\mathcal{B}}\\, \\mathbf{y}" }
             ]
         },
         {
@@ -109,19 +109,19 @@ const LESSON = {
             subsections: [
                 {
                     subtitle: "Formula del cambiamento di base",
-                    content: `<p><strong>Proposizione.</strong> Siano $B$ e $B'$ due basi di $V$, con matrici di Gram $G = G_B(\\phi)$ e $G' = G_{B'}(\\phi)$. Se $P$ è la matrice le cui colonne sono le coordinate dei vettori di $B'$ rispetto a $B$ (cioè la matrice di cambiamento di base da $B'$ a $B$), allora:</p>
+                    content: `<p><strong>Proposizione.</strong> Siano $\\mathcal{B}$ e $\\mathcal{B}'$ due basi di $V$, con matrici di Gram $G = G_{\\mathcal{B}}(\\phi)$ e $G' = G_{\\mathcal{B}'}(\\phi)$. Se $P$ è la matrice le cui colonne sono le coordinate dei vettori di $\\mathcal{B}'$ rispetto a $\\mathcal{B}$ (cioè la matrice di cambiamento di base da $\\mathcal{B}'$ a $\\mathcal{B}$), allora:</p>
 <p>$$G' = P^T G\\, P$$</p>
-<p><strong>Dimostrazione.</strong> Per ogni $\\vec{u}, \\vec{v} \\in V$, siano $\\vec{x}, \\vec{y}$ le coordinate rispetto a $B$ e $\\vec{x}', \\vec{y}'$ le coordinate rispetto a $B'$. La relazione tra coordinate è:</p>
-<p>$$\\vec{x} = P\\vec{x}' \\qquad \\vec{y} = P\\vec{y}'$$</p>
-<p>Scrivendo $\\phi(\\vec{u}, \\vec{v})$ in entrambe le basi:</p>
-<p>$$\\phi(\\vec{u}, \\vec{v}) = \\vec{x}^T G\\, \\vec{y} = (P\\vec{x}')^T G\\, (P\\vec{y}') = (\\vec{x}')^T P^T G\\, P\\, \\vec{y}'$$</p>
-<p>Ma anche $\\phi(\\vec{u}, \\vec{v}) = (\\vec{x}')^T G'\\, \\vec{y}'$. Confrontando:</p>
-<p>$$(\\vec{x}')^T G'\\, \\vec{y}' = (\\vec{x}')^T (P^T G\\, P)\\, \\vec{y}'$$</p>
-<p>Per concludere che $G' = P^T G P$, scegliamo $\\vec{x}' = \\vec{e}_i$ e $\\vec{y}' = \\vec{e}_j$ (vettori della base canonica di $\\mathbb{R}^n$). Allora il membro sinistro dà $g'_{ij}$ e il membro destro dà $(P^T G P)_{ij}$, per ogni $i,j$. Dunque le due matrici sono uguali componente per componente. $\\square$</p>`
+<p><strong>Dimostrazione.</strong> Per ogni $\\mathbf{u}, \\mathbf{v} \\in V$, siano $\\mathbf{x}, \\mathbf{y}$ le coordinate rispetto a $\\mathcal{B}$ e $\\mathbf{x}', \\mathbf{y}'$ le coordinate rispetto a $\\mathcal{B}'$. La relazione tra coordinate è:</p>
+<p>$$\\mathbf{x} = P\\mathbf{x}' \\qquad \\mathbf{y} = P\\mathbf{y}'$$</p>
+<p>Scrivendo $\\phi(\\mathbf{u}, \\mathbf{v})$ in entrambe le basi:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T G\\, \\mathbf{y} = (P\\mathbf{x}')^T G\\, (P\\mathbf{y}') = (\\mathbf{x}')^T P^T G\\, P\\, \\mathbf{y}'$$</p>
+<p>Ma anche $\\phi(\\mathbf{u}, \\mathbf{v}) = (\\mathbf{x}')^T G'\\, \\mathbf{y}'$. Confrontando:</p>
+<p>$$(\\mathbf{x}')^T G'\\, \\mathbf{y}' = (\\mathbf{x}')^T (P^T G\\, P)\\, \\mathbf{y}'$$</p>
+<p>Per concludere che $G' = P^T G P$, scegliamo $\\mathbf{x}' = \\mathbf{e}_i$ e $\\mathbf{y}' = \\mathbf{e}_j$ (vettori della base canonica di $\\mathbb{R}^n$). Allora il membro sinistro dà $g'_{ij}$ e il membro destro dà $(P^T G P)_{ij}$, per ogni $i,j$. Dunque le due matrici sono uguali componente per componente. $\\square$</p>`
                 },
                 {
                     subtitle: "Matrici congruenti",
-                    content: `<p>Due matrici quadrate $A, B \\in M_{n,n}(\\mathbb{R})$ si dicono <strong>congruenti</strong> se esiste una matrice invertibile $P$ tale che:</p>
+                    content: `<p>Due matrici quadrate $A, B \\in \\mathcal{M}(n, n)$ si dicono <strong>congruenti</strong> se esiste una matrice invertibile $P$ tale che:</p>
 <p>$$B = P^T A\\, P$$</p>
 <p>La proposizione ci dice che <strong>due matrici di Gram della stessa forma bilineare rispetto a basi diverse sono sempre congruenti</strong>.</p>
 <p>Attenzione alla differenza con la <strong>similitudine</strong> ($B = P^{-1}AP$), che descrive il cambiamento di base per le applicazioni lineari. Per le forme bilineari la formula è $P^T A P$, non $P^{-1} A P$.</p>`
@@ -137,8 +137,8 @@ const LESSON = {
             type: "note_box",
             title: "Attenzione alla direzione di P",
             icon: "⚠️",
-            content: `<p>La matrice $P$ nella formula $G' = P^T G P$ è la matrice le cui <strong>colonne sono le coordinate dei vettori della nuova base $B'$ rispetto alla vecchia base $B$</strong>.</p>
-<p>Non confondere la direzione: $P$ porta le coordinate <em>da $B'$ a $B$</em> (cioè $\\vec{x} = P\\vec{x}'$). Nell'esempio che segue, $P = P^T$ per pura coincidenza numerica. <strong>In generale $P \\neq P^T$</strong> e il ruolo della trasposta nella formula è essenziale.</p>`
+            content: `<p>La matrice $P$ nella formula $G' = P^T G P$ è la matrice le cui <strong>colonne sono le coordinate dei vettori della nuova base $\\mathcal{B}'$ rispetto alla vecchia base $\\mathcal{B}$</strong>.</p>
+<p>Non confondere la direzione: $P$ porta le coordinate <em>da $\\mathcal{B}'$ a $\\mathcal{B}$</em> (cioè $\\mathbf{x} = P\\mathbf{x}'$). Nell'esempio che segue, $P = P^T$ per pura coincidenza numerica. <strong>In generale $P \\neq P^T$</strong> e il ruolo della trasposta nella formula è essenziale.</p>`
         },
         {
             id: "s35-diagramma-cambio",
@@ -147,7 +147,7 @@ const LESSON = {
             icon: "🗺️",
             content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
   <p><strong>📊 Diagramma 1 — Cambiamento di base per la matrice di Gram</strong></p>
-  <p><em>Diagramma commutativo che mostra: un vettore $\\vec{u} \\in V$ ha coordinate $\\vec{x}' = [\\vec{u}]_{B'}$ nella nuova base. La moltiplicazione per $P$ porta alle coordinate $\\vec{x} = P\\vec{x}' = [\\vec{u}]_B$ nella vecchia base. La forma $\\phi(\\vec{u}, \\vec{v})$ si calcola come $(\\vec{x}')^T G' \\vec{y}'$ oppure come $\\vec{x}^T G \\vec{y} = (P\\vec{x}')^T G (P\\vec{y}')$. La relazione $G' = P^T G P$ garantisce la coerenza.</em></p>
+  <p><em>Diagramma commutativo che mostra: un vettore $\\mathbf{u} \\in V$ ha coordinate $\\mathbf{x}' = [\\mathbf{u}]_{B'}$ nella nuova base. La moltiplicazione per $P$ porta alle coordinate $\\mathbf{x} = P\\mathbf{x}' = [\\mathbf{u}]_{\\mathcal{B}}$ nella vecchia base. La forma $\\phi(\\mathbf{u}, \\mathbf{v})$ si calcola come $(\\mathbf{x}')^T G' \\mathbf{y}'$ oppure come $\\mathbf{x}^T G \\mathbf{y} = (P\\mathbf{x}')^T G (P\\mathbf{y}')$. La relazione $G' = P^T G P$ garantisce la coerenza.</em></p>
   <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
 </div>`
         },
@@ -157,23 +157,23 @@ const LESSON = {
             title: "Esempio Completo su ℝ²",
             icon: "✏️",
             content: `<p>Applichiamo tutta la teoria a un esempio concreto. Consideriamo la forma bilineare su $\\mathbb{R}^2$:</p>
-<p>$$\\phi(\\vec{x}, \\vec{y}) = x_1y_1 + 3x_1y_2 + 3x_2y_1 + 2x_2y_2$$</p>
-<p>Sia $E = \\{\\vec{e}_1, \\vec{e}_2\\}$ la base canonica e $B = \\{\\vec{b}_1, \\vec{b}_2\\} = \\{(1,1),\\; (1,-1)\\}$.</p>`,
+<p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = x_1y_1 + 3x_1y_2 + 3x_2y_1 + 2x_2y_2$$</p>
+<p>Sia $\\mathcal{E} = \\{\\mathbf{e}_1, \\mathbf{e}_2\\}$ la base canonica e $\\mathcal{B} = \\{\\mathbf{b}_1, \\mathbf{b}_2\\} = \\{(1,1),\\; (1,-1)\\}$.</p>`,
             subsections: [
                 {
                     subtitle: "Passo 1 — Matrice di Gram rispetto a E",
                     content: `<p>I coefficienti del polinomio forniscono direttamente la matrice:</p>
-<p>$$G_E = \\begin{pmatrix} \\phi(\\vec{e}_1, \\vec{e}_1) & \\phi(\\vec{e}_1, \\vec{e}_2) \\\\ \\phi(\\vec{e}_2, \\vec{e}_1) & \\phi(\\vec{e}_2, \\vec{e}_2) \\end{pmatrix} = \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix}$$</p>`
+<p>$$G_E = \\begin{pmatrix} \\phi(\\mathbf{e}_1, \\mathbf{e}_1) & \\phi(\\mathbf{e}_1, \\mathbf{e}_2) \\\\ \\phi(\\mathbf{e}_2, \\mathbf{e}_1) & \\phi(\\mathbf{e}_2, \\mathbf{e}_2) \\end{pmatrix} = \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix}$$</p>`
                 },
                 {
                     subtitle: "Passo 2 — Matrice di Gram rispetto a B (calcolo diretto)",
-                    content: `<p>Calcoliamo le componenti $g'_{ij} = \\phi(\\vec{b}_i, \\vec{b}_j)$ una per una:</p>
+                    content: `<p>Calcoliamo le componenti $g'_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j)$ una per una:</p>
 <p>$$g'_{11} = \\phi((1,1),(1,1)) = 1 + 3 + 3 + 2 = 9$$</p>
 <p>$$g'_{12} = \\phi((1,1),(1,-1)) = 1 - 3 + 3 - 2 = -1$$</p>
 <p>$$g'_{21} = \\phi((1,-1),(1,1)) = 1 + 3 - 3 - 2 = -1$$</p>
 <p>$$g'_{22} = \\phi((1,-1),(1,-1)) = 1 - 3 - 3 + 2 = -3$$</p>
 <p>Quindi:</p>
-<p>$$G_B = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix}$$</p>`
+<p>$$G_{\\mathcal{B}} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix}$$</p>`
                 },
                 {
                     subtitle: "Passo 3 — Verifica con la formula di cambiamento di base",
@@ -184,14 +184,14 @@ const LESSON = {
 <p>Primo prodotto:</p>
 <p>$$\\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} = \\begin{pmatrix} 4 & 5 \\\\ -2 & 1 \\end{pmatrix}$$</p>
 <p>Secondo prodotto:</p>
-<p>$$\\begin{pmatrix} 4 & 5 \\\\ -2 & 1 \\end{pmatrix} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix} = G_B \\quad \\checkmark$$</p>`
+<p>$$\\begin{pmatrix} 4 & 5 \\\\ -2 & 1 \\end{pmatrix} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix} = G_{\\mathcal{B}} \\quad \\checkmark$$</p>`
                 },
                 {
-                    subtitle: "Passo 4 — Calcolo di φ(u,v) usando G_B",
-                    content: `<p>Siano $\\vec{u} = (1,1)$ e $\\vec{v} = (1,4)$. Troviamo le coordinate rispetto a $B$.</p>
-<p>$\\vec{u} = \\vec{b}_1 \\Rightarrow [\\vec{u}]_B = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}$</p>
-<p>Per $\\vec{v} = (1,4)$, risolviamo $(1,4) = c_1(1,1) + c_2(1,-1)$. Si trova $c_1 = \\frac{5}{2},\\; c_2 = -\\frac{3}{2}$.</p>
-<p>$$\\phi(\\vec{u}, \\vec{v}) = [\\vec{u}]_B^T\\, G_B\\, [\\vec{v}]_B = \\begin{pmatrix} 1 & 0 \\end{pmatrix} \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix} \\begin{pmatrix} 5/2 \\\\ -3/2 \\end{pmatrix}$$</p>
+                    subtitle: "Passo 4 — Calcolo di φ(u,v) usando G_{\\mathcal{B}}",
+                    content: `<p>Siano $\\mathbf{u} = (1,1)$ e $\\mathbf{v} = (1,4)$. Troviamo le coordinate rispetto a $\\mathcal{B}$.</p>
+<p>$\\mathbf{u} = \\mathbf{b}_1 \\Rightarrow [\\mathbf{u}]_{\\mathcal{B}} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}$</p>
+<p>Per $\\mathbf{v} = (1,4)$, risolviamo $(1,4) = c_1(1,1) + c_2(1,-1)$. Si trova $c_1 = \\frac{5}{2},\\; c_2 = -\\frac{3}{2}$.</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = [\\mathbf{u}]_{\\mathcal{B}}^T\\, G_{\\mathcal{B}}\\, [\\mathbf{v}]_{\\mathcal{B}} = \\begin{pmatrix} 1 & 0 \\end{pmatrix} \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix} \\begin{pmatrix} 5/2 \\\\ -3/2 \\end{pmatrix}$$</p>
 <p>$$= \\begin{pmatrix} 9 & -1 \\end{pmatrix} \\begin{pmatrix} 5/2 \\\\ -3/2 \\end{pmatrix} = \\frac{45}{2} + \\frac{3}{2} = 24$$</p>`
                 },
                 {
@@ -202,7 +202,7 @@ const LESSON = {
             ],
             formulas: [
                 { label: "G rispetto a E", latex: "G_E = \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix}" },
-                { label: "G rispetto a B", latex: "G_B = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix}" }
+                { label: "G rispetto a B", latex: "G_{\\mathcal{B}} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix}" }
             ]
         },
         {
@@ -223,18 +223,18 @@ const LESSON = {
                 {
                     subtitle: "Prodotto punto in ℝⁿ",
                     content: `<p>Il <strong>prodotto punto</strong> (o prodotto scalare standard) è:</p>
-<p>$$\\phi(\\vec{x}, \\vec{y}) = \\vec{x} \\cdot \\vec{y} = \\vec{x}^T \\vec{y} = \\sum_{i=1}^n x_i y_i$$</p>
-<p>La matrice di Gram rispetto alla base canonica è la <strong>matrice identità</strong> $I$, poiché $\\vec{x}^T I\\, \\vec{y} = \\vec{x}^T \\vec{y}$.</p>`
+<p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = \\mathbf{x} \\cdot \\mathbf{y} = \\mathbf{x}^T \\mathbf{y} = \\sum_{i=1}^n x_i y_i$$</p>
+<p>La matrice di Gram rispetto alla base canonica è la <strong>matrice identità</strong> $I$, poiché $\\mathbf{x}^T I\\, \\mathbf{y} = \\mathbf{x}^T \\mathbf{y}$.</p>`
                 },
                 {
                     subtitle: "Prodotto scalare geometrico",
                     content: `<p>Il prodotto scalare geometrico tra vettori è definito come:</p>
-<p>$$\\phi(\\vec{u}, \\vec{v}) = \\|\\vec{u}\\|\\, \\|\\vec{v}\\| \\cos\\theta$$</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = \\|\\mathbf{u}\\|\\, \\|\\mathbf{v}\\| \\cos\\theta$$</p>
 <p>dove $\\theta$ è l'angolo tra i due vettori. Si dimostra (usando il Teorema del Coseno) che questa è una forma bilineare simmetrica. Se si fissa una base ortonormale, questo prodotto coincide con il prodotto punto standard.</p>`
                 }
             ],
             formulas: [
-                { label: "Prodotto scalare standard", latex: "\\phi(\\vec{x}, \\vec{y}) = \\vec{x}^T \\vec{y} = \\sum_{i=1}^n x_i y_i" },
+                { label: "Prodotto scalare standard", latex: "\\phi(\\mathbf{x}, \\mathbf{y}) = \\mathbf{x}^T \\mathbf{y} = \\sum_{i=1}^n x_i y_i" },
                 { label: "Gram del prodotto standard", latex: "G_E = I" }
             ]
         },
@@ -253,16 +253,16 @@ const LESSON = {
                 },
                 {
                     subtitle: "Calcolo della matrice di Gram",
-                    content: `<p>Rispetto alla base canonica $B = \\{1, t, t^2\\}$, calcoliamo i 9 integrali $g_{ij} = \\phi(t^{i-1}, t^{j-1})$. Per simmetria bastano 6 calcoli:</p>
+                    content: `<p>Rispetto alla base canonica $\\mathcal{E} = \\{1, t, t^2\\}$, calcoliamo i 9 integrali $g_{ij} = \\phi(t^{i-1}, t^{j-1})$. Per simmetria bastano 6 calcoli:</p>
 <p>$$g_{11} = \\int_0^1 1 \\cdot 1\\, dt = 1 \\qquad g_{12} = \\int_0^1 t\\, dt = \\frac{1}{2} \\qquad g_{13} = \\int_0^1 t^2\\, dt = \\frac{1}{3}$$</p>
 <p>$$g_{22} = \\int_0^1 t^2\\, dt = \\frac{1}{3} \\qquad g_{23} = \\int_0^1 t^3\\, dt = \\frac{1}{4} \\qquad g_{33} = \\int_0^1 t^4\\, dt = \\frac{1}{5}$$</p>
 <p>La matrice di Gram risultante è:</p>
-<p>$$G_B = \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix}$$</p>
+<p>$$G_{\\mathcal{B}} = \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix}$$</p>
 <p>Questa è la celebre <strong>matrice di Hilbert</strong> $3 \\times 3$, il cui elemento generico è $g_{ij} = \\frac{1}{i+j-1}$.</p>`
                 },
                 {
-                    subtitle: "Applicazione: calcolo tramite G_B",
-                    content: `<p>Usiamo la matrice di Gram per calcolare $\\phi(1+t,\\; t^2)$. Le coordinate sono $[1+t]_B = (1, 1, 0)^T$ e $[t^2]_B = (0, 0, 1)^T$.</p>
+                    subtitle: "Applicazione: calcolo tramite G_{\\mathcal{B}}",
+                    content: `<p>Usiamo la matrice di Gram per calcolare $\\phi(1+t,\\; t^2)$. Le coordinate sono $[1+t]_{\\mathcal{B}} = (1, 1, 0)^T$ e $[t^2]_{\\mathcal{B}} = (0, 0, 1)^T$.</p>
 <p>$$\\phi(1+t,\\; t^2) = \\begin{pmatrix} 1 & 1 & 0 \\end{pmatrix} \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix} \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}$$</p>
 <p>$$= \\begin{pmatrix} 1 & 1 & 0 \\end{pmatrix} \\begin{pmatrix} 1/3 \\\\ 1/4 \\\\ 1/5 \\end{pmatrix} = \\frac{1}{3} + \\frac{1}{4} = \\frac{7}{12}$$</p>
 <p><strong>Verifica diretta</strong>:</p>
@@ -276,7 +276,7 @@ const LESSON = {
             ],
             formulas: [
                 { label: "Forma integrale", latex: "\\phi(p,q) = \\int_0^1 p(t)\\,q(t)\\, dt" },
-                { label: "Matrice di Hilbert 3×3", latex: "G_B = \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix}" }
+                { label: "Matrice di Hilbert 3×3", latex: "G_{\\mathcal{B}} = \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix}" }
             ]
         },
         {
@@ -290,9 +290,9 @@ const LESSON = {
                     subtitle: "Classificazione delle forme",
                     content: `<p>Una forma bilineare simmetrica $\\phi$ si dice:</p>
 <ul>
-<li><strong>Definita positiva</strong>: se $\\phi(\\vec{v}, \\vec{v}) \\gt 0$ per ogni $\\vec{v} \\neq \\vec{0}$.</li>
-<li><strong>Definita negativa</strong>: se $\\phi(\\vec{v}, \\vec{v}) \\lt 0$ per ogni $\\vec{v} \\neq \\vec{0}$.</li>
-<li><strong>Semidefinita positiva</strong>: se $\\phi(\\vec{v}, \\vec{v}) \\geq 0$ per ogni $\\vec{v}$.</li>
+<li><strong>Definita positiva</strong>: se $\\phi(\\mathbf{v}, \\mathbf{v}) \\gt 0$ per ogni $\\mathbf{v} \\neq \\mathbf{0}$.</li>
+<li><strong>Definita negativa</strong>: se $\\phi(\\mathbf{v}, \\mathbf{v}) \\lt 0$ per ogni $\\mathbf{v} \\neq \\mathbf{0}$.</li>
+<li><strong>Semidefinita positiva</strong>: se $\\phi(\\mathbf{v}, \\mathbf{v}) \\geq 0$ per ogni $\\mathbf{v}$.</li>
 <li><strong>Indefinita</strong>: se assume sia valori positivi che negativi.</li>
 </ul>
 <p>Per esempio, il prodotto scalare standard è definito positivo (con $G_E = I$), mentre la forma dell'esempio su $\\mathbb{R}^2$ (con $\\det G_E = 2 - 9 = -7 \\lt 0$) è indefinita.</p>`
@@ -320,7 +320,7 @@ const LESSON = {
                 headers: ["", "Applicazione Lineare", "Forma Bilineare Simm."],
                 rows: [
                     ["Oggetto", "$f: V \\to W$", "$\\phi: V \\times V \\to \\mathbb{R}$"],
-                    ["Matrice", "$A = M_B(f)$", "$G_B = (\\phi(\\vec{b}_i, \\vec{b}_j))$"],
+                    ["Matrice", "$A = M_B(f)$", "$G_{\\mathcal{B}} = (\\phi(\\mathbf{b}_i, \\mathbf{b}_j))$"],
                     ["Proprietà matrice", "Qualsiasi", "Simmetrica ($G = G^T$)"],
                     ["Cambio base", "$A' = P^{-1} A P$", "$G' = P^T G P$"],
                     ["Relazione", "Similitudine", "Congruenza"],
@@ -334,22 +334,22 @@ const LESSON = {
         {
             type: "definizione",
             front: "Cos'è una forma bilineare simmetrica su uno spazio vettoriale V?",
-            back: "È una funzione $\\phi: V \\times V \\to \\mathbb{R}$ che è <strong>lineare nel primo argomento</strong> ($\\phi(a\\vec{u}+b\\vec{v}, \\vec{w}) = a\\phi(\\vec{u},\\vec{w}) + b\\phi(\\vec{v},\\vec{w})$) e <strong>simmetrica</strong> ($\\phi(\\vec{u},\\vec{v}) = \\phi(\\vec{v},\\vec{u})$). La simmetria + linearità a sinistra implicano automaticamente la linearità a destra."
+            back: "È una funzione $\\phi: V \\times V \\to \\mathbb{R}$ che è <strong>lineare nel primo argomento</strong> ($\\phi(a\\mathbf{u}+b\\mathbf{v}, \\mathbf{w}) = a\\phi(\\mathbf{u},\\mathbf{w}) + b\\phi(\\mathbf{v},\\mathbf{w})$) e <strong>simmetrica</strong> ($\\phi(\\mathbf{u},\\mathbf{v}) = \\phi(\\mathbf{v},\\mathbf{u})$). La simmetria + linearità a sinistra implicano automaticamente la linearità a destra."
         },
         {
             type: "definizione",
-            front: "Cos'è la matrice di Gram di φ rispetto a una base B?",
-            back: "È la matrice $G_B$ di dimensione $n \\times n$ con componenti $g_{ij} = \\phi(\\vec{b}_i, \\vec{b}_j)$. È sempre <strong>simmetrica</strong>. Permette di calcolare $\\phi(\\vec{u}, \\vec{v}) = \\vec{x}^T G_B \\vec{y}$ dove $\\vec{x} = [\\vec{u}]_B$ e $\\vec{y} = [\\vec{v}]_B$."
+            front: "Cos'è la matrice di Gram di φ rispetto a una base $\\mathcal{B}$?",
+            back: "È la matrice $G_{\\mathcal{B}}$ di dimensione $n \\times n$ con componenti $g_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j)$. È sempre <strong>simmetrica</strong>. Permette di calcolare $\\phi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T G_{\\mathcal{B}} \\mathbf{y}$ dove $\\mathbf{x} = [\\mathbf{u}]_{\\mathcal{B}}$ e $\\mathbf{y} = [\\mathbf{v}]_{\\mathcal{B}}$."
         },
         {
             type: "formula",
             front: "Come si trasforma la matrice di Gram al cambiamento di base?",
-            back: "Se $P$ è la matrice le cui colonne sono le coordinate dei vettori della nuova base $B'$ rispetto alla vecchia base $B$, allora: $$G' = P^T G P$$ Questa è la relazione di <strong>congruenza</strong>, diversa dalla similitudine $A' = P^{-1}AP$ delle applicazioni lineari."
+            back: "Se $P$ è la matrice le cui colonne sono le coordinate dei vettori della nuova base $\\mathcal{B}'$ rispetto alla vecchia base $\\mathcal{B}$, allora: $$G' = P^T G P$$ Questa è la relazione di <strong>congruenza</strong>, diversa dalla similitudine $A' = P^{-1}AP$ delle applicazioni lineari."
         },
         {
             type: "dimostrazione",
             front: "Dimostra la formula G' = PᵀGP per il cambiamento di base della matrice di Gram.",
-            back: "Si scrive $\\phi(\\vec{u},\\vec{v})$ in due modi: in base $B$ è $\\vec{x}^T G \\vec{y}$, in base $B'$ è $(\\vec{x}')^T G' \\vec{y}'$. Poiché $\\vec{x} = P\\vec{x}'$ e $\\vec{y} = P\\vec{y}'$, si ha $\\vec{x}^T G \\vec{y} = (P\\vec{x}')^T G (P\\vec{y}') = (\\vec{x}')^T P^T G P \\vec{y}'$. Scegliendo $\\vec{x}' = \\vec{e}_i$ e $\\vec{y}' = \\vec{e}_j$ si ottiene $g'_{ij} = (P^T G P)_{ij}$ per ogni $i,j$, dunque $G' = P^T G P$."
+            back: "Si scrive $\\phi(\\mathbf{u},\\mathbf{v})$ in due modi: in base $\\mathcal{B}$ è $\\mathbf{x}^T G \\mathbf{y}$, in base $\\mathcal{B}'$ è $(\\mathbf{x}')^T G' \\mathbf{y}'$. Poiché $\\mathbf{x} = P\\mathbf{x}'$ e $\\mathbf{y} = P\\mathbf{y}'$, si ha $\\mathbf{x}^T G \\mathbf{y} = (P\\mathbf{x}')^T G (P\\mathbf{y}') = (\\mathbf{x}')^T P^T G P \\mathbf{y}'$. Scegliendo $\\mathbf{x}' = \\mathbf{e}_i$ e $\\mathbf{y}' = \\mathbf{e}_j$ si ottiene $g'_{ij} = (P^T G P)_{ij}$ per ogni $i,j$, dunque $G' = P^T G P$."
         },
         {
             type: "tranello",
@@ -364,12 +364,12 @@ const LESSON = {
         {
             type: "domanda",
             front: "Perché la matrice di Gram è sempre simmetrica?",
-            back: "Perché $g_{ij} = \\phi(\\vec{b}_i, \\vec{b}_j) = \\phi(\\vec{b}_j, \\vec{b}_i) = g_{ji}$, usando la simmetria della forma bilineare. La simmetria della matrice <strong>riflette</strong> la simmetria della forma."
+            back: "Perché $g_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j) = \\phi(\\mathbf{b}_j, \\mathbf{b}_i) = g_{ji}$, usando la simmetria della forma bilineare. La simmetria della matrice <strong>riflette</strong> la simmetria della forma."
         },
         {
             type: "domanda",
             front: "Qual è la matrice di Gram del prodotto scalare standard rispetto alla base canonica?",
-            back: "È la matrice identità $I$, poiché $g_{ij} = \\vec{e}_i \\cdot \\vec{e}_j = \\delta_{ij}$ (simbolo di Kronecker). Segue che $\\phi(\\vec{x},\\vec{y}) = \\vec{x}^T I \\vec{y} = \\vec{x}^T \\vec{y}$."
+            back: "È la matrice identità $I$, poiché $g_{ij} = \\mathbf{e}_i \\cdot \\mathbf{e}_j = \\delta_{ij}$ (simbolo di Kronecker). Segue che $\\phi(\\mathbf{x},\\mathbf{y}) = \\mathbf{x}^T I \\mathbf{y} = \\mathbf{x}^T \\mathbf{y}$."
         },
         {
             type: "domanda",
