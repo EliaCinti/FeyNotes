@@ -88,21 +88,21 @@ const LESSON = {
                 {
                     subtitle: "Autospazio V₀ (λ₁ = 0)",
                     content: `<p>Risolviamo $A\\mathbf{x} = \\mathbf{0}$. Riduciamo la matrice $A$:</p>
-<p>$$\\begin{pmatrix} 3 & 3 & -1 \\\\ -4 & -2 & 2 \\\\ -2 & 2 & 2 \\end{pmatrix} \\overset{\\text{riduzione}{\\longrightarrow}} \\begin{pmatrix} 3 & 3 & -1 \\\\ 0 & 2 & \\frac{2}{3} \\\\ 0 & 0 & 0 \\end{pmatrix}$$</p>
+<p>$$\\begin{pmatrix} 3 & 3 & -1 \\\\ -4 & -2 & 2 \\\\ -2 & 2 & 2 \\end{pmatrix} \\overset{\\text{riduzione}}{\\longrightarrow} \\begin{pmatrix} 3 & 3 & -1 \\\\ 0 & 2 & \\frac{2}{3} \\\\ 0 & 0 & 0 \\end{pmatrix}$$</p>
 <p>Rango 2, variabile libera $z$. Dalla seconda riga: $y = -\\frac{1}{3}z$. Dalla prima: $x = \\frac{2}{3}z$. Ponendo $z = 3$:</p>
 <p>$$\\mathbf{v}_1 = (2, -1, 3) \\qquad V_0 = \\text{Span}(\\mathbf{v}_1)$$</p>`
                 },
                 {
                     subtitle: "Autospazio V₁ (λ₂ = 1)",
                     content: `<p>Risolviamo $(A - I)\\mathbf{x} = \\mathbf{0}$:</p>
-<p>$$\\begin{pmatrix} 2 & 3 & -1 \\\\ -4 & -3 & 2 \\\\ -2 & 2 & 1 \\end{pmatrix} \\overset{\\text{riduzione}{\\longrightarrow}} \\begin{pmatrix} 2 & 3 & -1 \\\\ 0 & 3 & 0 \\\\ 0 & 0 & 0 \\end{pmatrix}$$</p>
+<p>$$\\begin{pmatrix} 2 & 3 & -1 \\\\ -4 & -3 & 2 \\\\ -2 & 2 & 1 \\end{pmatrix} \\overset{\\text{riduzione}}{\\longrightarrow} \\begin{pmatrix} 2 & 3 & -1 \\\\ 0 & 3 & 0 \\\\ 0 & 0 & 0 \\end{pmatrix}$$</p>
 <p>Rango 2, variabile libera $z$. Dalla seconda riga: $y = 0$. Dalla prima: $x = \\frac{1}{2}z$. Ponendo $z = 2$:</p>
 <p>$$\\mathbf{v}_2 = (1, 0, 2) \\qquad V_1 = \\text{Span}(\\mathbf{v}_2)$$</p>`
                 },
                 {
                     subtitle: "Autospazio V₂ (λ₃ = 2)",
                     content: `<p>Risolviamo $(A - 2I)\\mathbf{x} = \\mathbf{0}$:</p>
-<p>$$\\begin{pmatrix} 1 & 3 & -1 \\\\ -4 & -4 & 2 \\\\ -2 & 2 & 0 \\end{pmatrix} \\overset{\\text{riduzione}{\\longrightarrow}} \\begin{pmatrix} 1 & 3 & -1 \\\\ 0 & 8 & -2 \\\\ 0 & 0 & 0 \\end{pmatrix}$$</p>
+<p>$$\\begin{pmatrix} 1 & 3 & -1 \\\\ -4 & -4 & 2 \\\\ -2 & 2 & 0 \\end{pmatrix} \\overset{\\text{riduzione}}{\\longrightarrow} \\begin{pmatrix} 1 & 3 & -1 \\\\ 0 & 8 & -2 \\\\ 0 & 0 & 0 \\end{pmatrix}$$</p>
 <p>Rango 2, variabile libera $z$. Dalla seconda riga: $y = \\frac{1}{4}z$. Dalla prima: $x = \\frac{1}{4}z$. Ponendo $z = 4$:</p>
 <p>$$\\mathbf{v}_3 = (1, 1, 4) \\qquad V_2 = \\text{Span}(\\mathbf{v}_3)$$</p>`
                 },
