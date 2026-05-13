@@ -64,6 +64,33 @@ const LESSON = {
 <p>dove nell'ultimo passaggio abbiamo usato $G^T = G$.</p>
 <p>Per $n=2$, con $G = \\begin{pmatrix} g_{11} & g_{12} \\\\ g_{12} & g_{22} \\end{pmatrix}$, la forma diventa il polinomio omogeneo:</p>
 <p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = g_{11}x_1y_1 + g_{12}(x_1y_2 + x_2y_1) + g_{22}x_2y_2$$</p>`
+                },
+                {
+                    subtitle: "Controesempio: una forma bilineare non simmetrica",
+                    content: `<p>Non tutte le forme bilineari sono simmetriche! Consideriamo $\\phi: \\mathbb{R}^2 \\times \\mathbb{R}^2 \\to \\mathbb{R}$ definita da:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = x_1 y_1 + 3 x_1 y_2 - 5 x_2 y_1 + 2 x_2 y_2$$</p>
+<p>Questa funzione è <strong>bilineare</strong> (si verifica come nell'esempio precedente, osservando che $\\phi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T \\begin{pmatrix} 1 & 3 \\\\ -5 & 2 \\end{pmatrix} \\mathbf{y}$), ma <strong>non</strong> è simmetrica. Infatti:</p>
+<p>$$\\phi(\\mathbf{e}_1, \\mathbf{e}_2) = 3, \\qquad \\phi(\\mathbf{e}_2, \\mathbf{e}_1) = -5,$$</p>
+<p>quindi $\\phi(\\mathbf{e}_1, \\mathbf{e}_2) \\neq \\phi(\\mathbf{e}_2, \\mathbf{e}_1)$. La matrice associata $\\begin{pmatrix} 1 & 3 \\\\ -5 & 2 \\end{pmatrix}$ non è simmetrica, e questo riflette esattamente l'assenza della simmetria della forma.</p>`
+                },
+                {
+                    subtitle: "Esempio 3: il prodotto punto in ℝⁿ",
+                    content: `<p>Un caso fondamentale è il <strong>prodotto punto</strong> (o prodotto scalare standard) su $\\mathbb{R}^n$:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = x_1 y_1 + x_2 y_2 + \\cdots + x_n y_n = \\mathbf{x}^T \\mathbf{y}$$</p>
+<p>È una forma bilineare simmetrica: rientra nell'Esempio 2 con $G = I$ (matrice identità), che è simmetrica. La matrice di Gram rispetto alla base canonica è quindi semplicemente $G_{\\mathcal{E}} = I$.</p>`
+                },
+                {
+                    subtitle: "Esempio 4: prodotto scalare geometrico tra vettori",
+                    content: `<p>Sia $\\mathcal{V}_O$ lo spazio dei vettori geometrici applicati in un punto fissato $O$ dello spazio. Per $\\mathbf{u} = \\overrightarrow{OP}$ e $\\mathbf{v} = \\overrightarrow{OQ}$ si definisce <strong>prodotto scalare geometrico</strong>:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = \\|\\mathbf{u}\\| \\cdot \\|\\mathbf{v}\\| \\cdot \\cos\\widehat{\\mathbf{u}\\mathbf{v}}$$</p>
+<p>dove $\\|\\mathbf{u}\\|, \\|\\mathbf{v}\\|$ sono le lunghezze e $\\widehat{\\mathbf{u}\\mathbf{v}}$ l'angolo tra i due vettori.</p>
+<p><strong>Perché è una forma bilineare simmetrica?</strong> Si applica la <em>regola del coseno</em> al triangolo $OPQ$:</p>
+<p>$$\\|\\mathbf{u} - \\mathbf{v}\\|^2 = \\|\\mathbf{u}\\|^2 + \\|\\mathbf{v}\\|^2 - 2 \\|\\mathbf{u}\\| \\, \\|\\mathbf{v}\\| \\cos\\widehat{\\mathbf{u}\\mathbf{v}},$$</p>
+<p>da cui</p>
+<p>$$\\|\\mathbf{u}\\| \\, \\|\\mathbf{v}\\| \\cos\\widehat{\\mathbf{u}\\mathbf{v}} = \\tfrac{1}{2}\\!\\left( \\|\\mathbf{u}\\|^2 + \\|\\mathbf{v}\\|^2 - \\|\\mathbf{u} - \\mathbf{v}\\|^2 \\right). \\qquad (*)$$</p>
+<p>Fissata una base $\\{\\mathbf{e}_1, \\mathbf{e}_2, \\mathbf{e}_3\\}$ di $\\mathcal{V}_O$ formata da vettori di lunghezza $1$ mutuamente ortogonali, dette $\\mathbf{x}, \\mathbf{y}$ le coordinate di $\\mathbf{u}, \\mathbf{v}$ rispetto a tale base, dal teorema di Pitagora si ha $\\|\\mathbf{u}\\|^2 = x_1^2 + x_2^2 + x_3^2$, e analogamente per $\\mathbf{v}$ e $\\mathbf{u} - \\mathbf{v}$. Sostituendo in $(*)$:</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = x_1 y_1 + x_2 y_2 + x_3 y_3 = \\mathbf{x}^T \\mathbf{y}.$$</p>
+<p>Quindi, in coordinate rispetto a una base ortonormale, il prodotto scalare geometrico <strong>coincide</strong> col prodotto punto. È dunque una forma bilineare simmetrica.</p>`
                 }
             ],
             formulas: [
@@ -158,7 +185,7 @@ const LESSON = {
             icon: "✏️",
             content: `<p>Applichiamo tutta la teoria a un esempio concreto. Consideriamo la forma bilineare su $\\mathbb{R}^2$:</p>
 <p>$$\\phi(\\mathbf{x}, \\mathbf{y}) = x_1y_1 + 3x_1y_2 + 3x_2y_1 + 2x_2y_2$$</p>
-<p>Sia $\\mathcal{E} = \\{\\mathbf{e}_1, \\mathbf{e}_2\\}$ la base canonica e $\\mathcal{B} = \\{\\mathbf{b}_1, \\mathbf{b}_2\\} = \\{(1,1),\\; (1,-1)\\}$.</p>`,
+<p>Sia $\\mathcal{E} = \\{\\mathbf{e}_1, \\mathbf{e}_2\\}$ la base canonica e $\\mathcal{B} = \\{\\mathbf{b}_1, \\mathbf{b}_2\\} = \\{(1,1),\\; (1,2)\\}$.</p>`,
             subsections: [
                 {
                     subtitle: "Passo 1 — Matrice di Gram rispetto a E",
@@ -169,40 +196,40 @@ const LESSON = {
                     subtitle: "Passo 2 — Matrice di Gram rispetto a B (calcolo diretto)",
                     content: `<p>Calcoliamo le componenti $g'_{ij} = \\phi(\\mathbf{b}_i, \\mathbf{b}_j)$ una per una:</p>
 <p>$$g'_{11} = \\phi((1,1),(1,1)) = 1 + 3 + 3 + 2 = 9$$</p>
-<p>$$g'_{12} = \\phi((1,1),(1,-1)) = 1 - 3 + 3 - 2 = -1$$</p>
-<p>$$g'_{21} = \\phi((1,-1),(1,1)) = 1 + 3 - 3 - 2 = -1$$</p>
-<p>$$g'_{22} = \\phi((1,-1),(1,-1)) = 1 - 3 - 3 + 2 = -3$$</p>
+<p>$$g'_{12} = \\phi((1,1),(1,2)) = 1 + 6 + 3 + 4 = 14$$</p>
+<p>$$g'_{21} = \\phi((1,2),(1,1)) = 1 + 3 + 6 + 4 = 14$$</p>
+<p>$$g'_{22} = \\phi((1,2),(1,2)) = 1 + 6 + 6 + 8 = 21$$</p>
 <p>Quindi:</p>
-<p>$$G_{\\mathcal{B}} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix}$$</p>`
+<p>$$G_{\\mathcal{B}} = \\begin{pmatrix} 9 & 14 \\\\ 14 & 21 \\end{pmatrix}$$</p>`
                 },
                 {
                     subtitle: "Passo 3 — Verifica con la formula di cambiamento di base",
-                    content: `<p>La matrice $P$ le cui colonne sono i vettori di $B$ espressi in coordinate rispetto a $E$ è:</p>
-<p>$$P = \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix}$$</p>
-<p>Calcoliamo $P^T G_E P$ (notare che qui $P^T = P$ <strong>per pura coincidenza</strong>):</p>
-<p>$$P^T G_E P = \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix}$$</p>
+                    content: `<p>La matrice $P$ le cui colonne sono i vettori di $\\mathcal{B}$ espressi in coordinate rispetto a $\\mathcal{E}$ è:</p>
+<p>$$P = \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix}$$</p>
+<p>Calcoliamo $P^T G_{\\mathcal{E}} P$:</p>
+<p>$$P^T G_{\\mathcal{E}} P = \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix} \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix}$$</p>
 <p>Primo prodotto:</p>
-<p>$$\\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} = \\begin{pmatrix} 4 & 5 \\\\ -2 & 1 \\end{pmatrix}$$</p>
+<p>$$\\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix} \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} = \\begin{pmatrix} 4 & 5 \\\\ 7 & 7 \\end{pmatrix}$$</p>
 <p>Secondo prodotto:</p>
-<p>$$\\begin{pmatrix} 4 & 5 \\\\ -2 & 1 \\end{pmatrix} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix} = G_{\\mathcal{B}} \\quad \\checkmark$$</p>`
+<p>$$\\begin{pmatrix} 4 & 5 \\\\ 7 & 7 \\end{pmatrix} \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix} = \\begin{pmatrix} 9 & 14 \\\\ 14 & 21 \\end{pmatrix} = G_{\\mathcal{B}} \\quad \\checkmark$$</p>`
                 },
                 {
                     subtitle: "Passo 4 — Calcolo di φ(u,v) usando G_{\\mathcal{B}}",
-                    content: `<p>Siano $\\mathbf{u} = (1,1)$ e $\\mathbf{v} = (1,4)$. Troviamo le coordinate rispetto a $\\mathcal{B}$.</p>
+                    content: `<p>Siano $\\mathbf{u} = (1,1)$ e $\\mathbf{v} = (2,0)$. Troviamo le coordinate rispetto a $\\mathcal{B}$.</p>
 <p>$\\mathbf{u} = \\mathbf{b}_1 \\Rightarrow [\\mathbf{u}]_{\\mathcal{B}} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}$</p>
-<p>Per $\\mathbf{v} = (1,4)$, risolviamo $(1,4) = c_1(1,1) + c_2(1,-1)$. Si trova $c_1 = \\frac{5}{2},\\; c_2 = -\\frac{3}{2}$.</p>
-<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = [\\mathbf{u}]_{\\mathcal{B}}^T\\, G_{\\mathcal{B}}\\, [\\mathbf{v}]_{\\mathcal{B}} = \\begin{pmatrix} 1 & 0 \\end{pmatrix} \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix} \\begin{pmatrix} 5/2 \\\\ -3/2 \\end{pmatrix}$$</p>
-<p>$$= \\begin{pmatrix} 9 & -1 \\end{pmatrix} \\begin{pmatrix} 5/2 \\\\ -3/2 \\end{pmatrix} = \\frac{45}{2} + \\frac{3}{2} = 24$$</p>`
+<p>Per $\\mathbf{v} = (2,0)$, risolviamo $(2,0) = c_1(1,1) + c_2(1,2)$. Dal sistema $c_1+c_2=2$, $c_1+2c_2=0$ si trova $c_1 = 4,\\; c_2 = -2$. Quindi $[\\mathbf{v}]_{\\mathcal{B}} = (4, -2)^T$.</p>
+<p>$$\\phi(\\mathbf{u}, \\mathbf{v}) = [\\mathbf{u}]_{\\mathcal{B}}^T\\, G_{\\mathcal{B}}\\, [\\mathbf{v}]_{\\mathcal{B}} = \\begin{pmatrix} 1 & 0 \\end{pmatrix} \\begin{pmatrix} 9 & 14 \\\\ 14 & 21 \\end{pmatrix} \\begin{pmatrix} 4 \\\\ -2 \\end{pmatrix}$$</p>
+<p>$$= \\begin{pmatrix} 9 & 14 \\end{pmatrix} \\begin{pmatrix} 4 \\\\ -2 \\end{pmatrix} = 36 - 28 = 8$$</p>`
                 },
                 {
                     subtitle: "Passo 5 — Verifica diretta",
-                    content: `<p>$$\\phi((1,1),(1,4)) = 1(1) + 3(1)(4) + 3(1)(1) + 2(1)(4) = 1 + 12 + 3 + 8 = 24 \\quad \\checkmark$$</p>
+                    content: `<p>$$\\phi((1,1),(2,0)) = 1 \\cdot 2 + 3 \\cdot 1 \\cdot 0 + 3 \\cdot 1 \\cdot 2 + 2 \\cdot 1 \\cdot 0 = 2 + 0 + 6 + 0 = 8 \\quad \\checkmark$$</p>
 <p>I due metodi danno lo stesso risultato, come garantito dalla teoria.</p>`
                 }
             ],
             formulas: [
                 { label: "G rispetto a E", latex: "G_E = \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix}" },
-                { label: "G rispetto a B", latex: "G_{\\mathcal{B}} = \\begin{pmatrix} 9 & -1 \\\\ -1 & -3 \\end{pmatrix}" }
+                { label: "G rispetto a B", latex: "G_{\\mathcal{B}} = \\begin{pmatrix} 9 & 14 \\\\ 14 & 21 \\end{pmatrix}" }
             ]
         },
         {
@@ -210,7 +237,7 @@ const LESSON = {
             type: "alert_box",
             title: "P = Pᵀ è una coincidenza!",
             icon: "🚨",
-            content: `<p>Nell'esempio precedente la matrice $P = \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix}$ è simmetrica, dunque $P = P^T$. Questo è un <strong>caso fortuito</strong> dovuto alla scelta particolare dei vettori di $B$.</p>
+            content: `<p>Nell'esempio precedente la matrice $P = \\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix}$ risulta simmetrica, dunque $P = P^T$. Anche qui è una <strong>coincidenza</strong> della scelta numerica.</p>
 <p>In generale $P \\neq P^T$, e nella formula $G' = P^T G P$ la trasposta e la matrice originale giocano ruoli diversi (una agisce "a sinistra", l'altra "a destra"). Non cadere nella trappola di semplificare la formula a $G' = P G P$ o $G' = P^2 G$!</p>`
         },
         {
@@ -236,47 +263,6 @@ const LESSON = {
             formulas: [
                 { label: "Prodotto scalare standard", latex: "\\phi(\\mathbf{x}, \\mathbf{y}) = \\mathbf{x}^T \\mathbf{y} = \\sum_{i=1}^n x_i y_i" },
                 { label: "Gram del prodotto standard", latex: "G_E = I" }
-            ]
-        },
-        {
-            id: "s35-polinomi",
-            type: "section",
-            title: "Esempio: Spazio di Polinomi e Matrice di Hilbert",
-            icon: "∫",
-            content: `<p>Questo esempio mostra che la teoria si applica a spazi molto diversi da $\\mathbb{R}^n$.</p>`,
-            subsections: [
-                {
-                    subtitle: "Definizione della forma bilineare",
-                    content: `<p>Sia $V = \\mathbb{R}_2[t]$ lo spazio dei polinomi di grado $\\leq 2$. Definiamo:</p>
-<p>$$\\phi(p(t), q(t)) = \\int_0^1 p(t)\\,q(t)\\, dt$$</p>
-<p>Questa è una forma bilineare simmetrica (la linearità viene dalle proprietà dell'integrale, la simmetria dal fatto che $p(t)q(t) = q(t)p(t)$).</p>`
-                },
-                {
-                    subtitle: "Calcolo della matrice di Gram",
-                    content: `<p>Rispetto alla base canonica $\\mathcal{E} = \\{1, t, t^2\\}$, calcoliamo i 9 integrali $g_{ij} = \\phi(t^{i-1}, t^{j-1})$. Per simmetria bastano 6 calcoli:</p>
-<p>$$g_{11} = \\int_0^1 1 \\cdot 1\\, dt = 1 \\qquad g_{12} = \\int_0^1 t\\, dt = \\frac{1}{2} \\qquad g_{13} = \\int_0^1 t^2\\, dt = \\frac{1}{3}$$</p>
-<p>$$g_{22} = \\int_0^1 t^2\\, dt = \\frac{1}{3} \\qquad g_{23} = \\int_0^1 t^3\\, dt = \\frac{1}{4} \\qquad g_{33} = \\int_0^1 t^4\\, dt = \\frac{1}{5}$$</p>
-<p>La matrice di Gram risultante è:</p>
-<p>$$G_{\\mathcal{B}} = \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix}$$</p>
-<p>Questa è la celebre <strong>matrice di Hilbert</strong> $3 \\times 3$, il cui elemento generico è $g_{ij} = \\frac{1}{i+j-1}$.</p>`
-                },
-                {
-                    subtitle: "Applicazione: calcolo tramite G_{\\mathcal{B}}",
-                    content: `<p>Usiamo la matrice di Gram per calcolare $\\phi(1+t,\\; t^2)$. Le coordinate sono $[1+t]_{\\mathcal{B}} = (1, 1, 0)^T$ e $[t^2]_{\\mathcal{B}} = (0, 0, 1)^T$.</p>
-<p>$$\\phi(1+t,\\; t^2) = \\begin{pmatrix} 1 & 1 & 0 \\end{pmatrix} \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix} \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}$$</p>
-<p>$$= \\begin{pmatrix} 1 & 1 & 0 \\end{pmatrix} \\begin{pmatrix} 1/3 \\\\ 1/4 \\\\ 1/5 \\end{pmatrix} = \\frac{1}{3} + \\frac{1}{4} = \\frac{7}{12}$$</p>
-<p><strong>Verifica diretta</strong>:</p>
-<p>$$\\int_0^1 (1+t)\\,t^2\\, dt = \\int_0^1 (t^2 + t^3)\\, dt = \\frac{1}{3} + \\frac{1}{4} = \\frac{7}{12} \\quad \\checkmark$$</p>`
-                },
-                {
-                    subtitle: "Osservazione sulla matrice di Hilbert",
-                    content: `<p>La matrice di Hilbert è un oggetto famoso in analisi numerica: è <strong>definita positiva</strong> (tutti gli autovalori sono positivi), ma è anche notoriamente <strong>mal condizionata</strong> — il rapporto tra il più grande e il più piccolo autovalore cresce rapidamente con la dimensione. Questo significa che piccoli errori di arrotondamento possono causare grandi errori nei calcoli.</p>
-<p>Il fatto che sia definita positiva riflette una proprietà della forma: $\\phi(p,p) = \\int_0^1 p(t)^2\\, dt \\geq 0$, e vale $0$ solo se $p = 0$. Questa è la definizione di <strong>prodotto scalare</strong> (forma bilineare simmetrica definita positiva).</p>`
-                }
-            ],
-            formulas: [
-                { label: "Forma integrale", latex: "\\phi(p,q) = \\int_0^1 p(t)\\,q(t)\\, dt" },
-                { label: "Matrice di Hilbert 3×3", latex: "G_{\\mathcal{B}} = \\begin{pmatrix} 1 & 1/2 & 1/3 \\\\ 1/2 & 1/3 & 1/4 \\\\ 1/3 & 1/4 & 1/5 \\end{pmatrix}" }
             ]
         },
         {
@@ -312,21 +298,53 @@ const LESSON = {
         },
         {
             id: "s35-riepilogo",
-            type: "oral_box",
+            type: "note_box",
             title: "Schema Riepilogativo: Applicazioni Lineari vs Forme Bilineari",
             icon: "⚖️",
-            content: `<p>Le due teorie hanno strutture parallele ma formule diverse:</p>`,
-            table_compare: {
-                headers: ["", "Applicazione Lineare", "Forma Bilineare Simm."],
-                rows: [
-                    ["Oggetto", "$f: V \\to W$", "$\\phi: V \\times V \\to \\mathbb{R}$"],
-                    ["Matrice", "$A = M_B(f)$", "$G_{\\mathcal{B}} = (\\phi(\\mathbf{b}_i, \\mathbf{b}_j))$"],
-                    ["Proprietà matrice", "Qualsiasi", "Simmetrica ($G = G^T$)"],
-                    ["Cambio base", "$A' = P^{-1} A P$", "$G' = P^T G P$"],
-                    ["Relazione", "Similitudine", "Congruenza"],
-                    ["Invariante", "Autovalori", "Segnatura $(p,q)$"]
-                ]
-            }
+            content: `<p>Le due teorie hanno strutture parallele ma formule diverse:</p>
+<div style="overflow-x:auto; margin: 15px 0;">
+<table style="width:100%; border-collapse: collapse; font-size: 0.95em;">
+  <thead>
+    <tr style="background: var(--bg-alt, rgba(100,100,255,0.08)); border-bottom: 2px solid var(--accent, #4a90e2);">
+      <th style="padding: 8px 12px; text-align: left;"></th>
+      <th style="padding: 8px 12px; text-align: left;">Applicazione lineare</th>
+      <th style="padding: 8px 12px; text-align: left;">Forma bilineare simmetrica</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid var(--border-light, #eee);">
+      <td style="padding: 8px 12px;"><strong>Oggetto</strong></td>
+      <td style="padding: 8px 12px;">$f: V \\to W$</td>
+      <td style="padding: 8px 12px;">$\\phi: V \\times V \\to \\mathbb{R}$</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-light, #eee);">
+      <td style="padding: 8px 12px;"><strong>Matrice</strong></td>
+      <td style="padding: 8px 12px;">$A = M_{\\mathcal{B}'}^{\\mathcal{B}}(f)$</td>
+      <td style="padding: 8px 12px;">$G_{\\mathcal{B}}^{\\mathcal{B}}(\\phi) = (\\phi(\\mathbf{b}_i, \\mathbf{b}_j))$</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-light, #eee);">
+      <td style="padding: 8px 12px;"><strong>Proprietà</strong></td>
+      <td style="padding: 8px 12px;">qualsiasi</td>
+      <td style="padding: 8px 12px;">simmetrica ($G = G^T$)</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-light, #eee);">
+      <td style="padding: 8px 12px;"><strong>Cambio base</strong></td>
+      <td style="padding: 8px 12px;">$A' = P^{-1} A P$</td>
+      <td style="padding: 8px 12px;">$G' = P^T G P$</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-light, #eee);">
+      <td style="padding: 8px 12px;"><strong>Relazione</strong></td>
+      <td style="padding: 8px 12px;">similitudine</td>
+      <td style="padding: 8px 12px;">congruenza</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px 12px;"><strong>Invariante</strong></td>
+      <td style="padding: 8px 12px;">autovalori</td>
+      <td style="padding: 8px 12px;">segnatura $(p, q)$</td>
+    </tr>
+  </tbody>
+</table>
+</div>`
         }
     ],
 
@@ -378,8 +396,8 @@ const LESSON = {
         },
         {
             type: "domanda",
-            front: "Cos'è la matrice di Hilbert e perché compare nello studio delle forme bilineari?",
-            back: "La matrice di Hilbert $H_n$ ha componenti $h_{ij} = \\frac{1}{i+j-1}$. Compare come matrice di Gram della forma $\\phi(p,q) = \\int_0^1 p(t)q(t)\\,dt$ su $\\mathbb{R}_{n-1}[t]$ rispetto alla base canonica. È definita positiva (poiché $\\int_0^1 p^2 \\gt 0$ per $p \\neq 0$) ma notoriamente mal condizionata."
+            front: "Mostra con un controesempio che non tutte le forme bilineari sono simmetriche.",
+            back: "Su $\\mathbb{R}^2$ la forma $\\phi(\\mathbf{u}, \\mathbf{v}) = x_1 y_1 + 3 x_1 y_2 - 5 x_2 y_1 + 2 x_2 y_2$ è bilineare (la sua matrice è $\\begin{pmatrix} 1 & 3 \\\\ -5 & 2 \\end{pmatrix}$, e ogni forma del tipo $\\mathbf{x}^T M \\mathbf{y}$ è bilineare), ma $\\phi(\\mathbf{e}_1, \\mathbf{e}_2) = 3 \\neq -5 = \\phi(\\mathbf{e}_2, \\mathbf{e}_1)$, quindi non è simmetrica. La matrice associata non è simmetrica."
         }
     ]
 };
