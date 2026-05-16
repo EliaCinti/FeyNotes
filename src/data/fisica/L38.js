@@ -1,7 +1,7 @@
 const LESSON = {
     id: "L38", date: "Lezione 29 — 14 Mag 2026",
     title: "Dinamica del Corpo Rigido: Rotazione attorno a un Asse Fisso",
-    abstract: "Spostamenti infinitesimi di un corpo rigido, rotazione attorno a un asse fisso, momento di inerzia, assi principali di inerzia (Teorema di Poinsot), equazione del moto rotazionale M = Iα e il problema dell'equilibratura.",
+    abstract: "Spostamenti infinitesimi di un corpo rigido come combinazione di traslazione e rotazione. Rotazione attorno a un asse fisso: momento angolare assiale, momento di inerzia e l'equazione fondamentale della dinamica rotazionale M_z = I_z α. Analogia completa traslazione–rotazione. L'effetto ballerina come applicazione della conservazione del momento angolare.",
 
     sections: [
         {
@@ -9,8 +9,8 @@ const LESSON = {
             type: "section",
             title: "Spostamenti infinitesimi di un corpo rigido",
             icon: "🔄",
-            content: `<p>Riprendiamo il discorso lasciato in sospeso nella lezione precedente. Abbiamo visto che il moto più generale di un corpo rigido è una combinazione di traslazioni e rotazioni. Ora enunciamo un principio fondamentale che descrive gli spostamenti su scala infinitesima.</p>
-<p><strong>Principio degli spostamenti infinitesimi:</strong> Qualunque spostamento infinitesimo di un corpo rigido, che sia di traslazione, rotazione o roto-traslazione, è descrivibile come la combinazione di una <strong>traslazione infinitesima</strong> e una <strong>rotazione infinitesima</strong> attorno a un asse istantaneo di rotazione.</p>`,
+            content: `<p>Riprendendo il discorso della lezione precedente: abbiamo visto che il moto più generale di un corpo rigido è una combinazione di traslazioni e rotazioni. Ora enunciamo un principio fondamentale che descrive gli spostamenti su scala infinitesima.</p>
+<p><strong>Qualunque spostamento infinitesimo di un corpo rigido</strong>, che sia di traslazione, rotazione o roto-traslazione, <strong>è descrivibile come la combinazione di una traslazione infinitesima e una rotazione infinitesima attorno a un asse istantaneo di rotazione</strong>.</p>`,
             quote: {
                 text: "Questa affermazione, scritta in un italiano un po' «brutto», rende però l'idea fondamentale: per un intervallo di tempo infinitesimo dt, qualsiasi moto complesso di un corpo rigido può essere visto come una semplice rotazione attorno a un asse (che può cambiare da istante a istante) più una traslazione.",
                 src: "Nota del Prof."
@@ -18,27 +18,24 @@ const LESSON = {
             subsections: [
                 {
                     subtitle: "Esempio: il moto di puro rotolamento",
-                    content: `<p>Consideriamo una ruota che avanza rotolando senza strisciare su un piano. Questo moto è detto di <strong>puro rotolamento</strong>.</p>
-<p>Nel puro rotolamento, il punto di contatto $O$ tra la ruota e il piano ha istantaneamente velocità nulla (non slitta). Per un intervallo di tempo infinitesimo $dt$, possiamo pensare che l'intera ruota stia compiendo una piccola rotazione attorno al punto di contatto $O$. In questo frangente, $O$ si comporta come un asse di rotazione fisso.</p>
-
+                    content: `<p>Per convincersi di questo principio, analizziamo il <em>moto di puro rotolamento</em>: una ruota che avanza rotolando senza strisciare su un piano.</p>
+<p>Nel puro rotolamento, il punto di contatto $O$ tra la ruota e il piano ha istantaneamente <strong>velocità nulla</strong> (non slitta). Per un intervallo di tempo infinitesimo $dt$, l'intera ruota sta compiendo una piccola rotazione attorno al punto di contatto $O$, che si comporta come un asse di rotazione fisso.</p>
+<p><strong>Prima descrizione — pura rotazione attorno a $O$:</strong> l'unica equazione che serve è quella dei momenti rispetto al polo $O$:</p>
+<p>$$\\frac{d\\vec{L}_O}{dt} = \\vec{M}_{O,\\,ext}$$</p>
+<p><strong>Seconda descrizione — traslazione + rotazione:</strong> lo stesso moto si scompone in:</p>
+<ol>
+<li>Una <strong>traslazione</strong> del centro di massa $C$ con velocità $\\vec{v}_{CM}$.</li>
+<li>Una <strong>rotazione</strong> con velocità angolare $\\vec{\\omega}$ attorno a un asse passante per $C$.</li>
+</ol>
+<p>In questo caso il moto è governato dalle due equazioni cardinali:</p>
+<p>$$\\sum \\vec{F}_{ext} = \\frac{d\\vec{p}_{CM}}{dt}$$</p>
+<p>$$\\sum \\vec{M}_{C,\\,ext} = \\frac{d\\vec{L}_C}{dt}$$</p>
+<p>Lo stesso fenomeno fisico (il rotolamento) può dunque essere raccontato come una pura rotazione attorno a un asse istantaneo (il punto di contatto $O$), oppure come una combinazione di traslazione del centro di massa e rotazione attorno ad esso. Questo dimostra la validità del principio per gli spostamenti infinitesimi.</p>
 <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
   <p><strong>📊 Diagramma 1 — Ruota in moto di puro rotolamento</strong></p>
-  <p><em>Una ruota di raggio R appoggiata su un piano orizzontale. Centro di massa C con vettore velocità $\\vec{v}_C$ orizzontale (rosso). Punto di contatto O alla base. Freccia curva blu per $\\vec{\\omega}$. Raggio tratteggiato da O a C.</em></p>
+  <p><em>Ruota su piano orizzontale. Centro di massa C al centro della ruota, punto di contatto O alla base. Vettore $\\vec{v}_C$ orizzontale verso destra. Freccia curva per $\\vec{\\omega}$ attorno a C. Raggio tratteggiato da C a O.</em></p>
   <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
-</div>
-
-<p>Questo moto può essere descritto in <strong>due modi equivalenti</strong>:</p>
-<p><strong>Descrizione 1 — Pura rotazione attorno a O:</strong> l'unica equazione necessaria è quella dei momenti calcolata rispetto al polo $O$:</p>
-<p>$$\\frac{d\\vec{L}_O}{dt} = \\vec{M}_{O, ext}$$</p>
-<p><strong>Descrizione 2 — Traslazione + rotazione attorno al centro di massa:</strong> si scompone il moto in:</p>
-<ol>
-<li>Una <strong>traslazione</strong> del centro di massa $C$ con velocità $\\vec{v}_{CM}$</li>
-<li>Una <strong>rotazione</strong> con velocità angolare $\\vec{\\omega}$ attorno a un asse passante per $C$</li>
-</ol>
-<p>In questo caso servono le due equazioni cardinali della dinamica:</p>
-<p>$$\\sum \\vec{F}_{ext} = \\frac{d\\vec{p}_{CM}}{dt}$$</p>
-<p>$$\\sum \\vec{M}_{C, ext} = \\frac{d\\vec{L}_C}{dt}$$</p>
-<p>Lo stesso fenomeno fisico (il rotolamento) può dunque essere raccontato come una pura rotazione attorno a un asse istantaneo (il punto di contatto $O$), oppure come una combinazione di traslazione del centro di massa e rotazione attorno ad esso. Questo dimostra la validità del principio degli spostamenti infinitesimi.</p>`
+</div>`
                 }
             ]
         },
@@ -47,251 +44,227 @@ const LESSON = {
             type: "section",
             title: "Rotazione attorno a un asse fisso",
             icon: "⚙️",
-            content: `<p>Il principio appena visto vale per spostamenti infinitesimi, durante i quali l'asse istantaneo di rotazione può essere considerato fisso. Un caso particolare, ma estremamente importante e frequente in fisica e ingegneria, è quello in cui l'asse di rotazione <strong>non cambia nel tempo</strong>, cioè è un <strong>asse fisso</strong>.</p>
+            content: `<p>Il principio appena visto vale per spostamenti infinitesimi, durante i quali l'asse istantaneo di rotazione può essere considerato fisso. Un caso particolare ma estremamente importante è quello in cui l'asse di rotazione <strong>non cambia nel tempo</strong>, cioè è un <strong>asse fisso</strong>.</p>
 <p>Pensate a tutte le componenti in rotazione in un motore termico o elettrico, dall'asse motore all'asse delle ruote di un'auto: quasi tutto funziona girando attorno ad un asse fisso.</p>
 <p>Quando un corpo rigido ruota attorno a un asse fisso, valgono alcune proprietà importanti:</p>
 <ol>
 <li>La velocità angolare $\\omega$ è <strong>la stessa</strong> per tutti i punti del corpo rigido.</li>
 <li>Il vettore $\\vec{\\omega}$ ha <strong>direzione fissa</strong>, coincidente con quella dell'asse di rotazione. Possono cambiare il suo modulo e il suo verso, ma non la sua direzione.</li>
-<li>Anche il vettore accelerazione angolare $\\vec{\\alpha}$ è parallelo all'asse di rotazione.</li>
-<li>Tutti i punti del corpo rigido descrivono un <strong>moto circolare</strong> in un piano perpendicolare all'asse di rotazione.</li>
-</ol>
-<p><strong>Dimostrazione della proprietà 3:</strong> Sia $\\hat{u}_z$ il versore dell'asse di rotazione fisso. Allora $\\vec{\\omega}(t) = \\omega(t)\\hat{u}_z$. Poiché l'asse è fisso, $\\hat{u}_z$ è un vettore costante. Derivando rispetto al tempo:</p>
-<p>$$\\vec{\\alpha} = \\frac{d\\vec{\\omega}}{dt} = \\frac{d}{dt}(\\omega(t)\\hat{u}_z) = \\frac{d\\omega}{dt}\\hat{u}_z + \\omega \\frac{d\\hat{u}_z}{dt}$$</p>
-<p>Ma $\\frac{d\\hat{u}_z}{dt} = 0$, quindi:</p>
-<p>$$\\vec{\\alpha} = \\frac{d\\omega}{dt}\\hat{u}_z = \\alpha\\,\\hat{u}_z$$</p>
-<p>Questo dimostra che $\\vec{\\alpha}$ è parallelo a $\\hat{u}_z$ e quindi a $\\vec{\\omega}$.</p>`,
+<li>Il vettore accelerazione angolare $\\vec{\\alpha}$ è parallelo all'asse di rotazione.</li>
+<li>Tutti i punti (le «massette» infinitesime $dm$) del corpo rigido descrivono un <strong>moto circolare</strong> in un piano perpendicolare all'asse.</li>
+</ol>`,
             subsections: [
                 {
-                    subtitle: "Momento angolare per una rotazione attorno a un asse fisso",
-                    content: `<p>Calcoliamo il momento angolare di un corpo rigido che ruota attorno a un asse fisso $z$. Scegliamo un polo $O$ sull'asse di rotazione. Consideriamo una massetta $i$-esima $m_i$ del corpo, posta a distanza $\\vec{r}_i$ da $O$.</p>
-<p>La sua velocità è data dalla legge del moto circolare:</p>
+                    subtitle: "Dimostrazione: α è parallelo all'asse",
+                    content: `<p>Sia $\\hat{u}_z$ il versore dell'asse di rotazione fisso. Allora $\\vec{\\omega}(t) = \\omega(t)\\,\\hat{u}_z$. Poiché l'asse è fisso, $\\hat{u}_z$ è un vettore costante. Derivando rispetto al tempo:</p>
+<p>$$\\vec{\\alpha} = \\frac{d\\vec{\\omega}}{dt} = \\frac{d}{dt}\\bigl(\\omega(t)\\,\\hat{u}_z\\bigr) = \\frac{d\\omega}{dt}\\hat{u}_z + \\omega\\,\\frac{d\\hat{u}_z}{dt}$$</p>
+<p>Ma $\\frac{d\\hat{u}_z}{dt} = 0$ (asse fisso), quindi:</p>
+<p>$$\\vec{\\alpha} = \\frac{d\\omega}{dt}\\hat{u}_z = \\alpha\\,\\hat{u}_z$$</p>
+<p>Questo dimostra che $\\vec{\\alpha}$ è parallelo a $\\hat{u}_z$ e quindi a $\\vec{\\omega}$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s38-momento-angolare-assiale",
+            type: "section",
+            title: "Momento angolare per rotazione attorno a un asse fisso",
+            icon: "🧮",
+            content: `<p>Vogliamo calcolare il momento angolare di un corpo rigido che ruota attorno a un asse fisso $z$. Scegliamo un polo $O$ sull'asse di rotazione. La massetta $i$-esima $m_i$ è posta a distanza $\\vec{r}_i$ da $O$.</p>
+<p>La velocità è data dalla legge del moto circolare:</p>
 <p>$$\\vec{v}_i = \\vec{\\omega} \\times \\vec{r}_i$$</p>
-<p>Il momento angolare della singola massetta rispetto al polo $O$ è:</p>
-<p>$$\\vec{L}_i = \\vec{r}_i \\times \\vec{p}_i = m_i(\\vec{r}_i \\times \\vec{v}_i)$$</p>
-<p>Sostituendo l'espressione di $\\vec{v}_i$:</p>
+<p>Il momento angolare della singola massetta rispetto a $O$:</p>
+<p>$$\\vec{L}_i = \\vec{r}_i \\times \\vec{p}_i = m_i\\,(\\vec{r}_i \\times \\vec{v}_i)$$</p>
+<p>Sostituendo $\\vec{v}_i$:</p>
 <p>$$\\vec{L}_i = m_i\\,\\vec{r}_i \\times (\\vec{\\omega} \\times \\vec{r}_i)$$</p>
-<p>Usando l'identità del doppio prodotto vettoriale $\\vec{A} \\times (\\vec{B} \\times \\vec{C}) = \\vec{B}(\\vec{A} \\cdot \\vec{C}) - \\vec{C}(\\vec{A} \\cdot \\vec{B})$, otteniamo:</p>
-<p>$$\\vec{L}_i = m_i\\left[\\vec{\\omega}(\\vec{r}_i \\cdot \\vec{r}_i) - \\vec{r}_i(\\vec{r}_i \\cdot \\vec{\\omega})\\right] = m_i\\left[r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\vec{r}_i\\right]$$</p>
-<p>Il momento angolare totale del corpo rigido è la somma dei momenti angolari di tutte le sue parti:</p>
-<p>$$\\vec{L} = \\sum_i \\vec{L}_i = \\sum_i m_i\\left[r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\vec{r}_i\\right]$$</p>
-<p><strong>Osservazione importante:</strong> dall'espressione $\\vec{L}_i = m_i\\left[r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\vec{r}_i\\right]$, notiamo che $\\vec{L}_i$ è una combinazione lineare dei vettori $\\vec{\\omega}$ e $\\vec{r}_i$. Questo significa che, in generale, $\\vec{L}_i$ <strong>non è parallelo</strong> a $\\vec{\\omega}$. Il momento angolare del singolo punto non ha la stessa direzione dell'asse di rotazione.</p>
-
+<p>Usando l'identità del doppio prodotto vettoriale $\\vec{A} \\times (\\vec{B} \\times \\vec{C}) = \\vec{B}(\\vec{A} \\cdot \\vec{C}) - \\vec{C}(\\vec{A} \\cdot \\vec{B})$:</p>
+<p>$$\\vec{L}_i = m_i \\left[ \\vec{\\omega}(\\vec{r}_i \\cdot \\vec{r}_i) - \\vec{r}_i(\\vec{r}_i \\cdot \\vec{\\omega}) \\right] = m_i \\left[ r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\,\\vec{r}_i \\right]$$</p>
+<p>Il momento angolare totale del corpo rigido è la somma dei momenti di tutte le parti:</p>
+<p>$$\\vec{L} = \\sum_i m_i \\left[ r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\,\\vec{r}_i \\right]$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Osservazione: L non è in generale parallelo a ω",
+                    content: `<p>Dall'espressione $\\vec{L}_i = m_i \\left[ r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\,\\vec{r}_i \\right]$, notiamo che $\\vec{L}_i$ è una combinazione lineare dei vettori $\\vec{\\omega}$ e $\\vec{r}_i$. Questo significa che, in generale, <strong>$\\vec{L}_i$ non è parallelo a $\\vec{\\omega}$</strong>: il momento angolare del singolo punto non ha la stessa direzione dell'asse di rotazione.</p>
 <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-  <p><strong>📊 Diagramma 2 — Decomposizione del momento angolare $\\vec{L}_i$</strong></p>
-  <p><em>Asse $z$ verticale con polo $O$ alla base e $\\vec{\\omega}$ lungo $z$ (blu). Massetta $m_i$ collegata a $O$ dal vettore $\\vec{r}_i$. Distanza $R_i$ dall'asse (perpendicolare tratteggiata). Vettore $\\vec{L}_i$ (rosso) NON parallelo a $z$, scomposto in componente assiale $\\vec{L}_{i,z}$ e trasversale $\\vec{L}_{i,\\perp}$ (tratteggiati rossi).</em></p>
+  <p><strong>📊 Diagramma 2 — Decomposizione di $\\vec{L}_i$ in componente assiale e trasversale</strong></p>
+  <p><em>Asse $z$ verticale con polo $O$ alla base. Vettore $\\vec{\\omega}$ lungo $z$. Punto $m_i$ nello spazio con vettore posizione $\\vec{r}_i$. Distanza dall'asse $R_i$ (orizzontale tratteggiata). Vettore $\\vec{L}_i$ in rosso, scomposto in $\\vec{L}_{i,z}$ (verticale tratteggiata) e $\\vec{L}_{i,\\perp}$ (orizzontale tratteggiata).</em></p>
   <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
 </div>`
-                },
-                {
-                    subtitle: "Componente assiale e momento di inerzia",
-                    content: `<p>Analizziamo separatamente la componente del momento angolare lungo l'asse di rotazione $z$ (componente <em>assiale</em>) e quella perpendicolare (componente <em>trasversale</em>).</p>
-<p>La componente assiale di $\\vec{L}_i$ è la sua proiezione sull'asse $z$:</p>
-<p>$$L_{i,z} = \\vec{L}_i \\cdot \\hat{u}_z = m_i\\left(\\vec{r}_i \\times (\\vec{\\omega} \\times \\vec{r}_i)\\right) \\cdot \\hat{u}_z$$</p>
-<p>Usando l'identità del prodotto misto $\\vec{A} \\cdot (\\vec{B} \\times \\vec{C}) = \\vec{B} \\cdot (\\vec{C} \\times \\vec{A})$, con $\\vec{A} = \\hat{u}_z$, $\\vec{B} = \\vec{r}_i$, $\\vec{C} = (\\vec{\\omega} \\times \\vec{r}_i)$, possiamo riscrivere la proiezione come:</p>
-<p>$$L_{i,z} = m_i(\\vec{\\omega} \\times \\vec{r}_i) \\cdot (\\hat{u}_z \\times \\vec{r}_i)$$</p>
-<p>Poiché $\\vec{\\omega} = \\omega\\,\\hat{u}_z$:</p>
-<p>$$L_{i,z} = m_i(\\omega\\,\\hat{u}_z \\times \\vec{r}_i) \\cdot (\\hat{u}_z \\times \\vec{r}_i)$$</p>
-<p>Posto $\\vec{A} = \\hat{u}_z \\times \\vec{r}_i$, l'espressione diventa $L_{i,z} = m_i\\omega\\,(\\vec{A} \\cdot \\vec{A}) = m_i\\omega\\,|\\vec{A}|^2$.</p>
-<p>Il modulo di $\\vec{A}$ è $|\\hat{u}_z \\times \\vec{r}_i| = r_i\\sin\\theta_i$, dove $\\theta_i$ è l'angolo tra $\\vec{r}_i$ e l'asse $z$. Ma $r_i\\sin\\theta_i$ non è altro che la distanza $R_i$ della massa $m_i$ dall'asse di rotazione. Quindi:</p>
-<p>$$L_{i,z} = m_i R_i^2\\,\\omega$$</p>
+                }
+            ]
+        },
+        {
+            id: "s38-momento-inerzia",
+            type: "section",
+            title: "Componente assiale e momento di inerzia",
+            icon: "🎯",
+            content: `<p>Analizziamo separatamente la componente del momento angolare lungo l'asse $z$ (<em>componente assiale</em>) e quella perpendicolare (<em>componente trasversale</em>).</p>
+<p>La componente assiale di $\\vec{L}_i$ è la proiezione sull'asse $z$:</p>
+<p>$$L_{i,z} = \\vec{L}_i \\cdot \\hat{u}_z = m_i \\left( \\vec{r}_i \\times (\\vec{\\omega} \\times \\vec{r}_i) \\right) \\cdot \\hat{u}_z$$</p>
+<p>Usando l'identità del prodotto misto $\\vec{A} \\cdot (\\vec{B} \\times \\vec{C}) = \\vec{B} \\cdot (\\vec{C} \\times \\vec{A})$:</p>
+<p>$$L_{i,z} = m_i\\,(\\vec{\\omega} \\times \\vec{r}_i) \\cdot (\\hat{u}_z \\times \\vec{r}_i)$$</p>
+<p>Poiché $\\vec{\\omega} = \\omega\\,\\hat{u}_z$, ponendo $\\vec{A} = \\hat{u}_z \\times \\vec{r}_i$ otteniamo:</p>
+<p>$$L_{i,z} = m_i\\,\\omega\\,|\\vec{A}|^2$$</p>
+<p>Il modulo di $\\vec{A}$ è $|\\hat{u}_z \\times \\vec{r}_i| = r_i \\sin\\theta_i$, dove $\\theta_i$ è l'angolo tra $\\vec{r}_i$ e l'asse $z$. La quantità $r_i \\sin\\theta_i$ è la <strong>distanza $R_i$</strong> della massa $m_i$ dall'asse di rotazione. Quindi:</p>
+<p>$$L_{i,z} = m_i\\,R_i^2\\,\\omega$$</p>
 <p>La componente assiale totale del momento angolare è:</p>
-<p>$$L_z = \\sum_i L_{i,z} = \\sum_i m_i R_i^2\\,\\omega = \\left(\\sum_i m_i R_i^2\\right)\\omega$$</p>
-<p>La quantità tra parentesi dipende solo dalla distribuzione della massa rispetto all'asse $z$. Questa grandezza fondamentale prende il nome di <strong>momento di inerzia</strong>.</p>`
-                },
+<p>$$L_z = \\sum_i L_{i,z} = \\left( \\sum_i m_i\\,R_i^2 \\right) \\omega$$</p>
+<p>La quantità tra parentesi dipende solo dalla distribuzione della massa rispetto all'asse $z$. È il <strong>momento di inerzia</strong>.</p>`,
+            subsections: [
                 {
                     subtitle: "Definizione di momento di inerzia",
-                    content: `<p>Il <strong>momento di inerzia</strong> di un corpo rigido rispetto a un asse $z$ è definito come la somma dei prodotti delle masse di ciascun punto del corpo per il quadrato della loro distanza dall'asse:</p>
-<p>$$I_z = \\sum_i m_i R_i^2 \\quad \\text{(sistemi discreti)}$$</p>
-<p>Nel caso di un corpo continuo:</p>
-<p>$$I_z = \\int_V R^2\\,dm = \\int_V R^2\\,\\rho(\\vec{r})\\,dV$$</p>
-<p>dove $R$ è la distanza del volumetto infinitesimo $dV$ dall'asse $z$.</p>
-<p>Usando questa definizione, la componente assiale del momento angolare assume una forma molto semplice:</p>
+                    content: `<p>Il <strong>momento di inerzia</strong> di un corpo rigido rispetto a un asse $z$ è definito come:</p>
+<p>$$I_z = \\sum_i m_i\\,R_i^2 \\quad \\text{(sistemi discreti)}$$</p>
+<p>$$I_z = \\int_V R^2\\,dm = \\int_V R^2\\,\\rho(\\vec{r})\\,dV \\quad \\text{(corpi continui)}$$</p>
+<p>dove $R$ è la distanza dall'asse $z$.</p>`
+                },
+                {
+                    subtitle: "Relazione fondamentale L_z = I_z ω",
+                    content: `<p>Usando la definizione di momento di inerzia, la componente assiale del momento angolare assume una forma molto semplice e potente:</p>
 <p>$$L_z = I_z\\,\\omega$$</p>
 <p>Questa relazione scalare è <strong>sempre valida</strong> per un corpo rigido in rotazione attorno a un asse fisso $z$.</p>`
                 }
             ],
             formulas: [
-                { label: "Velocità del punto i-esimo", latex: "\\vec{v}_i = \\vec{\\omega} \\times \\vec{r}_i" },
-                { label: "Momento angolare (componente assiale)", latex: "L_z = I_z\\,\\omega" },
-                { label: "Momento di inerzia (discreto)", latex: "I_z = \\sum_i m_i R_i^2" },
-                { label: "Momento di inerzia (continuo)", latex: "I_z = \\int_V R^2\\,\\rho(\\vec{r})\\,dV" }
-            ]
-        },
-        {
-            id: "s38-assi-principali",
-            type: "section",
-            title: "Assi principali di inerzia — Teorema di Poinsot",
-            icon: "🎯",
-            content: `<p>In generale, la componente trasversale $\\vec{L}_{\\perp}$ del momento angolare non è nulla: il momento angolare totale $\\vec{L}$ ha una direzione diversa da quella di $\\vec{\\omega}$.</p>
-<p>Tuttavia, esistono delle direzioni privilegiate per ogni corpo rigido.</p>
-<p><strong>Teorema di Poinsot:</strong> Per ogni corpo rigido, esistono almeno tre assi ortogonali tra loro, detti <strong>assi principali di inerzia</strong>, tali che se il corpo ruota attorno a uno di essi, il suo momento angolare $\\vec{L}$ è parallelo alla velocità angolare $\\vec{\\omega}$.</p>`,
-            subsections: [
-                {
-                    subtitle: "Perché esistono gli assi principali?",
-                    content: `<p>Da notare: la relazione $\\vec{L} = I\\vec{\\omega}$ in forma vettoriale richiede in realtà una <strong>matrice</strong> (il cosiddetto <em>tensore di inerzia</em>) che moltiplica $\\vec{\\omega}$ per dare $\\vec{L}$. Gli assi principali di inerzia sono gli <strong>autovettori</strong> di questa matrice: lungo queste direzioni, il tensore agisce come una semplice moltiplicazione scalare, e $\\vec{L}$ risulta parallelo a $\\vec{\\omega}$. L'esistenza di almeno tre autovettori ortogonali è garantita dal fatto che il tensore di inerzia è una matrice simmetrica reale $3 \\times 3$.</p>`
-                },
-                {
-                    subtitle: "Simmetrie e assi principali",
-                    content: `<p>Se un corpo ha una geometria regolare e una distribuzione di massa omogenea, i suoi <strong>assi di simmetria sono assi principali di inerzia</strong>. Per esempio, per un cilindro omogeneo, l'asse del cilindro è un asse principale di inerzia.</p>
-<p>Intuitivamente: se il corpo è simmetrico rispetto a un asse, la componente trasversale $\\vec{L}_{\\perp}$ si cancella per simmetria, e $\\vec{L}$ risulta allineato con $\\vec{\\omega}$.</p>`
-                },
-                {
-                    subtitle: "Relazione scalare vs. vettoriale",
-                    content: `<p>Ricapitolando le due relazioni fondamentali:</p>
-<ul>
-<li>$L_z = I_z\\,\\omega$ (relazione <strong>scalare</strong>): è <strong>sempre vera</strong> per la componente del momento angolare lungo l'asse di rotazione fisso $z$.</li>
-<li>$\\vec{L} = I_z\\,\\vec{\\omega}$ (relazione <strong>vettoriale</strong>): è vera <strong>solo se</strong> l'asse di rotazione $z$ è un asse principale di inerzia.</li>
-</ul>`
-                }
+                { label: "Momento di inerzia (discreto)", latex: "I_z = \\sum_i m_i\\,R_i^2" },
+                { label: "Momento di inerzia (continuo)", latex: "I_z = \\int_V R^2\\,\\rho(\\vec{r})\\,dV" },
+                { label: "Momento angolare assiale", latex: "L_z = I_z\\,\\omega" }
             ],
-            formulas: [
-                { label: "Relazione vettoriale (asse principale)", latex: "\\vec{L} = I_z\\,\\vec{\\omega}" }
-            ]
+            extra_content: `<blockquote><p><em>«Questa è la relazione, questa è la grandezza che stabilisce lo stato di moto rotatorio intorno all'asse, ed è proporzionale solo alla rapidità di rotazione.»</em> — Prof.</p></blockquote>`
         },
         {
             id: "s38-equazione-moto-rotazionale",
             type: "section",
-            title: "Equazione del moto per rotazioni attorno a un asse principale fisso",
+            title: "Equazione del moto per rotazioni attorno a un asse fisso",
             icon: "📐",
-            content: `<p>Consideriamo il caso molto comune in cui un corpo rigido ruota attorno a un asse fisso $z$ che è anche un asse principale di inerzia. Vale la relazione vettoriale $\\vec{L} = I_z\\,\\vec{\\omega}$.</p>
-<p>Partiamo dalla seconda equazione cardinale della dinamica:</p>
-<p>$$\\vec{M}_{O, ext} = \\frac{d\\vec{L}}{dt}$$</p>
-<p>Sostituiamo l'espressione di $\\vec{L}$:</p>
-<p>$$\\vec{M}_{O, ext} = \\frac{d}{dt}(I_z\\,\\vec{\\omega})$$</p>
-<p>$I_z$ è costante perché le distanze $R_i$ di ciascuna massa dall'asse non cambiano nel tempo (il corpo è rigido) e l'asse è fisso (quindi $R_i$ è misurata sempre rispetto allo stesso asse). Possiamo portarlo fuori dalla derivata:</p>
-<p>$$\\vec{M}_{O, ext} = I_z\\frac{d\\vec{\\omega}}{dt} = I_z\\,\\vec{\\alpha}$$</p>
-<p>Questa è l'<strong>equazione fondamentale della dinamica rotazionale</strong> per rotazioni attorno a un asse principale fisso:</p>
-<p>$$\\vec{M}_{O, ext} = I_z\\,\\vec{\\alpha}$$</p>`,
+            content: `<p>Dopo aver capito cosa <em>descrive</em> lo stato di moto rotatorio (la coppia $\\omega$, $L_z = I_z\\,\\omega$), passiamo a chiederci <em>chi può farlo variare</em>. La risposta è perfettamente analoga alla meccanica del punto: come una forza $\\vec{F}$ varia la quantità di moto $\\vec{p} = m\\vec{v}$, così un <strong>momento di forze</strong> varia il momento angolare.</p>`,
+            quote: {
+                text: "Mentre nella meccanica generale la grandezza che descrive lo stato di moto è la quantità di moto, in dinamica rotazionale è il momento angolare; e mentre la forza fa variare la quantità di moto, il momento di forze fa variare il momento angolare. Entrambe le leggi hanno la stessa struttura: stato di moto = (coefficiente d'inerzia) × (variabile cinematica).",
+                src: "Il Prof. sull'analogia traslazione–rotazione"
+            },
             subsections: [
                 {
-                    subtitle: "Analogia traslazionale–rotazionale",
-                    content: `<p>Questa equazione è l'analogo rotazionale della seconda legge di Newton, $\\vec{F} = m\\vec{a}$. Il momento di inerzia $I$ gioca nel moto rotazionale lo stesso ruolo che la massa $m$ gioca nel moto traslazionale: è una misura della <strong>resistenza del corpo a cambiare il suo stato di moto rotatorio</strong>.</p>`
-                },
-                {
-                    subtitle: "Distribuzione della massa e momento di inerzia",
-                    content: `<p>A differenza della massa, che è una proprietà intrinseca del corpo, il momento di inerzia $I_z = \\sum_i m_i R_i^2$ dipende non solo dalla massa, ma anche da <strong>come la massa è distribuita</strong> rispetto all'asse di rotazione. Masse più lontane dall'asse contribuiscono molto di più (con il quadrato della distanza $R_i^2$).</p>`
-                },
-                {
-                    subtitle: "Esempio numerico: disco soggetto a un momento esterno",
-                    content: `<p>Un disco omogeneo di massa $M = 2\\,\\text{kg}$ e raggio $R = 0{,}3\\,\\text{m}$ è soggetto a un momento esterno $M_{ext} = 1{,}5\\,\\text{N}\\cdot\\text{m}$. Calcoliamo l'accelerazione angolare.</p>
-<p>Il momento di inerzia di un disco omogeneo rispetto all'asse passante per il centro e perpendicolare al piano del disco è:</p>
-<p>$$I_z = \\frac{1}{2}MR^2 = \\frac{1}{2}(2)(0{,}3)^2 = \\frac{1}{2}(2)(0{,}09) = 0{,}09\\,\\text{kg}\\cdot\\text{m}^2$$</p>
-<p>Dall'equazione $M_{ext} = I_z\\,\\alpha$:</p>
-<p>$$\\alpha = \\frac{M_{ext}}{I_z} = \\frac{1{,}5}{0{,}09} \\approx 16{,}7\\,\\text{rad/s}^2$$</p>
-<p>Da notare: un disco così leggero e piccolo acquista un'accelerazione angolare notevole con un momento esterno relativamente modesto. Se la massa fosse distribuita più lontano dall'asse (a parità di massa totale), $I_z$ sarebbe maggiore e $\\alpha$ minore.</p>`
-                },
-                {
-                    subtitle: "Esempio: la piroetta del pattinatore",
-                    content: `<p>Un esempio classico per illustrare il concetto di momento di inerzia e la <strong>conservazione del momento angolare</strong> è quello di un pattinatore che esegue una piroetta.</p>
-<p>Supponiamo che non ci siano momenti di forze esterne significative (attrito con il ghiaccio trascurabile). Il momento angolare $L = I\\omega$ del pattinatore si conserva.</p>
-<ol>
-<li><strong>Braccia e gambe larghe:</strong> il pattinatore gira con braccia e una gamba estese. Una parte significativa della massa si trova a grande distanza dall'asse di rotazione. Il momento di inerzia $I$ è grande, la velocità angolare $\\omega$ è relativamente bassa.</li>
-<li><strong>Braccia e gambe raccolte:</strong> il pattinatore raccoglie braccia e gambe verso il corpo. La distanza $R_i$ media delle particelle diminuisce, il momento di inerzia $I$ <strong>diminuisce drasticamente</strong>.</li>
-</ol>
-<p>Poiché $L = I\\omega$ deve conservarsi, se $I$ diminuisce, $\\omega$ deve necessariamente <strong>aumentare</strong> per mantenere il prodotto costante. Il pattinatore gira molto più velocemente. Per rallentare, allarga di nuovo le braccia.</p>`
+                    subtitle: "Derivazione dell'equazione M_z = I_z α",
+                    content: `<p>Partiamo dalla seconda equazione cardinale della dinamica, componente lungo l'asse fisso $z$:</p>
+<p>$$M_{z,\\,ext} = \\frac{dL_z}{dt}$$</p>
+<p>Sostituendo $L_z = I_z\\,\\omega$ e tenendo conto che $I_z$ è costante (corpo rigido, asse fisso):</p>
+<p>$$M_{z,\\,ext} = I_z\\,\\frac{d\\omega}{dt} = I_z\\,\\alpha$$</p>
+<p>Dove $\\alpha = d\\omega/dt$ è l'accelerazione angolare. Otteniamo l'<strong>equazione fondamentale della dinamica rotazionale</strong> attorno a un asse fisso:</p>
+<p>$$M_z = I_z\\,\\alpha$$</p>
+<p>Formalmente identica a $F = m\\,a$ della meccanica traslazionale.</p>`
                 }
             ],
+            formulas: [
+                { label: "Equazione fondamentale della dinamica rotazionale", latex: "M_z = I_z\\,\\alpha" }
+            ]
+        },
+        {
+            id: "s38-analogia-traslazione-rotazione",
+            type: "section",
+            title: "Analogia traslazione ↔ rotazione attorno a un asse fisso",
+            icon: "🔁",
+            content: `<p>La struttura formale delle leggi del moto traslazionale e rotazionale è identica. Il momento di inerzia $I_z$ gioca nel moto rotazionale lo stesso ruolo che la massa $m$ gioca nel moto traslazionale: è una misura della <strong>resistenza del corpo a cambiare il suo stato di moto rotatorio</strong>.</p>`,
             table_compare: {
-                headers: ["Moto traslazionale", "Moto rotazionale (asse principale fisso)"],
+                headers: ["Moto Traslazionale", "Moto Rotazionale (asse fisso)"],
                 rows: [
                     ["Posizione $\\vec{r}$", "Angolo $\\theta$"],
-                    ["Velocità $\\vec{v}$", "Velocità angolare $\\vec{\\omega}$"],
-                    ["Accelerazione $\\vec{a}$", "Accelerazione angolare $\\vec{\\alpha}$"],
-                    ["Massa (inerzia) $m$", "Momento di inerzia $I$"],
-                    ["Quantità di moto $\\vec{p} = m\\vec{v}$", "Momento angolare $\\vec{L} = I\\vec{\\omega}$"],
-                    ["Forza $\\vec{F}$", "Momento della forza $\\vec{M}$"],
-                    ["Legge del moto $\\vec{F} = m\\vec{a}$", "Legge del moto $\\vec{M} = I\\vec{\\alpha}$"]
+                    ["Velocità $\\vec{v}$", "Velocità angolare $\\omega$"],
+                    ["Accelerazione $\\vec{a}$", "Accelerazione angolare $\\alpha$"],
+                    ["Massa (inerzia) $m$", "Momento di inerzia $I_z$"],
+                    ["Quantità di moto $\\vec{p} = m\\vec{v}$", "Momento angolare assiale $L_z = I_z\\,\\omega$"],
+                    ["Forza $\\vec{F}$", "Momento (assiale) della forza $M_z$"],
+                    ["Legge del moto $\\vec{F} = m\\vec{a}$", "Legge del moto $M_z = I_z\\,\\alpha$"]
                 ]
-            },
-            formulas: [
-                { label: "Equazione del moto rotazionale", latex: "\\vec{M}_{O, ext} = I_z\\,\\vec{\\alpha}" },
-                { label: "Conservazione del momento angolare", latex: "L = I\\omega = \\text{costante} \\quad (\\text{se } M_{ext} = 0)" }
-            ]
+            }
         },
         {
-            id: "s38-equilibratura",
+            id: "s38-inerzia-non-intrinseca",
+            type: "alert_box",
+            title: "Il momento di inerzia NON è una proprietà intrinseca del corpo",
+            icon: "⚠️",
+            content: `<p>Questa è la <strong>prima vera differenza</strong> fra meccanica traslazionale e rotazionale. La massa inerziale $m$ è una proprietà intrinseca del corpo: una volta data, non cambia. Il momento di inerzia, invece:</p>
+<p>$$I_z = \\sum_i m_i\\,R_i^2$$</p>
+<p>dove $R_i$ è la distanza della massa $m_i$ dall'<em>asse di rotazione scelto</em>. Quindi $I_z$ dipende sia dalla massa sia da <strong>come la massa è distribuita</strong> rispetto a quell'asse. In particolare:</p>
+<ul>
+<li>Lo <strong>stesso corpo rigido</strong> ha, in generale, momenti di inerzia diversi rispetto ad assi di rotazione diversi.</li>
+<li>Masse più lontane dall'asse contribuiscono <strong>molto di più</strong> (la dipendenza è quadratica in $R_i$).</li>
+<li>Per cambiare lo stato di moto rotatorio dello stesso corpo si deve applicare un momento <strong>diverso</strong> a seconda dell'asse attorno al quale lo facciamo ruotare.</li>
+</ul>`
+        },
+        {
+            id: "s38-effetto-ballerina",
             type: "section",
-            title: "Il problema dell'equilibratura",
-            icon: "🔧",
-            content: `<p>Abbiamo visto che se un corpo non ruota attorno a un asse principale di inerzia, il suo momento angolare $\\vec{L}$ non è parallelo a $\\vec{\\omega}$. Esiste una componente trasversale $\\vec{L}_{\\perp}$ che, ruotando insieme al corpo, <strong>cambia continuamente direzione</strong>.</p>
-<p>La seconda equazione cardinale ci dice che $\\vec{M}_{ext} = d\\vec{L}/dt$. Se $\\vec{L}_{\\perp}$ cambia direzione, la sua derivata temporale non è nulla, anche se $\\omega$ è costante. Questo implica che per mantenere il corpo in rotazione attorno a un asse non principale, è necessario applicare un <strong>momento di forze esterne</strong> fornito dai vincoli (es. i cuscinetti dell'asse).</p>
-<p>Questi momenti variabili nel tempo generano forze sui vincoli che causano <strong>vibrazioni</strong>.</p>`,
-            subsections: [
-                {
-                    subtitle: "Esempio: equilibratura delle ruote dell'auto",
-                    content: `<p>Quando prendete una buca e deformate leggermente un cerchione, la distribuzione di massa della ruota non è più simmetrica rispetto all'asse di rotazione. L'asse di rotazione non è più un asse principale di inerzia.</p>
-<p>Quando la ruota gira, specialmente ad alta velocità, si genera una componente trasversale del momento angolare che ruota. Per mantenere l'asse fisso, i supporti della ruota devono esercitare forze variabili che vengono percepite come una <strong>vibrazione al volante</strong>.</p>
-<p>Il gommista, per risolvere il problema, esegue l'<strong>equilibratura</strong>: aggiunge piccoli pesi di piombo sul cerchione in posizioni strategiche per riportare la distribuzione di massa ad essere simmetrica. In questo modo, l'asse di rotazione torna ad essere un asse principale di inerzia, $\\vec{L}$ torna ad essere parallelo a $\\vec{\\omega}$, e le vibrazioni spariscono.</p>`
-                }
+            title: "L'effetto ballerina: conservazione di L_z con I_z variabile",
+            icon: "⛸️",
+            content: `<p>Come esempio concreto della combinazione tra conservazione di $L_z$ e variabilità di $I_z$, consideriamo l'esempio classico del pattinatore (o della ballerina) sul ghiaccio.</p>
+<p>Un pattinatore gira sul ghiaccio attorno a un asse verticale fisso. Il momento delle forze esterne attorno a quell'asse è trascurabile (attrito con il ghiaccio piccolo, gravità parallela all'asse). In questo caso $M_z = 0$, e quindi <strong>$L_z = I_z\\,\\omega$ si conserva</strong>.</p>
+<ul>
+<li><strong>Configurazione iniziale</strong> (braccia e gambe larghe): parte della massa è a grande distanza dall'asse $\\Rightarrow$ $I_z$ grande, $\\omega$ piccola.</li>
+<li><strong>Configurazione raccolta</strong>: il pattinatore avvicina braccia e gambe al tronco. La distanza media $R_i$ diminuisce $\\Rightarrow$ $I_z$ <strong>diminuisce</strong> (dipendenza quadratica, effetto marcato).</li>
+</ul>
+<p>Poiché il prodotto $I_z\\,\\omega$ deve restare costante, se $I_z$ diminuisce allora $\\omega$ deve <strong>aumentare</strong>: appena il pattinatore si raccoglie, comincia a girare molto più rapidamente. Per rallentare, allarga di nuovo le braccia, riportando $I_z$ a un valore più grande e $\\omega$ a un valore più piccolo.</p>`,
+            formulas: [
+                { label: "Conservazione momento angolare", latex: "L_z = I_z\\,\\omega = \\text{costante} \\quad (\\text{se } M_z = 0)" }
             ]
         },
         {
-            id: "s38-calcolo-inerzia-asta",
+            id: "s38-anticipazione",
             type: "note_box",
-            title: "Esempio di calcolo: momento di inerzia di un'asta",
-            icon: "📝",
-            content: `<p>Per vedere come si usa concretamente la formula integrale del momento di inerzia, calcoliamo $I$ per un'asta omogenea di massa $M$ e lunghezza $L$ rispetto all'asse perpendicolare passante per un estremo.</p>
-<p>Scegliamo l'asse $x$ lungo l'asta con l'origine nell'estremo. La densità lineare è $\\lambda = M/L$. Un elemento infinitesimo $dm = \\lambda\\,dx$ si trova a distanza $R = x$ dall'asse di rotazione (perpendicolare all'asta e passante per $x = 0$):</p>
-<p>$$I = \\int_0^L x^2\\,dm = \\int_0^L x^2\\,\\frac{M}{L}\\,dx = \\frac{M}{L}\\left[\\frac{x^3}{3}\\right]_0^L = \\frac{M}{L}\\cdot\\frac{L^3}{3} = \\frac{1}{3}ML^2$$</p>
-<p>Per confronto, se l'asse passasse per il centro dell'asta, si troverebbe $I_{cm} = \\frac{1}{12}ML^2$, cioè un valore quattro volte più piccolo: spostare l'asse verso un estremo aumenta il momento di inerzia perché più massa si trova lontano dall'asse.</p>`,
-            formulas: [
-                { label: "Asta (asse per un estremo)", latex: "I = \\frac{1}{3}ML^2" },
-                { label: "Asta (asse per il centro)", latex: "I_{cm} = \\frac{1}{12}ML^2" }
-            ]
+            title: "Anticipazione: prossimi argomenti",
+            icon: "📌",
+            content: `<p>Nelle prossime lezioni il caso della rotazione attorno ad asse fisso si specializzerà in due fenomeni concreti molto importanti per gli esercizi d'esame: il <strong>pendolo composto</strong> e il <strong>puro rotolamento</strong>.</p>`
         }
     ],
 
     oral_cards: [
         {
             type: "definizione",
-            front: "Enuncia il principio degli spostamenti infinitesimi di un corpo rigido.",
-            back: "Qualunque spostamento infinitesimo di un corpo rigido è descrivibile come la combinazione di una traslazione infinitesima e una rotazione infinitesima attorno a un asse istantaneo di rotazione. Per un $dt$ infinitesimo, qualsiasi moto complesso è scomponibile in traslazione + rotazione attorno a un asse che può cambiare da istante a istante."
+            front: "Come si descrive qualunque spostamento infinitesimo di un corpo rigido?",
+            back: "Qualunque spostamento infinitesimo di un corpo rigido è descrivibile come la combinazione di una <strong>traslazione infinitesima</strong> e una <strong>rotazione infinitesima</strong> attorno a un asse istantaneo di rotazione."
         },
         {
             type: "domanda",
-            front: "In quanti modi equivalenti si può descrivere il moto di puro rotolamento di una ruota? Quali equazioni si usano in ciascun caso?",
-            back: "In due modi: (1) come pura rotazione attorno al punto di contatto $O$ (asse istantaneo), usando $\\frac{d\\vec{L}_O}{dt} = \\vec{M}_{O,ext}$; (2) come traslazione del centro di massa più rotazione attorno ad esso, usando le due equazioni cardinali $\\sum\\vec{F}_{ext} = \\frac{d\\vec{p}_{CM}}{dt}$ e $\\sum\\vec{M}_{C,ext} = \\frac{d\\vec{L}_C}{dt}$."
-        },
-        {
-            type: "definizione",
-            front: "Cos'è il momento di inerzia di un corpo rigido rispetto a un asse $z$?",
-            back: "È la grandezza $I_z = \\sum_i m_i R_i^2$ (caso discreto) o $I_z = \\int_V R^2\\,\\rho\\,dV$ (caso continuo), dove $R_i$ (o $R$) è la distanza della massa dall'asse $z$. Misura la resistenza del corpo a cambiare il proprio stato di moto rotatorio attorno a quell'asse."
+            front: "In quali due modi equivalenti si può descrivere il moto di puro rotolamento di una ruota?",
+            back: "1) Come una <strong>pura rotazione</strong> attorno al punto di contatto $O$ (asse istantaneo), usando $\\frac{d\\vec{L}_O}{dt} = \\vec{M}_{O,ext}$.<br>2) Come la combinazione di una <strong>traslazione del centro di massa</strong> ($\\sum \\vec{F}_{ext} = \\frac{d\\vec{p}_{CM}}{dt}$) e una <strong>rotazione attorno al centro di massa</strong> ($\\sum \\vec{M}_{C,ext} = \\frac{d\\vec{L}_C}{dt}$)."
         },
         {
             type: "domanda",
-            front: "La relazione $\\vec{L} = I_z\\vec{\\omega}$ (vettoriale) è sempre valida per un corpo che ruota attorno a un asse fisso?",
-            back: "No! La relazione scalare $L_z = I_z\\omega$ è sempre valida per la componente lungo l'asse. Ma la relazione vettoriale $\\vec{L} = I_z\\vec{\\omega}$ vale solo se l'asse di rotazione è un asse principale di inerzia. In generale $\\vec{L}$ ha anche una componente trasversale $\\vec{L}_\\perp$ non nulla."
-        },
-        {
-            type: "tranello",
-            front: "Perché in generale $\\vec{L}$ non è parallelo a $\\vec{\\omega}$ per un corpo rigido in rotazione?",
-            back: "Perché il momento angolare della singola massetta è $\\vec{L}_i = m_i[r_i^2\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\vec{r}_i]$, combinazione lineare di $\\vec{\\omega}$ e $\\vec{r}_i$: in generale questo vettore non è allineato con $\\vec{\\omega}$. La componente trasversale si annulla solo se la rotazione avviene attorno a un asse principale di inerzia."
-        },
-        {
-            type: "formula",
-            front: "Scrivi l'equazione del moto rotazionale per un corpo rigido che ruota attorno a un asse principale fisso e spiega l'analogia con la traslazione.",
-            back: "$\\vec{M}_{O,ext} = I_z\\vec{\\alpha}$. È l'analogo di $\\vec{F} = m\\vec{a}$: il momento delle forze $\\vec{M}$ sostituisce la forza $\\vec{F}$, il momento di inerzia $I$ sostituisce la massa $m$, e l'accelerazione angolare $\\vec{\\alpha}$ sostituisce l'accelerazione lineare $\\vec{a}$."
-        },
-        {
-            type: "domanda",
-            front: "Perché il momento di inerzia $I_z$ si può portare fuori dalla derivata temporale nella derivazione di $M = I\\alpha$?",
-            back: "Perché $I_z = \\sum_i m_i R_i^2$ è costante nel tempo: le distanze $R_i$ di ciascuna massa dall'asse non cambiano (il corpo è rigido) e l'asse è fisso (quindi $R_i$ è misurata sempre rispetto allo stesso asse)."
-        },
-        {
-            type: "domanda",
-            front: "Spiega l'esempio del pattinatore sul ghiaccio in termini di conservazione del momento angolare.",
-            back: "Se i momenti esterni sono trascurabili, $L = I\\omega = \\text{cost}$. Raccogliendo le braccia, il pattinatore riduce $I$ (massa più vicina all'asse). Per conservare $L$, la velocità angolare $\\omega$ deve aumentare. Allargando le braccia, $I$ aumenta e $\\omega$ diminuisce."
-        },
-        {
-            type: "domanda",
-            front: "Cos'è il problema dell'equilibratura e come si risolve?",
-            back: "Se una ruota ha distribuzione di massa non simmetrica, l'asse di rotazione non è un asse principale: $\\vec{L}$ ha una componente trasversale che ruota, generando forze variabili sui vincoli (vibrazioni). Si risolve con l'equilibratura: aggiungere piccoli pesi sul cerchione per ripristinare la simmetria della distribuzione di massa, rendendo l'asse di rotazione nuovamente un asse principale di inerzia."
+            front: "Quali proprietà valgono quando un corpo rigido ruota attorno a un asse fisso?",
+            back: "1) La velocità angolare $\\omega$ è la stessa per tutti i punti.<br>2) $\\vec{\\omega}$ ha direzione fissa (quella dell'asse), possono cambiare modulo e verso ma non direzione.<br>3) $\\vec{\\alpha}$ è parallelo all'asse di rotazione.<br>4) Tutti i punti descrivono un moto circolare in un piano perpendicolare all'asse."
         },
         {
             type: "dimostrazione",
-            front: "Dimostra che, per un asse di rotazione fisso, l'accelerazione angolare $\\vec{\\alpha}$ è parallela a $\\vec{\\omega}$.",
-            back: "Sia $\\hat{u}_z$ il versore dell'asse fisso. Allora $\\vec{\\omega}(t) = \\omega(t)\\hat{u}_z$. Derivando: $\\vec{\\alpha} = \\frac{d\\vec{\\omega}}{dt} = \\frac{d\\omega}{dt}\\hat{u}_z + \\omega\\frac{d\\hat{u}_z}{dt}$. Poiché l'asse è fisso, $\\frac{d\\hat{u}_z}{dt} = 0$, quindi $\\vec{\\alpha} = \\dot{\\omega}\\,\\hat{u}_z$, che è parallelo a $\\vec{\\omega}$."
+            front: "Dimostra che l'accelerazione angolare $\\vec{\\alpha}$ è parallela all'asse di rotazione fisso.",
+            back: "Sia $\\hat{u}_z$ il versore dell'asse fisso: $\\vec{\\omega}(t) = \\omega(t)\\hat{u}_z$. Derivando: $\\vec{\\alpha} = \\frac{d\\omega}{dt}\\hat{u}_z + \\omega\\frac{d\\hat{u}_z}{dt}$. Poiché l'asse è fisso, $\\frac{d\\hat{u}_z}{dt} = 0$, quindi $\\vec{\\alpha} = \\frac{d\\omega}{dt}\\hat{u}_z = \\alpha\\,\\hat{u}_z$, che è parallelo a $\\vec{\\omega}$."
+        },
+        {
+            type: "definizione",
+            front: "Definisci il momento di inerzia di un corpo rigido rispetto a un asse z.",
+            back: "Il momento di inerzia è $I_z = \\sum_i m_i R_i^2$ (discreto) oppure $I_z = \\int_V R^2\\,\\rho(\\vec{r})\\,dV$ (continuo), dove $R$ è la distanza dall'asse $z$. Misura la resistenza del corpo a cambiare il suo stato di moto rotatorio attorno a quell'asse."
+        },
+        {
+            type: "formula",
+            front: "Scrivi la relazione tra momento angolare assiale, momento di inerzia e velocità angolare per un corpo rigido in rotazione attorno a un asse fisso.",
+            back: "$$L_z = I_z\\,\\omega$$"
+        },
+        {
+            type: "formula",
+            front: "Scrivi l'equazione fondamentale della dinamica rotazionale attorno a un asse fisso e l'analoga traslazionale.",
+            back: "Rotazionale: $M_z = I_z\\,\\alpha$<br>Traslazionale: $F = m\\,a$<br>Struttura identica: (agente che cambia lo stato di moto) = (coefficiente d'inerzia) × (variabile cinematica derivata seconda)."
+        },
+        {
+            type: "tranello",
+            front: "Il momento di inerzia è una proprietà intrinseca del corpo, come la massa?",
+            back: "<strong>No!</strong> La massa $m$ è intrinseca, ma $I_z = \\sum_i m_i R_i^2$ dipende dall'<strong>asse di rotazione scelto</strong>: lo stesso corpo ha momenti di inerzia diversi rispetto ad assi diversi. Inoltre la dipendenza dalla distanza è <strong>quadratica</strong>, quindi masse lontane dall'asse contribuiscono molto di più."
+        },
+        {
+            type: "domanda",
+            front: "Spiega l'effetto ballerina usando la conservazione del momento angolare.",
+            back: "Se $M_z = 0$, allora $L_z = I_z\\,\\omega = \\text{costante}$. Quando il pattinatore raccoglie le braccia, $R_i$ diminuisce $\\Rightarrow$ $I_z$ diminuisce (dipendenza quadratica). Per conservare $L_z$, $\\omega$ deve <strong>aumentare</strong>: la rotazione accelera. Allargando le braccia, $I_z$ aumenta e $\\omega$ diminuisce."
+        },
+        {
+            type: "domanda",
+            front: "Il momento angolare $\\vec{L}_i$ di una singola massetta è parallelo a $\\vec{\\omega}$ nella rotazione attorno a un asse fisso?",
+            back: "In generale <strong>no</strong>. Dall'espressione $\\vec{L}_i = m_i[r_i^2\\,\\vec{\\omega} - (\\vec{r}_i \\cdot \\vec{\\omega})\\,\\vec{r}_i]$, si vede che $\\vec{L}_i$ è combinazione lineare di $\\vec{\\omega}$ e $\\vec{r}_i$: solo la <strong>componente assiale</strong> $L_{i,z} = m_i R_i^2\\,\\omega$ è lungo l'asse, ma esiste anche una componente trasversale."
         }
     ]
 };
