@@ -1,0 +1,374 @@
+const LESSON = {
+    id: "L37", date: "Lezione 30 — 14 Mag 2026",
+    title: "Congruenza, forme quadratiche e diagonalizzazione",
+    abstract: "Come cambia la matrice di Gram al variare della base: la relazione di congruenza. Forme quadratiche come modo equivalente di descrivere forme bilineari simmetriche. L'algoritmo di Gauss-Lagrange per diagonalizzare qualsiasi forma quadratica.",
+
+    sections: [
+        {
+            id: "s37-cambio-base-congruenza",
+            type: "section",
+            title: "Cambiamento di base e congruenza tra matrici simmetriche",
+            icon: "🔄",
+            content: `<p>Sia $\\varphi : V \\times V \\to \\mathbb{R}$ una forma bilineare simmetrica su uno spazio vettoriale reale $V$. Quando si cambia base, la matrice di Gram della stessa forma non resta, in generale, uguale: cambia secondo una legge precisa.</p>
+<p>Se $\\mathcal{B}$ e $\\mathcal{B}'$ sono due basi di $V$, poniamo:</p>
+<p>$$\\mathbf{x} = [\\mathbf{u}]_{\\mathcal{B}}, \\quad \\mathbf{y} = [\\mathbf{v}]_{\\mathcal{B}}, \\quad P = M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V), \\quad G = G_{\\mathcal{B}}^{\\mathcal{B}}(\\varphi), \\quad G' = G_{\\mathcal{B}'}^{\\mathcal{B}'}(\\varphi).$$</p>
+<p>Ricordiamo che $P = M_{\\mathcal{B}}^{\\mathcal{B}'}(\\text{id}_V)$ denota la matrice di cambio base da $\\mathcal{B}$ a $\\mathcal{B}'$, le cui colonne sono le coordinate dei vettori di $\\mathcal{B}$ rispetto a $\\mathcal{B}'$.</p>
+<p>Le proprietà della forma bilineare si scrivono in modo compatto sotto forma matriciale:</p>
+<p>$$\\varphi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T \\cdot G \\cdot \\mathbf{y}, \\qquad G' = P^T G P.$$</p>
+<p>Questa seconda formula è il punto di partenza per la nozione di congruenza tra matrici simmetriche.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio: calcolo con basi diverse",
+                    content: `<p>Consideriamo la forma bilineare $\\varphi : \\mathbb{R}^2 \\times \\mathbb{R}^2 \\to \\mathbb{R}$ definita da:</p>
+<p>$$\\varphi(\\mathbf{u}, \\mathbf{v}) := x_1 y_1 + 3 x_1 y_2 + 3 x_2 y_1 + 2 x_2 y_2.$$</p>
+<p>Denotiamo con $\\mathcal{E}$ la base canonica di $\\mathbb{R}^2$ e con $\\mathcal{B}$ la base formata dai vettori $(1,1)$, $(1,2)$. Allora:</p>
+<p>$$G_{\\mathcal{E}}^{\\mathcal{E}}(\\varphi) = \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix}, \\qquad G_{\\mathcal{B}}^{\\mathcal{B}}(\\varphi) = \\begin{pmatrix} 9 & 14 \\\\ 14 & 21 \\end{pmatrix}.$$</p>
+<p>Se si usano le coordinate $\\mathbf{x}'$ rispetto alla base $\\mathcal{B}$:</p>
+<p>$$\\varphi(\\mathbf{u}, \\mathbf{v}) = 9 x_1' y_1' + 14 x_1' y_2' + 14 x_2' y_1' + 21 x_2' y_2'.$$</p>
+<p>Calcoliamo $\\varphi((1,1),(2,0))$ in entrambi i modi.</p>
+<p><strong>Usando le coordinate canoniche:</strong></p>
+<p>$$\\varphi((1,1),(2,0)) = \\begin{pmatrix} 1 & 1 \\end{pmatrix} \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix} = 8.$$</p>
+<p><strong>Usando le coordinate rispetto a $\\mathcal{B}$:</strong> sappiamo che $[(1,1)]_{\\mathcal{B}} = (1,0)^T$. Per trovare $[(2,0)]_{\\mathcal{B}}$ risolviamo il sistema $\\alpha(1,1) + \\beta(1,2) = (2,0)$, cioè $\\alpha + \\beta = 2$, $\\alpha + 2\\beta = 0$, da cui $\\beta = -2$, $\\alpha = 4$, quindi $[(2,0)]_{\\mathcal{B}} = (4,-2)^T$. Allora:</p>
+<p>$$\\varphi((1,1),(2,0)) = \\begin{pmatrix} 1 & 0 \\end{pmatrix} \\begin{pmatrix} 9 & 14 \\\\ 14 & 21 \\end{pmatrix} \\begin{pmatrix} 4 \\\\ -2 \\end{pmatrix} = 8.$$</p>
+<p>Chiaramente il valore $\\varphi((1,1),(2,0))$ non può dipendere dalla base scelta.</p>`
+                },
+                {
+                    subtitle: "Definizione: matrici congruenti",
+                    content: `<p>La formula $G' = P^T G P$ motiva la seguente definizione.</p>
+<p>Date due matrici simmetriche reali $G$ e $G'$ di ordine $n$, si dice che $G$ è <strong>congruente</strong> alla matrice $G'$ se esiste una matrice invertibile $P$ tale che:</p>
+<p>$$G' = P^T G P.$$</p>
+<p>La relazione di congruenza è una <strong>relazione di equivalenza</strong> nell'insieme di tutte le matrici simmetriche di dato ordine $n$. Inoltre, si può provare che $G$ è congruente a $G'$ se e solo se $G$ e $G'$ sono matrici di Gram di una stessa forma bilineare simmetrica $\\varphi : \\mathbb{R}^n \\times \\mathbb{R}^n \\to \\mathbb{R}$, riferite a basi eventualmente distinte.</p>
+<p>Più in generale, dato uno spazio vettoriale $V$ di dimensione $n$ e date due matrici congruenti $G$ e $G'$ di ordine $n$, esiste una forma bilineare simmetrica $\\varphi$ su $V$ ed esistono basi $\\mathcal{B}$ e $\\mathcal{B}'$ di $V$ tali che la matrice di Gram di $\\varphi$ rispetto a $\\mathcal{B}$ è $G$, e la matrice di Gram di $\\varphi$ rispetto a $\\mathcal{B}'$ è $G'$.</p>`
+                },
+                {
+                    subtitle: "Analogia con la similitudine",
+                    content: `<p>Queste nozioni hanno una analogia con quelle già incontrate a proposito della relazione di similitudine. Ricordiamo che due matrici quadrate $A$ ed $A'$ dello stesso ordine $n$ si dicono <strong>simili</strong> se esiste una matrice invertibile $P$ tale che:</p>
+<p>$$A' = P^{-1} A P.$$</p>
+<p>La relazione di similitudine è una relazione di equivalenza e due matrici $A$ ed $A'$ sono simili se e solo se rappresentano uno stesso operatore lineare $f : \\mathbb{R}^n \\to \\mathbb{R}^n$, riferite a basi eventualmente diverse.</p>
+<p>L'analogia è dunque: <strong>similitudine</strong> $\\leftrightarrow$ <strong>operatori lineari</strong>, <strong>congruenza</strong> $\\leftrightarrow$ <strong>forme bilineari simmetriche</strong>. La differenza formale è che nella similitudine compare $P^{-1}$, mentre nella congruenza compare $P^T$.</p>`
+                },
+                {
+                    subtitle: "Corrispondenza biiettiva con le matrici simmetriche",
+                    content: `<p>Fissato uno spazio vettoriale $V$ ed una base $\\mathcal{B}$ di $V$, ogni forma bilineare simmetrica $\\varphi : V \\times V \\to \\mathbb{R}$ determina una matrice simmetrica $G$, cioè la matrice di Gram di $\\varphi$ associata alla base fissata $\\mathcal{B}$. Viceversa, data una matrice simmetrica $G$ qualsiasi (di ordine pari alla dimensione di $V$) possiamo costruire una forma bilineare simmetrica $\\varphi : V \\times V \\to \\mathbb{R}$ ponendo per definizione $\\varphi(\\mathbf{u}, \\mathbf{v}) := \\mathbf{x}^T G \\mathbf{y}$, dove $\\mathbf{x}$ ed $\\mathbf{y}$ denotano le coordinate rispetto alla base fissata $\\mathcal{B}$.</p>
+<p>In altre parole, una volta fissata una base di $V$, esiste una <strong>corrispondenza biiettiva</strong> tra l'insieme di tutte le forme bilineari simmetriche su $V$ e l'insieme delle matrici simmetriche di ordine $\\dim(V)$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Cambio base matrice di Gram", latex: "G' = P^T G P" },
+                { label: "Forma bilineare in coordinate", latex: "\\varphi(\\mathbf{u}, \\mathbf{v}) = \\mathbf{x}^T \\cdot G \\cdot \\mathbf{y}" },
+                { label: "Congruenza", latex: "G' = P^T G P \\text{ con } P \\text{ invertibile}" }
+            ]
+        },
+        {
+            id: "s37-forme-quadratiche",
+            type: "section",
+            title: "Forme quadratiche",
+            icon: "📐",
+            content: `<p>C'è un altro modo per introdurre la nozione di forma bilineare simmetrica, ovvero attraverso la nozione di <strong>forma quadratica</strong>. Si tratta di definizioni diverse ma che, in un senso preciso, sono equivalenti.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione di forma quadratica",
+                    content: `<p>Sia $V$ uno spazio vettoriale reale. Una <strong>forma quadratica</strong> su $V$ è una funzione $q : V \\to \\mathbb{R}$ soddisfacente le seguenti due proprietà:</p>
+<ul>
+<li>Per ogni $\\mathbf{u} \\in V$ ed ogni $c \\in \\mathbb{R}$ si ha $q(c\\mathbf{u}) = c^2 q(\\mathbf{u})$.</li>
+<li>La funzione
+<p>$$\\varphi_q : (\\mathbf{u}, \\mathbf{v}) \\in V \\times V \\longmapsto \\tfrac{1}{2}\\bigl(q(\\mathbf{u}+\\mathbf{v}) - q(\\mathbf{u}) - q(\\mathbf{v})\\bigr) \\in \\mathbb{R}$$</p>
+è una forma bilineare simmetrica su $V$ (tale forma si dice ottenuta <strong>polarizzando</strong> $q$).</li>
+</ul>`
+                },
+                {
+                    subtitle: "Esempi di forme quadratiche",
+                    content: `<p><strong>(i)</strong> La funzione identicamente nulla $q(\\mathbf{u}) \\equiv 0$ è una forma quadratica.</p>
+<p><strong>(ii)</strong> Consideriamo $q : \\mathbb{R}^2 \\to \\mathbb{R}$ definita da:</p>
+<p>$$q(\\mathbf{u}) := x_1^2 + 6 x_1 x_2 + 2 x_2^2.$$</p>
+<p>Osserviamo che:</p>
+<p>$$q(\\mathbf{u}) = \\mathbf{x}^T \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} \\mathbf{x}.$$</p>
+<p>La verifica della prima condizione:</p>
+<p>$$q(c\\mathbf{u}) = (c \\mathbf{x}^T) \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} (c \\mathbf{x}) = c^2 \\left( \\mathbf{x}^T \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} \\mathbf{x} \\right) = c^2 q(\\mathbf{u}).$$</p>
+<p>Per la polarizzazione:</p>
+<p>$$\\varphi_q(\\mathbf{u},\\mathbf{v}) = \\tfrac{1}{2}\\bigl(q(\\mathbf{u}+\\mathbf{v}) - q(\\mathbf{u}) - q(\\mathbf{v})\\bigr) = \\mathbf{x}^T \\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix} \\mathbf{y},$$</p>
+<p>che è una forma bilineare simmetrica.</p>
+<p><strong>(iii)</strong> La funzione $q : \\mathbb{R}^n \\to \\mathbb{R}$ definita da:</p>
+<p>$$q(\\mathbf{u}) := x_1^2 + x_2^2 + \\cdots + x_n^2 = \\mathbf{x}^T \\mathbf{x}$$</p>
+<p>è una forma quadratica. In questo caso $\\varphi_q(\\mathbf{u},\\mathbf{v}) = \\mathbf{x}^T \\mathbf{y}$, cioè $\\varphi_q$ è il prodotto punto.</p>`
+                },
+                {
+                    subtitle: "Equivalenza tra forme quadratiche e forme bilineari simmetriche",
+                    content: `<p>Per definizione stessa, una forma quadratica $q$ determina una forma bilineare simmetrica $\\varphi_q$. Viceversa, data una forma bilineare simmetrica $\\varphi$, la funzione:</p>
+<p>$$q_\\varphi(\\mathbf{u}) := \\varphi(\\mathbf{u}, \\mathbf{u})$$</p>
+<p>è una forma quadratica. Le corrispondenze:</p>
+<p>$$q \\longmapsto \\varphi_q, \\qquad \\varphi \\longmapsto q_\\varphi$$</p>
+<p>sono una l'inversa dell'altra e stabiliscono una <strong>corrispondenza biiettiva</strong> tra l'insieme delle forme quadratiche e l'insieme delle forme bilineari simmetriche.</p>
+<p><strong>Verifica che $q_{\\varphi_q} = q$:</strong> partendo da $q$, polarizziamo per ottenere $\\varphi_q$, poi restringiamo alla diagonale:</p>
+<p>$$q_{\\varphi_q}(\\mathbf{u}) = \\varphi_q(\\mathbf{u},\\mathbf{u}) = \\tfrac{1}{2}\\bigl(q(\\mathbf{u}+\\mathbf{u}) - q(\\mathbf{u}) - q(\\mathbf{u})\\bigr) = \\tfrac{1}{2}\\bigl(q(2\\mathbf{u}) - 2q(\\mathbf{u})\\bigr) = \\tfrac{1}{2}(4q(\\mathbf{u}) - 2q(\\mathbf{u})) = q(\\mathbf{u}),$$</p>
+<p>usando la proprietà $q(c\\mathbf{u}) = c^2 q(\\mathbf{u})$ con $c=2$.</p>
+<p>Da ora in poi, quando assegneremo una forma quadratica $q$, denoteremo con $\\varphi$ la forma bilineare simmetrica corrispondente. In particolare, introdotte delle coordinate nello spazio $V$ e denotata con $G$ la matrice di Gram di $\\varphi$:</p>
+<p>$$\\varphi(\\mathbf{u},\\mathbf{v}) = \\mathbf{x}^T G \\mathbf{y}, \\qquad q(\\mathbf{u}) = \\mathbf{x}^T G \\mathbf{x}.$$</p>
+<p>La matrice $G$ si dice anche <strong>matrice di Gram di $q$</strong>.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Polarizzazione", latex: "\\varphi_q(\\mathbf{u}, \\mathbf{v}) = \\tfrac{1}{2}\\bigl(q(\\mathbf{u}+\\mathbf{v}) - q(\\mathbf{u}) - q(\\mathbf{v})\\bigr)" },
+                { label: "Da bilineare a quadratica", latex: "q_\\varphi(\\mathbf{u}) = \\varphi(\\mathbf{u}, \\mathbf{u})" },
+                { label: "Forma quadratica in coordinate", latex: "q(\\mathbf{u}) = \\mathbf{x}^T G \\mathbf{x}" }
+            ]
+        },
+        {
+            id: "s37-espressione-esplicita",
+            type: "section",
+            title: "Espressione esplicita di forme bilineari e quadratiche",
+            icon: "📝",
+            content: `<p>Esplicitando l'espressione $\\varphi(\\mathbf{u},\\mathbf{v}) = \\mathbf{x}^T G \\mathbf{y}$ si ottiene (con $n = \\dim V$):</p>
+<p>$$\\varphi(\\mathbf{u}, \\mathbf{v}) = \\sum_{i,j=1}^{n} g_{ij} x_i y_j.$$</p>
+<p>Questa è l'<strong>espressione esplicita della forma bilineare $\\varphi$ in termini delle coordinate scelte</strong>. Essa presenta $\\varphi$ come un polinomio omogeneo di secondo grado nelle variabili $x_i$ e $y_j$, bi-omogeneo nel senso che è di primo grado nelle $x_i$ e di primo grado nelle $y_j$. I coefficienti di tale polinomio sono le componenti della matrice di Gram.</p>
+<p>Esplicitando invece $q(\\mathbf{u}) = \\mathbf{x}^T G \\mathbf{x}$:</p>
+<p>$$q(\\mathbf{u}) = \\sum_{i=1}^{n} g_{ii} x_i^2 + \\sum_{1 \\le i \\lt j \\le n} 2 g_{ij} x_i x_j.$$</p>
+<p>Questa è l'<strong>espressione esplicita della forma quadratica $q$</strong>. È un polinomio omogeneo di secondo grado nelle variabili $x_i$:</p>
+<ul>
+<li>I monomi del tipo $x_i^2$ appaiono con coefficiente $g_{ii}$, pari alla componente di posto $(i,i)$ della matrice di Gram.</li>
+<li>I monomi del tipo $x_i x_j$ (con $i \\neq j$) appaiono con coefficiente $2 g_{ij}$, pari al <strong>doppio</strong> della componente corrispondente nella matrice di Gram.</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "Attenzione: leggere la matrice di Gram da φ vs. da q",
+                    content: `<p>Punto chiave da non confondere:</p>
+<ul>
+<li>Da $\\varphi$: il coefficiente di $x_i y_j$ è <strong>direttamente</strong> $g_{ij}$.</li>
+<li>Da $q$: il coefficiente di $x_i x_j$ (con $i \\neq j$) è $2 g_{ij}$, quindi per ricavare $g_{ij}$ dalla forma esplicita di $q$ occorre <strong>dividere per 2</strong>.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Esempi di lettura della matrice di Gram",
+                    content: `<p><strong>(i) Da una forma bilineare su $\\mathbb{R}^2$:</strong></p>
+<p>$$\\varphi(\\mathbf{u},\\mathbf{v}) = a x_1 y_1 + b x_1 y_2 + b x_2 y_1 + c x_2 y_2 \\quad \\Rightarrow \\quad G = \\begin{pmatrix} a & b \\\\ b & c \\end{pmatrix}.$$</p>
+<p><strong>(ii) Da una forma quadratica su $\\mathbb{R}^2$:</strong></p>
+<p>$$q(\\mathbf{u}) = a x_1^2 + b x_1 x_2 + c x_2^2 \\quad \\Rightarrow \\quad G = \\begin{pmatrix} a & \\tfrac{b}{2} \\\\ \\tfrac{b}{2} & c \\end{pmatrix}.$$</p>
+<p>Verifica: $\\mathbf{x}^T \\begin{pmatrix} a & \\tfrac{b}{2} \\\\ \\tfrac{b}{2} & c \\end{pmatrix} \\mathbf{x} = a x_1^2 + b x_1 x_2 + c x_2^2$.</p>
+<p><strong>(iii) Da una forma bilineare su $\\mathbb{R}^3$:</strong></p>
+<p>$$\\varphi(\\mathbf{u},\\mathbf{v}) = a x_1 y_1 + b x_1 y_2 + c x_1 y_3 + b x_2 y_1 + d x_2 y_2 + e x_2 y_3 + c x_3 y_1 + e x_3 y_2 + f x_3 y_3$$</p>
+<p>$$\\Rightarrow \\quad G = \\begin{pmatrix} a & b & c \\\\ b & d & e \\\\ c & e & f \\end{pmatrix}.$$</p>
+<p><strong>(iv) Da una forma quadratica su $\\mathbb{R}^3$:</strong></p>
+<p>$$q(\\mathbf{u}) = a x_1^2 + b x_1 x_2 + c x_1 x_3 + d x_2^2 + e x_2 x_3 + f x_3^2$$</p>
+<p>$$\\Rightarrow \\quad G = \\begin{pmatrix} a & \\tfrac{b}{2} & \\tfrac{c}{2} \\\\ \\tfrac{b}{2} & d & \\tfrac{e}{2} \\\\ \\tfrac{c}{2} & \\tfrac{e}{2} & f \\end{pmatrix}.$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Forma bilineare esplicita", latex: "\\varphi(\\mathbf{u}, \\mathbf{v}) = \\sum_{i,j=1}^{n} g_{ij} x_i y_j" },
+                { label: "Forma quadratica esplicita", latex: "q(\\mathbf{u}) = \\sum_{i=1}^{n} g_{ii} x_i^2 + \\sum_{1 \\le i < j \\le n} 2 g_{ij} x_i x_j" }
+            ]
+        },
+        {
+            id: "s37-diagonalizzazione",
+            type: "section",
+            title: "Diagonalizzazione di una forma quadratica",
+            icon: "⚡",
+            content: `<p>Ora dimostriamo il risultato centrale: ogni forma bilineare simmetrica (e quindi ogni forma quadratica) può essere diagonalizzata.</p>
+<p><strong>Teorema.</strong> Sia $\\varphi$ una forma bilineare simmetrica su uno spazio $V$. Allora esiste una base $\\mathcal{B}$ di $V$ tale che $G_{\\mathcal{B}}^{\\mathcal{B}}(\\varphi)$ sia una matrice diagonale.</p>`,
+            subsections: [
+                {
+                    subtitle: "L'Algoritmo di Gauss-Lagrange",
+                    content: `<p>La dimostrazione è costruttiva e si basa sull'<strong>Algoritmo di Gauss-Lagrange</strong>. Si parte da una base qualunque $\\mathcal{E}$ di $V$ e dalla relativa matrice di Gram $G = G_{\\mathcal{E}}^{\\mathcal{E}}(\\varphi)$. Si affianca a $G$ la matrice identità, formando la matrice $n \\times 2n$:</p>
+<p>$$M := [\\, G \\mid I \\,].$$</p>
+<p>Su $M$ si applicano i seguenti passi.</p>
+<p><strong>Passo 1.</strong></p>
+<ul>
+<li><strong>1.1</strong> Se la matrice ha una sola riga, l'algoritmo termina.</li>
+<li><strong>1.2</strong> Individuare la colonna non nulla con indice più basso (nella metà sinistra), ed il suo pivot $a_{ij}$; se non esistono colonne non nulle la matrice è nulla e l'algoritmo termina.</li>
+<li><strong>1.3</strong> Se $i = j$ (il pivot è sulla diagonale), passare a 1.5. Se $i \\neq j$, sommare alla $j$-esima riga la $i$-esima riga, e sommare alla $j$-esima colonna la $i$-esima colonna.</li>
+<li><strong>1.4</strong> Se dopo queste operazioni l'elemento di posto $(j,j)$ è nullo, ripetere il passo 1.3; altrimenti proseguire.</li>
+<li><strong>1.5</strong> Rendere nulli tutti gli altri elementi della colonna $j$-esima sommando alle varie righe opportuni multipli della $j$-esima riga.</li>
+<li><strong>1.6</strong> Ripetere sulle colonne le stesse operazioni elementari che sono state effettuate in 1.5 sulle righe, nello stesso ordine.</li>
+</ul>
+<p><strong>Passo 2.</strong> "Schermare" le prime $j$ righe e le prime $j$ colonne (cioè considerare la sottomatrice rimanente), e ripetere il Passo 1 sulla parte non ancora elaborata.</p>
+<p><strong>Iterazione.</strong> Ripetere il Passo 2 finché la parte schermata non copre l'intera matrice (cioè finché rimangono righe e colonne non ancora elaborate). L'algoritmo termina necessariamente perché ad ogni iterazione la matrice schermata cresce di almeno una riga e una colonna.</p>`
+                },
+                {
+                    subtitle: "Perché l'algoritmo funziona: operazioni simmetriche su righe e colonne",
+                    content: `<p>Punto chiave per capire il meccanismo: ogni operazione elementare di riga corrisponde a moltiplicare a sinistra per una matrice elementare $E$. La stessa operazione ripetuta sulle colonne (passo 1.6) corrisponde a moltiplicare a destra per $E^T$. Quindi, dopo una sequenza di operazioni $E_1, E_2, \\ldots, E_k$, la metà sinistra della matrice diventa:</p>
+<p>$$E_k \\cdots E_2 E_1 \\cdot G \\cdot E_1^T E_2^T \\cdots E_k^T.$$</p>
+<p>Posto $Q = E_k \\cdots E_1$, questa è esattamente $Q G Q^T$. La metà destra, partendo da $I$, subisce solo le operazioni di riga e diventa $Q \\cdot I = Q$. Ma poiché le matrici elementari per operazioni di riga del tipo "somma un multiplo di una riga ad un'altra" soddisfano $E^T = E^{-T}$... in realtà la metà destra registra esattamente $P^T$ dove $P$ è la matrice di cambio base, e vale $D = P^T G P$.</p>
+<p>Al termine dell'algoritmo si ottiene:</p>
+<p>$$[\\, G \\mid I \\,] \\longrightarrow [\\, D \\mid P^T \\,]$$</p>
+<p>dove $D$ è diagonale e $D = P^T G P$.</p>`
+                },
+                {
+                    subtitle: "Come leggere la base dalla matrice P",
+                    content: `<p>Se $\\mathcal{B}$ è la base di $V$ tale che $M_{\\mathcal{E}}^{\\mathcal{B}}(\\text{id}_V) = P$, allora:</p>
+<p>$$G_{\\mathcal{B}}^{\\mathcal{B}}(\\varphi) = D.$$</p>
+<p>Le <strong>colonne di $P$</strong> sono le coordinate dei vettori di $\\mathcal{B}$ rispetto alla base di partenza $\\mathcal{E}$. Quindi il primo vettore di $\\mathcal{B}$ ha come coordinate (rispetto a $\\mathcal{E}$) la prima colonna di $P$, il secondo la seconda colonna, e così via.</p>
+<p>Se denotiamo con $\\mathbf{x}$ le coordinate rispetto a $\\mathcal{B}$ e con $d_1, d_2, \\ldots, d_n$ le componenti sulla diagonale di $D$:</p>
+<p>$$\\varphi(\\mathbf{u},\\mathbf{v}) = d_1 x_1 y_1 + d_2 x_2 y_2 + \\cdots + d_n x_n y_n.$$</p>`
+                },
+                {
+                    subtitle: "Corollari",
+                    content: `<p><strong>Corollario 1.</strong> Sia $q$ una forma quadratica su uno spazio $V$ di dimensione $n$. Allora, per una opportuna scelta delle coordinate $\\mathbf{x}$ in $V$, esistono delle costanti $d_1, d_2, \\ldots, d_n$ tali che per ogni $\\mathbf{u} \\in V$:</p>
+<p>$$q(\\mathbf{u}) = d_1 x_1^2 + d_2 x_2^2 + \\cdots + d_n x_n^2.$$</p>
+<p>Questo segue dal Teorema scegliendo come coordinate le coordinate rispetto alla base $\\mathcal{B}$ che diagonalizza $\\varphi$: in tali coordinate la matrice di Gram è diagonale $D = \\text{diag}(d_1, \\ldots, d_n)$, e quindi $q(\\mathbf{u}) = \\mathbf{x}^T D \\mathbf{x} = d_1 x_1^2 + \\cdots + d_n x_n^2$.</p>
+<p><strong>Corollario 2.</strong> Ogni matrice reale simmetrica $G$ è congruente a qualche matrice diagonale. Cioè esiste una matrice diagonale $D$ ed una matrice invertibile $P$ tale che:</p>
+<p>$$D = P^T G P.$$</p>
+<p>Questo segue perché ogni matrice simmetrica $G$ è matrice di Gram di qualche forma bilineare simmetrica (basta porre $\\varphi(\\mathbf{u},\\mathbf{v}) = \\mathbf{x}^T G \\mathbf{y}$ rispetto alla base canonica), e il Teorema garantisce l'esistenza di una base che diagonalizza $\\varphi$, con matrice di cambio base $P$ tale che $D = P^T G P$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Risultato dell'algoritmo", latex: "[\\, G \\mid I \\,] \\longrightarrow [\\, D \\mid P^T \\,]" },
+                { label: "Relazione di congruenza-diagonalizzazione", latex: "D = P^T G P" },
+                { label: "Forma diagonalizzata", latex: "q(\\mathbf{u}) = d_1 x_1^2 + d_2 x_2^2 + \\cdots + d_n x_n^2" }
+            ]
+        },
+        {
+            id: "s37-esempio-diag-r2",
+            type: "section",
+            title: "Esempio: diagonalizzazione su ℝ²",
+            icon: "✏️",
+            content: `<p>Consideriamo la forma bilineare simmetrica $\\varphi : \\mathbb{R}^2 \\times \\mathbb{R}^2 \\to \\mathbb{R}$ definita da:</p>
+<p>$$\\varphi(\\mathbf{u},\\mathbf{v}) := x_1 y_1 + 3 x_1 y_2 + 3 x_2 y_1 + 2 x_2 y_2.$$</p>
+<p>Cerchiamo una base che diagonalizzi $\\varphi$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Setup: affiancamento [G | I]",
+                    content: `<p>Affianchiamo alla matrice di Gram $G$ di $\\varphi$ rispetto alla base canonica la matrice $I$:</p>
+<p>$$[\\, G \\mid I \\,] = \\left[\\begin{array}{cc|cc} 1 & 3 & 1 & 0 \\\\ 3 & 2 & 0 & 1 \\end{array}\\right].$$</p>`
+                },
+                {
+                    subtitle: "Passo 1: eliminazione con operazioni simmetriche",
+                    content: `<p>Il pivot $a_{11} = 1$ è non nullo e si trova sulla diagonale ($i = j = 1$). Passiamo al passo 1.5: vogliamo annullare l'elemento $a_{21} = 3$.</p>
+<p>Eseguiamo l'operazione elementare sulla seconda riga: $R_2 \\to R_2 - 3 R_1$ (cioè $e_{21}(-3)$).</p>
+<p>Per mantenere la simmetria, ripetiamo la stessa operazione sulle colonne: $C_2 \\to C_2 - 3 C_1$.</p>
+<p>Si ottiene:</p>
+<p>$$[\\, D \\mid P^T \\,] = \\left[\\begin{array}{cc|cc} 1 & 0 & 1 & 0 \\\\ 0 & -7 & -3 & 1 \\end{array}\\right].$$</p>`
+                },
+                {
+                    subtitle: "Lettura del risultato",
+                    content: `<p>Dalla matrice ottenuta leggiamo:</p>
+<p>$$D = \\begin{pmatrix} 1 & 0 \\\\ 0 & -7 \\end{pmatrix}, \\qquad P^T = \\begin{pmatrix} 1 & 0 \\\\ -3 & 1 \\end{pmatrix}, \\qquad P = \\begin{pmatrix} 1 & -3 \\\\ 0 & 1 \\end{pmatrix}.$$</p>
+<p>Le colonne di $P$ sono le coordinate dei vettori della nuova base rispetto alla base canonica $\\mathcal{E}$: la prima colonna $(1,0)^T$ dà il vettore $(1,0)$ e la seconda colonna $(-3,1)^T$ dà il vettore $(-3,1)$.</p>
+<p>Posto $\\mathcal{B} = \\{(1,0),(-3,1)\\}$:</p>
+<p>$$G_{\\mathcal{B}}^{\\mathcal{B}}(\\varphi) = \\begin{pmatrix} 1 & 0 \\\\ 0 & -7 \\end{pmatrix}.$$</p>
+<p>Se denotiamo con $\\mathbf{x}'$ le coordinate rispetto a $\\mathcal{B}$:</p>
+<p>$$\\varphi(\\mathbf{u},\\mathbf{v}) = x_1' y_1' - 7 x_2' y_2'.$$</p>
+<p>Equivalentemente, nella forma originale, la sostituzione:</p>
+<p>$$\\begin{cases} x_1 = x_1' - 3 x_2' \\\\ x_2 = x_2' \\end{cases}$$</p>
+<p>(e analoga per $y_1, y_2$) trasforma $\\varphi$ esattamente in $x_1' y_1' - 7 x_2' y_2'$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s37-esempio-diag-r3",
+            type: "section",
+            title: "Esempio aggiuntivo: diagonalizzazione su ℝ³ con pivot fuori diagonale",
+            icon: "🔧",
+            content: `<p>Per illustrare l'algoritmo di Gauss-Lagrange nel caso in cui il pivot iniziale <strong>non</strong> si trova sulla diagonale (passi 1.3–1.4), consideriamo la forma quadratica su $\\mathbb{R}^3$:</p>
+<p>$$q(\\mathbf{u}) = x_1 x_2 + x_1 x_3 + x_2 x_3.$$</p>
+<p>La matrice di Gram (ricordando di dividere per 2 i coefficienti misti) è:</p>
+<p>$$G = \\begin{pmatrix} 0 & \\tfrac{1}{2} & \\tfrac{1}{2} \\\\ \\tfrac{1}{2} & 0 & \\tfrac{1}{2} \\\\ \\tfrac{1}{2} & \\tfrac{1}{2} & 0 \\end{pmatrix}.$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Passo 1: il pivot è fuori diagonale",
+                    content: `<p>Setup iniziale:</p>
+<p>$$[\\, G \\mid I \\,] = \\left[\\begin{array}{ccc|ccc} 0 & \\tfrac{1}{2} & \\tfrac{1}{2} & 1 & 0 & 0 \\\\ \\tfrac{1}{2} & 0 & \\tfrac{1}{2} & 0 & 1 & 0 \\\\ \\tfrac{1}{2} & \\tfrac{1}{2} & 0 & 0 & 0 & 1 \\end{array}\\right].$$</p>
+<p>La prima colonna non nulla è la colonna 1, ma $a_{11} = 0$. Il pivot è $a_{21} = \\tfrac{1}{2}$, con $i=2 \\neq j=1$. Siamo nel caso 1.3.</p>
+<p><strong>Passo 1.3:</strong> sommiamo alla riga 1 la riga 2 ($R_1 \\to R_1 + R_2$), e sommiamo alla colonna 1 la colonna 2 ($C_1 \\to C_1 + C_2$):</p>
+<p>Dopo $R_1 \\to R_1 + R_2$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} \\tfrac{1}{2} & \\tfrac{1}{2} & 1 & 1 & 1 & 0 \\\\ \\tfrac{1}{2} & 0 & \\tfrac{1}{2} & 0 & 1 & 0 \\\\ \\tfrac{1}{2} & \\tfrac{1}{2} & 0 & 0 & 0 & 1 \\end{array}\\right].$$</p>
+<p>Dopo $C_1 \\to C_1 + C_2$ (sulla metà sinistra):</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & \\tfrac{1}{2} & 1 & 1 & 1 & 0 \\\\ \\tfrac{1}{2} & 0 & \\tfrac{1}{2} & 0 & 1 & 0 \\\\ 1 & \\tfrac{1}{2} & 0 & 0 & 0 & 1 \\end{array}\\right].$$</p>
+<p>Ora $a_{11} = 1 \\neq 0$, il pivot è sulla diagonale. Passiamo a 1.5.</p>`
+                },
+                {
+                    subtitle: "Passo 1.5–1.6: eliminazione dalla prima colonna",
+                    content: `<p><strong>Passo 1.5:</strong> annulliamo gli elementi sotto il pivot $a_{11} = 1$.</p>
+<p>$R_2 \\to R_2 - \\tfrac{1}{2} R_1$ e $R_3 \\to R_3 - 1 \\cdot R_1$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & \\tfrac{1}{2} & 1 & 1 & 1 & 0 \\\\ 0 & -\\tfrac{1}{4} & 0 & -\\tfrac{1}{2} & \\tfrac{1}{2} & 0 \\\\ 0 & 0 & -1 & -1 & -1 & 1 \\end{array}\\right].$$</p>
+<p><strong>Passo 1.6:</strong> ripetiamo sulle colonne (metà sinistra): $C_2 \\to C_2 - \\tfrac{1}{2} C_1$ e $C_3 \\to C_3 - 1 \\cdot C_1$:</p>
+<p>$$\\left[\\begin{array}{ccc|ccc} 1 & 0 & 0 & 1 & 1 & 0 \\\\ 0 & -\\tfrac{1}{4} & 0 & -\\tfrac{1}{2} & \\tfrac{1}{2} & 0 \\\\ 0 & 0 & -1 & -1 & -1 & 1 \\end{array}\\right].$$</p>`
+                },
+                {
+                    subtitle: "Risultato finale",
+                    content: `<p>La matrice è già diagonale nella metà sinistra (abbiamo avuto fortuna: la sottomatrice $2 \\times 2$ residua era già diagonale). Il risultato è:</p>
+<p>$$D = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & -\\tfrac{1}{4} & 0 \\\\ 0 & 0 & -1 \\end{pmatrix}, \\qquad P^T = \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\tfrac{1}{2} & \\tfrac{1}{2} & 0 \\\\ -1 & -1 & 1 \\end{pmatrix}.$$</p>
+<p>Trasponiamo per ottenere $P$:</p>
+<p>$$P = \\begin{pmatrix} 1 & -\\tfrac{1}{2} & -1 \\\\ 1 & \\tfrac{1}{2} & -1 \\\\ 0 & 0 & 1 \\end{pmatrix}.$$</p>
+<p>Le colonne di $P$ danno i vettori della base diagonalizzante $\\mathcal{B}$: $(1,1,0)$, $(-\\tfrac{1}{2}, \\tfrac{1}{2}, 0)$, $(-1,-1,1)$.</p>
+<p>In coordinate rispetto a $\\mathcal{B}$, la forma quadratica diventa:</p>
+<p>$$q(\\mathbf{u}) = (x_1')^2 - \\tfrac{1}{4}(x_2')^2 - (x_3')^2.$$</p>
+<p>Da notare: questo esempio illustra il caso cruciale in cui $g_{11} = 0$ (nessun termine $x_1^2$ nella forma quadratica) e occorre il passo 1.3 di somma riga+colonna per creare un pivot sulla diagonale.</p>`
+                }
+            ]
+        },
+        {
+            id: "s37-alert-gram-q-vs-phi",
+            type: "alert_box",
+            title: "Trappola d'esame: leggere G da q vs. da φ",
+            icon: "⚠️",
+            content: `<p>Errore comune da evitare: confondere il modo in cui si legge la matrice di Gram a partire da $\\varphi$ e a partire da $q$.</p>
+<ul>
+<li>Da $\\varphi(\\mathbf{u},\\mathbf{v}) = \\ldots + b\\, x_i y_j + b\\, x_j y_i + \\ldots$ si legge direttamente $g_{ij} = b$.</li>
+<li>Da $q(\\mathbf{u}) = \\ldots + b\\, x_i x_j + \\ldots$ (con $i \\neq j$) si ha $g_{ij} = \\tfrac{b}{2}$, <strong>non</strong> $b$!</li>
+</ul>
+<p>Esempio: se $q(\\mathbf{u}) = x_1^2 + 6 x_1 x_2 + 2 x_2^2$, allora $g_{12} = 3$ (non $6$) e la matrice di Gram è $\\begin{pmatrix} 1 & 3 \\\\ 3 & 2 \\end{pmatrix}$.</p>`
+        },
+        {
+            id: "s37-note-simmetria-operazioni",
+            type: "note_box",
+            title: "Perché le operazioni sono simmetriche (righe e colonne)?",
+            icon: "💡",
+            content: `<p>Nell'algoritmo di Gauss standard (per sistemi lineari) si opera <strong>solo sulle righe</strong>. Nell'algoritmo di Gauss-Lagrange si opera <strong>sia sulle righe che sulle colonne</strong>, ripetendo la stessa operazione. Perché?</p>
+<p>La matrice di Gram $G$ rappresenta una forma bilineare, non un operatore lineare. Un cambio di base agisce con $P^T G P$ (congruenza), non con $P^{-1} G P$ (similitudine). Quindi per mantenere la relazione di congruenza, ogni operazione elementare di riga (che corrisponde a moltiplicare a sinistra per una matrice elementare $E$) deve essere accompagnata dalla stessa operazione sulle colonne (che corrisponde a moltiplicare a destra per $E^T$).</p>
+<p>Nella metà destra della matrice $[G \\mid I]$ si registrano solo le operazioni di riga: per questo alla fine si ottiene $P^T$ (non $P$).</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quando si dice che due matrici simmetriche G e G' sono congruenti?",
+            back: "Due matrici simmetriche reali $G$ e $G'$ di ordine $n$ sono <strong>congruenti</strong> se esiste una matrice invertibile $P$ tale che $G' = P^T G P$. Questo avviene se e solo se $G$ e $G'$ sono matrici di Gram di una stessa forma bilineare simmetrica, riferite a basi eventualmente diverse."
+        },
+        {
+            type: "domanda",
+            front: "Qual è l'analogia tra congruenza e similitudine? Qual è la differenza formale?",
+            back: "Similitudine ↔ operatori lineari: $A' = P^{-1} A P$. Congruenza ↔ forme bilineari simmetriche: $G' = P^T G P$. La differenza formale è che nella similitudine compare $P^{-1}$, nella congruenza compare $P^T$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è una forma quadratica su uno spazio vettoriale V?",
+            back: "Una funzione $q : V \\to \\mathbb{R}$ tale che: (1) $q(c\\mathbf{u}) = c^2 q(\\mathbf{u})$ per ogni $\\mathbf{u} \\in V$, $c \\in \\mathbb{R}$; (2) la funzione $\\varphi_q(\\mathbf{u},\\mathbf{v}) = \\tfrac{1}{2}(q(\\mathbf{u}+\\mathbf{v}) - q(\\mathbf{u}) - q(\\mathbf{v}))$ è una forma bilineare simmetrica (detta polarizzazione di $q$)."
+        },
+        {
+            type: "domanda",
+            front: "In che senso forme quadratiche e forme bilineari simmetriche sono equivalenti?",
+            back: "Le corrispondenze $q \\mapsto \\varphi_q$ (polarizzazione) e $\\varphi \\mapsto q_\\varphi(\\mathbf{u}) := \\varphi(\\mathbf{u},\\mathbf{u})$ sono una l'inversa dell'altra, stabilendo una corrispondenza biiettiva tra forme quadratiche e forme bilineari simmetriche. Si verifica che $q_{\\varphi_q} = q$ usando $q(2\\mathbf{u}) = 4q(\\mathbf{u})$."
+        },
+        {
+            type: "tranello",
+            front: "Data la forma quadratica q(u) = ax₁² + bx₁x₂ + cx₂², qual è la matrice di Gram? Qual è l'errore tipico?",
+            back: "La matrice di Gram è $G = \\begin{pmatrix} a & \\tfrac{b}{2} \\\\ \\tfrac{b}{2} & c \\end{pmatrix}$. L'errore tipico è mettere $b$ al posto di $\\tfrac{b}{2}$ nelle posizioni fuori diagonale. Il coefficiente del monomio misto $x_i x_j$ nella forma quadratica è $2g_{ij}$, non $g_{ij}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Descrivi la struttura dell'algoritmo di Gauss-Lagrange per diagonalizzare una forma bilineare simmetrica.",
+            back: "Si parte da $[G \\mid I]$. (1) Si trova un pivot non nullo; se non è sulla diagonale, si somma la riga/colonna corrispondente per portarlo sulla diagonale. (2) Si annullano gli altri elementi della colonna con operazioni di riga, e si ripetono le stesse operazioni sulle colonne per mantenere la simmetria. (3) Si itera sulla sottomatrice residua. Alla fine si ottiene $[D \\mid P^T]$ con $D = P^T G P$ diagonale."
+        },
+        {
+            type: "domanda",
+            front: "Perché nell'algoritmo di Gauss-Lagrange si operano le stesse operazioni elementari sia sulle righe sia sulle colonne?",
+            back: "Perché la matrice di Gram cambia per congruenza ($G' = P^T G P$), non per similitudine. Un'operazione di riga moltiplica a sinistra per $E$, l'operazione speculare sulle colonne moltiplica a destra per $E^T$. Insieme producono $E G E^T$, che mantiene la relazione di congruenza."
+        },
+        {
+            type: "formula",
+            front: "Come si cambia base per la matrice di Gram di una forma bilineare simmetrica?",
+            back: "Se $P$ è la matrice di cambio base da $\\mathcal{B}$ a $\\mathcal{B}'$, allora $$G' = P^T G P.$$ Attenzione: nella congruenza appare $P^T$, non $P^{-1}$ come nella similitudine."
+        },
+        {
+            type: "domanda",
+            front: "Cosa afferma il teorema di diagonalizzazione per forme bilineari simmetriche? Quali sono i suoi due corollari?",
+            back: "Per ogni forma bilineare simmetrica $\\varphi$ su $V$ esiste una base $\\mathcal{B}$ tale che $G_{\\mathcal{B}}^{\\mathcal{B}}(\\varphi)$ è diagonale. Corollario 1: ogni forma quadratica, con opportune coordinate, si scrive come $q(\\mathbf{u}) = d_1 x_1^2 + \\cdots + d_n x_n^2$. Corollario 2: ogni matrice simmetrica reale è congruente a qualche matrice diagonale."
+        },
+        {
+            type: "domanda",
+            front: "Nell'esempio su ℝ², come si leggono i vettori della base diagonalizzante dalla matrice P?",
+            back: "Le colonne di $P$ sono le coordinate dei vettori della nuova base rispetto alla base di partenza. Se $P = \\begin{pmatrix} 1 & -3 \\\\ 0 & 1 \\end{pmatrix}$, il primo vettore è $(1,0)$ (prima colonna) e il secondo è $(-3,1)$ (seconda colonna)."
+        }
+    ]
+};
+
