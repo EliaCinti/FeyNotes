@@ -1,0 +1,461 @@
+const LESSON = {
+    id: "L40", date: "Lezione 31 — 20 Mag 2026",
+    title: "Moto di puro rotolamento, baricentro e pendolo composto",
+    abstract: "Cinematica e dinamica del puro rotolamento (due descrizioni equivalenti), trazione di un carro e ruota motrice, momento risultante vs momento della risultante, baricentro come centro delle forze peso, pendolo composto, cenni agli urti con corpi rigidi e problemi di statica.",
+
+    sections: [
+        {
+            id: "s40-puro-rotolamento",
+            type: "section",
+            title: "Il moto di puro rotolamento",
+            icon: "🛞",
+            content: `<p>Il moto di puro rotolamento è una delle condizioni più frequenti nei problemi di dinamica dei corpi rigidi, per corpi a sezione circolare (cilindri, dischi, sfere, ruote) a contatto con una superficie. Quando un corpo a sezione circolare rotola su un piano, si distinguono tre situazioni cinematiche:</p>
+<ul>
+<li>un corpo che ruota e contemporaneamente <strong>scivola</strong>;</li>
+<li>un corpo che ruota stando fermo, <strong>senza avanzare</strong>;</li>
+<li>un corpo che ruota a contatto con la superficie <strong>senza slittamento relativo</strong>, e quindi avanza puramente per effetto della rotazione.</li>
+</ul>
+<p>Quest'ultimo è il caso di interesse e prende il nome di <strong>moto di puro rotolamento</strong>. Tipicamente il testo del problema lo dichiara con espressioni come "un cilindro scende lungo un piano inclinato ruotando senza slittare".</p>`,
+            subsections: [
+                {
+                    subtitle: "Descrizione come pura rotazione istantanea attorno al punto di contatto",
+                    content: `<p>Consideriamo un disco omogeneo di raggio $R$ e massa $M$ che rotola senza strisciare su un piano orizzontale, e indichiamo con $C$ il punto di contatto.</p>
+<blockquote>Una ruota reale non è in generale un disco omogeneo: ha una distribuzione di massa simmetrica ma radiale, con la densità che varia spostandosi dal centro verso il bordo. Per semplicità, consideriamo la ruota come un disco omogeneo: in tal modo il centro di massa coincide con il centro geometrico e il momento di inerzia è noto.</blockquote>
+<p>In un intervallo di tempo infinitesimo $dt$, il punto di contatto $C$ può essere considerato fermo, e il disco compie una piccola rotazione di angolo $d\\theta$ attorno a un asse istantaneo passante per $C$. All'istante successivo il punto di contatto si è spostato di un $dx$ in avanti, e si ripete una nuova rotazione infinitesima attorno al nuovo punto di contatto. L'avanzamento finito della ruota viene descritto come una successione di infinite rotazioni infinitesime attorno ad assi istantanei passanti, di volta in volta, per il punto di contatto.</p>
+<p><strong>Condizione di puro rotolamento:</strong> il moto di un corpo rigido a sezione circolare a contatto con una superficie si dice di puro rotolamento se la velocità istantanea del punto di contatto $C$ è nulla:</p>
+<p>$$\\vec{v}_C = \\vec{0}$$</p>`
+                },
+                {
+                    subtitle: "Relazione cinematica fondamentale",
+                    content: `<p>Nell'intervallo $dt$, il centro di massa percorre un piccolo arco di lunghezza $ds$, corrispondente alla rotazione di angolo $d\\theta$ attorno a $C$. Poiché il centro di massa dista $R$ dall'asse istantaneo di rotazione:</p>
+<p>$$ds = R\\, d\\theta$$</p>
+<p>e quindi:</p>
+<p>$$v_{CM} = \\frac{ds}{dt} = R\\,\\frac{d\\theta}{dt} = \\omega_C R$$</p>
+<p>In un moto di puro rotolamento vale:</p>
+<p>$$v_{CM} = \\omega_C R$$</p>
+<p>dove $\\omega_C$ è la velocità angolare della rotazione istantanea attorno all'asse passante per il punto di contatto.</p>`
+                },
+                {
+                    subtitle: "Descrizione come roto-traslazione",
+                    content: `<p>Esiste una seconda descrizione, alternativa ma equivalente. Ricordiamo che qualunque spostamento infinitesimo di un corpo rigido può essere descritto come la combinazione di una traslazione infinitesima e di una rotazione infinitesima attorno a un asse istantaneo. Anche l'energia cinetica si scompone secondo il teorema di König:</p>
+<p>$$K = \\tfrac{1}{2} M v_{CM}^2 + \\tfrac{1}{2} I_{CM}\\,\\omega^2$$</p>
+<p>Nella seconda descrizione, immaginiamo il disco come un corpo che <strong>trasla</strong> con il centro di massa (con velocità $\\vec{v}_{CM}$) e <strong>contemporaneamente ruota</strong> attorno a un asse passante per il centro di massa, con velocità angolare $\\omega_{CM}$.</p>
+<p>Anche in questo caso $ds = R\\,d\\theta$ e quindi $v_{CM} = \\omega_{CM} R$. Confrontando con la relazione precedente:</p>
+<p>$$\\omega_C R = v_{CM} = \\omega_{CM} R \\quad\\Rightarrow\\quad \\omega_C = \\omega_{CM} \\equiv \\omega$$</p>
+<p><strong>Punto chiave:</strong> nel puro rotolamento la velocità angolare è la stessa nelle due descrizioni. Che si scelga di descrivere il moto come pura rotazione istantanea attorno al punto di contatto, oppure come roto-traslazione, il valore di $\\omega$ coincide.</p>`
+                },
+                {
+                    subtitle: "Momenti di inerzia nelle due descrizioni",
+                    content: `<p>Anche se la velocità angolare è la stessa, il <strong>momento di inerzia</strong> delle due rotazioni è diverso, perché è diversa la distribuzione di massa attorno ai due assi. Per un disco omogeneo di massa $M$ e raggio $R$:</p>
+<ul>
+<li>Rispetto all'asse per il centro di massa: $I_{CM} = \\tfrac{1}{2} M R^2$</li>
+<li>Rispetto all'asse per il punto di contatto, applicando il teorema di Huygens-Steiner: $I_C = I_{CM} + M R^2 = \\tfrac{1}{2}MR^2 + MR^2 = \\tfrac{3}{2} MR^2$</li>
+</ul>
+<p>Il fatto che $I_C \\gt I_{CM}$ è coerente: ruotando attorno al punto di contatto, alcuni elementi del disco si trovano a distanza fino a $2R$ dall'asse, mentre nella rotazione attorno al centro di massa la distanza massima è $R$.</p>`
+                },
+                {
+                    subtitle: "Composizione delle velocità e vista dal sistema del centro di massa",
+                    content: `<p>L'osservatore esterno (solidale al pavimento) vede sia la traslazione del centro di massa sia la rotazione del disco attorno ad esso; l'osservatore nel centro di massa vede solo i moti <em>interni</em> del corpo rigido.</p>
+<p>Per un punto generico $P$ del disco, detta $\\vec{R}\\,'$ la sua posizione rispetto al centro di massa, l'osservatore mobile vede:</p>
+<p>$$\\vec{v}\\,' = \\vec{\\omega}_{CM} \\wedge \\vec{R}\\,'$$</p>
+<p>La legge di composizione delle velocità dà:</p>
+<p>$$\\vec{v}_P = \\vec{v}\\,' + \\vec{v}_{CM} = \\vec{\\omega}_{CM} \\wedge \\vec{R}\\,' + \\vec{v}_{CM}$$</p>
+<p>Applicando al punto di contatto $C$ (dove $\\vec{v}_C = \\vec{0}$ per la condizione di puro rotolamento):</p>
+<p>$$\\vec{0} = \\vec{\\omega}_{CM} \\wedge \\vec{R} + \\vec{v}_{CM}$$</p>
+<p>$$\\vec{v}_{CM} = -\\vec{\\omega}_{CM} \\wedge \\vec{R}$$</p>
+<p>che in modulo restituisce $v_{CM} = \\omega R$, coerentemente con quanto trovato.</p>`
+                },
+                {
+                    subtitle: "Confronto grafico tra le due descrizioni",
+                    content: `<p><strong>Descrizione come pura rotazione attorno a $C$:</strong> tutti i punti del disco ruotano con la stessa $\\omega$ attorno all'asse istantaneo passante per $C$:</p>
+<p>$$v_T = \\omega \\cdot (2R) = 2\\,v_{CM}, \\qquad v_{CM} = \\omega R, \\qquad v_C = 0$$</p>
+<p><strong>Descrizione come roto-traslazione:</strong> si combinano una pura traslazione (tutti i punti a velocità $v_{CM}$) e una pura rotazione attorno al CM:</p>
+<p>$$v_T = v_{CM} + v_{CM} = 2\\,v_{CM}$$</p>
+<p>$$v_{CM} = v_{CM} + 0 = v_{CM}$$</p>
+<p>$$v_C = v_{CM} - v_{CM} = 0$$</p>
+<p>Le due descrizioni forniscono lo stesso risultato per la velocità di ogni punto del disco.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Confronto delle velocità nelle due descrizioni del puro rotolamento</strong></p>
+  <p><em>A sinistra: disco con pura rotazione attorno a C. Il punto C ha un puntino con etichetta $v_C = 0$, il CM ha una freccia blu di lunghezza $\\omega R$, il punto T (sommità) ha una freccia blu di lunghezza $2\\omega R$. Asse istantaneo tratteggiato verticale per C. A destra: stesso disco, con frecce verdi tutte uguali ($v_{CM}$, traslazione) e frecce arancioni (rotazione attorno al CM): $-\\omega R$ al punto C, $0$ al CM (puntino arancione), $+\\omega R$ al punto T. Le risultanti blu tratteggiate coincidono con il caso sinistro.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+                }
+            ],
+            formulas: [
+                { label: "Condizione di puro rotolamento", latex: "\\vec{v}_C = \\vec{0}" },
+                { label: "Relazione cinematica", latex: "v_{CM} = \\omega R" },
+                { label: "Energia cinetica (König)", latex: "K = \\tfrac{1}{2} M v_{CM}^2 + \\tfrac{1}{2} I_{CM}\\,\\omega^2" }
+            ],
+            extra_content: `<blockquote>"Da adesso in poi non vi disturbate quando vi chiedete: «ma questo è una pura rotazione o una roto-traslazione?». Quello dipende da voi. È come la scelta degli assi coordinati in cinematica: il fenomeno fisico è quello, ma a seconda di come scegliete di descriverlo i calcoli risultano più o meno semplici. In certi problemi conviene una scelta, in certi l'altra, ma il risultato finale deve essere lo stesso. <em>Il fenomeno fisico non dipende dal modo in cui io decido di descriverlo.</em>"</blockquote>`
+        },
+        {
+            id: "s40-carro-ruota",
+            type: "section",
+            title: "Trazione di un carro e ruota motrice",
+            icon: "🚗",
+            content: `<p>Applichiamo quanto visto a due situazioni reali, distinte ma riconducibili al medesimo formalismo:</p>
+<ul>
+<li><strong>Caso 1 — Carro (o ruota non motrice):</strong> una ruota viene tirata mediante una forza esterna $\\vec{F}$ applicata all'asse (centro di massa). È il caso del giogo di un cavallo che tira un carro, della ruota di un vagone ferroviario, o di una ruota non motrice.</li>
+<li><strong>Caso 2 — Ruota motrice:</strong> una ruota è messa in moto da una coppia di forze applicata all'asse, prodotta dal motore. Sull'asse agisce un momento $\\mathcal{M}$.</li>
+</ul>
+<p>In entrambi i casi: ruota di massa $M$, raggio $R$, momento di inerzia $I$ rispetto al centro di massa, coefficiente di attrito statico $\\mu_S$, piano orizzontale con reazione normale $N = Mg$. Il problema è determinare la <strong>forza limite</strong> $F_{\\max}$ (caso 1) e il <strong>momento limite</strong> $\\mathcal{M}_{\\max}$ (caso 2) affinché il moto sia di puro rotolamento.</p>`,
+            subsections: [
+                {
+                    subtitle: "Ruolo dell'attrito statico e direzione della forza di attrito",
+                    content: `<p>Se non vi fosse attrito, nel caso 1 la forza $\\vec{F}$ trascinerebbe la ruota traslandola senza farla ruotare. È proprio l'attrito al punto di contatto a metterla in rotazione. Poiché la condizione di puro rotolamento impone $\\vec{v}_C = \\vec{0}$, il punto di contatto è in condizioni <strong>statiche</strong>: l'attrito in gioco è l'<strong>attrito statico</strong>.</p>
+<p><strong>Caso 1 (carro):</strong> la forza $\\vec{F}$ tenderebbe a far slittare in avanti il punto di contatto; quindi $\\vec{f}_A$ ha verso <em>opposto</em> a $\\vec{F}$.</p>
+<p><strong>Caso 2 (ruota motrice):</strong> la coppia motrice fa girare la ruota in modo che il punto di contatto, in assenza di attrito, slitterebbe <em>all'indietro</em>; quindi $\\vec{f}_A$ ha verso <em>concorde</em> al moto del centro di massa (in avanti).</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Diagrammi delle forze nei due casi</strong></p>
+  <p><em>A sinistra (carro): disco su piano con tratteggio, forza $\\vec{F}$ rossa applicata al CM e diretta a destra, attrito $\\vec{f}_A$ blu diretto a sinistra al punto C, peso $M\\vec{g}$ e normale $\\vec{N}$ grigi. A destra (ruota motrice): disco con momento $\\mathcal{M}$ rosso (arco con freccia), attrito $\\vec{f}_A$ blu diretto a destra al punto C, peso e normale come prima.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<blockquote>"Può sembrare strano, ma è proprio la forza di attrito statico ad essere responsabile dell'avanzamento del centro di massa nel caso della ruota motrice. È controintuitivo, ma è così. Non vi dovete mai fidare della pura intuizione: fidatevi delle due equazioni cardinali e della conservazione dell'energia meccanica."</blockquote>`
+                },
+                {
+                    subtitle: "Caso 1: forza di trazione applicata all'asse",
+                    content: `<p><strong>Prima equazione cardinale</strong> (lungo la direzione del moto):</p>
+<p>$$F - f_A = M a_{CM}$$</p>
+<p><strong>Seconda equazione cardinale</strong> (rispetto al centro di massa). Scegliendo come positivo il verso di rotazione corrispondente all'avanzamento, l'attrito $f_A$ diretto all'indietro produce un momento positivo rispetto al CM (tende a far ruotare la ruota nel verso dell'avanzamento). La forza $\\vec{F}$ applicata all'asse ha braccio nullo rispetto al CM, quindi momento nullo. Solo l'attrito contribuisce:</p>
+<p>$$R f_A = I\\, \\alpha$$</p>
+<p>Per il puro rotolamento: $a_{CM} = \\alpha R$, cioè $\\alpha = a_{CM}/R$. Sostituendo:</p>
+<p>$$R f_A = I\\, \\frac{a_{CM}}{R} \\quad\\Rightarrow\\quad f_A = \\frac{I\\, a_{CM}}{R^2}$$</p>
+<p>Inserendo nella prima equazione cardinale:</p>
+<p>$$F = a_{CM}\\!\\left(M + \\frac{I}{R^2}\\right)$$</p>
+<p>Risolvendo per $a_{CM}$ e $f_A$:</p>
+<p>$$a_{CM} = \\frac{F}{M + \\dfrac{I}{R^2}}, \\qquad f_A = \\frac{F}{1 + \\dfrac{MR^2}{I}}$$</p>
+<p><strong>Condizione limite.</strong> Imponendo $f_A \\le \\mu_S M g$:</p>
+<p>$$F \\le F_{\\max} = \\mu_S M g\\!\\left(1 + \\frac{MR^2}{I}\\right)$$</p>`
+                },
+                {
+                    subtitle: "Caso 2: ruota motrice, momento applicato all'asse",
+                    content: `<p>Scegliamo come positivo il verso di rotazione corrispondente all'avanzamento della ruota. Il momento esterno $\\mathcal{M}$ è positivo. La forza di attrito $\\vec{f}_A$ è diretta in avanti e, rispetto al CM, produce un momento di segno opposto a $\\mathcal{M}$.</p>
+<p><strong>Prima equazione cardinale:</strong></p>
+<p>$$f_A = M\\, a_{CM}$$</p>
+<p><strong>Seconda equazione cardinale (rispetto al CM):</strong></p>
+<p>$$\\mathcal{M} - R f_A = I\\, \\alpha = I\\, \\frac{a_{CM}}{R}$$</p>
+<p>Dalla prima: $a_{CM} = f_A / M$. Sostituendo:</p>
+<p>$$\\mathcal{M} = f_A R\\!\\left(1 + \\frac{I}{MR^2}\\right)$$</p>
+<p>Da cui:</p>
+<p>$$f_A = \\frac{\\mathcal{M}}{R\\!\\left(1 + \\dfrac{I}{MR^2}\\right)}, \\qquad a_{CM} = \\frac{\\mathcal{M}}{R\\!\\left(M + \\dfrac{I}{R^2}\\right)}$$</p>
+<p><strong>Condizione limite.</strong> Imponendo $f_A \\le \\mu_S M g$:</p>
+<p>$$\\mathcal{M} \\le \\mathcal{M}_{\\max} = \\mu_S M g R\\!\\left(1 + \\frac{I}{MR^2}\\right)$$</p>`
+                },
+                {
+                    subtitle: "Interpretazione fisica",
+                    content: `<p>Nel caso 1, la forza massima di trazione <strong>cresce con la massa</strong> $M$: una ruota di un treno (massa enorme) non slitta facilmente, mentre un disco leggero scivola via appena lo si tira. Analogamente, nel caso 2 il momento massimo applicabile senza slittamento cresce con $M$: un TIR non sgomma mai, mentre una vettura di Formula 1 (leggera, con motore molto potente) deve essere guidata mantenendosi appena al di sotto della soglia di slittamento per avere la massima trazione possibile. Nelle partenze di Formula 1, i piloti veramente bravi sono quelli che riescono a rimanere un pelo sotto questo valore: massima trazione senza farle slittare.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Accelerazione (caso 1)", latex: "a_{CM} = \\frac{F}{M + \\frac{I}{R^2}}" },
+                { label: "Attrito (caso 1)", latex: "f_A = \\frac{F}{1 + \\frac{MR^2}{I}}" },
+                { label: "F massima (caso 1)", latex: "F_{\\max} = \\mu_S M g\\left(1 + \\frac{MR^2}{I}\\right)" },
+                { label: "Attrito (caso 2)", latex: "f_A = \\frac{\\mathcal{M}}{R\\left(1 + \\frac{I}{MR^2}\\right)}" },
+                { label: "Momento massimo (caso 2)", latex: "\\mathcal{M}_{\\max} = \\mu_S M g R\\left(1 + \\frac{I}{MR^2}\\right)" }
+            ]
+        },
+        {
+            id: "s40-strategia-dinamica",
+            type: "alert_box",
+            title: "Strategia generale per i problemi di dinamica",
+            icon: "🧭",
+            content: `<p>Quando non si sa come affrontare un problema di dinamica, si può sempre fare appello a tre strumenti, nell'ordine:</p>
+<ol>
+<li><strong>Prima equazione cardinale</strong> (equazione delle forze): $\\sum \\vec{F}^{\\,ext} = M \\vec{a}_{CM}$</li>
+<li><strong>Seconda equazione cardinale</strong> (equazione dei momenti rispetto a un polo)</li>
+<li><strong>Conservazione dell'energia meccanica</strong> (o lavoro delle forze non conservative)</li>
+</ol>
+<p><strong>Forze, momenti, energia:</strong> queste tre cose, o loro combinazioni, permettono di risolvere tutti i problemi di meccanica.</p>`
+        },
+        {
+            id: "s40-momento-risultante",
+            type: "section",
+            title: "Momento risultante e momento della risultante",
+            icon: "🔄",
+            content: `<p><strong>Punto chiave:</strong> in generale, il <em>momento risultante</em> delle forze esterne agenti su un sistema, calcolato rispetto a un polo $O$, <strong>non coincide</strong> con il <em>momento della risultante</em> delle forze esterne applicata a un generico punto $C$ del sistema.</p>
+<p>Se calcolo la risultante $\\vec{F}_R = \\sum_i \\vec{F}_i$ delle forze esterne, non c'è un punto univoco a cui applicarla: se la applico in punti diversi del corpo, ottengo momenti diversi rispetto allo stesso polo $O$. Il momento risultante, invece, è ben definito:</p>
+<p>$$\\vec{M}_O = \\sum_i \\vec{r}_i \\wedge \\vec{F}_i$$</p>
+<p>Ma in generale non esiste un punto $C$ tale che, applicando $\\vec{F}_R$ in $C$, si ottenga $\\vec{r}_C \\wedge \\vec{F}_R = \\vec{M}_O$.</p>
+<p>Esempio intuitivo: se un corpo rigido è fissato con un chiodo in $O$ e applichiamo una forza lungo una retta passante per $O$, il momento è nullo e il corpo non ruota; se applichiamo la stessa forza su una retta che non passa per $O$, il braccio non è nullo e il corpo ruota. Il punto di applicazione della risultante è essenziale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Sistemi di forze parallele e centro delle forze",
+                    content: `<p>Esiste un caso speciale in cui la coincidenza vale: i <strong>sistemi di forze parallele e costanti</strong> (esempio principe: la forza peso).</p>
+<p>Sia dato un corpo rigido soggetto a un sistema di forze parallele $\\vec{F}_i$, tutte con la stessa direzione. Esiste un punto $C$, detto <strong>centro delle forze</strong>, tale che, applicando in $C$ la risultante $\\vec{F}_R = \\sum_i \\vec{F}_i$, si ha:</p>
+<p>$$\\vec{M}_O = \\vec{r}_C \\wedge \\vec{F}_R$$</p>
+<p>per ogni polo $O$. La posizione di $C$ è data da:</p>
+<p>$$\\vec{r}_C = \\frac{\\sum_i F_i\\, \\vec{r}_i}{\\sum_i F_i}$$</p>
+<p>dove $F_i$ sono i moduli delle forze e $\\vec{r}_i$ i loro punti di applicazione.</p>
+<p>Da notare: la formula è analoga a una <strong>media pesata</strong> delle posizioni $\\vec{r}_i$, con pesi dati dalle intensità $F_i$ delle forze. Questa struttura è esattamente la stessa del centro di massa $\\vec{r}_{CM} = \\frac{\\sum_i m_i \\vec{r}_i}{\\sum_i m_i}$, dove i pesi sono le masse. Il centro delle forze è il punto in cui le forze "si bilanciano" rispetto alle distanze, così come il centro di massa è il punto in cui le masse si bilanciano.</p>`
+                },
+                {
+                    subtitle: "Il baricentro coincide con il centro di massa",
+                    content: `<p>Applichiamo la formula al caso della forza peso. Ogni elementino di massa $m_i$ è soggetto alla forza peso $\\vec{F}_i = m_i \\vec{g}$ (forze tutte parallele, di modulo $F_i = m_i g$). Allora:</p>
+<p>$$\\vec{r}_C = \\frac{\\sum_i m_i g\\, \\vec{r}_i}{\\sum_i m_i g} = \\frac{\\sum_i m_i \\vec{r}_i}{\\sum_i m_i} = \\vec{r}_{CM}$$</p>
+<p>Nel caso della forza peso, il centro delle forze $C$ si chiama <strong>baricentro</strong> e coincide con il <strong>centro di massa</strong> del corpo rigido.</p>
+<p>Di conseguenza, per il momento risultante delle forze peso si può sempre scrivere, rispetto a un polo $O$ qualunque:</p>
+<p>$$\\vec{M}_O^{\\,(P)} = \\vec{r}_{CM} \\wedge M\\vec{g}$$</p>
+<p>Questa proprietà è estremamente potente: invece di calcolare uno per uno i momenti delle forze peso elementari, basta applicare la risultante $M\\vec{g}$ al centro di massa.</p>`
+                },
+                {
+                    subtitle: "Esempio: come appendere un quadro",
+                    content: `<p>Un quadro di massa $M$ con distribuzione omogenea: il CM coincide con il centro geometrico. Se lo attacchiamo a un chiodo $O$ posto lungo il bordo superiore ma <em>non</em> al centro, allora $\\vec{r}_{CM}$ non è parallelo a $\\vec{g}$, il prodotto vettoriale $\\vec{r}_{CM} \\wedge M\\vec{g}$ non è nullo, e il quadro tende a ruotare (si mette storto).</p>
+<p>Se invece il chiodo è esattamente in corrispondenza della verticale passante per il centro di massa (cioè a metà del bordo superiore), allora $\\vec{r}_{CM}$ è parallelo a $\\vec{g}$, il momento è nullo e il quadro rimane dritto. È un'esperienza comune: spostando l'attaccaglia di mezzo centimetro dal centro non si riesce più a far stare il quadro perfettamente dritto.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Momento risultante", latex: "\\vec{M}_O = \\sum_i \\vec{r}_i \\wedge \\vec{F}_i" },
+                { label: "Centro delle forze parallele", latex: "\\vec{r}_C = \\frac{\\sum_i F_i\\, \\vec{r}_i}{\\sum_i F_i}" },
+                { label: "Momento delle forze peso", latex: "\\vec{M}_O^{\\,(P)} = \\vec{r}_{CM} \\wedge M\\vec{g}" }
+            ]
+        },
+        {
+            id: "s40-pendolo-composto",
+            type: "section",
+            title: "Il pendolo composto (pendolo fisico)",
+            icon: "🕰️",
+            content: `<p>Applichiamo i risultati precedenti a un problema classico: il <strong>pendolo composto</strong> (o <strong>pendolo fisico</strong>).</p>`,
+            subsections: [
+                {
+                    subtitle: "Impostazione del problema",
+                    content: `<p>Un corpo rigido qualunque di massa $M$, vincolato a ruotare sotto l'azione della gravità attorno a un asse orizzontale fisso passante per un punto $O$ (un perno). Sia $CM$ il centro di massa, e sia $h = |\\vec{R}_{CM}|$ la distanza fra $O$ e $CM$. Indichiamo con $\\theta$ l'angolo formato dalla retta $O$–$CM$ con la verticale.</p>
+<p>Sul corpo agiscono:</p>
+<ul>
+<li>la forza peso totale $M\\vec{g}$, applicata al centro di massa (per il risultato sul baricentro);</li>
+<li>la reazione del vincolo in $O$, che ha momento nullo rispetto al polo $O$ stesso.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Equazione del moto",
+                    content: `<p>Scriviamo l'equazione dei momenti rispetto al polo $O$. Il momento risultante è quello della forza peso:</p>
+<p>$$\\vec{M}_O = \\vec{R}_{CM} \\wedge M\\vec{g}$$</p>
+<p>Proiettando e tenendo conto che il peso tende a riportare il corpo verso la verticale:</p>
+<p>$$M_O = -Mgh\\sin\\theta$$</p>
+<p>L'equazione dei momenti per le rotazioni attorno all'asse fisso per $O$:</p>
+<p>$$I_O\\, \\ddot\\theta = -Mgh\\sin\\theta$$</p>`
+                },
+                {
+                    subtitle: "Approssimazione delle piccole oscillazioni",
+                    content: `<p>Per piccole oscillazioni $\\sin\\theta \\simeq \\theta$:</p>
+<p>$$\\ddot\\theta + \\frac{M g h}{I_O}\\, \\theta = 0$$</p>
+<p>Questa è l'equazione dell'<strong>oscillatore armonico</strong>. La pulsazione è:</p>
+<p>$$\\omega^2 = \\frac{M g h}{I_O}$$</p>
+<p>Il periodo di oscillazione:</p>
+<p>$$T = \\frac{2\\pi}{\\omega} = 2\\pi \\sqrt{\\frac{I_O}{M g h}} = 2\\pi \\sqrt{\\frac{L^*}{g}}$$</p>
+<p>dove si introduce la <strong>lunghezza ridotta</strong> (o efficace) del pendolo:</p>
+<p>$$L^* = \\frac{I_O}{M h}$$</p>
+<p>Da notare: se tutta la massa fosse concentrata nel CM (corpo puntiforme), si avrebbe $I_O = Mh^2$ e quindi $L^* = h$: si ritrova il pendolo semplice di lunghezza $h$, come atteso. Questo caso limite conferma la coerenza della formula.</p>`
+                },
+                {
+                    subtitle: "Analogia con il pendolo semplice",
+                    content: `<p>La formula $T = 2\\pi \\sqrt{L^*/g}$ ha la stessa struttura del periodo del pendolo semplice $T = 2\\pi \\sqrt{L/g}$. La differenza è che, per un corpo esteso, la lunghezza geometrica $L$ è sostituita dalla lunghezza ridotta $L^* = I_O/(Mh)$, che incorpora il momento di inerzia e la posizione del baricentro.</p>
+<p>Il periodo è tanto più lungo quanto più grande è $L^*$ e tanto più corto quanto più grande è $g$. Sulla Luna, lo stesso pendolo oscillerebbe molto più lentamente. Sulla Terra, non potendo variare $g$, per cambiare il periodo si può solo modificare il punto di sospensione (cioè $h$ e $I_O$).</p>`
+                },
+                {
+                    subtitle: "Esempio: sbarra omogenea incernierata a un estremo",
+                    content: `<p>Sbarra omogenea di massa $M$ e lunghezza $L$, incernierata a un estremo $O$.</p>
+<p><strong>Dati:</strong> il centro di massa è nel punto medio, quindi $h = L/2$. Il momento di inerzia rispetto a un estremo:</p>
+<p>$$I_O = I_{CM} + Mh^2 = \\frac{1}{12}ML^2 + M\\frac{L^2}{4} = \\frac{1}{3}ML^2$$</p>
+<p><strong>Lunghezza ridotta:</strong></p>
+<p>$$L^* = \\frac{I_O}{Mh} = \\frac{\\frac{1}{3}ML^2}{M \\cdot \\frac{L}{2}} = \\frac{2L}{3}$$</p>
+<p><strong>Periodo:</strong></p>
+<p>$$T = 2\\pi\\sqrt{\\frac{L^*}{g}} = 2\\pi\\sqrt{\\frac{2L}{3g}}$$</p>
+<p><strong>Confronto con il pendolo semplice:</strong> il pendolo semplice di lunghezza $L$ ha periodo $T_s = 2\\pi\\sqrt{L/g}$. Poiché $L^* = 2L/3 \\lt L$, il pendolo composto formato da una sbarra incernierata a un estremo oscilla <strong>più velocemente</strong> del pendolo semplice di uguale lunghezza. Intuitivamente, la massa della sbarra è distribuita anche vicino al perno (dove contribuisce meno all'inerzia), per cui l'inerzia effettiva è minore di quella di tutta la massa concentrata alla distanza $L$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Equazione del moto", latex: "I_O\\, \\ddot\\theta = -Mgh\\sin\\theta" },
+                { label: "Pulsazione", latex: "\\omega^2 = \\frac{Mgh}{I_O}" },
+                { label: "Periodo", latex: "T = 2\\pi \\sqrt{\\frac{I_O}{Mgh}} = 2\\pi \\sqrt{\\frac{L^*}{g}}" },
+                { label: "Lunghezza ridotta", latex: "L^* = \\frac{I_O}{Mh}" }
+            ]
+        },
+        {
+            id: "s40-pendolo-esame",
+            type: "alert_box",
+            title: "Il pendolo composto è un classico d'esame",
+            icon: "⚠️",
+            content: `<p>Il pendolo composto è un argomento ricorrente agli appelli d'esame: statisticamente, in almeno uno su sei appelli compare un problema di pendolo composto. Fatevi esercizi su questo argomento.</p>`
+        },
+        {
+            id: "s40-urti-rigidi",
+            type: "section",
+            title: "Urti tra punti materiali e corpi rigidi",
+            icon: "💥",
+            content: `<p>Estendiamo il discorso degli urti al caso di un punto materiale che urta un corpo rigido (per esempio una sbarra omogenea). Si distinguono due varianti.</p>`,
+            subsections: [
+                {
+                    subtitle: "Sbarra libera",
+                    content: `<p>Una sbarra omogenea, libera nello spazio, viene urtata da un punto materiale di massa $m$ e velocità $\\vec{v}$. Non vi sono forze esterne impulsive concomitanti all'urto, quindi <strong>si conserva la quantità di moto totale</strong>:</p>
+<p>$$\\vec{P}_{\\text{prima}} = \\vec{P}_{\\text{dopo}}$$</p>
+<p>Dopo l'urto la sbarra può sia traslare sia ruotare: il moto risultante è in generale una roto-traslazione.</p>
+<p>Da notare: per risolvere completamente il problema della sbarra libera servono: la conservazione di $\\vec{P}$, la conservazione di $\\vec{L}_{CM}$ (il momento angolare rispetto al centro di massa, poiché i momenti delle forze impulsive interne si annullano rispetto al CM del sistema), e una condizione sull'urto (elastico, anelastico, o completamente anelastico). Questo argomento è lasciato come esercizio assegnato.</p>`
+                },
+                {
+                    subtitle: "Sbarra vincolata a un perno",
+                    content: `<p>Se la sbarra è vincolata in un punto da un chiodo, all'istante dell'urto il vincolo esercita una <strong>forza impulsiva</strong> di reazione. Quindi <strong>non si conserva la quantità di moto totale</strong>.</p>
+<p>Tuttavia, scegliendo come polo il vincolo stesso, la reazione vincolare ha momento nullo rispetto ad esso, e quindi si conserva il <strong>momento angolare</strong> rispetto al vincolo:</p>
+<p>$$L_{O,\\text{prima}} = L_{O,\\text{dopo}}$$</p>`
+                },
+                {
+                    subtitle: "Classificazione degli urti",
+                    content: `<p>Anche per gli urti che coinvolgono corpi rigidi vale la classificazione già vista:</p>
+<ul>
+<li>Urto <strong>elastico</strong>: si conserva l'energia cinetica;</li>
+<li>Urto <strong>completamente anelastico</strong>: i due corpi restano uniti dopo l'urto (es. la pallina si conficca nella sbarra);</li>
+<li>Urto <strong>anelastico</strong> (non completamente): non si conserva l'energia cinetica e i corpi non restano necessariamente uniti (es. la pallina perfora la sbarra).</li>
+</ul>`
+                },
+                {
+                    subtitle: "Esempio: urto completamente anelastico con sbarra vincolata",
+                    content: `<p>Una sbarra omogenea di massa $M$ e lunghezza $L$ è vincolata a un perno nel suo estremo $O$. Un punto materiale di massa $m$, con velocità $v_0$ diretta perpendicolarmente alla sbarra, la colpisce nell'altro estremo e vi resta conficcato.</p>
+<p><strong>Grandezze note:</strong></p>
+<ul>
+<li>Momento di inerzia della sbarra rispetto al perno: $I_{\\text{sbarra}} = \\frac{1}{3}ML^2$</li>
+<li>Il punto materiale, dopo l'urto, si trova a distanza $L$ dal perno: $I_m = mL^2$</li>
+<li>Momento di inerzia totale dopo l'urto: $I_{\\text{tot}} = \\frac{1}{3}ML^2 + mL^2$</li>
+</ul>
+<p><strong>Conservazione del momento angolare rispetto a $O$:</strong></p>
+<p>Prima dell'urto (solo il punto materiale contribuisce, la sbarra è ferma):</p>
+<p>$$L_{O,\\text{prima}} = m\\, v_0\\, L$$</p>
+<p>Dopo l'urto (sistema che ruota rigidamente con $\\omega$):</p>
+<p>$$L_{O,\\text{dopo}} = I_{\\text{tot}}\\, \\omega = \\left(\\frac{1}{3}ML^2 + mL^2\\right)\\omega$$</p>
+<p><strong>Risoluzione:</strong></p>
+<p>$$m\\, v_0\\, L = \\left(\\frac{1}{3}ML^2 + mL^2\\right)\\omega \\quad\\Rightarrow\\quad \\omega = \\frac{m\\, v_0}{\\left(\\frac{1}{3}M + m\\right)L}$$</p>
+<p><strong>Verifica dimensionale:</strong> $[m\\, v_0] = \\text{kg}\\cdot\\text{m/s}$ al numeratore, $[\\text{kg}\\cdot\\text{m}]$ al denominatore, rapporto in $\\text{s}^{-1}$: corretto per una velocità angolare.</p>
+<p><strong>Energia dissipata:</strong></p>
+<p>$$\\Delta K = \\frac{1}{2}m v_0^2 - \\frac{1}{2}I_{\\text{tot}}\\,\\omega^2$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Conservazione L (sbarra vincolata)", latex: "L_{O,\\text{prima}} = L_{O,\\text{dopo}}" },
+                { label: "ω dopo urto anelastico", latex: "\\omega = \\frac{m\\, v_0}{\\left(\\frac{1}{3}M + m\\right)L}" }
+            ],
+            extra_content: `<p><strong>Esercizio assegnato:</strong> il professore assegna esplicitamente come esercizio lo studio degli urti tra punto materiale e sbarra, sia libera sia vincolata. L'obiettivo è capire quali quantità si conservano nei due casi: nel caso della sbarra libera si conserva la quantità di moto totale; nel caso della sbarra vincolata si conserva il momento angolare rispetto al perno.</p>`
+        },
+        {
+            id: "s40-statica",
+            type: "section",
+            title: "Problemi di statica",
+            icon: "⚖️",
+            content: `<p>Un corpo rigido è in <strong>equilibrio statico</strong> se, sotto l'azione delle forze e dei momenti applicati, non si muove e continua a non muoversi. Le condizioni sono:</p>
+<p>$$\\sum \\vec{F}^{\\,ext} = \\vec{0}, \\qquad \\sum \\vec{M}^{\\,ext}_O = \\vec{0} \\quad \\text{rispetto a un polo } O \\text{ qualunque}$$</p>
+<p>Nei problemi di statica valgono le equazioni cardinali con il secondo membro posto uguale a zero: $M\\vec{a}_{CM} \\to \\vec{0}$ e $I\\vec{\\alpha} \\to \\vec{0}$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio: equilibrio di una tavola sotto forze opposte",
+                    content: `<p>Una tavola tirata da due forze opposte rimane ferma se le due forze hanno la stessa retta di azione, oppure se i loro momenti rispetto a un polo qualunque si compensano. Se applichiamo una sola forza che produrrebbe una rotazione, ma agisce contemporaneamente un'altra forza che produce un momento opposto dello stesso modulo, la risultante dei momenti è nulla e la tavola resta in equilibrio.</p>`
+                },
+                {
+                    subtitle: "Esempio: trave appoggiata a muro e pavimento",
+                    content: `<p>Una trave omogenea di massa $M$ e lunghezza $L$ è appoggiata con l'estremo superiore $A$ a un muro liscio (privo di attrito) e con l'estremo inferiore $B$ a terra (con attrito statico $\\mu_S$). La trave forma un angolo $\\theta$ con il pavimento orizzontale.</p>
+<p><strong>Forze in gioco:</strong></p>
+<ul>
+<li>Il peso $M\\vec{g}$ applicato al centro di massa (punto medio della trave).</li>
+<li>In $A$ (muro liscio): reazione normale $\\vec{N}_A$, diretta orizzontalmente (verso la trave).</li>
+<li>In $B$ (pavimento con attrito): reazione normale $N_B$ (verticale, verso l'alto) e attrito statico $f_B$ (orizzontale, verso il muro).</li>
+</ul>
+<p><strong>Prima equazione cardinale:</strong></p>
+<p>Componente orizzontale: $N_A - f_B = 0$, cioè $N_A = f_B$.</p>
+<p>Componente verticale: $N_B - Mg = 0$, cioè $N_B = Mg$.</p>
+<p><strong>Seconda equazione cardinale (momenti rispetto a $B$):</strong> scegliamo il polo in $B$ per eliminare $N_B$ e $f_B$ (braccio nullo):</p>
+<p>$$N_A \\cdot L\\sin\\theta - Mg \\cdot \\frac{L}{2}\\cos\\theta = 0$$</p>
+<p>Risolvendo:</p>
+<p>$$N_A = \\frac{Mg\\cos\\theta}{2\\sin\\theta} = \\frac{Mg}{2\\tan\\theta}$$</p>
+<p><strong>Risultati:</strong></p>
+<p>$$N_B = Mg, \\qquad N_A = f_B = \\frac{Mg}{2\\tan\\theta}$$</p>
+<p><strong>Condizione di non slittamento:</strong> $f_B \\le \\mu_S N_B$:</p>
+<p>$$\\frac{Mg}{2\\tan\\theta} \\le \\mu_S Mg \\quad\\Rightarrow\\quad \\tan\\theta \\ge \\frac{1}{2\\mu_S}$$</p>
+<p>Se l'angolo è troppo piccolo (trave quasi orizzontale), l'attrito non basta e la trave scivola via.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Equilibrio delle forze", latex: "\\sum \\vec{F}^{\\,ext} = \\vec{0}" },
+                { label: "Equilibrio dei momenti", latex: "\\sum \\vec{M}^{\\,ext}_O = \\vec{0}" },
+                { label: "Reazione normale (trave)", latex: "N_A = \\frac{Mg}{2\\tan\\theta}" },
+                { label: "Condizione non slittamento", latex: "\\tan\\theta \\ge \\frac{1}{2\\mu_S}" }
+            ]
+        },
+        {
+            id: "s40-scelta-polo",
+            type: "note_box",
+            title: "Scelta strategica del polo nei problemi di statica",
+            icon: "🎯",
+            content: `<p>Nei problemi di statica la scelta del polo per il calcolo dei momenti è libera (il risultato non dipende dal polo), ma una <strong>scelta oculata semplifica notevolmente i conti</strong>. In generale conviene scegliere come polo un punto in cui agiscono forze incognite che non si vogliono calcolare: il loro momento rispetto a quel polo è automaticamente nullo e non compare nell'equazione.</p>
+<p>Nell'esempio della trave, scegliendo il polo in $B$, sia $N_B$ sia $f_B$ (due incognite) scompaiono dall'equazione dei momenti.</p>`
+        },
+        {
+            id: "s40-chiusura-meccanica",
+            type: "section",
+            title: "Conclusione della parte di meccanica",
+            icon: "🏁",
+            content: `<p>Con questa lezione si conclude la parte di meccanica del corso. I tre pilastri su cui si fonda la soluzione di qualunque problema di meccanica del punto materiale e del corpo rigido sono:</p>
+<p>$$\\sum \\vec{F}^{\\,ext} = M \\vec{a}_{CM}, \\qquad \\sum \\vec{M}^{\\,ext} = \\frac{d\\vec{L}}{dt}, \\qquad \\text{bilancio dell'energia meccanica}$$</p>
+<p><strong>Forze, momenti ed energia:</strong> non vi affidate mai alla sola intuizione, ma partite sempre dalle equazioni cardinali e dal bilancio energetico.</p>`,
+            formulas: [
+                { label: "I eq. cardinale", latex: "\\sum \\vec{F}^{\\,ext} = M \\vec{a}_{CM}" },
+                { label: "II eq. cardinale", latex: "\\sum \\vec{M}^{\\,ext} = \\frac{d\\vec{L}}{dt}" },
+                { label: "Bilancio energetico", latex: "\\Delta K = W_{\\text{totale}}" }
+            ]
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Qual è la condizione analitica che caratterizza il moto di puro rotolamento?",
+            back: "La velocità istantanea del punto di contatto $C$ è nulla: $\\vec{v}_C = \\vec{0}$. Da questa condizione segue la relazione cinematica $v_{CM} = \\omega R$."
+        },
+        {
+            type: "domanda",
+            front: "Il puro rotolamento può essere descritto in due modi equivalenti. Quali sono e cosa hanno in comune?",
+            back: "1) Come **pura rotazione istantanea** attorno all'asse passante per il punto di contatto $C$. 2) Come **roto-traslazione**: traslazione del CM con velocità $v_{CM}$ più rotazione attorno al CM. Le due descrizioni danno lo stesso $\\omega$ e le stesse velocità in ogni punto del disco. La scelta dipende dalla convenienza nei calcoli."
+        },
+        {
+            type: "formula",
+            front: "Per un disco omogeneo di massa $M$ e raggio $R$, quali sono i momenti di inerzia rispetto al CM e rispetto al punto di contatto?",
+            back: "$I_{CM} = \\frac{1}{2}MR^2$ e, per il teorema di Huygens-Steiner, $I_C = I_{CM} + MR^2 = \\frac{3}{2}MR^2$. Il fatto che $I_C \\gt I_{CM}$ è coerente: nella rotazione attorno a $C$ alcuni elementi arrivano a distanza $2R$ dall'asse."
+        },
+        {
+            type: "tranello",
+            front: "Nel caso della ruota motrice, in che verso è diretta la forza di attrito statico? Perché è controintuitivo?",
+            back: "La forza di attrito statico è diretta **in avanti**, nel verso del moto del centro di massa. È proprio l'attrito statico a essere responsabile dell'avanzamento! È controintuitivo perché si pensa all'attrito come forza frenante, ma nel puro rotolamento il punto di contatto è in condizioni statiche e l'attrito si oppone allo slittamento relativo (che sarebbe all'indietro)."
+        },
+        {
+            type: "domanda",
+            front: "Qual è la differenza tra 'momento risultante' delle forze e 'momento della risultante'? Quando coincidono?",
+            back: "Il momento risultante $\\vec{M}_O = \\sum_i \\vec{r}_i \\wedge \\vec{F}_i$ è ben definito. Il momento della risultante $\\vec{r}_C \\wedge \\vec{F}_R$ dipende dal punto $C$ in cui si applica la risultante. In generale **non coincidono**. Coincidono nel caso speciale di **forze parallele e costanti** (es. forza peso), dove esiste un unico punto — il centro delle forze — per cui l'uguaglianza vale per ogni polo."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è il baricentro e perché coincide con il centro di massa?",
+            back: "Il baricentro è il centro delle forze nel caso della forza peso. Poiché ogni elementino $m_i$ subisce $\\vec{F}_i = m_i\\vec{g}$ (forze parallele), la formula del centro delle forze dà $\\vec{r}_C = \\frac{\\sum m_i g \\vec{r}_i}{\\sum m_i g} = \\frac{\\sum m_i \\vec{r}_i}{\\sum m_i} = \\vec{r}_{CM}$. Quindi baricentro $\\equiv$ centro di massa, e il momento delle forze peso vale $\\vec{M}_O^{(P)} = \\vec{r}_{CM} \\wedge M\\vec{g}$."
+        },
+        {
+            type: "formula",
+            front: "Scrivi il periodo delle piccole oscillazioni del pendolo composto e la lunghezza ridotta.",
+            back: "$$T = 2\\pi\\sqrt{\\frac{I_O}{Mgh}} = 2\\pi\\sqrt{\\frac{L^*}{g}}$$ dove la lunghezza ridotta è $L^* = \\frac{I_O}{Mh}$, con $I_O$ momento di inerzia rispetto al perno e $h$ distanza perno-CM. Se $I_O = Mh^2$ (massa puntiforme), $L^* = h$ e si ritrova il pendolo semplice."
+        },
+        {
+            type: "dimostrazione",
+            front: "Per una sbarra omogenea di lunghezza $L$ incernierata a un estremo, calcola la lunghezza ridotta e confronta il periodo con quello del pendolo semplice.",
+            back: "Si ha $h = L/2$, $I_O = \\frac{1}{3}ML^2$. Quindi $L^* = \\frac{\\frac{1}{3}ML^2}{M \\cdot \\frac{L}{2}} = \\frac{2L}{3}$. Il periodo è $T = 2\\pi\\sqrt{\\frac{2L}{3g}}$. Poiché $L^* = \\frac{2L}{3} \\lt L$, il pendolo composto oscilla **più velocemente** del pendolo semplice di lunghezza $L$: la massa distribuita vicino al perno riduce l'inerzia effettiva."
+        },
+        {
+            type: "domanda",
+            front: "In un urto tra punto materiale e sbarra vincolata a un perno, quale grandezza si conserva e perché?",
+            back: "Si conserva il **momento angolare rispetto al perno** $O$: $L_{O,\\text{prima}} = L_{O,\\text{dopo}}$. La quantità di moto totale NON si conserva perché il vincolo esercita una forza impulsiva. Ma scegliendo il polo nel vincolo, questa forza ha braccio nullo e non contribuisce al momento, quindi $L_O$ si conserva."
+        },
+        {
+            type: "tranello",
+            front: "Nei problemi di statica, perché la scelta del polo per il calcolo dei momenti è importante anche se il risultato non ne dipende?",
+            back: "Perché una scelta oculata **semplifica i conti**. Conviene scegliere come polo un punto in cui agiscono forze incognite che non si vogliono calcolare: il loro momento è automaticamente nullo e non compare nell'equazione. Esempio: per la trave appoggiata, scegliendo il polo in $B$ si eliminano sia $N_B$ sia $f_B$ dall'equazione dei momenti."
+        },
+        {
+            type: "domanda",
+            front: "Quali sono i tre pilastri per risolvere qualunque problema di meccanica del punto materiale e del corpo rigido?",
+            back: "1) **Prima equazione cardinale** (forze): $\\sum \\vec{F}^{\\,ext} = M\\vec{a}_{CM}$. 2) **Seconda equazione cardinale** (momenti): $\\sum \\vec{M}^{\\,ext} = \\frac{d\\vec{L}}{dt}$. 3) **Bilancio dell'energia meccanica** (o lavoro delle forze non conservative). Forze, momenti ed energia: mai affidarsi alla sola intuizione."
+        }
+    ]
+};
+
