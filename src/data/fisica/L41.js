@@ -1,0 +1,477 @@
+const LESSON = {
+    id: "L41", date: "Lezione 32 — 21 Mag 2026",
+    title: "Introduzione alla Termodinamica e Primo Principio",
+    abstract: "Dalla meccanica alla termodinamica: sistemi termodinamici, temperatura, stati di equilibrio, trasformazioni, convenzione dei segni per calore e lavoro, energia interna e Primo Principio della Termodinamica con applicazioni alle trasformazioni speciali.",
+
+    sections: [
+        {
+            id: "s41-dalla-meccanica",
+            type: "section",
+            title: "Dalla Meccanica alla Termodinamica",
+            icon: "🔗",
+            content: `<p>Iniziamo l'ultima parte del programma: la <strong>termodinamica</strong>. Mentre la cinematica descrive i moti e la dinamica ne studia le cause (forze e momenti), la termodinamica amplia il campo di indagine.</p>
+<p>In dinamica siamo arrivati a definire una proprietà dei sistemi: la loro <strong>capacità di compiere lavoro</strong>. Questa capacità è quantificata come energia immagazzinata, che può essere configurazionale (potenziale) o in forma di moto (cinetica). La somma di queste energie è l'energia meccanica.</p>
+<p>Le variazioni di energia cinetica di un sistema quantificano esattamente l'energia trasferita al sistema o dal sistema attraverso il lavoro compiuto dalle forze:</p>
+<p>$$\\Delta E_k = L_{\\text{tot}}$$</p>
+<p>Qui $L_{\\text{tot}}$ indica il lavoro compiuto da <em>tutte</em> le forze agenti sul sistema, sia conservative sia non conservative. Questa relazione è il <strong>Teorema dell'energia cinetica</strong> (o Teorema lavoro-energia): la variazione di energia cinetica di un corpo è uguale al lavoro netto compiuto su di esso dalla risultante di tutte le forze.</p>
+<p>Questo è il punto di partenza: le forze, agendo su un sistema in movimento, possono conferirgli o sottrargli la capacità di mettere in moto altri sistemi, cioè di compiere lavoro. Questa capacità viene accumulata dal sistema, aumentando il suo contenuto energetico.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il ruolo delle forze non conservative",
+                    content: `<p>In meccanica, se agiscono solo forze conservative, l'energia meccanica totale $E = E_k + E_p$ si conserva. Quando però sono presenti <strong>forze non conservative</strong> (come l'attrito), l'energia meccanica non si conserva: essa diminuisce e si «perde».</p>
+<p>La termodinamica nasce proprio per dare conto di questa energia apparentemente scomparsa, riconoscendo che essa si è trasformata in <strong>energia interna</strong> (termica) del sistema. La termodinamica estende dunque i concetti della meccanica per includere non solo le trasformazioni meccaniche, ma anche quelle termiche, fornendo un quadro completo della conservazione dell'energia.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Teorema dell'energia cinetica", latex: "\\Delta E_k = L_{\\text{tot}}" }
+            ]
+        },
+        {
+            id: "s41-sistemi-termodinamici",
+            type: "section",
+            title: "Sistemi Termodinamici",
+            icon: "📦",
+            content: `<p>L'oggetto di studio della termodinamica sono i <strong>sistemi termodinamici</strong>.</p>
+<p>Un <strong>sistema termodinamico</strong> è una porzione di spazio e materia delimitata da una frontiera (reale o ideale) che la separa dall'ambiente circostante.</p>
+<p>Questa definizione è volutamente molto generica. Un sistema può essere una quantità di gas in un recipiente, un pezzo di metallo, o anche una porzione di aria in una stanza che delimitiamo idealmente. A seconda delle proprietà della frontiera, distinguiamo:</p>
+<ul>
+<li><strong>Sistema aperto</strong>: può scambiare sia materia sia energia con l'ambiente.</li>
+<li><strong>Sistema chiuso</strong>: può scambiare energia ma non materia con l'ambiente.</li>
+<li><strong>Sistema isolato</strong>: non scambia né materia né energia con l'ambiente.</li>
+</ul>
+<p>Nella maggior parte dei casi tratteremo <strong>sistemi chiusi</strong>.</p>
+<p>Di questi sistemi, vogliamo studiare lo <strong>stato</strong>, cioè le sue caratteristiche, e come queste caratteristiche cambiano, ovvero le <strong>trasformazioni</strong>.</p>`
+        },
+        {
+            id: "s41-proprieta-macro-micro",
+            type: "section",
+            title: "Proprietà Macroscopiche e Microscopiche",
+            icon: "🔬",
+            content: `<p>Le caratteristiche di un sistema termodinamico sono descritte da grandezze fisiche come il volume, la pressione, la massa, la densità e la temperatura.</p>
+<p>Un punto fondamentale: la termodinamica descrive i sistemi attraverso le loro <strong>proprietà macroscopiche</strong>. Queste proprietà, misurabili su larga scala, sono in realtà la manifestazione di fenomeni che avvengono a livello microscopico.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio: la pressione di un gas",
+                    content: `<p>Consideriamo la <strong>pressione</strong> esercitata da un gas sulle pareti di un recipiente:</p>
+<ul>
+<li><strong>A livello macroscopico</strong>: osserviamo una forza distribuita sulla parete, capace di spostarla.</li>
+<li><strong>A livello microscopico</strong>: questa forza è l'effetto cooperativo di miliardi di miliardi di urti delle singole molecole del gas contro la parete. Ogni singola molecola, rimbalzando sulla parete, le trasferisce una piccola quantità di moto; la somma di tutti questi contributi produce la forza macroscopica che misuriamo come pressione.</li>
+</ul>
+<p>La termodinamica non studia il singolo urto della singola molecola, ma l'<strong>effetto macroscopico complessivo</strong>.</p>`
+                },
+                {
+                    subtitle: "Grandezze estensive e intensive",
+                    content: `<p>Le variabili termodinamiche si dividono in due categorie:</p>
+<ul>
+<li><strong>Grandezze estensive</strong>: dipendono dalla quantità di materia del sistema (ad esempio volume $V$, massa $m$, energia interna $U$, numero di moli $n$). Se si raddoppia la quantità di materia, il loro valore raddoppia.</li>
+<li><strong>Grandezze intensive</strong>: non dipendono dalla quantità di materia (ad esempio pressione $P$, temperatura $T$, densità $\\rho$). Il loro valore rimane invariato se si considera una porzione più grande o più piccola di sistema in equilibrio.</li>
+</ul>`
+                }
+            ]
+        },
+        {
+            id: "s41-temperatura",
+            type: "section",
+            title: "Temperatura e Stato Termico",
+            icon: "🌡️",
+            content: `<p>Per descrivere lo stato di «caldo» o «freddo» di un sistema, introduciamo una nuova grandezza fisica.</p>
+<p>La <strong>temperatura</strong> ($T$) è la grandezza fisica che quantifica lo stato termico di un sistema, cioè la sua proprietà di essere «caldo» o «freddo».</p>
+<p>Anche la temperatura, una proprietà macroscopica, è legata a un fenomeno microscopico: è una misura dell'<strong>agitazione termica</strong> dei costituenti microscopici di un sistema.</p>`,
+            subsections: [
+                {
+                    subtitle: "Significato microscopico della temperatura",
+                    content: `<ul>
+<li>In un <strong>gas</strong>, una temperatura più alta corrisponde a una maggiore velocità media delle molecole, e quindi a una maggiore energia cinetica media. Per un gas ideale monoatomico, la relazione precisa è:
+<p>$$\\langle E_k \\rangle = \\frac{3}{2}\\,k_B\\,T$$</p>
+<p>dove $k_B \\approx 1{,}381 \\times 10^{-23}\\,\\text{J/K}$ è la costante di Boltzmann. Il fattore $\\frac{3}{2}$ deriva dai tre gradi di libertà traslazionali della molecola (uno per ogni direzione dello spazio). La costante di Boltzmann $k_B$ è legata alla costante dei gas dalla relazione $R = N_A \\, k_B$, dove $N_A$ è il numero di Avogadro.</p></li>
+<li>In un <strong>solido</strong>, gli atomi sono legati in un reticolo cristallino e vibrano attorno alle loro posizioni di equilibrio. Una temperatura più alta corrisponde a vibrazioni di ampiezza maggiore.</li>
+</ul>
+<p>In entrambi i casi, la temperatura è l'evidenza macroscopica dello stato cinetico microscopico del sistema. La temperatura è una grandezza <strong>intensiva</strong>: non dipende dalla quantità di materia del sistema.</p>`
+                },
+                {
+                    subtitle: "Scale di temperatura",
+                    content: `<p>La scala di temperatura utilizzata nelle formule della termodinamica è la <strong>scala Kelvin</strong> (o scala assoluta), indicata con il simbolo K. Lo zero della scala Kelvin ($0\\,\\text{K}$) corrisponde allo <strong>zero assoluto</strong>, la temperatura minima teoricamente raggiungibile, alla quale cessa ogni agitazione termica.</p>
+<p>La relazione con la scala Celsius è:</p>
+<p>$$T\\,[\\text{K}] = T\\,[^\\circ\\text{C}] + 273{,}15$$</p>
+<p>In tutte le equazioni della termodinamica la temperatura $T$ deve essere espressa in Kelvin. Ad esempio, l'acqua ghiaccia a $0\\,^\\circ\\text{C} = 273{,}15\\,\\text{K}$ e bolle a $100\\,^\\circ\\text{C} = 373{,}15\\,\\text{K}$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Energia cinetica media (gas ideale monoatomico)", latex: "\\langle E_k \\rangle = \\frac{3}{2}\\,k_B\\,T" },
+                { label: "Conversione Celsius → Kelvin", latex: "T\\,[\\text{K}] = T\\,[^\\circ\\text{C}] + 273{,}15" }
+            ]
+        },
+        {
+            id: "s41-stato-equilibrio",
+            type: "section",
+            title: "Stato Termodinamico e Stato di Equilibrio",
+            icon: "⚖️",
+            content: `<p>L'insieme dei valori delle proprietà macroscopiche di un sistema ne definisce lo stato.</p>
+<p>Lo <strong>stato termodinamico</strong> di un sistema è l'insieme dei valori delle sue proprietà macroscopiche (pressione $P$, volume $V$, temperatura $T$, numero di moli $n$, ecc.) necessarie a descriverlo completamente.</p>
+<p>Le grandezze macroscopiche che individuano lo stato sono dette <strong>variabili di stato</strong> (o funzioni di stato). Il loro valore dipende <em>esclusivamente</em> dallo stato in cui si trova il sistema e <strong>non dalla storia passata</strong>, cioè dal particolare percorso attraverso cui il sistema ha raggiunto quello stato.</p>`,
+            subsections: [
+                {
+                    subtitle: "Equilibrio termodinamico",
+                    content: `<p>Un sistema si trova in uno <strong>stato di equilibrio termodinamico</strong> quando le sue proprietà macroscopiche (le variabili di stato) sono uniformi in ogni punto del sistema e non variano nel tempo. L'equilibrio termodinamico comprende simultaneamente:</p>
+<ul>
+<li><strong>Equilibrio termico</strong>: temperatura uniforme in tutto il sistema.</li>
+<li><strong>Equilibrio meccanico</strong>: pressione uniforme (nessuna forza netta non bilanciata).</li>
+<li><strong>Equilibrio chimico</strong>: composizione chimica costante.</li>
+</ul>
+<p>Se un sistema non è in equilibrio (ad esempio, ha temperature diverse in punti diversi), esso evolverà spontaneamente fino a raggiungere una nuova condizione di equilibrio.</p>`
+                }
+            ]
+        },
+        {
+            id: "s41-trasformazioni",
+            type: "section",
+            title: "Trasformazioni Termodinamiche",
+            icon: "🔄",
+            content: `<p>Una trasformazione termodinamica è un processo che porta un sistema da uno stato di equilibrio iniziale a uno stato di equilibrio finale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Trasformazione quasi-statica",
+                    content: `<p>Una <strong>trasformazione quasi-statica</strong> è una trasformazione ideale che avviene in modo infinitamente lento, così che in ogni istante il sistema si trovi in uno stato di equilibrio termodinamico. Ogni stato intermedio è quindi ben definito dalle variabili di stato.</p>`
+                },
+                {
+                    subtitle: "Trasformazione reversibile",
+                    content: `<p>Una <strong>trasformazione reversibile</strong> è una trasformazione quasi-statica nella quale, inoltre, non vi sono fenomeni dissipativi (attrito, viscosità, ecc.). Poiché ogni stato intermedio è definito e non vi sono dissipazioni, è possibile invertire il processo ripercorrendo esattamente gli stessi stati in senso opposto, riportando sia il sistema sia l'ambiente alle condizioni iniziali.</p>`
+                },
+                {
+                    subtitle: "Trasformazione irreversibile",
+                    content: `<p>Una <strong>trasformazione irreversibile</strong> è una trasformazione reale che avviene in un tempo finito, passando attraverso stati di non-equilibrio. Questi stati intermedi non sono descrivibili con le sole variabili di stato, e la trasformazione non può essere invertita ripercorrendo lo stesso cammino senza lasciare modifiche nell'ambiente.</p>`
+                }
+            ],
+            extra_content: `<p><strong>Da notare:</strong> la reversibilità <strong>non</strong> significa semplicemente che si può tornare allo stato iniziale. Anche dopo una trasformazione irreversibile si può riportare il sistema allo stato iniziale, ma per farlo occorre coinvolgere l'ambiente, che risulterà modificato. La reversibilità richiede che si possa tornare allo stato iniziale facendo ripercorrere al sistema <em>e all'ambiente</em> la stessa sequenza di stati intermedi in ordine inverso, senza alcuna modifica residua.</p>
+<p>Tutte le trasformazioni reali sono irreversibili. Le trasformazioni reversibili sono un'<strong>idealizzazione</strong> utile per il calcolo e per stabilire limiti teorici alle prestazioni dei processi.</p>`
+        },
+        {
+            id: "s41-trasformazioni-speciali",
+            type: "section",
+            title: "Trasformazioni Speciali",
+            icon: "🏷️",
+            content: `<p>Tra le trasformazioni termodinamiche, rivestono particolare importanza quelle in cui una delle variabili di stato rimane costante durante tutto il processo.</p>`,
+            subsections: [
+                {
+                    subtitle: "Trasformazione isoterma",
+                    content: `<p>Una <strong>trasformazione isoterma</strong> avviene a <strong>temperatura costante</strong> ($T = \\text{cost}$). Per realizzarla, il sistema deve poter scambiare calore con un serbatoio termico (termostato) a temperatura fissata.</p>`
+                },
+                {
+                    subtitle: "Trasformazione isobara",
+                    content: `<p>Una <strong>trasformazione isobara</strong> avviene a <strong>pressione costante</strong> ($P = \\text{cost}$). Ad esempio, un gas che si espande in un cilindro con pistone mobile sottoposto alla pressione atmosferica costante.</p>`
+                },
+                {
+                    subtitle: "Trasformazione isocora",
+                    content: `<p>Una <strong>trasformazione isocora</strong> (o isovolumetrica) avviene a <strong>volume costante</strong> ($V = \\text{cost}$). Poiché il volume non cambia, il sistema non compie lavoro meccanico ($L = 0$).</p>`
+                },
+                {
+                    subtitle: "Trasformazione adiabatica",
+                    content: `<p>Una <strong>trasformazione adiabatica</strong> è una trasformazione nella quale il sistema <strong>non scambia calore</strong> con l'ambiente ($Q = 0$). Ciò si realizza, ad esempio, con pareti termicamente isolanti oppure con processi così rapidi da non consentire scambi termici apprezzabili.</p>`
+                }
+            ],
+            table_compare: {
+                headers: ["Trasformazione", "Grandezza costante"],
+                rows: [
+                    ["Isoterma", "$T = \\text{cost}$"],
+                    ["Isobara", "$P = \\text{cost}$"],
+                    ["Isocora", "$V = \\text{cost}$"],
+                    ["Adiabatica", "$Q = 0$"]
+                ]
+            },
+            extra_content: `<p><strong>Nota:</strong> le conseguenze del Primo Principio per ciascuna di queste trasformazioni (ad esempio $\\Delta U = -L$ per l'adiabatica, $L = 0$ per l'isocora, ecc.) verranno derivate nella sezione dedicata al Primo Principio, più avanti in questa lezione.</p>`
+        },
+        {
+            id: "s41-principio-zero",
+            type: "section",
+            title: "Principio Zero della Termodinamica",
+            icon: "0️⃣",
+            content: `<p>Il concetto di temperatura si fonda su un principio fondamentale dell'esperienza.</p>
+<p><strong>Principio Zero della Termodinamica:</strong> se un corpo $A$ è in equilibrio termico con un corpo $C$, e un corpo $B$ è anch'esso in equilibrio termico con $C$, allora $A$ e $B$ sono in equilibrio termico tra di loro.</p>
+<p>$$\\begin{cases} T_A = T_C \\\\ T_B = T_C \\end{cases} \\Rightarrow T_A = T_B$$</p>
+<p>Questo principio, apparentemente ovvio, è in realtà non banale e non deducibile dagli altri principi della termodinamica. Esso stabilisce la <strong>transitività dell'equilibrio termico</strong> e garantisce che la temperatura sia una proprietà ben definita e misurabile.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il termometro come applicazione del Principio Zero",
+                    content: `<p>Il Principio Zero giustifica il funzionamento del <strong>termometro</strong>. Supponiamo di voler verificare se due corpi $A$ e $B$ hanno la stessa temperatura. Utilizziamo un termometro, che è il corpo $C$:</p>
+<ol>
+<li>Mettiamo il termometro ($C$) a contatto con il corpo $A$ e attendiamo l'equilibrio termico. Il termometro segna, ad esempio, $T_C = 37\\,^\\circ\\text{C}$. Per l'equilibrio, $T_A = T_C = 37\\,^\\circ\\text{C}$.</li>
+<li>Mettiamo ora il termometro ($C$) a contatto con il corpo $B$ e attendiamo l'equilibrio. Se il termometro segna ancora $37\\,^\\circ\\text{C}$, allora $T_B = T_C = 37\\,^\\circ\\text{C}$.</li>
+<li>Per il Principio Zero, concludiamo che $T_A = T_B$: i due corpi sono in equilibrio termico tra loro, anche senza essere mai stati messi a contatto diretto.</li>
+</ol>
+<p>Senza il Principio Zero, non avremmo garanzia che la lettura del termometro (corpo $C$) sia trasferibile per confrontare le temperature di corpi diversi.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Principio Zero", latex: "T_A = T_C \\text{ e } T_B = T_C \\Rightarrow T_A = T_B" }
+            ]
+        },
+        {
+            id: "s41-esperimento-joule",
+            type: "section",
+            title: "L'Esperimento di Joule: Equivalenza di Lavoro e Calore",
+            icon: "⚙️",
+            content: `<p>Come possiamo far variare lo stato termico di un sistema, ad esempio la sua temperatura? James Joule dimostrò con un celebre esperimento che esistono <strong>due modi equivalenti</strong> per farlo.</p>`,
+            subsections: [
+                {
+                    subtitle: "L'esperimento",
+                    content: `<p>Consideriamo un recipiente con pareti adiabatiche (termicamente isolanti) contenente acqua. All'interno, un sistema di palette può essere messo in rotazione dalla caduta di un peso.</p>
+<ol>
+<li>La discesa del peso compie un lavoro meccanico $L$ sul sistema di palette.</li>
+<li>Le palette, ruotando, agitano l'acqua. L'attrito viscoso tra le palette e l'acqua fa sì che questo lavoro venga trasferito all'acqua.</li>
+<li>Si osserva che la <strong>temperatura dell'acqua aumenta</strong>.</li>
+</ol>
+<p>Questo dimostra che <strong>compiere lavoro meccanico su un sistema può aumentarne la temperatura</strong>.</p>
+<p>Joule notò inoltre che lo stesso aumento di temperatura poteva essere ottenuto mettendo l'acqua a contatto con un corpo più caldo, senza compiere alcun lavoro meccanico. I due effetti — lavoro meccanico e contatto termico — producono lo stesso risultato.</p>`
+                },
+                {
+                    subtitle: "Equivalente meccanico del calore",
+                    content: `<p>Joule misurò che per aumentare di $1\\,^\\circ\\text{C}$ la temperatura di $1\\,\\text{g}$ di acqua occorre compiere un lavoro di circa $4{,}186\\,\\text{J}$. Questo valore, noto come <strong>equivalente meccanico del calore</strong>, stabilisce la relazione:</p>
+<p>$$1\\,\\text{cal} \\approx 4{,}186\\,\\text{J}$$</p>
+<p>L'esperimento dimostrò definitivamente che calore e lavoro sono due forme equivalenti di trasferimento di energia, misurabili con la stessa unità (il joule nel Sistema Internazionale).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Equivalente meccanico del calore", latex: "1\\,\\text{cal} \\approx 4{,}186\\,\\text{J}" }
+            ]
+        },
+        {
+            id: "s41-calore-definizione",
+            type: "section",
+            title: "Calore e Convenzione dei Segni",
+            icon: "🔥",
+            content: `<p>L'esperimento di Joule stabilisce un'equivalenza fondamentale: il lavoro e lo scambio termico sono due modi diversi per produrre lo stesso effetto, cioè una variazione dello stato termico. Questo ci porta a definire il calore.</p>
+<p>Il <strong>calore</strong> ($Q$) è l'energia trasferita tra due sistemi (o tra un sistema e il suo ambiente) a causa di una <strong>differenza di temperatura</strong> tra essi.</p>`,
+            subsections: [
+                {
+                    subtitle: "Calore e lavoro sono energie in transito",
+                    content: `<p><strong>Punto chiave:</strong> sia il lavoro ($L$) sia il calore ($Q$) <strong>non</strong> sono energie <em>contenute</em> in un sistema, ma energie <em>in transito</em>, cioè modalità di trasferimento di energia. È scorretto dire che «un corpo contiene calore». Un corpo possiede energia interna, e può scambiare questa energia sotto forma di calore o lavoro. Il calore e il lavoro esistono solo <em>durante</em> un processo di trasferimento.</p>`
+                },
+                {
+                    subtitle: "Convenzione dei segni",
+                    content: `<p>Per quantificare i bilanci energetici, si adotta una convenzione sui segni per calore e lavoro:</p>
+<p><strong>Calore ($Q$):</strong></p>
+<ul>
+<li>$Q \\gt 0$: il sistema <strong>assorbe</strong> calore dall'ambiente (calore entrante).</li>
+<li>$Q \\lt 0$: il sistema <strong>cede</strong> calore all'ambiente (calore uscente).</li>
+</ul>
+<p><strong>Lavoro ($L$):</strong></p>
+<ul>
+<li>$L \\gt 0$: il sistema <strong>compie</strong> lavoro sull'ambiente (es. un gas che si espande e spinge un pistone).</li>
+<li>$L \\lt 0$: l'ambiente compie lavoro <strong>sul</strong> sistema (es. un gas che viene compresso da una forza esterna).</li>
+</ul>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Convenzione dei segni per calore e lavoro</strong></p>
+  <p><em>Riquadro centrale «Sistema» con due frecce bidirezionali: a sinistra una freccia rossa per il calore Q (punta verso il sistema = Q > 0, verso l'ambiente termico = Q < 0); a destra una freccia blu per il lavoro L (punta verso l'ambiente meccanico = L > 0, verso il sistema = L < 0).</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Questa convenzione è detta «convenzione del sistema», poiché assume il punto di vista del sistema: è positivo ciò che aumenta l'energia del sistema (calore entrante) o ciò che il sistema fa sull'esterno (lavoro uscente).</p>`
+                }
+            ],
+            extra_content: `<p><strong>Attenzione:</strong> alcuni testi adottano la convenzione opposta per il lavoro (positivo quando è fatto <em>sul</em> sistema), nel qual caso il Primo Principio si scrive $\\Delta U = Q + L$. È fondamentale verificare quale convenzione viene usata prima di applicare le formule.</p>`
+        },
+        {
+            id: "s41-energia-interna",
+            type: "section",
+            title: "Energia Interna",
+            icon: "⚛️",
+            content: `<p>L'esperimento di Joule e la convenzione dei segni ci portano naturalmente a introdurre una grandezza fondamentale.</p>
+<p>L'<strong>energia interna</strong> $U$ di un sistema termodinamico è l'energia totale contenuta nel sistema, somma di tutte le energie cinetiche e potenziali dei suoi costituenti microscopici (energia cinetica di agitazione termica delle molecole, energia potenziale delle interazioni intermolecolari, energie di legame, ecc.), <strong>escluse</strong> l'energia cinetica macroscopica del centro di massa e l'energia potenziale gravitazionale macroscopica.</p>`,
+            subsections: [
+                {
+                    subtitle: "Funzione di stato vs. grandezza di processo",
+                    content: `<p>L'energia interna $U$ è una <strong>funzione di stato</strong>: il suo valore dipende unicamente dallo stato termodinamico in cui si trova il sistema (cioè dai valori di $P$, $V$, $T$, ecc.) e <em>non</em> dal percorso seguito per raggiungere quello stato. Di conseguenza, la variazione $\\Delta U = U_f - U_i$ dipende solo dagli stati finale e iniziale.</p>
+<p>Al contrario, il calore $Q$ e il lavoro $L$ <strong>non sono funzioni di stato</strong>: i loro valori dipendono dal particolare processo (cammino) attraverso cui avviene la trasformazione. Per questo motivo, è corretto parlare di «variazione di energia interna» $\\Delta U$, ma non di «variazione di calore» o «variazione di lavoro».</p>`
+                },
+                {
+                    subtitle: "Esempio illustrativo",
+                    content: `<p>Consideriamo un gas che passa dallo stato $A$ (con $P_A$, $V_A$, $T_A$) allo stato $B$ (con $P_B$, $V_B$, $T_B$) attraverso due cammini diversi:</p>
+<ul>
+<li><strong>Cammino 1</strong>: prima espansione isoterma, poi riscaldamento isocoro.</li>
+<li><strong>Cammino 2</strong>: prima riscaldamento isobaro, poi espansione isoterma.</li>
+</ul>
+<p>In entrambi i casi la variazione di energia interna $\\Delta U = U_B - U_A$ è la stessa, perché $U$ è una funzione di stato. Tuttavia, i valori di $Q$ e $L$ lungo i due cammini saranno in generale diversi: cambia la ripartizione tra calore e lavoro, ma la loro differenza $Q - L = \\Delta U = U_B - U_A$ rimane costante.</p>`
+                }
+            ]
+        },
+        {
+            id: "s41-primo-principio",
+            type: "section",
+            title: "Il Primo Principio della Termodinamica",
+            icon: "🏛️",
+            content: `<p>Per qualsiasi trasformazione termodinamica, la variazione di energia interna $\\Delta U$ di un sistema è uguale alla differenza tra il calore $Q$ assorbito dal sistema e il lavoro $L$ compiuto dal sistema sull'ambiente:</p>
+<p>$$\\Delta U = Q - L$$</p>
+<p>Equivalentemente, in forma differenziale per trasformazioni infinitesime:</p>
+<p>$$dU = \\delta Q - \\delta L$$</p>
+<p>dove $dU$ è un differenziale esatto (funzione di stato), mentre $\\delta Q$ e $\\delta L$ sono differenziali non esatti (dipendono dal cammino).</p>`,
+            subsections: [
+                {
+                    subtitle: "Interpretazione fisica",
+                    content: `<p>Il Primo Principio è essenzialmente un <strong>principio di conservazione dell'energia</strong> esteso ai fenomeni termici: l'energia non si crea né si distrugge, ma si trasforma. L'energia interna di un sistema può variare solo se il sistema scambia energia con l'ambiente, e ci sono esattamente <strong>due modi</strong> per farlo:</p>
+<ol>
+<li><strong>Scambio di calore</strong> $Q$: trasferimento di energia dovuto a una differenza di temperatura.</li>
+<li><strong>Scambio di lavoro</strong> $L$: trasferimento di energia dovuto a forze macroscopiche che agiscono attraverso spostamenti.</li>
+</ol>
+<p>Il Primo Principio afferma che queste sono le <em>uniche</em> modalità di scambio energetico per un sistema chiuso, e che il loro bilancio netto determina la variazione di energia interna.</p>`
+                },
+                {
+                    subtitle: "Nota sulla notazione",
+                    content: `<p>I simboli $\\delta Q$ e $\\delta L$ (con la $\\delta$ anziché $d$) sottolineano che calore e lavoro non sono differenziali esatti. Ciò significa che non esistono funzioni $Q(P,V,T)$ o $L(P,V,T)$ delle variabili di stato tali che $\\delta Q = dQ$ e $\\delta L = dL$. La loro combinazione $\\delta Q - \\delta L$, però, è sempre un differenziale esatto: $dU$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Primo Principio della Termodinamica", latex: "\\Delta U = Q - L" },
+                { label: "Forma differenziale", latex: "dU = \\delta Q - \\delta L" }
+            ]
+        },
+        {
+            id: "s41-applicazioni-primo-principio",
+            type: "section",
+            title: "Applicazione alle Trasformazioni Speciali",
+            icon: "📐",
+            content: `<p>Applichiamo ora il Primo Principio $\\Delta U = Q - L$ alle trasformazioni speciali introdotte in precedenza.</p>`,
+            subsections: [
+                {
+                    subtitle: "Trasformazione isocora (V = cost, L = 0)",
+                    content: `<p>$$\\Delta U = Q$$</p>
+<p>Tutto il calore scambiato va a variare l'energia interna del sistema. Questa relazione permette di <strong>misurare variazioni di energia interna in modo diretto</strong>.</p>`
+                },
+                {
+                    subtitle: "Trasformazione adiabatica (Q = 0)",
+                    content: `<p>$$\\Delta U = -L$$</p>
+<p>L'energia interna varia solo a spese del lavoro. Se il sistema compie lavoro ($L \\gt 0$), la sua energia interna diminuisce e la temperatura scende. Viceversa, se l'ambiente compie lavoro sul sistema ($L \\lt 0$), l'energia interna aumenta e la temperatura sale.</p>`
+                },
+                {
+                    subtitle: "Trasformazione isoterma di un gas ideale (T = cost)",
+                    content: `<p>Per un gas ideale l'energia interna dipende solo dalla temperatura (questo risultato, che sarà approfondito nelle lezioni successive, è una conseguenza della teoria cinetica dei gas), quindi $\\Delta U = 0$ e:</p>
+<p>$$Q = L$$</p>
+<p>Tutto il calore assorbito viene interamente convertito in lavoro (e viceversa).</p>`
+                },
+                {
+                    subtitle: "Trasformazione isobara (P = cost)",
+                    content: `<p>Il lavoro compiuto dal gas vale $L = P\\,\\Delta V$, e il Primo Principio dà:</p>
+<p>$$\\Delta U = Q - P\\,\\Delta V$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Isocora", latex: "\\Delta U = Q" },
+                { label: "Adiabatica", latex: "\\Delta U = -L" },
+                { label: "Isoterma (gas ideale)", latex: "Q = L" },
+                { label: "Isobara", latex: "\\Delta U = Q - P\\,\\Delta V" }
+            ]
+        },
+        {
+            id: "s41-esempio-isobara",
+            type: "section",
+            title: "Esempio: Espansione Isobara di un Gas Ideale",
+            icon: "🧮",
+            content: `<p>Consideriamo $n = 2\\,\\text{mol}$ di gas ideale monoatomico che si espandono a pressione costante $P = 1{,}0 \\times 10^5\\,\\text{Pa}$. La temperatura passa da $T_i = 300\\,\\text{K}$ a $T_f = 600\\,\\text{K}$.</p>
+<p><strong>Nota:</strong> per un gas ideale monoatomico, l'energia interna è $U = \\frac{3}{2} n R T$ (risultato della teoria cinetica dei gas, che sarà approfondito nelle lezioni successive). Il fattore $\\frac{3}{2}$ deriva dai tre gradi di libertà traslazionali delle molecole.</p>`,
+            subsections: [
+                {
+                    subtitle: "Calcolo della variazione di energia interna",
+                    content: `<p>$$\\Delta U = \\frac{3}{2}\\,n\\,R\\,\\Delta T = \\frac{3}{2} \\times 2 \\times 8{,}314 \\times (600 - 300) \\approx 7483\\,\\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Calcolo del lavoro",
+                    content: `<p>Usando l'equazione di stato del gas ideale $P\\,\\Delta V = n\\,R\\,\\Delta T$:</p>
+<p>$$L = P\\,\\Delta V = n\\,R\\,\\Delta T = 2 \\times 8{,}314 \\times 300 \\approx 4989\\,\\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Calcolo del calore assorbito",
+                    content: `<p>Dal Primo Principio:</p>
+<p>$$Q = \\Delta U + L = 7483 + 4989 \\approx 12\\,472\\,\\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Interpretazione",
+                    content: `<p>Il calore assorbito ($Q \\approx 12\\,472\\,\\text{J}$) è <strong>maggiore</strong> della variazione di energia interna ($\\Delta U \\approx 7483\\,\\text{J}$). Questo perché il calore fornito al sistema si ripartisce in due contributi:</p>
+<ul>
+<li>circa il $60\\%$ va ad aumentare l'energia interna (e quindi la temperatura) del gas;</li>
+<li>circa il $40\\%$ viene speso dal gas per compiere lavoro di espansione contro la pressione esterna.</li>
+</ul>
+<p>Questa ripartizione è una conseguenza diretta del Primo Principio.</p>`
+                }
+            ]
+        },
+        {
+            id: "s41-esempio-adiabatica",
+            type: "section",
+            title: "Esempio: Compressione Adiabatica",
+            icon: "🔧",
+            content: `<p>Consideriamo $n = 1\\,\\text{mol}$ di gas ideale monoatomico che viene compresso adiabaticamente. L'ambiente compie un lavoro di $500\\,\\text{J}$ sul gas (quindi $L = -500\\,\\text{J}$ con la nostra convenzione, poiché il lavoro è fatto <em>sul</em> sistema).</p>`,
+            subsections: [
+                {
+                    subtitle: "Applicazione del Primo Principio",
+                    content: `<p>Con $Q = 0$:</p>
+<p>$$\\Delta U = Q - L = 0 - (-500) = +500\\,\\text{J}$$</p>
+<p>L'energia interna del gas aumenta di $500\\,\\text{J}$.</p>`
+                },
+                {
+                    subtitle: "Calcolo dell'aumento di temperatura",
+                    content: `<p>$$\\Delta T = \\frac{\\Delta U}{\\frac{3}{2}\\,n\\,R} = \\frac{500}{\\frac{3}{2} \\times 1 \\times 8{,}314} \\approx 40{,}1\\,\\text{K}$$</p>
+<p>Nella compressione adiabatica il gas si <strong>riscalda</strong>, poiché tutto il lavoro fatto su di esso si converte in energia interna.</p>`
+                }
+            ]
+        },
+        {
+            id: "s41-nota-finale",
+            type: "note_box",
+            title: "Prossimi sviluppi",
+            icon: "📝",
+            content: `<p>La trattazione rigorosa del Primo Principio, a partire dalla sua formulazione storica e dalle sue conseguenze per le <strong>trasformazioni cicliche</strong> (in cui $\\Delta U = 0$ e quindi $Q_{\\text{ciclo}} = L_{\\text{ciclo}}$), verrà approfondita nelle lezioni successive.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è un sistema termodinamico e quali tipi si distinguono in base alla frontiera?",
+            back: "Un <strong>sistema termodinamico</strong> è una porzione di spazio e materia delimitata da una frontiera (reale o ideale) che la separa dall'ambiente. Si distinguono: <strong>sistema aperto</strong> (scambia materia ed energia), <strong>sistema chiuso</strong> (scambia solo energia), <strong>sistema isolato</strong> (non scambia né materia né energia)."
+        },
+        {
+            type: "definizione",
+            front: "Che cos'è l'equilibrio termodinamico e quali condizioni comprende?",
+            back: "Un sistema è in <strong>equilibrio termodinamico</strong> quando le sue proprietà macroscopiche sono uniformi in ogni punto e non variano nel tempo. Comprende simultaneamente: <strong>equilibrio termico</strong> (temperatura uniforme), <strong>equilibrio meccanico</strong> (pressione uniforme), <strong>equilibrio chimico</strong> (composizione costante)."
+        },
+        {
+            type: "domanda",
+            front: "Qual è la differenza tra trasformazione reversibile e irreversibile? Perché la reversibilità non significa semplicemente 'poter tornare allo stato iniziale'?",
+            back: "Una trasformazione <strong>reversibile</strong> è quasi-statica e senza fenomeni dissipativi: si può invertire ripercorrendo gli stessi stati in senso opposto, riportando <em>sia il sistema sia l'ambiente</em> alle condizioni iniziali. Anche dopo una trasformazione irreversibile si può tornare allo stato iniziale, ma l'ambiente risulterà modificato. Tutte le trasformazioni reali sono irreversibili; quelle reversibili sono un'idealizzazione."
+        },
+        {
+            type: "domanda",
+            front: "Cosa stabilisce il Principio Zero della Termodinamica e perché è fondamentale per il funzionamento del termometro?",
+            back: "Il Principio Zero afferma la <strong>transitività dell'equilibrio termico</strong>: se $A$ è in equilibrio termico con $C$ e $B$ è in equilibrio termico con $C$, allora $A$ e $B$ sono in equilibrio termico tra loro ($T_A = T_B$). Garantisce che il termometro (corpo $C$) fornisca letture confrontabili: se segna la stessa temperatura a contatto con $A$ e con $B$, allora $A$ e $B$ hanno la stessa temperatura anche senza contatto diretto."
+        },
+        {
+            type: "tranello",
+            front: "Perché è scorretto dire che 'un corpo contiene calore'?",
+            back: "Sia il calore $Q$ sia il lavoro $L$ <strong>non sono energie contenute</strong> in un sistema, ma <strong>energie in transito</strong>: esistono solo durante un processo di trasferimento. Un corpo possiede <strong>energia interna</strong> $U$ e può scambiare questa energia sotto forma di calore o lavoro. Il calore e il lavoro non sono funzioni di stato."
+        },
+        {
+            type: "formula",
+            front: "Enuncia il Primo Principio della Termodinamica (con la convenzione del sistema) e spiega il significato dei segni.",
+            back: "$$\\Delta U = Q - L$$ dove $Q \\gt 0$ = calore assorbito dal sistema, $Q \\lt 0$ = calore ceduto; $L \\gt 0$ = lavoro compiuto dal sistema sull'ambiente, $L \\lt 0$ = lavoro fatto dall'ambiente sul sistema. In forma differenziale: $dU = \\delta Q - \\delta L$, dove $dU$ è differenziale esatto, $\\delta Q$ e $\\delta L$ no."
+        },
+        {
+            type: "domanda",
+            front: "Perché l'energia interna è una funzione di stato mentre il calore e il lavoro no? Cosa implica per trasformazioni lungo cammini diversi?",
+            back: "L'energia interna $U$ dipende solo dallo stato attuale del sistema (valori di $P$, $V$, $T$, ...), non dal percorso seguito. Quindi $\\Delta U = U_B - U_A$ è la stessa per qualsiasi cammino tra $A$ e $B$. Calore e lavoro dipendono dal cammino: lungo percorsi diversi $Q$ e $L$ cambiano, ma la loro differenza $Q - L = \\Delta U$ resta costante."
+        },
+        {
+            type: "formula",
+            front: "Quali sono le conseguenze del Primo Principio per le quattro trasformazioni speciali (isocora, adiabatica, isoterma di gas ideale, isobara)?",
+            back: "<strong>Isocora</strong> ($V = \\text{cost}$, $L = 0$): $\\Delta U = Q$. <strong>Adiabatica</strong> ($Q = 0$): $\\Delta U = -L$. <strong>Isoterma di gas ideale</strong> ($T = \\text{cost}$, $\\Delta U = 0$): $Q = L$. <strong>Isobara</strong> ($P = \\text{cost}$): $\\Delta U = Q - P\\,\\Delta V$."
+        },
+        {
+            type: "domanda",
+            front: "Cosa dimostrò l'esperimento di Joule e qual è il valore dell'equivalente meccanico del calore?",
+            back: "Joule dimostrò che <strong>lavoro meccanico e contatto termico</strong> sono due modi equivalenti per variare lo stato termico (la temperatura) di un sistema: producono lo stesso effetto. L'equivalente meccanico del calore è $1\\,\\text{cal} \\approx 4{,}186\\,\\text{J}$, stabilendo che calore e lavoro sono due forme equivalenti di trasferimento di energia."
+        },
+        {
+            type: "tranello",
+            front: "In una compressione adiabatica, il gas si riscalda o si raffredda? Come si calcola la variazione di temperatura?",
+            back: "Si <strong>riscalda</strong>. Con $Q = 0$ e lavoro fatto <em>sul</em> sistema ($L \\lt 0$): $\\Delta U = -L \\gt 0$, quindi l'energia interna aumenta. Per un gas ideale monoatomico: $\\Delta T = \\frac{\\Delta U}{\\frac{3}{2} n R}$. Ad esempio, $500\\,\\text{J}$ di lavoro su $1\\,\\text{mol}$ danno $\\Delta T \\approx 40{,}1\\,\\text{K}$."
+        }
+    ]
+};
+
