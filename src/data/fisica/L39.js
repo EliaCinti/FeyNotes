@@ -1,0 +1,350 @@
+const LESSON = {
+    id: "L39", date: "Lezione 30 — 18 Mag 2026",
+    title: "Dinamica della rotazione: momento di inerzia, energia cinetica e teorema di Huygens-Steiner",
+    abstract: "Momento di inerzia per corpi discreti e continui, energia cinetica di rotazione, teorema delle forze vive in forma rotazionale, calcolo dei momenti di inerzia notevoli e teorema di Huygens-Steiner per assi paralleli.",
+
+    sections: [
+        {
+            id: "s39-riepilogo-rotazione",
+            type: "section",
+            title: "Riepilogo: rotazione attorno a un asse fisso",
+            icon: "🔄",
+            content: `<p>Riprendiamo i risultati fondamentali stabiliti nella lezione precedente per un corpo rigido in rotazione attorno a un asse fisso $z$.</p>
+<p>Il primo riguarda la <strong>componente assiale del momento angolare</strong> (momento assiale), che si esprime <em>sempre</em> come:</p>
+<p>$$L_z = I_z \\, \\omega$$</p>
+<p>Questa relazione è <strong>sempre valida</strong> per un corpo rigido che ruota attorno a un asse fisso, senza ulteriori ipotesi.</p>
+<p>Il secondo risultato riguarda il caso particolare in cui $\\vec{L}$ risulti <strong>parallelo</strong> a $\\vec{\\omega}$ (cioè parallelo all'asse di rotazione). In tal caso $L_z$ coincide con il modulo di $\\vec{L}$ e possiamo scrivere la relazione in forma <strong>vettoriale</strong>:</p>
+<p>$$\\vec{L} = I_z \\, \\vec{\\omega}$$</p>
+<p>I due vettori hanno la stessa direzione, lo stesso verso, e i moduli sono legati dal coefficiente $I_z$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Variazione del momento angolare",
+                    content: `<p>Chi può far variare la componente assiale del momento angolare? Soltanto un momento di forze esterne con componente non nulla rispetto all'asse $z$. La relazione che governa la dinamica, proiettata su $z$, è:</p>
+<p>$$M_z^{\\text{est}} = \\frac{dL_z}{dt} = I_z \\, \\frac{d\\omega}{dt} = I_z \\, \\alpha$$</p>
+<p>dove $\\alpha$ è l'accelerazione angolare. Se vale il parallelismo tra $\\vec{L}$ e $\\vec{\\omega}$, allora vale anche la relazione vettoriale:</p>
+<p>$$\\vec{M}^{\\text{est}} = I_z \\, \\vec{\\alpha}$$</p>
+<p>dove $\\vec{M}^{\\text{est}}$ è il momento risultante delle forze esterne calcolato rispetto a un polo posto sull'asse di rotazione.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Momento assiale (sempre valida)", latex: "L_z = I_z \\, \\omega" },
+                { label: "Forma vettoriale (se L ∥ ω)", latex: "\\vec{L} = I_z \\, \\vec{\\omega}" },
+                { label: "Equazione della dinamica rotazionale", latex: "M_z^{\\text{est}} = I_z \\, \\alpha" }
+            ],
+            extra_content: `<div class="note-box" style="border-left: 3px solid var(--accent); padding: 10px 15px; margin: 15px 0; background: var(--bg-alt); border-radius: 4px;">
+<p><strong>Attenzione:</strong> La relazione scalare $L_z = I_z \\omega$ è sempre vera per un corpo rigido in rotazione attorno a un asse fisso. La relazione vettoriale $\\vec{L} = I_z \\vec{\\omega}$, invece, vale soltanto quando $\\vec{L}$ è parallelo a $\\vec{\\omega}$.</p>
+</div>`
+        },
+        {
+            id: "s39-momento-inerzia",
+            type: "section",
+            title: "Momento di inerzia: corpi discreti e continui",
+            icon: "⚙️",
+            content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Definizione geometrica di momento di inerzia</strong></p>
+  <p><em>Un corpo rigido con l'asse $z$ verticale. Un punto $P$ del corpo è indicato con le sue coordinate $(x, y, z)$. La distanza $r = \\sqrt{x^2 + y^2}$ è mostrata come segmento orizzontale dalla proiezione del punto sul piano $xy$ all'asse $z$. Si evidenzia che la coordinata $z$ del punto non interviene nel calcolo di $r$.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Per un <strong>sistema discreto</strong> di punti materiali di masse $m_i$ poste a distanza $r_i$ da un asse $z$, il momento di inerzia rispetto a tale asse è:</p>
+<p>$$I_z = \\sum_i m_i \\, r_i^2$$</p>
+<p>Per un <strong>corpo rigido continuo</strong>, la sommatoria diventa un integrale esteso a tutto il volume del corpo:</p>
+<p>$$I_z = \\int r^2 \\, dm$$</p>
+<p>dove $r$ è la distanza dell'elementino di massa $dm$ dall'asse $z$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Espressione cartesiana della distanza dall'asse",
+                    content: `<p>Scegliamo un sistema cartesiano $(x,y,z)$ con asse $z$ coincidente con l'asse di rotazione. Per un elementino di massa $dm$ di coordinate $(x,y,z)$, la sua distanza dall'asse $z$ è:</p>
+<p>$$r = \\sqrt{x^2 + y^2}$$</p>
+<p>Di conseguenza il momento di inerzia rispetto a $z$ si può riscrivere nella forma:</p>
+<p>$$I_z = \\int (x^2 + y^2) \\, dm$$</p>
+<p>La coordinata $z$ dell'elementino <strong>non compare</strong>: ciò che conta è soltanto la distanza dall'asse, non la posizione lungo di esso.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Momento di inerzia (discreto)", latex: "I_z = \\sum_i m_i \\, r_i^2" },
+                { label: "Momento di inerzia (continuo)", latex: "I_z = \\int r^2 \\, dm" },
+                { label: "Forma cartesiana", latex: "I_z = \\int (x^2 + y^2) \\, dm" }
+            ],
+            extra_content: `<blockquote><p>Il momento di inerzia non è una proprietà intrinseca del corpo rigido come lo è la massa. La massa del corpo si può conoscere semplicemente pesandolo; il momento di inerzia, invece, va sempre dichiarato rispetto a un asse di rotazione. Lo stesso corpo ha momenti di inerzia diversi rispetto ad assi diversi.</p></blockquote>`
+        },
+        {
+            id: "s39-energia-cinetica-rotazione",
+            type: "section",
+            title: "Energia cinetica di un corpo rigido in rotazione",
+            icon: "⚡",
+            content: `<p>Vediamo che forma assume l'energia cinetica nel caso di un corpo rigido in rotazione attorno a un asse fisso. Partendo dalla definizione generale:</p>
+<p>$$E_k = \\sum_i \\tfrac{1}{2} m_i v_i^2$$</p>
+<p>Nella rotazione attorno all'asse $z$, ciascun punto del corpo descrive un moto circolare di raggio $r_i$ con velocità angolare $\\omega$, quindi $v_i = \\omega r_i$. Sostituendo:</p>
+<p>$$E_k = \\sum_i \\tfrac{1}{2} m_i (\\omega r_i)^2 = \\tfrac{1}{2} \\left( \\sum_i m_i r_i^2 \\right) \\omega^2 = \\tfrac{1}{2} \\, I_z \\, \\omega^2$$</p>
+<p>La struttura ricalca quella generale $E_k = \\tfrac{1}{2} m v^2$: al posto della massa inerziale compare il momento di inerzia (l'<em>inerzia rotazionale</em>), e al posto della velocità lineare compare la velocità angolare.</p>`,
+            subsections: [
+                {
+                    subtitle: "Lavoro del momento delle forze esterne",
+                    content: `<p>Calcoliamo il differenziale dell'energia cinetica rotazionale:</p>
+<p>$$dE_k = d\\!\\left( \\tfrac{1}{2} I_z \\omega^2 \\right) = I_z \\, \\omega \\, d\\omega$$</p>
+<p>Poiché $d\\omega = \\alpha \\, dt$ e $d\\theta = \\omega \\, dt$, si ha:</p>
+<p>$$dE_k = I_z \\, \\omega \\, (\\alpha \\, dt) = I_z \\, \\alpha \\, (\\omega \\, dt) = I_z \\, \\alpha \\, d\\theta$$</p>
+<p>Come stabilito nella sezione precedente, sotto l'ipotesi che $\\vec{L}$ sia parallelo a $\\vec{\\omega}$, vale $M_z = I_z \\alpha$, quindi $I_z \\alpha$ coincide con il momento delle forze esterne $M$:</p>
+<p>$$dW = dE_k = M \\, d\\theta$$</p>
+<p>Integrando tra una configurazione iniziale e una finale (angoli $\\theta_i$ e $\\theta_f$):</p>
+<p>$$W = \\int_{\\theta_i}^{\\theta_f} M \\, d\\theta = \\tfrac{1}{2} I_z \\omega_f^2 - \\tfrac{1}{2} I_z \\omega_i^2 = \\Delta E_k$$</p>`
+                },
+                {
+                    subtitle: "Potenza in rotazione",
+                    content: `<p>La potenza istantanea associata alla rotazione si ottiene dividendo il lavoro infinitesimo per il tempo:</p>
+<p>$$P = \\frac{dW}{dt} = M \\, \\frac{d\\theta}{dt} = M \\, \\omega$$</p>
+<p>Nella dinamica del punto si ha $P = Fv$ (forza per velocità). Nella dinamica rotazionale lo schema si ripete: momento per velocità angolare. L'analogia $m \\leftrightarrow I_z$, $v \\leftrightarrow \\omega$, $F \\leftrightarrow M$ è completa.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Energia cinetica di rotazione", latex: "E_k = \\tfrac{1}{2} \\, I_z \\, \\omega^2" },
+                { label: "Lavoro del momento", latex: "W = \\int_{\\theta_i}^{\\theta_f} M \\, d\\theta = \\Delta E_k" },
+                { label: "Potenza in rotazione", latex: "P = M \\, \\omega" }
+            ],
+            extra_content: `<div class="note-box" style="border-left: 3px solid var(--accent); padding: 10px 15px; margin: 15px 0; background: var(--bg-alt); border-radius: 4px;">
+<p><strong>Esempio — I freni della bicicletta:</strong> Prendete una bicicletta capovolta, fate girare la ruota, poi azionate i freni. I tacchetti di gomma generano forze d'attrito esterne con momento non nullo rispetto all'asse della ruota. Queste forze compiono un <em>lavoro resistente</em> (negativo), facendo diminuire l'energia cinetica rotazionale fino a fermare la ruota. Se inizialmente $\\omega = \\omega_i$ e alla fine $\\omega_f = 0$, il lavoro complessivo dei freni è $W = -\\tfrac{1}{2} I_z \\omega_i^2$.</p>
+</div>`
+        },
+        {
+            id: "s39-calcolo-momenti",
+            type: "section",
+            title: "Calcolo del momento di inerzia: esempi notevoli",
+            icon: "📐",
+            content: `<p>Mentre la massa di un corpo si può conoscere semplicemente pesandolo, il momento di inerzia va calcolato e dipende dall'asse scelto. Vediamo i casi che sistematicamente si incontrano nei problemi, tutti riferiti a corpi rigidi omogenei a geometria regolare.</p>`,
+            subsections: [
+                {
+                    subtitle: "Anello omogeneo (asse per il centro, ortogonale al piano)",
+                    content: `<p>Consideriamo un anello omogeneo di massa $M$ e raggio $R$, in rotazione attorno all'asse passante per il suo centro e ortogonale al piano dell'anello. La densità lineare è $\\rho_L = M / (2\\pi R)$.</p>
+<p>Un elementino di arco $dl = R\\,d\\phi$ ha massa $dm = \\rho_L R \\, d\\phi$. La caratteristica fondamentale è che <strong>tutti gli elementini si trovano alla stessa distanza $r = R$ dall'asse</strong>:</p>
+<p>$$I_z = \\int_0^{2\\pi} R^2 \\, \\rho_L R \\, d\\phi = \\rho_L R^3 \\cdot 2\\pi = \\frac{M}{2\\pi R} \\cdot R^3 \\cdot 2\\pi = M R^2$$</p>
+<p>Pertanto:</p>
+<p>$$I_{CM} = M R^2$$</p>`
+                },
+                {
+                    subtitle: "Disco omogeneo (asse per il centro, ortogonale al piano)",
+                    content: `<p>Consideriamo un disco pieno omogeneo di massa $M$ e raggio $R$. La densità superficiale è $\\rho_S = M / (\\pi R^2)$.</p>
+<p>In coordinate polari $(r, \\phi)$, l'elementino di area è $dS = r \\, dr \\, d\\phi$, quindi $dm = \\rho_S \\, r \\, dr \\, d\\phi$:</p>
+<p>$$I_z = \\rho_S \\int_0^{2\\pi} d\\phi \\int_0^R r^3 \\, dr = \\rho_S \\cdot 2\\pi \\cdot \\frac{R^4}{4} = \\frac{M}{\\pi R^2} \\cdot 2\\pi \\cdot \\frac{R^4}{4} = \\tfrac{1}{2} M R^2$$</p>
+<p>Pertanto (vale anche per un cilindro pieno omogeneo attorno al proprio asse di simmetria):</p>
+<p>$$I_{CM} = \\tfrac{1}{2} M R^2$$</p>`
+                },
+                {
+                    subtitle: "Asta omogenea: rotazione attorno a un estremo",
+                    content: `<p>Asta omogenea di massa $M$ e lunghezza $L$. Asse ortogonale all'asta, passante per un estremo. Scegliamo l'asse $x$ lungo l'asta, con l'origine sull'estremo: l'asta si estende da $x=0$ a $x=L$. La densità lineare è $\\rho_L = M/L$:</p>
+<p>$$I_z = \\frac{M}{L} \\int_0^L x^2 \\, dx = \\frac{M}{L} \\cdot \\frac{L^3}{3} = \\tfrac{1}{3} M L^2$$</p>`
+                },
+                {
+                    subtitle: "Asta omogenea: rotazione attorno al centro di massa",
+                    content: `<p>Stessa asta, ma con asse passante per il centro geometrico (= centro di massa per un'asta omogenea). L'asta si estende da $-L/2$ a $+L/2$:</p>
+<p>$$I_{CM} = \\frac{M}{L} \\int_{-L/2}^{L/2} x^2 \\, dx = \\frac{M}{3L} \\left( \\frac{L^3}{8} + \\frac{L^3}{8} \\right) = \\frac{M}{3L} \\cdot \\frac{L^3}{4} = \\tfrac{1}{12} M L^2$$</p>
+<p><strong>Confronto fisico:</strong> il momento di inerzia dell'asta rispetto a un estremo ($ML^2/3 = 4\\,ML^2/12$) è <strong>quattro volte più grande</strong> di quello rispetto al centro di massa ($ML^2/12$). Questo riflette un principio generale: <em>quanto più la massa è raccolta vicino all'asse di rotazione, tanto più piccolo è il momento di inerzia</em>. L'asta è la stessa, ma il momento di inerzia dipende dall'asse intorno al quale la si fa ruotare.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Anello / cilindro cavo", latex: "I_{CM} = MR^2" },
+                { label: "Disco / cilindro pieno", latex: "I_{CM} = \\tfrac{1}{2} MR^2" },
+                { label: "Asta (centro di massa)", latex: "I_{CM} = \\tfrac{1}{12} ML^2" },
+                { label: "Asta (estremo)", latex: "I_z = \\tfrac{1}{3} ML^2" }
+            ]
+        },
+        {
+            id: "s39-momenti-notevoli",
+            type: "alert_box",
+            title: "Momenti di inerzia notevoli da memorizzare",
+            icon: "🧠",
+            content: `<p>Tutti i seguenti momenti di inerzia si riferiscono a rotazioni attorno a un asse di simmetria passante per il centro di massa di un corpo omogeneo:</p>
+<table style="width:100%; border-collapse: collapse; margin: 15px 0;">
+<tr style="border-bottom: 2px solid var(--border-light);">
+  <th style="text-align:left; padding: 8px;">Corpo</th>
+  <th style="text-align:center; padding: 8px;">$I_{CM}$</th>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+  <td style="padding: 8px;">Anello / cilindro cavo</td>
+  <td style="text-align:center; padding: 8px;">$MR^2$</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+  <td style="padding: 8px;">Disco / cilindro pieno</td>
+  <td style="text-align:center; padding: 8px;">$\\tfrac{1}{2} MR^2$</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+  <td style="padding: 8px;">Sfera cava</td>
+  <td style="text-align:center; padding: 8px;">$\\tfrac{2}{3} MR^2$</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+  <td style="padding: 8px;">Sfera piena</td>
+  <td style="text-align:center; padding: 8px;">$\\tfrac{2}{5} MR^2$</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border-light);">
+  <td style="padding: 8px;">Asta (attorno al centro)</td>
+  <td style="text-align:center; padding: 8px;">$\\tfrac{1}{12} ML^2$</td>
+</tr>
+<tr>
+  <td style="padding: 8px;">Asta (attorno a un estremo)</td>
+  <td style="text-align:center; padding: 8px;">$\\tfrac{1}{3} ML^2$</td>
+</tr>
+</table>
+<p>I momenti di inerzia della sfera cava e della sfera piena richiedono un'integrazione in coordinate sferiche che va oltre lo scopo di questa lezione; i valori vanno memorizzati e verificati sul libro di testo.</p>`,
+            quote: {
+                text: "Quei sei momenti di inerzia dovreste poter fare più o meno tutti i problemi di fisica uno. Non serve altro.",
+                src: "Il Prof."
+            }
+        },
+        {
+            id: "s39-huygens-steiner",
+            type: "section",
+            title: "Il teorema di Huygens-Steiner",
+            icon: "📏",
+            content: `<p>I momenti di inerzia notevoli che abbiamo tabulato si riferiscono a rotazioni attorno a un asse passante per il centro di massa. Cosa succede se dobbiamo studiare una rotazione attorno a un asse <strong>diverso</strong>, parallelo al precedente ma traslato? Il teorema di Huygens-Steiner risponde a questa domanda.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Teorema di Huygens-Steiner</strong></p>
+  <p><em>Un corpo rigido visto in sezione. L'asse $z_{CM}$ passa per il centro di massa. L'asse $z$, parallelo a $z_{CM}$, è traslato di una distanza $d$. I due sistemi di coordinate $(x, y, z)$ e $(x', y', z')$ sono indicati, con la relazione $y_i = y'_i + d$ evidenziata. Il punto $CM$ ha coordinate $(0, 0, 0)$ nel sistema primo.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Sia dato un corpo rigido di massa $M$. Sia $z$ un asse generico e sia $z_{CM}$ l'asse parallelo a $z$ passante per il centro di massa. Detta $d$ la distanza fra i due assi, vale:</p>
+<p>$$I_z = I_{CM} + M d^2$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Scegliamo due sistemi cartesiani con assi paralleli:</p>
+<ul>
+<li>un sistema $(x,y,z)$ con origine $O$ sull'asse $z$;</li>
+<li>un sistema $(x', y', z')$ con origine nel centro di massa $CM$, con assi paralleli ai precedenti.</li>
+</ul>
+<p>Senza perdita di generalità, posizioniamo i sistemi in modo che la distanza tra i due assi sia $d$ lungo la direzione $y$. Le relazioni tra le coordinate sono:</p>
+<p>$$x_i = x'_i, \\qquad y_i = y'_i + d, \\qquad z_i = z'_i$$</p>
+<p>Per definizione, $I_z = \\sum_i m_i (x_i^2 + y_i^2)$. Sostituendo:</p>
+<p>$$I_z = \\sum_i m_i \\left[ (x'_i)^2 + (y'_i + d)^2 \\right] = \\sum_i m_i \\left[ (x'_i)^2 + (y'_i)^2 + d^2 + 2d \\, y'_i \\right]$$</p>
+<p>Distribuiamo la sommatoria in tre contributi:</p>
+<p>$$I_z = \\underbrace{\\sum_i m_i \\left[ (x'_i)^2 + (y'_i)^2 \\right]}_{I_{CM}} + \\underbrace{d^2 \\sum_i m_i}_{Md^2} + \\underbrace{2d \\sum_i m_i y'_i}_{= 0}$$</p>
+<p>Il terzo termine è proporzionale a $\\sum_i m_i y'_i$, che per definizione di centro di massa nel sistema $(x', y', z')$ è nullo:</p>
+<p>$$\\sum_i m_i y'_i = M \\, y'_{CM} = 0$$</p>
+<p>Sommando i contributi sopravvissuti:</p>
+<p>$$I_z = I_{CM} + M d^2$$</p>`
+                },
+                {
+                    subtitle: "Verifica sull'asta omogenea",
+                    content: `<p>Verifichiamo su un caso già calcolato direttamente. Per l'asta omogenea:</p>
+<ul>
+<li>rispetto al centro di massa: $I_{CM} = \\tfrac{1}{12} ML^2$</li>
+<li>rispetto a un estremo: $I_z = \\tfrac{1}{3} ML^2$</li>
+</ul>
+<p>La distanza tra i due assi è $d = L/2$. Applicando Huygens-Steiner:</p>
+<p>$$I_z = I_{CM} + Md^2 = \\frac{ML^2}{12} + M\\left(\\frac{L}{2}\\right)^2 = \\frac{ML^2}{12} + \\frac{ML^2}{4} = \\frac{ML^2}{12} + \\frac{3ML^2}{12} = \\frac{4ML^2}{12} = \\tfrac{1}{3} ML^2$$</p>
+<p>Il risultato coincide esattamente con il calcolo diretto. ✓</p>`
+                }
+            ],
+            formulas: [
+                { label: "Teorema di Huygens-Steiner", latex: "I_z = I_{CM} + M d^2" }
+            ],
+            extra_content: `<div class="note-box" style="border-left: 3px solid var(--accent); padding: 10px 15px; margin: 15px 0; background: var(--bg-alt); border-radius: 4px;">
+<p><strong>Utilità pratica:</strong> nei problemi capita spesso che venga fornito il momento di inerzia rispetto a un asse passante per il centro di massa. Il teorema di Huygens-Steiner permette, conoscendo solo la massa totale e la distanza $d$, di calcolare immediatamente il momento di inerzia rispetto a un qualsiasi asse parallelo, senza rifare integrazioni. Ecco perché è così utile memorizzare i momenti di inerzia rispetto al centro di massa: sono il "mattone base" da cui ricavare tutti gli altri.</p>
+</div>`
+        },
+        {
+            id: "s39-secondo-konig",
+            type: "section",
+            title: "Connessione con il secondo teorema di König",
+            icon: "🔗",
+            content: `<p>Applichiamo il teorema di Huygens-Steiner all'espressione dell'energia cinetica di rotazione per ritrovare un risultato già noto in forma generale.</p>
+<p>Partiamo dall'energia cinetica di un corpo rigido in rotazione attorno a un asse $z$ generico:</p>
+<p>$$E_k = \\tfrac{1}{2} I_z \\, \\omega^2$$</p>
+<p>Sostituendo $I_z = I_{CM} + Md^2$:</p>
+<p>$$E_k = \\tfrac{1}{2} (I_{CM} + Md^2) \\, \\omega^2 = \\tfrac{1}{2} I_{CM} \\, \\omega^2 + \\tfrac{1}{2} M (d\\omega)^2$$</p>
+<p>Osserviamo che $d\\omega$ è la velocità con cui il centro di massa ruota attorno all'asse $z$: il centro di massa si trova a distanza $d$ dall'asse e percorre una traiettoria circolare con velocità angolare $\\omega$, quindi $V_{CM} = \\omega \\, d$. Sostituendo:</p>
+<p>$$E_k = \\tfrac{1}{2} I_{CM} \\, \\omega^2 + \\tfrac{1}{2} M \\, V_{CM}^2$$</p>
+<p>L'energia cinetica totale si scompone come somma di due contributi:</p>
+<ul>
+<li>$\\tfrac{1}{2} I_{CM} \\omega^2$: energia cinetica di <strong>rotazione attorno al centro di massa</strong></li>
+<li>$\\tfrac{1}{2} M V_{CM}^2$: energia cinetica di <strong>traslazione del centro di massa</strong></li>
+</ul>`,
+            formulas: [
+                { label: "Secondo teorema di König (corpo rigido)", latex: "E_k = \\tfrac{1}{2} I_{CM} \\, \\omega^2 + \\tfrac{1}{2} M \\, V_{CM}^2" }
+            ],
+            extra_content: `<div class="note-box" style="border-left: 3px solid var(--accent); padding: 10px 15px; margin: 15px 0; background: var(--bg-alt); border-radius: 4px;">
+<p><strong>Da notare:</strong> questo risultato è qui derivato per il caso di rotazione attorno ad asse fisso. Il secondo teorema di König ha in realtà validità più generale, come visto in precedenza per un sistema qualsiasi di punti materiali.</p>
+</div>`
+        },
+        {
+            id: "s39-analogia-traslazione-rotazione",
+            type: "note_box",
+            title: "Analogia traslazione–rotazione: tabella riassuntiva",
+            icon: "🔀",
+            content: `<p>La struttura delle equazioni della dinamica rotazionale ricalca esattamente quella della dinamica del punto. Ecco il quadro completo delle corrispondenze emerse in questa lezione:</p>`,
+            table_compare: {
+                headers: ["Grandezza traslazionale", "Grandezza rotazionale"],
+                rows: [
+                    ["Massa $m$", "Momento di inerzia $I_z$"],
+                    ["Velocità $v$", "Velocità angolare $\\omega$"],
+                    ["Accelerazione $a$", "Accelerazione angolare $\\alpha$"],
+                    ["Forza $F$", "Momento $M$"],
+                    ["Quantità di moto $p = mv$", "Momento angolare $L_z = I_z \\omega$"],
+                    ["$F = ma$", "$M = I_z \\alpha$"],
+                    ["$E_k = \\tfrac{1}{2}mv^2$", "$E_k = \\tfrac{1}{2}I_z\\omega^2$"],
+                    ["$P = Fv$", "$P = M\\omega$"],
+                    ["$W = \\int F\\,dx$", "$W = \\int M\\,d\\theta$"]
+                ]
+            }
+        },
+        {
+            id: "s39-anticipazioni",
+            type: "note_box",
+            title: "Anticipazioni per la prossima lezione",
+            icon: "🔮",
+            content: `<p>Nella prossima lezione verranno affrontati tre argomenti: il <strong>moto di puro rotolamento</strong>, il <strong>pendolo composto</strong> e alcune <strong>considerazioni generali sui sistemi di forze</strong>, con l'obiettivo di chiudere la parte di meccanica.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Scrivi la definizione di momento di inerzia rispetto a un asse, sia per un sistema discreto che per un corpo continuo.",
+            back: "Per un sistema discreto: $I_z = \\sum_i m_i r_i^2$, dove $r_i$ è la distanza della massa $m_i$ dall'asse $z$. Per un corpo continuo: $I_z = \\int r^2 \\, dm$. In coordinate cartesiane con $z$ come asse di rotazione: $I_z = \\int (x^2 + y^2) \\, dm$. Da notare: la coordinata $z$ del punto non compare, conta solo la distanza dall'asse."
+        },
+        {
+            type: "domanda",
+            front: "Il momento di inerzia è una proprietà intrinseca del corpo rigido? Perché?",
+            back: "No. A differenza della massa, che è una proprietà intrinseca (basta pesare il corpo), il momento di inerzia va sempre dichiarato rispetto a un asse di rotazione. Lo stesso corpo ha momenti di inerzia diversi rispetto ad assi diversi."
+        },
+        {
+            type: "domanda",
+            front: "Quando vale la relazione scalare $L_z = I_z \\omega$ e quando vale quella vettoriale $\\vec{L} = I_z \\vec{\\omega}$?",
+            back: "La relazione scalare $L_z = I_z \\omega$ è **sempre** valida per un corpo rigido in rotazione attorno a un asse fisso. La relazione vettoriale $\\vec{L} = I_z \\vec{\\omega}$ vale **soltanto** quando $\\vec{L}$ è parallelo a $\\vec{\\omega}$ (parallelo all'asse di rotazione)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra il teorema di Huygens-Steiner.",
+            back: "Si scelgono due sistemi cartesiani paralleli: uno con origine sull'asse $z$, l'altro con origine nel CM. Con la distanza $d$ lungo $y$: $x_i = x'_i$, $y_i = y'_i + d$. Si espande $I_z = \\sum m_i[(x'_i)^2 + (y'_i + d)^2]$ ottenendo tre termini: (1) $\\sum m_i[(x'_i)^2 + (y'_i)^2] = I_{CM}$; (2) $d^2 \\sum m_i = Md^2$; (3) $2d \\sum m_i y'_i = 0$ perché nel sistema del CM le coordinate del CM sono nulle. Risultato: $I_z = I_{CM} + Md^2$."
+        },
+        {
+            type: "formula",
+            front: "Elenca i sei momenti di inerzia notevoli da memorizzare.",
+            back: "Anello/cilindro cavo: $I_{CM} = MR^2$. Disco/cilindro pieno: $I_{CM} = \\tfrac{1}{2}MR^2$. Sfera cava: $I_{CM} = \\tfrac{2}{3}MR^2$. Sfera piena: $I_{CM} = \\tfrac{2}{5}MR^2$. Asta (centro): $I_{CM} = \\tfrac{1}{12}ML^2$. Asta (estremo): $I_z = \\tfrac{1}{3}ML^2$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Ricava l'espressione dell'energia cinetica di un corpo rigido in rotazione attorno a un asse fisso.",
+            back: "Si parte da $E_k = \\sum_i \\tfrac{1}{2} m_i v_i^2$. Ogni punto descrive un moto circolare di raggio $r_i$ con velocità angolare $\\omega$, quindi $v_i = \\omega r_i$. Sostituendo: $E_k = \\sum_i \\tfrac{1}{2} m_i \\omega^2 r_i^2 = \\tfrac{1}{2} \\omega^2 \\sum_i m_i r_i^2 = \\tfrac{1}{2} I_z \\omega^2$."
+        },
+        {
+            type: "domanda",
+            front: "Enuncia il teorema delle forze vive per la rotazione e scrivi l'espressione della potenza in rotazione.",
+            back: "Il lavoro del momento risultante delle forze esterne eguaglia la variazione di energia cinetica rotazionale: $W = \\int_{\\theta_i}^{\\theta_f} M \\, d\\theta = \\tfrac{1}{2}I_z\\omega_f^2 - \\tfrac{1}{2}I_z\\omega_i^2 = \\Delta E_k$. La potenza istantanea è $P = M\\omega$, analoga a $P = Fv$ nella dinamica del punto."
+        },
+        {
+            type: "tranello",
+            front: "Perché il momento di inerzia dell'asta rispetto a un estremo è quattro volte quello rispetto al centro di massa, e non il doppio?",
+            back: "Perché $I_z = I_{CM} + Md^2$ con $d = L/2$. Dunque $I_z = \\tfrac{1}{12}ML^2 + M(L/2)^2 = \\tfrac{1}{12}ML^2 + \\tfrac{1}{4}ML^2 = \\tfrac{4}{12}ML^2 = \\tfrac{1}{3}ML^2$. Il fattore 4 (e non 2) viene dal fatto che il termine aggiuntivo $Md^2 = ML^2/4$ è tre volte $I_{CM} = ML^2/12$. La distanza appare al quadrato, non linearmente."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si ricava il secondo teorema di König per il corpo rigido dall'espressione dell'energia cinetica e dal teorema di Huygens-Steiner?",
+            back: "Si parte da $E_k = \\tfrac{1}{2}I_z \\omega^2$ e si sostituisce $I_z = I_{CM} + Md^2$: $E_k = \\tfrac{1}{2}I_{CM}\\omega^2 + \\tfrac{1}{2}M(d\\omega)^2$. Poiché il CM dista $d$ dall'asse e ruota con velocità angolare $\\omega$, la sua velocità è $V_{CM} = d\\omega$. Quindi $E_k = \\tfrac{1}{2}I_{CM}\\omega^2 + \\tfrac{1}{2}MV_{CM}^2$: energia di rotazione attorno al CM più energia di traslazione del CM."
+        },
+        {
+            type: "domanda",
+            front: "Un disco e un anello hanno la stessa massa $M$ e lo stesso raggio $R$. Quale dei due ha il momento di inerzia maggiore rispetto all'asse di simmetria, e perché?",
+            back: "L'anello ha momento di inerzia maggiore: $I_{\\text{anello}} = MR^2$ contro $I_{\\text{disco}} = \\tfrac{1}{2}MR^2$. Nell'anello tutta la massa è concentrata a distanza $R$ dall'asse; nel disco la massa è distribuita anche a distanze minori di $R$, contribuendo meno al momento di inerzia. Principio generale: quanto più la massa è raccolta vicino all'asse, tanto più piccolo è $I_z$."
+        }
+    ]
+};
+
