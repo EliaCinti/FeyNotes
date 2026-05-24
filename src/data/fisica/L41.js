@@ -91,7 +91,7 @@ const LESSON = {
                     content: `<p>La scala di temperatura utilizzata nelle formule della termodinamica è la <strong>scala Kelvin</strong> (o scala assoluta), indicata con il simbolo K. Lo zero della scala Kelvin ($0\\,\\text{K}$) corrisponde allo zero assoluto, la temperatura minima teoricamente raggiungibile, alla quale cessa ogni agitazione termica.</p>
 <p>La relazione con la scala Celsius è:</p>
 <p>$$T\\,[\\text{K}] = T\\,[^{\\circ}\\text{C}] + 273{,}15$$</p>
-<p>In tutte le equazioni della termodinamica la temperatura $T$ deve essere espressa in Kelvin. Ad esempio, l'acqua ghiaccia a $0\\,^{\\circ}\\text{C} = 273{,}15\\,\\text{K}$ e bolle a $100\\,^{\\circ}\\text{C} = 373{,}15\\,\\text{K}$.</p>`
+<p>In tutte le equazioni della termodinamica la temperatura $T$ deve essere espressa in Kelvin. Ad esempio, l'acqua ghiaccia a $0^{\\circ}\\text{C} = 273{,}15\\,\\text{K}$ e bolle a $100^{\\circ}\\text{C} = 373{,}15\\,\\text{K}$.</p>`
                 }
             ],
             formulas: [
@@ -183,8 +183,8 @@ const LESSON = {
                     subtitle: "Il termometro come applicazione del Principio Zero",
                     content: `<p>Il Principio Zero giustifica il funzionamento del <strong>termometro</strong>. Supponiamo di voler verificare se due corpi $A$ e $B$ hanno la stessa temperatura. Utilizziamo un termometro, che è il corpo $C$:</p>
 <ol>
-<li>Mettiamo il termometro ($C$) a contatto con il corpo $A$ e attendiamo l'equilibrio termico. Il termometro segna, ad esempio, $T_C = 37\\,^{\\circ}\\text{C}$. Per l'equilibrio, $T_A = T_C = 37\\,^{\\circ}\\text{C}$.</li>
-<li>Mettiamo ora il termometro ($C$) a contatto con il corpo $B$ e attendiamo l'equilibrio. Se il termometro segna ancora $37\\,^{\\circ}\\text{C}$, allora $T_B = T_C = 37\\,^{\\circ}\\text{C}$.</li>
+<li>Mettiamo il termometro ($C$) a contatto con il corpo $A$ e attendiamo l'equilibrio termico. Il termometro segna, ad esempio, $T_C = 37^{\\circ}\\text{C}$. Per l'equilibrio, $T_A = T_C = 37^{\\circ}\\text{C}$.</li>
+<li>Mettiamo ora il termometro ($C$) a contatto con il corpo $B$ e attendiamo l'equilibrio. Se il termometro segna ancora $37^{\\circ}\\text{C}$, allora $T_B = T_C = 37^{\\circ}\\text{C}$.</li>
 <li>Per il Principio Zero, concludiamo che $T_A = T_B$: i due corpi sono in equilibrio termico tra loro, anche senza essere mai stati messi a contatto diretto.</li>
 </ol>
 <p>Senza il Principio Zero, non avremmo garanzia che la lettura del termometro (corpo $C$) sia trasferibile per confrontare le temperature di corpi diversi.</p>`
@@ -214,7 +214,7 @@ const LESSON = {
                 },
                 {
                     subtitle: "Equivalente meccanico del calore",
-                    content: `<p>Joule misurò che per aumentare di $1\\,^{\\circ}\\text{C}$ la temperatura di $1\\,\\text{g}$ di acqua occorre compiere un lavoro di circa $4{,}186\\,\\text{J}$. Questo valore stabilisce la relazione:</p>
+                    content: `<p>Joule misurò che per aumentare di $1^{\\circ}\\text{C}$ la temperatura di $1\\,\\text{g}$ di acqua occorre compiere un lavoro di circa $4{,}186\\,\\text{J}$. Questo valore stabilisce la relazione:</p>
 <p>$$1\\,\\text{cal} \\approx 4{,}186\\,\\text{J}$$</p>
 <p>L'esperimento dimostrò definitivamente che calore e lavoro sono due forme equivalenti di trasferimento di energia, misurabili con la stessa unità (il joule nel Sistema Internazionale).</p>`
                 }
