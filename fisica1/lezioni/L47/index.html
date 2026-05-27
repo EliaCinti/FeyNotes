@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 34 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 34: Riepilogo di termodinamica: sistemi monofasici, bifasici e diagramma di Clapeyron. Classificazione dei sistemi termodinamici, scambi termici in sistemi monofasici (calore specifico) e bifasici (calore latente), unità di misura, Primo Principio della Termodinamica e diagramma di Clapeyron con esempio guidato di ciclo a tre trasformazioni.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 34: Riepilogo di termodinamica: sistemi monofasici, bifasici e diagramma di Clapeyron — Fisica 1">
+  <meta property="og:description" content="Classificazione dei sistemi termodinamici, scambi termici in sistemi monofasici (calore specifico) e bifasici (calore latente), unità di misura, Primo Principio della Termodinamica e diagramma di Clapeyron con esempio guidato di ciclo a tre trasformazioni.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/lezioni/L47/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/lezioni/L47/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 34 — Riepilogo di termodinamica: sistemi monofasici, bifasici e diagramma di Clapeyron",
+  "description": "Classificazione dei sistemi termodinamici, scambi termici in sistemi monofasici (calore specifico) e bifasici (calore latente), unità di misura, Primo Principio della Termodinamica e diagramma di Clapeyron con esempio guidato di ciclo a tre trasformazioni.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/lezioni/L47/",
+  "datePublished": "2026-05-27",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 34</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/lezioni/L46/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L47", date: "Lezione 34 — 27 Mag 2026",
+    title: "Riepilogo di termodinamica: sistemi monofasici, bifasici e diagramma di Clapeyron",
+    abstract: "Classificazione dei sistemi termodinamici, scambi termici in sistemi monofasici (calore specifico) e bifasici (calore latente), unità di misura, Primo Principio della Termodinamica e diagramma di Clapeyron con esempio guidato di ciclo a tre trasformazioni.",
+
+    sections: [
+        {
+            id: "s47-classificazione-sistemi",
+            type: "section",
+            title: "Classificazione dei sistemi termodinamici",
+            icon: "📦",
+            content: `<p>La termodinamica studia come cambiano i sistemi in seguito a scambi, con l'ambiente circostante, di energia (sotto forma di lavoro e di calore) ed eventualmente di materia. La classificazione dei sistemi si fonda proprio su <strong>quali scambi sono ammessi</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Le quattro categorie",
+                    content: `<ul>
+<li><strong>Sistema isolato</strong>: non scambia energia con l'ambiente, dunque né calore né lavoro (e neppure materia).</li>
+<li><strong>Sistema chiuso</strong>: non scambia materia, ma può scambiare energia (calore e/o lavoro).</li>
+<li><strong>Sistema aperto</strong>: può scambiare sia energia sia materia.</li>
+<li><strong>Sistema isolato termicamente (adiabatico)</strong>: non può scambiare calore, ma può scambiare lavoro. Le pareti che impediscono lo scambio di calore si dicono <em>pareti adiabatiche</em>.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Esempio: cilindro con pistone adiabatico",
+                    content: `<p>Un cilindro chiuso da un pistone mobile, con tutte le pareti adiabatiche, contiene un gas. Espandendosi, il gas sposta il pistone e compie lavoro contro l'ambiente; tuttavia, essendo le pareti isolanti termicamente, non può scambiare calore. È un sistema isolato termicamente ma non in toto, perché ammette ancora scambi di lavoro.</p>`
+                },
+                {
+                    subtitle: "Convenzione del corso",
+                    content: `<p>Salvo diverso avviso, considereremo sempre sistemi con una quantità di sostanza fissata: nessuno scambio di materia. Attenzione però: «quantità di sostanza fissata» non significa «quantità di sostanza in una determinata fase fisica». La stessa massa può trovarsi in più fasi (solida, liquida, gassosa).</p>`
+                }
+            ]
+        },
+        {
+            id: "s47-fasi-microscopica",
+            type: "section",
+            title: "Fasi fisiche e interpretazione microscopica",
+            icon: "🔬",
+            content: `<p>Questo modello microscopico ci permetterà di capire perché durante una transizione di fase si cede o assorbe calore senza variazione di temperatura.</p>`,
+            subsections: [
+                {
+                    subtitle: "L'esempio dell'acqua",
+                    content: `<p>Prendiamo mezzo bicchiere di $H_2O$ in fase liquida e cominciamo a sottrarre calore. Inizialmente lo scambio termico produce un abbassamento della temperatura (effetto tipico in una fase monofasica). Raggiunti $0°C$, se continuiamo a sottrarre calore, accade qualcosa di qualitativamente diverso: l'agitazione termica delle molecole diventa così bassa che le interazioni con le molecole circostanti prevalgono, e le molecole restano agganciate alle prime vicine, strutturandosi in un reticolo.</p>
+<p>L'$H_2O$ liquida diventa $H_2O$ solida (ghiaccio), <strong>senza che la temperatura cambi</strong>: tanto più calore sottraggo, tanta più massa passa di fase. Si tratta di una <em>transizione di fase</em>.</p>`
+                },
+                {
+                    subtitle: "Modello microscopico del solido: le «molle»",
+                    content: `<p>Per capire cosa accade microscopicamente, si può pensare a un solido come a un reticolo di molecole legate tra loro da «molle». Non sono molle vere: si tratta di potenziali di interazione, tipicamente di origine elettromagnetica, che modellizziamo come molle. Ogni molecola è collegata alle prime vicine.</p>
+<p>Anche se macroscopicamente il solido appare fermo, microscopicamente le molecole oscillano attorno al proprio <em>sito reticolare</em> con una certa energia cinetica. L'agitazione di una molecola, attraverso le «molle», perturba quelle vicine, e così via.</p>`
+                },
+                {
+                    subtitle: "Principio della conduzione termica",
+                    content: `<p>Quando appoggiamo la mano (calda, ad alta agitazione termica) su un blocco di ghiaccio (a bassa agitazione termica), le molecole della superficie della mano trasmettono energia cinetica alle molecole superficiali del ghiaccio. Queste, attraverso le «molle», mettono in agitazione le molecole vicine, e così via.</p>
+<p>L'agitazione termica si propaga meccanicamente all'interno del solido: è questo, microscopicamente, ciò che chiamiamo <em>conduzione termica</em>. All'equilibrio meccanico tra le molecole dei due corpi corrisponde, macroscopicamente, una <strong>temperatura comune di equilibrio</strong>, intermedia tra le due temperature iniziali.</p>`
+                },
+                {
+                    subtitle: "La transizione solido-liquido vista da vicino",
+                    content: `<p>Se riscaldiamo il blocchetto di ghiaccio, le molecole di $H_2O$ si agitano sempre di più, sollecitando sempre di più le «molle». Arriva un punto in cui le molle si rompono: la molecola si stacca dal sito reticolare e diventa libera di muoversi (pur risentendo ancora di un'interazione media con le vicine). Il solido sta diventando un liquido.</p>
+<p>Durante la coesistenza di due fasi (sistema bifasico), l'energia ceduta al sistema <strong>non può essere immagazzinata come ulteriore agitazione termica</strong>: le molecole sono al limite della loro coesione. Quell'energia viene spesa per «rompere le molle», cioè per la transizione di fase. Macroscopicamente: si cede calore al sistema, ma la temperatura <em>non cambia</em>.</p>
+<p>Ecco il collegamento tra il modello microscopico e il <em>calore latente</em> che definiremo più avanti: l'energia necessaria per «rompere le molle» è proprio l'energia che macroscopicamente misuriamo come calore latente di trasformazione.</p>`
+                }
+            ]
+        },
+        {
+            id: "s47-scambio-monofasici",
+            type: "section",
+            title: "Scambio termico nei sistemi monofasici",
+            icon: "🌡️",
+            content: `<p>Quando cediamo calore a un sistema, l'effetto prodotto dipende dal tipo di sistema. Per un <em>sistema monofasico che non compie lavoro</em>, l'effetto è una variazione di temperatura.</p>`,
+            subsections: [
+                {
+                    subtitle: "Attenzione: il lavoro «nascosto»",
+                    content: `<p>Se il sistema può compiere lavoro, non tutto il calore ceduto si traduce in aumento di temperatura. Due esempi quotidiani:</p>
+<ul>
+<li>Premendo una bomboletta spray, il gas si espande rapidamente e compie lavoro: spende energia, e la temperatura del beccuccio (<em>nozzle</em>) cala bruscamente.</li>
+<li>Gonfiando la ruota di una bicicletta con la pompetta, comprimiamo il gas: stiamo compiendo lavoro <em>sul</em> sistema, gli cediamo energia in forma meccanica, e la pompa si scalda.</li>
+</ul>
+<p>Lo stato energetico del sistema dipende sempre dal bilancio degli scambi di calore e lavoro.</p>`
+                },
+                {
+                    subtitle: "Legge di scambio termico e capacità termica",
+                    content: `<p>Per un sistema monofasico che non compie lavoro, la quantità di calore $Q$ scambiata è legata alla variazione di temperatura $\\Delta T$ dalla relazione:</p>
+<p>$$Q = C\\,\\Delta T \\quad\\Longleftrightarrow\\quad \\Delta T = \\frac{Q}{C}$$</p>
+<p>dove $C$ è la <em>capacità termica</em> del sistema.</p>
+<p>Questa relazione ha la stessa struttura della seconda legge di Newton:</p>
+<ul>
+<li>In meccanica: la <strong>causa</strong> è la forza $\\vec{F}$, l'<strong>effetto</strong> è l'accelerazione $\\vec{a}$, e $m$ esprime l'<em>inerzia meccanica</em> del corpo.</li>
+<li>In termodinamica: la <strong>causa</strong> è il calore $Q$, l'<strong>effetto</strong> è la variazione di temperatura $\\Delta T$, e $C$ esprime l'<em>inerzia termica</em> del sistema, cioè quanto il sistema è poco incline a cambiare il suo stato di agitazione molecolare.</li>
+</ul>
+<p>Se $C$ è molto grande, anche cedendo $Q$ non trascurabile la variazione di temperatura tende a zero: $\\Delta T = Q/C \\to 0$.</p>`
+                },
+                {
+                    subtitle: "Esempio: toccare la parete dell'aula",
+                    content: `<p>Se appoggio per pochi secondi un dito caldo sulla parete dell'aula, certamente avviene uno scambio di calore. Tuttavia la temperatura media della parete cambia in modo impercettibile: la massa coinvolta è enorme, dunque la capacità termica è enorme, e $\\Delta T = Q/C$ risulta minuscola.</p>`
+                },
+                {
+                    subtitle: "Capacità termica e calore specifico",
+                    content: `<p>La capacità termica $C$ dipende da due fattori: la quantità di materia presente e una proprietà intrinseca della sostanza.</p>
+<p>$$C = m\\,c$$</p>
+<p>dove $m$ è la massa (<strong>inerzia meccanica</strong>) e $c$ è il <em>calore specifico</em> della sostanza (<strong>proprietà intrinseca</strong>). Il prodotto di questi due fattori esprime quanto è difficile cambiare la temperatura del sistema considerato.</p>
+<p>Sostituendo in $Q = C\\Delta T$:</p>
+<p>$$Q = m\\,c\\,\\Delta T$$</p>`
+                },
+                {
+                    subtitle: "Esempio: acqua vs rame (con valori numerici)",
+                    content: `<p>Prendendo $1\\,\\mathrm{kg}$ d'acqua e $1\\,\\mathrm{kg}$ di rame, e volendo elevare di $3\\,\\mathrm{K}$ la temperatura di entrambi, servono quantità di calore molto diverse: è ben più facile scaldare il rame. I calori specifici spiegano perché:</p>
+<p>$$c_{\\text{acqua}} \\approx 4186\\,\\mathrm{J/(kg\\cdot K)}, \\qquad c_{\\text{rame}} \\approx 385\\,\\mathrm{J/(kg\\cdot K)}$$</p>
+<p>Per $\\Delta T = 3\\,\\mathrm{K}$ e $m = 1\\,\\mathrm{kg}$:</p>
+<p>$$Q_{\\text{acqua}} = 1 \\times 4186 \\times 3 \\approx 12\\,558\\,\\mathrm{J}$$</p>
+<p>$$Q_{\\text{rame}} = 1 \\times 385 \\times 3 \\approx 1\\,155\\,\\mathrm{J}$$</p>
+<p>Serve circa <strong>10 volte più energia</strong> per scaldare l'acqua dello stesso $\\Delta T$: l'acqua ha un'inerzia termica intrinseca molto maggiore del rame.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Scambio termico monofasico", latex: "Q = C\\,\\Delta T = m\\,c\\,\\Delta T" },
+                { label: "Capacità termica", latex: "C = m\\,c" }
+            ],
+            extra_content: `<p><strong>Natura scalare della termodinamica:</strong> da quando trattiamo termodinamica non sono più comparsi vettori. La temperatura è l'evidenza macroscopica dell'energia cinetica media delle molecole, che è una grandezza scalare. Anche calore, lavoro, energia interna, capacità termica e calore specifico sono grandezze scalari. <strong>Mai mettere una freccia sopra $T$, $Q$, $W$</strong>: è un errore concettuale grave.</p>`
+        },
+        {
+            id: "s47-unita-misura",
+            type: "section",
+            title: "Unità di misura e grandezze fondamentali",
+            icon: "📏",
+            content: `<p>Una grandezza fisica appartiene alla categoria delle grandezze <em>fondamentali</em> (quantificabili direttamente per confronto con un'unità di misura convenzionale) oppure <em>derivate</em>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Le grandezze fondamentali del SI",
+                    content: `<p>Nel Sistema Internazionale le grandezze fondamentali sono sette; per i nostri scopi ne servono quattro:</p>
+<table><thead><tr><th>Grandezza</th><th>Unità SI</th><th>Simbolo</th></tr></thead><tbody>
+<tr><td>Lunghezza</td><td>metro</td><td>m</td></tr>
+<tr><td>Tempo</td><td>secondo</td><td>s</td></tr>
+<tr><td>Massa</td><td>chilogrammo</td><td>kg</td></tr>
+<tr><td>Temperatura</td><td>kelvin</td><td>K</td></tr>
+</tbody></table>
+<p>Le tre fondamentali necessarie alla meccanica sono lunghezza, tempo, massa: con le sole lunghezze si fa geometria; aggiungendo il tempo si fa cinematica; aggiungendo la massa si fa dinamica. La forza è <em>derivata</em>: dalla seconda legge di Newton $F = ma$ segue:</p>
+<p>$$1\\,\\mathrm{N} = 1\\,\\mathrm{kg}\\cdot\\mathrm{m}\\cdot\\mathrm{s}^{-2}$$</p>`
+                },
+                {
+                    subtitle: "Temperatura e scala kelvin",
+                    content: `<p>Nel SI la temperatura è una grandezza fondamentale, espressa in <em>kelvin</em> (simbolo $\\mathrm{K}$, maiuscolo, perché deriva dal nome di Lord Kelvin).</p>
+<p>Lo zero della scala kelvin è la temperatura minima fisicamente concepibile: quella in cui non si muove più nulla, cioè in cui l'energia cinetica delle molecole è nulla. È lo <strong>zero assoluto</strong>. Così come non esistono masse negative o energie cinetiche negative, nella scala termodinamica assoluta non esistono temperature negative.</p>
+<p>L'ampiezza di un grado kelvin coincide con quella di un grado Celsius, ma lo zero è diverso:</p>
+<p>$$0°\\mathrm{C} \\;\\longleftrightarrow\\; 273{,}15\\,\\mathrm{K}, \\qquad T[\\mathrm{K}] = T[°\\mathrm{C}] + 273{,}15$$</p>
+<p>Lo zero centigrado è uno zero «di comodo», scelto storicamente per tarare i termometri ai punti fissi di fusione del ghiaccio ed ebollizione dell'acqua alla pressione atmosferica.</p>`
+                },
+                {
+                    subtitle: "Regola pratica: quando usare i kelvin",
+                    content: `<ul>
+<li>Quando in una formula compare un <em>valore assoluto</em> di temperatura (in particolare se $T$ è variabile di una funzione termodinamica, o se si fa un <em>rapporto</em> tra temperature), bisogna usare i kelvin.</li>
+<li>Quando compare una <em>differenza</em> $\\Delta T$, il valore numerico è lo stesso in $\\mathrm{K}$ e in $°\\mathrm{C}$: i $273{,}15$ si cancellano.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Errore comune: il rapporto tra temperature",
+                    content: `<p>«Ieri c'erano $15°\\mathrm{C}$, oggi ce ne sono $30°\\mathrm{C}$, la temperatura è raddoppiata.» È una frase sbagliata, prima ancora che dal punto di vista fisico, dal punto di vista algebrico. Convertiamo:</p>
+<p>$$15°\\mathrm{C} \\approx 288\\,\\mathrm{K}, \\qquad 30°\\mathrm{C} \\approx 303\\,\\mathrm{K}$$</p>
+<p>Il rapporto $303/288$ è ben lontano da $2$. <strong>I rapporti tra temperature vanno sempre fatti in kelvin.</strong></p>`
+                },
+                {
+                    subtitle: "Unità di misura del calore specifico",
+                    content: `<p>L'esperienza di Joule mostra che calore e lavoro sono omogenei: appartengono alla stessa categoria di grandezze, l'<em>energia</em>. Si misurano tutti in joule (J).</p>
+<p>Dalla relazione $Q = C\\,\\Delta T$:</p>
+<p>$$[C] = \\frac{\\mathrm{J}}{\\mathrm{K}}$$</p>
+<p>e da $C = mc$:</p>
+<p>$$[c] = \\frac{\\mathrm{J}}{\\mathrm{kg}\\cdot\\mathrm{K}}$$</p>
+<p>Il calore specifico $c$ rappresenta la quantità di energia, in joule, che bisogna somministrare a $1\\,\\mathrm{kg}$ di sostanza per innalzarne la temperatura di $1\\,\\mathrm{K}$. Maggiore è $c$, più difficile è variare la temperatura della sostanza.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Conversione Celsius–Kelvin", latex: "T[\\mathrm{K}] = T[°\\mathrm{C}] + 273{,}15" },
+                { label: "Unità del calore specifico", latex: "[c] = \\frac{\\mathrm{J}}{\\mathrm{kg}\\cdot\\mathrm{K}}" }
+            ]
+        },
+        {
+            id: "s47-scambio-bifasici",
+            type: "section",
+            title: "Scambio termico nei sistemi bifasici",
+            icon: "🧊",
+            content: `<p>In un sistema bifasico (ad esempio acqua e ghiaccio in equilibrio), lo scambio di calore <strong>non produce variazione di temperatura</strong>:</p>
+<p>$$Q \\neq 0, \\qquad \\Delta T = 0$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Perché la legge Q = CΔT non è applicabile",
+                    content: `<p>Provando ad applicare la relazione monofasica si avrebbe:</p>
+<p>$$C = \\frac{Q}{\\Delta T} = \\frac{Q}{0} \\to \\infty$$</p>
+<p>cioè capacità termica e calore specifico «infiniti». Questo segnala che la relazione $Q = C\\,\\Delta T$ <strong>non è definita</strong> per un sistema bifasico: durante la coesistenza di fasi non ha senso parlare di capacità termica né di calore specifico.</p>`
+                },
+                {
+                    subtitle: "Distinzione fondamentale: mono vs bifasico",
+                    content: `<ul>
+<li><strong>Sistema monofasico</strong>: lo scambio di calore produce variazione di <em>temperatura</em>.</li>
+<li><strong>Sistema bifasico</strong>: lo scambio di calore produce variazione della <em>massa di una fase fisica</em> (parte della sostanza cambia fase); la temperatura resta costante.</li>
+</ul>
+<p>Ciascun caso richiede la propria legge di scambio termico.</p>`
+                },
+                {
+                    subtitle: "Calore latente di trasformazione",
+                    content: `<p>L'effetto dello scambio di calore in un sistema bifasico è una variazione di massa $\\Delta m$ di una delle due fasi (la massa persa da una fase è pari alla massa acquisita dall'altra). La relazione è:</p>
+<p>$$Q = \\lambda\\,\\Delta m \\quad\\Longleftrightarrow\\quad \\Delta m = \\frac{Q}{\\lambda}$$</p>
+<p>dove $\\lambda$ è il <em>calore latente di trasformazione</em> relativo alla specifica transizione di fase considerata.</p>
+<p>Il calore latente $\\lambda$ dipende sia dalla sostanza sia dalla <em>specifica transizione</em>. Per l'$H_2O$:</p>
+<ul>
+<li>Transizione solido $\\leftrightarrow$ liquido: <em>calore latente di fusione/solidificazione</em></li>
+<li>Transizione liquido $\\leftrightarrow$ gas: <em>calore latente di evaporazione/condensazione</em></li>
+</ul>
+<p>A parità di calore scambiato, $\\Delta m$ è tanto minore quanto più grande è $\\lambda$: $\\lambda$ rappresenta una sorta di «inerzia di trasformazione», cioè quanto è difficile far cambiare fase a una certa sostanza.</p>
+<p>Per l'acqua i valori numerici di riferimento sono:</p>
+<p>$$\\lambda_{\\text{fus}}(H_2O) \\approx 334\\,\\mathrm{kJ/kg}, \\qquad \\lambda_{\\text{evap}}(H_2O) \\approx 2260\\,\\mathrm{kJ/kg}$$</p>
+<p>Si noti che il calore latente di evaporazione è circa <strong>7 volte</strong> quello di fusione: «rompere» tutte le interazioni tra molecole (passaggio a gas) richiede molta più energia che «rompere» la struttura cristallina (passaggio a liquido). Per confronto, $c_{\\text{acqua}} \\approx 4186\\,\\mathrm{J/(kg\\cdot K)}$: per scaldare $1\\,\\mathrm{kg}$ d'acqua di $1\\,\\mathrm{K}$ servono circa $4\\,\\mathrm{kJ}$, mentre per far evaporare lo stesso kg servono $2260\\,\\mathrm{kJ}$.</p>`
+                },
+                {
+                    subtitle: "Esempi quotidiani",
+                    content: `<p><strong>L'acqua e i suoi grandi calori latenti:</strong> per far evaporare mezzo litro d'acqua dal pentolino bisogna tenere accesa la fiamma per molto tempo: è proprio questa grande inerzia di trasformazione che conferisce stabilità a numerosi processi naturali e biologici.</p>
+<p><strong>Il sudore come meccanismo di raffreddamento:</strong> il corpo produce sudore sulla pelle. Per evaporare, il sudore deve compiere la transizione liquido $\\to$ gas, cioè assorbire energia: la sottrae alla superficie cutanea, raffreddandola. In un ambiente caldo e secco l'evaporazione è efficiente; in un ambiente molto umido l'aria è già satura di vapore, l'evaporazione è inibita e il sudore resta liquido. Per questo si tollerano meglio $40°\\mathrm{C}$ in clima secco che $30°\\mathrm{C}$ in clima molto umido.</p>
+<p><strong>La cottura della pasta:</strong> quando l'acqua bolle, il sistema acqua liquida–vapore è bifasico e la temperatura resta sostanzialmente costante (al valore di ebollizione alla pressione data). Anche se parte dell'acqua evapora e il livello in pentola si abbassa, la temperatura non cambia: ecco perché i tempi di cottura sono ripetibili e affidabili.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Scambio termico bifasico", latex: "Q = \\lambda\\,\\Delta m" },
+                { label: "Calore latente fusione acqua", latex: "\\lambda_{\\text{fus}}(H_2O) \\approx 334\\,\\mathrm{kJ/kg}" },
+                { label: "Calore latente evaporazione acqua", latex: "\\lambda_{\\text{evap}}(H_2O) \\approx 2260\\,\\mathrm{kJ/kg}" }
+            ],
+            extra_content: `<p><strong>Non sono casi marginali:</strong> moltissimi fenomeni naturali coinvolgono sistemi bifasici — fusione dei ghiacci, evaporazione dell'acqua, condensazione del vapore e formazione delle nuvole. Non bisogna pensare che i sistemi bifasici siano un'eccezione di poco conto.</p>`
+        },
+        {
+            id: "s47-domanda-mono-bi",
+            type: "oral_box",
+            title: "Domanda tipica da esame: mono vs bifasico",
+            icon: "🎯",
+            content: `<p><em>In che cosa differiscono, durante gli scambi termici, i sistemi monofasici dai sistemi bifasici?</em></p>
+<p>La risposta sta nel tipo di effetto prodotto:</p>
+<p>$$\\text{monofasico:}\\ Q \\longrightarrow \\Delta T, \\qquad \\text{bifasico:}\\ Q \\longrightarrow \\Delta m$$</p>
+<p>Nel sistema monofasico il calore cambia la <em>temperatura</em> (legge $Q = mc\\Delta T$); nel sistema bifasico il calore cambia la <em>massa</em> in una fase (legge $Q = \\lambda\\Delta m$), mentre la temperatura resta costante.</p>`
+        },
+        {
+            id: "s47-primo-principio",
+            type: "section",
+            title: "Primo Principio della Termodinamica e diagramma di Clapeyron",
+            icon: "⚡",
+            content: `<p>Raccogliamo le relazioni chiave introdotte finora e il principio che le unifica.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il Primo Principio della Termodinamica",
+                    content: `<p>Il <em>Primo Principio della Termodinamica</em> afferma che la variazione di energia interna di un sistema in una trasformazione è data dal bilancio tra calore assorbito e lavoro compiuto dal sistema:</p>
+<p>$$\\Delta U = Q - W$$</p>
+<p>con la convenzione: $Q \\gt 0$ se il sistema <strong>assorbe</strong> calore, $W \\gt 0$ se il sistema <strong>compie</strong> lavoro sull'ambiente.</p>`
+                },
+                {
+                    subtitle: "Nota sulle convenzioni di segno",
+                    content: `<p><strong>Attenzione:</strong> esiste una convenzione alternativa, usata in alcuni testi (specialmente di chimica), in cui $W$ indica il lavoro compiuto <em>sull'</em>sistema anziché <em>dal</em> sistema. In quella convenzione il Primo Principio si scrive $\\Delta U = Q + W$. Le due formulazioni sono del tutto equivalenti, purché si sia coerenti. Nel nostro corso usiamo sempre $\\Delta U = Q - W$ con $W \\gt 0$ = lavoro compiuto dal sistema sull'ambiente.</p>`
+                },
+                {
+                    subtitle: "Il lavoro termodinamico",
+                    content: `<p>Il lavoro termodinamico scambiato in una trasformazione si esprime come:</p>
+<p>$$W = \\int_{V_{\\text{in}}}^{V_{\\text{fin}}} P(V)\\,dV$$</p>
+<p>Geometricamente, l'integrale è l'<strong>area sottesa dalla curva</strong> $P(V)$ nel piano $(V,P)$ tra il volume iniziale e quello finale. Tale area dipende dal <em>percorso</em>: trasformazioni diverse che collegano gli stessi stati hanno aree sottese diverse, quindi $W$ <em>non</em> è una funzione di stato. Lo stesso vale per $Q$.</p>
+<p>Al contrario, l'energia interna $U$ è una <strong>funzione di stato</strong>: $\\Delta U$ dipende solo dagli stati iniziale e finale, non dal percorso.</p>
+<p><strong>Punto chiave:</strong> $Q$ e $W$ sono forme di energia <em>scambiate</em>, non <em>contenute</em> nel sistema.</p>
+<p>Per un gas ideale in trasformazione isoterma, $PV = nRT = \\text{cost}$, quindi $P = nRT/V$ e il lavoro vale:</p>
+<p>$$W_{\\text{isoterma}} = \\int_{V_{\\text{in}}}^{V_{\\text{fin}}} \\frac{nRT}{V}\\,dV = nRT\\ln\\frac{V_{\\text{fin}}}{V_{\\text{in}}}$$</p>
+<p>Questo risultato è particolarmente utile per calcolare il lavoro lungo trasformazioni isoterme (come il tratto $C \\to A$ dell'esempio che segue).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Primo Principio della Termodinamica", latex: "\\Delta U = Q - W" },
+                { label: "Lavoro termodinamico", latex: "W = \\int_{V_{\\text{in}}}^{V_{\\text{fin}}} P(V)\\,dV" },
+                { label: "Lavoro isoterma (gas ideale)", latex: "W_{\\text{isoterma}} = nRT\\ln\\frac{V_{\\text{fin}}}{V_{\\text{in}}}" }
+            ]
+        },
+        {
+            id: "s47-diagramma-clapeyron",
+            type: "section",
+            title: "Il diagramma di Clapeyron",
+            icon: "📈",
+            content: `<p>Il diagramma di Clapeyron è il piano $(V,P)$, con il volume sull'asse orizzontale e la pressione sull'asse verticale. Su questo diagramma rappresentiamo le trasformazioni termodinamiche.</p>`,
+            subsections: [
+                {
+                    subtitle: "Consiglio per l'esame",
+                    content: `<p>Negli esercizi di termodinamica, il primo quesito chiede tipicamente di rappresentare la trasformazione descritta dal testo sul diagramma di Clapeyron. Sono punti che si prendono «a costo zero» se si è capito di cosa si sta parlando: chi non riesce a tradurre il testo in un grafico difficilmente saprà impostare il resto del problema. <strong>Statisticamente, meno di uno studente su quattro lo fa correttamente.</strong> La prima cosa da fare è sempre: <em>disegno il diagramma</em>.</p>`
+                },
+                {
+                    subtitle: "Esempio guidato: ciclo isocora–isobara–isoterma",
+                    content: `<p>Un gas si trova inizialmente nello stato $A$, di pressione $P_A$ e volume $V_A$. Subisce le seguenti trasformazioni:</p>
+<ol>
+<li>$A \\to B$: trasformazione <em>isocora</em> (volume costante, $V_B = V_A$), durante la quale la pressione scende a $P_B \\lt P_A$;</li>
+<li>$B \\to C$: trasformazione <em>isobara</em> (pressione costante, $P_C = P_B$), durante la quale il volume aumenta fino a $V_C \\gt V_B$;</li>
+<li>$C \\to A$: trasformazione <em>isoterma</em> che riporta il sistema allo stato iniziale (per un gas ideale, $PV = \\text{cost}$, un ramo di iperbole).</li>
+</ol>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Ciclo A→B→C→A nel piano di Clapeyron</strong></p>
+  <p><em>Piano (V,P). Punto A in alto a sinistra (V_A, P_A). Tratto A→B verticale verso il basso (isocora) fino a B=(V_A, P_B). Tratto B→C orizzontale verso destra (isobara) fino a C=(V_C, P_B). Tratto C→A curva iperbolica verso l'alto a sinistra (isoterma) che chiude il ciclo. Linee tratteggiate dai punti agli assi. Nota: schema qualitativo, non in scala.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+                },
+                {
+                    subtitle: "Variazione di energia interna sul ciclo",
+                    content: `<p>Lo stato finale coincide con lo stato iniziale ($A$); essendo $U$ funzione di stato:</p>
+<p>$$\\Delta U_{\\text{ciclo}} = 0$$</p>`
+                },
+                {
+                    subtitle: "Analisi qualitativa degli scambi",
+                    content: `<p><strong>Tratto $A \\to B$ (isocora):</strong> il volume non cambia, dunque:</p>
+<p>$$W_{AB} = \\int_{V_A}^{V_A} P\\,dV = 0$$</p>
+<p>Il pistone si può immaginare bloccato. Poiché la pressione diminuisce a volume costante, si sta <em>sottraendo</em> calore al gas: $Q_{AB} \\lt 0$.</p>
+<p><strong>Tratto $B \\to C$ (isobara, espansione):</strong> il gas si espande, compie lavoro positivo:</p>
+<p>$$W_{BC} = P_B (V_C - V_B) \\gt 0$$</p>
+<p>Perché la pressione resti costante mentre il volume aumenta, le molecole devono urtare le pareti più frequentemente, cioè avere maggiore energia cinetica: il sistema deve <em>assorbire</em> calore, $Q_{BC} \\gt 0$.</p>
+<p><strong>Tratto $C \\to A$ (isoterma, compressione):</strong> la temperatura resta costante, ma il gas viene compresso. Una compressione tenderebbe a riscaldare il gas; per mantenere $T$ costante, il gas deve <em>cedere</em> calore all'esterno. Il lavoro compiuto dal sistema è negativo: $W_{CA} \\lt 0$.</p>
+<p>Per un gas ideale, il lavoro lungo questa isoterma vale:</p>
+<p>$$W_{CA} = nRT\\ln\\frac{V_A}{V_C} \\lt 0$$</p>
+<p>dato che $V_A \\lt V_C$, il logaritmo è negativo e il lavoro risulta effettivamente negativo, coerentemente con l'analisi qualitativa.</p>`
+                },
+                {
+                    subtitle: "Bilancio totale sul ciclo",
+                    content: `<p>La somma dei lavori (e dei calori) sul ciclo è in generale non nulla, ma deve valere:</p>
+<p>$$0 = \\Delta U_{\\text{ciclo}} = Q_{\\text{ciclo}} - W_{\\text{ciclo}} \\quad\\Longrightarrow\\quad Q_{\\text{ciclo}} = W_{\\text{ciclo}}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "ΔU sul ciclo", latex: "\\Delta U_{\\text{ciclo}} = 0" },
+                { label: "Bilancio sul ciclo", latex: "Q_{\\text{ciclo}} = W_{\\text{ciclo}}" },
+                { label: "Lavoro isocora", latex: "W_{\\text{isocora}} = 0" },
+                { label: "Lavoro isobara", latex: "W_{\\text{isobara}} = P(V_{\\text{fin}} - V_{\\text{in}})" }
+            ]
+        },
+        {
+            id: "s47-esempio-numerico",
+            type: "note_box",
+            title: "Esempio numerico riepilogativo: calcolo su un ciclo",
+            icon: "🔢",
+            content: `<p>Per consolidare i concetti, consideriamo il ciclo dell'esempio precedente con valori numerici concreti. Sia un gas ideale con $n = 1\\,\\mathrm{mol}$ negli stati:</p>
+<ul>
+<li>$A$: $P_A = 4\\,\\mathrm{atm}$, $V_A = 1\\,\\mathrm{L}$</li>
+<li>$B$: $P_B = 2\\,\\mathrm{atm}$, $V_B = V_A = 1\\,\\mathrm{L}$ (isocora)</li>
+<li>$C$: $P_C = P_B = 2\\,\\mathrm{atm}$, $V_C = 3\\,\\mathrm{L}$ (isobara)</li>
+</ul>
+<p>Convertiamo in SI: $1\\,\\mathrm{atm} = 101\\,325\\,\\mathrm{Pa}$, $1\\,\\mathrm{L} = 10^{-3}\\,\\mathrm{m}^3$.</p>
+<p><strong>Lavoro tratto $A \\to B$ (isocora):</strong></p>
+<p>$$W_{AB} = 0$$</p>
+<p><strong>Lavoro tratto $B \\to C$ (isobara):</strong></p>
+<p>$$W_{BC} = P_B(V_C - V_B) = 2 \\times 101\\,325 \\times (3 - 1) \\times 10^{-3} \\approx 405\\,\\mathrm{J}$$</p>
+<p><strong>Lavoro tratto $C \\to A$ (isoterma):</strong></p>
+<p>$$W_{CA} = nRT_A\\ln\\frac{V_A}{V_C}$$</p>
+<p>La temperatura dell'isoterma si ricava dallo stato $A$: $T_A = \\frac{P_A V_A}{nR} = \\frac{4 \\times 101\\,325 \\times 10^{-3}}{1 \\times 8{,}314} \\approx 48{,}7\\,\\mathrm{K}$.</p>
+<p>$$W_{CA} = 1 \\times 8{,}314 \\times 48{,}7 \\times \\ln\\frac{1}{3} \\approx 405 \\times (-1{,}099) \\approx -445\\,\\mathrm{J}$$</p>
+<p><strong>Bilancio sul ciclo:</strong></p>
+<p>$$W_{\\text{ciclo}} = 0 + 405 + (-445) \\approx -40\\,\\mathrm{J}$$</p>
+<p>Per il Primo Principio: $\\Delta U_{\\text{ciclo}} = 0$, quindi $Q_{\\text{ciclo}} = W_{\\text{ciclo}} \\approx -40\\,\\mathrm{J}$. Il sistema ha ceduto globalmente calore all'ambiente. ✓</p>`
+        },
+        {
+            id: "s47-trasformazioni-notevoli",
+            type: "section",
+            title: "Riepilogo delle trasformazioni notevoli",
+            icon: "📋",
+            content: `<p>Riassumiamo le proprietà delle tre trasformazioni fondamentali nel piano di Clapeyron.</p>`,
+            table_compare: {
+                headers: ["Trasformazione", "Vincolo", "Lavoro W", "Aspetto nel piano (V,P)"],
+                rows: [
+                    ["Isocora", "$V = \\text{cost}$", "$W = 0$", "Retta verticale"],
+                    ["Isobara", "$P = \\text{cost}$", "$W = P(V_{\\text{fin}} - V_{\\text{in}})$", "Retta orizzontale"],
+                    ["Isoterma", "$T = \\text{cost}$", "$W = nRT\\ln(V_{\\text{fin}}/V_{\\text{in}})$", "Ramo di iperbole ($PV = \\text{cost}$)"]
+                ]
+            },
+            extra_content: `<p><strong>Dati di stato vs dati di trasformazione:</strong> se conosciamo solo lo stato iniziale e quello finale possiamo determinare $\\Delta U$, ma non possiamo determinare separatamente $Q$ e $W$: per quelli serve sapere <em>come</em> avviene la trasformazione. È proprio questa la differenza fondamentale tra una funzione di stato e una grandezza di scambio.</p>`
+        },
+        {
+            id: "s47-alert-scalari",
+            type: "alert_box",
+            title: "Trappola d'esame: grandezze scalari e vettoriali",
+            icon: "⚠️",
+            content: `<p>Le grandezze termodinamiche — temperatura $T$, calore $Q$, lavoro $W$, energia interna $U$, capacità termica $C$, calore specifico $c$ — sono <strong>tutte scalari</strong>. Scrivere $\\vec{T}$ o $\\vec{Q}$ è un <strong>errore concettuale grave</strong> che segnala una confusione tra meccanica e termodinamica. Non mettere mai una freccia sopra queste grandezze.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Come si classificano i sistemi termodinamici in base agli scambi ammessi?",
+            back: "**Isolato**: nessuno scambio di energia né materia. **Chiuso**: scambia energia ma non materia. **Aperto**: scambia energia e materia. **Adiabatico** (isolato termicamente): scambia lavoro ma non calore."
+        },
+        {
+            type: "domanda",
+            front: "In che cosa differiscono, durante gli scambi termici, i sistemi monofasici dai sistemi bifasici?",
+            back: "Nel sistema **monofasico** il calore produce variazione di *temperatura*: $Q = mc\\,\\Delta T$. Nel sistema **bifasico** il calore produce variazione di *massa di una fase*: $Q = \\lambda\\,\\Delta m$. La temperatura resta costante durante la coesistenza di fasi."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è la capacità termica $C$ e come si lega al calore specifico $c$?",
+            back: "La capacità termica è $C = mc$, dove $m$ è la massa e $c$ il calore specifico della sostanza. Rappresenta l'*inerzia termica* del sistema: quanto è difficile cambiargli la temperatura. Si misura in $\\mathrm{J/K}$, mentre $[c] = \\mathrm{J/(kg\\cdot K)}$."
+        },
+        {
+            type: "tranello",
+            front: "Perché è sbagliato dire «ieri c'erano 15°C, oggi 30°C, la temperatura è raddoppiata»?",
+            back: "I rapporti tra temperature vanno fatti in kelvin. Convertendo: $15°\\mathrm{C} \\approx 288\\,\\mathrm{K}$ e $30°\\mathrm{C} \\approx 303\\,\\mathrm{K}$. Il rapporto $303/288 \\approx 1{,}05$, ben lontano da 2. Solo le *differenze* $\\Delta T$ hanno lo stesso valore in K e °C."
+        },
+        {
+            type: "formula",
+            front: "Enuncia il Primo Principio della Termodinamica con la convenzione usata nel corso.",
+            back: "$\\Delta U = Q - W$, dove $Q \\gt 0$ se il sistema *assorbe* calore e $W \\gt 0$ se il sistema *compie* lavoro sull'ambiente. Attenzione: esiste la convenzione alternativa $\\Delta U = Q + W$ (con $W$ = lavoro *sul* sistema), usata in alcuni testi di chimica."
+        },
+        {
+            type: "domanda",
+            front: "Perché il lavoro $W$ e il calore $Q$ non sono funzioni di stato?",
+            back: "Il lavoro $W = \\int P(V)\\,dV$ è l'area sotto la curva $P(V)$ nel diagramma di Clapeyron, che dipende dal *percorso* della trasformazione. Trasformazioni diverse tra gli stessi stati danno aree diverse. Lo stesso vale per $Q$. Sono energie *scambiate*, non *contenute* nel sistema. Solo $\\Delta U$ dipende unicamente dagli stati iniziale e finale."
+        },
+        {
+            type: "domanda",
+            front: "In un ciclo termodinamico, quanto valgono $\\Delta U_{\\text{ciclo}}$, e qual è la relazione tra $Q_{\\text{ciclo}}$ e $W_{\\text{ciclo}}$?",
+            back: "$\\Delta U_{\\text{ciclo}} = 0$ perché $U$ è funzione di stato e lo stato finale coincide con l'iniziale. Dal Primo Principio: $0 = Q_{\\text{ciclo}} - W_{\\text{ciclo}}$, quindi $Q_{\\text{ciclo}} = W_{\\text{ciclo}}$."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è il calore latente di trasformazione $\\lambda$? Di cosa dipende?",
+            back: "È la costante di proporzionalità nella legge di scambio termico bifasico: $Q = \\lambda\\,\\Delta m$. Rappresenta l'«inerzia di trasformazione» della sostanza. Dipende sia dalla *sostanza* sia dalla *specifica transizione di fase*. Per l'acqua: $\\lambda_{\\text{fus}} \\approx 334\\,\\mathrm{kJ/kg}$, $\\lambda_{\\text{evap}} \\approx 2260\\,\\mathrm{kJ/kg}$."
+        },
+        {
+            type: "tranello",
+            front: "Si può definire un calore specifico $c$ per un sistema bifasico?",
+            back: "No. In un sistema bifasico $\\Delta T = 0$ con $Q \\neq 0$, quindi $C = Q/\\Delta T \\to \\infty$: la relazione $Q = C\\Delta T$ non è definita. Durante la coesistenza di fasi non ha senso parlare di capacità termica né di calore specifico. Si usa la legge $Q = \\lambda\\,\\Delta m$."
+        },
+        {
+            type: "domanda",
+            front: "Quali sono le proprietà delle trasformazioni isocora, isobara e isoterma nel diagramma di Clapeyron?",
+            back: "**Isocora**: $V = \\text{cost}$, $W = 0$, retta verticale. **Isobara**: $P = \\text{cost}$, $W = P\\Delta V$, retta orizzontale. **Isoterma**: $T = \\text{cost}$, per gas ideale $PV = \\text{cost}$ (iperbole), $W = nRT\\ln(V_{\\text{fin}}/V_{\\text{in}})$."
+        },
+        {
+            type: "tranello",
+            front: "È corretto scrivere $\\vec{Q}$ o $\\vec{T}$ in termodinamica?",
+            back: "No, è un errore concettuale grave. Tutte le grandezze termodinamiche — $T$, $Q$, $W$, $U$, $C$, $c$ — sono **scalari**. Non si mette mai una freccia sopra di esse."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
