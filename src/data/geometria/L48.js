@@ -1,0 +1,342 @@
+const LESSON = {
+    id: "L48", date: "Lezione 35 — 26 Mag 2026",
+    title: "Proiezione ortogonale su un sottospazio: proprietà e calcolo",
+    abstract: "Richiami sugli spazi euclidei e sulla proiezione ortogonale. Dimostrazione delle proprietà fondamentali della decomposizione ortogonale, linearità della proiezione come endomorfismo, spettro e diagonalizzabilità. Esempio completo di calcolo in ℝ⁴: base ortogonale, proiezione del generico vettore e matrice rappresentativa.",
+
+    sections: [
+        {
+            id: "s48-avviso-autovalutazione",
+            type: "note_box",
+            title: "Avviso sulla prova di autovalutazione",
+            icon: "📋",
+            content: `<p>È stata messa a disposizione una <strong>prova di autovalutazione</strong>, strutturata con sei quesiti (un punto ciascuno) e tre problemi (un punto ciascuno). La prova scritta avrà un foglio strutturato in modo analogo.</p>
+<p><strong>Attenzione:</strong> la prova di autovalutazione <em>non è un fac-simile</em>. Gli esercizi che si troveranno alla prova scritta potrebbero essere completamente diversi. Autovalutazione significa provare a svolgere gli esercizi da soli e vedere se ci si riesce: serve a testare la propria preparazione.</p>`
+        },
+        {
+            id: "s48-richiami-euclidei",
+            type: "section",
+            title: "Richiami sugli spazi euclidei",
+            icon: "📐",
+            content: `<p>Uno <strong>spazio euclideo</strong> è uno spazio vettoriale reale $V$ dotato di una forma bilineare simmetrica definita positiva $\\langle\\,,\\,\\rangle$. Equivalentemente, esiste una base ortonormale $\\mathcal{B}$ di $V$ tale che la matrice di Gram rispetto a $\\mathcal{B}$ è l'identità: $G_{\\mathcal{B}} = I$.</p>
+<p>L'esistenza di tale base ortonormale equivale a dire che la forma bilineare calcolata su due vettori $u, v$ non è altro che il prodotto punto delle loro coordinate:</p>
+<p>$$\\langle u, v\\rangle = x \\cdot y = x_1 y_1 + x_2 y_2 + \\cdots + x_n y_n$$</p>
+<p>In uno spazio euclideo si possono definire tre nozioni geometriche che in uno spazio vettoriale generico non avrebbero senso:</p>`,
+            subsections: [
+                {
+                    subtitle: "Norma, angolo, proiezione",
+                    content: `<ol>
+<li><p><strong>Norma</strong> (o lunghezza) di un vettore:</p>
+<p>$$\\|v\\| = \\sqrt{\\langle v, v\\rangle}$$</p>
+<p>È una definizione intrinseca alla forma bilineare simmetrica, non intervengono le coordinate.</p></li>
+<li><p><strong>Angolo</strong> tra due vettori non nulli $u, v$, definito dalla relazione:</p>
+<p>$$\\langle u, v\\rangle = \\|u\\|\\,\\|v\\|\\,\\cos\\theta, \\qquad \\theta \\in [0,\\pi]$$</p></li>
+<li><p><strong>Proiezione ortogonale</strong>, oggetto principale di questa lezione.</p></li>
+</ol>`
+                }
+            ],
+            formulas: [
+                { label: "Norma di un vettore", latex: "\\|v\\| = \\sqrt{\\langle v, v\\rangle}" },
+                { label: "Angolo tra due vettori", latex: "\\langle u, v\\rangle = \\|u\\|\\,\\|v\\|\\,\\cos\\theta" }
+            ],
+            extra_content: `<blockquote>L'angolo tra due vettori è per definizione un numero compreso tra $0$ e $\\pi$. In realtà, geometricamente, tra due vettori ci sono due angoli: uno $\\leq \\pi$ e uno $\\geq \\pi$. Noi prendiamo sempre quello in $[0,\\pi]$. In corsi successivi (analisi due, geometria due) si parlerà di angoli orientati, ma per ora a noi non interessa.</blockquote>`
+        },
+        {
+            id: "s48-proiezione-vettore",
+            type: "section",
+            title: "Proiezione ortogonale su un singolo vettore",
+            icon: "➡️",
+            content: `<p>Sia $V$ uno spazio euclideo e sia $u \\in V$ un vettore non nullo. Per ogni $v \\in V$ si definisce la <strong>proiezione ortogonale di $v$ su $u$</strong> come:</p>
+<p>$$p_u(v) := c\\,u, \\qquad c = \\frac{\\langle v, u\\rangle}{\\langle u, u\\rangle} = \\frac{\\langle v, u\\rangle}{\\|u\\|^2}$$</p>
+<p>Lo scalare $c$ si chiama <strong>coefficiente di Fourier</strong> di $v$ rispetto a $u$.</p>
+<p>Nel caso dei vettori geometrici del piano o dello spazio, questa definizione coincide con quella elementare: si prende la retta individuata da $u$, si traccia dall'estremo di $v$ la perpendicolare a tale retta; il punto di intersezione è $H$, e $p_u(v) = \\overrightarrow{OH}$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Indipendenza dal generatore",
+                    content: `<p>Se $u'$ è un altro vettore non nullo in $\\mathrm{Span}(u)$, allora $p_{u'}(v) = p_u(v)$. Geometricamente è evidente: la proiezione non dipende da $u$, ma solo dalla retta $\\mathrm{Span}(u)$. Pertanto, se $U = \\mathrm{Span}(u)$, ha senso definire:</p>
+<p>$$p_U(v) := p_u(v)$$</p>
+<p>prendendo un qualunque generatore non nullo di $U$.</p>
+<p>Fatto apparentemente banale ma cruciale per la generalizzazione: <strong>il singolo vettore $u$ costituisce una base ortogonale di $\\mathrm{Span}(u)$</strong>. Questa osservazione è la chiave per estendere la definizione a sottospazi di dimensione qualunque.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Proiezione su un vettore", latex: "p_u(v) = \\frac{\\langle v, u\\rangle}{\\langle u, u\\rangle}\\,u" }
+            ]
+        },
+        {
+            id: "s48-proiezione-sottospazio",
+            type: "section",
+            title: "Proiezione ortogonale su un sottospazio",
+            icon: "📏",
+            content: `<p>Sia $V$ uno spazio euclideo, $U$ un sottospazio di $V$ di dimensione $k \\geq 1$ (anche $U$ è uno spazio euclideo, con il prodotto scalare ristretto). Fissiamo una <strong>base ortogonale</strong> $\\{u_1, u_2, \\dots, u_k\\}$ di $U$. Per ogni $v \\in V$ si definisce:</p>
+<p>$$p_U(v) := \\sum_{i=1}^{k} p_{u_i}(v) = \\sum_{i=1}^{k} \\frac{\\langle v, u_i\\rangle}{\\langle u_i, u_i\\rangle}\\,u_i$$</p>`,
+            formulas: [
+                { label: "Proiezione su un sottospazio", latex: "p_U(v) = \\sum_{i=1}^{k} \\frac{\\langle v, u_i\\rangle}{\\langle u_i, u_i\\rangle}\\,u_i" }
+            ],
+            extra_content: `<p><strong>Punto chiave:</strong> la parola da sottolineare due volte è <em>base ortogonale</em>. La formula <strong>non funziona</strong> con una base qualunque. Inoltre, si dimostra che $p_U(v)$ <em>non dipende</em> dalla particolare base ortogonale scelta in $U$: in $U$ ci saranno tante basi ortogonali, ma il risultato non cambia.</p>`
+        },
+        {
+            id: "s48-decomposizione-ortogonale",
+            type: "section",
+            title: "Decomposizione ortogonale",
+            icon: "✂️",
+            content: `<p>Il <strong>complemento ortogonale</strong> di $U$ è il sottospazio:</p>
+<p>$$U^{\\perp} = \\{\\,v \\in V \\mid \\langle v, u\\rangle = 0 \\quad \\forall u \\in U\\,\\}$$</p>
+<p>Si era già dimostrato che vale la decomposizione:</p>
+<p>$$V = U \\oplus U^{\\perp}$$</p>
+<p>Ogni vettore $v \\in V$ si scrive in modo unico come:</p>
+<p>$$v = a + b, \\qquad a \\in U,\\; b \\in U^\\perp$$</p>
+<p>e si dimostra che $a = p_U(v)$. La componente $b$ è quindi necessariamente $b = v - p_U(v)$.</p>`,
+            formulas: [
+                { label: "Decomposizione ortogonale", latex: "v = p_U(v) + p_{U^\\perp}(v)" }
+            ],
+            extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Decomposizione ortogonale nel piano</strong></p>
+  <p><em>Nel piano 2D: una retta $U = \\mathrm{Span}(u)$ passante per l'origine, un vettore $v$ generico, la sua proiezione $p_U(v) = \\overrightarrow{OH}$ sulla retta, e il complemento ortogonale $p_{U^\\perp}(v) = \\overrightarrow{OK}$ sulla retta perpendicolare. Il parallelogramma mostra che $v = \\overrightarrow{OH} + \\overrightarrow{OK}$.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Decomposizione ortogonale in $\\mathbb{R}^3$</strong></p>
+  <p><em>Un piano $U$ passante per l'origine in $\\mathbb{R}^3$ e la retta $U^\\perp$ perpendicolare al piano. Un vettore $v$ generico, la sua proiezione $p_U(v)$ sul piano e la componente $p_{U^\\perp}(v)$ lungo la retta perpendicolare, con $v = p_U(v) + p_{U^\\perp}(v)$.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+        },
+        {
+            id: "s48-corollario-centrale",
+            type: "section",
+            title: "Proprietà della decomposizione ortogonale",
+            icon: "🔑",
+            content: `<p>Sia $U$ un sottospazio di uno spazio euclideo $V$. Valgono le seguenti proprietà fondamentali:</p>
+<ol>
+<li><p>$(U^{\\perp})^{\\perp} = U$</p></li>
+<li><p>Ogni vettore $v \\in V$ si scrive in modo unico come $v = p_U(v) + p_{U^{\\perp}}(v)$</p></li>
+<li><p>$p_U(v) = v$ se e solo se $v \\in U$</p></li>
+<li><p>$p_U(v) = 0$ se e solo se $v \\in U^{\\perp}$</p></li>
+</ol>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione del Punto 1: (U⊥)⊥ = U",
+                    content: `<p>Innanzitutto $U \\subseteq (U^{\\perp})^{\\perp}$: i vettori di $U$ sono ortogonali a tutti i vettori di $U^\\perp$ (per definizione di $U^\\perp$), quindi stanno nel complemento ortogonale di $U^{\\perp}$.</p>
+<p>Ora applichiamo la decomposizione $V = W \\oplus W^{\\perp}$ sia a $W = U$ sia a $W = U^{\\perp}$:</p>
+<p>$$V = U \\oplus U^{\\perp}, \\qquad V = U^{\\perp} \\oplus (U^{\\perp})^{\\perp}$$</p>
+<p>Poiché le somme sono dirette, per la formula di Grassmann:</p>
+<p>$$\\dim V = \\dim U + \\dim U^{\\perp} = \\dim U^{\\perp} + \\dim (U^{\\perp})^{\\perp}$$</p>
+<p>da cui $\\dim U = \\dim (U^{\\perp})^{\\perp}$. Abbiamo un sottospazio $U$ contenuto in $(U^{\\perp})^{\\perp}$ con la stessa dimensione, quindi $U = (U^{\\perp})^{\\perp}$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione del Punto 2: v = p_U(v) + p_{U⊥}(v)",
+                    content: `<p>Dalla somma diretta $V = U \\oplus U^{\\perp}$ sappiamo che ogni $v \\in V$ si scrive in modo unico come $v = a + b$ con $a \\in U$, $b \\in U^\\perp$, e che $a = p_U(v)$. Resta da provare che $b = p_{U^\\perp}(v)$.</p>
+<p>Applichiamo la decomposizione al sottospazio $U^\\perp$: si ha $V = U^{\\perp} \\oplus (U^{\\perp})^{\\perp}$, cioè per il Punto 1, $V = U^\\perp \\oplus U$. Rispetto a tale decomposizione possiamo scrivere in modo unico:</p>
+<p>$$v = a' + b', \\qquad a' = p_{U^{\\perp}}(v) \\in U^{\\perp}, \\; b' \\in (U^{\\perp})^{\\perp} = U$$</p>
+<p>Dalla prima decomposizione abbiamo $v = a + b$ con $a \\in U$ e $b \\in U^\\perp$. Dalla seconda abbiamo $v = a' + b'$ con $a' \\in U^\\perp$ e $b' \\in U$. Per l'unicità della scomposizione di $v$ come somma di un vettore in $U$ e uno in $U^\\perp$, i termini devono coincidere: $b' = a$ e $a' = b$. Quindi $b = a' = p_{U^{\\perp}}(v)$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione del Punto 3: p_U(v) = v ⟺ v ∈ U",
+                    content: `<p>Se $p_U(v) = v$, allora $v \\in U$, perché la proiezione ortogonale su $U$ è sempre un vettore di $U$ (combinazione lineare degli $u_i$).</p>
+<p>Viceversa, se $v \\in U$, possiamo scriverlo come $v = v + 0$, dove $v \\in U$ e $0 \\in U^\\perp$ (lo zero sta in ogni sottospazio). Poiché la decomposizione $V = U \\oplus U^\\perp$ è diretta, c'è un solo modo per scrivere un vettore come somma di un elemento di $U$ e uno di $U^\\perp$. Quindi la componente in $U$ deve essere $v$, ossia $p_U(v) = v$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione del Punto 4: p_U(v) = 0 ⟺ v ∈ U⊥",
+                    content: `<p>Se $p_U(v) = 0$, dalla decomposizione $v = p_U(v) + p_{U^\\perp}(v)$ otteniamo $v = p_{U^\\perp}(v) \\in U^\\perp$.</p>
+<p>Viceversa, se $v \\in U^\\perp$, per il Punto 3 applicato a $U^\\perp$ si ha $p_{U^\\perp}(v) = v$; sostituendo nella decomposizione $v = p_U(v) + p_{U^\\perp}(v) = p_U(v) + v$ segue $p_U(v) = 0$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Bicomplemento ortogonale", latex: "(U^{\\perp})^{\\perp} = U" },
+                { label: "Decomposizione completa", latex: "v = p_U(v) + p_{U^{\\perp}}(v)" }
+            ]
+        },
+        {
+            id: "s48-linearita",
+            type: "section",
+            title: "La proiezione ortogonale come operatore lineare",
+            icon: "🔄",
+            content: `<p>Consideriamo la proiezione ortogonale come funzione $p_U : V \\to V$, $v \\mapsto p_U(v)$. La proiezione ortogonale è un'applicazione lineare: questo è un fatto generale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione della linearità",
+                    content: `<p>Fissiamo una base ortogonale $\\{u_1, \\dots, u_k\\}$ di $U$. Per definizione $p_U = \\sum_{i=1}^{k} p_{u_i}$, cioè $p_U$ è somma delle proiezioni sui singoli vettori $u_i$. Poiché la somma di applicazioni lineari è lineare, basta verificare che ogni $p_u$ (con $u \\neq 0$) è lineare.</p>
+<p><strong>Additività.</strong> Per ogni $v, w \\in V$:</p>
+<p>$$p_u(v + w) = \\frac{\\langle v + w, u\\rangle}{\\langle u, u\\rangle}\\,u = \\frac{\\langle v, u\\rangle + \\langle w, u\\rangle}{\\langle u, u\\rangle}\\,u = \\frac{\\langle v, u\\rangle}{\\langle u, u\\rangle}\\,u + \\frac{\\langle w, u\\rangle}{\\langle u, u\\rangle}\\,u = p_u(v) + p_u(w)$$</p>
+<p>dove si è usata la linearità a sinistra del prodotto scalare e la distributività della moltiplicazione scalare-vettore.</p>
+<p><strong>Omogeneità.</strong> Per ogni $\\lambda \\in \\mathbb{R}$:</p>
+<p>$$p_u(\\lambda v) = \\frac{\\langle \\lambda v, u\\rangle}{\\langle u, u\\rangle}\\,u = \\frac{\\lambda\\langle v, u\\rangle}{\\langle u, u\\rangle}\\,u = \\lambda\\,p_u(v)$$</p>
+<p>Quindi $p_u$ è lineare, e per somma anche $p_U$ lo è.</p>`
+                }
+            ]
+        },
+        {
+            id: "s48-spettro-diag",
+            type: "section",
+            title: "Spettro e diagonalizzabilità della proiezione",
+            icon: "🌈",
+            content: `<p>Dalle proprietà 3 e 4 del corollario si ricavano conseguenze importanti sulla struttura algebrica di $p_U$.</p>
+<p>Sia $U$ un sottospazio di dimensione $h$ di uno spazio euclideo $V$ di dimensione $n$. Allora:</p>
+<ul>
+<li><p>$p_U(v) = v \\iff v \\in U$, quindi $U$ è l'<strong>autospazio $V_1$</strong> relativo all'autovalore $\\lambda = 1$;</p></li>
+<li><p>$p_U(v) = 0 \\iff v \\in U^\\perp$, quindi $U^\\perp$ è l'<strong>autospazio $V_0$</strong> relativo all'autovalore $\\lambda = 0$;</p></li>
+<li><p>poiché $V = U \\oplus U^\\perp$ è somma diretta degli autospazi, $p_U$ è <strong>diagonalizzabile</strong>;</p></li>
+<li><p>$\\mathrm{Im}(p_U) = U$ e $\\ker(p_U) = U^\\perp$;</p></li>
+<li><p>il polinomio caratteristico è $p_{p_U}(t) = (t-1)^h\\,t^{\\,n-h}$.</p></li>
+</ul>
+<p>Una base di autovettori si ottiene riunendo una base di $U$ con una base di $U^\\perp$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Giustificazione del polinomio caratteristico",
+                    content: `<p>Poiché $p_U$ è diagonalizzabile con autovalore $1$ di molteplicità geometrica $h = \\dim U$ (l'autospazio è $U$) e autovalore $0$ di molteplicità geometrica $n - h = \\dim U^\\perp$ (l'autospazio è $U^\\perp$), e poiché la somma delle molteplicità geometriche è $h + (n-h) = n = \\dim V$, le molteplicità algebriche coincidono con quelle geometriche. Quindi il polinomio caratteristico si legge direttamente come $(t-1)^h \\cdot t^{n-h}$.</p>`
+                },
+                {
+                    subtitle: "Matrice in base ortonormale adatta",
+                    content: `<p>Riunendo una base ortonormale di $U$ con una di $U^\\perp$ si ottiene una base ortonormale $\\mathcal{B}$ di $V$ rispetto alla quale:</p>
+<p>$$p_U(x_1, \\dots, x_h, x_{h+1}, \\dots, x_n) = (x_1, \\dots, x_h, 0, \\dots, 0)$$</p>
+<p>e la matrice rappresentativa $M^\\mathcal{B}_\\mathcal{B}(p_U)$ è diagonale, con $h$ valori $1$ e $n-h$ valori $0$ sulla diagonale principale.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Polinomio caratteristico di p_U", latex: "p_{p_U}(t) = (t-1)^h\\,t^{\\,n-h}" },
+                { label: "Autospazi", latex: "V_1 = U, \\quad V_0 = U^\\perp" }
+            ]
+        },
+        {
+            id: "s48-esempio-r4",
+            type: "section",
+            title: "Esempio completo di calcolo in ℝ⁴",
+            icon: "🧮",
+            content: `<p>Nello spazio euclideo $(\\mathbb{R}^4, \\text{prodotto punto})$ si consideri il sottospazio $U$ definito dalla rappresentazione cartesiana:</p>
+<p>$$\\begin{cases} x + y + z + t = 0 \\\\ x - y - z - t = 0 \\end{cases}$$</p>
+<p>Calcoliamo: una base ortogonale di $U$ e di $U^{\\perp}$; la proiezione ortogonale $p_U(x,y,z,t)$ del generico vettore; la matrice rappresentativa.</p>`,
+            subsections: [
+                {
+                    subtitle: "Passo 1: base di U",
+                    content: `<p>Riduciamo a scala la matrice del sistema:</p>
+<p>$$\\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 1 & -1 & -1 & -1 \\end{pmatrix} \\overset{R_2 \\to R_2 - R_1}{\\longrightarrow} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -2 & -2 & -2 \\end{pmatrix} \\overset{R_2 \\to -\\frac{1}{2}R_2}{\\longrightarrow} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 1 & 1 & 1 \\end{pmatrix}$$</p>
+<p>I pivot sono in posizione $1$ e $2$; le variabili libere sono $z$ e $t$. Dal sistema $y + z + t = 0$ e $x + y + z + t = 0$ ricaviamo $y = -z - t$ e $x = 0$. Il generico vettore di $U$ è:</p>
+<p>$$(0,\\,-z-t,\\,z,\\,t) = z(0,-1,1,0) + t(0,-1,0,1)$$</p>
+<p>Una base di $U$ è $\\{(0,-1,1,0),\\,(0,-1,0,1)\\}$.</p>`
+                },
+                {
+                    subtitle: "Passo 2: ortogonalizzazione di Gram–Schmidt",
+                    content: `<p>I due vettori non sono ortogonali:</p>
+<p>$$\\langle (0,-1,1,0), (0,-1,0,1)\\rangle = 0 + 1 + 0 + 0 = 1 \\neq 0$$</p>
+<p>Poniamo $c_1 = (0,-1,1,0)$ e calcoliamo:</p>
+<p>$$c_2 = (0,-1,0,1) - p_{c_1}(0,-1,0,1) = (0,-1,0,1) - \\frac{1}{2}(0,-1,1,0) = \\left(0,\\,-\\tfrac{1}{2},\\,-\\tfrac{1}{2},\\,1\\right)$$</p>
+<p>Moltiplicando per $-2$ (la proiezione non cambia, l'ortogonalità si mantiene) otteniamo $(0,1,1,-2)$. Quindi una <strong>base ortogonale di $U$</strong> è:</p>
+<p>$$\\{c_1, c_2'\\} = \\{(0,-1,1,0),\\,(0,1,1,-2)\\}$$</p>`
+                },
+                {
+                    subtitle: "Passo 3: base ortogonale di U⊥",
+                    content: `<p>Un vettore $(x,y,z,t)$ sta in $U^\\perp$ se e solo se è ortogonale ai generatori di $U$:</p>
+<p>$$\\begin{cases} \\langle (x,y,z,t), (0,-1,1,0)\\rangle = 0 \\\\ \\langle (x,y,z,t), (0,-1,0,1)\\rangle = 0 \\end{cases} \\;\\Longleftrightarrow\\; \\begin{cases} -y + z = 0 \\\\ -y + t = 0 \\end{cases}$$</p>
+<p>Risolvendo: $z = y$, $t = y$, mentre $x$ e $y$ sono libere. Il generico vettore di $U^\\perp$ è:</p>
+<p>$$(x,y,z,t) = x(1,0,0,0) + y(0,1,1,1)$$</p>
+<p>Una base di $U^\\perp$ è $\\{(1,0,0,0),\\,(0,1,1,1)\\}$. Questi due vettori sono già ortogonali tra loro: $\\langle (1,0,0,0),(0,1,1,1)\\rangle = 0$. Quindi è direttamente una <strong>base ortogonale di $U^\\perp$</strong>, non occorre Gram–Schmidt.</p>`
+                },
+                {
+                    subtitle: "Passo 4: proiezione del generico vettore",
+                    content: `<p>Usando la base ortogonale $\\{c_1, c_2'\\}$ di $U$:</p>
+<p>$$p_U(x,y,z,t) = \\frac{\\langle (x,y,z,t), c_1\\rangle}{\\langle c_1, c_1\\rangle}\\,c_1 + \\frac{\\langle (x,y,z,t), c_2'\\rangle}{\\langle c_2', c_2'\\rangle}\\,c_2'$$</p>
+<p>Calcoliamo i prodotti scalari:</p>
+<p>$$\\langle (x,y,z,t), c_1\\rangle = -y + z, \\qquad \\langle c_1, c_1\\rangle = 2$$</p>
+<p>$$\\langle (x,y,z,t), c_2'\\rangle = y + z - 2t, \\qquad \\langle c_2', c_2'\\rangle = 1+1+4 = 6$$</p>
+<p>Quindi:</p>
+<p>$$p_U(x,y,z,t) = \\frac{-y+z}{2}(0,-1,1,0) + \\frac{y+z-2t}{6}(0,1,1,-2)$$</p>
+<p>Sommiamo componente per componente. La prima componente è $0$. Per la seconda:</p>
+<p>$$\\frac{-y+z}{2}\\cdot(-1) + \\frac{y+z-2t}{6}\\cdot 1 = \\frac{-3(-y+z) + (y+z-2t)}{6} = \\frac{3y-3z+y+z-2t}{6} = \\frac{4y-2z-2t}{6} = \\frac{2y-z-t}{3}$$</p>
+<p>Per la terza:</p>
+<p>$$\\frac{-y+z}{2}\\cdot 1 + \\frac{y+z-2t}{6}\\cdot 1 = \\frac{3(-y+z)+(y+z-2t)}{6} = \\frac{-3y+3z+y+z-2t}{6} = \\frac{-2y+4z-2t}{6} = \\frac{-y+2z-t}{3}$$</p>
+<p>Per la quarta:</p>
+<p>$$\\frac{-y+z}{2}\\cdot 0 + \\frac{y+z-2t}{6}\\cdot(-2) = \\frac{-(y+z-2t)}{3} = \\frac{-y-z+2t}{3}$$</p>
+<p>Il risultato finale è:</p>
+<p>$$p_U(x,y,z,t) = \\left(0,\\; \\frac{2y - z - t}{3},\\; \\frac{-y + 2z - t}{3},\\; \\frac{-y - z + 2t}{3}\\right)$$</p>`
+                },
+                {
+                    subtitle: "Passo 5: matrice rappresentativa",
+                    content: `<p>Poiché $p_U$ è lineare, la sua matrice rispetto alla base canonica $\\mathcal{E}$ di $\\mathbb{R}^4$ è:</p>
+<p>$$M = M^{\\mathcal{E}}_{\\mathcal{E}}(p_U) = \\begin{pmatrix} 0 & 0 & 0 & 0 \\\\ 0 & \\frac{2}{3} & -\\frac{1}{3} & -\\frac{1}{3} \\\\ 0 & -\\frac{1}{3} & \\frac{2}{3} & -\\frac{1}{3} \\\\ 0 & -\\frac{1}{3} & -\\frac{1}{3} & \\frac{2}{3} \\end{pmatrix}$$</p>`
+                },
+                {
+                    subtitle: "Proprietà strutturali della matrice",
+                    content: `<p>Si osservano due fatti notevoli sulla matrice $M$:</p>
+<ol>
+<li><p>$M$ è <strong>simmetrica</strong>, cioè $M^T = M$. Questo è un fatto generale: la matrice di una proiezione ortogonale rispetto a una base ortonormale è sempre simmetrica. (La base canonica di $\\mathbb{R}^n$ è ortonormale rispetto al prodotto punto.)</p></li>
+<li><p><strong>$M^2 = M$ (idempotenza)</strong>. La motivazione geometrica è immediata: se proietto un vettore su $U$, ottengo un vettore di $U$; proiettarlo una seconda volta su $U$ non cambia nulla. Quindi $p_U \\circ p_U = p_U$, da cui $M^2 = M$.</p></li>
+</ol>
+<p>Si può verificare $M^2 = M$ anche con un argomento concettuale diretto: per ogni $v \\in \\mathbb{R}^4$, $p_U(v) \\in U$; ma per ogni $w \\in U$ si ha $p_U(w) = w$ (proprietà 3 del corollario); quindi $p_U(p_U(v)) = p_U(v)$, cioè $p_U \\circ p_U = p_U$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Proiezione generica in ℝ⁴", latex: "p_U(x,y,z,t) = \\left(0,\\, \\frac{2y-z-t}{3},\\, \\frac{-y+2z-t}{3},\\, \\frac{-y-z+2t}{3}\\right)" }
+            ]
+        },
+        {
+            id: "s48-alert-base-ortogonale",
+            type: "alert_box",
+            title: "La formula funziona SOLO con base ortogonale!",
+            icon: "⚠️",
+            content: `<p>La formula della proiezione su un sottospazio:</p>
+<p>$$p_U(v) = \\sum_{i=1}^{k} \\frac{\\langle v, u_i\\rangle}{\\langle u_i, u_i\\rangle}\\,u_i$$</p>
+<p><strong>richiede che $\\{u_1, \\dots, u_k\\}$ sia una base ortogonale di $U$</strong>. Se si usa una base qualunque, la formula dà un risultato sbagliato. Questo è l'errore più comune negli esercizi: dimenticarsi di ortogonalizzare prima con Gram–Schmidt.</p>`
+        },
+        {
+            id: "s48-oral-simmetria-idempotenza",
+            type: "oral_box",
+            title: "Domanda tipica: proprietà della matrice di proiezione",
+            icon: "🎤",
+            content: `<p><strong>Domanda:</strong> Quali proprietà ha la matrice di una proiezione ortogonale rispetto a una base ortonormale?</p>
+<p><strong>Risposta attesa:</strong> La matrice è <strong>simmetrica</strong> ($M^T = M$) e <strong>idempotente</strong> ($M^2 = M$). L'idempotenza discende dal fatto che proiettare due volte è come proiettare una volta: $p_U(p_U(v)) = p_U(v)$ poiché $p_U(v) \\in U$ e per ogni $w \\in U$ si ha $p_U(w) = w$.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è la proiezione ortogonale di un vettore $v$ su un vettore non nullo $u$?",
+            back: "È il vettore $p_u(v) = c\\,u$ dove $c = \\frac{\\langle v, u\\rangle}{\\langle u, u\\rangle} = \\frac{\\langle v, u\\rangle}{\\|u\\|^2}$ è il coefficiente di Fourier di $v$ rispetto a $u$."
+        },
+        {
+            type: "definizione",
+            front: "Come si definisce la proiezione ortogonale di $v$ su un sottospazio $U$ di dimensione $k$?",
+            back: "Fissata una base ortogonale $\\{u_1, \\dots, u_k\\}$ di $U$, si ha $p_U(v) = \\sum_{i=1}^{k} \\frac{\\langle v, u_i\\rangle}{\\langle u_i, u_i\\rangle}\\,u_i$. La formula richiede che la base sia ortogonale e il risultato non dipende dalla particolare base ortogonale scelta."
+        },
+        {
+            type: "domanda",
+            front: "Enuncia le quattro proprietà fondamentali della decomposizione ortogonale $V = U \\oplus U^\\perp$.",
+            back: "1) $(U^\\perp)^\\perp = U$. 2) Ogni $v \\in V$ si scrive in modo unico come $v = p_U(v) + p_{U^\\perp}(v)$. 3) $p_U(v) = v \\iff v \\in U$. 4) $p_U(v) = 0 \\iff v \\in U^\\perp$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si dimostra che $(U^\\perp)^\\perp = U$?",
+            back: "Si mostra prima che $U \\subseteq (U^\\perp)^\\perp$ (i vettori di $U$ sono ortogonali a tutti quelli di $U^\\perp$). Poi, dalle decomposizioni $V = U \\oplus U^\\perp$ e $V = U^\\perp \\oplus (U^\\perp)^\\perp$ si ricava $\\dim U = \\dim(U^\\perp)^\\perp$. Un sottospazio contenuto in un altro con la stessa dimensione coincide con esso."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si dimostra che $p_U : V \\to V$ è un'applicazione lineare?",
+            back: "Si scrive $p_U = \\sum_{i=1}^k p_{u_i}$ dove $\\{u_1, \\dots, u_k\\}$ è una base ortogonale di $U$. Basta provare che ogni $p_u$ è lineare: $p_u(v+w) = \\frac{\\langle v+w, u\\rangle}{\\langle u,u\\rangle}u = p_u(v) + p_u(w)$ per linearità del prodotto scalare, e $p_u(\\lambda v) = \\lambda\\, p_u(v)$ per omogeneità. La somma di applicazioni lineari è lineare."
+        },
+        {
+            type: "domanda",
+            front: "Quali sono gli autovalori e gli autospazi di $p_U$? Perché $p_U$ è diagonalizzabile?",
+            back: "Autovalore $\\lambda = 1$ con autospazio $V_1 = U$ (di dimensione $h = \\dim U$). Autovalore $\\lambda = 0$ con autospazio $V_0 = U^\\perp$ (di dimensione $n - h$). $p_U$ è diagonalizzabile perché $V = U \\oplus U^\\perp$ è somma diretta degli autospazi, e la somma delle dimensioni è $n$."
+        },
+        {
+            type: "tranello",
+            front: "Cosa succede se si applica la formula della proiezione su un sottospazio usando una base NON ortogonale?",
+            back: "Si ottiene un risultato sbagliato! La formula $p_U(v) = \\sum \\frac{\\langle v, u_i\\rangle}{\\langle u_i, u_i\\rangle}u_i$ funziona SOLO con una base ortogonale. Se la base data non è ortogonale, bisogna prima ortogonalizzarla con Gram–Schmidt."
+        },
+        {
+            type: "formula",
+            front: "Qual è il polinomio caratteristico della proiezione ortogonale $p_U$ dove $\\dim U = h$ e $\\dim V = n$?",
+            back: "$p_{p_U}(t) = (t-1)^h \\cdot t^{n-h}$, dove $h$ è la molteplicità dell'autovalore $1$ e $n-h$ quella dell'autovalore $0$."
+        },
+        {
+            type: "domanda",
+            front: "Nell'esempio in $\\mathbb{R}^4$, perché occorre applicare Gram–Schmidt alla base di $U$ ma non a quella di $U^\\perp$?",
+            back: "I due vettori base di $U$, $(0,-1,1,0)$ e $(0,-1,0,1)$, hanno prodotto scalare $1 \\neq 0$, quindi non sono ortogonali: serve Gram–Schmidt. I due vettori base di $U^\\perp$, $(1,0,0,0)$ e $(0,1,1,1)$, hanno prodotto scalare $0$: sono già ortogonali."
+        },
+        {
+            type: "domanda",
+            front: "Perché la matrice di $p_U$ rispetto a una base ortonormale è simmetrica e idempotente?",
+            back: "Simmetrica: è un fatto generale delle proiezioni ortogonali in base ortonormale. Idempotente ($M^2 = M$): proiettare due volte è come proiettare una volta. Formalmente: per ogni $v$, $p_U(v) \\in U$, e per ogni $w \\in U$ si ha $p_U(w) = w$, quindi $p_U(p_U(v)) = p_U(v)$."
+        }
+    ]
+};
+
