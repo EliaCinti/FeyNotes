@@ -1,0 +1,376 @@
+const LESSON = {
+    id: "L45", date: "Lezione 34 — 25 Mag 2026",
+    title: "Proiezione ortogonale e procedimento di Gram-Schmidt",
+    abstract: "Dalla proiezione di un vettore su una retta alla proiezione su un sottospazio qualsiasi: costruiamo la proiezione ortogonale, il coefficiente di Fourier, il procedimento di Gram-Schmidt per ottenere basi ortonormali, e infine definiamo il complemento ortogonale dimostrando la decomposizione V = U ⊕ U⊥.",
+
+    sections: [
+        {
+            id: "s45-esempi-preliminari",
+            type: "section",
+            title: "Esempi preliminari: angoli e prodotti scalari non standard",
+            icon: "📐",
+            content: `<p>Prima di entrare nel cuore della lezione, richiamiamo due esempi di calcolo che chiariscono come si lavora con il coseno dell'angolo e con la matrice di Gram di un prodotto scalare.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 26: calcolo di un angolo",
+                    content: `<p>Nello spazio euclideo $(\\mathbb{R}^3, \\text{prodotto punto})$, calcolare l'angolo $\\alpha$ tra i vettori $(1,0,0)$ e $(3,0,3)$.</p>
+<p><strong>Svolgimento.</strong> Sappiamo che:</p>
+<p>$$\\cos\\alpha = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\|\\vec{u}\\|\\,\\|\\vec{v}\\|} = \\frac{3}{3\\sqrt{2}} = \\frac{\\sqrt{2}}{2}$$</p>
+<p>Quindi $\\alpha = \\dfrac{\\pi}{4}$.</p>`
+                },
+                {
+                    subtitle: "Esempio 27: un prodotto scalare non standard",
+                    content: `<p>Fare un esempio di spazio euclideo $(\\mathbb{R}^2, \\langle\\, , \\,\\rangle)$ in cui i vettori canonici hanno lunghezza $1$ ma formano un angolo di $120^\\circ$.</p>
+<p><strong>Svolgimento.</strong> In questo spazio deve essere $\\langle \\vec{e}_1, \\vec{e}_1\\rangle = 1$ e $\\langle \\vec{e}_2, \\vec{e}_2\\rangle = 1$; inoltre:</p>
+<p>$$\\cos 120^\\circ = \\langle \\vec{e}_1, \\vec{e}_2\\rangle, \\qquad \\text{cioè} \\qquad \\langle \\vec{e}_1, \\vec{e}_2\\rangle = -\\tfrac{1}{2}$$</p>
+<p>Dunque la matrice di Gram rispetto alla base canonica $\\mathcal{E}$ è determinata:</p>
+<p>$$G^{\\mathcal{E}}_{\\mathcal{E}}(\\langle\\, , \\,\\rangle) = \\begin{pmatrix} 1 & -\\tfrac{1}{2} \\\\ -\\tfrac{1}{2} & 1 \\end{pmatrix}$$</p>
+<p>Tale matrice è definita positiva per il Criterio dei minori principali, quindi l'esempio richiesto è:</p>
+<p>$$\\langle \\vec{u}, \\vec{v}\\rangle = x_1 y_1 - \\tfrac{1}{2} x_1 y_2 - \\tfrac{1}{2} x_2 y_1 + x_2 y_2$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s45-proiezione-vettore",
+            type: "section",
+            title: "Proiezione ortogonale su un vettore in uno spazio euclideo",
+            icon: "📏",
+            content: `<p>Una tipica costruzione geometrica consiste nel proiettare un vettore geometrico su una retta. Sia $\\vec{v} := \\overrightarrow{OP}$ un vettore geometrico nello spazio euclideo $\\mathcal{V}_O$ dei vettori geometrici applicati in un fissato punto $O$, e sia $r$ una retta per $O$. Allora $\\overrightarrow{OP}$ ed $r$ individuano un piano (a meno che $P$ non stia su $r$), ed in tale piano esiste un'unica retta per $P$ ortogonale ad $r$. Tale retta interseca $r$ in un punto $H$, ed il vettore geometrico $\\overrightarrow{OH}$ (che giace su $r$) si dice la <strong>proiezione ortogonale</strong> di $\\overrightarrow{OP}$ su $r$ (se $P \\in r$, la proiezione ortogonale di $\\overrightarrow{OP}$ su $r$ è proprio $\\overrightarrow{OP}$).</p>
+
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Proiezione ortogonale su una retta</strong></p>
+  <p><em>Punto O origine. Retta r passante per O con direzione u. Vettore OP = v dal punto O al punto P. Retta perpendicolare da P su r che interseca r nel punto H. Vettore OH = p_u(v) evidenziato come proiezione ortogonale. Vettore HP = v − p_u(v) ortogonale ad r. Angolo retto in H marcato con il quadratino.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+
+<p>Si osservi che il vettore $\\overrightarrow{OP} - \\overrightarrow{OH}$ è ortogonale ad $r$, sicché possiamo scrivere $\\overrightarrow{OP}$ come somma di un vettore parallelo ad $r$ e di un vettore ortogonale ad $r$:</p>
+<p>$$\\overrightarrow{OP} = \\overrightarrow{OH} + (\\overrightarrow{OP} - \\overrightarrow{OH})$$</p>
+<p>Se $\\vec{u} \\in \\mathcal{V}_O$ è un qualsiasi vettore non nullo giacente su $r$, allora $\\overrightarrow{OH}$ sarà un multiplo di $\\vec{u}$, cioè sarà del tipo $\\overrightarrow{OH} = c\\,\\vec{u}$.</p>
+<p>Dalla definizione di funzione coseno segue che $c = \\dfrac{\\|\\vec{v}\\|}{\\|\\vec{u}\\|}\\cos \\widehat{\\vec{u}\\vec{v}}$. Poiché per definizione $\\cos(\\text{angolo}) = \\dfrac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\|\\vec{u}\\| \\cdot \\|\\vec{v}\\|}$, si ha:</p>
+<p>$$c = \\frac{\\|\\vec{v}\\|}{\\|\\vec{u}\\|} \\cdot \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\|\\vec{u}\\| \\cdot \\|\\vec{v}\\|} = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\|\\vec{u}\\|^2} = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}$$</p>
+<p>Questa formula consente di dare la definizione di proiezione ortogonale in un qualsiasi spazio munito di prodotto scalare.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione: proiezione ortogonale e coefficiente di Fourier",
+                    content: `<p>Sia $(V, \\langle\\, , \\,\\rangle)$ uno spazio euclideo, e siano $\\vec{u} \\neq \\vec{0}$ e $\\vec{v}$ vettori di $V$. Si definisce <strong>proiezione ortogonale di $\\vec{v}$ su $\\vec{u}$</strong> il vettore:</p>
+<p>$$p_{\\vec{u}}(\\vec{v}) := \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}\\,\\vec{u}$$</p>
+<p>Lo scalare</p>
+<p>$$c = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}$$</p>
+<p>si chiama il <strong>coefficiente di Fourier</strong> di $\\vec{v}$ rispetto al vettore $\\vec{u}$.</p>`
+                },
+                {
+                    subtitle: "Osservazione 3: proprietà della proiezione ortogonale",
+                    content: `<p><strong>(i)</strong> Per la stessa definizione di proiezione ortogonale si ha $p_{\\vec{u}}(\\vec{v}) \\in \\text{Span}(\\vec{u})$, cioè $p_{\\vec{u}}(\\vec{v}) \\parallel \\vec{u}$.</p>
+<p><strong>(ii)</strong> $p_{\\vec{u}}(\\vec{v}) = \\vec{v}$ se e solo se $\\vec{v} \\in \\text{Span}(\\vec{u})$.</p>
+<p><strong>(iii)</strong> $p_{\\vec{u}}(\\vec{v}) = \\vec{0}$ se e solo se $\\vec{v} \\perp \\vec{u}$.</p>
+<p><strong>(iv)</strong> Possiamo scrivere:</p>
+<p>$$\\vec{v} = p_{\\vec{u}}(\\vec{v}) + (\\vec{v} - p_{\\vec{u}}(\\vec{v}))$$</p>
+<p>L'interesse di tale decomposizione risiede nel fatto che $p_{\\vec{u}}(\\vec{v})$ è <strong>parallelo</strong> ad $\\vec{u}$, mentre $\\vec{v} - p_{\\vec{u}}(\\vec{v})$ è <strong>ortogonale</strong> a $\\vec{u}$. Infatti:</p>
+<p>$$\\langle \\vec{v} - p_{\\vec{u}}(\\vec{v}),\\, \\vec{u}\\rangle = \\langle \\vec{v}, \\vec{u}\\rangle - \\langle p_{\\vec{u}}(\\vec{v}), \\vec{u}\\rangle = \\langle \\vec{v}, \\vec{u}\\rangle - \\langle c\\vec{u}, \\vec{u}\\rangle = \\langle \\vec{v}, \\vec{u}\\rangle - c\\langle \\vec{u}, \\vec{u}\\rangle = 0$$</p>`
+                },
+                {
+                    subtitle: "Corollario 5: unicità della decomposizione parallela + ortogonale",
+                    content: `<p>Sia $\\vec{u}$ un vettore non nullo di uno spazio euclideo $V$. Allora ogni vettore $\\vec{v} \\in V$ si può decomporre nella somma:</p>
+<p>$$\\vec{v} = \\vec{a} + \\vec{b}$$</p>
+<p>con $\\vec{a} \\parallel \\vec{u}$ e $\\vec{b} \\perp \\vec{u}$. <strong>Tale decomposizione è unica</strong>, ed $\\vec{a} = p_{\\vec{u}}(\\vec{v})$ e $\\vec{b} = \\vec{v} - p_{\\vec{u}}(\\vec{v})$.</p>
+<p><strong>Dimostrazione.</strong> L'esistenza della decomposizione è già garantita dall'Osservazione 3(iv), che mostra esplicitamente $\\vec{a} = p_{\\vec{u}}(\\vec{v})$ e $\\vec{b} = \\vec{v} - p_{\\vec{u}}(\\vec{v})$. Resta da provare l'unicità.</p>
+<p>Supponiamo che $\\vec{v} = \\vec{a} + \\vec{b} = \\vec{a}' + \\vec{b}'$ con $\\vec{a}, \\vec{a}'$ paralleli ad $\\vec{u}$, e $\\vec{b}, \\vec{b}'$ ortogonali a $\\vec{u}$. Poniamo:</p>
+<p>$$\\vec{z} := \\vec{a} - \\vec{a}' = \\vec{b}' - \\vec{b}$$</p>
+<p>Il vettore $\\vec{z}$, in quanto uguale ad $\\vec{a} - \\vec{a}'$, è parallelo ad $\\vec{u}$. Quindi $\\vec{z} = x\\vec{u}$ per qualche $x \\in \\mathbb{R}$. Ma essendo anche $\\vec{z} = \\vec{b}' - \\vec{b}$, allora $\\vec{z}$ è anche ortogonale ad $\\vec{u}$:</p>
+<p>$$\\langle \\vec{z}, \\vec{u}\\rangle = \\langle \\vec{b}' - \\vec{b}, \\vec{u}\\rangle = \\langle \\vec{b}', \\vec{u}\\rangle - \\langle \\vec{b}, \\vec{u}\\rangle = 0 - 0 = 0$$</p>
+<p>Quindi:</p>
+<p>$$0 = \\langle \\vec{z}, \\vec{u}\\rangle = \\langle x\\vec{u}, \\vec{u}\\rangle = x\\langle \\vec{u}, \\vec{u}\\rangle$$</p>
+<p>Poiché $\\vec{u} \\neq \\vec{0}$, deduciamo che $x = 0$, quindi $\\vec{z} = \\vec{0}$, e cioè $\\vec{a} = \\vec{a}'$ e $\\vec{b} = \\vec{b}'$. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Proiezione ortogonale su un vettore", latex: "p_{\\vec{u}}(\\vec{v}) = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}\\,\\vec{u}" },
+                { label: "Coefficiente di Fourier", latex: "c = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}" },
+                { label: "Decomposizione parallela + ortogonale", latex: "\\vec{v} = p_{\\vec{u}}(\\vec{v}) + (\\vec{v} - p_{\\vec{u}}(\\vec{v}))" }
+            ]
+        },
+        {
+            id: "s45-esempi-proiezione",
+            type: "section",
+            title: "Esempi di calcolo della proiezione ortogonale",
+            icon: "🧮",
+            content: `<p>Vediamo ora una serie di esempi che illustrano il calcolo concreto della proiezione ortogonale, sia con il prodotto punto che con prodotti scalari non standard.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 28: proiezione con prodotto punto",
+                    content: `<p>Nello spazio euclideo $(\\mathbb{R}^3, \\text{prodotto punto})$ calcolare la proiezione ortogonale di $(1,1,1)$ sul vettore $(-1,0,2)$.</p>
+<p><strong>Svolgimento.</strong></p>
+<p>$$p_{(-1,0,2)}(1,1,1) = \\frac{\\langle (1,1,1), (-1,0,2)\\rangle}{\\langle (-1,0,2), (-1,0,2)\\rangle}(-1,0,2) = \\frac{-1+0+2}{1+0+4}(-1,0,2) = \\frac{1}{5}(-1,0,2)$$</p>`
+                },
+                {
+                    subtitle: "Esempio 29: decomposizione parallela + ortogonale",
+                    content: `<p>Nello spazio euclideo $(\\mathbb{R}^3, \\text{prodotto punto})$ decomporre $(1,1,1)$ nella somma di un vettore parallelo a $(-1,0,2)$ e di un vettore ortogonale a $(-1,0,2)$.</p>
+<p><strong>Svolgimento.</strong> Sappiamo che tale decomposizione è:</p>
+<p>$$(1,1,1) = p_{(-1,0,2)}(1,1,1) + \\bigl[(1,1,1) - p_{(-1,0,2)}(1,1,1)\\bigr] = \\frac{1}{5}(-1,0,2) + \\frac{1}{5}(6,5,3)$$</p>`
+                },
+                {
+                    subtitle: "Esempio 30: proiezione con prodotto scalare non standard",
+                    content: `<p>Nello spazio euclideo $(\\mathbb{R}^3, \\langle\\, , \\,\\rangle)$ definito dalla forma bilineare simmetrica:</p>
+<p>$$\\langle \\vec{u}, \\vec{v}\\rangle = \\vec{x}^T \\begin{pmatrix} 6 & -1 & 3 \\\\ -1 & 2 & 1 \\\\ 3 & 1 & 6 \\end{pmatrix} \\vec{y}$$</p>
+<p>calcolare la proiezione ortogonale di $(1,1,1)$ sul vettore $(-1,0,2)$.</p>
+<p><strong>Svolgimento.</strong> A differenza dell'esempio precedente, adesso il prodotto scalare non è il prodotto punto, ma è definito da una nuova forma bilineare. Quindi:</p>
+<p>$$p_{(-1,0,2)}(1,1,1) = \\frac{\\langle (1,1,1), (-1,0,2)\\rangle}{\\langle (-1,0,2), (-1,0,2)\\rangle}(-1,0,2) = \\frac{12}{18}(-1,0,2) = \\frac{2}{3}(-1,0,2)$$</p>
+<p>Da notare: lo <strong>stesso</strong> vettore e la <strong>stessa</strong> direzione danno un risultato diverso se cambia il prodotto scalare!</p>`
+                },
+                {
+                    subtitle: "Esempio 31: coordinate come coefficienti di Fourier",
+                    content: `<p>Sia $(V, \\langle\\, , \\,\\rangle)$ uno spazio euclideo, $\\mathcal{B} = \\{\\vec{b}_1, \\dots, \\vec{b}_n\\}$ una base ortonormale di $V$, $\\vec{v}$ un vettore in $V$, e $x_1, \\dots, x_n$ le coordinate di $\\vec{v}$ rispetto a $\\mathcal{B}$. Quindi $\\vec{v} = x_1 \\vec{b}_1 + \\cdots + x_n \\vec{b}_n$. Provare che:</p>
+<p>$$x_i \\vec{b}_i = p_{\\vec{b}_i}(\\vec{v})$$</p>
+<p>cioè che:</p>
+<p>$$\\vec{v} = p_{\\vec{b}_1}(\\vec{v}) + \\cdots + p_{\\vec{b}_n}(\\vec{v})$$</p>
+<p>In particolare la coordinata $x_i$ è il coefficiente di Fourier di $\\vec{v}$ rispetto a $\\vec{b}_i$. Inoltre, se $\\vec{v}$ è un versore (cioè un vettore di lunghezza $1$), allora $x_i = \\cos\\widehat{\\vec{b}_i \\vec{v}}$, e perciò in tal caso le coordinate di $\\vec{v}$ si chiamano anche i <strong>coseni direttori</strong> di $\\vec{v}$ rispetto alla base ortonormale $\\mathcal{B}$.</p>
+<p><strong>Svolgimento.</strong> Tenuto conto che $\\|\\vec{b}_i\\| = 1$, è sufficiente osservare che:</p>
+<p>$$\\langle \\vec{v}, \\vec{b}_i\\rangle = \\left\\langle \\sum_{j=1}^n x_j \\vec{b}_j,\\, \\vec{b}_i\\right\\rangle = \\sum_{j=1}^n x_j \\langle \\vec{b}_j, \\vec{b}_i\\rangle = x_i \\langle \\vec{b}_i, \\vec{b}_i\\rangle = x_i$$</p>
+<p>Questo esempio mostra che in uno spazio euclideo qualsiasi le <strong>coordinate rispetto a una base ortonormale si ottengono effettuando le proiezioni ortogonali lungo gli assi della base</strong>, esattamente come nel caso dei vettori geometrici.</p>`
+                }
+            ]
+        },
+        {
+            id: "s45-gram-schmidt",
+            type: "section",
+            title: "Il procedimento di ortogonalizzazione di Gram-Schmidt",
+            icon: "⚙️",
+            content: `<p>Sia $(V, \\phi)$ uno spazio pseudoeuclideo, e $\\mathcal{B}$ una base. Abbiamo visto che, grazie all'Algoritmo di Gauss-Lagrange, a partire da $\\mathcal{B}$ si può calcolare una base ortonormale di $(V, \\phi)$. Nel caso in cui lo spazio è anche <strong>euclideo</strong> esiste un altro algoritmo: il <strong>procedimento di ortogonalizzazione di Gram-Schmidt</strong>.</p>
+<p>Si può dimostrare che Gram-Schmidt produce lo stesso risultato dell'Algoritmo di Gauss-Lagrange, che però è più generale perché si può applicare anche in uno spazio non definito positivo. Nonostante ciò, il procedimento di Gram-Schmidt ha un grande interesse perché <strong>si basa sulla nozione di proiezione ortogonale su un vettore</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il caso di una base con due vettori",
+                    content: `<p>Sia $\\mathcal{B} = \\{\\vec{b}_1, \\vec{b}_2\\}$ una base per uno spazio euclideo $(V, \\langle\\, , \\,\\rangle)$ di dimensione $2$. Poniamo:</p>
+<p>$$\\vec{c}_1 := \\vec{b}_1$$</p>
+<p>Poi, dal Corollario 5, il vettore:</p>
+<p>$$\\vec{c}_2 := \\vec{b}_2 - p_{\\vec{c}_1}(\\vec{b}_2)$$</p>
+<p>è ortogonale a $\\vec{c}_1$. Dunque il sistema $\\vec{c}_1, \\vec{c}_2$ forma una <strong>base ortogonale</strong> per $V$.</p>
+<p>Se si vuole una base ortonormale occorre normalizzare i vettori ottenuti:</p>
+<p>$$\\frac{\\vec{c}_1}{\\|\\vec{c}_1\\|}, \\quad \\frac{\\vec{c}_2}{\\|\\vec{c}_2\\|}$$</p>`
+                },
+                {
+                    subtitle: "Il caso generale",
+                    content: `<p>Nel caso generale di dimensione $n \\geq 2$, si parte da una base qualsiasi $\\mathcal{B} = \\{\\vec{b}_1, \\dots, \\vec{b}_n\\}$, e si costruiscono i vettori $\\vec{c}_1, \\vec{c}_2, \\dots, \\vec{c}_n$ nel seguente modo:</p>
+<p>$$\\vec{c}_1 := \\vec{b}_1$$</p>
+<p>$$\\vec{c}_2 := \\vec{b}_2 - p_{\\vec{c}_1}(\\vec{b}_2)$$</p>
+<p>$$\\vec{c}_3 := \\vec{b}_3 - p_{\\vec{c}_1}(\\vec{b}_3) - p_{\\vec{c}_2}(\\vec{b}_3)$$</p>
+<p>$$\\vdots$$</p>
+<p>$$\\vec{c}_n := \\vec{b}_n - p_{\\vec{c}_1}(\\vec{b}_n) - p_{\\vec{c}_2}(\\vec{b}_n) - \\cdots - p_{\\vec{c}_{n-1}}(\\vec{b}_n)$$</p>
+<p>I vettori così costruiti formano una <strong>base ortogonale</strong> di $V$. L'idea è che $\\vec{c}_k$ è ortogonale a $\\vec{c}_1, \\dots, \\vec{c}_{k-1}$ perché sottraiamo esattamente le componenti lungo ciascuna di quelle direzioni; e poiché le $\\vec{c}_i$ sono già mutuamente ortogonali, sottrarre la proiezione su $\\vec{c}_i$ non altera l'ortogonalità con le $\\vec{c}_j$ precedenti ($j \\neq i$).</p>
+<p>Normalizzando si ottiene una base ortonormale:</p>
+<p>$$\\frac{\\vec{c}_1}{\\|\\vec{c}_1\\|}, \\;\\; \\frac{\\vec{c}_2}{\\|\\vec{c}_2\\|}, \\;\\; \\dots, \\;\\; \\frac{\\vec{c}_n}{\\|\\vec{c}_n\\|}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Gram-Schmidt (passo k-esimo)", latex: "\\vec{c}_k = \\vec{b}_k - \\sum_{i=1}^{k-1} p_{\\vec{c}_i}(\\vec{b}_k)" },
+                { label: "Normalizzazione", latex: "\\hat{c}_k = \\frac{\\vec{c}_k}{\\|\\vec{c}_k\\|}" }
+            ]
+        },
+        {
+            id: "s45-esempi-gram-schmidt",
+            type: "section",
+            title: "Esempi di Gram-Schmidt",
+            icon: "✏️",
+            content: `<p>Vediamo il procedimento di Gram-Schmidt applicato a casi concreti.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 32: base ortonormale di un sottospazio",
+                    content: `<p>Nello spazio euclideo $(\\mathbb{R}^3, \\text{prodotto punto})$ si consideri il sottospazio $U$ generato dai vettori $(1,1,0)$, $(0,1,-1)$. Calcolare una base ortonormale di $U$.</p>
+<p><strong>Osservazione preliminare:</strong> un sottospazio di uno spazio euclideo eredita in modo naturale una struttura di spazio euclideo (la forma ristretta su $U$ è ancora definita positiva). Quindi $U$ ammette una base ortonormale.</p>
+<p><strong>Svolgimento.</strong> Applichiamo Gram-Schmidt alla base $\\{(1,1,0), (0,1,-1)\\}$.</p>
+<p>Poniamo $\\vec{c}_1 = (1,1,0)$. Poi calcoliamo:</p>
+<p>$$\\langle (0,1,-1), (1,1,0)\\rangle = 0 + 1 + 0 = 1$$</p>
+<p>$$\\|(1,1,0)\\|^2 = \\langle (1,1,0), (1,1,0)\\rangle = 1 + 1 + 0 = 2$$</p>
+<p>Quindi il coefficiente di Fourier è $\\frac{1}{2}$, e la proiezione vale:</p>
+<p>$$p_{(1,1,0)}(0,1,-1) = \\frac{1}{2}(1,1,0) = \\left(\\frac{1}{2}, \\frac{1}{2}, 0\\right)$$</p>
+<p>Dunque:</p>
+<p>$$\\vec{c}_2 = (0,1,-1) - \\left(\\frac{1}{2}, \\frac{1}{2}, 0\\right) = \\left(-\\frac{1}{2}, \\frac{1}{2}, -1\\right) = \\frac{1}{2}(-1,1,-2)$$</p>
+<p>Una base ortogonale per $U$ è data dai vettori $(1,1,0)$ e $\\frac{1}{2}(-1,1,-2)$. Normalizzando:</p>
+<p>$$\\frac{1}{\\sqrt{2}}(1,1,0), \\quad \\frac{1}{\\sqrt{6}}(-1,1,-2)$$</p>
+<p><strong>Metodo alternativo: Gauss-Lagrange.</strong> Calcoliamo la matrice di Gram del prodotto punto ristretto su $U$ rispetto alla base $\\{(1,1,0), (0,1,-1)\\}$:</p>
+<p>$$G = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$$</p>
+<p>Applichiamo l'Algoritmo di Gauss-Lagrange alla matrice:</p>
+<p>$$\\begin{pmatrix} 2 & 1 & 1 & 0 \\\\ 1 & 2 & 0 & 1 \\end{pmatrix}$$</p>
+<p>Eseguendo le operazioni elementari $e_{21}(-\\frac{1}{2})$ ed $e^{21}(-\\frac{1}{2})$ otteniamo:</p>
+<p>$$\\begin{pmatrix} 2 & 0 & 1 & 0 \\\\ 0 & \\frac{3}{2} & -\\frac{1}{2} & 1 \\end{pmatrix}$$</p>
+<p>Quindi i vettori di $U$ con coordinate $(1,0)^T$ e $(-\\frac{1}{2}, 1)^T$ rispetto alla base data formano una base ortogonale per $U$. Tali vettori sono esattamente $\\vec{c}_1$ e $\\vec{c}_2$ calcolati prima.</p>`
+                },
+                {
+                    subtitle: "Esempio 33: completare a base ortogonale",
+                    content: `<p>Nello spazio euclideo $(\\mathbb{R}^3, \\text{prodotto punto})$ si considerino i vettori ortogonali $(1,0,1)$ e $(0,1,0)$. Completare il sistema a base ortogonale di $(\\mathbb{R}^3, \\text{prodotto punto})$.</p>
+<p><strong>Svolgimento.</strong> Aggiungendo il vettore $(0,0,1)$ otteniamo una base di $\\mathbb{R}^3$ che non è ortogonale:</p>
+<p>$$(1,0,1), \\; (0,1,0), \\; (0,0,1)$$</p>
+<p>Applichiamo il procedimento di Gram-Schmidt. I primi due vettori sono già ortogonali, quindi $\\vec{c}_1 = (1,0,1)$ e $\\vec{c}_2 = (0,1,0)$. Calcoliamo $\\vec{c}_3$:</p>
+<p>$$p_{\\vec{c}_1}(0,0,1) = \\frac{\\langle (0,0,1), (1,0,1)\\rangle}{\\langle (1,0,1), (1,0,1)\\rangle}(1,0,1) = \\frac{1}{2}(1,0,1) = \\left(\\frac{1}{2}, 0, \\frac{1}{2}\\right)$$</p>
+<p>$$p_{\\vec{c}_2}(0,0,1) = \\frac{\\langle (0,0,1), (0,1,0)\\rangle}{\\langle (0,1,0), (0,1,0)\\rangle}(0,1,0) = \\frac{0}{1}(0,1,0) = (0,0,0)$$</p>
+<p>Quindi:</p>
+<p>$$\\vec{c}_3 = (0,0,1) - \\left(\\frac{1}{2}, 0, \\frac{1}{2}\\right) - (0,0,0) = \\left(-\\frac{1}{2}, 0, \\frac{1}{2}\\right)$$</p>
+<p>che è proporzionale a $(-1,0,1)$. La base ortogonale cercata è:</p>
+<p>$$(1,0,1), \\; (0,1,0), \\; (-1,0,1)$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s45-proiezione-sottospazio",
+            type: "section",
+            title: "Proiezione ortogonale su un sottospazio",
+            icon: "📐",
+            content: `<p>Abbiamo imparato a proiettare un vettore $\\vec{v}$ su un vettore non nullo $\\vec{u}$. Ora estendiamo la definizione al caso di un sottospazio di dimensione qualsiasi.</p>
+<p>Prima osserviamo un fatto importante: se $\\vec{u}' = a\\vec{u}$ con $a \\neq 0$, allora la proiezione di $\\vec{v}$ su $\\vec{u}'$ coincide con la proiezione su $\\vec{u}$:</p>
+<p>$$p_{\\vec{u}'}(\\vec{v}) = \\frac{\\langle a\\vec{u}, \\vec{v}\\rangle}{\\langle a\\vec{u}, a\\vec{u}\\rangle}(a\\vec{u}) = \\frac{a\\langle \\vec{u}, \\vec{v}\\rangle}{a^2\\langle \\vec{u}, \\vec{u}\\rangle}(a\\vec{u}) = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}\\vec{u} = p_{\\vec{u}}(\\vec{v})$$</p>
+<p>Ciò rende ben posta la seguente definizione.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione: proiezione su un sottospazio di dimensione 1",
+                    content: `<p>Sia $(V, \\langle\\, , \\,\\rangle)$ uno spazio euclideo, ed $U$ un sottospazio di $V$ di dimensione $1$. Sia $\\vec{u}$ un vettore non nullo di $U$ (cioè una base di $U$, che in questo caso è anche una base ortogonale di $U$). Sia poi $\\vec{v}$ un qualunque vettore di $V$. Allora si definisce <strong>proiezione ortogonale di $\\vec{v}$ su $U$</strong>:</p>
+<p>$$p_U(\\vec{v}) := p_{\\vec{u}}(\\vec{v})$$</p>`
+                },
+                {
+                    subtitle: "Definizione: proiezione su un sottospazio di dimensione qualunque",
+                    content: `<p>Più in generale, sia $U$ un sottospazio di $V$ di dimensione qualunque $h \\geq 1$. Si fissa una <strong>base ortogonale</strong> di $U$, diciamo $\\{\\vec{u}_1, \\dots, \\vec{u}_h\\}$, e si pone per definizione:</p>
+<p>$$p_U(\\vec{v}) := \\sum_{i=1}^{h} p_{\\vec{u}_i}(\\vec{v})$$</p>
+<p>Proveremo tra poco che tale definizione è ben posta, cioè che il vettore $p_U(\\vec{v})$ non dipende dalla base ortogonale di $U$ scelta.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Proiezione ortogonale su un sottospazio", latex: "p_U(\\vec{v}) = \\sum_{i=1}^{h} p_{\\vec{u}_i}(\\vec{v})" },
+                { label: "Invarianza per riscalamento", latex: "p_{a\\vec{u}}(\\vec{v}) = p_{\\vec{u}}(\\vec{v}) \\quad (a \\neq 0)" }
+            ]
+        },
+        {
+            id: "s45-complemento-ortogonale",
+            type: "section",
+            title: "Complemento ortogonale e Proposizione 3",
+            icon: "⊥",
+            content: `<p>Per dimostrare che la proiezione su un sottospazio è ben definita, abbiamo bisogno di una nozione preliminare fondamentale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione: complemento ortogonale",
+                    content: `<p>Dato un sottospazio $U$ di $V$, si definisce il <strong>complemento ortogonale</strong> $U^\\perp$ di $U$ in $V$ come:</p>
+<p>$$U^\\perp := \\{\\vec{v} \\in V \\,:\\, \\langle \\vec{v}, \\vec{u}\\rangle = 0 \\text{ per ogni } \\vec{u} \\in U\\}$$</p>`
+                },
+                {
+                    subtitle: "Proposizione 3: proprietà del complemento ortogonale",
+                    content: `<p>Valgono le seguenti proprietà:</p>
+<p><strong>1)</strong> $U^\\perp$ è un sottospazio di $V$.</p>
+<p><strong>2)</strong> Se $U = \\text{Span}(\\vec{u}_1, \\dots, \\vec{u}_h)$ allora $U^\\perp = \\{\\vec{v} \\in V : \\langle \\vec{v}, \\vec{u}_i\\rangle = 0 \\text{ per ogni } i = 1, \\dots, h\\}$.</p>
+<p><strong>3)</strong> $V = U \\oplus U^\\perp$.</p>
+<p><strong>4)</strong> La definizione di proiezione ortogonale su $U$ non dipende dalla base ortogonale di $U$ scelta.</p>
+<p>In particolare, dal punto 3), poiché $V = U \\oplus U^\\perp$, si ha $\\dim(U^\\perp) = \\dim(V) - \\dim(U)$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione della Proposizione 3",
+                    content: `<p><strong>Punto 1):</strong> Osserviamo che $\\vec{0} \\in U^\\perp$ in quanto $\\langle \\vec{0}, \\vec{u}\\rangle = 0$ per ogni $\\vec{u} \\in V$. Poi siano $\\vec{v}$ e $\\vec{w}$ vettori di $U^\\perp$. Per ogni $\\vec{u} \\in U$:</p>
+<p>$$\\langle \\vec{v} + \\vec{w}, \\vec{u}\\rangle = \\langle \\vec{v}, \\vec{u}\\rangle + \\langle \\vec{w}, \\vec{u}\\rangle = 0 + 0 = 0$$</p>
+<p>Ciò prova la stabilità rispetto all'addizione. Analogamente:</p>
+<p>$$\\langle c\\vec{v}, \\vec{u}\\rangle = c\\langle \\vec{v}, \\vec{u}\\rangle = c \\cdot 0 = 0$$</p>
+<p>per ogni $c \\in \\mathbb{R}$. Quindi $U^\\perp$ è un sottospazio di $V$.</p>
+
+<p><strong>Punto 2):</strong> Basta provare che se $\\langle \\vec{v}, \\vec{u}_i\\rangle = 0$ per ogni $i$, allora $\\langle \\vec{v}, \\vec{u}\\rangle = 0$ per ogni $\\vec{u} \\in U$. Poiché i vettori $\\vec{u}_i$ generano $U$, allora $\\vec{u} = a_1 \\vec{u}_1 + \\cdots + a_h \\vec{u}_h$ per opportuni $a_i \\in \\mathbb{R}$. Per cui:</p>
+<p>$$\\langle \\vec{v}, \\vec{u}\\rangle = \\langle \\vec{v}, a_1\\vec{u}_1 + \\cdots + a_h \\vec{u}_h\\rangle = a_1 \\langle \\vec{v}, \\vec{u}_1\\rangle + \\cdots + a_h \\langle \\vec{v}, \\vec{u}_h\\rangle = 0$$</p>
+
+<p><strong>Punto 3):</strong> Fissiamo una base ortogonale di $U$, diciamo $\\mathcal{B} = \\{\\vec{u}_1, \\dots, \\vec{u}_h\\}$. Sia $\\vec{v}$ un qualunque vettore di $V$. Possiamo scrivere:</p>
+<p>$$\\vec{v} = p_U(\\vec{v}) + (\\vec{v} - p_U(\\vec{v})) \\qquad (*)$$</p>
+<p>Proviamo che $\\vec{v} - p_U(\\vec{v}) \\in U^\\perp$. Per la proprietà 2), basta provare che $\\langle \\vec{v} - p_U(\\vec{v}), \\vec{u}_i\\rangle = 0$ per ogni $i = 1, \\dots, h$. Calcoliamo:</p>
+<p>$$\\langle \\vec{v} - p_U(\\vec{v}), \\vec{u}_i\\rangle = \\langle \\vec{v}, \\vec{u}_i\\rangle - \\sum_{j=1}^{h} \\langle p_{\\vec{u}_j}(\\vec{v}), \\vec{u}_i\\rangle$$</p>
+<p>Ora $p_{\\vec{u}_j}(\\vec{v}) = c_j \\vec{u}_j$ (è parallelo a $\\vec{u}_j$). Quindi se $j \\neq i$:</p>
+<p>$$\\langle p_{\\vec{u}_j}(\\vec{v}), \\vec{u}_i\\rangle = c_j \\langle \\vec{u}_j, \\vec{u}_i\\rangle = 0$$</p>
+<p>perché $\\mathcal{B}$ è ortogonale. Riprendendo il calcolo:</p>
+<p>$$\\langle \\vec{v} - p_U(\\vec{v}), \\vec{u}_i\\rangle = \\langle \\vec{v}, \\vec{u}_i\\rangle - \\langle p_{\\vec{u}_i}(\\vec{v}), \\vec{u}_i\\rangle = \\langle \\vec{v} - p_{\\vec{u}_i}(\\vec{v}), \\vec{u}_i\\rangle = 0$$</p>
+<p>per il Corollario 5. Questo prova che $\\vec{v} - p_U(\\vec{v}) \\in U^\\perp$. D'altra parte, per definizione $p_U(\\vec{v}) \\in U$. Abbiamo dimostrato che $V = U + U^\\perp$.</p>
+<p>Per concludere, dobbiamo provare che la somma è diretta: $U \\cap U^\\perp = \\{\\vec{0}\\}$. Sia $\\vec{u} \\in U \\cap U^\\perp$. Allora $\\langle \\vec{u}, \\vec{u}\\rangle = 0$, e poiché lo spazio è euclideo, $\\vec{u} = \\vec{0}$. $\\square$</p>
+
+<p><strong>Punto 4):</strong> Siano $\\vec{v} \\in V$, e $\\mathcal{B}, \\mathcal{B}'$ due basi ortogonali per $U$. Denotiamo con $\\vec{a}$ la proiezione definita a partire da $\\mathcal{B}$, e con $\\vec{a}'$ quella da $\\mathcal{B}'$. Per definizione $\\vec{a}, \\vec{a}' \\in U$, e abbiamo:</p>
+<p>$$\\vec{v} = \\vec{a} + (\\vec{v} - \\vec{a}) = \\vec{a}' + (\\vec{v} - \\vec{a}')$$</p>
+<p>I vettori $\\vec{v} - \\vec{a}$ e $\\vec{v} - \\vec{a}'$ stanno in $U^\\perp$ (come dimostrato nel punto 3). Il vettore:</p>
+<p>$$\\vec{z} := \\vec{a} - \\vec{a}' = (\\vec{v} - \\vec{a}') - (\\vec{v} - \\vec{a})$$</p>
+<p>sta in $U \\cap U^\\perp$, per cui $\\vec{z} = \\vec{0}$. Quindi $\\vec{a} = \\vec{a}'$. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Complemento ortogonale", latex: "U^\\perp = \\{\\vec{v} \\in V : \\langle \\vec{v}, \\vec{u}\\rangle = 0 \\;\\forall\\, \\vec{u} \\in U\\}" },
+                { label: "Decomposizione in somma diretta", latex: "V = U \\oplus U^\\perp" },
+                { label: "Conseguenza dimensionale", latex: "\\dim(U^\\perp) = \\dim(V) - \\dim(U)" }
+            ]
+        },
+        {
+            id: "s45-parallelo-ortogonale",
+            type: "note_box",
+            title: "Vettore parallelo e ortogonale a un sottospazio",
+            icon: "📝",
+            content: `<p>Sia $U$ un sottospazio di uno spazio euclideo $V$, e $\\vec{v} \\in V$ un vettore:</p>
+<p>• $\\vec{v}$ è <strong>parallelo</strong> ad $U$ se $\\vec{v} \\in U$, e si scrive $\\vec{v} \\parallel U$.</p>
+<p>• $\\vec{v}$ è <strong>ortogonale</strong> ad $U$ se $\\vec{v} \\in U^\\perp$, e si scrive $\\vec{v} \\perp U$.</p>
+<p>La prossima lezione comincerà con il Corollario 6 a pagina 37 delle dispense.</p>`
+        },
+        {
+            id: "s45-riepilogo-confronto",
+            type: "section",
+            title: "Riepilogo: proiezione su un vettore vs su un sottospazio",
+            icon: "📊",
+            content: `<p>Riassumiamo le due nozioni di proiezione ortogonale introdotte in questa lezione.</p>`,
+            table_compare: {
+                headers: ["", "Proiezione su un vettore u", "Proiezione su un sottospazio U"],
+                rows: [
+                    ["Formula", "$p_{\\vec{u}}(\\vec{v}) = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}\\vec{u}$", "$p_U(\\vec{v}) = \\sum_{i=1}^{h} p_{\\vec{u}_i}(\\vec{v})$"],
+                    ["Requisito", "$\\vec{u} \\neq \\vec{0}$", "Base ortogonale $\\{\\vec{u}_1, \\dots, \\vec{u}_h\\}$ di $U$"],
+                    ["Risultato ∈", "$\\text{Span}(\\vec{u})$", "$U$"],
+                    ["Residuo $\\vec{v} - p(\\vec{v})$", "$\\perp \\vec{u}$", "$\\in U^\\perp$"],
+                    ["Unicità", "Corollario 5", "Proposizione 3 (punto 4)"],
+                    ["Ben posta?", "Invariante per riscalamento di $\\vec{u}$", "Indipendente dalla base ortogonale di $U$"]
+                ]
+            }
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Definisci la proiezione ortogonale di un vettore v su un vettore non nullo u in uno spazio euclideo.",
+            back: "La proiezione ortogonale di $\\vec{v}$ su $\\vec{u} \\neq \\vec{0}$ è il vettore $p_{\\vec{u}}(\\vec{v}) := \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}\\,\\vec{u}$. Lo scalare $c = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}$ si chiama coefficiente di Fourier di $\\vec{v}$ rispetto a $\\vec{u}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che v − p_u(v) è ortogonale a u.",
+            back: "Calcoliamo direttamente: $\\langle \\vec{v} - p_{\\vec{u}}(\\vec{v}),\\, \\vec{u}\\rangle = \\langle \\vec{v}, \\vec{u}\\rangle - \\langle c\\vec{u}, \\vec{u}\\rangle = \\langle \\vec{v}, \\vec{u}\\rangle - c\\langle \\vec{u}, \\vec{u}\\rangle$. Sostituendo $c = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}$, il secondo termine diventa $\\langle \\vec{v}, \\vec{u}\\rangle$, e si ottiene $0$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Enuncia e dimostra l'unicità della decomposizione di v in componente parallela e ortogonale a u (Corollario 5).",
+            back: "Ogni $\\vec{v}$ si scrive come $\\vec{v} = \\vec{a} + \\vec{b}$ con $\\vec{a} \\parallel \\vec{u}$ e $\\vec{b} \\perp \\vec{u}$, con $\\vec{a} = p_{\\vec{u}}(\\vec{v})$. L'unicità si dimostra così: se $\\vec{v} = \\vec{a} + \\vec{b} = \\vec{a}' + \\vec{b}'$, ponendo $\\vec{z} = \\vec{a} - \\vec{a}' = \\vec{b}' - \\vec{b}$, allora $\\vec{z}$ è sia parallelo che ortogonale a $\\vec{u}$. Scrivendo $\\vec{z} = x\\vec{u}$, si ha $0 = \\langle \\vec{z}, \\vec{u}\\rangle = x\\langle \\vec{u}, \\vec{u}\\rangle$, da cui $x = 0$ (perché $\\vec{u} \\neq \\vec{0}$)."
+        },
+        {
+            type: "formula",
+            front: "Come si calcola la proiezione ortogonale di v su un sottospazio U di dimensione h?",
+            back: "Si fissa una base ortogonale $\\{\\vec{u}_1, \\dots, \\vec{u}_h\\}$ di $U$, e si pone $p_U(\\vec{v}) = \\sum_{i=1}^{h} p_{\\vec{u}_i}(\\vec{v}) = \\sum_{i=1}^{h} \\frac{\\langle \\vec{u}_i, \\vec{v}\\rangle}{\\langle \\vec{u}_i, \\vec{u}_i\\rangle}\\vec{u}_i$. La definizione è ben posta: non dipende dalla base ortogonale scelta."
+        },
+        {
+            type: "domanda",
+            front: "Descrivi il procedimento di ortogonalizzazione di Gram-Schmidt nel caso generale.",
+            back: "Data una base $\\{\\vec{b}_1, \\dots, \\vec{b}_n\\}$, si costruiscono: $\\vec{c}_1 = \\vec{b}_1$, e per $k \\geq 2$: $\\vec{c}_k = \\vec{b}_k - \\sum_{i=1}^{k-1} p_{\\vec{c}_i}(\\vec{b}_k)$. A ogni passo si sottrae da $\\vec{b}_k$ le sue proiezioni sulle direzioni ortogonali già costruite. I vettori $\\vec{c}_1, \\dots, \\vec{c}_n$ formano una base ortogonale. Normalizzando si ottiene una base ortonormale."
+        },
+        {
+            type: "definizione",
+            front: "Definisci il complemento ortogonale U⊥ di un sottospazio U.",
+            back: "$U^\\perp = \\{\\vec{v} \\in V : \\langle \\vec{v}, \\vec{u}\\rangle = 0 \\text{ per ogni } \\vec{u} \\in U\\}$. È un sottospazio di $V$. Se $U = \\text{Span}(\\vec{u}_1, \\dots, \\vec{u}_h)$, basta verificare l'ortogonalità con i generatori: $U^\\perp = \\{\\vec{v} : \\langle \\vec{v}, \\vec{u}_i\\rangle = 0 \\;\\forall\\, i\\}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che V = U ⊕ U⊥ per uno spazio euclideo V e un sottospazio U.",
+            back: "Si fissa una base ortogonale $\\{\\vec{u}_1, \\dots, \\vec{u}_h\\}$ di $U$. Ogni $\\vec{v} \\in V$ si scrive $\\vec{v} = p_U(\\vec{v}) + (\\vec{v} - p_U(\\vec{v}))$ con $p_U(\\vec{v}) \\in U$. Si dimostra che $\\vec{v} - p_U(\\vec{v}) \\in U^\\perp$ calcolando $\\langle \\vec{v} - p_U(\\vec{v}), \\vec{u}_i\\rangle$: i termini con $j \\neq i$ si annullano per ortogonalità della base, e il termine con $j = i$ si annulla per il Corollario 5. Questo dà $V = U + U^\\perp$. La somma è diretta perché se $\\vec{u} \\in U \\cap U^\\perp$ allora $\\langle \\vec{u}, \\vec{u}\\rangle = 0$, che nello spazio euclideo implica $\\vec{u} = \\vec{0}$."
+        },
+        {
+            type: "tranello",
+            front: "Perché la proiezione ortogonale su un vettore cambia se si cambia il prodotto scalare, anche se il vettore e la direzione restano gli stessi?",
+            back: "La formula $p_{\\vec{u}}(\\vec{v}) = \\frac{\\langle \\vec{u}, \\vec{v}\\rangle}{\\langle \\vec{u}, \\vec{u}\\rangle}\\vec{u}$ dipende dal prodotto scalare sia al numeratore che al denominatore. Come visto confrontando gli Esempi 28 e 30: con prodotto punto $p_{(-1,0,2)}(1,1,1) = \\frac{1}{5}(-1,0,2)$, mentre con un prodotto scalare diverso si ottiene $\\frac{2}{3}(-1,0,2)$."
+        },
+        {
+            type: "domanda",
+            front: "In che senso le coordinate rispetto a una base ortonormale sono coefficienti di Fourier?",
+            back: "Se $\\mathcal{B} = \\{\\vec{b}_1, \\dots, \\vec{b}_n\\}$ è una base ortonormale e $\\vec{v} = x_1\\vec{b}_1 + \\cdots + x_n\\vec{b}_n$, allora $x_i = \\langle \\vec{v}, \\vec{b}_i\\rangle$ (coefficiente di Fourier) e $x_i\\vec{b}_i = p_{\\vec{b}_i}(\\vec{v})$. Quindi $\\vec{v} = \\sum p_{\\vec{b}_i}(\\vec{v})$: le coordinate si ottengono proiettando sugli assi. Se $\\vec{v}$ è un versore, $x_i = \\cos\\widehat{\\vec{b}_i\\vec{v}}$ (coseni direttori)."
+        },
+        {
+            type: "tranello",
+            front: "Nella definizione di proiezione su un sottospazio U, perché è essenziale che la base di U sia ortogonale?",
+            back: "La formula $p_U(\\vec{v}) = \\sum p_{\\vec{u}_i}(\\vec{v})$ funziona solo con base ortogonale. Se la base non fosse ortogonale, le proiezioni sui singoli vettori non sarebbero 'indipendenti': proiettare su $\\vec{u}_j$ aggiungerebbe componenti lungo $\\vec{u}_i$ (per $i \\neq j$), e la somma non darebbe la vera
+
