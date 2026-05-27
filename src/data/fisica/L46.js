@@ -1,0 +1,258 @@
+const LESSON = {
+    id: "L46", date: "Lezione 33 — 25 Mag 2026",
+    title: "Il lavoro in termodinamica",
+    abstract: "Dal primo principio della termodinamica alla riscrittura del lavoro meccanico in variabili termodinamiche: derivazione di δL = p dV, integrale per trasformazioni finite e convenzione dei segni.",
+
+    sections: [
+        {
+            id: "s46-richiamo-primo-principio",
+            type: "section",
+            title: "Richiamo del Primo Principio della Termodinamica",
+            icon: "🔄",
+            content: `<p>Riprendiamo il filo del discorso dalla lezione precedente, in cui avevamo enunciato il <strong>primo principio della termodinamica</strong>. Il contenuto fisico di questo principio si può riassumere così: la variazione di contenuto energetico che un sistema termodinamico subisce mentre interagisce con l'ambiente circostante è data dal bilancio del calore scambiato e del lavoro scambiato.</p>
+<p>In forma finita scriviamo:</p>
+<p>$$\\Delta U = Q - L$$</p>
+<p>dove $\\Delta U$ è la variazione di energia interna del sistema, $Q$ il calore scambiato e $L$ il lavoro scambiato.</p>`,
+            subsections: [
+                {
+                    subtitle: "Stesso ΔU, infinite trasformazioni",
+                    content: `<p>Scambiando calore e lavoro in tanti modi diversi, cioè imponendo al sistema trasformazioni di tipo diverso, si può arrivare allo stesso risultato finale, cioè produrre la stessa variazione di contenuto energetico interno. La combinazione $Q - L$ non dipende dal cammino seguito, mentre i singoli contributi $Q$ ed $L$ dipendono dalla trasformazione seguita.</p>
+<p>In altre parole, la variazione di energia interna è semplicemente la differenza tra il contenuto energetico nello stato finale e quello nello stato iniziale:</p>
+<p>$$\\Delta U = U_f - U_i$$</p>
+<p>mentre il calore scambiato e il lavoro scambiato durante la trasformazione dipendono dal tipo di trasformazione seguita.</p>`
+                },
+                {
+                    subtitle: "Funzione di stato",
+                    content: `<p>Una grandezza termodinamica si dice <strong>funzione di stato</strong> se il suo valore dipende solo dallo stato macroscopico del sistema, e non dal cammino seguito per raggiungerlo. La sua variazione tra due stati è determinata solo dallo stato iniziale e dallo stato finale.</p>
+<p>Per dirla in un linguaggio tecnico analitico: il calore $Q$ e il lavoro $L$ <strong>non</strong> sono funzioni di stato; lo è però la loro somma algebrica $Q - L$, che viene definita come variazione di energia interna.</p>`
+                },
+                {
+                    subtitle: "Forma differenziale e notazione δ",
+                    content: `<p>Quando consideriamo trasformazioni infinitesime, scriviamo il primo principio nella forma differenziale:</p>
+<p>$$dU = \\delta Q - \\delta L$$</p>
+<p>Compaiono qui due simboli diversi per i differenziali, ed è una scelta intenzionale.</p>
+<blockquote>«Vedete che io questa variazione infinitesima di calore scambiato e di lavoro scambiato l'ho indicata non con una $d$ minuscola, ma con un $\\delta$ minuscolo. Questo è un simbolismo puramente formale che serve da promemoria per ricordarci che il calore scambiato e il lavoro scambiato non sono funzioni di stato, mentre la variazione eventualmente infinitesima prodotta di energia interna la scrivo con la $d$ latina davanti minuscola, che invece rappresenta appunto una variazione univoca di questa variabile, cioè di una variabile che è una funzione di stato e questa variazione dipende soltanto dallo stato finale meno lo stato iniziale.»</blockquote>
+<p>In sintesi:</p>
+<ul>
+<li>$dU$ è un <strong>differenziale esatto</strong>: $U$ è funzione di stato e la sua variazione infinitesima è ben definita una volta specificati gli stati;</li>
+<li>$\\delta Q$ e $\\delta L$ sono quantità infinitesime scambiate, ma <strong>non</strong> sono differenziali esatti: $Q$ ed $L$ non sono funzioni di stato.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Primo principio (forma finita)", latex: "\\Delta U = Q - L" },
+                { label: "Primo principio (forma differenziale)", latex: "dU = \\delta Q - \\delta L" }
+            ]
+        },
+        {
+            id: "s46-problema-lavoro-calore",
+            type: "section",
+            title: "Il problema: scrivere lavoro e calore in variabili termodinamiche",
+            icon: "🎯",
+            content: `<p>Il primo principio, scritto come $\\Delta U = Q - L$, contiene due grandezze, $Q$ ed $L$, di cui in termodinamica non abbiamo ancora un'espressione esplicita.</p>
+<p>Il lavoro lo conosciamo dalla meccanica, dove lo abbiamo definito come integrale del prodotto scalare della forza per lo spostamento:</p>
+<p>$$L = \\int_{\\vec{r}_i}^{\\vec{r}_f} \\vec{F} \\cdot d\\vec{r}$$</p>
+<p>Questa è una formula <strong>meccanica</strong>: esprime il lavoro in funzione di due variabili meccaniche, la forza e lo spostamento.</p>
+<p>Tuttavia, in termodinamica le variabili di stato che si utilizzano sono variabili macroscopiche di natura diversa: pressione, volume, temperatura. Il lavoro come concetto fisico resta quello introdotto in meccanica, ma è fondamentale — anzi naturale e comodo — riscriverlo in funzione delle variabili termodinamiche che descrivono lo stato del sistema.</p>
+<p>Per quanto riguarda il calore, non ne abbiamo ancora dato un'espressione operativa: non abbiamo ancora considerato le leggi di scambio termico che descrivono la migrazione di energia in forma di calore da un sistema a un altro. Questo argomento verrà affrontato nelle lezioni successive.</p>
+<p>In questa lezione cominciamo dal lavoro.</p>`
+        },
+        {
+            id: "s46-cilindro-pistone",
+            type: "section",
+            title: "Calcolo del lavoro: il cilindro con pistone",
+            icon: "🔧",
+            content: `<p>Per riscrivere il lavoro in variabili termodinamiche, consideriamo un sistema fisico concreto.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il sistema fisico",
+                    content: `<p>Consideriamo un cilindro verticale, visto in sezione, chiuso superiormente da un pistone che può scorrere senza attrito lungo l'asse verticale, che identifichiamo con l'asse $x$. All'interno del cilindro è racchiuso un gas: questo è il nostro sistema termodinamico. Indichiamo con $S$ l'area della sezione del pistone.</p>
+<p>Sopra il pistone immaginiamo di poggiare una pila di tante piccole masse infinitesime (pensatele come piccoli cubetti). In condizioni di equilibrio, la forza con cui il gas spinge il pistone verso l'alto bilancia esattamente la forza peso delle masse e della colonna d'aria sovrastante.</p>
+<p>Togliamo ora una sola massetta infinitesima. La forza verso il basso diminuisce leggermente: il pistone, leggermente sbilanciato, si solleva di una quantità infinitesima $dx$, e il gas compie un'espansione infinitesima. Togliendo le masse una alla volta produciamo una lentissima (<strong>quasi statica</strong>) espansione del gas.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Cilindro con pistone e masse</strong></p>
+  <p><em>Cilindro verticale con gas (in azzurro) nella parte inferiore. Pistone orizzontale (grigio) che separa il gas dall'esterno. Sopra il pistone: tre piccole masse (cubetti). Freccia $\\vec{F}_{\\text{gas}}$ rivolta verso l'alto dall'interno del gas al pistone. Freccia $dx$ sulla destra che indica lo spostamento verticale del pistone. Asse $x$ verticale orientato verso l'alto indicato sulla destra. In basso: doppia freccia orizzontale con etichetta $S$ (sezione del pistone).</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+                },
+                {
+                    subtitle: "La pressione",
+                    content: `<p>Per collegare il lavoro meccanico alle variabili termodinamiche serve introdurre la pressione.</p>
+<p><strong>Definizione:</strong> la pressione è l'effetto cooperativo che le molecole di gas esercitano sulla parete del contenitore. Per definizione, essa è il rapporto tra la componente normale della forza che agisce sulla superficie e l'area della superficie stessa:</p>
+<p>$$p = \\frac{F_\\perp}{S}$$</p>
+<p>La pressione è una <strong>grandezza scalare</strong>.</p>
+<p>Nel nostro caso la forza esercitata dal gas è diretta ortogonalmente alla superficie del pistone, quindi la componente normale coincide in valore con il modulo della forza stessa: $F_\\perp = F$. Possiamo dunque scrivere:</p>
+<p>$$F = p\\,S$$</p>`
+                },
+                {
+                    subtitle: "Lavoro infinitesimo: derivazione di δL = p dV",
+                    content: `<p>Partiamo dalla definizione meccanica di lavoro infinitesimo:</p>
+<p>$$\\delta L = \\vec{F} \\cdot d\\vec{r}$$</p>
+<p>Nel nostro caso, durante un'espansione infinitesima, forza e spostamento sono entrambi diretti lungo l'asse verticale e nello stesso verso. Il prodotto scalare si riduce quindi al prodotto dei moduli:</p>
+<p>$$\\delta L = F\\,dx = p\\,S\\,dx$$</p>
+<p>Ora osserviamo che lo spostamento $dx$ del pistone produce una variazione infinitesima di volume del gas: il volume aggiunto è un piccolo cilindro di base $S$ e altezza $dx$, dunque:</p>
+<p>$$dV = S\\,dx \\quad \\Longrightarrow \\quad dx = \\frac{dV}{S}$$</p>
+<p>Sostituendo nell'espressione del lavoro infinitesimo:</p>
+<p>$$\\delta L = p\\,S\\,dx = p\\,S \\cdot \\frac{dV}{S} = p\\,dV$$</p>
+<p>La superficie $S$ si semplifica, e otteniamo il <strong>risultato fondamentale</strong>:</p>
+<p>$$\\delta L = p\\,dV$$</p>
+<p>L'espressione $\\delta L = p\\,dV$ è la stessa definizione di lavoro infinitesimo, ma riscritta in funzione delle variabili termodinamiche $p$ e $V$ invece che delle variabili meccaniche $\\vec{F}$ e $d\\vec{r}$. È solo una riscrittura: il lavoro resta lo stesso introdotto in meccanica, ma ora è espresso nelle variabili che descrivono lo stato del sistema in termodinamica.</p>`
+                },
+                {
+                    subtitle: "Lavoro in una trasformazione finita",
+                    content: `<p>In generale, la pressione all'interno di un sistema come questo è una funzione del volume, $p = p(V)$. Per un gas, la pressione dipende in generale sia dal volume che dalla temperatura. Lungo una trasformazione specifica (es. isoterma, adiabatica), la temperatura può essere espressa in funzione del volume tramite l'equazione di stato, e quindi $p$ diventa effettivamente funzione del solo $V$: è questa dipendenza che rende possibile l'integrazione.</p>
+<p>Per ottenere il lavoro totale $L$ scambiato durante una trasformazione che porta il sistema dal volume iniziale $V_i$ al volume finale $V_f$, occorre integrare il lavoro infinitesimo lungo la trasformazione:</p>
+<p>$$L = \\int_{V_i}^{V_f} p(V)\\,dV$$</p>
+<p>Questa è la forma che il lavoro assume in termodinamica: dipende esplicitamente dalle variabili termodinamiche pressione e volume, ed è calcolato come integrale lungo la particolare trasformazione seguita dal sistema. Come abbiamo già osservato, è soltanto una riscrittura dell'espressione introdotta in meccanica, adattata alle variabili che descrivono lo stato del sistema termodinamico.</p>
+<p><strong>Dipendenza dal cammino:</strong> poiché $p$ è funzione di $V$ (e in generale del cammino seguito nello spazio degli stati), l'integrale $\\int_{V_i}^{V_f} p(V)\\,dV$ dipende dalla particolare trasformazione, non solo dagli stati estremi. Questo è il motivo profondo per cui il lavoro <strong>non</strong> è funzione di stato e per cui scriviamo $\\delta L$ e non $dL$.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Pressione", latex: "p = \\frac{F_\\perp}{S}" },
+                { label: "Lavoro infinitesimo", latex: "\\delta L = p\\,dV" },
+                { label: "Lavoro in trasformazione finita", latex: "L = \\int_{V_i}^{V_f} p(V)\\,dV" }
+            ]
+        },
+        {
+            id: "s46-esempio-isobara",
+            type: "note_box",
+            title: "Esempio: trasformazione isobara",
+            icon: "📐",
+            content: `<p>Per vedere concretamente come si usa la formula integrale, consideriamo il caso più semplice: una <strong>trasformazione isobara</strong>, in cui la pressione rimane costante ($p = \\text{cost}$).</p>
+<p>Essendo $p$ costante, esce dall'integrale:</p>
+<p>$$L = \\int_{V_i}^{V_f} p\\,dV = p \\int_{V_i}^{V_f} dV = p\\,(V_f - V_i)$$</p>
+<p>Quindi per una trasformazione isobara:</p>
+<p>$$L = p\\,(V_f - V_i) = p\\,\\Delta V$$</p>
+<p>Ad esempio, con $p = 10^5$ Pa, $V_i = 1\\,\\text{L} = 10^{-3}\\,\\text{m}^3$ e $V_f = 2\\,\\text{L} = 2 \\times 10^{-3}\\,\\text{m}^3$:</p>
+<p>$$L = 10^5 \\times (2 \\times 10^{-3} - 10^{-3}) = 10^5 \\times 10^{-3} = 100\\,\\text{J}$$</p>`
+        },
+        {
+            id: "s46-convenzione-segni",
+            type: "section",
+            title: "Convenzione dei segni",
+            icon: "±",
+            content: `<p>Guardando l'espressione $L = \\int_{V_i}^{V_f} p\\,dV$ e tenendo presente che la pressione è sempre una quantità positiva, possiamo leggere il segno del lavoro direttamente dal confronto tra $V_f$ e $V_i$.</p>`,
+            subsections: [
+                {
+                    subtitle: "I tre casi fondamentali",
+                    content: `<ul>
+<li><strong>Espansione</strong> ($V_f \\gt V_i$): $dV \\gt 0$, dunque $\\delta L = p\\,dV \\gt 0$. L'integrale dà un risultato positivo: il gas compie lavoro <strong>sull'ambiente</strong>.</li>
+<li><strong>Compressione</strong> ($V_f \\lt V_i$): $dV \\lt 0$, dunque $\\delta L \\lt 0$. Il lavoro compiuto dal gas è negativo, ovvero è l'ambiente che compie lavoro <strong>sul</strong> gas.</li>
+<li><strong>Trasformazione isocora</strong> ($V_f = V_i$): $dV = 0$, dunque $L = 0$. Non c'è variazione di volume e il gas non compie lavoro.</li>
+</ul>
+<p>In sintesi:</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0;">
+<thead>
+<tr style="border-bottom:2px solid var(--border-light);">
+<th style="padding:8px; text-align:left;">Trasformazione</th>
+<th style="padding:8px; text-align:center;">Volume</th>
+<th style="padding:8px; text-align:center;">Segno di $L$</th>
+<th style="padding:8px; text-align:left;">Significato</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom:1px solid var(--border-light);">
+<td style="padding:8px;">Espansione</td>
+<td style="padding:8px; text-align:center;">$V_f \\gt V_i$</td>
+<td style="padding:8px; text-align:center;">$L \\gt 0$</td>
+<td style="padding:8px;">Il gas compie lavoro sull'ambiente</td>
+</tr>
+<tr style="border-bottom:1px solid var(--border-light);">
+<td style="padding:8px;">Compressione</td>
+<td style="padding:8px; text-align:center;">$V_f \\lt V_i$</td>
+<td style="padding:8px; text-align:center;">$L \\lt 0$</td>
+<td style="padding:8px;">L'ambiente compie lavoro sul gas</td>
+</tr>
+<tr>
+<td style="padding:8px;">Isocora</td>
+<td style="padding:8px; text-align:center;">$V_f = V_i$</td>
+<td style="padding:8px; text-align:center;">$L = 0$</td>
+<td style="padding:8px;">Nessun lavoro scambiato</td>
+</tr>
+</tbody>
+</table>`
+                },
+                {
+                    subtitle: "Collegamento con il primo principio",
+                    content: `<p>Conoscendo il segno del lavoro, possiamo leggere le conseguenze sul bilancio energetico tramite $\\Delta U = Q - L$:</p>
+<ul>
+<li>Se il gas si <strong>espande</strong> ($L \\gt 0$) senza scambiare calore ($Q = 0$), allora $\\Delta U = -L \\lt 0$: l'energia interna <strong>diminuisce</strong>. Il gas "paga" il lavoro con la propria energia interna.</li>
+<li>Se il gas viene <strong>compresso</strong> ($L \\lt 0$), allora $-L \\gt 0$ e, a parità di calore, l'energia interna <strong>aumenta</strong>.</li>
+<li>Se il volume resta costante ($L = 0$), allora $\\Delta U = Q$: tutta l'energia scambiata sotto forma di calore va a modificare l'energia interna.</li>
+</ul>
+<p><em>Da notare:</em> la discussione del segno del lavoro nel contesto del primo principio verrà approfondita nella prossima lezione.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Lavoro in espansione", latex: "V_f > V_i \\Rightarrow L > 0" },
+                { label: "Lavoro in compressione", latex: "V_f < V_i \\Rightarrow L < 0" },
+                { label: "Trasformazione isocora", latex: "V_f = V_i \\Rightarrow L = 0" }
+            ]
+        },
+        {
+            id: "s46-alert-segno",
+            type: "alert_box",
+            title: "Attenzione: δL vs dL e il segno del lavoro",
+            icon: "⚠️",
+            content: `<p>Due trappole classiche d'esame su questa lezione:</p>
+<ol>
+<li><strong>Non scrivere $dL$!</strong> Il lavoro non è funzione di stato, quindi la sua variazione infinitesima si indica con $\\delta L$, non con $dL$. Analogamente per il calore: $\\delta Q$, non $dQ$. Solo l'energia interna, che è funzione di stato, ha il differenziale esatto $dU$.</li>
+<li><strong>Il segno del lavoro dipende dalla convenzione.</strong> Con la convenzione usata qui ($\\Delta U = Q - L$), il lavoro è positivo quando il gas si espande (lavoro compiuto <strong>dal</strong> sistema). In alcuni testi si usa la convenzione opposta $\\Delta U = Q + L$ dove $L$ è il lavoro compiuto <strong>sul</strong> sistema. Verificare sempre quale convenzione è adottata.</li>
+</ol>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Enuncia il primo principio della termodinamica in forma finita e in forma differenziale.",
+            back: "In forma finita: $\\Delta U = Q - L$. In forma differenziale: $dU = \\delta Q - \\delta L$. La variazione di energia interna di un sistema termodinamico è data dalla differenza tra il calore scambiato e il lavoro scambiato."
+        },
+        {
+            type: "definizione",
+            front: "Che cos'è una funzione di stato? Fai un esempio e un controesempio tra le grandezze del primo principio.",
+            back: "Una grandezza termodinamica è funzione di stato se il suo valore dipende solo dallo stato macroscopico del sistema, non dal cammino seguito per raggiungerlo. L'energia interna $U$ è funzione di stato (la sua variazione dipende solo dagli stati iniziale e finale). Il calore $Q$ e il lavoro $L$ NON sono funzioni di stato: dipendono dalla trasformazione seguita."
+        },
+        {
+            type: "domanda",
+            front: "Perché si usa il simbolo δ per il calore e il lavoro infinitesimi invece della d?",
+            back: "Si scrive $\\delta Q$ e $\\delta L$ (e non $dQ$, $dL$) perché $Q$ e $L$ non sono funzioni di stato, quindi le loro variazioni infinitesime non sono differenziali esatti. La notazione $\\delta$ serve da promemoria: il valore di queste quantità dipende dal cammino seguito. Al contrario, $dU$ è un differenziale esatto perché $U$ è funzione di stato."
+        },
+        {
+            type: "dimostrazione",
+            front: "Deriva l'espressione δL = p dV a partire dalla definizione meccanica di lavoro, nel caso di un gas in un cilindro con pistone.",
+            back: "Si parte da $\\delta L = \\vec{F} \\cdot d\\vec{r}$. Per un'espansione lungo l'asse verticale, forza e spostamento sono paralleli: $\\delta L = F\\,dx$. La forza del gas sul pistone è $F = p\\,S$ (definizione di pressione). Quindi $\\delta L = p\\,S\\,dx$. Ma la variazione di volume è $dV = S\\,dx$, da cui $dx = dV/S$. Sostituendo: $\\delta L = p\\,S \\cdot dV/S = p\\,dV$. La sezione $S$ si semplifica."
+        },
+        {
+            type: "definizione",
+            front: "Come si definisce la pressione? È una grandezza scalare o vettoriale?",
+            back: "La pressione è il rapporto tra la componente normale della forza che agisce su una superficie e l'area della superficie stessa: $p = F_\\perp / S$. È una grandezza scalare."
+        },
+        {
+            type: "formula",
+            front: "Scrivi l'espressione del lavoro in termodinamica per una trasformazione finita da volume $V_i$ a volume $V_f$.",
+            back: "$$L = \\int_{V_i}^{V_f} p(V)\\,dV$$ dove $p(V)$ è la pressione espressa come funzione del volume lungo la specifica trasformazione seguita."
+        },
+        {
+            type: "domanda",
+            front: "Perché il lavoro in termodinamica non è funzione di stato? Come si vede dalla sua espressione integrale?",
+            back: "L'integrale $L = \\int_{V_i}^{V_f} p(V)\\,dV$ dipende dalla funzione $p(V)$, cioè da come la pressione varia col volume durante la trasformazione. Due trasformazioni diverse tra gli stessi stati $(V_i, V_f)$ possono avere $p(V)$ diverse, e quindi dare lavori diversi. Il lavoro dipende dal cammino, non solo dagli estremi: per questo non è funzione di stato e si scrive $\\delta L$ anziché $dL$."
+        },
+        {
+            type: "domanda",
+            front: "Come si determina il segno del lavoro compiuto dal gas dalla formula integrale? Cosa succede nei tre casi: espansione, compressione, trasformazione isocora?",
+            back: "Poiché $p \gt 0$ sempre: (1) Espansione ($V_f \gt V_i$): $dV \gt 0$, quindi $L \gt 0$ — il gas compie lavoro sull'ambiente. (2) Compressione ($V_f \lt V_i$): $dV \lt 0$, quindi $L \lt 0$ — l'ambiente compie lavoro sul gas. (3) Isocora ($V_f = V_i$): $dV = 0$, quindi $L = 0$ — nessun lavoro scambiato."
+        },
+        {
+            type: "tranello",
+            front: "Uno studente scrive: «Il lavoro del gas dal volume 2L a 1L è positivo perché la pressione è positiva». Dov'è l'errore?",
+            back: "L'errore è ignorare il segno di $dV$. Se $V_f = 1\\,\\text{L} \lt V_i = 2\\,\\text{L}$, allora $dV \lt 0$. Anche se $p \gt 0$, il prodotto $p\\,dV \lt 0$ e quindi $L \lt 0$. Si tratta di una compressione: è l'ambiente che compie lavoro sul gas, non viceversa."
+        },
+        {
+            type: "formula",
+            front: "Quanto vale il lavoro in una trasformazione isobara ($p = \\text{cost}$)?",
+            back: "In una trasformazione isobara la pressione esce dall'integrale: $$L = p \\int_{V_i}^{V_f} dV = p\\,(V_f - V_i) = p\\,\\Delta V$$"
+        }
+    ]
+};
+
