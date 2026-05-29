@@ -46,6 +46,25 @@ Quando Elia dice "processa la lezione X di [corso]" o simili:
 - Non inventare categorie — chiedi a Elia se non è chiaro
 - Non pushare senza --auto-push o senza conferma
 
+## Scelta dello script: convert.py vs council vs council_audio
+
+Il default è **SEMPRE `convert.py`**. Gli altri script costano 10x (~$3–5 vs ~$0.30) e vanno usati solo per i casi specifici sotto.
+
+| Situazione | Script | Note |
+|---|---|---|
+| Audio singolo (±PDF appunti) | **`convert.py`** | DEFAULT. Provalo SEMPRE per primo. |
+| Audio splittato in 2+ parti | `council_audio.py --pdf ...` | `convert.py` "due chiamate + cat" può perdere file per collisione naming. |
+| Solo PDF, niente audio | `council.py` | Vedi memoria Engram #22. |
+| Solo audio, NO PDF appunti | `council_audio.py` (senza --pdf) | Vedi memoria Engram #26. |
+| Guida orale (NON FeyNotes) | `study_council.py` | Workflow PARALLELO, output `.md/.pdf` didattico. Vedi memoria #25. |
+| `convert.py` fallisce **2+ volte** con Gemini 503/504 | fallback `council_audio.py` | SOLO dopo 2+ retry falliti. Vedi memoria #42. |
+| Rehumanize lezione già pubblicata | solo su richiesta esplicita | Vedi memoria #38. |
+
+**Anti-pattern da evitare** (osservati nel drift 24–27 Mag 2026):
+- Lanciare `council_audio` "per inerzia" perché è stato usato nella lezione precedente.
+- Usare `council_audio` "per qualità migliore" senza un trigger specifico dalla tabella sopra.
+- Dopo un fallback Gemini-down, restare su `council_audio` per le lezioni successive. **Quando Gemini torna, torna a `convert.py`.**
+
 ## KaTeX — Pattern Problematici e Fix
 
 I file `.js` in `src/data/` contengono formule KaTeX. Questi pattern causano errori di rendering (formule rosse nel browser):
