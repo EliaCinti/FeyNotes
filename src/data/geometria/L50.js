@@ -1,0 +1,318 @@
+const LESSON = {
+    id: "L50", date: "Lezione 36 — 28 Mag 2026",
+    title: "Proprietà delle Proiezioni Ortogonali, Matrici Ortogonali e Operatori Aggiunti",
+    abstract: "Dimostrazione della simmetria della proiezione ortogonale, caratterizzazione completa delle matrici ortogonali con le sei proprietà equivalenti, descrizione esplicita di O(2) come rotazioni e riflessioni, e introduzione dell'operatore aggiunto (trasposto) con la definizione di operatore autoaggiunto.",
+
+    sections: [
+        {
+            id: "s50-proiezione-ortogonale",
+            type: "section",
+            title: "Proprietà della Proiezione Ortogonale",
+            icon: "📐",
+            content: `<p>Riprendiamo il discorso sugli spazi vettoriali euclidei. Sia $V$ uno spazio euclideo e $U$ un suo sottospazio. Fissata una base ortonormale $\\{\\boldsymbol{u}_1, \\boldsymbol{u}_2, \\dots, \\boldsymbol{u}_h\\}$ di $U$, la <strong>proiezione ortogonale</strong> di $\\boldsymbol{v} \\in V$ su $U$ è:</p>
+<p>$$p_U(\\boldsymbol{v}) = \\langle \\boldsymbol{v}, \\boldsymbol{u}_1 \\rangle \\boldsymbol{u}_1 + \\langle \\boldsymbol{v}, \\boldsymbol{u}_2 \\rangle \\boldsymbol{u}_2 + \\dots + \\langle \\boldsymbol{v}, \\boldsymbol{u}_h \\rangle \\boldsymbol{u}_h$$</p>
+<p>L'applicazione $p_U : V \\to V$ è un endomorfismo <strong>diagonalizzabile</strong>. I suoi autovalori possono essere solo $1$ e $0$:</p>
+<ul>
+<li>L'autospazio $\\lambda = 1$ coincide con $U$</li>
+<li>L'autospazio $\\lambda = 0$ coincide con $U^\\perp$</li>
+</ul>
+<p>Costruendo una base di $V$ unendo una base ortonormale di $U$ e una di $U^\\perp$, la matrice di $p_U$ è diagonale:</p>
+<p>$$p_U(x_1, x_2, \\dots, x_h, x_{h+1}, \\dots, x_n) = (x_1, x_2, \\dots, x_h, 0, \\dots, 0)$$</p>
+<p>Casi limite: se $U = V$ allora $p_U = id_V$ (solo autovalore $1$); se $U = \\{\\boldsymbol{0}\\}$ allora $p_U \\equiv \\boldsymbol{0}$ (solo autovalore $0$).</p>`,
+            subsections: [
+                {
+                    subtitle: "Simmetria della proiezione ortogonale",
+                    content: `<p><strong>Proposizione.</strong> Per ogni $\\boldsymbol{v}, \\boldsymbol{w} \\in V$:</p>
+<p>$$\\langle p_U(\\boldsymbol{v}), \\boldsymbol{w} \\rangle = \\langle \\boldsymbol{v}, p_U(\\boldsymbol{w}) \\rangle$$</p>
+<p>Questa proprietà si esprime dicendo che l'operatore di proiezione è <strong>simmetrico</strong> (o <strong>autoaggiunto</strong>).</p>
+<p><strong>Dimostrazione.</strong> Scegliamo una base ortonormale $\\mathcal{B}$ di $V$ formata unendo una base ortonormale di $U$, $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$, e una di $U^\\perp$, $\\{\\boldsymbol{u}_{h+1}, \\dots, \\boldsymbol{u}_n\\}$. Poiché $\\mathcal{B}$ è ortonormale, la matrice di Gram è $G = I$ e il prodotto scalare si calcola come prodotto riga per colonna delle coordinate.</p>
+<p>Siano $\\boldsymbol{x}$ le coordinate di $\\boldsymbol{v}$ e $\\boldsymbol{y}$ le coordinate di $\\boldsymbol{w}$. Il membro di sinistra:</p>
+<p>$$\\langle p_U(\\boldsymbol{v}), \\boldsymbol{w} \\rangle = (x_1, x_2, \\dots, x_h, 0, \\dots, 0) \\cdot \\begin{pmatrix} y_1 \\\\ y_2 \\\\ \\vdots \\\\ y_n \\end{pmatrix} = x_1 y_1 + x_2 y_2 + \\dots + x_h y_h$$</p>
+<p>Il membro di destra:</p>
+<p>$$\\langle \\boldsymbol{v}, p_U(\\boldsymbol{w}) \\rangle = (x_1, x_2, \\dots, x_n) \\cdot \\begin{pmatrix} y_1 \\\\ \\vdots \\\\ y_h \\\\ 0 \\\\ \\vdots \\\\ 0 \\end{pmatrix} = x_1 y_1 + x_2 y_2 + \\dots + x_h y_h$$</p>
+<p>I due risultati coincidono. $\\square$</p>`
+                },
+                {
+                    subtitle: "Conseguenze matriciali",
+                    content: `<p>Dalla simmetria dell'operatore segue un fatto importante. Se $M$ è la matrice di $p_U$ rispetto a una <strong>qualsiasi</strong> base ortonormale, allora $M$ è simmetrica. Infatti, traducendo $\\langle p_U(\\boldsymbol{v}), \\boldsymbol{w} \\rangle = \\langle \\boldsymbol{v}, p_U(\\boldsymbol{w}) \\rangle$ in coordinate:</p>
+<p>$$(M\\boldsymbol{x})^T \\boldsymbol{y} = \\boldsymbol{x}^T (M\\boldsymbol{y})$$</p>
+<p>Sviluppando il trasposto a sinistra:</p>
+<p>$$\\boldsymbol{x}^T M^T \\boldsymbol{y} = \\boldsymbol{x}^T M \\boldsymbol{y}$$</p>
+<p>Poiché vale per ogni $\\boldsymbol{x}, \\boldsymbol{y} \\in \\mathbb{R}^n$, si deduce $M^T = M$.</p>
+<p>Inoltre, proiettare due volte equivale a proiettare una volta ($p_U \\circ p_U = p_U$), quindi $M^2 = M$.</p>
+<p>Pertanto, un operatore di proiezione ortogonale è rappresentato, rispetto a una base ortonormale, da una matrice $M$ che soddisfa:</p>
+<p>$$M^T = M, \\quad M^2 = M$$</p>
+<p><em>Da notare: queste condizioni non sono solo necessarie, ma anche sufficienti affinché un operatore sia una proiezione ortogonale. La dimostrazione di sufficienza verrà presentata nelle lezioni successive.</em></p>`
+                }
+            ],
+            formulas: [
+                { label: "Proiezione ortogonale", latex: "p_U(\\boldsymbol{v}) = \\sum_{i=1}^{h} \\langle \\boldsymbol{v}, \\boldsymbol{u}_i \\rangle \\boldsymbol{u}_i" },
+                { label: "Simmetria (autoaggiuntezza)", latex: "\\langle p_U(\\boldsymbol{v}), \\boldsymbol{w} \\rangle = \\langle \\boldsymbol{v}, p_U(\\boldsymbol{w}) \\rangle" },
+                { label: "Condizioni matriciali", latex: "M^T = M, \\quad M^2 = M" }
+            ]
+        },
+        {
+            id: "s50-matrici-ortogonali",
+            type: "section",
+            title: "Le Matrici Ortogonali",
+            icon: "🔄",
+            content: `<p>Studiamo ora una classe di matrici molto importante: le matrici del cambiamento di coordinate tra basi ortonormali in uno spazio euclideo. Tali matrici si dicono <strong>ortogonali</strong>.</p>
+<p><strong>Definizione.</strong> Una matrice $P$ reale $n \\times n$ si dice <strong>ortogonale</strong> se è la matrice di cambio di coordinate tra due basi ortonormali di uno spazio euclideo.</p>`,
+            subsections: [
+                {
+                    subtitle: "Sei proprietà equivalenti",
+                    content: `<p><strong>Proposizione.</strong> Sia $P$ una matrice reale $n \\times n$. Sono equivalenti le seguenti proprietà:</p>
+<ol>
+<li>(i) $P$ è una matrice ortogonale</li>
+<li>(ii) $PP^T = P^T P = I$</li>
+<li>(iii) $P$ è invertibile e $P^{-1} = P^T$</li>
+<li>(iv) le righe di $P$ formano una base ortonormale per $(\\mathbb{R}^n, \\text{prodotto punto})$</li>
+<li>(v) $P^T$ è ortogonale</li>
+<li>(vi) le colonne di $P$ formano una base ortonormale per $(\\mathbb{R}^n, \\text{prodotto punto})$</li>
+</ol>`
+                },
+                {
+                    subtitle: "Dimostrazione delle equivalenze",
+                    content: `<p><strong>(i) $\\Rightarrow$ (ii):</strong> Per definizione, esistono due basi ortonormali $\\mathcal{B}$ e $\\mathcal{B}'$ di uno spazio euclideo $V$ tali che $P = M_{\\mathcal{B}}^{\\mathcal{B}'}(id_V)$. Dalla teoria dei cambiamenti di base per le forme bilineari, se $P$ è la matrice di passaggio da $\\mathcal{B}$ a $\\mathcal{B}'$, le matrici di Gram sono legate dalla relazione $G' = P^T G P$. Essendo entrambe le basi ortonormali, $G = G' = I$, quindi:</p>
+<p>$$I = P^T I P = P^T P$$</p>
+<p>Poiché $P$ è quadrata, $P^T$ è inversa sinistra di $P$; per le matrici quadrate l'inversa sinistra è anche inversa destra (una matrice quadrata con inversa sinistra ha determinante non nullo, ed è quindi invertibile), pertanto $PP^T = I$.</p>
+<p><strong>(ii) $\\Leftrightarrow$ (iii):</strong> Equivalenza immediata dalla definizione di matrice inversa.</p>
+<p><strong>(iii) $\\Rightarrow$ (iv):</strong> Da (iii), cioè $P^{-1} = P^T$, segue in particolare $PP^T = I$. Usiamo questa condizione per dimostrare (iv). Denotiamo con $P_i$ la riga $i$-esima di $P$ e con $(P^T)^j$ la colonna $j$-esima di $P^T$. Osserviamo che $(P^T)^j = P_j$ (la colonna $j$-esima della trasposta è la riga $j$-esima). Dalla condizione $PP^T = I$, il prodotto punto della riga $P_i$ con la colonna $(P^T)^j$ dà:</p>
+<p>$$P_i \\cdot P_j = \\delta_{ij} = \\begin{cases} 1 & \\text{se } i = j \\\\ 0 & \\text{se } i \\neq j \\end{cases}$$</p>
+<p>Questo significa esattamente che le righe di $P$ formano una base ortonormale.</p>
+<p><strong>(iv) $\\Rightarrow$ (v):</strong> Se le righe di $P$ formano una base ortonormale $\\mathcal{B}$ per $\\mathbb{R}^n$, allora $P^T$ ha per colonne i vettori di $\\mathcal{B}$. Quindi $P^T = M_{\\mathcal{E}}^{\\mathcal{B}}(id_{\\mathbb{R}^n})$, dove $\\mathcal{E}$ è la base canonica. Essendo un cambio di base tra due basi ortonormali ($\\mathcal{E}$ e $\\mathcal{B}$), $P^T$ è ortogonale per definizione.</p>
+<p><strong>(v) $\\Rightarrow$ (vi):</strong> Se $P^T$ è ortogonale, per (ii) applicata a $P^T$ vale $P^T(P^T)^T = I$, cioè $P^T P = I$. Ripetendo il ragionamento di (iii) $\\Rightarrow$ (iv) per le colonne, si deduce che le colonne di $P$ formano una base ortonormale.</p>
+<p><strong>(vi) $\\Rightarrow$ (i):</strong> Se le colonne di $P$ formano una base ortonormale $\\mathcal{B}$ per $\\mathbb{R}^n$, allora $P = M_{\\mathcal{B}}^{\\mathcal{E}}(id_{\\mathbb{R}^n})$. Essendo il passaggio dalla base canonica (ortonormale) alla base $\\mathcal{B}$ (ortonormale), $P$ è ortogonale per definizione. $\\square$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Caratterizzazione matrici ortogonali", latex: "PP^T = P^T P = I \\iff P^{-1} = P^T" }
+            ]
+        },
+        {
+            id: "s50-gruppo-ortogonale",
+            type: "section",
+            title: "Il Gruppo Ortogonale O(n)",
+            icon: "🔵",
+            content: `<p>Denotiamo con $O(n)$ l'insieme delle matrici reali $n \\times n$ ortogonali. Si verifica che:</p>
+<ul>
+<li>$I \\in O(n)$</li>
+<li>Se $P, Q \\in O(n)$ allora $PQ \\in O(n)$</li>
+<li>Se $P \\in O(n)$ allora $P^{-1} \\in O(n)$</li>
+</ul>
+<p>Per queste proprietà, $O(n)$ forma un <strong>gruppo</strong> rispetto alla moltiplicazione, detto il <strong>gruppo ortogonale</strong>.</p>`,
+            subsections: [
+                {
+                    subtitle: "Il caso n = 1",
+                    content: `<p>Una matrice $1 \\times 1$ è un singolo numero reale $x$. La condizione $P^T P = I$ diventa $x^2 = 1$, quindi:</p>
+<p>$$O(1) = \\{-1, 1\\}$$</p>`
+                },
+                {
+                    subtitle: "Il caso n = 2: rotazioni e riflessioni",
+                    content: `<p>Sia $P \\in O(2)$. Le colonne di $P$ formano una base ortonormale di $\\mathbb{R}^2$, cioè due vettori unitari e ortogonali tra loro. Se $\\alpha$ è l'angolo della prima colonna con l'asse delle ascisse, le sue coordinate sono $(\\cos\\alpha, \\sin\\alpha)^T$.</p>
+<p>Il secondo vettore, ortogonale al primo e di norma $1$, può essere ruotato di $+90°$ o di $-90°$. Si ottengono due famiglie:</p>
+<p><strong>Rotazione</strong> di angolo $\\alpha$ (senso antiorario):</p>
+<p>$$R_\\alpha = \\begin{pmatrix} \\cos\\alpha & -\\sin\\alpha \\\\ \\sin\\alpha & \\cos\\alpha \\end{pmatrix}, \\quad \\det(R_\\alpha) = 1$$</p>
+<p><strong>Riflessione</strong> rispetto alla retta che forma angolo $\\frac{\\alpha}{2}$ con l'asse $x$:</p>
+<p>$$S_\\alpha = \\begin{pmatrix} \\cos\\alpha & \\sin\\alpha \\\\ \\sin\\alpha & -\\cos\\alpha \\end{pmatrix}, \\quad \\det(S_\\alpha) = -1$$</p>
+
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Le due famiglie di matrici ortogonali in O(2)</strong></p>
+  <p><em>A sinistra: la rotazione $R_\\alpha$ ruota un vettore $\\boldsymbol{v}$ di un angolo $\\alpha$ in senso antiorario. A destra: la riflessione $S_\\alpha$ riflette un vettore $\\boldsymbol{v}$ rispetto alla retta $r$ che forma un angolo $\\frac{\\alpha}{2}$ con l'asse delle ascisse. Entrambe le trasformazioni preservano la lunghezza dei vettori. L'angolo $\\alpha$ è indicato esplicitamente.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+
+<p>In conclusione:</p>
+<p>$$O(2) = \\left\\{ R_\\alpha : \\alpha \\in \\mathbb{R} \\right\\} \\cup \\left\\{ S_\\alpha : \\alpha \\in \\mathbb{R} \\right\\}$$</p>
+<p>L'unione è disgiunta poiché i determinanti sono diversi ($+1$ per le rotazioni, $-1$ per le riflessioni).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Matrice di rotazione", latex: "R_\\alpha = \\begin{pmatrix} \\cos\\alpha & -\\sin\\alpha \\\\ \\sin\\alpha & \\cos\\alpha \\end{pmatrix}" },
+                { label: "Matrice di riflessione", latex: "S_\\alpha = \\begin{pmatrix} \\cos\\alpha & \\sin\\alpha \\\\ \\sin\\alpha & -\\cos\\alpha \\end{pmatrix}" }
+            ]
+        },
+        {
+            id: "s50-angoli-eulero",
+            type: "note_box",
+            title: "Osservazione sugli angoli di Eulero",
+            icon: "🌐",
+            content: `<blockquote>"Esiste una descrizione analoga per $O(3)$, nella quale la generica matrice ortogonale appare in funzione di tre angoli, detti gli angoli di Eulero. Più in generale la generica matrice ortogonale $n \\times n$ si può rappresentare in funzione di $\\binom{n}{2}$ angoli."</blockquote>
+<p>Per $n = 3$, i tre angoli di Eulero parametrizzano rotazioni e riflessioni nello spazio tridimensionale. Questo argomento verrà approfondito in seguito.</p>`
+        },
+        {
+            id: "s50-esempio-completamento",
+            type: "section",
+            title: "Esempio: Completamento a Matrice Ortogonale",
+            icon: "🧩",
+            content: `<p><strong>Problema.</strong> Completare la seguente matrice a matrice ortogonale:</p>
+<p>$$\\begin{pmatrix} -\\frac{1}{\\sqrt{3}} & * & * \\\\ \\frac{1}{\\sqrt{3}} & * & * \\\\ \\frac{1}{\\sqrt{3}} & * & * \\end{pmatrix}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Svolgimento con Gram-Schmidt",
+                    content: `<p>La prima colonna è $\\boldsymbol{v}_1 = (-\\frac{1}{\\sqrt{3}}, \\frac{1}{\\sqrt{3}}, \\frac{1}{\\sqrt{3}})^T$, che ha norma $1$. Per comodità di calcolo, lavoriamo con il vettore non normalizzato $\\boldsymbol{c}_1 = (-1, 1, 1)^T$.</p>
+<p><em>Nota: possiamo scalare i vettori intermedi per costanti positive senza alterare la direzione, poiché Gram-Schmidt produce vettori ortogonali indipendentemente dalla normalizzazione dei passi intermedi. La normalizzazione si fa solo alla fine.</em></p>
+<p>Completiamo $\\boldsymbol{c}_1$ a base di $\\mathbb{R}^3$ aggiungendo $\\boldsymbol{e}_1 = (1,0,0)^T$ e $\\boldsymbol{e}_2 = (0,1,0)^T$. Applichiamo Gram-Schmidt.</p>
+<p><strong>Primo vettore:</strong></p>
+<p>$$\\boldsymbol{w}_1 = \\boldsymbol{c}_1 = (-1, 1, 1)^T$$</p>
+<p><strong>Secondo vettore:</strong></p>
+<p>$$\\boldsymbol{w}_2 = \\boldsymbol{e}_1 - \\frac{\\langle \\boldsymbol{e}_1, \\boldsymbol{w}_1 \\rangle}{\\langle \\boldsymbol{w}_1, \\boldsymbol{w}_1 \\rangle} \\boldsymbol{w}_1$$</p>
+<p>Prodotti scalari: $\\langle \\boldsymbol{e}_1, \\boldsymbol{w}_1 \\rangle = -1$, $\\langle \\boldsymbol{w}_1, \\boldsymbol{w}_1 \\rangle = 3$. Quindi:</p>
+<p>$$\\boldsymbol{w}_2 = (1,0,0)^T + \\frac{1}{3}(-1,1,1)^T = \\left(\\frac{2}{3}, \\frac{1}{3}, \\frac{1}{3}\\right)^T$$</p>
+<p>Per comodità, prendiamo $\\boldsymbol{w}_2' = 3\\boldsymbol{w}_2 = (2, 1, 1)^T$.</p>
+<p><strong>Terzo vettore:</strong></p>
+<p>$$\\boldsymbol{w}_3 = \\boldsymbol{e}_2 - \\frac{\\langle \\boldsymbol{e}_2, \\boldsymbol{w}_1 \\rangle}{\\langle \\boldsymbol{w}_1, \\boldsymbol{w}_1 \\rangle} \\boldsymbol{w}_1 - \\frac{\\langle \\boldsymbol{e}_2, \\boldsymbol{w}_2' \\rangle}{\\langle \\boldsymbol{w}_2', \\boldsymbol{w}_2' \\rangle} \\boldsymbol{w}_2'$$</p>
+<p>Prodotti scalari: $\\langle \\boldsymbol{e}_2, \\boldsymbol{w}_1 \\rangle = 1$, $\\langle \\boldsymbol{w}_1, \\boldsymbol{w}_1 \\rangle = 3$, $\\langle \\boldsymbol{e}_2, \\boldsymbol{w}_2' \\rangle = 1$, $\\langle \\boldsymbol{w}_2', \\boldsymbol{w}_2' \\rangle = 6$.</p>
+<p>Coefficienti di proiezione: $\\frac{1}{3}$ e $\\frac{1}{6}$.</p>
+<p>$$\\boldsymbol{w}_3 = (0,1,0)^T - \\frac{1}{3}(-1,1,1)^T - \\frac{1}{6}(2,1,1)^T = \\left(0, \\frac{1}{2}, -\\frac{1}{2}\\right)^T$$</p>
+<p>Prendiamo $\\boldsymbol{w}_3' = (0, 1, -1)^T$.</p>`
+                },
+                {
+                    subtitle: "Normalizzazione e risultato",
+                    content: `<p>Normalizzando i tre vettori ortogonali:</p>
+<p>$$\\boldsymbol{u}_1 = \\frac{1}{\\sqrt{3}}(-1,1,1)^T, \\quad \\boldsymbol{u}_2 = \\frac{1}{\\sqrt{6}}(2,1,1)^T, \\quad \\boldsymbol{u}_3 = \\frac{1}{\\sqrt{2}}(0,1,-1)^T$$</p>
+<p>Mettendo questi vettori in colonna, la matrice ortogonale è:</p>
+<p>$$\\begin{pmatrix} -\\frac{1}{\\sqrt{3}} & \\frac{2}{\\sqrt{6}} & 0 \\\\ \\frac{1}{\\sqrt{3}} & \\frac{1}{\\sqrt{6}} & \\frac{1}{\\sqrt{2}} \\\\ \\frac{1}{\\sqrt{3}} & \\frac{1}{\\sqrt{6}} & -\\frac{1}{\\sqrt{2}} \\end{pmatrix}$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s50-operatore-aggiunto",
+            type: "section",
+            title: "Operatori Lineari in uno Spazio Euclideo: l'Operatore Aggiunto",
+            icon: "🔀",
+            content: `<p>Studiamo gli endomorfismi di uno spazio vettoriale in presenza di un prodotto scalare.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esistenza e unicità dell'aggiunto",
+                    content: `<p><strong>Proposizione.</strong> Sia $(V, \\langle \\cdot, \\cdot \\rangle)$ uno spazio euclideo, e $f : V \\to V$ un operatore lineare. Allora <strong>esiste un unico</strong> operatore $g : V \\to V$ tale che per ogni $\\boldsymbol{u}, \\boldsymbol{v} \\in V$:</p>
+<p>$$\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = \\langle \\boldsymbol{u}, g(\\boldsymbol{v}) \\rangle$$</p>
+<p><strong>Dimostrazione (Esistenza).</strong> Fissiamo una base ortonormale $\\mathcal{B}$ di $V$, e poniamo $A := M_{\\mathcal{B}}^{\\mathcal{B}}(f)$. Definiamo $g$ ponendo la sua matrice rappresentativa pari alla trasposta:</p>
+<p>$$[g(\\boldsymbol{u})]_{\\mathcal{B}} := A^T [\\boldsymbol{u}]_{\\mathcal{B}}$$</p>
+<p>Essendo $\\mathcal{B}$ ortonormale, il prodotto scalare è il prodotto riga per colonna delle coordinate. Denotando con $\\boldsymbol{x}$ le coordinate di $\\boldsymbol{u}$ e con $\\boldsymbol{y}$ quelle di $\\boldsymbol{v}$:</p>
+<p>$$\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = (A\\boldsymbol{x})^T \\boldsymbol{y} = \\boldsymbol{x}^T A^T \\boldsymbol{y} = \\boldsymbol{x}^T (A^T \\boldsymbol{y}) = \\langle \\boldsymbol{u}, g(\\boldsymbol{v}) \\rangle$$</p>
+<p><strong>Dimostrazione (Unicità).</strong> Sia $h : V \\to V$ un altro operatore con la stessa proprietà. Allora per ogni $\\boldsymbol{u}, \\boldsymbol{v}$:</p>
+<p>$$\\langle \\boldsymbol{u}, g(\\boldsymbol{v}) \\rangle = \\langle \\boldsymbol{u}, h(\\boldsymbol{v}) \\rangle$$</p>
+<p>Quindi $\\langle \\boldsymbol{u}, g(\\boldsymbol{v}) - h(\\boldsymbol{v}) \\rangle = 0$ per ogni $\\boldsymbol{u}$. Scegliendo $\\boldsymbol{u} = g(\\boldsymbol{v}) - h(\\boldsymbol{v})$:</p>
+<p>$$\\langle g(\\boldsymbol{v}) - h(\\boldsymbol{v}),\\; g(\\boldsymbol{v}) - h(\\boldsymbol{v}) \\rangle = 0$$</p>
+<p>Per la definitezza positiva del prodotto scalare, $g(\\boldsymbol{v}) = h(\\boldsymbol{v})$ per ogni $\\boldsymbol{v}$, quindi $g = h$. $\\square$</p>`
+                },
+                {
+                    subtitle: "Definizione di operatore aggiunto",
+                    content: `<p><strong>Definizione.</strong> L'operatore $g$ della proposizione precedente si denota $f^*$ e si dice <strong>operatore aggiunto</strong> (o <strong>operatore trasposto</strong>) di $f$.</p>
+<p>La proprietà che lo definisce è:</p>
+<p>$$\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = \\langle \\boldsymbol{u}, f^*(\\boldsymbol{v}) \\rangle \\quad \\forall\\, \\boldsymbol{u}, \\boldsymbol{v} \\in V$$</p>
+<p>Se $A$ è la matrice di $f$ rispetto a una base ortonormale $\\mathcal{B}$, allora la matrice di $f^*$ rispetto alla stessa base è $A^T$.</p>`
+                },
+                {
+                    subtitle: "Operatori autoaggiunti",
+                    content: `<p><strong>Definizione.</strong> Un operatore $f : V \\to V$ si dice <strong>autoaggiunto</strong> (o <strong>simmetrico</strong>) se $f = f^*$, cioè se per ogni $\\boldsymbol{u}, \\boldsymbol{v} \\in V$:</p>
+<p>$$\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = \\langle \\boldsymbol{u}, f(\\boldsymbol{v}) \\rangle$$</p>
+<p>Questo equivale a dire che la matrice di $f$ rispetto a qualunque base ortonormale è simmetrica ($A = A^T$).</p>`
+                }
+            ],
+            formulas: [
+                { label: "Proprietà definitoria dell'aggiunto", latex: "\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = \\langle \\boldsymbol{u}, f^*(\\boldsymbol{v}) \\rangle" },
+                { label: "Matrice dell'aggiunto (base ON)", latex: "M_{\\mathcal{B}}^{\\mathcal{B}}(f^*) = A^T" },
+                { label: "Operatore autoaggiunto", latex: "f = f^* \\iff A = A^T \\text{ (base ON)}" }
+            ]
+        },
+        {
+            id: "s50-teorema-spettrale-rimando",
+            type: "note_box",
+            title: "L'importanza degli operatori autoaggiunti",
+            icon: "⭐",
+            content: `<p>La nozione di operatore aggiunto è particolarmente importante perché permette di definire gli operatori <strong>autoaggiunti</strong>, i quali si "comportano bene" rispetto al prodotto scalare e risultano sempre diagonalizzabili in base ortonormale.</p>
+<p>Questo è il contenuto del <strong>Teorema Spettrale</strong>, che verrà dimostrato nelle lezioni successive: <em>ogni operatore autoaggiunto su uno spazio euclideo è diagonalizzabile in base ortonormale</em>.</p>`
+        },
+        {
+            id: "s50-esempi-aggiunto",
+            type: "section",
+            title: "Esempi di Calcolo dell'Aggiunto",
+            icon: "✏️",
+            content: `<p>Vediamo due esempi nello spazio euclideo $\\mathbb{R}^2$ con il prodotto punto.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio 1: operatore non autoaggiunto",
+                    content: `<p>Consideriamo $f(x, y) := (x + 2y,\\; 3x - 5y)$. La matrice rispetto alla base canonica (ortonormale) è:</p>
+<p>$$A = \\begin{pmatrix} 1 & 2 \\\\ 3 & -5 \\end{pmatrix}$$</p>
+<p>La matrice dell'aggiunto è la trasposta:</p>
+<p>$$A^T = \\begin{pmatrix} 1 & 3 \\\\ 2 & -5 \\end{pmatrix}$$</p>
+<p>Quindi $f^*(x, y) = (x + 3y,\\; 2x - 5y)$.</p>
+<p><strong>Verifica diretta.</strong> Posti $\\boldsymbol{u} = (x, y)$ e $\\boldsymbol{v} = (x', y')$:</p>
+<p>$$\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = (x+2y)x' + (3x-5y)y' = xx' + 2yx' + 3xy' - 5yy'$$</p>
+<p>Raccogliendo rispetto a $x$ e $y$:</p>
+<p>$$= x(x' + 3y') + y(2x' - 5y') = \\langle (x,y),\\; (x'+3y',\\; 2x'-5y') \\rangle = \\langle \\boldsymbol{u}, f^*(\\boldsymbol{v}) \\rangle$$</p>`
+                },
+                {
+                    subtitle: "Esempio 2: operatore autoaggiunto",
+                    content: `<p>Consideriamo $f(x, y) := (x + 2y,\\; 2x + 24y)$. La matrice è:</p>
+<p>$$A = \\begin{pmatrix} 1 & 2 \\\\ 2 & 24 \\end{pmatrix}$$</p>
+<p>Poiché $A = A^T$, l'operatore coincide con il suo aggiunto: $f = f^*$. Questo operatore è <strong>autoaggiunto</strong>.</p>`
+                }
+            ]
+        },
+        {
+            id: "s50-trappola-ortonormale",
+            type: "alert_box",
+            title: "Attenzione: la base deve essere ortonormale!",
+            icon: "⚠️",
+            content: `<p>Un errore frequente: la relazione "$f^*$ ha matrice $A^T$" vale <strong>solo</strong> se la base è ortonormale. Se si lavora in una base non ortonormale, la matrice di Gram $G \\neq I$ e la formula diventa più complicata. Analogamente, "$f$ autoaggiunto $\\iff$ $A = A^T$" richiede base ortonormale.</p>
+<p>Stesso discorso per le proiezioni: la matrice $M$ della proiezione ortogonale è simmetrica solo rispetto a basi ortonormali.</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cos'è la proiezione ortogonale di un vettore su un sottospazio, e quali sono i suoi autovalori?",
+            back: "Dato uno spazio euclideo $V$ e un sottospazio $U$ con base ortonormale $\\{\\boldsymbol{u}_1, \\dots, \\boldsymbol{u}_h\\}$, la proiezione ortogonale è $p_U(\\boldsymbol{v}) = \\sum_{i=1}^{h} \\langle \\boldsymbol{v}, \\boldsymbol{u}_i \\rangle \\boldsymbol{u}_i$. Gli autovalori sono solo $1$ (autospazio $U$) e $0$ (autospazio $U^\\perp$)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che la proiezione ortogonale è un operatore simmetrico (autoaggiunto).",
+            back: "Si sceglie una base ortonormale $\\mathcal{B}$ unione di basi ON di $U$ e $U^\\perp$. In questa base, $p_U$ azzera le ultime $n-h$ coordinate. Calcolando: $\\langle p_U(\\boldsymbol{v}), \\boldsymbol{w} \\rangle = x_1 y_1 + \\dots + x_h y_h = \\langle \\boldsymbol{v}, p_U(\\boldsymbol{w}) \\rangle$, poiché in entrambi i casi le coordinate dalla $(h+1)$-esima in poi vengono moltiplicate per zero."
+        },
+        {
+            type: "formula",
+            front: "Quali condizioni soddisfa la matrice $M$ di una proiezione ortogonale rispetto a una base ortonormale?",
+            back: "$M^T = M$ (simmetria, conseguenza dell'autoaggiuntezza) e $M^2 = M$ (idempotenza, conseguenza di $p_U \\circ p_U = p_U$)."
+        },
+        {
+            type: "definizione",
+            front: "Cosa si intende per matrice ortogonale e quali proprietà equivalenti la caratterizzano?",
+            back: "Una matrice reale $P$ di dimensione $n \\times n$ è ortogonale se è matrice di cambio di coordinate tra due basi ortonormali. Equivalentemente: (1) $PP^T = P^T P = I$, (2) $P^{-1} = P^T$, (3) le righe formano una base ON, (4) le colonne formano una base ON, (5) $P^T$ è ortogonale."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si dimostra che se $P$ è ortogonale allora $P^T P = I$?",
+            back: "Per definizione $P$ è cambio di base tra due basi ON $\\mathcal{B}, \\mathcal{B}'$. La relazione $G' = P^T G P$ tra matrici di Gram, con $G = G' = I$ (basi ortonormali), dà $I = P^T I P = P^T P$. Poi, essendo $P$ quadrata, l'inversa sinistra $P^T$ è anche inversa destra, quindi $PP^T = I$."
+        },
+        {
+            type: "domanda",
+            front: "Descrivi le due famiglie di matrici ortogonali $2 \\times 2$ e come distinguerle.",
+            back: "Le rotazioni $R_\\alpha = \\begin{pmatrix} \\cos\\alpha & -\\sin\\alpha \\\\ \\sin\\alpha & \\cos\\alpha \\end{pmatrix}$ con $\\det = 1$, e le riflessioni $S_\\alpha = \\begin{pmatrix} \\cos\\alpha & \\sin\\alpha \\\\ \\sin\\alpha & -\\cos\\alpha \\end{pmatrix}$ con $\\det = -1$. $R_\\alpha$ è rotazione antioraria di angolo $\\alpha$; $S_\\alpha$ è riflessione rispetto alla retta che forma angolo $\\frac{\\alpha}{2}$ con l'asse $x$. Si distinguono dal determinante."
+        },
+        {
+            type: "definizione",
+            front: "Cos'è l'operatore aggiunto $f^*$ di un operatore lineare $f$ su uno spazio euclideo?",
+            back: "È l'unico operatore $f^* : V \\to V$ tale che $\\langle f(\\boldsymbol{u}), \\boldsymbol{v}) \\rangle = \\langle \\boldsymbol{u}, f^*(\\boldsymbol{v}) \\rangle$ per ogni $\\boldsymbol{u}, \\boldsymbol{v} \\in V$. La sua matrice rispetto a una base ortonormale è la trasposta della matrice di $f$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si dimostra l'unicità dell'operatore aggiunto?",
+            back: "Se $g$ e $h$ soddisfano entrambi la proprietà dell'aggiunto, allora $\\langle \\boldsymbol{u}, g(\\boldsymbol{v}) - h(\\boldsymbol{v}) \\rangle = 0$ per ogni $\\boldsymbol{u}$. Scegliendo $\\boldsymbol{u} = g(\\boldsymbol{v}) - h(\\boldsymbol{v})$, si ottiene $\\|g(\\boldsymbol{v}) - h(\\boldsymbol{v})\\|^2 = 0$, che per la definitezza positiva implica $g(\\boldsymbol{v}) = h(\\boldsymbol{v})$ per ogni $\\boldsymbol{v}$."
+        },
+        {
+            type: "definizione",
+            front: "Quando un operatore si dice autoaggiunto? Cosa implica per la sua matrice?",
+            back: "Un operatore $f : V \\to V$ è autoaggiunto se $f = f^*$, cioè $\\langle f(\\boldsymbol{u}), \\boldsymbol{v} \\rangle = \\langle \\boldsymbol{u}, f(\\boldsymbol{v}) \\rangle$ per ogni $\\boldsymbol{u}, \\boldsymbol{v}$. Equivalentemente, la matrice di $f$ rispetto a qualunque base ortonormale è simmetrica ($A = A^T$)."
+        },
+        {
+            type: "tranello",
+            front: "Perché è essenziale specificare 'rispetto a una base ortonormale' quando si dice che la matrice dell'aggiunto è la trasposta?",
+            back: "Perché la dimostrazione usa il fatto che, in base ortonormale, la matrice di Gram è $G = I$ e il prodotto scalare diventa $\\boldsymbol{x}^T \\boldsymbol{y}$. In una base non ortonormale, $G \\neq I$ e la formula $(A\\boldsymbol{x})^T \\boldsymbol{y} = \\boldsymbol{x}^T A^T \\boldsymbol{y}$ non dà direttamente il prodotto scalare. Senza base ON, $A^T$ non è la matrice dell'aggiunto."
+        }
+    ]
+};
+
