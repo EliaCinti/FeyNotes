@@ -1,0 +1,313 @@
+const LESSON = {
+    id: "L51", date: "Lezione 36 — 03 Giu 2026",
+    title: "Trasformazioni Termodinamiche e Ciclo di Carnot",
+    abstract: "Riepilogo delle trasformazioni notevoli per gas ideali (adiabatica, isoterma, isocora, isobara) con confronto grafico, definizione di sorgente termodinamica, costruzione del ciclo di Carnot e derivazione del suo rendimento. Enunciato del Teorema di Carnot e schema della dimostrazione per assurdo.",
+
+    sections: [
+        {
+            id: "s51-richiami-gas-ideali",
+            type: "section",
+            title: "Richiami sui Gas Ideali",
+            icon: "💨",
+            content: `<p>Riprendiamo lo studio delle <strong>trasformazioni termodinamiche notevoli</strong> per i sistemi costituiti da gas ideali.</p>`,
+            quote: {
+                text: "È importante ricordare che \"gas ideale\" non è un singolo sistema termodinamico, ma un modello. Questo modello può rappresentare diverse situazioni reali, come i gas molto rarefatti o i gas caldi. A seconda della struttura elementare della sostanza, anche i gas ideali si distinguono. Ad esempio, ci sono gas monoatomici (come i gas nobili: elio, argon) e gas biatomici (come l'ossigeno, l'azoto). Questi due tipi di gas ideali, pur essendo entrambi \"ideali\", hanno calori specifici diversi.",
+                src: "Nota del Prof."
+            }
+        },
+        {
+            id: "s51-calore-specifico",
+            type: "section",
+            title: "Il Calore Specifico come Inerzia Termica",
+            icon: "🌡️",
+            content: `<p>Il calore specifico è il parametro che compare nella legge di scambio termico e caratterizza l'<strong>inerzia termica</strong> di un sistema monofasico.</p>
+<p>La definizione scolastica — "la quantità di calore da fornire a un'unità di massa per elevare la temperatura di un grado" — è operativamente utile ma <strong>incompleta</strong>. Il problema è che la quantità di calore $\\delta Q$ necessaria per produrre una certa variazione di temperatura $dT$ dipende non solo dalla sostanza, ma anche dal <strong>tipo di trasformazione</strong> che il sistema subisce.</p>
+<p>Possiamo fare un'analogia con la dinamica. La massa inerziale è il rapporto tra causa (forza) ed effetto (accelerazione):</p>
+<p>$$m = \\frac{F}{a}$$</p>
+<p>Analogamente, il calore specifico è legato al rapporto tra causa (calore scambiato) ed effetto (variazione di temperatura):</p>
+<p>$$C = \\frac{1}{m} \\frac{\\delta Q}{dT}$$</p>
+<p>Poiché $\\delta Q$ è una funzione di processo (non di stato), anche il calore specifico $C$ dipende dalla trasformazione. Per un gas ideale, il calore specifico a pressione costante ($C_p$) è maggiore di quello a volume costante ($C_v$): in una trasformazione isobara, il calore fornito deve coprire sia l'aumento di energia interna sia il lavoro che il sistema compie espandendosi.</p>`
+        },
+        {
+            id: "s51-sorgente-termodinamica",
+            type: "section",
+            title: "Sorgente Termodinamica",
+            icon: "♨️",
+            content: `<p>Introduciamo un concetto fondamentale per lo studio delle macchine termiche.</p>
+<p>Una <strong>sorgente termodinamica</strong> (o serbatoio di calore) è un sistema termodinamico con <strong>capacità termica infinita</strong>.</p>
+<p>La capacità termica è $C_{cap} = mC$, e la relazione tra calore e variazione di temperatura è $\\delta Q = C_{cap} \\, dT$. Di conseguenza:</p>
+<p>$$dT = \\frac{\\delta Q}{C_{cap}}$$</p>
+<p>Se $C_{cap} \\to \\infty$, per qualsiasi quantità finita di calore scambiato $\\delta Q$, la variazione di temperatura è nulla:</p>
+<p>$$\\lim_{C_{cap} \\to \\infty} dT = \\lim_{C_{cap} \\to \\infty} \\frac{\\delta Q}{C_{cap}} = 0$$</p>
+<p>In pratica, una sorgente è un sistema talmente grande che può assorbire o cedere calore <strong>senza cambiare apprezzabilmente la sua temperatura</strong>.</p>
+<p><strong>Esempio:</strong> un cubetto di rame rovente immerso in un bicchiere d'acqua fa aumentare significativamente la temperatura dell'acqua. Lo stesso cubetto immerso in un lago non produce variazioni misurabili: il lago si comporta come una sorgente termodinamica.</p>`,
+            formulas: [
+                { label: "Capacità termica", latex: "C_{cap} = mC" },
+                { label: "Condizione sorgente", latex: "C_{cap} \\to \\infty \\Rightarrow dT \\to 0" }
+            ]
+        },
+        {
+            id: "s51-trasformazioni-reversibili",
+            type: "section",
+            title: "Riepilogo delle Trasformazioni Reversibili per Gas Ideale",
+            icon: "🔄",
+            content: `<p>Riepiloghiamo le quattro trasformazioni notevoli per un gas ideale.</p>`,
+            subsections: [
+                {
+                    subtitle: "Trasformazione Adiabatica",
+                    content: `<p>Non c'è scambio di calore con l'esterno: $\\delta Q = 0$.</p>
+<p>Dal primo principio ($dU = \\delta Q - \\delta W$) segue:</p>
+<p>$$\\Delta U = -W$$</p>
+<p>Il lavoro è uguale all'opposto della variazione di energia interna. Per un gas ideale ($U$ dipende solo da $T$):</p>
+<p>$$W = -\\Delta U = -nC_v(T_B - T_A)$$</p>
+<p>Poiché $pV = nRT$, si ha $nRT_A = p_A V_A$ e $nRT_B = p_B V_B$. Inoltre $C_v = R/(\\gamma - 1)$, quindi:</p>
+<p>$$W = -nC_v(T_B - T_A) = -\\frac{nR}{\\gamma - 1}(T_B - T_A) = \\frac{1}{\\gamma - 1}(p_A V_A - p_B V_B)$$</p>
+<p>Se la trasformazione è anche <strong>reversibile</strong>, valgono le <strong>equazioni di Poisson</strong>:</p>
+<ul>
+<li>$pV^\\gamma = \\text{costante}$</li>
+<li>$TV^{\\gamma - 1} = \\text{costante}$</li>
+<li>$T p^{\\frac{1-\\gamma}{\\gamma}} = \\text{costante}$</li>
+</ul>
+<p>dove $\\gamma = C_p / C_v$.</p>
+<p><strong>Derivazione.</strong> La prima relazione si ricava combinando il primo principio per un'adiabatica reversibile con l'equazione di stato. Le altre si ottengono sostituendo $p = nRT/V$ oppure $V = nRT/p$.</p>
+<p>Per ricavare $TV^{\\gamma - 1} = \\text{costante}$, partiamo da $pV^\\gamma = K$ e sostituiamo $p = nRT/V$:</p>
+<p>$$\\frac{nRT}{V} \\cdot V^\\gamma = K \\Rightarrow nRT \\, V^{\\gamma - 1} = K$$</p>
+<p>Poiché $nR$ è costante, otteniamo $TV^{\\gamma - 1} = \\text{costante}$.</p>
+<p>Per ricavare $Tp^{(1-\\gamma)/\\gamma} = \\text{costante}$, da $pV^\\gamma = K$ sostituiamo $V = nRT/p$:</p>
+<p>$$p \\left(\\frac{nRT}{p}\\right)^\\gamma = K \\Rightarrow p^{1-\\gamma}(nRT)^\\gamma = K$$</p>
+<p>Dividendo per $(nR)^\\gamma$ e riorganizzando:</p>
+<p>$$T^\\gamma \\, p^{1-\\gamma} = \\text{costante} \\Rightarrow T \\, p^{\\frac{1-\\gamma}{\\gamma}} = \\text{costante}$$</p>`
+                },
+                {
+                    subtitle: "Trasformazione Isoterma",
+                    content: `<p>La temperatura resta costante: $T = \\text{cost}$, quindi $\\Delta T = 0$.</p>
+<p>Per un gas ideale, l'energia interna dipende solo da $T$, quindi $\\Delta U = 0$. Dal primo principio:</p>
+<p>$$Q = W$$</p>
+<p>Se la trasformazione è <strong>reversibile</strong>:</p>
+<p>$$W = Q = \\int_{V_A}^{V_B} p \\, dV = \\int_{V_A}^{V_B} \\frac{nRT}{V} \\, dV = nRT \\ln\\left(\\frac{V_B}{V_A}\\right)$$</p>
+<p>Sul piano p-V, un'isoterma è un ramo di iperbole ($pV = \\text{costante}$).</p>`
+                },
+                {
+                    subtitle: "Trasformazione Isocora",
+                    content: `<p>Il volume resta costante: $V = \\text{cost}$, quindi $\\Delta V = 0$.</p>
+<p>Il lavoro è nullo:</p>
+<p>$$W = \\int p \\, dV = 0$$</p>
+<p>Dal primo principio, il calore scambiato è pari alla variazione di energia interna:</p>
+<p>$$Q_v = \\Delta U = nC_v \\Delta T$$</p>`
+                },
+                {
+                    subtitle: "Trasformazione Isobara",
+                    content: `<p>La pressione resta costante: $p = \\text{cost}$.</p>
+<p>Il lavoro compiuto è:</p>
+<p>$$W = \\int_{V_A}^{V_B} p \\, dV = p(V_B - V_A) = nR(T_B - T_A)$$</p>
+<p>Il calore scambiato a pressione costante è:</p>
+<p>$$Q_p = nC_p \\Delta T$$</p>
+<p>La variazione di energia interna è sempre:</p>
+<p>$$\\Delta U = nC_v \\Delta T$$</p>`
+                }
+            ],
+            extra_content: `<p><strong>Confronto grafico:</strong> sul piano p-V, partendo dallo stesso stato A, un'adiabatica reversibile è più "ripida" di un'isoterma. L'equazione dell'adiabatica è $p \\propto V^{-\\gamma}$ mentre quella dell'isoterma è $p \\propto V^{-1}$, e poiché $\\gamma \\gt 1$, la pendenza dell'adiabatica è maggiore in valore assoluto.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Confronto delle quattro trasformazioni nel piano p-V</strong></p>
+  <p><em>Dallo stato A partono quattro curve: isobara (retta orizzontale verso B₁), isocora (retta verticale verso B₂), isoterma (iperbole $pV = \\text{cost}$ verso B₃) e adiabatica (curva più ripida $pV^\\gamma = \\text{cost}$ verso B₄). L'adiabatica scende più rapidamente dell'isoterma.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`,
+            formulas: [
+                { label: "Lavoro adiabatico", latex: "W = \\frac{1}{\\gamma - 1}(p_A V_A - p_B V_B)" },
+                { label: "Equazione di Poisson", latex: "pV^\\gamma = \\text{costante}" },
+                { label: "Lavoro isotermo", latex: "W = nRT \\ln\\left(\\frac{V_B}{V_A}\\right)" },
+                { label: "Calore isocoro", latex: "Q_v = nC_v \\Delta T" },
+                { label: "Calore isobaro", latex: "Q_p = nC_p \\Delta T" }
+            ]
+        },
+        {
+            id: "s51-tabella-trasformazioni",
+            type: "note_box",
+            title: "Tabella Riassuntiva delle Trasformazioni",
+            icon: "📋",
+            content: `<p>Sintesi delle quattro trasformazioni notevoli reversibili per un gas ideale:</p>`,
+            table_compare: {
+                headers: ["Trasformazione", "Vincolo", "ΔU", "W", "Q"],
+                rows: [
+                    ["Adiabatica", "δQ = 0", "$nC_v(T_B - T_A)$", "$-nC_v(T_B - T_A)$", "$0$"],
+                    ["Isoterma", "T = cost", "$0$", "$nRT\\ln(V_B/V_A)$", "$nRT\\ln(V_B/V_A)$"],
+                    ["Isocora", "V = cost", "$nC_v \\Delta T$", "$0$", "$nC_v \\Delta T$"],
+                    ["Isobara", "p = cost", "$nC_v \\Delta T$", "$nR(T_B - T_A)$", "$nC_p \\Delta T$"]
+                ]
+            }
+        },
+        {
+            id: "s51-ciclo-carnot-definizione",
+            type: "section",
+            title: "Il Ciclo di Carnot: Definizione e Fasi",
+            icon: "⚙️",
+            content: `<p>Un <strong>ciclo di Carnot</strong> è un ciclo termodinamico reversibile composto da quattro trasformazioni: <strong>due isoterme</strong> e <strong>due adiabatiche</strong>, alternate tra loro. Il sistema opera tra due sorgenti: una "calda" a temperatura $T_2$ e una "fredda" a temperatura $T_1 \\lt T_2$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Le quattro fasi del ciclo",
+                    content: `<ol>
+<li><strong>A → B: Espansione isoterma reversibile.</strong> Il gas è a contatto con la sorgente calda a temperatura $T_2$, si espande assorbendo calore $Q_{AB} \\gt 0$ e compiendo lavoro.</li>
+<li><strong>B → C: Espansione adiabatica reversibile.</strong> Il gas viene isolato termicamente e continua a espandersi. La sua temperatura diminuisce da $T_2$ a $T_1$.</li>
+<li><strong>C → D: Compressione isoterma reversibile.</strong> Il gas è a contatto con la sorgente fredda a temperatura $T_1$ e viene compresso. Cede calore $Q_{CD} \\lt 0$ e subisce lavoro.</li>
+<li><strong>D → A: Compressione adiabatica reversibile.</strong> Il gas viene nuovamente isolato e compresso, riportando la temperatura da $T_1$ a $T_2$, chiudendo il ciclo.</li>
+</ol>`
+                }
+            ],
+            extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Ciclo di Carnot nel piano p-V</strong></p>
+  <p><em>Diagramma schematico con quattro punti A, B, C, D. La curva A→B (blu) è un'espansione isoterma sulla curva $pV = nRT_2$. La curva B→C (arancione) è un'espansione adiabatica. La curva C→D (rossa) è una compressione isoterma sulla curva $pV = nRT_1$. La curva D→A (arancione) è una compressione adiabatica. Sopra la curva A→B compare l'etichetta $Q_{AB} \\gt 0$, sotto la curva C→D compare $Q_{CD} \\lt 0$. Il ciclo percorso in senso orario racchiude un'area pari al lavoro netto $W$.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`
+        },
+        {
+            id: "s51-rendimento-carnot",
+            type: "section",
+            title: "Calcolo del Rendimento del Ciclo di Carnot",
+            icon: "📐",
+            content: `<p>Il <strong>rendimento</strong> $\\eta$ di una macchina termica è il rapporto tra il lavoro totale compiuto in un ciclo e il calore assorbito dalla sorgente calda:</p>
+<p>$$\\eta = \\frac{W}{Q_{AB}}$$</p>
+<p>Poiché il ciclo è una trasformazione chiusa, $\\Delta U_{ciclo} = 0$. Dal primo principio, il lavoro totale è uguale al calore totale scambiato:</p>
+<p>$$W = Q_{tot} = Q_{AB} + Q_{CD}$$</p>
+<p>dove $Q_{AB} \\gt 0$ (calore assorbito) e $Q_{CD} \\lt 0$ (calore ceduto). Sostituendo:</p>
+<p>$$\\eta = \\frac{Q_{AB} + Q_{CD}}{Q_{AB}} = 1 + \\frac{Q_{CD}}{Q_{AB}} = 1 - \\frac{|Q_{CD}|}{Q_{AB}}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Calcolo dei calori scambiati",
+                    content: `<p><strong>Calore assorbito (A → B)</strong> — isoterma a temperatura $T_2$:</p>
+<p>$$Q_{AB} = nRT_2 \\ln\\left(\\frac{V_B}{V_A}\\right)$$</p>
+<p>Poiché $V_B \\gt V_A$ (espansione), si ha $Q_{AB} \\gt 0$.</p>
+<p><strong>Calore ceduto (C → D)</strong> — isoterma a temperatura $T_1$:</p>
+<p>$$Q_{CD} = nRT_1 \\ln\\left(\\frac{V_D}{V_C}\\right)$$</p>
+<p>Poiché $V_D \\lt V_C$ (compressione), si ha $Q_{CD} \\lt 0$.</p>
+<p>Nelle trasformazioni adiabatiche (B → C e D → A), il calore scambiato è nullo per definizione.</p>`
+                },
+                {
+                    subtitle: "Relazione tra i volumi dalle adiabatiche",
+                    content: `<p>Dalle equazioni delle adiabatiche reversibili ($TV^{\\gamma-1} = \\text{costante}$), ricaviamo il rapporto $T_2/T_1$.</p>
+<p><strong>Dall'adiabatica B → C</strong> ($T_B = T_2$, $T_C = T_1$):</p>
+<p>$$T_2 V_B^{\\gamma - 1} = T_1 V_C^{\\gamma - 1} \\quad \\Rightarrow \\quad \\frac{T_2}{T_1} = \\left(\\frac{V_C}{V_B}\\right)^{\\gamma - 1}$$</p>
+<p><strong>Dall'adiabatica D → A</strong> ($T_D = T_1$, $T_A = T_2$): si applica $TV^{\\gamma-1} = \\text{cost}$ con $T_1 V_D^{\\gamma-1} = T_2 V_A^{\\gamma-1}$, da cui:</p>
+<p>$$\\frac{T_2}{T_1} = \\left(\\frac{V_D}{V_A}\\right)^{\\gamma - 1}$$</p>
+<p>(Il rapporto è $V_D/V_A$ perché $V_D \\gt V_A$: D è uno stato espanso rispetto ad A.)</p>
+<p>Uguagliando i secondi membri:</p>
+<p>$$\\left(\\frac{V_C}{V_B}\\right)^{\\gamma-1} = \\left(\\frac{V_D}{V_A}\\right)^{\\gamma-1} \\quad \\Rightarrow \\quad \\frac{V_C}{V_B} = \\frac{V_D}{V_A}$$</p>
+<p>Riorganizzando, otteniamo la <strong>relazione cruciale</strong>:</p>
+<p>$$\\frac{V_B}{V_A} = \\frac{V_C}{V_D}$$</p>`
+                },
+                {
+                    subtitle: "Semplificazione e risultato finale",
+                    content: `<p>Il modulo del calore ceduto è:</p>
+<p>$$|Q_{CD}| = \\left|nRT_1 \\ln\\left(\\frac{V_D}{V_C}\\right)\\right| = nRT_1 \\ln\\left(\\frac{V_C}{V_D}\\right)$$</p>
+<p>Usando $V_C/V_D = V_B/V_A$:</p>
+<p>$$|Q_{CD}| = nRT_1 \\ln\\left(\\frac{V_B}{V_A}\\right)$$</p>
+<p>Sostituendo nella formula del rendimento:</p>
+<p>$$\\eta = 1 - \\frac{|Q_{CD}|}{Q_{AB}} = 1 - \\frac{nRT_1 \\ln(V_B/V_A)}{nRT_2 \\ln(V_B/V_A)}$$</p>
+<p>I termini $nR$ e $\\ln(V_B/V_A)$ si semplificano, portando al risultato finale:</p>
+<p>$$\\eta_{\\text{Carnot}} = 1 - \\frac{T_1}{T_2}$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Rendimento di Carnot", latex: "\\eta_{\\text{Carnot}} = 1 - \\frac{T_1}{T_2}" },
+                { label: "Relazione tra i volumi", latex: "\\frac{V_B}{V_A} = \\frac{V_C}{V_D}" }
+            ]
+        },
+        {
+            id: "s51-importanza-rendimento",
+            type: "alert_box",
+            title: "Significato del Rendimento di Carnot",
+            icon: "⚠️",
+            content: `<p>Il rendimento del ciclo di Carnot dipende <strong>esclusivamente</strong> dalle temperature assolute delle due sorgenti tra cui opera, e <strong>non</strong> dalla sostanza utilizzata per compiere il ciclo.</p>
+<p><strong>Esempio:</strong> una centrale termica opera tra una caldaia a $T_2 = 800\\,\\text{K}$ e un condensatore a $T_1 = 300\\,\\text{K}$. Il rendimento massimo teorico è:</p>
+<p>$$\\eta_{\\text{Carnot}} = 1 - \\frac{300}{800} = 1 - 0{,}375 = 0{,}625 = 62{,}5\\%$$</p>
+<p>Al massimo il $62{,}5\\%$ del calore prelevato dalla caldaia può essere convertito in lavoro utile. Il restante $37{,}5\\%$ viene inevitabilmente ceduto al condensatore. <strong>Nessuna macchina termica reale</strong> operante tra queste due temperature potrà mai superare questo valore.</p>`
+        },
+        {
+            id: "s51-teorema-carnot",
+            type: "section",
+            title: "Teorema di Carnot",
+            icon: "🏛️",
+            content: `<p>Il rendimento del ciclo di Carnot non è soltanto il risultato di un calcolo specifico per un gas ideale: stabilisce un <strong>limite universale</strong> per tutte le macchine termiche.</p>
+<p><strong>Teorema di Carnot.</strong> Nessuna macchina termica che operi tra due sorgenti alle temperature $T_1$ (fredda) e $T_2$ (calda), con $T_1 \\lt T_2$, può avere un rendimento superiore a quello di una macchina di Carnot (reversibile) operante tra le stesse due sorgenti:</p>
+<p>$$\\eta \\leq \\eta_{\\text{Carnot}} = 1 - \\frac{T_1}{T_2}$$</p>
+<p>L'uguaglianza vale se e solo se la macchina è reversibile.</p>`,
+            subsections: [
+                {
+                    subtitle: "Schema della dimostrazione per assurdo",
+                    content: `<p>La dimostrazione completa richiede il secondo principio della termodinamica. Ne presentiamo lo schema logico:</p>
+<ol>
+<li><strong>Ipotesi per assurdo:</strong> supponiamo che esista una macchina $\\mathcal{M}$ con rendimento $\\eta_{\\mathcal{M}} \\gt \\eta_{\\text{Carnot}}$, operante tra le stesse sorgenti $T_1$ e $T_2$.</li>
+<li><strong>Costruzione:</strong> accoppiamo $\\mathcal{M}$ con una macchina di Carnot funzionante <strong>al contrario</strong> ($\\mathcal{C}^{-1}$, cioè come pompa di calore). La macchina $\\mathcal{C}^{-1}$ assorbe calore dalla sorgente fredda e lo cede alla calda, consumando lavoro. Scegliamo $\\mathcal{C}^{-1}$ in modo che assorba dalla sorgente calda esattamente il calore che $\\mathcal{M}$ le cede.</li>
+<li><strong>Bilancio:</strong> poiché $\\eta_{\\mathcal{M}} \\gt \\eta_{\\text{Carnot}}$, la macchina $\\mathcal{M}$ produce più lavoro di quanto $\\mathcal{C}^{-1}$ ne consumi. L'effetto netto del sistema composto è: <strong>si estrae calore dalla sorgente fredda e lo si converte interamente in lavoro</strong>, senza alcun altro effetto.</li>
+<li><strong>Contraddizione:</strong> questo viola il secondo principio nella formulazione di Kelvin-Planck (è impossibile realizzare una trasformazione ciclica il cui unico risultato sia l'assorbimento di calore da una sola sorgente e la sua completa conversione in lavoro).</li>
+</ol>
+<p>Quindi l'ipotesi è falsa: $\\eta_{\\mathcal{M}} \\leq \\eta_{\\text{Carnot}}$ per ogni macchina termica.</p>`
+                },
+                {
+                    subtitle: "Corollari del Teorema di Carnot",
+                    content: `<p>Dal teorema seguono due importanti conseguenze:</p>
+<ol>
+<li><strong>Tutte le macchine reversibili</strong> operanti tra le stesse due sorgenti hanno lo <strong>stesso rendimento</strong>, indipendentemente dalla sostanza di lavoro o dai dettagli costruttivi.</li>
+<li><strong>Ogni macchina irreversibile</strong> operante tra le stesse due sorgenti ha un rendimento <strong>strettamente inferiore</strong> a quello di Carnot: $\\eta_{\\text{irrev}} \\lt 1 - T_1/T_2$.</li>
+</ol>`
+                }
+            ],
+            formulas: [
+                { label: "Teorema di Carnot", latex: "\\eta \\leq 1 - \\frac{T_1}{T_2}" }
+            ]
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Cos'è una sorgente termodinamica?",
+            back: "Un sistema termodinamico con capacità termica infinita ($C_{cap} \\to \\infty$). Per qualsiasi quantità finita di calore scambiato, la sua temperatura non varia: $dT = \\delta Q / C_{cap} \\to 0$. Esempio: un lago rispetto a un piccolo oggetto caldo."
+        },
+        {
+            type: "domanda",
+            front: "Perché il calore specifico dipende dalla trasformazione?",
+            back: "Perché il calore scambiato $\\delta Q$ è una funzione di processo, non di stato. Il rapporto $C = \\frac{1}{m}\\frac{\\delta Q}{dT}$ dipende quindi dal tipo di trasformazione. Ad esempio, per un gas ideale $C_p \\gt C_v$: a pressione costante il calore deve coprire sia l'aumento di energia interna sia il lavoro di espansione."
+        },
+        {
+            type: "domanda",
+            front: "Da quali trasformazioni è composto il ciclo di Carnot e tra quanti serbatoi opera?",
+            back: "Il ciclo di Carnot è composto da quattro trasformazioni reversibili alternate: espansione isoterma (a $T_2$), espansione adiabatica, compressione isoterma (a $T_1$), compressione adiabatica. Opera tra due sorgenti: una calda a $T_2$ e una fredda a $T_1 \\lt T_2$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si ricava il rendimento del ciclo di Carnot?",
+            back: "Si parte da $\\eta = 1 - |Q_{CD}|/Q_{AB}$. I calori si calcolano come isoterme reversibili: $Q_{AB} = nRT_2 \\ln(V_B/V_A)$ e $|Q_{CD}| = nRT_1 \\ln(V_C/V_D)$. Dalle adiabatiche reversibili ($TV^{\\gamma-1} = \\text{cost}$) si dimostra che $V_B/V_A = V_C/V_D$. I logaritmi si semplificano e resta $\\eta_{\\text{Carnot}} = 1 - T_1/T_2$."
+        },
+        {
+            type: "formula",
+            front: "Scrivi il rendimento del ciclo di Carnot e spiega da cosa dipende.",
+            back: "$\\eta_{\\text{Carnot}} = 1 - \\frac{T_1}{T_2}$, dove $T_1$ è la temperatura della sorgente fredda e $T_2$ quella della sorgente calda (in kelvin). Dipende esclusivamente dalle temperature assolute delle due sorgenti, non dalla sostanza di lavoro."
+        },
+        {
+            type: "domanda",
+            front: "Enuncia il Teorema di Carnot e i suoi due corollari.",
+            back: "Nessuna macchina termica operante tra due sorgenti a $T_1$ e $T_2$ può avere rendimento superiore a quello di una macchina reversibile: $\\eta \\leq 1 - T_1/T_2$. Corollario 1: tutte le macchine reversibili tra le stesse sorgenti hanno lo stesso rendimento. Corollario 2: ogni macchina irreversibile ha rendimento strettamente inferiore a quello di Carnot."
+        },
+        {
+            type: "dimostrazione",
+            front: "Descrivi lo schema della dimostrazione per assurdo del Teorema di Carnot.",
+            back: "Si suppone che esista una macchina $\\mathcal{M}$ con $\\eta \gt \\eta_{\\text{Carnot}}$. La si accoppia con una macchina di Carnot inversa $\\mathcal{C}^{-1}$, scelta in modo che la sorgente calda abbia bilancio nullo. Poiché $\\mathcal{M}$ produce più lavoro di quanto $\\mathcal{C}^{-1}$ ne consumi, l'effetto netto è estrarre calore dalla sola sorgente fredda e convertirlo interamente in lavoro: ciò viola il secondo principio (Kelvin-Planck)."
+        },
+        {
+            type: "tranello",
+            front: "Perché il rendimento di Carnot non può mai raggiungere il 100%?",
+            back: "Dalla formula $\\eta = 1 - T_1/T_2$, il rendimento è 1 (100%) solo se $T_1 = 0\\,\\text{K}$, cioè zero assoluto. Ma il terzo principio della termodinamica impedisce di raggiungere lo zero assoluto. Inoltre, con sorgenti a temperature reali si ha sempre $T_1 \\gt 0$, quindi $\\eta \\lt 1$. Per esempio, tra 300 K e 800 K il massimo è solo 62,5%."
+        },
+        {
+            type: "formula",
+            front: "Scrivi le tre equazioni di Poisson per un'adiabatica reversibile e mostra come si ricava la seconda dalla prima.",
+            back: "Le tre forme sono: $pV^\\gamma = \\text{cost}$, $TV^{\\gamma-1} = \\text{cost}$, $Tp^{(1-\\gamma)/\\gamma} = \\text{cost}$. Per ricavare la seconda: da $pV^\\gamma = K$ si sostituisce $p = nRT/V$, ottenendo $nRT \\cdot V^{\\gamma-1} = K$. Poiché $nR$ è costante, segue $TV^{\\gamma-1} = \\text{costante}$."
+        },
+        {
+            type: "domanda",
+            front: "Perché l'adiabatica reversibile è più ripida dell'isoterma nel piano p-V?",
+            back: "L'isoterma segue $p \\propto V^{-1}$, l'adiabatica segue $p \\propto V^{-\\gamma}$ con $\\gamma \\gt 1$. L'esponente dell'adiabatica è maggiore in valore assoluto, quindi la curva scende più rapidamente: a parità di espansione, la pressione cala di più perché non c'è calore in ingresso a compensare."
+        }
+    ]
+};
+
