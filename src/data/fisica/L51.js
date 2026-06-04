@@ -553,8 +553,51 @@ const LESSON = {
     ],
 
     oral_cards: [
-      {
-        type: "definizione",
-        front: "Qual è il significato fisico del calore specifico e in che modo è analogo alla massa inerziale?",
-        back: "Il calore specifico è l'**inerzia termica per unità di massa**: la propensione di un sistema monofasico a *non* cambiare il proprio stato termico in seguito a uno scambio di calore. L'analogia con la dinamica: in dinamica $m = F/a$ (azione diviso effetto), in termodinamica $c = \\frac{1}{m}\\frac{\\delta Q}{dT}$ (azione diviso effetto). A parità di calore scambiato, un sistema
+        {
+            type: "definizione",
+            front: "Cos'è una sorgente termodinamica?",
+            back: "È un sistema termodinamico con capacità termica infinita ($C_{cap} \\to \\infty$). Può assorbire o cedere qualsiasi quantità finita di calore senza variare apprezzabilmente la propria temperatura, poiché $dT = \\delta Q / C_{cap} \\to 0$. Esempio: un lago rispetto a un piccolo oggetto caldo immerso in esso."
+        },
+        {
+            type: "domanda",
+            front: "Perché il calore specifico dipende dal tipo di trasformazione?",
+            back: "Perché il calore scambiato $\\delta Q$ è una funzione di processo, non di stato. Il calore specifico è definito come $C = \\frac{1}{m}\\frac{\\delta Q}{dT}$, e poiché $\\delta Q$ dipende dalla trasformazione, anche $C$ ne dipende. Per esempio, $C_p \\gt C_v$ perché a pressione costante parte del calore serve a compiere lavoro di espansione."
+        },
+        {
+            type: "domanda",
+            front: "Quali sono le quattro fasi del ciclo di Carnot?",
+            back: "1) A→B: espansione isoterma reversibile a $T_2$ (assorbe calore $Q_{AB} \\gt 0$). 2) B→C: espansione adiabatica reversibile (temperatura scende da $T_2$ a $T_1$). 3) C→D: compressione isoterma reversibile a $T_1$ (cede calore $Q_{CD} \\lt 0$). 4) D→A: compressione adiabatica reversibile (temperatura risale da $T_1$ a $T_2$)."
+        },
+        {
+            type: "dimostrazione",
+            front: "Ricava il rendimento del ciclo di Carnot per un gas ideale.",
+            back: "Poiché $\\Delta U_{ciclo} = 0$, si ha $W = Q_{AB} + Q_{CD}$ e $\\eta = W/Q_{AB} = 1 - |Q_{CD}|/Q_{AB}$. I calori sulle isoterme sono $Q_{AB} = nRT_2 \\ln(V_B/V_A)$ e $|Q_{CD}| = nRT_1 \\ln(V_C/V_D)$. Dalle adiabatiche ($TV^{\\gamma-1} = \\text{cost}$) si ricava $V_B/V_A = V_C/V_D$, quindi i logaritmi si semplificano e resta $\\eta_{\\text{Carnot}} = 1 - T_1/T_2$."
+        },
+        {
+            type: "formula",
+            front: "Scrivi le tre equazioni di Poisson per un'adiabatica reversibile di gas ideale.",
+            back: "1) $pV^\\gamma = \\text{costante}$, 2) $TV^{\\gamma-1} = \\text{costante}$, 3) $Tp^{\\frac{1-\\gamma}{\\gamma}} = \\text{costante}$, dove $\\gamma = C_p/C_v$. La seconda e la terza si ricavano dalla prima sostituendo $p$ o $V$ tramite la legge dei gas ideali $pV = nRT$."
+        },
+        {
+            type: "tranello",
+            front: "Il rendimento di Carnot dipende dal tipo di gas ideale usato (monoatomico o biatomico)?",
+            back: "No! Il rendimento $\\eta_{\\text{Carnot}} = 1 - T_1/T_2$ dipende esclusivamente dalle temperature delle due sorgenti. Non compare $\\gamma$, né $C_v$, né $C_p$. Nella derivazione, il rapporto dei logaritmi si semplifica grazie alla relazione tra i volumi imposta dalle adiabatiche, eliminando ogni dipendenza dalla sostanza."
+        },
+        {
+            type: "domanda",
+            front: "Perché sul piano p-V un'adiabatica reversibile è più ripida di un'isoterma che parte dallo stesso punto?",
+            back: "L'isoterma ha equazione $p \\propto V^{-1}$, mentre l'adiabatica ha equazione $p \\propto V^{-\\gamma}$. Poiché $\\gamma \\gt 1$, la pendenza (in valore assoluto) dell'adiabatica è maggiore di quella dell'isoterma."
+        },
+        {
+            type: "domanda",
+            front: "In una trasformazione isoterma di un gas ideale, qual è la relazione tra calore e lavoro? E la variazione di energia interna?",
+            back: "Poiché $T = \\text{cost}$ e per un gas ideale $U$ dipende solo da $T$, si ha $\\Delta U = 0$. Dal primo principio: $Q = W$. Per una isoterma reversibile: $Q = W = nRT \\ln(V_B/V_A)$."
+        },
+        {
+            type: "domanda",
+            front: "Nell'esempio della centrale termica con $T_2 = 800$ K e $T_1 = 300$ K, qual è il rendimento massimo? Cosa implica per il calore ceduto?",
+            back: "Il rendimento massimo è $\\eta_{\\text{Carnot}} = 1 - 300/800 = 62{,}5\\%$. Ciò implica che almeno il $37{,}5\\%$ del calore assorbito dalla caldaia viene inevitabilmente ceduto al condensatore. Nessuna macchina termica reale operante tra queste temperature può fare meglio."
+        }
+    ]
+};
 
