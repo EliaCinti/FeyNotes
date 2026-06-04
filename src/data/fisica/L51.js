@@ -87,9 +87,9 @@ const LESSON = {
         subsections: [
           {
             subtitle: "Esempio: cubetto di rame nel bicchiere vs nel lago",
-            content: `<p>Si prende un cubetto di rame arroventato (es. $200\\,^\\circ\\mathrm{C}$):</p>
+            content: `<p>Si prende un cubetto di rame arroventato (es. $200^{\\circ}\\mathrm{C}$):</p>
 <ul>
-  <li>Immerso in un <strong>bicchiere d'acqua</strong> a $25\\,^\\circ\\mathrm{C}$, l'acqua si scalda visibilmente (es. fino a $35$–$40\\,^\\circ\\mathrm{C}$). L'acqua ha massa limitata e capacità termica finita.</li>
+  <li>Immerso in un <strong>bicchiere d'acqua</strong> a $25^{\\circ}\\mathrm{C}$, l'acqua si scalda visibilmente (es. fino a $35$–$40^{\\circ}\\mathrm{C}$). L'acqua ha massa limitata e capacità termica finita.</li>
   <li>Lo stesso cubetto immerso in un <strong>lago</strong> alla stessa temperatura iniziale: la temperatura media del lago non cambia in maniera apprezzabile.</li>
 </ul>
 <p>La sostanza è la stessa ($\\mathrm{H}_2\\mathrm{O}$), il calore ceduto dal cubo è lo stesso, ma nel secondo caso la capacità termica del bacino è enormemente più grande. Per esperimenti di questo tipo, il lago si comporta come una <em>sorgente termodinamica</em>.</p>`
@@ -289,9 +289,9 @@ const LESSON = {
         type: "alert_box",
         title: "Trappola d'esame: temperature assolute!",
         icon: "⚠️",
-        content: `<p>Se in condizioni isocore vi chiedo: <em>"Raddoppiando la temperatura da $10\\,^\\circ\\mathrm{C}$ a $20\\,^\\circ\\mathrm{C}$, la pressione raddoppia?"</em></p>
-<p>La risposta è <strong>no!</strong> La proporzionalità vale solo per le temperature <em>assolute</em>. Infatti $10\\,^\\circ\\mathrm{C} = 283\\,\\mathrm{K}$ e $20\\,^\\circ\\mathrm{C} = 293\\,\\mathrm{K}$: il rapporto $293/283 \\approx 1{,}04$, ben lontano da 2.</p>
-<p>Per raddoppiare la pressione partendo da $300\\,\\mathrm{K}$ ($27\\,^\\circ\\mathrm{C}$), bisogna portarsi a $600\\,\\mathrm{K}$ ($327\\,^\\circ\\mathrm{C}$).</p>`
+        content: `<p>Se in condizioni isocore vi chiedo: <em>"Raddoppiando la temperatura da $10^{\\circ}\\mathrm{C}$ a $20^{\\circ}\\mathrm{C}$, la pressione raddoppia?"</em></p>
+<p>La risposta è <strong>no!</strong> La proporzionalità vale solo per le temperature <em>assolute</em>. Infatti $10^{\\circ}\\mathrm{C} = 283\\,\\mathrm{K}$ e $20^{\\circ}\\mathrm{C} = 293\\,\\mathrm{K}$: il rapporto $293/283 \\approx 1{,}04$, ben lontano da 2.</p>
+<p>Per raddoppiare la pressione partendo da $300\\,\\mathrm{K}$ ($27^{\\circ}\\mathrm{C}$), bisogna portarsi a $600\\,\\mathrm{K}$ ($327^{\\circ}\\mathrm{C}$).</p>`
       },
       {
         id: "s52-isobara",
@@ -419,7 +419,7 @@ const LESSON = {
           },
           {
             subtitle: "Esempio: il frigorifero domestico",
-            content: `<p>All'interno del frigorifero c'è dell'aria a temperatura ambiente. Per portarla a $4\\,^\\circ\\mathrm{C}$ il calore deve passare dall'interno (freddo) all'esterno (caldo): processo non spontaneo. Un <em>compressore</em> comprime un gas refrigerante in una serpentina; questo gas, fatto poi espandere, si raffredda al di sotto della temperatura dell'aria interna, ne assorbe calore e lo cede infine all'ambiente esterno attraverso lo scambiatore posteriore.</p>
+            content: `<p>All'interno del frigorifero c'è dell'aria a temperatura ambiente. Per portarla a $4^{\\circ}\\mathrm{C}$ il calore deve passare dall'interno (freddo) all'esterno (caldo): processo non spontaneo. Un <em>compressore</em> comprime un gas refrigerante in una serpentina; questo gas, fatto poi espandere, si raffredda al di sotto della temperatura dell'aria interna, ne assorbe calore e lo cede infine all'ambiente esterno attraverso lo scambiatore posteriore.</p>
 <p>Il rumore del frigorifero quando "parte" è proprio il compressore. Se la serpentina si buca, il compressore continua a girare (consumando lavoro), ma il trasferimento di calore dalla sorgente fredda diventa inefficace.</p>`
           },
           {
