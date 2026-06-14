@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 39 — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Fisica 1, Lezione 39: Energia inutilizzata, diagrammi T-S e calcolo di variazioni di entropia. Completiamo il discorso sull'entropia introducendo l'energia inutilizzata legata all'irreversibilità, il diagramma termodinamico T-S come alternativa al piano di Clapeyron, e tre esempi concreti di calcolo della variazione di entropia dell'universo termodinamico.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 39: Energia inutilizzata, diagrammi T-S e calcolo di variazioni di entropia — Fisica 1">
+  <meta property="og:description" content="Completiamo il discorso sull'entropia introducendo l'energia inutilizzata legata all'irreversibilità, il diagramma termodinamico T-S come alternativa al piano di Clapeyron, e tre esempi concreti di calcolo della variazione di entropia dell'universo termodinamico.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/lezioni/L54/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/lezioni/L54/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 39 — Energia inutilizzata, diagrammi T-S e calcolo di variazioni di entropia",
+  "description": "Completiamo il discorso sull'entropia introducendo l'energia inutilizzata legata all'irreversibilità, il diagramma termodinamico T-S come alternativa al piano di Clapeyron, e tre esempi concreti di calcolo della variazione di entropia dell'universo termodinamico.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/lezioni/L54/",
+  "datePublished": "2026-06-10",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 39</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="#">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/lezioni/L53/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L54", date: "Lezione 39 — 10 Giu 2026",
+    title: "Energia inutilizzata, diagrammi T-S e calcolo di variazioni di entropia",
+    abstract: "Completiamo il discorso sull'entropia introducendo l'energia inutilizzata legata all'irreversibilità, il diagramma termodinamico T-S come alternativa al piano di Clapeyron, e tre esempi concreti di calcolo della variazione di entropia dell'universo termodinamico.",
+
+    sections: [
+        {
+            id: "s54-energia-inutilizzata",
+            type: "section",
+            title: "Energia inutilizzata",
+            icon: "🔋",
+            content: `<p>Le considerazioni svolte in precedenza sull'irreversibilità si estendono al caso generale in cui il sistema scambia calore con più sorgenti, anche con $N \\gt 2$ sorgenti. Confrontando una trasformazione reale (irreversibile) con la corrispondente trasformazione reversibile tra gli stessi stati estremi, si osserva che la differenza tra il lavoro reversibile e quello irreversibile è proporzionale alla variazione di entropia dell'universo termodinamico:</p>
+<p>$$|W_{\\text{rev}} - W_{\\text{irr}}| \\propto \\Delta S_U$$</p>
+<p>La domanda fisica è: <strong>quanto siamo lontani dalla massima energia utilizzabile</strong>, cioè dalla trasformazione reversibile? La risposta è contenuta nella relazione precedente, che si può rendere quantitativa introducendo come fattore di proporzionalità la temperatura $T_0$ della sorgente con cui il sistema scambia calore:</p>
+<p>$$|W_{\\text{rev}} - W_{\\text{irr}}| = E_0 = T_0 \\, \\Delta S_U$$</p>
+<p>La quantità $E_0$ prende il nome di <strong>energia inutilizzata</strong>.</p>
+<p>Il fattore $T_0$ emerge naturalmente dall'analisi: il lavoro "perso" a causa dell'irreversibilità corrisponde al calore che potrebbe essere convertito in lavoro operando reversibilmente con la sorgente a temperatura $T_0$, e il prodotto $T_0 \\Delta S_U$ fornisce esattamente questa quantità.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione formale",
+                    content: `<p>Data una trasformazione irreversibile in cui il sistema scambia calore con una sorgente a temperatura $T_0$, si definisce <strong>energia inutilizzata</strong> la quantità:</p>
+<p>$$E_0 = T_0 \\, \\Delta S_U$$</p>
+<p>dove $\\Delta S_U$ è la variazione di entropia dell'universo termodinamico associata alla trasformazione. Essa misura l'energia che, a causa delle irreversibilità, <strong>non è più disponibile</strong> per essere trasformata in lavoro.</p>`
+                },
+                {
+                    subtitle: "Significato fisico",
+                    content: `<p>Per una <strong>trasformazione reversibile</strong>: $\\Delta S_U = 0$ e quindi $E_0 = 0$. Tutta l'energia è in linea di principio utilizzabile.</p>
+<p>Per una <strong>trasformazione irreversibile</strong>: $\\Delta S_U \\gt 0$ e quindi $E_0 \\gt 0$. Una parte dell'energia è ormai persa ai fini della produzione di lavoro.</p>
+<p>Questo è il <strong>significato termodinamico profondo</strong> dell'aumento di entropia dell'universo: ogni aumento di entropia corrisponde a energia che diventa inutilizzabile per produrre lavoro.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Energia inutilizzata", latex: "E_0 = T_0 \\, \\Delta S_U" },
+                { label: "Caso reversibile", latex: "\\Delta S_U = 0 \\Rightarrow E_0 = 0" }
+            ]
+        },
+        {
+            id: "s54-diagramma-ts",
+            type: "section",
+            title: "Il diagramma T-S",
+            icon: "📊",
+            content: `<p>Finora abbiamo rappresentato le trasformazioni termodinamiche di un gas nel <strong>piano di Clapeyron</strong> $p$-$V$, dove l'area sottesa da una curva $A \\to B$ rappresenta il lavoro scambiato lungo la trasformazione:</p>
+<p>$$W = \\int_A^B p \\, dV$$</p>
+<p>In modo del tutto analogo si può introdurre un diagramma in cui sull'asse delle ascisse compare l'<strong>entropia $S$</strong> e sull'asse delle ordinate la <strong>temperatura $T$</strong>. Questo diagramma è particolarmente utile quando si vogliono visualizzare scambi di calore reversibili.</p>`,
+            subsections: [
+                {
+                    subtitle: "Calore come area nel piano T-S",
+                    content: `<p>Partiamo dalla definizione differenziale di entropia: per una trasformazione reversibile infinitesima</p>
+<p>$$dS = \\left( \\frac{dQ}{T} \\right)_{\\text{rev}}$$</p>
+<p>da cui, integrando lungo una trasformazione reversibile da $A$ a $B$:</p>
+<p>$$\\Delta S = \\int_A^B \\left( \\frac{dQ}{T} \\right)_{\\text{rev}}$$</p>
+<p>Invertendo la relazione differenziale, possiamo scrivere $dQ_{\\text{rev}} = T \\, dS$ e quindi:</p>
+<p>$$Q_{\\text{rev}} = \\int_A^B T \\, dS$$</p>
+<p>Nel piano $T$-$S$, dunque, <strong>l'area sottesa dalla curva</strong> che rappresenta la trasformazione reversibile $A \\to B$ rappresenta il <strong>calore scambiato reversibilmente</strong>.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Confronto piano p-V e piano T-S</strong></p>
+  <p><em>A sinistra: piano di Clapeyron ($p$-$V$) con curva $A \\to B$ e area ombreggiata che rappresenta il lavoro $W = \\int p \\, dV$. A destra: piano $T$-$S$ con curva $A \\to B$ e area ombreggiata che rappresenta il calore $Q_{\\text{rev}} = \\int T \\, dS$. Nota: la forma della curva nei due piani è in generale diversa per la stessa trasformazione; i diagrammi sono puramente schematici per illustrare l'analogia tra le aree.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>L'analogia tra i due diagrammi è perfetta:</p>
+<ul>
+<li>nel piano $p$-$V$ l'area sotto la curva è il lavoro $W = \\int p \\, dV$;</li>
+<li>nel piano $T$-$S$ l'area sotto la curva è il calore reversibile $Q_{\\text{rev}} = \\int T \\, dS$.</li>
+</ul>`
+                },
+                {
+                    subtitle: "Trasformazioni cicliche nel piano T-S",
+                    content: `<p>Nel caso di una trasformazione ciclica, il sistema torna allo stato iniziale e quindi $\\Delta U = 0$. Per il primo principio si ha:</p>
+<p>$$Q = W$$</p>
+<p>ovvero il calore totale scambiato nel ciclo è uguale al lavoro totale prodotto. In un diagramma $T$-$S$ il ciclo si chiude su sé stesso e l'<strong>area racchiusa dalla curva chiusa</strong> rappresenta proprio:</p>
+<p>$$Q = Q_A + Q_C = W$$</p>
+<p>dove $Q_A$ è il calore assorbito (tratti in cui $S$ aumenta) e $Q_C$ è il calore ceduto (tratti in cui $S$ diminuisce).</p>
+<p>Per un ciclo generico (non di Carnot), la curva nel piano $T$-$S$ non è un rettangolo ma una curva chiusa qualsiasi; l'area racchiusa rappresenta comunque il lavoro netto del ciclo.</p>`
+                },
+                {
+                    subtitle: "Il ciclo di Carnot nel piano T-S",
+                    content: `<p>Il ciclo di Carnot, che nel piano $p$-$V$ ha la classica forma curvilinea delimitata da due isoterme e due adiabatiche, nel piano $T$-$S$ assume una forma estremamente semplice: è un <strong>rettangolo</strong>. Infatti:</p>
+<ul>
+<li>le due <strong>isoterme</strong> (a temperature $T_1$ e $T_2 \\gt T_1$) sono <strong>segmenti orizzontali</strong> nel piano $T$-$S$;</li>
+<li>le due <strong>adiabatiche reversibili</strong>, essendo $dQ_{\\text{rev}} = 0$ e dunque $dS = 0$, sono trasformazioni a entropia costante (<strong>isoentropiche</strong>) e quindi <strong>segmenti verticali</strong> nel piano $T$-$S$.</li>
+</ul>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 2 — Ciclo di Carnot nel piano T-S</strong></p>
+  <p><em>Rettangolo con vertici $A$ (in alto a sinistra), $B$ (in alto a destra), $C$ (in basso a destra), $D$ (in basso a sinistra). Asse orizzontale: $S$ con valori $S_1$ e $S_2$. Asse verticale: $T$ con valori $T_1$ (bassa) e $T_2$ (alta). Frecce in senso orario: $A \\to B$ (isoterma calda), $B \\to C$ (adiabatica), $C \\to D$ (isoterma fredda), $D \\to A$ (adiabatica). Area ombreggiata = lavoro $W$. Il verso di percorrenza orario nel piano $T$-$S$ corrisponde al ciclo diretto (motore): il sistema assorbe calore $Q_2 = T_2(S_2-S_1)$ dall'isoterma calda e cede $Q_1 = T_1(S_2-S_1)$ all'isoterma fredda.</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>
+<p>Il calore totale scambiato nel ciclo, che coincide con il lavoro, è l'area del rettangolo:</p>
+<p>$$Q = (T_2 - T_1)(S_2 - S_1) = W$$</p>`
+                }
+            ],
+            formulas: [
+                { label: "Calore reversibile (piano T-S)", latex: "Q_{\\text{rev}} = \\int_A^B T \\, dS" },
+                { label: "Lavoro del ciclo di Carnot (piano T-S)", latex: "W = (T_2 - T_1)(S_2 - S_1)" }
+            ]
+        },
+        {
+            id: "s54-metodo-calcolo-entropia",
+            type: "alert_box",
+            title: "Metodo generale per calcolare ΔS_U",
+            icon: "⚠️",
+            content: `<p>Per calcolare la variazione di entropia dell'universo termodinamico:</p>
+<p>$$\\Delta S_U = \\Delta S_{\\text{amb}} + \\Delta S_{\\text{sist}}$$</p>
+<p>Il punto cruciale è che, per calcolare $\\Delta S$, si deve scegliere una trasformazione <strong>reversibile</strong> che colleghi gli stessi stati iniziale e finale della trasformazione reale, anche se quest'ultima è irreversibile: l'entropia è una <strong>funzione di stato</strong>, quindi $\\Delta S$ dipende solo dagli stati estremi.</p>
+<p>Il procedimento è sempre lo stesso:</p>
+<ol>
+<li>Si identificano sistema e ambiente.</li>
+<li>Per ciascuno si individua una trasformazione <strong>reversibile</strong> che colleghi gli stessi stati iniziale e finale.</li>
+<li>Si calcola $\\Delta S = \\int (dQ/T)_{\\text{rev}}$ lungo tale trasformazione.</li>
+<li>Si somma per ottenere $\\Delta S_U$, che risulta sempre $\\gt 0$ per processi spontanei irreversibili.</li>
+</ol>
+<p><strong>Caso semplificato:</strong> quando uno dei due tra sistema e ambiente è una <strong>sorgente</strong> (capacità termica infinita, temperatura costante), il calcolo si semplifica drasticamente: $\\Delta S = Q/T$. Quando invece la temperatura cambia, occorre integrare $dQ = mc \\, dT$ ottenendo termini logaritmici.</p>`
+        },
+        {
+            id: "s54-esempio1",
+            type: "section",
+            title: "Esempio 1: scambio di calore tra due sorgenti",
+            icon: "🔥",
+            content: `<p>Consideriamo un sistema costituito da una sorgente a temperatura $T_2$ che cede una quantità di calore $Q$ a un ambiente, costituito da un'altra sorgente a temperatura $T_1$, con $T_2 \\gt T_1$. Il processo è spontaneo e irreversibile.</p>
+<p>Identifichiamo:</p>
+<ul>
+<li><strong>Sistema:</strong> la sorgente a temperatura $T_2$, che cede calore $Q$.</li>
+<li><strong>Ambiente:</strong> la sorgente a temperatura $T_1$, che assorbe calore $Q$.</li>
+</ul>`,
+            subsections: [
+                {
+                    subtitle: "Variazione di entropia dell'ambiente",
+                    content: `<p>L'ambiente, a temperatura costante $T_1$, assorbe il calore $Q$:</p>
+<p>$$\\Delta S_{\\text{amb}} = \\int_A^B \\left( \\frac{dQ}{T_1} \\right)_{\\text{rev}} = \\frac{Q}{T_1}$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia del sistema",
+                    content: `<p>Il sistema, a temperatura costante $T_2$, cede il calore $Q$:</p>
+<p>$$\\Delta S_{\\text{sist}} = \\int_A^B \\left( \\frac{-dQ}{T_2} \\right)_{\\text{rev}} = -\\frac{Q}{T_2}$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia dell'universo",
+                    content: `<p>$$\\Delta S_U = \\Delta S_{\\text{amb}} + \\Delta S_{\\text{sist}} = \\frac{Q}{T_1} - \\frac{Q}{T_2}$$</p>
+<p>Poiché $T_2 \\gt T_1$, si ha $\\frac{1}{T_1} \\gt \\frac{1}{T_2}$ e quindi:</p>
+<p>$$\\Delta S_U = Q\\left(\\frac{1}{T_1} - \\frac{1}{T_2}\\right) \\gt 0$$</p>
+<p>In pieno accordo con il secondo principio: il processo è irreversibile e l'entropia dell'universo aumenta.</p>`
+                }
+            ],
+            formulas: [
+                { label: "ΔS_U (due sorgenti)", latex: "\\Delta S_U = Q\\left(\\frac{1}{T_1} - \\frac{1}{T_2}\\right)" }
+            ]
+        },
+        {
+            id: "s54-esempio2",
+            type: "section",
+            title: "Esempio 2: riscaldamento di un corpo tramite una sorgente",
+            icon: "🌡️",
+            content: `<p>Un corpo di massa $m$ e calore specifico $c$ si trova inizialmente a temperatura $T_1$. Viene messo a contatto con un'unica sorgente (l'ambiente) a temperatura $T_2 \\gt T_1$, fino a raggiungere l'equilibrio termico alla temperatura $T_2$.</p>
+<p>Il processo reale è irreversibile (contatto diretto tra corpi a temperature finite e diverse), ma per calcolare le variazioni di entropia useremo trasformazioni reversibili equivalenti tra gli stessi stati estremi.</p>`,
+            subsections: [
+                {
+                    subtitle: "Calore scambiato",
+                    content: `<p>Il calore assorbito dal sistema per portarsi da $T_1$ a $T_2$ è:</p>
+<p>$$dQ = mc \\, dT \\quad \\Rightarrow \\quad Q_{\\text{sist}} = mc \\int_{T_1}^{T_2} dT = mc(T_2 - T_1)$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia del sistema",
+                    content: `<p>Per calcolare $\\Delta S_{\\text{sist}}$ immaginiamo di riscaldare il corpo in modo reversibile, ad esempio attraverso una successione di sorgenti a temperature infinitesimamente crescenti da $T_1$ a $T_2$:</p>
+<p>$$\\Delta S_{\\text{sist}} = \\int_{T_1}^{T_2} \\frac{mc \\, dT}{T} = mc \\, \\ln \\frac{T_2}{T_1} \\gt 0$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia dell'ambiente",
+                    content: `<p>L'ambiente è una sorgente a temperatura costante $T_2$ che cede calore al sistema. Con la convenzione che $Q \\gt 0$ indica calore assorbito dal corpo considerato, l'ambiente cede calore, quindi:</p>
+<p>$$Q_{\\text{amb}} = -mc(T_2 - T_1) \\lt 0$$</p>
+<p>(negativo perché l'ambiente perde energia termica). Essendo una sorgente, lo scambio è per esso reversibile:</p>
+<p>$$\\Delta S_{\\text{amb}} = \\frac{Q_{\\text{amb}}}{T_2} = -\\frac{mc(T_2 - T_1)}{T_2} \\lt 0$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia dell'universo",
+                    content: `<p>$$\\Delta S_U = \\Delta S_{\\text{sist}} + \\Delta S_{\\text{amb}} = mc \\, \\ln \\frac{T_2}{T_1} - \\frac{mc(T_2 - T_1)}{T_2} \\gt 0$$</p>
+<p>Confermando ancora una volta l'irreversibilità del processo.</p>`
+                }
+            ],
+            formulas: [
+                { label: "ΔS sistema (corpo riscaldato)", latex: "\\Delta S_{\\text{sist}} = mc \\ln \\frac{T_2}{T_1}" },
+                { label: "ΔS ambiente (sorgente)", latex: "\\Delta S_{\\text{amb}} = -\\frac{mc(T_2 - T_1)}{T_2}" },
+                { label: "ΔS_U (corpo + sorgente)", latex: "\\Delta S_U = mc \\ln \\frac{T_2}{T_1} - \\frac{mc(T_2 - T_1)}{T_2}" }
+            ]
+        },
+        {
+            id: "s54-esempio3",
+            type: "section",
+            title: "Esempio 3: mescolamento termico di due corpi",
+            icon: "🔀",
+            content: `<p>Due corpi, di masse $m_1$ e $m_2$ e calori specifici $c_1$ e $c_2$, si trovano inizialmente a temperature $T_1$ e $T_2$ rispettivamente, con $T_2 \\gt T_1$. Vengono messi a contatto termico (<strong>sistema isolato dall'esterno</strong>) e raggiungono una temperatura di equilibrio $T_E$ con $T_1 \\lt T_E \\lt T_2$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Temperatura di equilibrio",
+                    content: `<p>Per la conservazione dell'energia, il calore ceduto dal corpo caldo è uguale al calore assorbito dal corpo freddo. Imponendo:</p>
+<p>$$m_1 c_1 (T_E - T_1) + m_2 c_2 (T_E - T_2) = 0$$</p>
+<p>da cui si ricava:</p>
+<p>$$T_E = \\frac{m_1 c_1 T_1 + m_2 c_2 T_2}{m_1 c_1 + m_2 c_2}$$</p>
+<p>Identifichiamo come <strong>sistema</strong> il corpo 1 (inizialmente a $T_1$) e come <strong>ambiente</strong> il corpo 2 (inizialmente a $T_2$). Si noti che nessuno dei due è una sorgente ideale: entrambi cambiano temperatura.</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia del sistema",
+                    content: `<p>Il corpo 1 si scalda da $T_1$ a $T_E$:</p>
+<p>$$\\Delta S_{\\text{sist}} = m_1 c_1 \\int_{T_1}^{T_E} \\frac{dT}{T} = m_1 c_1 \\, \\ln \\frac{T_E}{T_1} \\gt 0$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia dell'ambiente",
+                    content: `<p>Il corpo 2 si raffredda da $T_2$ a $T_E$:</p>
+<p>$$\\Delta S_{\\text{amb}} = m_2 c_2 \\int_{T_2}^{T_E} \\frac{dT}{T} = m_2 c_2 \\, \\ln \\frac{T_E}{T_2} \\lt 0$$</p>
+<p>Il segno è negativo perché $T_E \\lt T_2$.</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia dell'universo",
+                    content: `<p>$$\\Delta S_U = \\Delta S_{\\text{sist}} + \\Delta S_{\\text{amb}} = m_1 c_1 \\, \\ln \\frac{T_E}{T_1} + m_2 c_2 \\, \\ln \\frac{T_E}{T_2} \\gt 0$$</p>
+<p>Anche in questo caso il risultato è positivo: il mescolamento termico è un processo irreversibile, e l'entropia dell'universo aumenta.</p>
+<p>Si può dimostrare che questa espressione è sempre positiva usando la disuguaglianza $\\ln x \\leq x - 1$, oppure verificarlo numericamente con un esempio concreto.</p>`
+                }
+            ],
+            formulas: [
+                { label: "Temperatura di equilibrio", latex: "T_E = \\frac{m_1 c_1 T_1 + m_2 c_2 T_2}{m_1 c_1 + m_2 c_2}" },
+                { label: "ΔS_U (mescolamento)", latex: "\\Delta S_U = m_1 c_1 \\ln \\frac{T_E}{T_1} + m_2 c_2 \\ln \\frac{T_E}{T_2}" }
+            ]
+        },
+        {
+            id: "s54-filo-conduttore",
+            type: "note_box",
+            title: "Filo conduttore dei tre esempi",
+            icon: "🧵",
+            content: `<p>Il procedimento è sempre lo stesso:</p>
+<ol>
+<li>Si identificano sistema e ambiente.</li>
+<li>Per ciascuno si individua una trasformazione <strong>reversibile</strong> che colleghi gli stessi stati iniziale e finale della trasformazione reale.</li>
+<li>Si calcola $\\Delta S = \\int (dQ/T)_{\\text{rev}}$ lungo tale trasformazione.</li>
+<li>Si somma per ottenere $\\Delta S_U$, che risulta sempre $\\gt 0$ per processi spontanei irreversibili.</li>
+</ol>
+<p>Quando uno dei due tra sistema e ambiente è una <strong>sorgente</strong> (capacità termica infinita, temperatura costante), il calcolo si semplifica drasticamente: $\\Delta S = Q/T$. Quando invece la temperatura cambia, occorre integrare $dQ = mc \\, dT$ ottenendo <strong>termini logaritmici</strong>.</p>`,
+            table_compare: {
+                headers: ["Esempio", "Sistema", "Ambiente", "Risultato chiave"],
+                rows: [
+                    ["Due sorgenti", "Sorgente a $T_2$ (cede $Q$)", "Sorgente a $T_1$ (assorbe $Q$)", "$\\Delta S_U = Q(1/T_1 - 1/T_2)$"],
+                    ["Corpo + sorgente", "Corpo ($T_1 \\to T_2$)", "Sorgente a $T_2$", "$\\Delta S_U = mc\\ln(T_2/T_1) - mc(T_2-T_1)/T_2$"],
+                    ["Mescolamento", "Corpo 1 ($T_1 \\to T_E$)", "Corpo 2 ($T_2 \\to T_E$)", "$\\Delta S_U = m_1c_1\\ln(T_E/T_1) + m_2c_2\\ln(T_E/T_2)$"]
+                ]
+            }
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è l'energia inutilizzata $E_0$ e qual è la sua formula?",
+            back: "L'energia inutilizzata misura l'energia che, a causa delle irreversibilità, non è più disponibile per essere trasformata in lavoro. La formula è $E_0 = T_0 \\, \\Delta S_U$, dove $T_0$ è la temperatura della sorgente e $\\Delta S_U$ la variazione di entropia dell'universo termodinamico."
+        },
+        {
+            type: "domanda",
+            front: "Quanto vale l'energia inutilizzata per una trasformazione reversibile? E per una irreversibile?",
+            back: "Per una trasformazione reversibile $\\Delta S_U = 0$, quindi $E_0 = 0$: tutta l'energia è utilizzabile. Per una trasformazione irreversibile $\\Delta S_U \gt 0$, quindi $E_0 \gt 0$: una parte dell'energia è persa ai fini della produzione di lavoro."
+        },
+        {
+            type: "domanda",
+            front: "Che cosa rappresenta l'area sotto la curva nel piano T-S per una trasformazione reversibile?",
+            back: "Rappresenta il calore scambiato reversibilmente: $Q_{\\text{rev}} = \\int_A^B T \\, dS$. È l'analogo esatto del lavoro $W = \\int_A^B p \\, dV$ nel piano $p$-$V$."
+        },
+        {
+            type: "domanda",
+            front: "Perché il ciclo di Carnot è un rettangolo nel piano T-S?",
+            back: "Perché le due isoterme a $T_1$ e $T_2$ sono segmenti orizzontali ($T$ costante), e le due adiabatiche reversibili sono isoentropiche ($dS = 0$), cioè segmenti verticali. Le quattro trasformazioni delimitano un rettangolo di area $W = (T_2 - T_1)(S_2 - S_1)$."
+        },
+        {
+            type: "formula",
+            front: "Scrivi la formula per $\\Delta S_U$ nel caso di scambio di calore $Q$ tra due sorgenti a temperature $T_1$ e $T_2$ con $T_2 \gt T_1$.",
+            back: "$\\Delta S_U = \\frac{Q}{T_1} - \\frac{Q}{T_2} = Q\\left(\\frac{1}{T_1} - \\frac{1}{T_2}\\right) \gt 0$"
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si calcola $\\Delta S_{\\text{sist}}$ per un corpo di massa $m$ e calore specifico $c$ che viene riscaldato da $T_1$ a $T_2$?",
+            back: "Si immagina una trasformazione reversibile equivalente (successione di sorgenti a temperature infinitesimamente crescenti) e si integra: $\\Delta S_{\\text{sist}} = \\int_{T_1}^{T_2} \\frac{mc \\, dT}{T} = mc \\ln \\frac{T_2}{T_1}$"
+        },
+        {
+            type: "domanda",
+            front: "Nell'esempio del mescolamento termico di due corpi, come si ricava la temperatura di equilibrio $T_E$?",
+            back: "Si impone la conservazione dell'energia: $m_1 c_1 (T_E - T_1) + m_2 c_2 (T_E - T_2) = 0$, da cui $T_E = \\frac{m_1 c_1 T_1 + m_2 c_2 T_2}{m_1 c_1 + m_2 c_2}$"
+        },
+        {
+            type: "tranello",
+            front: "Perché per calcolare $\\Delta S$ di una trasformazione irreversibile si usa una trasformazione reversibile?",
+            back: "Perché l'entropia è una funzione di stato: $\\Delta S$ dipende solo dagli stati iniziale e finale, non dal cammino. Si può quindi scegliere qualsiasi trasformazione reversibile tra gli stessi stati estremi per calcolare $\\Delta S = \\int (dQ/T)_{\\text{rev}}$. L'errore comune è tentare di usare direttamente il calore della trasformazione irreversibile nell'integrale."
+        },
+        {
+            type: "tranello",
+            front: "Quando il calcolo di $\\Delta S$ si riduce a $Q/T$ e quando invece richiede un integrale logaritmico?",
+            back: "Se il corpo è una sorgente ideale (capacità termica infinita, temperatura costante $T$), allora $\\Delta S = Q/T$. Se invece la temperatura cambia durante il processo (corpo con capacità termica finita), bisogna integrare: $\\Delta S = \\int mc \\, dT / T = mc \\ln(T_f/T_i)$."
+        },
+        {
+            type: "formula",
+            front: "Scrivi $\\Delta S_U$ per il mescolamento termico di due corpi a temperature $T_1$ e $T_2$.",
+            back: "$\\Delta S_U = m_1 c_1 \\ln \\frac{T_E}{T_1} + m_2 c_2 \\ln \\frac{T_E}{T_2} \gt 0$, dove $T_E = \\frac{m_1 c_1 T_1 + m_2 c_2 T_2}{m_1 c_1 + m_2 c_2}$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
