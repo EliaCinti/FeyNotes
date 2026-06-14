@@ -1,0 +1,296 @@
+const LESSON = {
+    id: "L55", date: "Lezione 40 — 11 Giu 2026",
+    title: "Variazione di Entropia per Gas Ideali ed Esercizi",
+    abstract: "Derivazione della formula generale per la variazione di entropia di un gas ideale, casi particolari per trasformazioni isoterma, isocora, isobara e adiabatica, e risoluzione di esercizi su entropia, macchine termiche e cicli termodinamici.",
+
+    sections: [
+        {
+            id: "s55-formula-entropia-gas-ideale",
+            type: "section",
+            title: "Calcolo della Variazione di Entropia per un Gas Ideale",
+            icon: "🔑",
+            content: `<p>Vogliamo ricavare un'espressione generale per il calcolo della variazione di entropia $\\Delta S$ per le trasformazioni di gas ideali. Per farlo, consideriamo inizialmente trasformazioni reversibili.</p>
+<blockquote><strong>Nota del Prof.:</strong> «Adesso troverò una relazione assumendo che le trasformazioni siano reversibili. Tuttavia, l'espressione che otterremo sarà valida per calcolare la variazione di entropia tra uno stato iniziale A e uno stato finale B <strong>anche se il processo reale che li collega è irreversibile</strong>.<br><br>
+Perché questo è possibile? Perché l'entropia è una <strong>funzione di stato</strong>. La sua variazione, $\\Delta S = S_B - S_A$, dipende unicamente dagli stati iniziale e finale, e non dal particolare cammino percorso per andare da A a B.<br><br>
+Quindi, anche se la trasformazione reale è irreversibile (e per essa non abbiamo un'espressione diretta per calcolare $\\Delta S$), possiamo immaginare una qualsiasi trasformazione reversibile che connetta gli stessi stati A e B, usare la formula che stiamo per ricavare, e il risultato numerico che otterremo sarà la variazione di entropia corretta anche per il processo irreversibile. Dal punto di vista numerico non cambia niente, ma dal punto di vista concettuale cambia tantissimo.»</blockquote>`,
+            subsections: [
+                {
+                    subtitle: "Derivazione della formula",
+                    content: `<p>Dalla definizione di Clausius dell'entropia, la variazione infinitesima di entropia per una trasformazione reversibile è:</p>
+<p>$$dS = \\frac{\\delta Q_{rev}}{T}$$</p>
+<p>Utilizziamo il primo principio della termodinamica in forma differenziale:</p>
+<p>$$\\delta Q = dU + \\delta W$$</p>
+<p>Sostituendo nell'espressione di $dS$:</p>
+<p>$$dS = \\frac{dU + \\delta W}{T}$$</p>
+<p>Specializziamo per un gas ideale, usando $dU = nC_V \\, dT$ e $\\delta W = p \\, dV$:</p>
+<p>$$dS = \\frac{nC_V \\, dT + p \\, dV}{T}$$</p>
+<p>Esprimiamo $p$ dall'equazione di stato $pV = nRT$, cioè $p = \\frac{nRT}{V}$:</p>
+<p>$$dS = \\frac{nC_V \\, dT}{T} + \\frac{\\frac{nRT}{V} \\, dV}{T} = nC_V \\frac{dT}{T} + nR \\frac{dV}{V}$$</p>
+<p>Integrando tra lo stato iniziale A e lo stato finale B:</p>
+<p>$$\\Delta S_{A \\to B} = \\int_A^B dS = \\int_{T_A}^{T_B} nC_V \\frac{dT}{T} + \\int_{V_A}^{V_B} nR \\frac{dV}{V}$$</p>
+<p>$$\\Delta S_{A \\to B} = nC_V \\ln\\left(\\frac{T_B}{T_A}\\right) + nR \\ln\\left(\\frac{V_B}{V_A}\\right)$$</p>
+<p>Questa è la <strong>formula fondamentale</strong> che permette di calcolare la variazione di entropia per qualsiasi trasformazione (reversibile o irreversibile) di un gas ideale, noti gli stati iniziale e finale.</p>
+<p><strong>Da notare:</strong> questa espressione vale <strong>solo ed esclusivamente per i gas ideali</strong>. Durante la derivazione abbiamo utilizzato due proprietà specifiche dei gas ideali: la formula per l'energia interna $dU = nC_V \\, dT$ e l'equazione di stato $pV = nRT$.</p>`
+                },
+                {
+                    subtitle: "Casi particolari di trasformazioni",
+                    content: `<p><strong>Trasformazione Isoterma</strong> ($T_A = T_B$): il primo termine si annulla poiché $\\ln(1) = 0$.</p>
+<p>$$\\Delta S = nR \\ln\\left(\\frac{V_B}{V_A}\\right)$$</p>
+<p>Poiché per una trasformazione isoterma vale la legge di Boyle ($p_A V_A = p_B V_B$), si può scrivere $\\frac{V_B}{V_A} = \\frac{p_A}{p_B}$, quindi:</p>
+<p>$$\\Delta S = nR \\ln\\left(\\frac{p_A}{p_B}\\right) = -nR \\ln\\left(\\frac{p_B}{p_A}\\right)$$</p>
+<p><strong>Trasformazione Isocora</strong> ($V_A = V_B$): il secondo termine si annulla.</p>
+<p>$$\\Delta S = nC_V \\ln\\left(\\frac{T_B}{T_A}\\right)$$</p>
+<p>Per una trasformazione isocora vale $\\frac{p_A}{T_A} = \\frac{p_B}{T_B}$, da cui $\\frac{T_B}{T_A} = \\frac{p_B}{p_A}$, quindi:</p>
+<p>$$\\Delta S = nC_V \\ln\\left(\\frac{p_B}{p_A}\\right)$$</p>
+<p><strong>Trasformazione Isobara</strong> ($p_A = p_B$): usando la relazione $\\frac{V_B}{V_A} = \\frac{T_B}{T_A}$ e sostituendo nella formula generale:</p>
+<p>$$\\Delta S = nC_V \\ln\\left(\\frac{T_B}{T_A}\\right) + nR \\ln\\left(\\frac{T_B}{T_A}\\right) = n(C_V + R) \\ln\\left(\\frac{T_B}{T_A}\\right)$$</p>
+<p>Usando la relazione di Mayer ($C_p = C_V + R$):</p>
+<p>$$\\Delta S = nC_p \\ln\\left(\\frac{T_B}{T_A}\\right)$$</p>
+<p>Poiché per l'isobara $\\frac{T_B}{T_A} = \\frac{V_B}{V_A}$, si può anche scrivere:</p>
+<p>$$\\Delta S = nC_p \\ln\\left(\\frac{V_B}{V_A}\\right)$$</p>
+<p><strong>Trasformazione Adiabatica:</strong></p>
+<ul>
+<li>Se <strong>reversibile</strong>: per definizione $\\delta Q_{rev} = 0$, quindi $\\Delta S = 0$.</li>
+<li>Se <strong>irreversibile</strong>: sappiamo che $\\Delta S \\gt 0$. Per calcolarne il valore, si devono conoscere gli stati iniziale e finale e applicare la formula generale, immaginando un percorso reversibile che li connetta.</li>
+</ul>`
+                }
+            ],
+            formulas: [
+                { label: "Variazione di entropia (gas ideale)", latex: "\\Delta S = nC_V \\ln\\left(\\frac{T_B}{T_A}\\right) + nR \\ln\\left(\\frac{V_B}{V_A}\\right)" },
+                { label: "Isoterma", latex: "\\Delta S = nR \\ln\\left(\\frac{V_B}{V_A}\\right)" },
+                { label: "Isocora", latex: "\\Delta S = nC_V \\ln\\left(\\frac{T_B}{T_A}\\right)" },
+                { label: "Isobara", latex: "\\Delta S = nC_p \\ln\\left(\\frac{T_B}{T_A}\\right)" }
+            ]
+        },
+        {
+            id: "s55-esercizio1-isobara-irreversibile",
+            type: "section",
+            title: "Esercizio 1 — Espansione Isobara Irreversibile",
+            icon: "🧪",
+            content: `<p>Un cilindro con base diatermica contiene 3 moli di un gas ideale biatomico. Inizialmente, il gas si trova alla temperatura $T_1 = 300 \\, \\text{K}$. Il cilindro viene messo a contatto con una sorgente di calore a temperatura costante $T_2 = 400 \\, \\text{K}$. Il processo avviene a pressione costante $p = 1 \\, \\text{atm}$.</p>
+<p>La trasformazione è un'<strong>espansione isobara irreversibile</strong>, poiché avviene a causa di una differenza finita di temperatura tra il gas e la sorgente.</p>`,
+            subsections: [
+                {
+                    subtitle: "Variazione di energia interna del gas",
+                    content: `<p>Per un gas ideale, $\\Delta U$ dipende solo dalla variazione di temperatura. Per un gas biatomico, $C_V = \\frac{5}{2}R$.</p>
+<p>$$\\Delta U_{gas} = nC_V \\Delta T = n \\left(\\frac{5}{2}R\\right)(T_2 - T_1)$$</p>
+<p>$$\\Delta U_{gas} = 3 \\cdot \\left(\\frac{5}{2} \\cdot 8.314\\right) \\cdot (400 - 300) \\approx 6235 \\, \\text{J} = 6.24 \\, \\text{kJ}$$</p>`
+                },
+                {
+                    subtitle: "Lavoro compiuto dal gas",
+                    content: `<p>La trasformazione è isobara. Usando l'equazione di stato, $p\\Delta V = nR\\Delta T$.</p>
+<p>$$W_{gas} = p \\Delta V = nR(T_2 - T_1)$$</p>
+<p>$$W_{gas} = 3 \\cdot 8.314 \\cdot 100 \\approx 2494 \\, \\text{J} = 2.49 \\, \\text{kJ}$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia del gas",
+                    content: `<p>Usiamo la formula per una trasformazione isobara. Per un gas biatomico, $C_p = \\frac{7}{2}R$.</p>
+<p>$$\\Delta S_{gas} = nC_p \\ln\\left(\\frac{T_2}{T_1}\\right) = n \\left(\\frac{7}{2}R\\right) \\ln\\left(\\frac{400}{300}\\right)$$</p>
+<p>Calcoliamo passo per passo:</p>
+<p>$$\\frac{7}{2} \\cdot 8.314 = 29.10 \\, \\frac{\\text{J}}{\\text{mol K}}, \\qquad \\ln\\left(\\frac{4}{3}\\right) \\approx 0.2877$$</p>
+<p>$$\\Delta S_{gas} = 3 \\cdot 29.10 \\cdot 0.2877 \\approx 25.1 \\, \\frac{\\text{J}}{\\text{K}}$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia della sorgente",
+                    content: `<p>La sorgente cede calore a temperatura costante $T_2$, quindi per lei la trasformazione è isoterma. Il calore ceduto dalla sorgente è uguale in modulo e opposto in segno a quello assorbito dal gas.</p>
+<p>$$Q_{ass, gas} = \\Delta U_{gas} + W_{gas} = 6.24 \\, \\text{kJ} + 2.49 \\, \\text{kJ} = 8.73 \\, \\text{kJ}$$</p>
+<p>$$Q_{ced, sorgente} = -Q_{ass, gas} = -8.73 \\, \\text{kJ}$$</p>
+<p>$$\\Delta S_{sorgente} = \\frac{Q_{ced, sorgente}}{T_2} = \\frac{-8730 \\, \\text{J}}{400 \\, \\text{K}} = -21.8 \\, \\frac{\\text{J}}{\\text{K}}$$</p>`
+                },
+                {
+                    subtitle: "Variazione di entropia dell'universo",
+                    content: `<p>L'universo termodinamico è costituito dal sistema (gas) e dall'ambiente (sorgente).</p>
+<p>$$\\Delta S_{universo} = \\Delta S_{gas} + \\Delta S_{sorgente} = 25.1 - 21.8 = 3.3 \\, \\frac{\\text{J}}{\\text{K}}$$</p>
+<p>Come ci aspettavamo per una trasformazione irreversibile, la variazione di entropia dell'universo è <strong>maggiore di zero</strong> ($\\Delta S_{universo} \\gt 0$), in accordo con il secondo principio della termodinamica.</p>`
+                }
+            ]
+        },
+        {
+            id: "s55-esercizio2-macchina-vapore",
+            type: "section",
+            title: "Esercizio 2 — Macchina a Vapore e Rendimento di Carnot",
+            icon: "🏭",
+            content: `<p>Una macchina a vapore opera tra una caldaia a $T_2 = 500 \\, \\text{K}$ e l'ambiente a $T_1 = 300 \\, \\text{K}$. In ogni ciclo, la macchina assorbe una quantità di calore $Q_A = 400 \\, \\text{J}$. Calcolare il rendimento massimo teorico e il lavoro massimo che la macchina può compiere in un ciclo.</p>`,
+            subsections: [
+                {
+                    subtitle: "Rendimento massimo e lavoro massimo",
+                    content: `<p>Il rendimento massimo teorico per una macchina che opera tra due sorgenti è quello del ciclo di Carnot:</p>
+<p>$$\\eta_{max} = \\eta_{Carnot} = 1 - \\frac{T_1}{T_2} = 1 - \\frac{300}{500} = 1 - 0.6 = 0.4$$</p>
+<p>Il rendimento massimo è quindi del <strong>40%</strong>.</p>
+<p>Il lavoro massimo si ottiene quando la macchina opera con il rendimento massimo:</p>
+<p>$$W_{max} = \\eta_{max} \\cdot Q_A = 0.4 \\cdot 400 \\, \\text{J} = 160 \\, \\text{J}$$</p>`
+                },
+                {
+                    subtitle: "Verifica tramite l'entropia",
+                    content: `<p>Per una macchina di Carnot, che è reversibile, la variazione di entropia dell'universo deve essere nulla ($\\Delta S_{universo} = 0$). Verifichiamolo.</p>
+<p>Il calore ceduto alla sorgente fredda è:</p>
+<p>$$Q_C = Q_A - W_{max} = 400 \\, \\text{J} - 160 \\, \\text{J} = 240 \\, \\text{J}$$</p>
+<p>Le variazioni di entropia delle due sorgenti sono:</p>
+<p>$$\\Delta S_{\\text{calda}} = \\frac{-Q_A}{T_2} = \\frac{-400}{500} = -0.8 \\, \\frac{\\text{J}}{\\text{K}}, \\qquad \\Delta S_{\\text{fredda}} = \\frac{+Q_C}{T_1} = \\frac{+240}{300} = +0.8 \\, \\frac{\\text{J}}{\\text{K}}$$</p>
+<p>$$\\Delta S_{universo} = \\Delta S_{\\text{calda}} + \\Delta S_{\\text{fredda}} = -0.8 + 0.8 = 0 \\, \\frac{\\text{J}}{\\text{K}}$$</p>
+<p>Come previsto, per una macchina reversibile la variazione di entropia dell'universo è nulla.</p>`
+                }
+            ]
+        },
+        {
+            id: "s55-esercizio3-macchina-termica",
+            type: "section",
+            title: "Esercizio 3 — Macchina Termica con Rendimento Assegnato",
+            icon: "⚙️",
+            content: `<p>Una macchina termica ha un rendimento $\\eta = 0.25$ e compie un lavoro $W = 200 \\, \\text{J}$ in ogni ciclo. Calcolare il calore assorbito dalla sorgente calda ($Q_A$) e il calore ceduto alla sorgente fredda ($Q_C$).</p>`,
+            subsections: [
+                {
+                    subtitle: "Svolgimento",
+                    content: `<p>Dalla definizione di rendimento $\\eta = \\frac{W}{Q_A}$, ricaviamo il calore assorbito:</p>
+<p>$$Q_A = \\frac{W}{\\eta} = \\frac{200 \\, \\text{J}}{0.25} = 800 \\, \\text{J}$$</p>
+<p>Per un ciclo termico, la variazione di energia interna è nulla ($\\Delta U = 0$). Dal primo principio della termodinamica, il lavoro totale è uguale al calore totale scambiato: $W = Q_{tot} = Q_A + Q_C$.</p>
+<p>$Q_C$ è negativo perché rappresenta calore <strong>ceduto</strong> dal sistema. Quindi:</p>
+<p>$$Q_C = W - Q_A = 200 \\, \\text{J} - 800 \\, \\text{J} = -600 \\, \\text{J}$$</p>
+<p>Il calore effettivamente ceduto alla sorgente fredda è $|Q_C| = 600 \\, \\text{J}$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s55-esercizio4-carnot-potenza",
+            type: "section",
+            title: "Esercizio 4 — Macchina di Carnot con Potenza Assegnata",
+            icon: "🔧",
+            content: `<p>Una macchina di Carnot opera tra una sorgente calda a $T_H = 473.15 \\, \\text{K}$ ($200°\\text{C}$) e una sorgente fredda a $T_C = 293.15 \\, \\text{K}$ ($20°\\text{C}$). La macchina ha una potenza di $P = 360 \\, \\text{W}$ e la durata di un ciclo è $T_{ciclo} = 0.2 \\, \\text{s}$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Svolgimento",
+                    content: `<p>Calcoliamo il lavoro compiuto in un ciclo a partire dalla potenza:</p>
+<p>$$W = P \\cdot T_{ciclo} = 360 \\, \\text{W} \\cdot 0.2 \\, \\text{s} = 72 \\, \\text{J}$$</p>
+<p>Trattandosi di una macchina di Carnot, il suo rendimento è:</p>
+<p>$$\\eta = 1 - \\frac{T_C}{T_H} = 1 - \\frac{293.15}{473.15} \\approx 0.38$$</p>
+<p>Il calore assorbito:</p>
+<p>$$Q_A = \\frac{W}{\\eta} = \\frac{72 \\, \\text{J}}{0.38} \\approx 189 \\, \\text{J}$$</p>
+<p>Il calore ceduto:</p>
+<p>$$Q_C = W - Q_A = 72 \\, \\text{J} - 189 \\, \\text{J} = -117 \\, \\text{J}$$</p>
+<p>Come verifica: $\\Delta S_{universo} = -\\frac{Q_A}{T_H} + \\frac{|Q_C|}{T_C} = -\\frac{189}{473.15} + \\frac{117}{293.15} \\approx -0.40 + 0.40 = 0$, confermando la reversibilità del ciclo di Carnot.</p>`
+                }
+            ]
+        },
+        {
+            id: "s55-esercizio5-ciclo-abc",
+            type: "section",
+            title: "Esercizio 5 — Ciclo Termodinamico ABC",
+            icon: "🔄",
+            content: `<p>Un gas ideale biatomico compie un ciclo reversibile composto da tre trasformazioni:</p>
+<ul>
+<li><strong>AB:</strong> Trasformazione isocora</li>
+<li><strong>BC:</strong> Trasformazione adiabatica</li>
+<li><strong>CA:</strong> Trasformazione isoterma</li>
+</ul>
+<p>Nello stato A, il gas ha pressione $p_A$ e volume $V_A$. Si sa che $p_B = 2p_A$. Rappresentare il ciclo su un diagramma p-V e calcolare il rendimento.</p>
+<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+  <p><strong>📊 Diagramma 1 — Ciclo termodinamico ABC nel piano p-V</strong></p>
+  <p><em>Asse orizzontale: Volume V. Asse verticale: Pressione p.<br>
+  Punto A in basso a sinistra ($V_A, p_A$). Punto B in alto a sinistra ($V_A, 2p_A$) — collegato ad A da una verticale (isocora).<br>
+  Punto C in basso a destra ($V_C, p_C$) con $V_C = V_A \\cdot 2^{1/(\\gamma-1)} \\approx 5.66 \\, V_A$ e $p_C$ molto bassa — collegato a B da un'adiabatica (curva decrescente convessa).<br>
+  Da C ad A: isoterma (curva decrescente, compressione) che riporta al punto A.<br>
+  Il ciclo percorso in senso orario (AB→BC→CA).</em></p>
+  <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+</div>`,
+            subsections: [
+                {
+                    subtitle: "Analisi qualitativa del calore e del lavoro",
+                    content: `<ul>
+<li><strong>AB (Isocora):</strong> $W_{AB} = 0$ (volume costante). La temperatura aumenta ($T_B \\gt T_A$, dato che $p_B \\gt p_A$ a volume costante), quindi il calore viene <strong>assorbito</strong>: $Q_{AB} \\gt 0$.</li>
+<li><strong>BC (Adiabatica):</strong> $Q_{BC} = 0$ (nessuno scambio di calore). È un'espansione, quindi il gas compie lavoro: $W_{BC} \\gt 0$.</li>
+<li><strong>CA (Isoterma):</strong> È una compressione ($V_A \\lt V_C$), quindi il lavoro è fatto sul gas: $W_{CA} \\lt 0$. Per mantenere la temperatura costante, il calore deve essere <strong>ceduto</strong>: $Q_{CA} \\lt 0$.</li>
+</ul>
+<p>Di conseguenza, il calore totale assorbito è $Q_{ass} = Q_{AB}$ e il lavoro totale è $W_{tot} = W_{BC} + W_{CA}$.</p>
+<p>Poiché $\\Delta U_{ciclo} = 0$, si ha $W_{tot} = Q_{AB} + Q_{CA} = Q_{ass} - |Q_{CA}|$, e il rendimento è $\\eta = \\frac{W_{tot}}{Q_{ass}}$.</p>`
+                },
+                {
+                    subtitle: "Determinazione delle variabili di stato",
+                    content: `<p>L'obiettivo è esprimere tutte le quantità in funzione delle variabili dello stato A ($p_A, V_A, T_A$).</p>
+<p><strong>Stato B:</strong> $V_B = V_A$, $p_B = 2p_A$. Dall'equazione di stato a volume costante, segue che $T_B = 2T_A$.</p>
+<p><strong>Stato C:</strong> Si trova sulla stessa isoterma di A, quindi $T_C = T_A$. Per trovare $V_C$, usiamo la relazione per l'adiabatica reversibile BC: $T_B V_B^{\\gamma-1} = T_C V_C^{\\gamma-1}$.</p>
+<p>$$(2T_A) V_A^{\\gamma-1} = T_A V_C^{\\gamma-1} \\quad \\Rightarrow \\quad \\frac{V_C^{\\gamma-1}}{V_A^{\\gamma-1}} = 2 \\quad \\Rightarrow \\quad \\frac{V_C}{V_A} = 2^{\\frac{1}{\\gamma-1}}$$</p>
+<p>Per un gas biatomico, $\\gamma = \\frac{C_p}{C_V} = \\frac{7/2 \\, R}{5/2 \\, R} = \\frac{7}{5} = 1.4$.</p>`
+                },
+                {
+                    subtitle: "Calcolo delle singole quantità",
+                    content: `<p>$Q_{ass} = Q_{AB} = nC_V(T_B - T_A) = nC_V(2T_A - T_A) = nC_V T_A$.</p>
+<p>$W_{BC} = -\\Delta U_{BC} = -nC_V(T_C - T_B) = nC_V(T_B - T_C) = nC_V(2T_A - T_A) = nC_V T_A$.</p>
+<p>Per il lavoro sulla trasformazione isoterma CA (da C ad A):</p>
+<p>$$W_{CA} = nRT_A \\ln\\left(\\frac{V_A}{V_C}\\right)$$</p>
+<p>Poiché $V_C \\gt V_A$ (il gas si comprime), il logaritmo è negativo, coerentemente con il fatto che nella compressione il lavoro è fatto <em>sul</em> gas. Sostituendo $V_C/V_A = 2^{1/(\\gamma-1)}$:</p>
+<p>$$W_{CA} = nRT_A \\ln\\left(2^{-\\frac{1}{\\gamma-1}}\\right) = -\\frac{nRT_A \\ln 2}{\\gamma-1}$$</p>`
+                },
+                {
+                    subtitle: "Calcolo del rendimento",
+                    content: `<p>Il lavoro totale del ciclo è:</p>
+<p>$$W_{tot} = W_{BC} + W_{CA} = nC_V T_A - \\frac{nRT_A \\ln 2}{\\gamma-1}$$</p>
+<p>Usiamo la relazione fondamentale $\\frac{R}{C_V} = \\gamma - 1$ (che segue dalla relazione di Mayer $C_p - C_V = R$ e dalla definizione $\\gamma = C_p/C_V$). Questo ci permette di scrivere:</p>
+<p>$$\\frac{nRT_A}{\\gamma - 1} = \\frac{nRT_A}{\\frac{R}{C_V}} = nC_V T_A$$</p>
+<p>Sostituendo nell'espressione del lavoro totale:</p>
+<p>$$W_{tot} = nC_V T_A - nC_V T_A \\ln 2 = nC_V T_A (1 - \\ln 2)$$</p>
+<p>Il rendimento del ciclo è dunque:</p>
+<p>$$\\eta = \\frac{W_{tot}}{Q_{ass}} = \\frac{nC_V T_A (1 - \\ln 2)}{nC_V T_A} = 1 - \\ln 2 \\approx 1 - 0.693 = 0.307$$</p>
+<p>$$\\eta \\approx 30.7\\%$$</p>`
+                }
+            ],
+            extra_content: `<p><strong>Risultato notevole:</strong> $\\eta = 1 - \\ln 2 \\approx 30.7\\%$ non dipende dalla natura specifica del gas (mono-, bi- o poliatomico), nonostante nel calcolo intermedio compaiano $C_V$ e $\\gamma$. Questo avviene perché la sostituzione $R/C_V = \\gamma - 1$ porta a una cancellazione esatta. In altre parole, il rendimento di questo particolare ciclo dipende solo dal rapporto $p_B/p_A = 2$ e non dalle proprietà molecolari del gas.</p>`,
+            formulas: [
+                { label: "Rendimento del ciclo ABC", latex: "\\eta = 1 - \\ln\\left(\\frac{p_B}{p_A}\\right)" }
+            ]
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "formula",
+            front: "Scrivi la formula generale per la variazione di entropia di un gas ideale tra due stati A e B.",
+            back: "$$\\Delta S = nC_V \\ln\\left(\\frac{T_B}{T_A}\\right) + nR \\ln\\left(\\frac{V_B}{V_A}\\right)$$"
+        },
+        {
+            type: "domanda",
+            front: "La formula per la variazione di entropia dei gas ideali è stata ricavata assumendo trasformazioni reversibili. Perché vale anche per trasformazioni irreversibili?",
+            back: "Perché l'entropia è una **funzione di stato**: la sua variazione $\\Delta S = S_B - S_A$ dipende solo dagli stati iniziale e finale, non dal cammino percorso. Possiamo quindi immaginare un qualsiasi percorso reversibile che connetta A e B, usare la formula, e ottenere il valore corretto di $\\Delta S$ anche se il processo reale è irreversibile."
+        },
+        {
+            type: "formula",
+            front: "Come si semplifica $\\Delta S$ per una trasformazione isoterma di un gas ideale?",
+            back: "$\\Delta S = nR \\ln\\left(\\frac{V_B}{V_A}\\right) = -nR \\ln\\left(\\frac{p_B}{p_A}\\right)$. Il termine con $\\ln(T_B/T_A)$ si annulla perché $T_A = T_B$."
+        },
+        {
+            type: "formula",
+            front: "Come si semplifica $\\Delta S$ per una trasformazione isobara di un gas ideale?",
+            back: "Si usa $\\frac{V_B}{V_A} = \\frac{T_B}{T_A}$ e la relazione di Mayer per ottenere: $\\Delta S = nC_p \\ln\\left(\\frac{T_B}{T_A}\\right)$."
+        },
+        {
+            type: "tranello",
+            front: "Per una trasformazione adiabatica irreversibile di un gas ideale, $\\Delta S = 0$?",
+            back: "No! $\\Delta S = 0$ vale solo per l'adiabatica **reversibile**. Per un'adiabatica irreversibile si ha $\\Delta S \gt 0$. Per calcolarlo, si devono conoscere gli stati iniziale e finale e applicare la formula generale $\\Delta S = nC_V \\ln(T_B/T_A) + nR \\ln(V_B/V_A)$, immaginando un percorso reversibile che li connetta."
+        },
+        {
+            type: "domanda",
+            front: "In un processo irreversibile isobaro in cui un gas è messo a contatto con una sorgente a temperatura $T_2 \gt T_1$, come si calcola $\\Delta S_{sorgente}$?",
+            back: "La sorgente è a temperatura costante $T_2$, quindi per lei la trasformazione è isoterma: $\\Delta S_{sorgente} = \\frac{Q_{ced,sorgente}}{T_2} = \\frac{-Q_{ass,gas}}{T_2}$. Il segno è negativo perché la sorgente cede calore."
+        },
+        {
+            type: "domanda",
+            front: "Come si verifica che il secondo principio è rispettato nel caso di un'espansione isobara irreversibile?",
+            back: "Si calcola $\\Delta S_{universo} = \\Delta S_{gas} + \\Delta S_{sorgente}$. Per un processo irreversibile si deve ottenere $\\Delta S_{universo} \gt 0$. Nell'esercizio svolto in aula: $\\Delta S_{universo} = 25.1 - 21.8 = 3.3 \\, \\text{J/K} \gt 0$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Nel ciclo ABC (isocora + adiabatica + isoterma con $p_B = 2p_A$), perché il rendimento non dipende dalla natura del gas?",
+            back: "Nel calcolo, il lavoro totale risulta $W_{tot} = nC_V T_A(1 - \\ln 2)$ e il calore assorbito è $Q_{ass} = nC_V T_A$. La sostituzione chiave è $\\frac{R}{C_V} = \\gamma - 1$, che fa sì che $\\frac{nRT_A}{\\gamma-1} = nC_V T_A$. Nel rapporto $\\eta = W_{tot}/Q_{ass}$, tutti i fattori $nC_V T_A$ si cancellano e resta $\\eta = 1 - \\ln 2 \\approx 30.7\\%$, indipendente da $C_V$ e $\\gamma$."
+        },
+        {
+            type: "tranello",
+            front: "La formula $\\Delta S = nC_V \\ln(T_B/T_A) + nR \\ln(V_B/V_A)$ vale per qualsiasi sistema termodinamico?",
+            back: "No, vale **solo per i gas ideali**. Nella derivazione si usano due proprietà specifiche: $dU = nC_V \\, dT$ (energia interna dipendente solo da T) e l'equazione di stato $pV = nRT$."
+        },
+        {
+            type: "domanda",
+            front: "Per una macchina di Carnot reversibile, come si verifica la coerenza del risultato tramite l'entropia?",
+            back: "Si verifica che $\\Delta S_{universo} = 0$: $$\\Delta S_{universo} = \\frac{-Q_A}{T_{calda}} + \\frac{Q_C}{T_{fredda}} = 0$$ Questo è equivalente alla condizione $\\frac{Q_A}{T_{calda}} = \\frac{Q_C}{T_{fredda}}$, che caratterizza i cicli reversibili."
+        }
+    ]
+};
+
