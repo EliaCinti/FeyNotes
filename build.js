@@ -277,6 +277,71 @@ function buildCourseIndex(courseId) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  BUILD ESERCIZI PAGE  (optional, per-course)
+//  Generated only if src/data/<courseId>/esercizi.js exists.
+//  Reuses the lesson template + renderer (data defines `const LESSON`).
+// ═══════════════════════════════════════════════════════════════
+
+function buildEsercizi(courseId) {
+  const course = COURSES[courseId];
+  if (!course) return;
+
+  const dataPath = path.join(DATA_DIR, courseId, 'esercizi.js');
+  if (!fs.existsSync(dataPath)) return; // course has no exercises page
+
+  const templatePath = path.join(TEMPLATE_DIR, 'lezione.html');
+  if (!fs.existsSync(templatePath)) { console.error(`  ✗ Template not found`); return; }
+  const template = fs.readFileSync(templatePath, 'utf-8');
+  const lessonData = fs.readFileSync(dataPath, 'utf-8');
+
+  const url = `${course.basePath}/esercizi/`;
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    'name': `Esercizi — ${course.name}`,
+    'description': `Esercizi di allenamento di ${course.name} con soluzioni guidate e risultati verificati.`,
+    'educationalLevel': 'University',
+    'learningResourceType': 'Exercise',
+    'inLanguage': 'it',
+    'url': `${SITE.url}${url}`,
+    'author': { '@type': 'Person', 'name': SITE.author },
+    'isPartOf': {
+      '@type': 'Course',
+      'name': course.name,
+      'provider': { '@type': 'Organization', 'name': course.university },
+    },
+  }, null, 2);
+
+  const vars = {
+    THEME: course.theme,
+    PAGE_TITLE: `Esercizi — ${course.name} — FeyNotes`,
+    META_DESCRIPTION: escapeHtml(`Esercizi di allenamento di ${course.name} con soluzioni guidate passo-passo e risultati verificati.`),
+    AUTHOR: SITE.author,
+    OG_TITLE: escapeHtml(`Esercizi — ${course.name}`),
+    OG_DESCRIPTION: escapeHtml(`Esercizi di allenamento con soluzioni guidate e risultati verificati.`),
+    OG_URL: `${SITE.url}${url}`,
+    CANONICAL_URL: `${SITE.url}${url}`,
+    CSS_VERSION: String(SITE.cssVersion),
+    COURSE_URL: course.indexUrl,
+    COURSE_ICON: course.icon,
+    COURSE_NAME: course.name,
+    NAV_LINKS: buildNavLinks(course),
+    PREV_LINK: `<a href="${course.indexUrl}">← Lezioni</a>`,
+    NEXT_LINK: '<a href="#" style="opacity:0.3">Succ. →</a>',
+    LESSON_NUM: 'Esercizi',
+    LESSON_DATA: lessonData,
+    JSON_LD: jsonLd,
+  };
+
+  const html = render(template, vars);
+  const outputPath = path.join(ROOT, course.basePath.slice(1), 'esercizi', 'index.html');
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, html, 'utf-8');
+
+  console.log(`  ✓ ${course.name} esercizi → ${path.relative(ROOT, outputPath)}`);
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  BUILD COURSE (all lessons + index)
 // ═══════════════════════════════════════════════════════════════
 
@@ -292,6 +357,7 @@ function buildCourse(courseId) {
   }
 
   buildCourseIndex(courseId);
+  buildEsercizi(courseId);
 
   console.log(`   Done: ${built}/${course.lessons.length} lessons built.\n`);
 }
@@ -345,6 +411,10 @@ function buildSitemap() {
         changefreq: 'monthly',
         lastmod: formatDateISO(lesson.date),
       });
+    }
+
+    if (fs.existsSync(path.join(DATA_DIR, course.id, 'esercizi.js'))) {
+      urls.push({ loc: `${SITE.url}${course.basePath}/esercizi/`, priority: '0.7', changefreq: 'monthly' });
     }
   }
 

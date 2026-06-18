@@ -29,7 +29,7 @@ const COURSES = {
     nav: [
       { label: 'Lezioni', href: '/fisica1/', active: true },
       { label: 'Formulario', href: '#' },
-      { label: 'Esercizi', href: '#' },
+      { label: 'Esercizi', href: '/fisica1/esercizi/' },
     ],
     categories: [
       { id: 'cinematica', label: 'cinematica', gridId: 'cinematica-grid' },

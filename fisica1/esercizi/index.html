@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="fisica">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizi — Fisica 1 — FeyNotes</title>
+  <meta name="description" content="Esercizi di allenamento di Fisica 1 con soluzioni guidate passo-passo e risultati verificati.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Esercizi — Fisica 1">
+  <meta property="og:description" content="Esercizi di allenamento con soluzioni guidate e risultati verificati.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://eliacinti.dev/fisica1/esercizi/">
+  <link rel="canonical" href="https://eliacinti.dev/fisica1/esercizi/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=14">
+  <link rel="stylesheet" href="/css/style.css?v=14">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Esercizi — Fisica 1",
+  "description": "Esercizi di allenamento di Fisica 1 con soluzioni guidate e risultati verificati.",
+  "educationalLevel": "University",
+  "learningResourceType": "Exercise",
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/fisica1/esercizi/",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Fisica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/fisica1/" class="header-logo">
+    
+    Fisica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Esercizi</span>
+  <nav class="header-nav">
+    <a href="/fisica1/" class="active">Lezioni</a>
+    <a href="#">Formulario</a>
+    <a href="/fisica1/esercizi/">Esercizi</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/fisica1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/fisica1/">← Lezioni</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+  id: "esercizi",
+  date: "Esercizi di allenamento · soluzioni guidate",
+  title: "Esercizi di Allenamento — Fisica 1",
+  abstract: "Esercizi progressivi (dal facile al medio) divisi nelle tre sezioni dello scritto: ① Punto materiale, ② Sistemi, ③ Termodinamica. Ogni esercizio ha testo, soluzione guidata passo-passo e risultato. Tutti i risultati numerici sono stati verificati con calcolo indipendente. Prova prima da solo, poi apri «Mostra soluzione».",
+
+  sections: [
+    {
+      id: "come-usare",
+      type: "method_box",
+      title: "Come usare questi esercizi",
+      steps: [
+        "Leggi il testo e prova a risolverlo <strong>da solo</strong>, in simbolico, prima di guardare la soluzione.",
+        "Disegna sempre lo schema (diagramma di corpo libero, piano p–V, ecc.).",
+        "Sostituisci i numeri solo alla fine e fai il <strong>controllo dimensionale</strong>.",
+        "Apri «💡 Mostra soluzione» e confronta metodo e risultato.",
+        "g = 9,81 m/s² · R = 8,314 J/(mol·K) salvo diverse indicazioni."
+      ]
+    },
+
+    /* ═══════════════ SEZIONE ① PUNTO ═══════════════ */
+    {
+      id: "sez-punto",
+      type: "alert_box",
+      title: "① PUNTO MATERIALE — cinematica, dinamica, lavoro ed energia",
+      content: "<p>Tipi di problema: moto rettilineo e caduta, proiettile, piano inclinato con attrito, oscillatore armonico. Corrisponde al <strong>Problema 1</strong> dello scritto.</p>"
+    },
+    {
+      id: "punto-1",
+      type: "section",
+      icon: "🚗",
+      title: "Esercizio 1 — Frenata (facile)",
+      content: "<p><strong>Testo.</strong> Un'auto viaggia a 72 km/h e frena con decelerazione costante di modulo 5 m/s². Calcola il tempo di arresto e lo spazio di frenata.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Converto: $v_0 = 72\\ \\text{km/h} = 20\\ \\text{m/s}$. Moto uniformemente accelerato con $a = -5\\ \\text{m/s}^2$.</p>" +
+        "<p>Tempo di arresto (da $v = v_0 + at = 0$): $t = -v_0/a = 20/5 = \\mathbf{4\\ s}$.</p>" +
+        "<p>Spazio (da $v^2 = v_0^2 + 2a\\,d$ con $v=0$): $d = v_0^2/(2|a|) = 400/10 = \\mathbf{40\\ m}$.</p>" +
+        "<p><em>Verifica:</em> con le leggi orarie $d = v_0 t + \\tfrac12 a t^2 = 80 - 40 = 40$ m. ✓</p>" +
+        "</div></details>"
+    },
+    {
+      id: "punto-2",
+      type: "section",
+      icon: "🪨",
+      title: "Esercizio 2 — Caduta libera (facile)",
+      content: "<p><strong>Testo.</strong> Un sasso è lasciato cadere da fermo da un'altezza di 45 m. Trascurando l'attrito dell'aria, calcola il tempo di caduta e la velocità d'impatto.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Caduta da fermo: $h = \\tfrac12 g t^2 \\Rightarrow t = \\sqrt{2h/g} = \\sqrt{90/9{,}81} = \\mathbf{3{,}03\\ s}$.</p>" +
+        "<p>Velocità d'impatto: $v = g t = 9{,}81 \\cdot 3{,}03 = \\mathbf{29{,}7\\ m/s}$.</p>" +
+        "<p><em>Verifica:</em> $v = \\sqrt{2gh} = \\sqrt{2 \\cdot 9{,}81 \\cdot 45} = 29{,}7$ m/s. ✓</p>" +
+        "</div></details>"
+    },
+    {
+      id: "punto-3",
+      type: "section",
+      icon: "🎯",
+      title: "Esercizio 3 — Moto del proiettile (medio)",
+      content: "<p><strong>Testo.</strong> Un proiettile parte dal suolo con velocità di 25 m/s inclinata di 40° sull'orizzontale. Calcola tempo di volo, gittata e quota massima (suolo piano).</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Componenti: $v_x = v_0\\cos 40^\\circ = 19{,}15$ m/s, $v_y = v_0\\sin 40^\\circ = 16{,}07$ m/s.</p>" +
+        "<p>Tempo di volo (ritorno a $y=0$): $t = 2v_y/g = \\mathbf{3{,}28\\ s}$.</p>" +
+        "<p>Gittata: $R = \\dfrac{v_0^2\\sin(2\\theta)}{g} = \\mathbf{62{,}7\\ m}$ (verifica: $v_x\\cdot t = 62{,}7$ m ✓).</p>" +
+        "<p>Quota massima: $h = \\dfrac{v_y^2}{2g} = \\mathbf{13{,}2\\ m}$.</p>" +
+        "<p><em>Ricorda:</em> la gittata è massima a $\\theta = 45^\\circ$ (dimostrazione L05).</p>" +
+        "</div></details>"
+    },
+    {
+      id: "punto-4",
+      type: "section",
+      icon: "📐",
+      title: "Esercizio 4 — Piano inclinato con attrito (medio)",
+      content: "<p><strong>Testo.</strong> Un blocco di massa 5 kg è appoggiato su un piano inclinato di 25°, con coefficiente di attrito dinamico 0,3. Il blocco si mette in moto? In caso affermativo, con quale accelerazione scende?</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Lungo il piano: componente motrice del peso $mg\\sin\\theta$, attrito massimo $\\mu\\, mg\\cos\\theta$ (la massa si semplifica).</p>" +
+        "<p>Confronto: $\\tan\\theta = 0{,}466 \\gt \\mu = 0{,}3$, quindi <strong>il blocco scivola</strong>.</p>" +
+        "<p>Accelerazione: $a = g(\\sin\\theta - \\mu\\cos\\theta) = 9{,}81\\,(0{,}423 - 0{,}3\\cdot 0{,}906) = \\mathbf{1{,}48\\ m/s^2}$.</p>" +
+        "<p><em>Nota:</em> $a$ non dipende dalla massa.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "punto-5",
+      type: "section",
+      icon: "🌀",
+      title: "Esercizio 5 — Oscillatore armonico (medio)",
+      content: "<p><strong>Testo.</strong> Una massa di 0,2 kg è attaccata a una molla di costante elastica 50 N/m e oscilla con ampiezza 0,05 m. Calcola pulsazione, periodo, frequenza, velocità e accelerazione massime, ed energia meccanica.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Pulsazione: $\\omega = \\sqrt{k/m} = \\sqrt{250} = \\mathbf{15{,}81\\ rad/s}$.</p>" +
+        "<p>Periodo $T = 2\\pi/\\omega = \\mathbf{0{,}397\\ s}$; frequenza $f = 1/T = \\mathbf{2{,}52\\ Hz}$.</p>" +
+        "<p>$v_{max} = \\omega A = \\mathbf{0{,}79\\ m/s}$; $\\ a_{max} = \\omega^2 A = \\mathbf{12{,}5\\ m/s^2}$.</p>" +
+        "<p>Energia: $E = \\tfrac12 k A^2 = \\mathbf{0{,}0625\\ J}$ (verifica: $\\tfrac12 m v_{max}^2 = 0{,}0625$ J ✓).</p>" +
+        "<p><em>Ricorda:</em> $T$ non dipende dall'ampiezza.</p>" +
+        "</div></details>"
+    },
+
+    /* ═══════════════ SEZIONE ② SISTEMI ═══════════════ */
+    {
+      id: "sez-sistemi",
+      type: "alert_box",
+      title: "② SISTEMI — quantità di moto, urti, corpo rigido",
+      content: "<p>Tipi di problema: centro di massa, conservazione della quantità di moto, urti elastici/anelastici, pendolo balistico, puro rotolamento. Corrisponde al <strong>Problema 2</strong> dello scritto.</p>"
+    },
+    {
+      id: "sistemi-1",
+      type: "section",
+      icon: "🚃",
+      title: "Esercizio 1 — Urto completamente anelastico (facile)",
+      content: "<p><strong>Testo.</strong> Un carrello di 3 kg viaggia a 4 m/s e urta un carrello fermo di 2 kg, restando agganciato. Trova la velocità comune dopo l'urto e l'energia cinetica dissipata.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Conservazione della quantità di moto: $V = \\dfrac{m_1 v_1}{m_1+m_2} = \\dfrac{12}{5} = \\mathbf{2{,}4\\ m/s}$.</p>" +
+        "<p>Energia: $K_i = \\tfrac12 \\cdot 3 \\cdot 4^2 = 24$ J, $\\ K_f = \\tfrac12 \\cdot 5 \\cdot 2{,}4^2 = 14{,}4$ J.</p>" +
+        "<p>Dissipata: $\\Delta K = \\mathbf{9{,}6\\ J}$, pari al <strong>40%</strong> di $K_i$.</p>" +
+        "<p><em>Concetto:</em> la quantità di moto si conserva sempre nell'urto, l'energia cinetica no.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "sistemi-2",
+      type: "section",
+      icon: "⚖️",
+      title: "Esercizio 2 — Centro di massa (facile)",
+      content: "<p><strong>Testo.</strong> Due masse puntiformi, 2 kg in $x=0$ e 3 kg in $x=4$ m, sono su una retta. Dove si trova il centro di massa?</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>$x_{cm} = \\dfrac{m_1 x_1 + m_2 x_2}{m_1+m_2} = \\dfrac{2\\cdot 0 + 3\\cdot 4}{5} = \\mathbf{2{,}4\\ m}$.</p>" +
+        "<p><em>Nota:</em> il CM è più vicino alla massa maggiore, come ci si aspetta.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "sistemi-3",
+      type: "section",
+      icon: "🎱",
+      title: "Esercizio 3 — Urto elastico 1D (medio)",
+      content: "<p><strong>Testo.</strong> Una massa di 2 kg a 5 m/s urta elasticamente, in modo centrale, una massa di 3 kg ferma. Trova le velocità dopo l'urto e verifica la conservazione di quantità di moto ed energia.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Formule dell'urto elastico (bersaglio fermo):</p>" +
+        "<p>$v_1' = \\dfrac{m_1-m_2}{m_1+m_2}\\,u_1 = \\dfrac{-1}{5}\\cdot 5 = \\mathbf{-1\\ m/s}$ (rimbalza indietro).</p>" +
+        "<p>$v_2' = \\dfrac{2m_1}{m_1+m_2}\\,u_1 = \\dfrac{4}{5}\\cdot 5 = \\mathbf{4\\ m/s}$.</p>" +
+        "<p><em>Verifiche:</em> $p$: $2\\cdot 5 = 10 = 2(-1)+3(4)$ ✓ ; $\\ K$: $\\tfrac12 2\\cdot 25 = 25 = \\tfrac12 2\\cdot 1 + \\tfrac12 3\\cdot 16$ ✓.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "sistemi-4",
+      type: "section",
+      icon: "🔫",
+      title: "Esercizio 4 — Pendolo balistico (medio)",
+      content: "<p><strong>Testo.</strong> Un proiettile di 20 g, a 250 m/s, si conficca in un blocco di legno di 1,5 kg appeso a una fune. Di quanto sale il blocco dopo l'urto?</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p><strong>Due fasi con principi diversi.</strong></p>" +
+        "<p>Fase 1 — urto anelastico (si conserva $p$, NON l'energia): $V = \\dfrac{m v}{m+M} = \\dfrac{0{,}02\\cdot 250}{1{,}52} = \\mathbf{3{,}29\\ m/s}$.</p>" +
+        "<p>Fase 2 — salita (si conserva l'energia meccanica): $h = \\dfrac{V^2}{2g} = \\mathbf{0{,}552\\ m}$.</p>" +
+        "<p><em>Tranello:</em> non usare la conservazione dell'energia nella fase d'urto — lì gran parte dell'energia cinetica si dissipa.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "sistemi-5",
+      type: "section",
+      icon: "🛞",
+      title: "Esercizio 5 — Puro rotolamento (medio)",
+      content: "<p><strong>Testo.</strong> Un cilindro pieno omogeneo ($I = \\tfrac12 MR^2$) parte da fermo e rotola senza strisciare scendendo di un dislivello di 2 m. Trova la velocità del centro di massa in fondo e confrontala con un corpo che scivola senza attrito dalla stessa altezza.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Bilancio energetico (König): $mgh = \\tfrac12 m v^2 + \\tfrac12 I\\omega^2 = \\tfrac12 m v^2\\Big(1+\\tfrac{I}{mR^2}\\Big)$.</p>" +
+        "<p>Per il cilindro $I/(mR^2)=\\tfrac12$, quindi $v = \\sqrt{\\dfrac{2gh}{1+\\tfrac12}} = \\sqrt{\\dfrac{39{,}24}{1{,}5}} = \\mathbf{5{,}12\\ m/s}$.</p>" +
+        "<p>Scivolamento liscio: $v = \\sqrt{2gh} = \\mathbf{6{,}26\\ m/s}$ (più veloce).</p>" +
+        "<p><em>Concetto:</em> rotolando, parte dell'energia va in rotazione; il risultato è indipendente da $M$ e $R$.</p>" +
+        "</div></details>"
+    },
+
+    /* ═══════════════ SEZIONE ③ TERMODINAMICA ═══════════════ */
+    {
+      id: "sez-termo",
+      type: "alert_box",
+      title: "③ TERMODINAMICA — primo e secondo principio, gas ideali, cicli, entropia",
+      content: "<p>Tipi di problema: primo principio, trasformazioni di gas ideali (isoterma, isobara, isocora, adiabatica), cicli e macchine di Carnot, variazioni di entropia. Corrisponde al <strong>Problema 3</strong> dello scritto (9 CFU).</p>"
+    },
+    {
+      id: "termo-1",
+      type: "section",
+      icon: "🔥",
+      title: "Esercizio 1 — Primo principio (facile)",
+      content: "<p><strong>Testo.</strong> A un gas vengono forniti 500 J di calore, e il gas compie 200 J di lavoro sull'ambiente. Di quanto varia la sua energia interna?</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Primo principio: $\\Delta U = Q - L = 500 - 200 = \\mathbf{300\\ J}$.</p>" +
+        "<p><em>Convenzione:</em> $Q\\gt 0$ assorbito dal gas, $L\\gt 0$ compiuto dal gas.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "termo-2",
+      type: "section",
+      icon: "♨️",
+      title: "Esercizio 2 — Trasformazione isobara (medio)",
+      content: "<p><strong>Testo.</strong> 2 mol di gas ideale monoatomico subiscono una trasformazione isobara con aumento di temperatura di 100 K. Calcola lavoro, variazione di energia interna e calore scambiato. ($C_V=\\tfrac32 R$, $C_P=\\tfrac52 R$.)</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Lavoro isobaro: $L = p\\Delta V = nR\\Delta T = 2\\cdot 8{,}314\\cdot 100 = \\mathbf{1663\\ J}$.</p>" +
+        "<p>Energia interna: $\\Delta U = nC_V\\Delta T = 2\\cdot 12{,}47\\cdot 100 = \\mathbf{2494\\ J}$.</p>" +
+        "<p>Calore: $Q = nC_P\\Delta T = 2\\cdot 20{,}79\\cdot 100 = \\mathbf{4157\\ J}$.</p>" +
+        "<p><em>Verifica:</em> $Q - L = 4157 - 1663 = 2494 = \\Delta U$ ✓ (primo principio).</p>" +
+        "</div></details>"
+    },
+    {
+      id: "termo-3",
+      type: "section",
+      icon: "🌡️",
+      title: "Esercizio 3 — Espansione isoterma (medio)",
+      content: "<p><strong>Testo.</strong> 1 mol di gas ideale si espande isotermicamente a 350 K fino a triplicare il volume. Calcola lavoro e calore.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Isoterma di gas ideale: $\\Delta U = 0$, quindi $Q = L$.</p>" +
+        "<p>$L = nRT\\ln\\dfrac{V_2}{V_1} = 1\\cdot 8{,}314\\cdot 350\\cdot \\ln 3 = \\mathbf{3197\\ J}$.</p>" +
+        "<p>Dunque $Q = L = 3197$ J (assorbito), $\\Delta U = 0$.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "termo-4",
+      type: "section",
+      icon: "⚙️",
+      title: "Esercizio 4 — Macchina di Carnot (medio)",
+      content: "<p><strong>Testo.</strong> Una macchina di Carnot lavora fra una sorgente calda a 500 K e una fredda a 300 K, assorbendo 1000 J dalla sorgente calda per ciclo. Calcola rendimento, lavoro prodotto e calore ceduto.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Rendimento di Carnot: $\\eta = 1 - \\dfrac{T_f}{T_c} = 1 - \\dfrac{300}{500} = \\mathbf{0{,}40}$ (40%).</p>" +
+        "<p>Lavoro: $L = \\eta\\, Q_c^{ass} = 0{,}40\\cdot 1000 = \\mathbf{400\\ J}$.</p>" +
+        "<p>Calore ceduto: $Q_{ced} = Q_{ass} - L = 1000 - 400 = \\mathbf{600\\ J}$.</p>" +
+        "<p><em>Ricorda:</em> $\\eta$ di Carnot dipende solo dalle temperature, non dal gas.</p>" +
+        "</div></details>"
+    },
+    {
+      id: "termo-5",
+      type: "section",
+      icon: "📈",
+      title: "Esercizio 5 — Variazione di entropia (medio)",
+      content: "<p><strong>Testo.</strong> 2 kg d'acqua (calore specifico 4186 J/(kg·K)) vengono riscaldati da 290 K a 350 K. Calcola la variazione di entropia dell'acqua.</p>" +
+        "<details style=\"margin-top:1rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);padding:.6rem 1rem;\"><summary style=\"cursor:pointer;font-weight:600;color:var(--accent);\">💡 Mostra soluzione</summary><div style=\"margin-top:.6rem;\">" +
+        "<p>Per un corpo a calore specifico costante: $\\Delta S = m c \\ln\\dfrac{T_f}{T_i}$.</p>" +
+        "<p>$\\Delta S = 2\\cdot 4186\\cdot \\ln\\dfrac{350}{290} = 8372\\cdot 0{,}188 = \\mathbf{+1574\\ J/K}$.</p>" +
+        "<p><em>Nota:</em> $\\Delta S \\gt 0$ perché il corpo si scalda; si integra $\\delta Q_{rev}/T$ lungo una trasformazione reversibile (L54).</p>" +
+        "</div></details>"
+    }
+  ]
+};
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=14"></script>
+<script src="/js/graphs.js?v=14"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
