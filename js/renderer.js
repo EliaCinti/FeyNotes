@@ -387,7 +387,7 @@ function buildSidebar(lesson) {
 
   let html = '';
   for (const sec of lesson.sections) {
-    if (sec.id) {
+    if (sec.id && sec.type !== 'integrazione_box') {
       html += `<a class="sidebar-link" href="#${sec.id}" onclick="scrollToSection('${sec.id}')">
         <span class="sl-icon">${sec.icon || '📌'}</span>
         <span>${stripHtml(sec.title)}</span>
