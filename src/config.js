@@ -179,6 +179,50 @@ const COURSES = {
       { id: 'L06', num: 'Guida 6', date: '6 Mag 2026', title: 'Risoluzione delle Equazioni alle Differenze', abstract: 'Versione discreta del Blocco 6: tabella dei modi con $a^t$, impulso $\\delta_0$ e radici complesse $\\rho e^{\\pm i\\omega}$, scorciatoia $Y_p = b^t/p(b)$, metodo classico via shift $\\Delta^k \\to t+k$, risonanza (incluso il caso speciale delle radici nulle), condizioni iniziali $Y(k) = y_k$, risposta libera e forzata.', category: 'blocco-7' },
     ],
   },
+  analisi: {
+    id: 'analisi',
+    theme: 'analisi',
+    name: 'Analisi Matematica 1',
+    icon: '∫',
+    basePath: '/analisi1',
+    indexUrl: '/analisi1/',
+    professor: '',
+    university: 'Università di Roma Tor Vergata',
+    year: 'A.A. 2026/2027',
+    lessonLabel: 'Lezione',
+    description: 'Le lezioni di Analisi Matematica 1: definizioni, teoremi con dimostrazione, grafici di ogni funzione studiata, esercizi svolti e proposti.',
+    nav: [
+      { label: 'Lezioni', href: '/analisi1/', active: true },
+    ],
+    categories: [
+      { id: 'numeri-e-funzioni', label: 'numeri reali e funzioni', gridId: 'numeri-grid' },
+      { id: 'successioni-e-serie', label: 'successioni e serie', gridId: 'successioni-grid' },
+      { id: 'limiti-e-continuita', label: 'limiti e continuità', gridId: 'limiti-grid' },
+      { id: 'derivate', label: 'calcolo differenziale', gridId: 'derivate-grid' },
+      { id: 'integrali', label: 'calcolo integrale', gridId: 'integrali-grid' },
+    ],
+    lessons: [],
+  },
+  precorso: {
+    id: 'precorso',
+    theme: 'analisi',
+    name: 'Precorso di Matematica',
+    icon: '∑',
+    basePath: '/precorso',
+    indexUrl: '/precorso/',
+    professor: '',
+    university: 'Università di Roma Tor Vergata',
+    year: 'A.A. 2026/2027',
+    lessonLabel: 'Lezione',
+    description: 'Il precorso: le basi che tornano in Analisi 1, con i grafici delle funzioni elementari.',
+    nav: [
+      { label: 'Lezioni', href: '/precorso/', active: true },
+    ],
+    categories: [
+      { id: 'precorso', label: 'le lezioni del precorso', gridId: 'precorso-grid' },
+    ],
+    lessons: [],
+  },
 };
 
 module.exports = { SITE, COURSES };

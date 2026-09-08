@@ -91,6 +91,13 @@
   --accent-glow-strong: rgba(255,107,107,0.25);
 }
 
+[data-theme="analisi"] {
+  --accent: #7c4dff;
+  --accent-dim: #5e35b1;
+  --accent-glow: rgba(124,77,255,0.12);
+  --accent-glow-strong: rgba(124,77,255,0.25);
+}
+
 /* ═══════════════════════════════════════════════════════════════
    RESET & BASE
    ═══════════════════════════════════════════════════════════════ */
@@ -415,6 +422,10 @@ a:hover { color: var(--text-primary); }
 .fn-course-card[data-course="geometria"] .fn-course-count { color: #d4702e; }
 .fn-course-card[data-course="controlli"]:hover { --accent: #ff6b6b; --accent-dim: #d44e4e; }
 .fn-course-card[data-course="controlli"] .fn-course-count { color: #d44e4e; }
+.fn-course-card[data-course="analisi"]:hover { --accent: #7c4dff; --accent-dim: #5e35b1; }
+.fn-course-card[data-course="analisi"] .fn-course-count { color: #5e35b1; }
+.fn-course-card[data-course="precorso"]:hover { --accent: #7c4dff; --accent-dim: #5e35b1; }
+.fn-course-card[data-course="precorso"] .fn-course-count { color: #5e35b1; }
 
 /* ═══════════════════════════════════════════════════════════════
    COURSE INDEX PAGE — Section headers, lesson cards

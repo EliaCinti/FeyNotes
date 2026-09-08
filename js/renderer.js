@@ -205,6 +205,33 @@ function renderSection(sec) {
       </div>`;
       break;
 
+    case 'figura':
+      h += `<div class="content-section" id="${id}">
+        <h2><span class="sec-icon">${sec.icon || '📈'}</span>${sec.title}</h2>
+        ${sec.content || ''}
+      </div>`;
+      break;
+
+    case 'esercizio': {
+      const kind = sec.kind ? `<span class="ex-badge ex-badge--${sec.kind}">${sec.kind}</span>` : '';
+      const src = sec.source && sec.source !== 'docente' ? `<span class="ex-badge ex-badge--integrazione">integrazione</span>` : '';
+      h += `<div class="content-section exercise" id="${id}">
+        <h2><span class="sec-icon">${sec.icon || '✏️'}</span>${sec.title} ${kind}${src}</h2>
+        ${sec.content || ''}
+        ${sec.solution ? `<details class="solution"><summary>Mostra la soluzione</summary><div class="solution-body">${sec.solution}</div></details>` : ''}
+      </div>`;
+      break;
+    }
+
+    case 'integrazione_box':
+      h += `<div class="content-section" id="${id}">
+        <div class="integrazione-box">
+          <h3>${sec.title || 'Integrazione — non detto dal docente'}</h3>
+          ${sec.content || ''}
+        </div>
+      </div>`;
+      break;
+
     default: // "section"
       h += `<div class="content-section" id="${id}">`;
       h += `<h2><span class="sec-icon">${sec.icon || '📌'}</span>${sec.title}</h2>`;
@@ -436,7 +463,7 @@ function renderAllKatex(container) {
 
   // Inline $...$ in text nodes — broad selector to catch everything
   const katexTargets = container.querySelectorAll(
-    'p, td, th, li, h2, h3, h4, span, div.ab-title, .step-text, .q-text, ' +
+    'figcaption, summary, .solution-body p, .integrazione-box p, p, td, th, li, h2, h3, h4, span, div.ab-title, .step-text, .q-text, ' +
     '.card-text, .qb-question, .quiz-explanation, .quiz-opt span, ' +
     '.note-box h3, .note-box p, .method-box h3, .method-box .step-text, ' +
     '.formula-label, .lesson-abstract, .info-table td'

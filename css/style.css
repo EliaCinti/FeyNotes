@@ -370,3 +370,16 @@ a:hover { color: var(--accent); }
   .alert-box { border: 1px solid #ddd; background: #fff0f0; }
   .note-box { border: 1px solid #ddd; background: #fff8f0; }
 }
+
+/* ── Corsi matematici: figure, esercizi, integrazioni ── */
+.figura { margin: 1.4rem auto; max-width: 640px; color: var(--text-muted); }
+.figura svg { width: 100%; height: auto; display: block; }
+.figura figcaption { text-align: center; font-size: .85rem; margin-top: .4rem; }
+.exercise h2 .ex-badge { font-size: .65rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  border: 1px solid var(--border); border-radius: 999px; padding: .1rem .5rem; margin-left: .4rem; vertical-align: middle; color: var(--text-muted); }
+.ex-badge--integrazione { border-color: #d97706; color: #d97706; }
+details.solution { margin-top: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); padding: .6rem 1rem; }
+details.solution summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+details.solution[open] summary { margin-bottom: .6rem; }
+.integrazione-box { border-left: 4px solid #d97706; background: rgba(217,119,6,.08); border-radius: 8px; padding: .8rem 1rem; }
+.integrazione-box h3 { margin-top: 0; color: #d97706; font-size: .95rem; }
