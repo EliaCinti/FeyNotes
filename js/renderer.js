@@ -205,13 +205,6 @@ function renderSection(sec) {
       </div>`;
       break;
 
-    case 'figura':
-      h += `<div class="content-section" id="${id}">
-        <h2><span class="sec-icon">${sec.icon || '📈'}</span>${sec.title}</h2>
-        ${sec.content || ''}
-      </div>`;
-      break;
-
     case 'esercizio': {
       const kind = sec.kind ? `<span class="ex-badge ex-badge--${sec.kind}">${sec.kind}</span>` : '';
       const src = sec.source && sec.source !== 'docente' ? `<span class="ex-badge ex-badge--integrazione">integrazione</span>` : '';
@@ -240,7 +233,7 @@ function renderSection(sec) {
 
       // Steps
       if (sec.steps) {
-        h += `<div class="steps-box"><div class="sb-title">Procedura</div>`;
+        h += `<div class="steps-box"><div class="sb-title">${sec.type === 'esercizio_svolto' ? 'Svolgimento' : 'Procedura'}</div>`;
         sec.steps.forEach((step, i) => {
           h += `<div class="step-item"><div class="step-num">${i + 1}</div><div class="step-text">${step}</div></div>`;
         });
