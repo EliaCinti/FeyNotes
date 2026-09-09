@@ -10,7 +10,7 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 14,
+  cssVersion: 15,
 };
 
 const COURSES = {
@@ -194,13 +194,8 @@ const COURSES = {
     nav: [
       { label: 'Lezioni', href: '/analisi1/', active: true },
     ],
-    categories: [
-      { id: 'numeri-e-funzioni', label: 'numeri reali e funzioni', gridId: 'numeri-grid' },
-      { id: 'successioni-e-serie', label: 'successioni e serie', gridId: 'successioni-grid' },
-      { id: 'limiti-e-continuita', label: 'limiti e continuità', gridId: 'limiti-grid' },
-      { id: 'derivate', label: 'calcolo differenziale', gridId: 'derivate-grid' },
-      { id: 'integrali', label: 'calcolo integrale', gridId: 'integrali-grid' },
-    ],
+    categories: [],   // si aggiungono man mano che il corso avanza
+
     lessons: [],
   },
   precorso: {
@@ -221,7 +216,9 @@ const COURSES = {
     categories: [
       { id: 'precorso', label: 'le lezioni del precorso', gridId: 'precorso-grid' },
     ],
-    lessons: [],
+    lessons: [
+      { id: 'L01', num: 'Lezione 1', date: '8 Set 2026', title: 'Moduli, Valori Assoluti e Radicali', abstract: 'Lezione introduttiva del precorso: presentazione delle attività di supporto e degli OFA, poi il ripasso del valore assoluto (definizione, grafici, equazioni e disequazioni con modulo) e dei radicali (campo di esistenza, convenzione sul segno, equazioni e disequazioni irrazionali).', category: 'precorso' },
+    ],
   },
 };
 

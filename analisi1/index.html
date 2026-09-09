@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="analisi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisi Matematica 1 — FeyNotes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1330'/%3E%3Cg fill='none' stroke='%237c9cff' stroke-width='1.5'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(120 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ffcf5c'/%3E%3C/svg%3E">
+  <meta name="description" content="Analisi Matematica 1 — Le lezioni di Analisi Matematica 1: definizioni, teoremi con dimostrazione, grafici di ogni funzione studiata, esercizi svolti e proposti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="Analisi Matematica 1 — FeyNotes">
+  <meta property="og:description" content="Le lezioni di Analisi Matematica 1: definizioni, teoremi con dimostrazione, grafici di ogni funzione studiata, esercizi svolti e proposti.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://eliacinti.dev/analisi1/">
+  <link rel="canonical" href="https://eliacinti.dev/analisi1/">
+  <link rel="stylesheet" href="/css/base.css?v=15">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Analisi Matematica 1",
+  "description": "Le lezioni di Analisi Matematica 1: definizioni, teoremi con dimostrazione, grafici di ogni funzione studiata, esercizi svolti e proposti.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Università di Roma Tor Vergata"
+  },
+  "inLanguage": "it",
+  "url": "https://eliacinti.dev/analisi1/",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "name": "A.A. 2026/2027",
+    "instructor": {
+      "@type": "Person",
+      "name": ""
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/analisi1/" class="header-logo">
+    Analisi Matematica 1
+  </a>
+  <nav class="header-nav">
+    <a href="/analisi1/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<div class="fn-page">
+
+  <div class="fn-course-hero">
+    <div class="fn-label fn-fade">// corso</div>
+    <div class="fn-course-badge-inline fn-fade fn-d1">Università di Roma Tor Vergata — A.A. 2026/2027</div>
+    <h1 class="fn-fade fn-d1">Analisi Matematica 1</h1>
+    <p class="fn-course-hero-sub fn-fade fn-d2">Le lezioni di Analisi Matematica 1: definizioni, teoremi con dimostrazione, grafici di ogni funzione studiata, esercizi svolti e proposti.</p>
+    <p class="fn-course-hero-meta fn-fade fn-d3">di <span class="hl">Elia Cinti</span> — Ingegneria Informatica · </p>
+  </div>
+
+  
+
+</div>
+
+<div class="fn-page">
+  <footer class="fn-footer">
+    <div class="fn-footer-coffee">Se ti sono stati utili, <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">offrimi un caffè</a></div>
+    <div class="fn-footer-inner">
+      <span class="fn-footer-copy">&copy; 2026 Elia Cinti</span>
+      <div class="fn-footer-links">
+        <a href="https://github.com/eliacinti" target="_blank" rel="noopener noreferrer">github</a>
+        <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">ko-fi</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const LESSON_INDEX = [];
+
+function populateGrid(gridId, category) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  const lessons = LESSON_INDEX.filter(l => l.category === category);
+  if (lessons.length === 0) return;
+  grid.innerHTML = '';
+  for (const l of lessons) {
+    grid.innerHTML += `
+      <a class="fn-card" href="${l.file}">
+        <div class="fn-card-glow"></div>
+        <div class="fn-card-num">${l.num}</div>
+        <div class="fn-card-title">${l.title}</div>
+        <div class="fn-card-abstract">${l.abstract}</div>
+        <div class="fn-card-footer">
+          <span class="fn-card-date">${l.date}</span>
+          <span class="fn-card-arrow">&rarr;</span>
+        </div>
+      </a>`;
+  }
+}
+
+
+
+document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
+  const html = el.innerHTML;
+  if (!html.includes('$')) return;
+  let processed = html.replace(/(?<!\$)\$(?!\$)([^$]+?)\$(?!\$)/g, (_, tex) => {
+    const span = document.createElement('span');
+    try { katex.render(tex, span, { throwOnError: false }); }
+    catch (e) { span.textContent = tex; }
+    return span.outerHTML;
+  });
+  if (processed !== html) el.innerHTML = processed;
+});
+</script>
+
+</body>
+</html>
