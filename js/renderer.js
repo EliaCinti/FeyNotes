@@ -386,12 +386,27 @@ function buildSidebar(lesson) {
   if (!sidebar) return;
 
   let html = '';
+  let lastWasExerciseGroup = false;
   for (const sec of lesson.sections) {
-    if (sec.id && sec.type !== 'integrazione_box') {
+    if (sec.type === 'integrazione_box') continue;
+
+    if (sec.type === 'esercizio') {
+      if (!lastWasExerciseGroup && sec.id) {
+        html += `<a class="sidebar-link" href="#${sec.id}" onclick="scrollToSection('${sec.id}')">
+          <span class="sl-icon">✏️</span>
+          <span>Esercizi proposti</span>
+        </a>`;
+        lastWasExerciseGroup = true;
+      }
+      continue;
+    }
+
+    if (sec.id) {
       html += `<a class="sidebar-link" href="#${sec.id}" onclick="scrollToSection('${sec.id}')">
         <span class="sl-icon">${sec.icon || '📌'}</span>
         <span>${stripHtml(sec.title)}</span>
       </a>`;
+      lastWasExerciseGroup = false;
     }
   }
 
