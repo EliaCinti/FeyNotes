@@ -246,7 +246,7 @@ a:hover { color: var(--accent); }
 .compare-table tr:hover td { background: var(--bg-hover); }
 
 /* ─── KaTeX ─── */
-.katex-display { margin: 16px 0; overflow-x: auto; }
+.katex-display { margin: 16px 0; padding: 6px 0; overflow-x: auto; overflow-y: hidden; }  /* overflow-x da solo rende auto anche l'asse y: le frazioni alte di qualche pixel mostravano una barra verticale */
 .content-section .katex { font-size: 1.05rem; }
 
 .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 28px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); scroll-margin-top: calc(var(--header-h) + 24px); }
