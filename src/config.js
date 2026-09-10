@@ -218,6 +218,7 @@ const COURSES = {
     ],
     lessons: [
       { id: 'L01', num: 'Lezione 1', date: '8 Set 2026', title: 'Moduli, Valori Assoluti e Radicali', abstract: 'Lezione introduttiva del precorso: presentazione delle attività di supporto e degli OFA, poi il ripasso del valore assoluto (definizione, grafici, equazioni e disequazioni con modulo) e dei radicali (campo di esistenza, convenzione sul segno, equazioni e disequazioni irrazionali).', category: 'precorso' },
+      { id: 'L02', num: 'Lezione 2', date: '9 Set 2026', title: 'Equazioni e Disequazioni: Concetti di Base', abstract: 'Richiami di algebra elementare, equazioni di primo e secondo grado, discriminante, campo di esistenza, equazioni irrazionali e fratte, disequazioni di primo e secondo grado, disequazioni irrazionali con discussione del segno, divisione tra polinomi e sistemi.', category: 'precorso' },
     ],
   },
 };
