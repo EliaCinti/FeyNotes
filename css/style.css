@@ -383,3 +383,8 @@ details.solution summary { cursor: pointer; font-weight: 600; color: var(--accen
 details.solution[open] summary { margin-bottom: .6rem; }
 .integrazione-box { border-left: 4px solid #d97706; background: rgba(217,119,6,.08); border-radius: 8px; padding: .8rem 1rem; }
 .integrazione-box h3 { margin-top: 0; color: #d97706; font-size: .95rem; }
+
+/* ── PDF della lezione (opzionale) ── */
+.header-pdf { margin-left: 10px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; text-decoration: none; white-space: nowrap; }
+.header-pdf:hover { background: var(--accent-glow); }

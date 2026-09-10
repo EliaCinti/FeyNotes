@@ -10,7 +10,7 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 16,
+  cssVersion: 17,
 };
 
 const COURSES = {

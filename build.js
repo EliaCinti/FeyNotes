@@ -106,6 +106,13 @@ function buildNextLink(course, lessonIndex) {
 //  JSON-LD
 // ═══════════════════════════════════════════════════════════════
 
+function buildPdfLink(course, lessonId) {
+  // Il PDF della lezione e' opzionale (feynotes.py --pdf-sito): il pulsante compare solo se il file c'e'.
+  const rel = path.join('pdf', course.id, `${lessonId}.pdf`);
+  if (!fs.existsSync(path.join(ROOT, rel))) return '';
+  return `<a class="header-pdf" href="/${rel}" download title="Scarica la lezione in PDF">📄 PDF</a>`;
+}
+
 function buildLessonJsonLd(course, lessonMeta) {
   return JSON.stringify({
     '@context': 'https://schema.org',
@@ -181,6 +188,7 @@ function buildLesson(courseId, lessonId) {
     PREV_LINK: buildPrevLink(course, lessonIndex),
     NEXT_LINK: buildNextLink(course, lessonIndex),
     LESSON_NUM: lessonMeta.num,
+    PDF_LINK: buildPdfLink(course, lessonId),
     LESSON_DATA: lessonData,
     JSON_LD: buildLessonJsonLd(course, lessonMeta),
   };
