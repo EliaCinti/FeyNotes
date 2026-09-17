@@ -1,5 +1,5 @@
 const LESSON = {
-    id: "L03", date: "Lezione 3 — 16 Set 2026",
+    id: "L03", date: "Lezione 3 — 10 Set 2026",
     title: "Geometria Cartesiana: Retta, Circonferenza e Parabola",
     abstract: "Il ponte tra geometria e algebra: piano cartesiano, equazione della retta in forma esplicita e implicita, pendenza e fasci, distanza punto-retta. Poi le coniche come sezioni del cono, la circonferenza e la parabola, con applicazioni al riempimento di una vasca e al moto di un proiettile.",
 
