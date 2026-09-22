@@ -196,7 +196,9 @@ const COURSES = {
     ],
     categories: [],   // si aggiungono man mano che il corso avanza
 
-    lessons: [],
+    lessons: [
+      { id: 'L01', num: 'Lezione 1', date: '21 Set 2026', title: 'Linguaggio matematico, insiemi e relazioni d\'ordine', abstract: 'Presentazione del corso e dell\'esame; linguaggio degli insiemi, operazioni e complementari, prodotto cartesiano, insiemi numerici, operazioni binarie e relazioni d\'ordine totale. Esempi ed esercizi proposti con soluzioni.', category: 'analisi1' },
+    ],
   },
   precorso: {
     id: 'precorso',
