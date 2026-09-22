@@ -186,7 +186,7 @@ const COURSES = {
     icon: '∫',
     basePath: '/analisi1',
     indexUrl: '/analisi1/',
-    professor: '',
+    professor: 'Vincenzo Morinelli',
     university: 'Università di Roma Tor Vergata',
     year: 'A.A. 2026/2027',
     lessonLabel: 'Lezione',
@@ -194,10 +194,19 @@ const COURSES = {
     nav: [
       { label: 'Lezioni', href: '/analisi1/', active: true },
     ],
-    categories: [],   // si aggiungono man mano che il corso avanza
+    categories: [
+      { id: 'equazioni-differenziali', label: 'equazioni differenziali', gridId: 'equazioni-differenziali-grid' },
+      { id: 'numeri-complessi', label: 'numeri complessi', gridId: 'numeri-complessi-grid' },
+      { id: 'integrali', label: 'integrali', gridId: 'integrali-grid' },
+      { id: 'derivate', label: 'derivate e studio di funzione', gridId: 'derivate-grid' },
+      { id: 'limiti-e-continuita', label: 'limiti e continuità', gridId: 'limiti-e-continuita-grid' },
+      { id: 'successioni', label: 'limiti di successioni', gridId: 'successioni-grid' },
+      { id: 'funzioni', label: 'funzioni e funzioni elementari', gridId: 'funzioni-grid' },
+      { id: 'numeri-reali', label: 'numeri reali, insiemi e completezza', gridId: 'numeri-reali-grid' },
+    ],   // si aggiungono man mano che il corso avanza
 
     lessons: [
-      { id: 'L01', num: 'Lezione 1', date: '21 Set 2026', title: 'Linguaggio matematico, insiemi e relazioni d\'ordine', abstract: 'Presentazione del corso e dell\'esame; linguaggio degli insiemi, operazioni e complementari, prodotto cartesiano, insiemi numerici, operazioni binarie e relazioni d\'ordine totale. Esempi ed esercizi proposti con soluzioni.', category: 'analisi1' },
+      { id: 'L01', num: 'Lezione 1', date: '21 Set 2026', title: 'Linguaggio matematico, insiemi e relazioni d\'ordine', abstract: 'Presentazione del corso e dell\'esame; linguaggio degli insiemi, operazioni e complementari, prodotto cartesiano, insiemi numerici, operazioni binarie e relazioni d\'ordine totale. Esempi ed esercizi proposti con soluzioni.', category: 'numeri-reali' },
     ],
   },
   precorso: {

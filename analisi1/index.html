@@ -35,7 +35,7 @@
     "name": "A.A. 2026/2027",
     "instructor": {
       "@type": "Person",
-      "name": ""
+      "name": "Vincenzo Morinelli"
     }
   }
 }</script>
@@ -62,10 +62,86 @@
     <div class="fn-course-badge-inline fn-fade fn-d1">Università di Roma Tor Vergata — A.A. 2026/2027</div>
     <h1 class="fn-fade fn-d1">Analisi Matematica 1</h1>
     <p class="fn-course-hero-sub fn-fade fn-d2">Le lezioni di Analisi Matematica 1: definizioni, teoremi con dimostrazione, grafici di ogni funzione studiata, esercizi svolti e proposti.</p>
-    <p class="fn-course-hero-meta fn-fade fn-d3">di <span class="hl">Elia Cinti</span> — Ingegneria Informatica · </p>
+    <p class="fn-course-hero-meta fn-fade fn-d3">di <span class="hl">Elia Cinti</span> — Ingegneria Informatica · Vincenzo Morinelli</p>
   </div>
 
   
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// equazioni differenziali</div>
+    <div class="fn-grid" id="equazioni-differenziali-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di equazioni differenziali saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// numeri complessi</div>
+    <div class="fn-grid" id="numeri-complessi-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di numeri complessi saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// integrali</div>
+    <div class="fn-grid" id="integrali-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di integrali saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// derivate e studio di funzione</div>
+    <div class="fn-grid" id="derivate-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di derivate e studio di funzione saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// limiti e continuità</div>
+    <div class="fn-grid" id="limiti-e-continuita-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di limiti e continuità saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// limiti di successioni</div>
+    <div class="fn-grid" id="successioni-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di limiti di successioni saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// funzioni e funzioni elementari</div>
+    <div class="fn-grid" id="funzioni-grid">
+      <div class="fn-card fn-card--placeholder">
+        <div class="fn-card-num">Prossimamente</div>
+        <div class="fn-card-title">Le lezioni di funzioni e funzioni elementari saranno aggiunte man mano che il corso procede.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// numeri reali, insiemi e completezza</div>
+    <div class="fn-grid" id="numeri-reali-grid">
+    </div>
+  </div>
+
 
 </div>
 
@@ -90,7 +166,7 @@ const LESSON_INDEX = [
     "date": "21 Set 2026",
     "title": "Linguaggio matematico, insiemi e relazioni d'ordine",
     "abstract": "Presentazione del corso e dell'esame; linguaggio degli insiemi, operazioni e complementari, prodotto cartesiano, insiemi numerici, operazioni binarie e relazioni d'ordine totale. Esempi ed esercizi proposti con soluzioni.",
-    "category": "analisi1",
+    "category": "numeri-reali",
     "file": "/analisi1/lezioni/L01/"
   }
 ];
@@ -116,7 +192,14 @@ function populateGrid(gridId, category) {
   }
 }
 
-
+populateGrid('equazioni-differenziali-grid', 'equazioni-differenziali');
+populateGrid('numeri-complessi-grid', 'numeri-complessi');
+populateGrid('integrali-grid', 'integrali');
+populateGrid('derivate-grid', 'derivate');
+populateGrid('limiti-e-continuita-grid', 'limiti-e-continuita');
+populateGrid('successioni-grid', 'successioni');
+populateGrid('funzioni-grid', 'funzioni');
+populateGrid('numeri-reali-grid', 'numeri-reali');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;
