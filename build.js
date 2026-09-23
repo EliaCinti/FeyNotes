@@ -195,6 +195,39 @@ function buildLesson(courseId, lessonId) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  VALIDATION
+// ═══════════════════════════════════════════════════════════════
+
+// Every lesson.category must exist among its course's categories, or the
+// lesson lands in a section nobody sees (the L25 Geometria bug).
+function validateCategories(courses = COURSES) {
+  const errors = [];
+  for (const [courseId, course] of Object.entries(courses)) {
+    const validIds = new Set(course.categories.map(c => c.id));
+    for (const lesson of course.lessons) {
+      if (!validIds.has(lesson.category)) {
+        errors.push(`${courseId}/${lesson.id}: category "${lesson.category}" is not in the course's categories`);
+      }
+    }
+  }
+  return errors;
+}
+
+// Which course owns a --lesson id. An explicit --course always wins; without
+// one, an id that exists in more than one course (ids are only unique within
+// a course, e.g. every course's intro lesson is "L01") must not silently pick
+// the first course in object-key order — that would rebuild the wrong page.
+function resolveCourseForLesson(lessonId, explicitCourse, courses = COURSES) {
+  if (explicitCourse) return { ok: true, courseId: explicitCourse };
+  const matches = Object.keys(courses).filter(cId =>
+    courses[cId].lessons.some(l => l.id === lessonId)
+  );
+  if (matches.length > 1) return { ok: false, reason: 'ambiguous', matches };
+  if (matches.length === 0) return { ok: false, reason: 'not-found', matches };
+  return { ok: true, courseId: matches[0] };
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  BUILD COURSE INDEX
 // ═══════════════════════════════════════════════════════════════
 
@@ -443,6 +476,13 @@ function main() {
   console.log('  FeyNotes Build System v3');
   console.log('═══════════════════════════════════════');
 
+  const categoryErrors = validateCategories();
+  if (categoryErrors.length) {
+    console.error('❌ Invalid categories — build aborted:');
+    for (const e of categoryErrors) console.error(`   - ${e}`);
+    process.exit(1);
+  }
+
   if (flags.sitemap) {
     buildSitemap();
     return;
@@ -450,12 +490,13 @@ function main() {
 
   if (flags.lesson) {
     const lessonId = flags.lesson;
-    const courseId = flags.course || Object.keys(COURSES).find(cId =>
-      COURSES[cId].lessons.some(l => l.id === lessonId)
-    );
-    if (courseId) {
-      buildLesson(courseId, lessonId);
-      buildCourseIndex(courseId);
+    const resolved = resolveCourseForLesson(lessonId, flags.course);
+    if (resolved.ok) {
+      buildLesson(resolved.courseId, lessonId);
+      buildCourseIndex(resolved.courseId);
+    } else if (resolved.reason === 'ambiguous') {
+      console.error(`Lesson "${lessonId}" exists in multiple courses (${resolved.matches.join(', ')}) — pass --course to disambiguate.`);
+      process.exit(1);
     } else {
       console.error(`Lesson "${lessonId}" not found in any course.`);
     }
@@ -481,4 +522,8 @@ function main() {
   console.log('✅ Build complete!');
 }
 
-main();
+module.exports = { validateCategories, resolveCourseForLesson };
+
+if (require.main === module) {
+  main();
+}
