@@ -1,0 +1,655 @@
+const LESSON = {
+    id: "L02",
+    date: "Lezione 2 — 23 Set 2026",
+    title: "Ordinamento, numeri razionali, logica e numeri reali",
+    abstract: "Ordine totale e disuguaglianze strette, densità e proprietà di Archimede, rappresentazioni decimali. Implicazioni e dimostrazioni per assurdo, irrazionalità di radice di due e introduzione ai numeri reali.",
+
+    sections: [
+        {
+            id: "s02-ordine-totale",
+            type: "section",
+            title: "Relazione d'ordine totale",
+            icon: "⚖️",
+            content: `<p>Nella lezione precedente abbiamo introdotto i naturali $\\mathbb{N}$, gli interi $\\mathbb{Z}$ e i razionali $\\mathbb{Q}$. Su tutti questi insiemi possiamo definire una <strong>relazione d'ordine totale</strong>, indicata con $\\le$ e letta “minore o uguale”.</p><p><strong>Definizione.</strong> Una relazione $\\le$ su un insieme $A$ è una relazione d'ordine totale se, per ogni $x,y,z\\in A$, soddisfa le seguenti proprietà:</p><ol><li><p><strong>Totalità:</strong> $x\\le y$ oppure $y\\le x$.</p></li><li><p><strong>Riflessività:</strong> $x\\le x$.</p></li><li><p><strong>Antisimmetria:</strong> se $x\\le y$ e $y\\le x$, allora $x=y$.</p></li><li><p><strong>Transitività:</strong> se $x\\le y$ e $y\\le z$, allora $x\\le z$.</p></li></ol><p>L'ordine usuale su $\\mathbb{N}$, $\\mathbb{Z}$ e $\\mathbb{Q}$ soddisfa queste proprietà.</p>`,
+            subsections: [
+                {
+                    subtitle: "Proposizione — Compatibilità dell'ordine con le operazioni",
+                    content: `<p>Su ciascuno degli insiemi $\\mathbb{N}$, $\\mathbb{Z}$ e $\\mathbb{Q}$, l'ordine usuale è compatibile con la somma e il prodotto.</p><p><strong>Compatibilità con la somma:</strong> se $x\\le y$, allora, per ogni $z$ dello stesso insieme,</p><p>$$x+z\\le y+z.$$</p><p>Sommando la stessa quantità ai due membri, la disuguaglianza si conserva.</p><p><strong>Compatibilità con il prodotto:</strong> se $x\\ge 0$ e $y\\ge 0$, allora</p><p>$$xy\\ge 0.$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-nota-prof-disequazioni",
+            type: "note_box",
+            title: "Nota del Prof. — Regole delle disequazioni",
+            icon: "📝",
+            content: `<blockquote><p>Da queste proprietà fondamentali si possono derivare tutte le regole algebriche per la manipolazione delle disequazioni. Ad esempio, in $\\mathbb{Z}$ e in $\\mathbb{Q}$, moltiplicando entrambi i membri di una disuguaglianza per un numero negativo si deve <strong>invertire il verso della disuguaglianza</strong>. Vi invito a ripassare queste regole, che sono fondamentali.</p></blockquote>`
+        },
+        {
+            id: "s02-disuguaglianza-stretta",
+            type: "section",
+            title: "Disuguaglianza stretta",
+            icon: "⚖️",
+            content: `<p>Oltre alla relazione $\\le$, definiamo la relazione di disuguaglianza stretta $\\lt$.</p><p><strong>Definizione.</strong> Diciamo che $x$ è <strong>strettamente minore</strong> di $y$ quando valgono contemporaneamente $x\\le y$ e $x\\neq y$:</p><p>$$x\\lt y\\iff (x\\le y)\\land(x\\neq y).$$</p><p>La relazione $\\lt$ non gode di tutte le proprietà della relazione $\\le$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Totalità e tricotomia",
+                    content: `<p>Non è sempre vero che $x\\lt y$ oppure $y\\lt x$: se $x=y$, entrambe le disuguaglianze sono false. La totalità, nella forma enunciata per $\\le$, non vale.</p><p>Vale invece la <strong>tricotomia</strong>: si verifica esattamente una delle tre possibilità</p><p>$$x\\lt y,\\qquad x=y,\\qquad y\\lt x.$$</p>`
+                },
+                {
+                    subtitle: "Irriflessività",
+                    content: `<p>Non è mai vero che $x\\lt x$. La riflessività non vale: la relazione $\\lt$ è <strong>irriflessiva</strong>.</p>`
+                },
+                {
+                    subtitle: "Antisimmetria per vacuità e asimmetria",
+                    content: `<p>L'implicazione</p><p>$$(x\\lt y\\text{ e }y\\lt x)\\Rightarrow x=y$$</p><p>è vera <strong>per vacuità</strong>, perché la premessa è impossibile. Un'implicazione è falsa soltanto quando la premessa è vera e la conclusione è falsa: se la premessa non si verifica mai, l'implicazione non viene mai contraddetta. Dunque anche $\\lt$ è antisimmetrica.</p><p>Inoltre, $\\lt$ soddisfa la proprietà più forte di <strong>asimmetria</strong>:</p><p>$$x\\lt y\\Rightarrow\\text{non }(y\\lt x).$$</p><p>Infatti, se valessero entrambe le disuguaglianze strette, avremmo $x\\le y$ e $y\\le x$, dunque $x=y$, in contrasto con $x\\lt y$.</p>`
+                },
+                {
+                    subtitle: "Transitività",
+                    content: `<p>Se $x\\lt y$ e $y\\lt z$, allora $x\\lt z$. La transitività resta valida.</p>`
+                }
+            ],
+            extra_content: `<p>Il passaggio da $\\le$ a $\\lt$ <strong>conserva antisimmetria e transitività</strong>, mentre modifica le proprietà di riflessività e totalità.</p>`
+        },
+        {
+            id: "s02-densita-razionali",
+            type: "section",
+            title: "Densità dei numeri razionali",
+            icon: "🔎",
+            content: `<p>Una proprietà fondamentale di $\\mathbb{Q}$ è la sua <strong>densità</strong>.</p><p><strong>Proposizione.</strong> Per ogni coppia $x,y\\in\\mathbb{Q}$ con $x\\lt y$, esistono infiniti numeri razionali $z$ tali che $x\\lt z\\lt y$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Corrispondenza tra i razionali e i punti di una retta",
+                    content: `<p>Per visualizzare questa proprietà, facciamo corrispondere a ogni razionale un punto della retta. Fissiamo un'origine, lo $0$, un verso positivo verso destra e un'unità di misura, la distanza tra $0$ e $1$.</p><p>Scriviamo il razionale nella forma $p/q$, con $p\\in\\mathbb{Z}$ e $q$ intero positivo. Dividiamo il segmento da $0$ a $1$ in $q$ parti uguali, ciascuna di lunghezza $1/q$. Dall'origine percorriamo $|p|$ passi di questa lunghezza: verso destra se $p\\gt 0$, verso sinistra se $p\\lt 0$. Se $p=0$, rimaniamo nell'origine.</p><p>I passi possono proseguire oltre il segmento $[0,1]$: se $p\\gt q$, il punto ottenuto si trova a destra di $1$. Questa rappresentazione aiuta a visualizzare i numeri e le loro relazioni.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Il punto medio è razionale",
+                    content: `<p>Dati $x,y\\in\\mathbb{Q}$ con $x\\lt y$, cerchiamo prima un razionale compreso tra essi. Una volta trovato, potremo iterare il procedimento.</p><p>Consideriamo il punto medio:</p><p>$$z=\\frac{x+y}{2}.$$</p><p>La somma $x+y$ è razionale. Dividendo per $2$, razionale e diverso da zero, otteniamo ancora un razionale. Quindi $z\\in\\mathbb{Q}$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Verifica delle due disuguaglianze",
+                    content: `<p>Per verificare $x\\lt z$, scriviamo:</p><p>$$x\\lt\\frac{x+y}{2}\\iff 2x\\lt x+y\\iff x\\lt y.$$</p><p>L'ultima disuguaglianza è vera per ipotesi.</p><p>Per verificare $z\\lt y$, scriviamo:</p><p>$$\\frac{x+y}{2}\\lt y\\iff x+y\\lt 2y\\iff x\\lt y.$$</p><p>Anche questa è vera per ipotesi. Abbiamo dunque trovato $z_1=\\frac{x+y}{2}$ tale che $x\\lt z_1\\lt y$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Costruzione di infiniti razionali distinti",
+                    content: `<p>Troviamo ora il punto medio tra $x$ e $z_1$:</p><p>$$z_2=\\frac{x+z_1}{2}.$$</p><p>Per lo stesso ragionamento, $x\\lt z_2\\lt z_1\\lt y$. Proseguendo, definiamo</p><p>$$z_{k+1}=\\frac{x+z_k}{2},\\qquad k\\ge 1.$$</p><p>A ogni passo si ha</p><p>$$x\\lt z_{k+1}\\lt z_k\\lt y.$$</p><p>I numeri costruiti sono razionali, tutti compresi tra $x$ e $y$ e <strong>tutti distinti</strong>, perché ogni nuovo numero è strettamente minore del precedente.</p>`
+                },
+                {
+                    subtitle: "Esempio illustrativo — Due razionali tra un terzo e un mezzo",
+                    content: `<p>Poniamo $x=\\frac{1}{3}$ e $y=\\frac{1}{2}$. Il primo punto medio è</p><p>$$z_1=\\frac{x+y}{2}=\\frac{\\frac{1}{3}+\\frac{1}{2}}{2}=\\frac{\\frac{5}{6}}{2}=\\frac{5}{12}.$$</p><p>Il punto medio tra $x$ e $z_1$ è</p><p>$$z_2=\\frac{x+z_1}{2}=\\frac{\\frac{1}{3}+\\frac{5}{12}}{2}=\\frac{\\frac{9}{12}}{2}=\\frac{3}{8}.$$</p><p>Per verificare l'ordine, portiamo tutte le frazioni al denominatore $24$:</p><p>$$\\frac{1}{3}=\\frac{8}{24}\\lt\\frac{3}{8}=\\frac{9}{24}\\lt\\frac{5}{12}=\\frac{10}{24}\\lt\\frac{1}{2}=\\frac{12}{24}.$$</p><p>Possiamo ripetere ancora la costruzione tra $\\frac{1}{3}$ e $\\frac{3}{8}$, ottenendo ogni volta un nuovo numero razionale.</p>`
+                }
+            ],
+            formulas: [
+                {
+                    label: "Costruzione mediante punti medi",
+                    latex: "z_1=\\frac{x+y}{2},\\qquad z_{k+1}=\\frac{x+z_k}{2},\\qquad x\\lt z_{k+1}\\lt z_k\\lt y"
+                }
+            ]
+        },
+        {
+            id: "s02-archimede",
+            type: "section",
+            title: "Proprietà di Archimede",
+            icon: "👣",
+            content: `<p><strong>Proposizione.</strong> Per ogni coppia di razionali $x,y\\in\\mathbb{Q}$ con $x\\gt 0$ e $y\\gt 0$, esiste un naturale $n\\in\\mathbb{N}$ tale che</p><p>$$nx\\gt y.$$</p><p>L'idea intuitiva è che, per quanto piccolo sia $x$, la lunghezza di un passo, e per quanto grande sia $y$, la distanza da percorrere, facendo un numero sufficiente di passi si può sempre superare $y$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione — Scrittura in frazioni e ricerca di un naturale",
+                    content: `<p>Scriviamo i razionali positivi come frazioni di interi positivi:</p><p>$$x=\\frac{p}{q},\\quad y=\\frac{r}{s},\\qquad p,q,r,s\\in\\mathbb{N},\\quad p,q,r,s\\ge 1.$$</p><p>Vogliamo trovare $n\\in\\mathbb{N}$ tale che</p><p>$$n\\cdot\\frac{p}{q}\\gt\\frac{r}{s}.$$</p><p>Moltiplicando entrambi i membri per $qs$, che è positivo, otteniamo la disuguaglianza equivalente</p><p>$$n\\cdot ps\\gt qr.$$</p><p>Poiché $p\\ge 1$ e $s\\ge 1$, abbiamo $ps\\ge 1$. Dividendo per $ps$, la condizione diventa</p><p>$$n\\gt\\frac{qr}{ps}.$$</p><p>Costruiamo direttamente un naturale che la soddisfi. Poiché $ps\\ge 1$ e $qr\\gt 0$,</p><p>$$\\frac{qr}{ps}\\le qr\\lt qr+1.$$</p><p>Scegliamo dunque $n=qr+1$, che è naturale.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Verifica della scelta",
+                    content: `<p>Verifichiamo anche la disuguaglianza prima della divisione per $ps$:</p><p>$$(qr+1)ps\\ge(qr+1)\\cdot 1=qr+1\\gt qr.$$</p><p>Per le equivalenze precedenti, segue $nx\\gt y$. Abbiamo trovato un naturale che soddisfa la richiesta.</p>`
+                },
+                {
+                    subtitle: "Esempio illustrativo",
+                    content: `<p>Siano</p><p>$$x=\\frac{2}{3},\\qquad y=\\frac{5}{4}.$$</p><p>Cerchiamo un naturale $n$ tale che</p><p>$$n\\cdot\\frac{2}{3}\\gt\\frac{5}{4},\\qquad\\text{ossia}\\qquad n\\gt\\frac{15}{8}.$$</p><p>Possiamo scegliere $n=2$. Infatti,</p><p>$$2\\cdot\\frac{2}{3}=\\frac{4}{3}=\\frac{16}{12}\\gt\\frac{15}{12}=\\frac{5}{4}.$$</p><p>Due passi di lunghezza $\\frac{2}{3}$ superano la distanza $\\frac{5}{4}$.</p><p>La scelta generale della dimostrazione darebbe $n=qr+1=3\\cdot 5+1=16$: anche questo valore funziona, ma non è necessario scegliere un numero così grande. La proposizione <strong>garantisce l'esistenza</strong> di un naturale adatto, senza richiedere che sia il più piccolo.</p>`
+                }
+            ],
+            formulas: [
+                {
+                    label: "Proprietà di Archimede nei razionali",
+                    latex: "x,y\\in\\mathbb{Q},\\ x\\gt 0,\\ y\\gt 0\\Rightarrow\\exists n\\in\\mathbb{N}:nx\\gt y"
+                }
+            ]
+        },
+        {
+            id: "s02-sviluppi-decimali",
+            type: "section",
+            title: "Rappresentazione decimale dei razionali",
+            icon: "🔢",
+            content: `<p>Ogni razionale può essere rappresentato, oltre che come frazione, come un <strong>allineamento decimale</strong>, ottenuto dividendo il numeratore per il denominatore. <strong>Nelle formule usiamo il punto come separatore decimale.</strong></p><p>Ad esempio:</p><p>$$\\frac{1}{2}=0.5,\\qquad\\frac{1}{3}=0.3333\\ldots=0.\\overline{3}.$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione — Periodo e antiperiodo",
+                    content: `<p>Uno sviluppo decimale si dice <strong>definitivamente periodico</strong> se, a partire da una certa posizione dopo il separatore decimale, le cifre si ripetono in un blocco fisso.</p><ul><li><p>Il <strong>periodo</strong> è il blocco di cifre che si ripete, indicato con una barra sovrapposta. Si sceglie usualmente il blocco ripetuto di lunghezza minima.</p></li><li><p>L'<strong>antiperiodo</strong> è il tratto iniziale di cifre decimali che precede l'inizio della ripetizione. Può essere assente, se il periodo inizia subito dopo il separatore decimale.</p></li></ul><p>In questi appunti, il termine <strong>periodico</strong> comprende anche gli sviluppi definitivamente periodici, con un eventuale antiperiodo.</p>`
+                },
+                {
+                    subtitle: "Esempio illustrativo — Uno sviluppo con antiperiodo",
+                    content: `<p>Dividendo $1$ per $6$, otteniamo</p><p>$$\\frac{1}{6}=0.1666\\ldots=0.1\\overline{6}.$$</p><p>L'antiperiodo è la cifra $1$, mentre il periodo è la cifra $6$. Invece, nello sviluppo $\\frac{1}{3}=0.\\overline{3}$, il periodo è $3$ e l'antiperiodo è assente.</p>`
+                },
+                {
+                    subtitle: "Proposizione — Sviluppo decimale dei numeri razionali",
+                    content: `<p>Lo sviluppo decimale di un razionale è sempre <strong>finito</strong> o <strong>definitivamente periodico</strong>.</p><p>Uno sviluppo finito può essere prolungato con infiniti zeri e considerato periodico di periodo $0$. Con questa convenzione, ogni razionale ammette uno sviluppo decimale periodico, eventualmente preceduto da un antiperiodo.</p><p><strong>La dimostrazione completa verrà presentata nelle lezioni successive.</strong></p>`
+                },
+                {
+                    subtitle: "Esempio — Uno sviluppo finito come periodico di periodo zero",
+                    content: `<p>Uno sviluppo finito si può riscrivere così:</p><p>$$0.5=0.5000\\ldots=0.5\\overline{0}.$$</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-ambiguita-decimali",
+            type: "section",
+            title: "Ambiguità della rappresentazione decimale",
+            icon: "🔁",
+            content: `<p>La rappresentazione decimale presenta un'ambiguità. Consideriamo $0.999\\ldots$, con il $9$ che si ripete all'infinito.</p><p><strong>Proposizione.</strong></p><p>$$0.\\overline{9}=1.$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione",
+                    content: `<p>Sia $x=0.\\overline{9}=0.999\\ldots$. Moltiplichiamo per $10$:</p><p>$$10x=9.999\\ldots.$$</p><p>Possiamo scrivere $9.999\\ldots$ come $9+0.999\\ldots$, cioè $9+x$. Quindi:</p><p>$$\\begin{aligned}10x&=9+x\\\\10x-x&=9\\\\9x&=9\\\\x&=1.\\end{aligned}$$</p><p>Il numero $1$ ha dunque due rappresentazioni decimali: $1.000\\ldots$ e $0.999\\ldots$.</p>`
+                },
+                {
+                    subtitle: "Esempio — Due rappresentazioni dello stesso numero",
+                    content: `<p>Questa ambiguità riguarda anche gli altri numeri non nulli che hanno una rappresentazione decimale finita. Si ha</p><p>$$0.5=0.4999\\ldots=0.4\\overline{9}$$</p><p>e</p><p>$$0.12=0.11999\\ldots=0.11\\overline{9}.$$</p><p>Le uguaglianze si riconducono a $0.\\overline{9}=1$. Infatti,</p><p>$$0.4\\overline{9}=0.4+\\frac{0.\\overline{9}}{10}=0.4+0.1=0.5,$$</p><p>$$0.11\\overline{9}=0.11+\\frac{0.\\overline{9}}{100}=0.11+0.01=0.12.$$</p>`
+                },
+                {
+                    subtitle: "Definizione — Allineamento decimale proprio",
+                    content: `<p>Per eliminare l'ambiguità, adottiamo una convenzione. Un allineamento decimale è <strong>proprio</strong> se non presenta, da una certa posizione in poi, soltanto cifre $9$: non termina cioè con un periodo composto unicamente dalla cifra $9$.</p><p>Tra $1.0$ e $0.\\overline{9}$, la rappresentazione propria è $1.0$, intesa anche come $1.\\overline{0}$.</p>`
+                },
+                {
+                    subtitle: "Proposizione — Unicità della rappresentazione decimale propria",
+                    content: `<p>Con la convenzione di prolungare gli sviluppi finiti con infiniti zeri, <strong>a ogni numero razionale corrisponde uno e un solo allineamento decimale periodico proprio</strong>.</p><p>Viceversa, ogni allineamento decimale periodico proprio rappresenta un numero razionale. Si ottiene una <strong>corrispondenza biunivoca</strong> tra i razionali e tali allineamenti.</p><p><strong>La dimostrazione completa di questo risultato verrà presentata nelle lezioni successive.</strong></p>`
+                }
+            ]
+        },
+        {
+            id: "s02-comunicazioni",
+            type: "note_box",
+            title: "Comunicazioni di servizio",
+            icon: "📚",
+            content: `<p>Il materiale del corso, incluse dimostrazioni come quella della disuguaglianza di Bernoulli già vista, si trova sul libro di testo consigliato.</p><p>Sul sito web personale del docente, collegato anche su Teams, sono disponibili esercizi, appunti degli anni passati e altre risorse utili. Per le comunicazioni urgenti viene usato il <strong>canale Teams del corso</strong>.</p>`
+        },
+        {
+            id: "s02-proposizioni-implicazioni",
+            type: "section",
+            title: "Proposizioni e implicazioni",
+            icon: "💬",
+            content: `<p>Prima di procedere con l'analisi matematica, occorre chiarire come si costruisce un ragionamento e come si dimostra un teorema: questi strumenti serviranno per tutto il corso.</p><p><strong>Definizione.</strong> Una <strong>proposizione</strong> è una frase, un'affermazione, di cui possiamo stabilire in modo univoco se è vera o falsa.</p><p>Indichiamo le proposizioni con lettere maiuscole, come $P$ e $Q$. Una volta fissato un intero $n$, la frase “$n$ è un numero pari” è una proposizione. Senza specificare $n$ o quantificare su di esso, la frase dipende ancora dal valore della variabile.</p>`,
+            subsections: [
+                {
+                    subtitle: "Ipotesi e tesi",
+                    content: `<p>Un teorema, nella sua forma più comune, lega un'ipotesi a una tesi attraverso un'implicazione logica:</p><p>$$P\\Rightarrow Q.$$</p><p>Si legge “$P$ implica $Q$”, oppure “se $P$ è vera, allora $Q$ è vera”. <strong>$P$ è l'ipotesi e $Q$ è la tesi.</strong></p>`
+                },
+                {
+                    subtitle: "Osservazione — L'implicazione ha una direzione",
+                    content: `<p>Il fatto che $P\\Rightarrow Q$ <strong>non significa automaticamente</strong> che valga il viceversa $Q\\Rightarrow P$.</p>`
+                },
+                {
+                    subtitle: "Esempio — Pioggia e nuvole",
+                    content: `<p>Consideriamo $P$: “Piove” e $Q$: “Ci sono le nuvole”.</p><p>L'implicazione $P\\Rightarrow Q$, “Se piove, allora ci sono le nuvole”, è vera nel contesto dell'esempio.</p><p>Il viceversa $Q\\Rightarrow P$, “Se ci sono le nuvole, allora piove”, non è necessariamente vero: potrebbero esserci nuvole senza che piova.</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-equivalenza-logica",
+            type: "section",
+            title: "Equivalenza logica",
+            icon: "🔗",
+            content: `<p>Quando un'implicazione è valida in entrambe le direzioni, si parla di equivalenza logica.</p><p><strong>Definizione.</strong> Due proposizioni $P$ e $Q$ sono <strong>logicamente equivalenti</strong> se $P$ implica $Q$ e, viceversa, $Q$ implica $P$. Si scrive</p><p>$$P\\iff Q,$$</p><p>che si legge “$P$ se e solo se $Q$”.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio — Pari e successivo dispari",
+                    content: `<p>Sia $n$ un intero. Consideriamo $P$: “$n$ è un numero pari” e $Q$: “$n+1$ è un numero dispari”.</p><ul><li><p>Se $n$ è pari, il suo successivo $n+1$ è dispari: $P\\Rightarrow Q$.</p></li><li><p>Se $n+1$ è dispari, il suo precedente $n$ deve essere pari: $Q\\Rightarrow P$.</p></li></ul><p>Valgono entrambe le implicazioni, quindi possiamo scrivere $P\\iff Q$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-contrapposizione",
+            type: "section",
+            title: "Proposizione — Contrapposizione",
+            icon: "🔄",
+            content: `<p>La <strong>contrapposizione</strong> è uno strumento di dimostrazione. Dire $P\\Rightarrow Q$ equivale logicamente a dire: “se $Q$ è falsa, allora anche $P$ deve essere falsa”.</p><p>$$ (P\\Rightarrow Q)\\iff(\\neg Q\\Rightarrow\\neg P). $$</p><p>Il simbolo $\\neg Q$ indica la negazione di $Q$ e si legge “non $Q$”.</p><p>Nell'esempio precedente:</p><ul><li><p>$P\\Rightarrow Q$: “Se piove, ci sono le nuvole”.</p></li><li><p>$\\neg Q\\Rightarrow\\neg P$: “Se non ci sono le nuvole, non piove”.</p></li></ul><p>Le due frasi esprimono lo stesso concetto logico. Per dimostrare mediante contrapposizione, si assume $\\neg Q$ e si dimostra $\\neg P$.</p>`,
+            formulas: [
+                {
+                    label: "Equivalenza con la contrapposta",
+                    latex: "(P\\Rightarrow Q)\\iff(\\neg Q\\Rightarrow\\neg P)"
+                }
+            ]
+        },
+        {
+            id: "s02-schema-assurdo",
+            type: "note_box",
+            title: "Osservazione — Schema della dimostrazione per assurdo",
+            icon: "🧩",
+            content: `<p>La <strong>dimostrazione per assurdo</strong> è strettamente collegata alla contrapposizione. Per dimostrare $P\\Rightarrow Q$ per assurdo:</p><ol><li><p><strong>Si assume l'ipotesi $P$ come vera.</strong></p></li><li><p><strong>Si nega la tesi:</strong> si assume per assurdo che $Q$ sia falsa.</p></li><li><p>Da $P$ vera e $Q$ falsa si sviluppa un ragionamento fino a ottenere una <strong>contraddizione</strong>, cioè un'affermazione incompatibile con le ipotesi assunte o con un fatto matematico noto.</p></li></ol><p>La contraddizione mostra che, mantenendo vera l'ipotesi $P$, l'assunzione del punto 2 non può essere vera. Pertanto, <strong>la tesi $Q$ deve essere vera</strong>.</p>`
+        },
+        {
+            id: "s02-quadrato-pari",
+            type: "section",
+            title: "Se il quadrato di un intero è pari, l'intero è pari",
+            icon: "✏️",
+            content: `<p><strong>Proposizione.</strong> Sia $n$ un intero. Se $n^2$ è pari, allora $n$ è pari.</p><p>Identifichiamo:</p><ol><li><p><strong>Ipotesi $P$:</strong> $n^2$ è pari.</p></li><li><p><strong>Tesi $Q$:</strong> $n$ è pari.</p></li></ol>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione per assurdo",
+                    content: `<p>Assumiamo vera l'ipotesi: $n^2$ è pari. <strong>Neghiamo la tesi</strong> e supponiamo che $n$ non sia pari, cioè che sia <strong>dispari</strong>.</p><p>Possiamo allora scrivere $n=2k+1$ per un intero $k\\in\\mathbb{Z}$. Calcoliamo:</p><p>$$n^2=(2k+1)^2=(2k)^2+2(2k)(1)+1^2=4k^2+4k+1.$$</p><p>Raccogliamo un $2$ dai primi due termini:</p><p>$$n^2=2(2k^2+2k)+1.$$</p><p>Poiché $2k^2+2k$ è un intero, l'espressione ha la forma $2\\cdot(\\text{un intero})+1$, che definisce un numero <strong>dispari</strong>. Quindi $n^2$ è dispari.</p><p>Questo contraddice l'ipotesi iniziale secondo cui $n^2$ è pari. L'assurdo nasce dall'aver negato la tesi: la sua negazione è falsa e dunque <strong>$n$ è pari</strong>.</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-condizioni",
+            type: "note_box",
+            title: "Condizioni necessarie e sufficienti",
+            icon: "🔑",
+            content: `<p>Data un'implicazione $P\\Rightarrow Q$:</p><ul><li><p>$P$ è una <strong>condizione sufficiente</strong> per $Q$: basta che $P$ sia vera per garantire che anche $Q$ lo sia.</p></li><li><p>$Q$ è una <strong>condizione necessaria</strong> per $P$: se $Q$ non è vera, $P$ non può essere vera.</p></li></ul>`
+        },
+        {
+            id: "s02-irrazionalita-radice-due",
+            type: "section",
+            title: "Insufficienza dei razionali e irrazionalità di radice di due",
+            icon: "📐",
+            content: `<p>I razionali $\\mathbb{Q}$ sono i numeri esprimibili come frazioni di interi con denominatore non nullo. Sono densi nella retta reale, nel senso che verrà precisato più avanti, ma presentano dei “buchi”.</p><p>Esistono quantità geometriche, come la lunghezza della diagonale di un quadrato di lato $1$, che non possono essere espresse come frazioni.</p><p><strong>Teorema — Irrazionalità di $\\sqrt{2}$.</strong> Non esiste alcun numero razionale $x\\in\\mathbb{Q}$ tale che $x^2=2$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione — Tesi e negazione della tesi",
+                    content: `<ul><li><p><strong>Tesi:</strong> non esiste alcun razionale $x$ tale che $x^2=2$.</p></li><li><p><strong>Negazione della tesi:</strong> esiste un razionale $x$ tale che $x^2=2$.</p></li></ul><p>Assumiamo per assurdo la negazione della tesi. Poiché $x$ è razionale, scriviamo $x=\\frac{p}{q}$, con $p,q\\in\\mathbb{Z}$ e $q\\neq 0$.</p><p>Possiamo supporre la frazione <strong>ridotta ai minimi termini</strong>, cioè</p><p>$$\\operatorname{MCD}(|p|,|q|)=1.$$</p><p>In particolare, $p$ e $q$ non possono essere entrambi pari.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Il numeratore deve essere pari",
+                    content: `<p>Dall'assunzione $x^2=2$ otteniamo:</p><p>$$\\left(\\frac{p}{q}\\right)^2=2\\Rightarrow\\frac{p^2}{q^2}=2\\Rightarrow p^2=2q^2.$$</p><p>Quindi $p^2$ è pari, perché è $2$ moltiplicato per l'intero $q^2$. Per la proposizione appena dimostrata, valida per ogni intero, anche $p$ è pari.</p><p>Scriviamo allora $p=2k$ per un qualche intero $k$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — Anche il denominatore deve essere pari",
+                    content: `<p>Sostituiamo $p=2k$ in $p^2=2q^2$:</p><p>$$(2k)^2=2q^2\\Rightarrow 4k^2=2q^2.$$</p><p>Dividendo entrambi i membri per $2$, otteniamo:</p><p>$$2k^2=q^2.$$</p><p>Anche $q^2$ è pari e, applicando di nuovo la stessa proposizione, anche $q$ è pari.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione — La contraddizione",
+                    content: `<p>Sia $p$ sia $q$ sono pari, quindi hanno il divisore comune $2$. Questo contraddice la scelta della frazione ridotta ai minimi termini, per la quale $\\operatorname{MCD}(|p|,|q|)=1$.</p><p>L'assurdo dimostra che la negazione della tesi è falsa. Pertanto, <strong>non esiste alcun razionale il cui quadrato sia $2$</strong>.</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-numeri-reali",
+            type: "section",
+            title: "Numeri reali e rappresentazioni decimali",
+            icon: "🔢",
+            content: `<p>L'esistenza di irrazionali come $\\sqrt{2}$ mostra che i razionali non riempiono completamente la retta geometrica. Per colmare questi “buchi”, si introducono i numeri reali.</p>`,
+            subsections: [
+                {
+                    subtitle: "Definizione — Numero reale",
+                    content: `<p>Un <strong>numero reale</strong> è un numero rappresentabile mediante un allineamento decimale, proprio o improprio, non necessariamente finito o periodico:</p><p>$$\\pm P.\\alpha_1\\alpha_2\\alpha_3\\dots\\alpha_n\\dots,$$</p><p>dove $P$ è un intero non negativo e ciascuna cifra decimale soddisfa</p><p>$$\\alpha_i\\in\\{0,1,2,3,4,5,6,7,8,9\\},\\qquad i=1,2,3,\\dots.$$</p><p>Il segno indica se consideriamo il valore non negativo descritto dalle cifre oppure il suo opposto. $P$ è la parte prima del separatore decimale del valore assoluto.</p><p>Un allineamento è <strong>proprio</strong> se non presenta una coda infinita di cifre tutte uguali a $9$; è <strong>improprio</strong> se, da una certa posizione in poi, tutte le cifre sono $9$. Uno sviluppo finito si può scrivere aggiungendo una coda infinita di zeri.</p>`
+                },
+                {
+                    subtitle: "Osservazione — Numero e rappresentazione decimale",
+                    content: `<p><strong>Il numero va distinto dalla sua scrittura:</strong> allineamenti diversi possono rappresentare lo stesso reale. Ad esempio,</p><p>$$0.999\\ldots=1.000\\ldots=1.$$</p><p>L'allineamento improprio con la coda di $9$ e quello finito corrispondente, prolungato con zeri, indicano lo stesso numero. La corrispondenza con i punti della retta riguarda i numeri, non le loro diverse scritture decimali.</p>`
+                },
+                {
+                    subtitle: "Definizione — Razionali e irrazionali",
+                    content: `<p>I <strong>razionali</strong> sono i reali il cui sviluppo decimale è finito o periodico, eventualmente dopo un tratto iniziale non periodico.</p><p>Gli <strong>irrazionali</strong> sono i numeri con sviluppo decimale <strong>infinito e non periodico</strong>.</p><p>L'insieme di tutti i numeri reali si indica con $\\mathbb{R}$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-retta-reale",
+            type: "section",
+            title: "Rappresentazione geometrica dei numeri reali",
+            icon: "📏",
+            content: `<p><strong>Teorema.</strong> Fissati su una retta un'origine $O$, un verso positivo e un'unità di misura, esiste una <strong>corrispondenza biunivoca</strong> tra $\\mathbb{R}$ e i punti della retta: a ogni reale corrisponde un unico punto di quella coordinata e a ogni punto un'unica coordinata reale.</p><p>La corrispondenza <strong>rispetta l'ordine</strong>: se $x\\lt y$, il punto di coordinata $x$ precede quello di coordinata $y$ nel verso positivo.</p>`,
+            subsections: [
+                {
+                    subtitle: "Osservazione — Interpretazione geometrica e completezza",
+                    content: `<p>L'espressione “i reali riempiono la retta senza lasciare buchi” descrive intuitivamente la <strong>completezza dell'ordine</strong> dei reali.</p><p>Una semplice corrispondenza biunivoca fra insiemi non basta a esprimere questa proprietà, perché da sola non descrive il loro ordine.</p><p>Il teorema presenta l'interpretazione geometrica dei reali, una volta fissati origine, orientamento e unità di misura; <strong>non costituisce una definizione formale della completezza</strong>. In questa lezione la completezza viene richiamata nel significato intuitivo di assenza di buchi nell'ordine.</p>`
+                },
+                {
+                    subtitle: "Inclusioni tra gli insiemi numerici",
+                    content: `<p>Vale la catena di inclusioni:</p><p>$$\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R},$$</p><p>dove $\\mathbb{N}$ sono i naturali, $\\mathbb{Z}$ gli interi, $\\mathbb{Q}$ i razionali e $\\mathbb{R}$ i reali.</p>`
+                },
+                {
+                    subtitle: "La coordinata della diagonale del quadrato unitario",
+                    content: `<p>Consideriamo un quadrato di lato $1$ con vertici $O=(0,0)$, $A=(1,0)$, $B=(1,1)$ e $C=(0,1)$.</p><figure class="figura" data-id="analisi1_lez02b_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="103.388pt" height="80.954pt" viewBox="0 0 103.388 80.954" version="1.2">
+<defs>
+<g>
+<symbol overflow="visible" id="glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="glyph0-1">
+<path style="stroke:none;" d="M 3.3125 -2.984375 C 3.375 -3.25 3.59375 -4.15625 4.296875 -4.15625 C 4.34375 -4.15625 4.578125 -4.15625 4.78125 -4.03125 C 4.5 -3.984375 4.3125 -3.734375 4.3125 -3.5 C 4.3125 -3.34375 4.421875 -3.15625 4.6875 -3.15625 C 4.90625 -3.15625 5.21875 -3.328125 5.21875 -3.71875 C 5.21875 -4.234375 4.640625 -4.375 4.296875 -4.375 C 3.71875 -4.375 3.375 -3.859375 3.265625 -3.625 C 3.015625 -4.28125 2.484375 -4.375 2.1875 -4.375 C 1.15625 -4.375 0.59375 -3.09375 0.59375 -2.859375 C 0.59375 -2.75 0.6875 -2.75 0.71875 -2.75 C 0.796875 -2.75 0.828125 -2.78125 0.84375 -2.859375 C 1.171875 -3.90625 1.828125 -4.15625 2.171875 -4.15625 C 2.359375 -4.15625 2.703125 -4.078125 2.703125 -3.5 C 2.703125 -3.1875 2.53125 -2.53125 2.171875 -1.140625 C 2.015625 -0.53125 1.671875 -0.109375 1.234375 -0.109375 C 1.171875 -0.109375 0.9375 -0.109375 0.734375 -0.234375 C 0.984375 -0.28125 1.203125 -0.5 1.203125 -0.765625 C 1.203125 -1.046875 0.984375 -1.125 0.828125 -1.125 C 0.53125 -1.125 0.28125 -0.859375 0.28125 -0.546875 C 0.28125 -0.09375 0.78125 0.109375 1.21875 0.109375 C 1.875 0.109375 2.234375 -0.578125 2.265625 -0.640625 C 2.375 -0.28125 2.734375 0.109375 3.328125 0.109375 C 4.34375 0.109375 4.90625 -1.171875 4.90625 -1.421875 C 4.90625 -1.515625 4.828125 -1.515625 4.796875 -1.515625 C 4.703125 -1.515625 4.6875 -1.46875 4.671875 -1.40625 C 4.34375 -0.34375 3.671875 -0.109375 3.34375 -0.109375 C 2.96875 -0.109375 2.796875 -0.421875 2.796875 -0.765625 C 2.796875 -0.984375 2.859375 -1.203125 2.96875 -1.640625 Z M 3.3125 -2.984375 "/>
+</symbol>
+<symbol overflow="visible" id="glyph0-2">
+<path style="stroke:none;" d="M 4.8125 -3.78125 C 4.859375 -3.90625 4.859375 -3.9375 4.859375 -4 C 4.859375 -4.1875 4.71875 -4.265625 4.5625 -4.265625 C 4.46875 -4.265625 4.3125 -4.203125 4.21875 -4.0625 C 4.203125 -4.015625 4.125 -3.703125 4.078125 -3.53125 C 4.015625 -3.265625 3.9375 -3 3.890625 -2.734375 L 3.4375 -0.953125 C 3.390625 -0.796875 2.96875 -0.109375 2.3125 -0.109375 C 1.8125 -0.109375 1.703125 -0.546875 1.703125 -0.90625 C 1.703125 -1.359375 1.875 -1.984375 2.203125 -2.859375 C 2.375 -3.265625 2.40625 -3.375 2.40625 -3.5625 C 2.40625 -4.015625 2.09375 -4.375 1.59375 -4.375 C 0.65625 -4.375 0.28125 -2.9375 0.28125 -2.859375 C 0.28125 -2.75 0.390625 -2.75 0.40625 -2.75 C 0.5 -2.75 0.515625 -2.78125 0.5625 -2.9375 C 0.828125 -3.859375 1.234375 -4.15625 1.5625 -4.15625 C 1.640625 -4.15625 1.8125 -4.15625 1.8125 -3.84375 C 1.8125 -3.59375 1.71875 -3.34375 1.640625 -3.15625 C 1.25 -2.09375 1.0625 -1.53125 1.0625 -1.0625 C 1.0625 -0.1875 1.6875 0.109375 2.28125 0.109375 C 2.671875 0.109375 3 -0.0625 3.28125 -0.34375 C 3.15625 0.171875 3.03125 0.65625 2.640625 1.1875 C 2.375 1.53125 2 1.8125 1.546875 1.8125 C 1.40625 1.8125 0.953125 1.78125 0.796875 1.390625 C 0.953125 1.390625 1.078125 1.390625 1.21875 1.28125 C 1.3125 1.1875 1.421875 1.0625 1.421875 0.875 C 1.421875 0.5625 1.15625 0.53125 1.046875 0.53125 C 0.828125 0.53125 0.5 0.6875 0.5 1.171875 C 0.5 1.671875 0.9375 2.03125 1.546875 2.03125 C 2.5625 2.03125 3.59375 1.125 3.859375 0.015625 Z M 4.8125 -3.78125 "/>
+</symbol>
+<symbol overflow="visible" id="glyph0-3">
+<path style="stroke:none;" d="M 1.578125 -0.765625 C 1.484375 -0.390625 1.46875 -0.3125 0.6875 -0.3125 C 0.515625 -0.3125 0.421875 -0.3125 0.421875 -0.109375 C 0.421875 0 0.5 0 0.6875 0 L 4.21875 0 C 5.78125 0 6.953125 -1.171875 6.953125 -2.140625 C 6.953125 -2.859375 6.375 -3.421875 5.421875 -3.53125 C 6.453125 -3.71875 7.484375 -4.453125 7.484375 -5.40625 C 7.484375 -6.125 6.828125 -6.765625 5.640625 -6.765625 L 2.3125 -6.765625 C 2.125 -6.765625 2.03125 -6.765625 2.03125 -6.5625 C 2.03125 -6.453125 2.125 -6.453125 2.3125 -6.453125 C 2.328125 -6.453125 2.515625 -6.453125 2.6875 -6.4375 C 2.859375 -6.421875 2.953125 -6.40625 2.953125 -6.28125 C 2.953125 -6.234375 2.9375 -6.21875 2.90625 -6.09375 Z M 3.078125 -3.625 L 3.6875 -6.078125 C 3.78125 -6.421875 3.796875 -6.453125 4.234375 -6.453125 L 5.515625 -6.453125 C 6.375 -6.453125 6.59375 -5.875 6.59375 -5.4375 C 6.59375 -4.5625 5.734375 -3.625 4.53125 -3.625 Z M 2.640625 -0.3125 C 2.5 -0.3125 2.484375 -0.3125 2.421875 -0.3125 C 2.3125 -0.328125 2.28125 -0.34375 2.28125 -0.421875 C 2.28125 -0.453125 2.28125 -0.46875 2.34375 -0.640625 L 3.015625 -3.40625 L 4.890625 -3.40625 C 5.84375 -3.40625 6.03125 -2.671875 6.03125 -2.25 C 6.03125 -1.265625 5.15625 -0.3125 3.984375 -0.3125 Z M 2.640625 -0.3125 "/>
+</symbol>
+<symbol overflow="visible" id="glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="glyph1-1">
+<path style="stroke:none;" d="M 4.5625 -3.171875 C 4.5625 -3.96875 4.5 -4.75 4.15625 -5.484375 C 3.703125 -6.4375 2.890625 -6.59375 2.484375 -6.59375 C 1.875 -6.59375 1.15625 -6.34375 0.75 -5.421875 C 0.4375 -4.734375 0.390625 -3.96875 0.390625 -3.171875 C 0.390625 -2.421875 0.421875 -1.53125 0.828125 -0.78125 C 1.265625 0.015625 1.984375 0.21875 2.46875 0.21875 C 3 0.21875 3.75 0.015625 4.1875 -0.9375 C 4.5 -1.609375 4.5625 -2.390625 4.5625 -3.171875 Z M 2.46875 0 C 2.078125 0 1.5 -0.25 1.3125 -1.203125 C 1.203125 -1.796875 1.203125 -2.703125 1.203125 -3.28125 C 1.203125 -3.921875 1.203125 -4.578125 1.28125 -5.109375 C 1.46875 -6.296875 2.21875 -6.375 2.46875 -6.375 C 2.796875 -6.375 3.453125 -6.203125 3.640625 -5.21875 C 3.734375 -4.671875 3.734375 -3.90625 3.734375 -3.28125 C 3.734375 -2.546875 3.734375 -1.875 3.625 -1.234375 C 3.484375 -0.296875 2.90625 0 2.46875 0 Z M 2.46875 0 "/>
+</symbol>
+<symbol overflow="visible" id="glyph1-2">
+<path style="stroke:none;" d="M 2.90625 -6.34375 C 2.90625 -6.578125 2.90625 -6.59375 2.6875 -6.59375 C 2.078125 -5.96875 1.203125 -5.96875 0.875 -5.96875 L 0.875 -5.65625 C 1.078125 -5.65625 1.671875 -5.65625 2.171875 -5.90625 L 2.171875 -0.78125 C 2.171875 -0.421875 2.15625 -0.3125 1.265625 -0.3125 L 0.9375 -0.3125 L 0.9375 0 C 1.28125 -0.03125 2.15625 -0.03125 2.546875 -0.03125 C 2.9375 -0.03125 3.796875 -0.03125 4.15625 0 L 4.15625 -0.3125 L 3.828125 -0.3125 C 2.9375 -0.3125 2.90625 -0.421875 2.90625 -0.78125 Z M 2.90625 -6.34375 "/>
+</symbol>
+<symbol overflow="visible" id="glyph1-3">
+<path style="stroke:none;" d="M 1.265625 -0.765625 L 2.3125 -1.78125 C 3.859375 -3.15625 4.453125 -3.6875 4.453125 -4.671875 C 4.453125 -5.8125 3.5625 -6.59375 2.34375 -6.59375 C 1.234375 -6.59375 0.5 -5.6875 0.5 -4.796875 C 0.5 -4.25 0.984375 -4.25 1.015625 -4.25 C 1.1875 -4.25 1.53125 -4.375 1.53125 -4.78125 C 1.53125 -5.03125 1.359375 -5.296875 1.015625 -5.296875 C 0.9375 -5.296875 0.90625 -5.296875 0.875 -5.28125 C 1.109375 -5.921875 1.640625 -6.296875 2.21875 -6.296875 C 3.125 -6.296875 3.546875 -5.484375 3.546875 -4.671875 C 3.546875 -3.890625 3.046875 -3.09375 2.5 -2.484375 L 0.609375 -0.359375 C 0.5 -0.25 0.5 -0.234375 0.5 0 L 4.171875 0 L 4.453125 -1.71875 L 4.203125 -1.71875 C 4.15625 -1.421875 4.078125 -0.984375 3.984375 -0.84375 C 3.90625 -0.765625 3.265625 -0.765625 3.046875 -0.765625 Z M 1.265625 -0.765625 "/>
+</symbol>
+<symbol overflow="visible" id="glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="glyph2-1">
+<path style="stroke:none;" d="M 3.859375 8.46875 L 2.109375 4.609375 C 2.046875 4.453125 1.984375 4.453125 1.96875 4.453125 C 1.953125 4.453125 1.90625 4.453125 1.796875 4.53125 L 0.859375 5.25 C 0.71875 5.34375 0.71875 5.375 0.71875 5.40625 C 0.71875 5.453125 0.75 5.515625 0.828125 5.515625 C 0.875 5.515625 1.046875 5.375 1.15625 5.296875 C 1.21875 5.25 1.359375 5.140625 1.46875 5.0625 L 3.421875 9.34375 C 3.5 9.515625 3.546875 9.515625 3.640625 9.515625 C 3.78125 9.515625 3.8125 9.453125 3.890625 9.3125 L 8.375 0 C 8.453125 -0.140625 8.453125 -0.171875 8.453125 -0.203125 C 8.453125 -0.296875 8.375 -0.390625 8.25 -0.390625 C 8.171875 -0.390625 8.109375 -0.34375 8.03125 -0.1875 Z M 3.859375 8.46875 "/>
+</symbol>
+</g>
+</defs>
+<g id="surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -5.671147 -0.000204356 L 70.071444 -0.000204356 " transform="matrix(0.994115,0,0,-0.994115,15.711994,59.632609)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.550353 3.111859 C -2.082757 1.245407 -1.045403 0.361298 -0.000189751 -0.000204356 C -1.045403 -0.361707 -2.082757 -1.245816 -2.550353 -3.112268 " transform="matrix(0.994115,0,0,-0.994115,85.765814,59.632609)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph0-1" x="89.857095" y="61.764987"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00106241 -5.670289 L -0.00106241 41.721877 " transform="matrix(0.994115,0,0,-0.994115,15.711994,59.632609)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.54918 3.109196 C -2.085514 1.242744 -1.044231 0.362565 0.000982573 0.00106241 C -1.044231 -0.364369 -2.085514 -1.244549 -2.54918 -3.111001 " transform="matrix(0,-0.994115,-0.994115,0,15.711994,17.758789)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph0-2" x="13.106417" y="11.741101"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00106241 -0.000204356 L 28.345433 -0.000204356 L 28.345433 28.346291 L -0.00106241 28.346291 Z M -0.00106241 -0.000204356 " transform="matrix(0.994115,0,0,-0.994115,15.711994,59.632609)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00106241 -0.000204356 L 28.345433 28.346291 " transform="matrix(0.994115,0,0,-0.994115,15.711994,59.632609)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 28.345433 28.346291 C 35.862324 20.829401 40.086399 10.632679 40.086399 0.00372502 " transform="matrix(0.994115,0,0,-0.994115,15.711994,59.632609)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 17.199219 59.632812 C 17.199219 58.8125 16.53125 58.148438 15.710938 58.148438 C 14.890625 58.148438 14.226562 58.8125 14.226562 59.632812 C 14.226562 60.453125 14.890625 61.117188 15.710938 61.117188 C 16.53125 61.117188 17.199219 60.453125 17.199219 59.632812 Z M 17.199219 59.632812 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph1-1" x="7.262013" y="69.513122"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 45.378906 59.632812 C 45.378906 58.8125 44.710938 58.148438 43.890625 58.148438 C 43.070312 58.148438 42.40625 58.8125 42.40625 59.632812 C 42.40625 60.453125 43.070312 61.117188 43.890625 61.117188 C 44.710938 61.117188 45.378906 60.453125 45.378906 59.632812 Z M 45.378906 59.632812 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph1-2" x="41.415841" y="69.513122"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 45.378906 31.453125 C 45.378906 30.632812 44.710938 29.96875 43.890625 29.96875 C 43.070312 29.96875 42.40625 30.632812 42.40625 31.453125 C 42.40625 32.273438 43.070312 32.9375 43.890625 32.9375 C 44.710938 32.9375 45.378906 32.273438 45.378906 31.453125 Z M 45.378906 31.453125 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph0-3" x="47.38948" y="27.955123"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 57.042969 59.632812 C 57.042969 58.8125 56.378906 58.148438 55.558594 58.148438 C 54.738281 58.148438 54.074219 58.8125 54.074219 59.632812 C 54.074219 60.453125 54.738281 61.117188 55.558594 61.117188 C 56.378906 61.117188 57.042969 60.453125 57.042969 59.632812 Z M 57.042969 59.632812 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph2-1" x="48.955212" y="63.923211"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00133464 -0.0011871 L 4.98111 -0.0011871 " transform="matrix(0.994115,0,0,-0.994115,57.208358,63.725382)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph1-3" x="57.208358" y="72.115716"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph2-1" x="18.734104" y="26.90136"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00103701 -0.000591249 L 4.979552 -0.000591249 " transform="matrix(0.994115,0,0,-0.994115,26.98725,26.702537)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#glyph1-3" x="26.98725" y="35.093865"/>
+</g>
+</g>
+</svg></figure><p>Per il teorema di Pitagora, la lunghezza della diagonale rossa è</p><p>$$OB=\\sqrt{1^2+1^2}=\\sqrt{2}.$$</p><p>L'arco tratteggiato rappresenta il trasporto di questa lunghezza sull'asse positivo delle ascisse. Essendo un arco di circonferenza centrata in $O$, mantiene costante la distanza dall'origine. Il punto di arrivo $S$ soddisfa quindi</p><p>$$OS=OB=\\sqrt{2},$$</p><p>e ha coordinata $\\sqrt{2}$ sull'asse. La figura mostra un punto della retta la cui coordinata non è razionale.</p>`
+                }
+            ]
+        },
+        {
+            id: "s02-densita-reali",
+            type: "section",
+            title: "Densità dei razionali e degli irrazionali nei reali",
+            icon: "🔎",
+            content: `<p>Sia i razionali sia gli irrazionali sono <strong>densi in $\\mathbb{R}$</strong>: ogni intervallo aperto con estremi distinti contiene numeri di entrambi i tipi.</p><p><strong>Teorema.</strong> Dati $x,y\\in\\mathbb{R}$ con $x\\lt y$:</p><ol><li><p>Esistono infiniti <strong>razionali</strong> $q\\in\\mathbb{Q}$ tali che $x\\lt q\\lt y$.</p></li><li><p>Esistono infiniti <strong>irrazionali</strong> $z\\in\\mathbb{R}\\setminus\\mathbb{Q}$ tali che $x\\lt z\\lt y$.</p></li></ol><p>Per quanto vicini siano due reali distinti, tra di essi si trovano sempre infiniti razionali e infiniti irrazionali.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio illustrativo — L'intervallo aperto tra uno e due",
+                    content: `<p>Consideriamo l'intervallo $(1,2)$. Un razionale al suo interno è $\\frac{3}{2}$, poiché</p><p>$$1=\\frac{2}{2}\\lt\\frac{3}{2}\\lt\\frac{4}{2}=2.$$</p><p>Un irrazionale nello stesso intervallo è $\\sqrt{2}$, la cui irrazionalità è stata dimostrata. Per verificarne la posizione, osserviamo che</p><p>$$1^2=1\\lt 2\\lt 4=2^2.$$</p><p>Poiché il quadrato conserva l'ordine fra numeri non negativi e $\\sqrt{2}$ è positivo, segue</p><p>$$1\\lt\\sqrt{2}\\lt 2.$$</p><p>Abbiamo individuato esplicitamente un razionale e un irrazionale tra $1$ e $2$. <strong>L'esempio illustra il teorema in un intervallo particolare; non ne dimostra l'enunciato generale.</strong></p>`
+                }
+            ]
+        },
+        {
+            id: "s02-densita-completezza",
+            type: "alert_box",
+            title: "Densità e completezza sono proprietà diverse",
+            icon: "⚠️",
+            content: `<p>La <strong>densità</strong> dei razionali in $\\mathbb{R}$ afferma che ogni intervallo aperto non vuoto contiene un razionale. Non afferma che ogni punto della retta abbia coordinata razionale: ad esempio, $\\sqrt{2}\\notin\\mathbb{Q}$.</p><p>La <strong>completezza</strong>, richiamata qui come assenza di buchi nell'ordine, è una proprietà diversa. I razionali sono densi nella retta reale, pur lasciando fuori punti come quello di coordinata $\\sqrt{2}$.</p><p><strong>Un “buco” non indica un intervallo privo di razionali. La densità, da sola, non garantisce la completezza.</strong></p>`
+        },
+        {
+            id: "s02-integrazione-esercizi",
+            type: "integrazione_box",
+            title: "Integrazione — non detto dal docente",
+            content: `<p>Esercizi sui contenuti di questa lezione, <strong>generati dal verificatore e non svolti dal docente</strong>. Le soluzioni sono nel box sotto ogni traccia.</p>`
+        },
+        {
+            id: "s02-esercizio-teoria-1",
+            type: "esercizio",
+            title: "Teoria 1",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Enunciare le proprietà di una relazione d'ordine totale $\\le$. Definire la relazione stretta associata $\\lt$ e stabilire quali delle quattro proprietà conserva.</p>`,
+            solution: `<p>Per ogni $x,y,z$ dell'insieme valgono:</p><ul><li><p><strong>Totalità:</strong> $x\\le y$ oppure $y\\le x$.</p></li><li><p><strong>Riflessività:</strong> $x\\le x$.</p></li><li><p><strong>Antisimmetria:</strong> $(x\\le y\\land y\\le x)\\Rightarrow x=y$.</p></li><li><p><strong>Transitività:</strong> $(x\\le y\\land y\\le z)\\Rightarrow x\\le z$.</p></li></ul><p>Si definisce $x\\lt y$ mediante $x\\le y$ e $x\\ne y$.</p><p>La relazione $\\lt$ è <strong>irriflessiva</strong> e non soddisfa la totalità nella forma precedente, perché per $x=y$ entrambe le disuguaglianze strette sono false. Vale invece la <strong>tricotomia</strong>: esattamente una tra $x\\lt y$, $x=y$ e $y\\lt x$ è vera.</p><p>L'antisimmetria resta valida <strong>per vacuità</strong>: $x\\lt y$ e $y\\lt x$ non possono verificarsi insieme. Vale quindi anche l'asimmetria.</p><p>Infine, se $x\\lt y$ e $y\\lt z$, allora $x\\le z$. Se fosse $x=z$, avremmo $y\\le x$ e quindi $x=y$, assurdo. Dunque $x\\lt z$ e la <strong>transitività è conservata</strong>.</p>`
+        },
+        {
+            id: "s02-esercizio-teoria-2",
+            type: "esercizio",
+            title: "Teoria 2",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Data un'implicazione $P\\Rightarrow Q$, spiegare quali condizioni sono necessarie e quali sufficienti. Scrivere la contrapposta e il viceversa, precisando quale sia equivalente all'implicazione iniziale.</p>`,
+            solution: `<p>$P$ è <strong>condizione sufficiente</strong> per $Q$, mentre $Q$ è <strong>condizione necessaria</strong> per $P$.</p><p>La contrapposta è $\\neg Q\\Rightarrow\\neg P$ ed è logicamente equivalente a $P\\Rightarrow Q$.</p><p>Il viceversa è $Q\\Rightarrow P$ e non segue, in generale, dall'implicazione iniziale.</p><p>Quando valgono entrambe le direzioni, si scrive $P\\iff Q$: ciascuna proposizione è condizione necessaria e sufficiente per l'altra.</p>`
+        },
+        {
+            id: "s02-esercizio-teoria-3",
+            type: "esercizio",
+            title: "Teoria 3",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Enunciare e dimostrare la densità dei razionali. Dati $x,y\\in\\mathbb{Q}$ con $x\\lt y$, costruire esplicitamente infiniti razionali distinti compresi tra essi.</p>`,
+            solution: `<p>La densità afferma che tra due razionali distinti esistono infiniti razionali.</p><p>Il punto medio</p><p>$$z_1=\\frac{x+y}{2}$$</p><p>è razionale e soddisfa $x\\lt z_1\\lt y$, perché entrambe le disuguaglianze equivalgono a $x\\lt y$.</p><p>Definiamo quindi</p><p>$$z_{k+1}=\\frac{x+z_k}{2},\\qquad k\\ge 1.$$</p><p>Per induzione,</p><p>$$z_k=x+\\frac{y-x}{2^k}.$$</p><p>La formula vale per $k=1$ e, sostituendola nella ricorrenza, si ottiene</p><p>$$z_{k+1}=x+\\frac{y-x}{2^{k+1}}.$$</p><p>Ogni $z_k$ è razionale. Poiché</p><p>$$0\\lt\\frac{y-x}{2^{k+1}}\\lt\\frac{y-x}{2^k}\\lt y-x,$$</p><p>risulta</p><p>$$x\\lt z_{k+1}\\lt z_k\\lt y.$$</p><p>I termini sono quindi tutti distinti e compresi tra $x$ e $y$.</p>`
+        },
+        {
+            id: "s02-esercizio-teoria-4",
+            type: "esercizio",
+            title: "Teoria 4",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Dimostrare per assurdo che $\\sqrt{2}$ è irrazionale, giustificando perché un intero con quadrato pari deve essere pari.</p>`,
+            solution: `<p>Se un intero $n$ fosse dispari, si avrebbe $n=2k+1$ con $k\\in\\mathbb{Z}$, dunque</p><p>$$n^2=2(2k^2+2k)+1,$$</p><p>che è dispari. Per contrapposizione, un quadrato pari ha base pari.</p><p>Supponiamo ora $\\sqrt{2}=p/q$, con $p,q\\in\\mathbb{Z}$, $q\\ne 0$ e $\\operatorname{MCD}(|p|,|q|)=1$.</p><p>Allora</p><p>$$p^2=2q^2,$$</p><p>quindi $p$ è pari: $p=2k$. Sostituendo otteniamo</p><p>$$q^2=2k^2,$$</p><p>perciò anche $q$ è pari. Il divisore comune $2$ contraddice la riduzione ai minimi termini. Quindi $\\sqrt{2}\\notin\\mathbb{Q}$.</p>`
+        },
+        {
+            id: "s02-esercizio-scritto-1",
+            type: "esercizio",
+            title: "Scritto 1",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Ordinare in senso crescente i numeri $-\\frac{2}{3}$, $-\\frac{5}{8}$ e $\\frac{1}{6}$. Risolvere poi in $\\mathbb{Q}$ la disequazione</p><p>$$-3t+\\frac{1}{2}\\le\\frac{5}{4}.$$</p>`,
+            solution: `<p>Portando le frazioni al denominatore positivo $24$, otteniamo</p><p>$$-\\frac{2}{3}=-\\frac{16}{24},\\qquad-\\frac{5}{8}=-\\frac{15}{24},\\qquad\\frac{1}{6}=\\frac{4}{24}.$$</p><p>Pertanto,</p><p>$$-\\frac{2}{3}\\lt-\\frac{5}{8}\\lt\\frac{1}{6}.$$</p><p>Per la disequazione, sottraiamo $\\frac{1}{2}$ da entrambi i membri:</p><p>$$-3t\\le\\frac{5}{4}-\\frac{1}{2}=\\frac{3}{4}.$$</p><p>Dividendo per $-3$, <strong>invertiamo il verso</strong> e otteniamo</p><p>$$t\\ge-\\frac{1}{4}.$$</p><p>L'insieme delle soluzioni è</p><p>$$\\left\\{t\\in\\mathbb{Q}:t\\ge-\\frac{1}{4}\\right\\}.$$</p>`
+        },
+        {
+            id: "s02-esercizio-scritto-2",
+            type: "esercizio",
+            title: "Scritto 2",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Per $n\\in\\mathbb{Z}$, siano $P$: “$n$ è multiplo di $4$” e $Q$: “$n$ è pari”.</p><p>Stabilire quali delle implicazioni $P\\Rightarrow Q$ e $Q\\Rightarrow P$ valgono per ogni intero. Scrivere la contrapposta dell'implicazione valida e individuare la condizione necessaria e quella sufficiente.</p>`,
+            solution: `<p>Se $n=4k$ con $k\\in\\mathbb{Z}$, allora $n=2(2k)$ è pari: $P\\Rightarrow Q$ vale per ogni intero.</p><p>Il viceversa è falso: $n=2$ è pari ma non è multiplo di $4$.</p><p>La contrapposta dell'implicazione valida è: “Se $n$ è dispari, allora $n$ non è multiplo di $4$”.</p><p>Essere multiplo di $4$ è <strong>condizione sufficiente, ma non necessaria</strong>, per essere pari. Essere pari è <strong>condizione necessaria, ma non sufficiente</strong>, per essere multiplo di $4$.</p>`
+        },
+        {
+            id: "s02-esercizio-scritto-3",
+            type: "esercizio",
+            title: "Scritto 3",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Siano $a=-\\frac{1}{3}$ e $b=\\frac{5}{6}$. Calcolare il punto medio $z_1$ tra $a$ e $b$ e il punto medio $z_2$ tra $a$ e $z_1$, verificando $a\\lt z_2\\lt z_1\\lt b$.</p><p>Determinare poi il più piccolo naturale $n$ tale che</p><p>$$n(z_1-z_2)\\gt 2.$$</p>`,
+            solution: `<p><strong>Primo punto medio.</strong></p><p>$$\\begin{aligned}z_1&=\\frac{a+b}{2}=\\frac{-\\frac{1}{3}+\\frac{5}{6}}{2}\\\\&=\\frac{-\\frac{2}{6}+\\frac{5}{6}}{2}=\\frac{\\frac{3}{6}}{2}=\\frac{1}{4}.\\end{aligned}$$</p><p><strong>Secondo punto medio.</strong></p><p>$$\\begin{aligned}z_2&=\\frac{a+z_1}{2}=\\frac{-\\frac{1}{3}+\\frac{1}{4}}{2}\\\\&=\\frac{-\\frac{4}{12}+\\frac{3}{12}}{2}=\\frac{-\\frac{1}{12}}{2}=-\\frac{1}{24}.\\end{aligned}$$</p><p><strong>Verifica dell'ordine.</strong> Al denominatore $24$ si ha</p><p>$$a=-\\frac{8}{24}\\lt-\\frac{1}{24}=z_2\\lt\\frac{6}{24}=z_1\\lt\\frac{20}{24}=b.$$</p><p><strong>Ricerca del più piccolo naturale.</strong> Inoltre,</p><p>$$z_1-z_2=\\frac{7}{24}.$$</p><p>Quindi</p><p>$$n(z_1-z_2)\\gt 2\\iff n\\gt\\frac{48}{7}.$$</p><p>Poiché</p><p>$$6\\lt\\frac{48}{7}\\lt 7,$$</p><p>il più piccolo naturale richiesto è <strong>$n=7$</strong>. Infatti,</p><p>$$6\\cdot\\frac{7}{24}=\\frac{7}{4}\\lt 2,$$</p><p>mentre</p><p>$$7\\cdot\\frac{7}{24}=\\frac{49}{24}\\gt 2.$$</p>`
+        },
+        {
+            id: "s02-esercizio-scritto-4",
+            type: "esercizio",
+            title: "Scritto 4",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Esprimere come frazioni ridotte ai minimi termini $a=0.1\\overline{6}$ e $b=0.24999\\ldots$, dove in $b$ la cifra $9$ si ripete indefinitamente.</p><p>Classificare gli allineamenti dati come propri o impropri e confrontare i due numeri.</p>`,
+            solution: `<p>Si ha</p><p>$$10a=1.\\overline{6},\\qquad 100a=16.\\overline{6}.$$</p><p>Sottraendo,</p><p>$$90a=15,\\qquad a=\\frac{1}{6}.$$</p><p>L'allineamento di $b$ ha una coda infinita di $9$, quindi</p><p>$$b=0.25000\\ldots=\\frac{25}{100}=\\frac{1}{4}.$$</p><p>Entrambe le frazioni finali sono ridotte ai minimi termini.</p><p>L'allineamento dato per $a$ è <strong>proprio</strong>, perché non termina con una coda di $9$; quello dato per $b$ è <strong>improprio</strong>. Lo stesso numero $b$ ammette la rappresentazione propria $0.25000\\ldots$.</p><p>Infine,</p><p>$$a=\\frac{2}{12}\\lt\\frac{3}{12}=b.$$</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Quali proprietà definiscono una relazione d'ordine totale?",
+            back: "Per ogni $x,y,z$ dell'insieme: totalità, $x\\le y$ oppure $y\\le x$; riflessività, $x\\le x$; antisimmetria, $(x\\le y\\land y\\le x)\\Rightarrow x=y$; transitività, $(x\\le y\\land y\\le z)\\Rightarrow x\\le z$."
+        },
+        {
+            type: "formula",
+            front: "Quali compatibilità dell'ordine con somma e prodotto sono state enunciate?",
+            back: "Su $\\mathbb{N}$, $\\mathbb{Z}$ e $\\mathbb{Q}$: se $x\\le y$, allora $x+z\\le y+z$ per ogni $z$ dello stesso insieme. Se $x\\ge 0$ e $y\\ge 0$, allora $xy\\ge 0$."
+        },
+        {
+            type: "tranello",
+            front: "Che cosa accade moltiplicando una disuguaglianza per un numero negativo?",
+            back: "In $\\mathbb{Z}$ e in $\\mathbb{Q}$ bisogna invertire il verso della disuguaglianza."
+        },
+        {
+            type: "definizione",
+            front: "Come si definisce la relazione stretta associata a $\\le$?",
+            back: "Si pone $x\\lt y\\iff(x\\le y)\\land(x\\ne y)$. La relazione conserva antisimmetria e transitività; è irriflessiva e soddisfa la tricotomia al posto della totalità nella forma usata per $\\le$."
+        },
+        {
+            type: "tranello",
+            front: "La relazione $\\lt$ è antisimmetrica?",
+            back: "Sì, per vacuità: la premessa $x\\lt y$ e $y\\lt x$ è impossibile, quindi l'implicazione verso $x=y$ non viene mai contraddetta. Vale anche l'asimmetria: $x\\lt y\\Rightarrow\\neg(y\\lt x)$."
+        },
+        {
+            type: "definizione",
+            front: "Che cosa afferma la tricotomia?",
+            back: "Per due numeri $x,y$ si verifica esattamente una delle tre possibilità: $x\\lt y$, $x=y$, $y\\lt x$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si trova un razionale tra due razionali $x\\lt y$?",
+            back: "Si prende $z=(x+y)/2$, che è razionale. Si verifica $x\\lt z$ mediante $x\\lt(x+y)/2\\iff2x\\lt x+y\\iff x\\lt y$ e $z\\lt y$ mediante $(x+y)/2\\lt y\\iff x+y\\lt2y\\iff x\\lt y$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Come si costruiscono infiniti razionali distinti tra $x$ e $y$?",
+            back: "Si pone $z_1=(x+y)/2$ e poi $z_{k+1}=(x+z_k)/2$ per $k\\ge1$. A ogni passo $x\\lt z_{k+1}\\lt z_k\\lt y$: i termini sono razionali, interni all'intervallo e tutti distinti."
+        },
+        {
+            type: "formula",
+            front: "Enuncia la proprietà di Archimede per i razionali.",
+            back: "Per ogni $x,y\\in\\mathbb{Q}$ con $x\\gt0$ e $y\\gt0$, esiste $n\\in\\mathbb{N}$ tale che $nx\\gt y$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Quale naturale viene costruito nella dimostrazione della proprietà di Archimede?",
+            back: "Scrivendo $x=p/q$ e $y=r/s$ con interi positivi, la richiesta equivale a $nps\\gt qr$, cioè $n\\gt qr/(ps)$. Poiché $ps\\ge1$, si ha $qr/(ps)\\le qr\\lt qr+1$. Si sceglie $n=qr+1$ e si verifica $(qr+1)ps\\ge qr+1\\gt qr$."
+        },
+        {
+            type: "tranello",
+            front: "La scelta $n=qr+1$ deve essere il più piccolo naturale adatto?",
+            back: "No. La proprietà garantisce l'esistenza. Nell'esempio $x=2/3$, $y=5/4$, basta $n=2$, mentre la scelta generale dà $n=16$."
+        },
+        {
+            type: "definizione",
+            front: "Che cosa sono periodo e antiperiodo?",
+            back: "Il periodo è il blocco di cifre che si ripete da una certa posizione, usualmente scelto di lunghezza minima. L'antiperiodo è il tratto iniziale che precede la ripetizione e può essere assente. In $0.1\\overline{6}$ l'antiperiodo è $1$ e il periodo è $6$."
+        },
+        {
+            type: "domanda",
+            front: "Quale forma ha lo sviluppo decimale di un razionale?",
+            back: "È finito o definitivamente periodico. Prolungando uno sviluppo finito con zeri, lo si considera periodico di periodo $0$, come $0.5=0.5\\overline{0}$. La dimostrazione completa è rinviata alle lezioni successive."
+        },
+        {
+            type: "dimostrazione",
+            front: "Quale calcolo mostra che $0.\\overline{9}=1$?",
+            back: "Posto $x=0.\\overline{9}$, si ha $10x=9.999\\ldots=9+x$. Quindi $10x-x=9$, $9x=9$ e $x=1$."
+        },
+        {
+            type: "definizione",
+            front: "Quando un allineamento decimale è proprio?",
+            back: "È proprio se non presenta, da una certa posizione in poi, soltanto cifre $9$. È improprio se ha una coda infinita di $9$. Ad esempio, $1.\\overline{0}$ è proprio e $0.\\overline{9}$ è improprio, ma rappresentano lo stesso numero."
+        },
+        {
+            type: "domanda",
+            front: "Quale corrispondenza esiste tra razionali e allineamenti periodici propri?",
+            back: "Prolungando gli sviluppi finiti con zeri, a ogni razionale corrisponde uno e un solo allineamento decimale periodico proprio, e viceversa. La dimostrazione completa è rinviata alle lezioni successive."
+        },
+        {
+            type: "definizione",
+            front: "Che cos'è una proposizione?",
+            back: "È un'affermazione di cui si può stabilire in modo univoco se è vera o falsa. La frase “$n$ è pari” è una proposizione una volta fissato l'intero $n$; senza fissarlo o quantificarlo dipende ancora dalla variabile."
+        },
+        {
+            type: "tranello",
+            front: "Da $P\\Rightarrow Q$ segue sempre $Q\\Rightarrow P$?",
+            back: "No. Il viceversa non segue automaticamente. Nell'esempio, se piove ci sono le nuvole, ma possono esserci nuvole senza pioggia."
+        },
+        {
+            type: "definizione",
+            front: "Che cosa significa $P\\iff Q$?",
+            back: "Significa che valgono sia $P\\Rightarrow Q$ sia $Q\\Rightarrow P$. Si legge “$P$ se e solo se $Q$”. Nell'esempio, per $n\\in\\mathbb{Z}$, $n$ è pari se e solo se $n+1$ è dispari."
+        },
+        {
+            type: "formula",
+            front: "Scrivi l'equivalenza tra un'implicazione e la sua contrapposta.",
+            back: "$(P\\Rightarrow Q)\\iff(\\neg Q\\Rightarrow\\neg P)$. Per contrapposizione si assume $\\neg Q$ e si dimostra $\\neg P$."
+        },
+        {
+            type: "domanda",
+            front: "Come si dimostra $P\\Rightarrow Q$ per assurdo?",
+            back: "Si assume vera l'ipotesi $P$, si nega la tesi assumendo $\\neg Q$ e si deduce una contraddizione con le ipotesi o con un fatto noto. Mantenendo vera $P$, l'assunzione $\\neg Q$ risulta falsa, quindi $Q$ è vera."
+        },
+        {
+            type: "definizione",
+            front: "In $P\\Rightarrow Q$, qual è la condizione sufficiente e qual è quella necessaria?",
+            back: "$P$ è sufficiente per $Q$: basta $P$ per garantire $Q$. $Q$ è necessaria per $P$: se $Q$ è falsa, anche $P$ deve essere falsa."
+        },
+        {
+            type: "dimostrazione",
+            front: "Perché, se $n^2$ è pari, anche l'intero $n$ è pari?",
+            back: "Per assurdo, se $n$ fosse dispari si scriverebbe $n=2k+1$. Allora $n^2=4k^2+4k+1=2(2k^2+2k)+1$ sarebbe dispari, in contraddizione con l'ipotesi."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra che non esiste un razionale il cui quadrato sia $2$.",
+            back: "Supponi $x=p/q$ ridotto ai minimi termini e $x^2=2$. Allora $p^2=2q^2$, quindi $p$ è pari: $p=2k$. Sostituendo, $4k^2=2q^2$, dunque $q^2=2k^2$ e anche $q$ è pari. Il divisore comune $2$ contraddice $\\operatorname{MCD}(|p|,|q|)=1$."
+        },
+        {
+            type: "tranello",
+            front: "Perché nella prova dell'irrazionalità di $\\sqrt{2}$ si sceglie una frazione ridotta ai minimi termini?",
+            back: "La contraddizione finale è che numeratore e denominatore risultano entrambi pari. Questo contraddice precisamente l'ipotesi $\\operatorname{MCD}(|p|,|q|)=1$."
+        },
+        {
+            type: "definizione",
+            front: "Come vengono introdotti i numeri reali nella lezione?",
+            back: "Come numeri rappresentabili mediante allineamenti decimali propri o impropri, non necessariamente finiti o periodici, della forma $\\pm P.\\alpha_1\\alpha_2\\dots$, con $P$ intero non negativo e cifre $\\alpha_i\\in\\{0,1,2,3,4,5,6,7,8,9\\}$."
+        },
+        {
+            type: "definizione",
+            front: "Come si distinguono razionali e irrazionali mediante lo sviluppo decimale?",
+            back: "I razionali hanno sviluppo finito o definitivamente periodico, anche con antiperiodo. Gli irrazionali hanno sviluppo infinito e non periodico."
+        },
+        {
+            type: "domanda",
+            front: "Che cosa afferma la rappresentazione geometrica dei reali?",
+            back: "Fissati origine, verso positivo e unità di misura, a ogni reale corrisponde un unico punto della retta e a ogni punto un'unica coordinata reale. La corrispondenza rispetta l'ordine."
+        },
+        {
+            type: "domanda",
+            front: "Che cosa afferma la densità di razionali e irrazionali in $\\mathbb{R}$?",
+            back: "Per ogni $x,y\\in\\mathbb{R}$ con $x\\lt y$ esistono infiniti $q\\in\\mathbb{Q}$ con $x\\lt q\\lt y$ e infiniti $z\\in\\mathbb{R}\\setminus\\mathbb{Q}$ con $x\\lt z\\lt y$."
+        },
+        {
+            type: "tranello",
+            front: "La densità dei razionali significa che ogni punto della retta ha coordinata razionale?",
+            back: "No: $\\sqrt{2}$ non è razionale. La densità assicura razionali in ogni intervallo aperto non vuoto. Un “buco” non è un intervallo privo di razionali; la densità non garantisce la completezza."
+        },
+        {
+            type: "tranello",
+            front: "La completezza è stata definita formalmente mediante una semplice corrispondenza biunivoca?",
+            back: "No. Una corrispondenza biunivoca tra insiemi, da sola, non descrive l'ordine. In questa lezione la completezza è richiamata soltanto nel significato intuitivo di assenza di buchi nell'ordine."
+        },
+        {
+            type: "formula",
+            front: "Qual è la catena di inclusioni tra gli insiemi numerici introdotti?",
+            back: "$\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R}$: naturali, interi, razionali e reali."
+        }
+    ]
+};
+

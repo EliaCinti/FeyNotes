@@ -207,6 +207,7 @@ const COURSES = {
 
     lessons: [
       { id: 'L01', num: 'Lezione 1', date: '21 Set 2026', title: 'Presentazione del corso, teoria degli insiemi e insiemi numerici', abstract: 'Organizzazione di Analisi Matematica 1 e introduzione al linguaggio matematico: insiemi, operazioni, complementari, leggi di De Morgan e prodotto cartesiano. Numeri naturali, interi e razionali, operazioni binarie e relazione d\'ordine totale.', category: 'numeri-reali' },
+      { id: 'L02', num: 'Lezione 2', date: '23 Set 2026', title: 'Ordinamento, numeri razionali, logica e numeri reali', abstract: 'Ordine totale e disuguaglianze strette, densità e proprietà di Archimede, rappresentazioni decimali. Implicazioni e dimostrazioni per assurdo, irrazionalità di radice di due e introduzione ai numeri reali.', category: 'numeri-reali' },
     ],
   },
   precorso: {
