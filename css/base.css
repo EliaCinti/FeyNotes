@@ -737,3 +737,23 @@ a:hover { color: var(--text-primary); }
   border-color: var(--accent);
   color: var(--accent);
 }
+[data-theme="lime"] {
+  --accent: #a3e635;
+  --accent-dim: #82b82a;
+  --accent-glow: rgba(163,230,53,0.12);
+  --accent-glow-strong: rgba(163,230,53,0.25);
+}
+
+[data-theme="magenta"] {
+  --accent: #f472b6;
+  --accent-dim: #c25a91;
+  --accent-glow: rgba(244,114,182,0.12);
+  --accent-glow-strong: rgba(244,114,182,0.25);
+}
+
+[data-theme="indaco"] {
+  --accent: #818cf8;
+  --accent-dim: #6770c6;
+  --accent-glow: rgba(129,140,248,0.12);
+  --accent-glow-strong: rgba(129,140,248,0.25);
+}

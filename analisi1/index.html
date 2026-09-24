@@ -139,10 +139,6 @@
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// numeri reali, insiemi e completezza</div>
     <div class="fn-grid" id="numeri-reali-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di numeri reali, insiemi e completezza saranno aggiunte man mano che il corso procede.</div>
-      </div>
     </div>
   </div>
 
@@ -163,7 +159,17 @@
 </div>
 
 <script>
-const LESSON_INDEX = [];
+const LESSON_INDEX = [
+  {
+    "id": "L01",
+    "num": "Lezione 1",
+    "date": "21 Set 2026",
+    "title": "Presentazione del corso, teoria degli insiemi e insiemi numerici",
+    "abstract": "Organizzazione di Analisi Matematica 1 e introduzione al linguaggio matematico: insiemi, operazioni, complementari, leggi di De Morgan e prodotto cartesiano. Numeri naturali, interi e razionali, operazioni binarie e relazione d'ordine totale.",
+    "category": "numeri-reali",
+    "file": "/analisi1/lezioni/L01/"
+  }
+];
 
 function populateGrid(gridId, category) {
   const grid = document.getElementById(gridId);
