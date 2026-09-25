@@ -69,10 +69,6 @@
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// insiemi e relazioni</div>
     <div class="fn-grid" id="insiemi-e-relazioni-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di insiemi e relazioni saranno aggiunte man mano che il corso procede.</div>
-      </div>
     </div>
   </div>
 
@@ -93,7 +89,17 @@
 </div>
 
 <script>
-const LESSON_INDEX = [];
+const LESSON_INDEX = [
+  {
+    "id": "L01",
+    "num": "Lezione 1",
+    "date": "23 Set 2026",
+    "title": "Linguaggio matematico, insiemi e corrispondenze",
+    "abstract": "Notazioni logiche, insiemi numerici, inclusione e insieme delle parti. Operazioni insiemistiche e loro proprietà, dimostrazioni per doppia inclusione, prodotto cartesiano, partizioni e corrispondenze.",
+    "category": "insiemi-e-relazioni",
+    "file": "/algebra/lezioni/L01/"
+  }
+];
 
 function populateGrid(gridId, category) {
   const grid = document.getElementById(gridId);

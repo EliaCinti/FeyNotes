@@ -274,6 +274,7 @@ const COURSES = {
       { id: 'insiemi-e-relazioni', label: 'insiemi e relazioni', gridId: 'insiemi-e-relazioni-grid' },
     ],
     lessons: [
+      { id: 'L01', num: 'Lezione 1', date: '23 Set 2026', title: 'Linguaggio matematico, insiemi e corrispondenze', abstract: 'Notazioni logiche, insiemi numerici, inclusione e insieme delle parti. Operazioni insiemistiche e loro proprietà, dimostrazioni per doppia inclusione, prodotto cartesiano, partizioni e corrispondenze.', category: 'insiemi-e-relazioni' },
     ],
   },
 };
