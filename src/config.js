@@ -10,7 +10,7 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 18,
+  cssVersion: 19,
 };
 
 const COURSES = {
@@ -208,6 +208,7 @@ const COURSES = {
     lessons: [
       { id: 'L01', num: 'Lezione 1', date: '21 Set 2026', title: 'Presentazione del corso, teoria degli insiemi e insiemi numerici', abstract: 'Organizzazione di Analisi Matematica 1 e introduzione al linguaggio matematico: insiemi, operazioni, complementari, leggi di De Morgan e prodotto cartesiano. Numeri naturali, interi e razionali, operazioni binarie e relazione d\'ordine totale.', category: 'numeri-reali' },
       { id: 'L02', num: 'Lezione 2', date: '23 Set 2026', title: 'Ordinamento, numeri razionali, logica e numeri reali', abstract: 'Ordine totale e disuguaglianze strette, densità e proprietà di Archimede, rappresentazioni decimali. Implicazioni e dimostrazioni per assurdo, irrazionalità di radice di due e introduzione ai numeri reali.', category: 'numeri-reali' },
+      { id: 'L03', num: 'Lezione 3', date: '24 Set 2026', title: 'Topologia della Retta Reale — Intervalli, Intorni, Estremi', abstract: 'Dalla completezza di $\\mathbb{R}$ alla struttura della retta reale: intervalli, valore assoluto e distanza, intorni, punti interni e di frontiera, insiemi aperti e chiusi. Seconda parte: maggioranti, minoranti, massimo, minimo, estremo superiore e inferiore con la loro caratterizzazione con $\\varepsilon$.', category: 'numeri-reali' },
     ],
   },
   precorso: {
@@ -250,6 +251,27 @@ const COURSES = {
       { label: 'Lezioni', href: '/fisica2/', active: true },
     ],
     categories: [
+    ],
+    lessons: [
+    ],
+  },
+  algebra: {
+    id: 'algebra',
+    theme: 'blu',
+    name: 'Algebra e Logica',
+    icon: '∧',
+    basePath: '/algebra',
+    indexUrl: '/algebra/',
+    professor: '',
+    university: 'Università di Roma Tor Vergata',
+    year: 'A.A. 2026/2027',
+    lessonLabel: 'Lezione',
+    description: 'Le lezioni di Algebra e Logica: insiemi, relazioni, logica e strutture algebriche.',
+    nav: [
+      { label: 'Lezioni', href: '/algebra/', active: true },
+    ],
+    categories: [
+      { id: 'insiemi-e-relazioni', label: 'insiemi e relazioni', gridId: 'insiemi-e-relazioni-grid' },
     ],
     lessons: [
     ],

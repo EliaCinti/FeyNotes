@@ -372,7 +372,7 @@ a:hover { color: var(--accent); }
 }
 
 /* ── Corsi matematici: figure, esercizi, integrazioni ── */
-.figura { margin: 1.4rem auto; max-width: 640px; color: var(--text-muted); }
+.figura { margin: 1.4rem auto; max-width: 640px; color: var(--text-secondary); }
 .figura svg { width: 100%; height: auto; display: block; }
 .figura figcaption { text-align: center; font-size: .85rem; margin-top: .4rem; }
 .exercise h2 .ex-badge { font-size: .65rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
