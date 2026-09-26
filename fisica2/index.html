@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://eliacinti.dev/fisica2/">
   <link rel="canonical" href="https://eliacinti.dev/fisica2/">
-  <link rel="stylesheet" href="/css/base.css?v=18">
+  <link rel="stylesheet" href="/css/base.css?v=19">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script type="application/ld+json">{
@@ -66,6 +66,12 @@
   </div>
 
   
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-section-label">// elettrostatica</div>
+    <div class="fn-grid" id="elettrostatica-grid">
+    </div>
+  </div>
+
 
 </div>
 
@@ -83,7 +89,17 @@
 </div>
 
 <script>
-const LESSON_INDEX = [];
+const LESSON_INDEX = [
+  {
+    "id": "L01",
+    "num": "Lezione 1",
+    "date": "22 Set 2026",
+    "title": "Introduzione al Corso e al Campo Elettrostatico",
+    "abstract": "Informazioni pratiche sul corso, prerequisiti di Fisica 1 e primo sguardo ai campi elettromagnetici. Si introduce la forza di Coulomb, la definizione operativa di campo elettrostatico tramite carica di prova, il campo di una carica puntiforme, il principio di sovrapposizione e il passaggio alle distribuzioni continue di carica.",
+    "category": "elettrostatica",
+    "file": "/fisica2/lezioni/L01/"
+  }
+];
 
 function populateGrid(gridId, category) {
   const grid = document.getElementById(gridId);
@@ -106,7 +122,7 @@ function populateGrid(gridId, category) {
   }
 }
 
-
+populateGrid('elettrostatica-grid', 'elettrostatica');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;

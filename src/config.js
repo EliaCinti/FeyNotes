@@ -251,8 +251,10 @@ const COURSES = {
       { label: 'Lezioni', href: '/fisica2/', active: true },
     ],
     categories: [
+      { id: 'elettrostatica', label: 'elettrostatica', gridId: 'elettrostatica-grid' },
     ],
     lessons: [
+      { id: 'L01', num: 'Lezione 1', date: '22 Set 2026', title: 'Introduzione al Corso e al Campo Elettrostatico', abstract: 'Informazioni pratiche sul corso, prerequisiti di Fisica 1 e primo sguardo ai campi elettromagnetici. Si introduce la forza di Coulomb, la definizione operativa di campo elettrostatico tramite carica di prova, il campo di una carica puntiforme, il principio di sovrapposizione e il passaggio alle distribuzioni continue di carica.', category: 'elettrostatica' },
     ],
   },
   algebra: {
