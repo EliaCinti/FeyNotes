@@ -482,7 +482,7 @@ function buildSitemap() {
   urls.push({ loc: SITE.url + '/', priority: '1.0', changefreq: 'weekly' });
 
   for (const [, course] of Object.entries(COURSES)) {
-    if (!course.anno) continue;              // fuori dalla home, fuori dalla sitemap (il precorso)
+    if (!course.anno) continue;              // fuori dalla home, fuori dalla sitemap
     urls.push({ loc: SITE.url + course.indexUrl, priority: '0.8', changefreq: 'weekly' });
 
     for (const lesson of course.lessons) {

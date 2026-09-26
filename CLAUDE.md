@@ -38,7 +38,8 @@ Le lezioni hanno `sections`, `oral_cards` e `formulas`. **Nessuna sezione quiz.*
 Ogni corso in `config.js` ha `anno` (1-3, anno di corso) e `semestre` (1-2):
 `build.js` genera la sezione corsi della home raggruppandoli in quest'ordine, e il
 colore del corso e' quello del suo anno (`theme: 'annoN'`, temi in `base.css`).
-Un corso senza `anno` non compare in home ne' nella sitemap (il precorso).
+Un corso senza `anno` non compare in home ne' nella sitemap.
+Il precorso e' stato tolto dal sito il 26 Set 2026 (e' nella cronologia git).
 
 ## Trovare una lezione — la trappola
 

@@ -220,30 +220,6 @@ const COURSES = {
       { id: 'L04', num: 'Lezione 4', date: '25 Set 2026', title: 'Disequazioni, Caratterizzazione di sup e inf, Radice n-esima', abstract: 'Correzione della definizione di estremo superiore, ripasso completo delle tecniche per risolvere disequazioni (polinomiali, fratte, irrazionali, con valore assoluto) e caratterizzazione «con gli $\\varepsilon$» di sup e inf. Si arriva alla proprietà di Archimede, all\'approssimazione decimale di $\\sqrt{2}$ e alla definizione rigorosa della radice n-esima come estremo superiore di un insieme.', category: 'numeri-reali' },
     ],
   },
-  precorso: {
-    id: 'precorso',
-    theme: 'analisi',
-    name: 'Precorso di Matematica',
-    icon: '∑',
-    basePath: '/precorso',
-    indexUrl: '/precorso/',
-    professor: '',
-    university: 'Università di Roma Tor Vergata',
-    year: 'A.A. 2026/2027',
-    lessonLabel: 'Lezione',
-    description: 'Il precorso: le basi che tornano in Analisi 1, con i grafici delle funzioni elementari.',
-    nav: [
-      { label: 'Lezioni', href: '/precorso/', active: true },
-    ],
-    categories: [
-      { id: 'precorso', label: 'le lezioni del precorso', gridId: 'precorso-grid' },
-    ],
-    lessons: [
-      { id: 'L01', num: 'Lezione 1', date: '8 Set 2026', title: 'Moduli, Valori Assoluti e Radicali', abstract: 'Lezione introduttiva del precorso: presentazione delle attività di supporto e degli OFA, poi il ripasso del valore assoluto (definizione, grafici, equazioni e disequazioni con modulo) e dei radicali (campo di esistenza, convenzione sul segno, equazioni e disequazioni irrazionali).', category: 'precorso' },
-      { id: 'L02', num: 'Lezione 2', date: '9 Set 2026', title: 'Equazioni e Disequazioni: Concetti di Base', abstract: 'Richiami di algebra elementare, equazioni di primo e secondo grado, discriminante, campo di esistenza, equazioni irrazionali e fratte, disequazioni di primo e secondo grado, disequazioni irrazionali con discussione del segno, divisione tra polinomi e sistemi.', category: 'precorso' },
-      { id: 'L03', num: 'Lezione 3', date: '10 Set 2026', title: 'Geometria Cartesiana: Retta, Circonferenza e Parabola', abstract: 'Il ponte tra geometria e algebra: piano cartesiano, equazione della retta in forma esplicita e implicita, pendenza e fasci, distanza punto-retta. Poi le coniche come sezioni del cono, la circonferenza e la parabola, con applicazioni al riempimento di una vasca e al moto di un proiettile.', category: 'precorso' },
-    ],
-  },
   fisica2: {
     id: 'fisica2',
     anno: 2,
