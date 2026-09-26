@@ -767,3 +767,7 @@ a:hover { color: var(--text-primary); }
   --accent-glow: rgba(59,130,246,0.12);
   --accent-glow-strong: rgba(59,130,246,0.25);
 }
+
+/* Scheda del corso fisica2 nella home */
+.fn-course-card[data-course="fisica2"]:hover { --accent: #818cf8; --accent-dim: #6770c6; }
+.fn-course-card[data-course="fisica2"] .fn-course-count { color: #6770c6; }
