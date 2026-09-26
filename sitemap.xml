@@ -541,29 +541,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://eliacinti.dev/precorso/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://eliacinti.dev/precorso/lezioni/L01/</loc>
-    <lastmod>2026-09-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://eliacinti.dev/precorso/lezioni/L02/</loc>
-    <lastmod>2026-09-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://eliacinti.dev/precorso/lezioni/L03/</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://eliacinti.dev/fisica2/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

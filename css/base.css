@@ -70,6 +70,29 @@
    THEME OVERRIDES
    Usage: <html lang="it" data-theme="fisica">
    ═══════════════════════════════════════════════════════════════ */
+/* I colori per anno (26 Set 2026): un corso prende il colore del suo anno,
+   nelle sue pagine e nella home. */
+[data-theme="anno1"] {
+  --accent: #7c4dff;
+  --accent-dim: #5e35b1;
+  --accent-glow: rgba(124,77,255,0.12);
+  --accent-glow-strong: rgba(124,77,255,0.25);
+}
+
+[data-theme="anno2"] {
+  --accent: #34d399;
+  --accent-dim: #2aa87a;
+  --accent-glow: rgba(52,211,153,0.12);
+  --accent-glow-strong: rgba(52,211,153,0.25);
+}
+
+[data-theme="anno3"] {
+  --accent: #ff8c42;
+  --accent-dim: #d4702e;
+  --accent-glow: rgba(255,140,66,0.12);
+  --accent-glow-strong: rgba(255,140,66,0.25);
+}
+
 [data-theme="fisica"] {
   --accent: #e8d44d;
   --accent-dim: #c4b030;
@@ -415,19 +438,33 @@ a:hover { color: var(--text-primary); }
   background: var(--bg-card);
 }
 
-/* Per-course accent on homepage cards */
-.fn-course-card[data-course="fisica"]:hover { --accent: #e8d44d; --accent-dim: #c4b030; }
-.fn-course-card[data-course="fisica"] .fn-course-count { color: #c4b030; }
-.fn-course-card[data-course="geometria"]:hover { --accent: #ff8c42; --accent-dim: #d4702e; }
-.fn-course-card[data-course="geometria"] .fn-course-count { color: #d4702e; }
-.fn-course-card[data-course="controlli"]:hover { --accent: #ff6b6b; --accent-dim: #d44e4e; }
-.fn-course-card[data-course="controlli"] .fn-course-count { color: #d44e4e; }
-.fn-course-card[data-course="analisi"]:hover { --accent: #7c4dff; --accent-dim: #5e35b1; }
-.fn-course-card[data-course="analisi"] .fn-course-count { color: #5e35b1; }
-.fn-course-card[data-course="precorso"]:hover { --accent: #7c4dff; --accent-dim: #5e35b1; }
-.fn-course-card[data-course="precorso"] .fn-course-count { color: #5e35b1; }
-.fn-course-card[data-course="algebra"]:hover { --accent: #3b82f6; --accent-dim: #2563eb; }
-.fn-course-card[data-course="algebra"] .fn-course-count { color: #2563eb; }
+/* Home: i corsi per anno e semestre. Il colore delle schede viene dal
+   data-theme="annoN" del blocco dell'anno (generato da build.js). */
+.fn-anno { margin-bottom: 40px; }
+.fn-anno-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.fn-semestre-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 18px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fn-semestre-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    COURSE INDEX PAGE — Section headers, lesson cards
@@ -768,6 +805,3 @@ a:hover { color: var(--text-primary); }
   --accent-glow-strong: rgba(59,130,246,0.25);
 }
 
-/* Scheda del corso fisica2 nella home */
-.fn-course-card[data-course="fisica2"]:hover { --accent: #818cf8; --accent-dim: #6770c6; }
-.fn-course-card[data-course="fisica2"] .fn-course-count { color: #6770c6; }

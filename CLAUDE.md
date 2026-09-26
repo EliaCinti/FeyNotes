@@ -7,7 +7,7 @@ GitHub Actions.
 ## Struttura
 
 ```
-index.html              # homepage — MANUALE, non generata da build.js
+index.html              # homepage — manuale, TRANNE la sezione corsi (fra i marcatori CORSI): la genera build.js
 build.js                # genera HTML da template + config
 src/
   config.js             # SOURCE OF TRUTH: corsi, categorie, lezioni
@@ -32,6 +32,13 @@ Le lezioni hanno `sections`, `oral_cards` e `formulas`. **Nessuna sezione quiz.*
   radius, font). Tutti i colori stanno in `base.css`.
 - Dopo ogni modifica CSS: bumpa `cssVersion` in `config.js` **e** aggiorna a
   mano il `?v=` hardcoded nel link CSS di `index.html`. Sono due posti.
+
+## Home: corsi per anno e semestre
+
+Ogni corso in `config.js` ha `anno` (1-3, anno di corso) e `semestre` (1-2):
+`build.js` genera la sezione corsi della home raggruppandoli in quest'ordine, e il
+colore del corso e' quello del suo anno (`theme: 'annoN'`, temi in `base.css`).
+Un corso senza `anno` non compare in home ne' nella sitemap (il precorso).
 
 ## Trovare una lezione — la trappola
 

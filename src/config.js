@@ -10,13 +10,15 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 19,
+  cssVersion: 20,
 };
 
 const COURSES = {
   fisica: {
     id: 'fisica',
-    theme: 'fisica',
+    anno: 1,
+    semestre: 2,
+    theme: 'anno1',
     name: 'Fisica 1',
     icon: '⚛️',
     basePath: '/fisica1',
@@ -84,7 +86,9 @@ const COURSES = {
 
   geometria: {
     id: 'geometria',
-    theme: 'geometria',
+    anno: 1,
+    semestre: 2,
+    theme: 'anno1',
     name: 'Geometria',
     icon: '△',
     basePath: '/geometria',
@@ -146,7 +150,9 @@ const COURSES = {
   },
   controlli: {
     id: 'controlli',
-    theme: 'controlli',
+    anno: 3,
+    semestre: 2,
+    theme: 'anno3',
     name: 'Fondamenti di Controlli',
     icon: '◎',
     basePath: '/controlli',
@@ -181,7 +187,9 @@ const COURSES = {
   },
   analisi: {
     id: 'analisi',
-    theme: 'analisi',
+    anno: 1,
+    semestre: 1,
+    theme: 'anno1',
     name: 'Analisi Matematica 1',
     icon: '∫',
     basePath: '/analisi1',
@@ -238,7 +246,9 @@ const COURSES = {
   },
   fisica2: {
     id: 'fisica2',
-    theme: 'indaco',
+    anno: 2,
+    semestre: 1,
+    theme: 'anno2',
     name: 'Fisica Generale 2',
     icon: '📘',
     basePath: '/fisica2',
@@ -260,7 +270,9 @@ const COURSES = {
   },
   algebra: {
     id: 'algebra',
-    theme: 'blu',
+    anno: 1,
+    semestre: 1,
+    theme: 'anno1',
     name: 'Algebra e Logica',
     icon: '∧',
     basePath: '/algebra',

@@ -165,7 +165,7 @@ function buildLesson(courseId, lessonId) {
 
   const url = lessonUrl(course, lessonId);
   const vars = {
-    THEME: course.theme,
+    THEME: themeOf(course),
     PAGE_TITLE: `${lessonMeta.num} — ${course.name} — FeyNotes`,
     META_DESCRIPTION: escapeHtml(`${course.name}, ${lessonMeta.num}: ${lessonMeta.title}. ${stripHtml(lessonMeta.abstract)}`),
     AUTHOR: SITE.author,
@@ -282,7 +282,7 @@ function buildCourseIndex(courseId) {
     .join('\n');
 
   const vars = {
-    THEME: course.theme,
+    THEME: themeOf(course),
     COURSE_NAME: course.name,
     COURSE_URL: course.indexUrl,
     META_DESCRIPTION: escapeHtml(`${course.name} — ${course.description}`),
@@ -346,7 +346,7 @@ function buildEsercizi(courseId) {
   }, null, 2);
 
   const vars = {
-    THEME: course.theme,
+    THEME: themeOf(course),
     PAGE_TITLE: `Esercizi — ${course.name} — FeyNotes`,
     META_DESCRIPTION: escapeHtml(`Esercizi di allenamento di ${course.name} con soluzioni guidate passo-passo e risultati verificati.`),
     AUTHOR: SITE.author,
@@ -399,29 +399,76 @@ function buildCourse(courseId) {
 //  UPDATE HOMEPAGE — Lesson counts
 // ═══════════════════════════════════════════════════════════════
 
+// La home si genera da config.js (26 Set 2026): i corsi raggruppati per anno e
+// semestre, in quest'ordine, e il colore di un corso e' quello del suo anno. Prima le
+// schede erano scritte a mano in index.html e un corso nuovo poteva non comparire
+// (Fisica 2). Un corso senza `anno` non compare in home ne' nella sitemap.
+const HOME_INIZIO = '<!-- CORSI: generati da build.js, non modificare a mano -->';
+const HOME_FINE = '<!-- /CORSI -->';
+
+function themeOf(course) {
+  return course.anno ? `anno${course.anno}` : course.theme;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function countLabel(course) {
+  const count = course.lessons.length;
+  const unitSingular = (course.lessonLabel || 'Lezione').toLowerCase();
+  const unitPlural = unitSingular === 'guida' ? 'guide' : 'lezioni';
+  return count === 1 ? `1 ${unitSingular}` : `${count} ${unitPlural}`;
+}
+
+function renderHomeCourses(courses = COURSES) {
+  const inHome = Object.values(courses).filter(c => c.anno && c.semestre);
+  const anni = [...new Set(inHome.map(c => c.anno))].sort((a, b) => a - b);
+  let delay = 3;
+  const out = [];
+  for (const anno of anni) {
+    out.push(`        <div class="fn-anno" data-theme="anno${anno}">`);
+    out.push(`            <div class="fn-anno-label">// ${anno}° anno</div>`);
+    const semestri = [...new Set(inHome.filter(c => c.anno === anno).map(c => c.semestre))].sort((a, b) => a - b);
+    for (const semestre of semestri) {
+      out.push(`            <div class="fn-semestre-label">${semestre}° semestre</div>`);
+      out.push('            <div class="fn-courses-grid">');
+      for (const c of inHome.filter(x => x.anno === anno && x.semestre === semestre)) {
+        const prof = c.professor ? (/^prof/i.test(c.professor) ? c.professor : `Prof. ${c.professor}`) : '';
+        out.push(`                <a href="${escapeHtml(c.indexUrl)}" class="fn-course-card fn-fade fn-d${Math.min(delay++, 9)}" data-course="${escapeHtml(c.id)}">`,
+                 '                    <div class="fn-course-glow"></div>',
+                 `                    <div class="fn-course-icon">fn::${escapeHtml(c.id)}</div>`,
+                 `                    <div class="fn-course-name">${escapeHtml(c.name)}</div>`,
+                 `                    <div class="fn-course-prof">${escapeHtml(prof)}</div>`,
+                 '                    <div class="fn-course-meta">',
+                 `                        <span class="fn-course-count">${countLabel(c)}</span>`,
+                 '                        <span class="fn-course-arrow">&rarr;</span>',
+                 '                    </div>',
+                 '                </a>');
+      }
+      out.push('            </div>');
+    }
+    out.push('        </div>');
+  }
+  return out.join('\n');
+}
+
 function updateHomepage() {
   const homePath = path.join(ROOT, 'index.html');
   if (!fs.existsSync(homePath)) {
-    console.log('  ⚠ Homepage not found — skipping count update');
+    console.log('  ⚠ Homepage not found — skipping');
     return;
   }
-
-  let html = fs.readFileSync(homePath, 'utf-8');
-
-  for (const [, course] of Object.entries(COURSES)) {
-    const count = course.lessons.length;
-    const unitSingular = (course.lessonLabel || 'Lezione').toLowerCase();
-    const unitPlural = unitSingular === 'guida' ? 'guide' : 'lezioni';
-    const label = count === 1 ? `1 ${unitSingular}` : `${count} ${unitPlural}`;
-    const regex = new RegExp(
-      `(data-course="${course.id}"[\\s\\S]*?class="fn-course-count">)\\d+ \\w+`,
-      'g'
-    );
-    html = html.replace(regex, `$1${label}`);
+  const html = fs.readFileSync(homePath, 'utf-8');
+  const a = html.indexOf(HOME_INIZIO), b = html.indexOf(HOME_FINE);
+  if (a < 0 || b < a) {
+    console.error(`  ✗ index.html: mancano i marcatori ${HOME_INIZIO} … ${HOME_FINE}`);
+    process.exitCode = 1;
+    return;
   }
-
-  fs.writeFileSync(homePath, html, 'utf-8');
-  console.log('  ✓ Updated lesson counts in index.html');
+  const nuovo = html.slice(0, a + HOME_INIZIO.length) + '\n' + renderHomeCourses() + '\n        ' + html.slice(b);
+  fs.writeFileSync(homePath, nuovo, 'utf-8');
+  console.log('  ✓ Homepage: corsi per anno e semestre');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -435,6 +482,7 @@ function buildSitemap() {
   urls.push({ loc: SITE.url + '/', priority: '1.0', changefreq: 'weekly' });
 
   for (const [, course] of Object.entries(COURSES)) {
+    if (!course.anno) continue;              // fuori dalla home, fuori dalla sitemap (il precorso)
     urls.push({ loc: SITE.url + course.indexUrl, priority: '0.8', changefreq: 'weekly' });
 
     for (const lesson of course.lessons) {
@@ -522,7 +570,7 @@ function main() {
   console.log('✅ Build complete!');
 }
 
-module.exports = { validateCategories, resolveCourseForLesson };
+module.exports = { validateCategories, resolveCourseForLesson, renderHomeCourses, themeOf };
 
 if (require.main === module) {
   main();
