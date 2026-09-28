@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lezione 5 — Analisi Matematica 1 — FeyNotes</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1330'/%3E%3Cg fill='none' stroke='%237c9cff' stroke-width='1.5'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(120 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ffcf5c'/%3E%3C/svg%3E">
-  <meta name="description" content="Analisi Matematica 1, Lezione 5: Disequazioni Irrazionali, Funzioni, Controimmagine e Monotonia. Riepilogo degli schemi risolutivi per le disequazioni irrazionali (indice pari e dispari), introduzione al concetto di funzione con dominio, codominio, immagine e grafico, successioni, controimmagine di un insieme e studio della monotonia con le operazioni algebriche tra funzioni monotone.">
+  <meta name="description" content="Analisi Matematica 1, Lezione 5: Disequazioni Irrazionali, Funzioni, Controimmagine e Monotonia. Chiudiamo il riepilogo sulle disequazioni irrazionali distinguendo indice pari e dispari, poi entriamo nel cuore del corso: il concetto di funzione, grafico, immagine e codominio, dominio naturale, successioni, controimmagine di un insieme e infine la monotonia con le sue operazioni algebriche.">
   <meta name="author" content="Elia Cinti">
   <meta name="robots" content="index, follow">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -14,7 +14,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Lezione 5: Disequazioni Irrazionali, Funzioni, Controimmagine e Monotonia — Analisi Matematica 1">
-  <meta property="og:description" content="Riepilogo degli schemi risolutivi per le disequazioni irrazionali (indice pari e dispari), introduzione al concetto di funzione con dominio, codominio, immagine e grafico, successioni, controimmagine di un insieme e studio della monotonia con le operazioni algebriche tra funzioni monotone.">
+  <meta property="og:description" content="Chiudiamo il riepilogo sulle disequazioni irrazionali distinguendo indice pari e dispari, poi entriamo nel cuore del corso: il concetto di funzione, grafico, immagine e codominio, dominio naturale, successioni, controimmagine di un insieme e infine la monotonia con le sue operazioni algebriche.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://eliacinti.dev/analisi1/lezioni/L05/">
   <link rel="canonical" href="https://eliacinti.dev/analisi1/lezioni/L05/">
@@ -30,7 +30,7 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Lezione 5 — Disequazioni Irrazionali, Funzioni, Controimmagine e Monotonia",
-  "description": "Riepilogo degli schemi risolutivi per le disequazioni irrazionali (indice pari e dispari), introduzione al concetto di funzione con dominio, codominio, immagine e grafico, successioni, controimmagine di un insieme e studio della monotonia con le operazioni algebriche tra funzioni monotone.",
+  "description": "Chiudiamo il riepilogo sulle disequazioni irrazionali distinguendo indice pari e dispari, poi entriamo nel cuore del corso: il concetto di funzione, grafico, immagine e codominio, dominio naturale, successioni, controimmagine di un insieme e infine la monotonia con le sue operazioni algebriche.",
   "educationalLevel": "University",
   "inLanguage": "it",
   "url": "https://eliacinti.dev/analisi1/lezioni/L05/",
@@ -90,75 +90,97 @@
 const LESSON = {
     id: "L05", date: "Lezione 5 — 28 Set 2026",
     title: "Disequazioni Irrazionali, Funzioni, Controimmagine e Monotonia",
-    abstract: "Riepilogo degli schemi risolutivi per le disequazioni irrazionali (indice pari e dispari), introduzione al concetto di funzione con dominio, codominio, immagine e grafico, successioni, controimmagine di un insieme e studio della monotonia con le operazioni algebriche tra funzioni monotone.",
+    abstract: "Chiudiamo il riepilogo sulle disequazioni irrazionali distinguendo indice pari e dispari, poi entriamo nel cuore del corso: il concetto di funzione, grafico, immagine e codominio, dominio naturale, successioni, controimmagine di un insieme e infine la monotonia con le sue operazioni algebriche.",
 
     sections: [
       {
-        id: "s01-diseq-irrazionali-pari",
+        id: "s05-irrazionali-intro",
         type: "section",
-        title: "Disequazioni irrazionali con indice pari",
+        title: "Riepilogo sulle disequazioni irrazionali",
         icon: "√",
-        content: `<p>Le <strong>disequazioni irrazionali</strong> sono quelle in cui l'incognita compare sotto il segno di radice. La procedura risolutiva dipende in modo cruciale dal fatto che l'indice della radice $n$ sia <strong>pari</strong> o <strong>dispari</strong>.</p>
-<p>Quando l'indice $n$ è pari (radici quadrate, quarte, ...), la quantità $\\sqrt[n]{f(x)}$ è definita solo se il suo argomento è <strong>non negativo</strong>, e il suo risultato è sempre <strong>non negativo</strong>. Questo impone delle condizioni di esistenza fondamentali.</p>`,
+        content: `<p>Una disequazione si dice <strong>irrazionale</strong> quando l'incognita compare sotto il segno di radice. La strategia risolutiva dipende in modo cruciale dalla <strong>parità dell'indice</strong> $n$ della radice.</p>
+        <p>Il motivo è tutto qui: se $n$ è pari, $\\sqrt[n]{f(x)}$ esiste solo quando l'argomento è non negativo e il risultato è sempre non negativo; se $n$ è dispari, la radice è definita per ogni valore reale dell'argomento e ne conserva il segno.</p>`,
+        table_compare: {
+          headers: ["", "Indice $n$ pari", "Indice $n$ dispari"],
+          rows: [
+            ["Esistenza della radice", "richiede $f(x) \\ge 0$", "nessuna condizione aggiuntiva sul radicando"],
+            ["Segno del risultato", "sempre $\\ge 0$", "concorde con il segno dell'argomento"],
+            ["Elevamento a potenza", "lecito solo se entrambi i membri sono $\\ge 0$", "sempre lecito, il verso si conserva"],
+            ["Discussione del segno di $g(x)$", "necessaria", "non necessaria"]
+          ]
+        }
+      },
+      {
+        id: "s05-irrazionali-pari",
+        type: "section",
+        title: "Indice della radice n pari",
+        icon: "⚖️",
+        content: `<p>Quando l'indice $n$ è pari (radici quadrate, quarte, ...) la quantità $\\sqrt[n]{f(x)}$ è definita solo se il suo argomento è non negativo, e il suo risultato è sempre non negativo. Questo impone condizioni di esistenza fondamentali e obbliga a discutere il segno del secondo membro.</p>`,
         subsections: [
           {
-            subtitle: "Caso $\\sqrt[n]{f(x)} \\ge g(x)$ con $n$ pari",
-            content: `<p>Dobbiamo considerare <strong>due casi distinti</strong>, a seconda del segno di $g(x)$. La soluzione finale sarà l'<strong>unione</strong> delle soluzioni dei due casi. La prima condizione da imporre sempre è quella di esistenza della radice:</p>
-<p>$$f(x) \\ge 0$$</p>
-<p><strong>Caso 1: $g(x) \\lt 0$.</strong> Se il secondo membro è negativo, la disequazione confronta una quantità non negativa con una quantità negativa: la relazione è <strong>sempre vera</strong>, a patto che la radice esista. Basta quindi imporre la condizione di esistenza:</p>
-<p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases}$$</p>
-<p>La soluzione di questo primo sistema si chiama $S_1$. Attenzione: qui $f(x) \\ge 0$ <strong>non</strong> può essere omessa.</p>
-<p><strong>Caso 2: $g(x) \\ge 0$.</strong> Entrambi i membri sono non negativi, quindi possiamo elevare alla potenza $n$ (pari) <strong>senza alterare il verso</strong> della disuguaglianza:</p>
-<p>$$\\begin{cases} f(x) \\ge 0 & \\text{(esistenza)} \\\\ g(x) \\ge 0 & \\text{(ipotesi del caso)} \\\\ f(x) \\ge [g(x)]^n & \\text{(elevamento a potenza)} \\end{cases}$$</p>
-<p>La soluzione di questo secondo sistema si chiama $S_2$. La soluzione complessiva della disequazione è $S = S_1 \\cup S_2$.</p>`
+            subtitle: "Caso $\\sqrt[n]{f(x)} \\ge g(x)$ — i due sistemi",
+            content: `<p>La prima condizione da imporre sempre è quella di esistenza della radice:</p>
+            <p>$$f(x) \\ge 0$$</p>
+            <p><strong>Caso 1: $g(x) \\lt 0$.</strong> Se il secondo membro è negativo, la disequazione confronta una quantità non negativa con una negativa: la relazione è <strong>sempre vera</strong>, a patto che la radice esista. Basta quindi imporre la condizione di esistenza. Il primo sistema è</p>
+            <p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases}$$</p>
+            <p>con insieme di soluzioni $S_1$.</p>
+            <p><strong>Caso 2: $g(x) \\ge 0$.</strong> Ora entrambi i membri sono non negativi, quindi possiamo elevare alla potenza $n$ senza alterare il verso della disuguaglianza:</p>
+            <p>$$\\begin{cases} f(x) \\ge 0 & \\text{(esistenza)} \\\\ g(x) \\ge 0 & \\text{(ipotesi del caso)} \\\\ f(x) \\ge [g(x)]^n & \\text{(elevamento)} \\end{cases}$$</p>
+            <p>con insieme di soluzioni $S_2$. La soluzione complessiva della disequazione è l'<strong>unione</strong> delle soluzioni dei due sistemi: $S = S_1 \\cup S_2$.</p>`
           },
           {
-            subtitle: "Osservazione: nel secondo caso $f(x) \\ge 0$ è superflua",
-            content: `<p>Nel sistema del <strong>Caso 2</strong> la condizione $f(x) \\ge 0$ è in realtà <strong>superflua</strong>. Infatti, se $f(x) \\ge [g(x)]^n$ e $g(x) \\ge 0$, allora $[g(x)]^n \\ge 0$, e di conseguenza $f(x)$ è maggiore o uguale a una quantità non negativa, quindi è non negativa automaticamente. Il sistema si semplifica in:</p>
-<p>$$\\begin{cases} g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases}$$</p>`
+            subtitle: "Osservazione: nel secondo sistema $f(x) \\ge 0$ è superflua",
+            content: `<p>Nel <strong>secondo</strong> sistema la condizione $f(x) \\ge 0$ è in realtà superflua. Infatti, se $g(x) \\ge 0$ allora $[g(x)]^n \\ge 0$; dalla terza condizione segue</p>
+            <p>$$f(x) \\ge [g(x)]^n \\ge 0,$$</p>
+            <p>quindi $f(x) \\ge 0$ è conseguenza delle altre due. Il sistema si semplifica in</p>
+            <p>$$\\begin{cases} g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases}$$</p>
+            <p>Attenzione: nel <strong>primo</strong> sistema la condizione $f(x) \\ge 0$ non può essere omessa, perché lì non c'è nessun elevamento a potenza che la implichi.</p>`
           },
           {
-            subtitle: "Caso $\\sqrt[n]{f(x)} \\le g(x)$ con $n$ pari",
-            content: `<p>Qui il ragionamento è <strong>più diretto</strong>: un unico sistema, nessuna unione. Affinché la disequazione possa essere vera, il membro di destra $g(x)$ deve essere necessariamente <strong>non negativo</strong>, poiché il membro di sinistra (radice di indice pari) lo è per definizione. Se $g(x)$ fosse negativo avremmo "non negativo $\\le$ negativo", che è impossibile.</p>
-<p>Le tre condizioni da imporre <strong>contemporaneamente</strong> sono:</p>
-<p>1. Esistenza della radice: $f(x) \\ge 0$.<br>
-2. Concordanza dei segni: $g(x) \\ge 0$.<br>
-3. Elevamento alla $n$: essendo entrambi i membri non negativi, il verso si conserva.</p>
-<p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\le [g(x)]^n \\end{cases}$$</p>
-<p>La soluzione della disequazione è la soluzione di questo unico sistema.</p>`
+            subtitle: "Caso $\\sqrt[n]{f(x)} \\le g(x)$ — un unico sistema",
+            content: `<p>Qui il ragionamento è più diretto. Affinché la disequazione possa essere vera, il membro di destra $g(x)$ deve <strong>necessariamente</strong> essere non negativo: il membro di sinistra lo è per definizione, e "non negativo $\\le$ negativo" è impossibile.</p>
+            <p>Le tre condizioni devono valere <strong>contemporaneamente</strong>:</p>
+            <ol>
+              <li>esistenza della radice: $f(x) \\ge 0$;</li>
+              <li>concordanza dei segni: $g(x) \\ge 0$;</li>
+              <li>elevamento alla $n$ (lecito perché entrambi i membri sono non negativi): $f(x) \\le [g(x)]^n$.</li>
+            </ol>
+            <p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\le [g(x)]^n \\end{cases}$$</p>
+            <p>La soluzione della disequazione è semplicemente la soluzione di questo unico sistema.</p>`
           }
         ],
         formulas: [
-          { label: "Schema $\\ge$, $n$ pari (caso 1)", latex: "\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases}" },
-          { label: "Schema $\\ge$, $n$ pari (caso 2, semplificato)", latex: "\\begin{cases} g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases}" },
-          { label: "Schema $\\le$, $n$ pari (unico sistema)", latex: "\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\le [g(x)]^n \\end{cases}" }
+          { label: "Caso ≥, sistema 1", latex: "\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases}" },
+          { label: "Caso ≥, sistema 2 (semplificato)", latex: "\\begin{cases} g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases}" },
+          { label: "Caso ≥, soluzione complessiva", latex: "S = S_1 \\cup S_2" },
+          { label: "Caso ≤, sistema unico", latex: "\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\le [g(x)]^n \\end{cases}" }
         ]
       },
-
       {
-        id: "s02-diseq-irrazionali-dispari",
+        id: "s05-irrazionali-dispari",
         type: "section",
-        title: "Disequazioni irrazionali con indice dispari",
-        icon: "∛",
-        content: `<p>Quando l'indice $n$ è <strong>dispari</strong> (radici cubiche, quinte, ...) la situazione è molto più semplice. La radice $n$-esima di un numero reale è definita per <strong>qualsiasi</strong> valore dell'argomento (positivo, negativo o nullo) e <strong>conserva il segno</strong> dell'argomento.</p>
-<p>Questo significa che la radice non impone alcuna condizione di non negatività su $f(x)$ e possiamo sempre elevare entrambi i membri alla potenza $n$ (dispari) <strong>mantenendo il verso</strong> della disuguaglianza. Quindi una disequazione del tipo</p>
-<p>$$\\sqrt[n]{f(x)} \\lessgtr g(x) \\quad (n \\text{ dispari})$$</p>
-<p>è semplicemente equivalente a</p>
-<p>$$f(x) \\lessgtr [g(x)]^n$$</p>
-<p>Non è necessario discutere i segni di $g(x)$ né imporre la condizione di non negatività del radicando.</p>`,
-        extra_content: `<div style="border-left: 3px solid var(--accent); padding-left: 12px; margin: 16px 0;">
-<p><strong>Precisazione importante.</strong> Si lavora sempre nel <strong>dominio comune</strong> delle espressioni $f(x)$ e $g(x)$. La radice di indice dispari elimina soltanto il vincolo di non negatività del radicando, <strong>non</strong> le altre condizioni di esistenza già presenti nelle espressioni: eventuali denominatori devono comunque essere diversi da zero, eventuali radici pari interne devono avere argomento non negativo, ecc. Per esempio, in $\\sqrt[3]{1/x}$ resta necessario imporre $x \\ne 0$.</p>
-</div>`
+        title: "Indice della radice n dispari",
+        icon: "🔓",
+        content: `<p>Quando l'indice $n$ è dispari (radici cubiche, quinte, ...) la situazione è molto più semplice. La radice $n$-esima di un numero reale è definita per qualsiasi valore dell'argomento (positivo, negativo o nullo) e <strong>conserva il segno</strong> dell'argomento.</p>
+        <p>Questo significa che la radice dispari non impone alcuna restrizione di segno su $f(x)$, e possiamo sempre elevare entrambi i membri alla potenza $n$ (dispari) mantenendo il verso della disuguaglianza. Quindi, per $n$ dispari,</p>
+        <p>$$\\sqrt[n]{f(x)} \\lessgtr g(x) \\quad \\Longleftrightarrow \\quad f(x) \\lessgtr [g(x)]^n$$</p>
+        <p>Non è necessario discutere i segni di $g(x)$ né imporre condizioni di esistenza <em>legate alla radice</em>.</p>`,
+        extra_content: `<div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>⚠️ Precisazione importante</strong></p>
+          <p><em>L'equivalenza vale nel <strong>dominio comune</strong> in cui $f(x)$ e $g(x)$ sono definite. La radice dispari non aggiunge restrizioni, ma le espressioni $f$ e $g$ possono averne di proprie: per esempio in $\\sqrt[3]{1/x}$ resta la condizione $x \\ne 0$.</em></p>
+        </div>`,
+        formulas: [
+          { label: "Indice dispari", latex: "\\sqrt[n]{f(x)} \\lessgtr g(x) \\iff f(x) \\lessgtr [g(x)]^n \\quad (n \\text{ dispari})" }
+        ]
       },
-
       {
-        id: "s03-concetto-funzione",
+        id: "s05-funzioni-intro",
         type: "section",
-        title: "Introduzione al concetto di funzione",
-        icon: "🗺️",
-        content: `<p>Il concetto di <strong>funzione</strong> è uno dei più importanti in tutta la matematica. Intuitivamente, una funzione è una <strong>regola</strong>, una <strong>legge</strong> che lega due insiemi di oggetti: una mappa che associa a ogni elemento di un primo insieme un elemento del secondo.</p>
-<p><strong>Esempio intuitivo.</strong> Pensiamo a una cartina geografica: ad ogni punto della cartina (primo insieme) possiamo associare la sua altitudine sul livello del mare (secondo insieme). Oppure, in un negozio, ad ogni maglietta (primo insieme) è associato un prezzo (secondo insieme).</p>
-<p>L'aspetto cruciale che definisce una funzione è che ad ogni elemento del primo insieme deve corrispondere <strong>uno e un solo</strong> elemento del secondo. Una maglietta non può avere due prezzi diversi.</p>`,
+        title: "Introduzione alle funzioni",
+        icon: "🔗",
+        content: `<p>Il concetto di funzione è uno dei più importanti in tutta la matematica. Intuitivamente, una funzione è una <strong>regola</strong>, una <strong>mappa</strong>, una <strong>legge</strong> che associa a ogni elemento di un primo insieme un elemento di un secondo insieme.</p>
+        <p>Pensiamo a una cartina geografica: a ogni punto della cartina (primo insieme) possiamo associare la sua altitudine sul livello del mare (secondo insieme). Oppure, in un negozio, a ogni maglietta (primo insieme) è associato un prezzo (secondo insieme).</p>
+        <p>L'aspetto cruciale è che a ogni elemento del primo insieme deve corrispondere <strong>uno e un solo</strong> elemento del secondo. Una maglietta non può avere due prezzi diversi.</p>`,
         quote: {
           text: "Ad ogni elemento del primo insieme, un solo elemento del secondo. L'analogia è quella delle magliette e dei prezzi: ad ogni maglietta corrisponde un prezzo. Possono esserci magliette diverse che hanno lo stesso prezzo, ma l'importante è che ogni maglietta abbia un solo prezzo.",
           src: "Nota del Prof."
@@ -166,32 +188,59 @@ const LESSON = {
         subsections: [
           {
             subtitle: "Definizione di funzione",
-            content: `<p>Dati due insiemi <strong>non vuoti</strong> $X$ e $Y$, una <strong>funzione</strong> $f$ da $X$ a $Y$ è una legge che associa ad ogni elemento $x \\in X$ <strong>uno e un solo</strong> elemento $y \\in Y$. Si scrive $f \\colon X \\to Y$ e l'elemento $y$ associato a $x$ si indica con $y = f(x)$.</p>
-<p>La terminologia associata:</p>
-<p>• L'insieme $X$ è detto <strong>dominio</strong> della funzione.<br>
-• L'insieme $Y$ è detto <strong>codominio</strong> della funzione.<br>
-• L'elemento $x \\in X$ è detto <strong>argomento</strong> o <strong>variabile indipendente</strong>.<br>
-• L'elemento $y = f(x) \\in Y$ è detto <strong>valore</strong> della funzione, oppure <strong>immagine</strong> di $x$ tramite $f$.</p>`
+            content: `<p>Dati due insiemi non vuoti $X$ e $Y$, una <strong>funzione</strong> $f$ da $X$ a $Y$ è una legge che associa ad ogni elemento $x \\in X$ <strong>uno e un solo</strong> elemento $y \\in Y$. Si scrive $f \\colon X \\to Y$ e l'elemento associato a $x$ si indica con $y = f(x)$.</p>
+            <ul>
+              <li>$X$ è il <strong>dominio</strong> della funzione;</li>
+              <li>$Y$ è il <strong>codominio</strong> della funzione;</li>
+              <li>$x \\in X$ è l'<strong>argomento</strong> o <strong>variabile indipendente</strong>;</li>
+              <li>$y = f(x) \\in Y$ è il <strong>valore</strong> della funzione, ossia l'<strong>immagine</strong> di $x$ tramite $f$.</li>
+            </ul>`
           },
           {
             subtitle: "Grafico di una funzione",
-            content: `<p>Per visualizzare una funzione, specialmente quando dominio e codominio sono insiemi di numeri reali, si utilizza il concetto di <strong>grafico</strong>. Data $f \\colon X \\to Y$, il suo grafico è il sottoinsieme del prodotto cartesiano $X \\times Y$ definito come</p>
-<p>$$Gr(f) = \\{ (x, y) \\in X \\times Y \\mid y = f(x) \\}$$</p>
-<p>Il grafico è quindi l'insieme di tutte le coppie ordinate $(x, f(x))$ al variare di $x$ nel dominio.</p>
-<p><strong>Test della retta verticale.</strong> Il test serve a controllare la condizione "uno e un solo $y$ per ogni $x$". Bisogna però distinguere due aspetti: per essere il grafico di una funzione <em>con dominio $X$ assegnato</em>, ogni retta verticale di ascissa appartenente a $X$ deve incontrare la curva <strong>esattamente una volta</strong>. Il criterio più debole "al massimo una volta" garantisce soltanto l'<strong>unicità</strong> dell'immagine, non la sua <strong>esistenza</strong> per ogni punto del dominio: una curva che non viene tagliata da qualche verticale di ascissa in $X$ è il grafico di una funzione definita su un dominio più piccolo.</p>`
-          },
+            content: `<p>Data una funzione $f \\colon X \\to Y$, il suo <strong>grafico</strong> è il sottoinsieme del prodotto cartesiano $X \\times Y$ definito da</p>
+            <p>$$Gr(f) = \\{ (x,y) \\in X \\times Y \\mid y = f(x) \\}.$$</p>
+            <p>Il grafico è quindi l'insieme di tutte le coppie ordinate $(x, f(x))$ al variare di $x$ nel dominio.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Funzione", latex: "f \\colon X \\to Y, \\qquad x \\mapsto y = f(x)" },
+          { label: "Grafico", latex: "Gr(f) = \\{ (x,y) \\in X \\times Y \\mid y = f(x) \\}" }
+        ]
+      },
+      {
+        id: "s05-retta-verticale",
+        type: "note_box",
+        title: "Test della retta verticale — formulazione precisa",
+        icon: "📏",
+        content: `<p>Una curva nel piano cartesiano è il grafico di una funzione definita su $X$ se e solo se, per <strong>ogni</strong> ascissa $x \\in X$, la retta verticale di equazione $x = x_0$ interseca la curva <strong>esattamente una volta</strong>.</p>
+        <p>Attenzione a distinguere le due richieste contenute in "uno e un solo $y$ per ogni $x$":</p>
+        <ul>
+          <li><strong>unicità</strong> — al massimo un punto di intersezione: garantisce che a $x$ non siano associati due valori diversi;</li>
+          <li><strong>esistenza</strong> — almeno un punto di intersezione: garantisce che ogni $x \\in X$ abbia effettivamente un'immagine.</li>
+        </ul>
+        <p>Il criterio "al massimo una volta" da solo non basta su un dominio $X$ già assegnato: identifica una funzione definita sull'insieme delle ascisse effettivamente incontrate dalla curva, che può essere un sottoinsieme proprio di $X$.</p>`
+      },
+      {
+        id: "s05-immagine-codominio",
+        type: "section",
+        title: "Immagine e codominio: non confonderli",
+        icon: "🎯",
+        content: `<p>È importante non confondere il <strong>codominio</strong> con l'<strong>immagine</strong> di una funzione.</p>
+        <ul>
+          <li>Il <strong>codominio</strong> $Y$ è l'insieme "di arrivo" <em>dichiarato</em>: contiene tutti i valori che la funzione <em>potrebbe</em> assumere.</li>
+          <li>L'<strong>immagine</strong> $Im(f)$ è il sottoinsieme del codominio costituito dai valori che la funzione <em>effettivamente</em> assume.</li>
+        </ul>
+        <p>Formalmente, data $f \\colon X \\to Y$,</p>
+        <p>$$Im(f) = \\{ y \\in Y \\mid \\exists\\, x \\in X : y = f(x) \\} = \\{ f(x) \\mid x \\in X \\},$$</p>
+        <p>e chiaramente $Im(f) \\subseteq Y$.</p>`,
+        subsections: [
           {
-            subtitle: "Immagine e codominio: non confonderli",
-            content: `<p>È importante <strong>non confondere</strong> il codominio con l'immagine.</p>
-<p>• Il <strong>codominio</strong> $Y$ è l'insieme "di arrivo" <em>dichiarato</em> per la funzione. Contiene tutti i valori che la funzione <em>potrebbe</em> assumere.<br>
-• L'<strong>immagine</strong> $Im(f)$ è il sottoinsieme del codominio costituito da tutti i valori che la funzione <em>effettivamente</em> assume.</p>
-<p>Formalmente, data $f \\colon X \\to Y$, la sua <strong>immagine</strong> (o <em>range</em>) è</p>
-<p>$$Im(f) = \\{ y \\in Y \\mid \\exists\\, x \\in X : y = f(x) \\} = \\{ f(x) \\mid x \\in X \\}$$</p>
-<p>Chiaramente vale sempre $Im(f) \\subseteq Y$, ma l'inclusione <strong>può essere stretta</strong>.</p>
-<p><strong>Esempio.</strong> Consideriamo $f \\colon \\R \\to \\R$, $f(x) = x^2$. Il dominio è $\\R$, il codominio <em>dichiarato</em> è $\\R$. L'immagine però non è tutto $\\R$: poiché $x^2$ è sempre non negativo, i valori effettivamente assunti sono solo i reali maggiori o uguali a zero, quindi</p>
-<p>$$Im(f) = [0, +\\infty) \\subset \\R$$</p>
-<p>L'immagine è la <strong>proiezione del grafico sull'asse $y$</strong>: nel grafico qui sotto si vede che la parabola non scende mai sotto l'asse delle ascisse.</p>
-<figure class="figura" data-id="analisi1_lez05a_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+            subtitle: "Esempio: $f(x) = x^2$",
+            content: `<p>Consideriamo $f \\colon \\mathbb{R} \\to \\mathbb{R}$, $f(x) = x^2$. Il dominio è $\\mathbb{R}$ e il codominio dichiarato è $\\mathbb{R}$. L'immagine però <strong>non</strong> è tutto $\\mathbb{R}$: poiché $x^2$ è sempre non negativo, i valori effettivamente assunti sono solo i reali maggiori o uguali a zero:</p>
+            <p>$$Im(f) = [0, +\\infty) \\subset \\mathbb{R}.$$</p>
+            <p>Graficamente, l'immagine è la <strong>proiezione del grafico sull'asse $y$</strong>.</p>
+            <figure class="figura" data-id="analisi1_lez05a_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -876,77 +925,80 @@ z
    <rect x="44.8" y="24" width="569.6" height="340"/>
   </clipPath>
  </defs>
-</svg></figure>`
-          },
-          {
-            subtitle: "Dominio naturale",
-            content: `<p>Spesso una funzione viene definita solo tramite la sua <strong>espressione analitica</strong> (es. $f(x) = \\sqrt{x}$), senza specificare esplicitamente il dominio. In questi casi si considera il <strong>dominio naturale</strong> (o campo di esistenza): il più grande sottoinsieme di $\\R$ per cui l'espressione ha significato.</p>
-<p>Esempi:</p>
-<p>• $f(x) = \\sqrt{x}$ ha dominio naturale $D = \\{x \\in \\R \\mid x \\ge 0\\} = [0, +\\infty)$.<br>
-• $f(x) = \\sqrt[3]{x}$ ha dominio naturale tutto $\\R$, poiché la radice cubica è definita per ogni numero reale.</p>`
+</svg></figure>
+            <p>L'inclusione $Im(f) \\subseteq Y$ è dunque <strong>stretta</strong> in questo esempio.</p>`
           }
         ],
         formulas: [
-          { label: "Grafico", latex: "Gr(f) = \\{ (x, y) \\in X \\times Y \\mid y = f(x) \\}" },
           { label: "Immagine", latex: "Im(f) = \\{ f(x) \\mid x \\in X \\} \\subseteq Y" }
         ]
       },
-
       {
-        id: "s04-successioni",
+        id: "s05-dominio-naturale",
         type: "section",
-        title: "Successioni: un caso particolare di funzione",
+        title: "Dominio naturale",
+        icon: "🌱",
+        content: `<p>Spesso una funzione viene assegnata solo tramite la sua espressione analitica (per esempio $f(x) = \\sqrt{x}$), senza specificare esplicitamente il dominio. In questi casi si considera il <strong>dominio naturale</strong>.</p>
+        <p>Il <strong>dominio naturale</strong> (o campo di esistenza) di una funzione definita da un'espressione analitica è il <strong>più grande</strong> sottoinsieme di $\\mathbb{R}$ per cui l'espressione ha significato.</p>
+        <ul>
+          <li>$f(x) = \\sqrt{x}$ ha dominio naturale $D = \\{ x \\in \\mathbb{R} \\mid x \\ge 0 \\} = [0, +\\infty)$;</li>
+          <li>$f(x) = \\sqrt[3]{x}$ ha dominio naturale tutto $\\mathbb{R}$, perché la radice cubica è definita per qualsiasi numero reale.</li>
+        </ul>`
+      },
+      {
+        id: "s05-successioni",
+        type: "section",
+        title: "Successioni: funzioni con dominio ℕ",
         icon: "🔢",
         content: `<p>Un tipo particolare e molto importante di funzione è la <strong>successione</strong>.</p>
-<p>Una <strong>successione</strong> di numeri reali è una funzione che ha come dominio l'insieme dei numeri naturali $\\N$:</p>
-<p>$$a \\colon \\N \\to \\R$$</p>
-<p>Invece della notazione funzionale $a(n)$, per le successioni si preferisce la <strong>notazione indiciale</strong> $a_n$. L'elemento $a_n$ è detto <strong>termine $n$-esimo</strong> della successione.</p>
-<p>A volte il dominio di una successione può essere un <strong>sottoinsieme</strong> dei naturali, per esempio l'insieme dei naturali a partire da un certo $n_0$, come $\\N \\setminus \\{0\\} = \\{n \\in \\N \\mid n \\ge 1\\}$.</p>
-<p><strong>Esempi.</strong> La successione $a_n = \\frac{1}{n}$ è definita per $n \\ge 1$: il suo dominio naturale è $\\N \\setminus \\{0\\}$. La successione $a_n = n^2 + 2n + 1$ è invece definita per ogni $n \\in \\N$, incluso $n = 0$.</p>`
+        <p>Una successione di numeri reali è una funzione che ha come dominio l'insieme dei numeri naturali:</p>
+        <p>$$a \\colon \\mathbb{N} \\to \\mathbb{R}.$$</p>
+        <p>Invece della notazione funzionale $a(n)$, per le successioni si preferisce la <strong>notazione indiciale</strong> $a_n$. L'elemento $a_n$ è detto <strong>termine $n$-esimo</strong> della successione.</p>
+        <p>A volte il dominio di una successione può essere un sottoinsieme dei naturali, per esempio i naturali a partire da un certo $n_0$, come $\\mathbb{N} \\setminus \\{0\\} = \\{ n \\in \\mathbb{N} \\mid n \\ge 1 \\}$.</p>
+        <ul>
+          <li>$a_n = \\dfrac{1}{n}$ è definita per $n \\ge 1$: il dominio naturale è $\\mathbb{N} \\setminus \\{0\\}$;</li>
+          <li>$a_n = n^2 + 2n + 1$ è definita per ogni $n \\in \\mathbb{N}$, incluso $n = 0$.</li>
+        </ul>`,
+        formulas: [
+          { label: "Successione", latex: "a \\colon \\mathbb{N} \\to \\mathbb{R}, \\qquad n \\mapsto a_n" }
+        ]
       },
-
       {
         id: "s05-controimmagine",
         type: "section",
-        title: "Controimmagine di un insieme",
+        title: "La controimmagine di un insieme",
         icon: "↩️",
-        content: `<p>Oltre a chiederci qual è l'immagine di un punto, possiamo porci la <strong>domanda inversa</strong>: quali punti del dominio vengono "mandati" in un certo sottoinsieme del codominio?</p>
-<p>Tornando all'analogia del negozio: <em>"Voglio tutte le magliette il cui prezzo è compreso tra 6 e 10 euro"</em>. Cosa fa il commesso? Va a prendere tutte le magliette che soddisfano questa condizione e ce le porta. Questo concetto si chiama <strong>controimmagine</strong>.</p>
-<p>In pratica: si dà un sottoinsieme dei valori di arrivo (le $y$, i prezzi) e si chiede di trovare tutti i valori di partenza (le $x$, le magliette) tali che la loro immagine (il loro prezzo) cada in quell'insieme.</p>`,
+        content: `<p>Oltre a chiederci qual è l'immagine di un punto, possiamo porci la domanda <strong>inversa</strong>: quali punti del dominio vengono "mandati" in un certo sottoinsieme del codominio?</p>
+        <p>Riprendendo l'analogia del negozio: «Voglio tutte le magliette il cui prezzo è compreso tra 6 e 10 euro». Cosa fa il commesso? Va a prendere tutte le magliette che soddisfano la condizione e ce le porta. Questo concetto si chiama <strong>controimmagine</strong>.</p>
+        <p>In pratica: io vi do un sottoinsieme dei valori di arrivo (le $y$, i prezzi) e vi chiedo di trovare tutti i valori di partenza (le $x$, le magliette) tali che la loro immagine cada in quell'insieme.</p>`,
         subsections: [
           {
-            subtitle: "Definizione di controimmagine",
-            content: `<p>Data una funzione $f \\colon X \\to Y$ e un sottoinsieme $B \\subseteq Y$ del codominio, si definisce <strong>controimmagine</strong> (o <em>preimmagine</em>) di $B$ tramite $f$ l'insieme di tutti gli elementi $x$ del dominio la cui immagine $f(x)$ appartiene a $B$:</p>
-<p>$$f^{-1}(B) = \\{ x \\in X \\mid f(x) \\in B \\}$$</p>`
+            subtitle: "Definizione formale",
+            content: `<p>Data una funzione $f \\colon X \\to Y$ e un sottoinsieme $B \\subseteq Y$ del codominio, si definisce <strong>controimmagine</strong> (o <em>preimmagine</em>) di $B$ tramite $f$ l'insieme</p>
+            <p>$$f^{-1}(B) = \\{ x \\in X \\mid f(x) \\in B \\}.$$</p>
+            <p>È l'insieme di tutti gli elementi del dominio la cui immagine appartiene a $B$.</p>`
           },
           {
             subtitle: "Attenzione al simbolo $f^{-1}$",
-            content: `<p>Non bisogna confondere il simbolo $f^{-1}(B)$ con la <strong>funzione inversa</strong>. Qui $f^{-1}$ <strong>non</strong> è una funzione che agisce su un punto, ma un'<strong>operazione che agisce su un insieme</strong> $B$ e restituisce un altro insieme, sottoinsieme del dominio. Per calcolarla basta saper risolvere la condizione $f(x) \\in B$: non serve alcuna ipotesi sull'invertibilità di $f$.</p>`
-          },
-          {
-            subtitle: "La controimmagine può essere vuota",
-            content: `<p>Consideriamo ancora $f(x) = x^2$ su $\\R$. Qual è la controimmagine dell'intervallo $B = [-6, -5]$? Dobbiamo trovare le $x$ tali che $-6 \\le x^2 \\le -5$. Poiché $x^2 \\ge 0$ per ogni $x \\in \\R$, <strong>non esistono</strong> $x$ che soddisfino questa condizione. Pertanto</p>
-<p>$$f^{-1}([-6, -5]) = \\emptyset$$</p>
-<p>Un insieme $B$ non vuoto può quindi avere controimmagine vuota.</p>`
+            content: `<p>Non confondere $f^{-1}(B)$ con la <strong>funzione inversa</strong>. Qui $f^{-1}$ non è una funzione che agisce su un punto, ma un'<strong>operazione che agisce su un insieme</strong> $B$ e restituisce un altro insieme, sottoinsieme del dominio. Non serve alcuna ipotesi di invertibilità di $f$.</p>`
           }
         ],
         formulas: [
           { label: "Controimmagine", latex: "f^{-1}(B) = \\{ x \\in X \\mid f(x) \\in B \\}" }
         ]
       },
-
       {
-        id: "s06-es-controimmagine-lineare",
+        id: "s05-es-controimmagine-lineare",
         type: "esercizio_svolto",
-        title: "Esercizio svolto — Controimmagine di una funzione lineare",
+        title: "Esercizio svolto — Controimmagine, funzione lineare",
         icon: "✎",
         source: "docente",
-        content: `<p>Data la funzione $f \\colon \\R \\to \\R$ definita da $f(x) = 2x+1$, calcolare la controimmagine dell'intervallo $B = (1, +\\infty)$.</p>`,
+        content: `<p>Data la funzione $f \\colon \\mathbb{R} \\to \\mathbb{R}$ definita da $f(x) = 2x + 1$, calcolare la controimmagine dell'intervallo $B = (1, +\\infty)$.</p>`,
         steps: [
-          `<strong>Impostare la condizione di appartenenza.</strong> Dobbiamo trovare tutte le $x \\in \\R$ tali che $f(x) \\in B$. Scriviamo esplicitamente la condizione: $$f(x) \\in (1, +\\infty) \\Rightarrow 2x+1 \\gt 1$$`,
-          `<strong>Risolvere la disequazione</strong> rispetto a $x$: $$\\begin{aligned} 2x+1 &\\gt 1 \\\\ 2x &\\gt 0 \\\\ x &\\gt 0 \\end{aligned}$$`,
-          `<strong>Scrivere la soluzione.</strong> L'insieme delle $x$ che soddisfano la condizione è l'intervallo $(0, +\\infty)$, quindi $$f^{-1}((1, +\\infty)) = (0, +\\infty)$$`,
-          `<strong>Lettura grafica.</strong> La controimmagine è l'insieme dei punti sull'asse $x$ (evidenziati in rosso) la cui immagine cade nella regione $y \\gt 1$. <figure class="figura" data-id="analisi1_lez05a_g_2x1_controimmagine"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+          `<strong>Impostare la condizione di appartenenza.</strong> Dobbiamo trovare tutte le $x \\in \\mathbb{R}$ tali che $f(x) \\in B$, cioè $f(x) \\in (1, +\\infty)$, ovvero $$2x + 1 \\gt 1.$$`,
+          `<strong>Risolvere la disequazione.</strong> $$\\begin{aligned} 2x + 1 &\\gt 1 \\\\ 2x &\\gt 0 \\\\ x &\\gt 0 \\end{aligned}$$`,
+          `<strong>Scrivere la soluzione.</strong> L'insieme delle $x$ che soddisfano la condizione è l'intervallo $(0, +\\infty)$, quindi $$f^{-1}\\big((1,+\\infty)\\big) = (0, +\\infty).$$`,
+          `Graficamente: la controimmagine è l'insieme delle ascisse la cui immagine supera il livello $y = 1$. <figure class="figura" data-id="analisi1_lez05b_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -963,8 +1015,8 @@ z
  <defs>
   <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
  </defs>
- <g id="analisi1_lez05a_g_2x1_controimmagine-figure_1">
-  <g id="analisi1_lez05a_g_2x1_controimmagine-patch_1">
+ <g id="analisi1_lez05b_g1-figure_1">
+  <g id="analisi1_lez05b_g1-patch_1">
    <path d="M 0 400 
 L 640 400 
 L 640 0 
@@ -973,8 +1025,8 @@ L 0 400
 z
 " style="fill: none; opacity: 0"/>
   </g>
-  <g id="analisi1_lez05a_g_2x1_controimmagine-axes_1">
-   <g id="analisi1_lez05a_g_2x1_controimmagine-patch_2">
+  <g id="analisi1_lez05b_g1-axes_1">
+   <g id="analisi1_lez05b_g1-patch_2">
     <path d="M 44.8 364 
 L 614.4 364 
 L 614.4 24 
@@ -983,35 +1035,35 @@ L 44.8 364
 z
 " style="fill: none"/>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-matplotlib.axis_1">
-    <g id="analisi1_lez05a_g_2x1_controimmagine-xtick_1">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_1">
+   <g id="analisi1_lez05b_g1-matplotlib.axis_1">
+    <g id="analisi1_lez05b_g1-xtick_1">
+     <g id="analisi1_lez05b_g1-line2d_1">
       <path d="M 44.8 364 
 L 44.8 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_2">
+     <g id="analisi1_lez05b_g1-line2d_2">
       <defs>
-       <path id="analisi1_lez05a_g_2x1_controimmagine-m37573acb42" d="M 0 0 
+       <path id="analisi1_lez05b_g1-m58ac8a6883" d="M 0 0 
 L 0 3 
 " style="stroke: currentColor; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m37573acb42" x="44.8" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m58ac8a6883" x="44.8" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_1">
+     <g id="analisi1_lez05b_g1-text_1">
       <!-- -2 -->
       <g style="fill: currentColor" transform="translate(39.316328 276.857422) scale(0.11 -0.11)">
        <defs>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-10" d="M 313 2009 
+        <path id="analisi1_lez05b_g1-DejaVuSans-10" d="M 313 2009 
 L 1997 2009 
 L 1997 1497 
 L 313 1497 
 L 313 2009 
 z
 " transform="scale(0.015625)"/>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-15" d="M 1228 531 
+        <path id="analisi1_lez05b_g1-DejaVuSans-15" d="M 1228 531 
 L 3431 531 
 L 3431 0 
 L 469 0 
@@ -1036,27 +1088,27 @@ Q 1991 1309 1228 531
 z
 " transform="scale(0.015625)"/>
        </defs>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-10"/>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-15" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-15" transform="translate(36.078125 0)"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-xtick_2">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_3">
+    <g id="analisi1_lez05b_g1-xtick_2">
+     <g id="analisi1_lez05b_g1-line2d_3">
       <path d="M 158.72 364 
 L 158.72 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_4">
+     <g id="analisi1_lez05b_g1-line2d_4">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m37573acb42" x="158.72" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m58ac8a6883" x="158.72" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_2">
+     <g id="analisi1_lez05b_g1-text_2">
       <!-- -1 -->
       <g style="fill: currentColor" transform="translate(153.236328 276.857422) scale(0.11 -0.11)">
        <defs>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14" d="M 794 531 
+        <path id="analisi1_lez05b_g1-DejaVuSans-14" d="M 794 531 
 L 1825 531 
 L 1825 4091 
 L 703 3866 
@@ -1071,27 +1123,27 @@ L 794 531
 z
 " transform="scale(0.015625)"/>
        </defs>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-10"/>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-14" transform="translate(36.078125 0)"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-xtick_3">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_5">
+    <g id="analisi1_lez05b_g1-xtick_3">
+     <g id="analisi1_lez05b_g1-line2d_5">
       <path d="M 272.64 364 
 L 272.64 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_6">
+     <g id="analisi1_lez05b_g1-line2d_6">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m37573acb42" x="272.64" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m58ac8a6883" x="272.64" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_3">
+     <g id="analisi1_lez05b_g1-text_3">
       <!-- 0 -->
       <g style="fill: currentColor" transform="translate(269.140625 276.857422) scale(0.11 -0.11)">
        <defs>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-13" d="M 2034 4250 
+        <path id="analisi1_lez05b_g1-DejaVuSans-13" d="M 2034 4250 
 Q 1547 4250 1301 3770 
 Q 1056 3291 1056 2328 
 Q 1056 1369 1301 889 
@@ -1113,62 +1165,62 @@ Q 1250 4750 2034 4750
 z
 " transform="scale(0.015625)"/>
        </defs>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-13"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-xtick_4">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_7">
+    <g id="analisi1_lez05b_g1-xtick_4">
+     <g id="analisi1_lez05b_g1-line2d_7">
       <path d="M 386.56 364 
 L 386.56 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_8">
+     <g id="analisi1_lez05b_g1-line2d_8">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m37573acb42" x="386.56" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m58ac8a6883" x="386.56" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_4">
+     <g id="analisi1_lez05b_g1-text_4">
       <!-- 1 -->
       <g style="fill: currentColor" transform="translate(383.060625 276.857422) scale(0.11 -0.11)">
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-14"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-xtick_5">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_9">
+    <g id="analisi1_lez05b_g1-xtick_5">
+     <g id="analisi1_lez05b_g1-line2d_9">
       <path d="M 500.48 364 
 L 500.48 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_10">
+     <g id="analisi1_lez05b_g1-line2d_10">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m37573acb42" x="500.48" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m58ac8a6883" x="500.48" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_5">
+     <g id="analisi1_lez05b_g1-text_5">
       <!-- 2 -->
       <g style="fill: currentColor" transform="translate(496.980625 276.857422) scale(0.11 -0.11)">
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-15"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-15"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-xtick_6">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_11">
+    <g id="analisi1_lez05b_g1-xtick_6">
+     <g id="analisi1_lez05b_g1-line2d_11">
       <path d="M 614.4 364 
 L 614.4 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_12">
+     <g id="analisi1_lez05b_g1-line2d_12">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m37573acb42" x="614.4" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m58ac8a6883" x="614.4" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_6">
+     <g id="analisi1_lez05b_g1-text_6">
       <!-- 3 -->
       <g style="fill: currentColor" transform="translate(610.900625 276.857422) scale(0.11 -0.11)">
        <defs>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-16" d="M 2597 2516 
+        <path id="analisi1_lez05b_g1-DejaVuSans-16" d="M 2597 2516 
 Q 3050 2419 3304 2112 
 Q 3559 1806 3559 1356 
 Q 3559 666 3084 287 
@@ -1201,106 +1253,106 @@ Q 3006 2619 2597 2516
 z
 " transform="scale(0.015625)"/>
        </defs>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-16"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-16"/>
       </g>
      </g>
     </g>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-matplotlib.axis_2">
-    <g id="analisi1_lez05a_g_2x1_controimmagine-ytick_1">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_13">
+   <g id="analisi1_lez05b_g1-matplotlib.axis_2">
+    <g id="analisi1_lez05b_g1-ytick_1">
+     <g id="analisi1_lez05b_g1-line2d_13">
       <path d="M 44.8 330 
 L 614.4 330 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_14">
+     <g id="analisi1_lez05b_g1-line2d_14">
       <defs>
-       <path id="analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" d="M 0 0 
+       <path id="analisi1_lez05b_g1-m4a372300ac" d="M 0 0 
 L -3 0 
 " style="stroke: currentColor; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" x="272.64" y="330" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m4a372300ac" x="272.64" y="330" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_7">
+     <g id="analisi1_lez05b_g1-text_7">
       <!-- -2 -->
       <g style="fill: currentColor" transform="translate(255.172656 334.178711) scale(0.11 -0.11)">
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-10"/>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-15" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-15" transform="translate(36.078125 0)"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-ytick_2">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_15">
+    <g id="analisi1_lez05b_g1-ytick_2">
+     <g id="analisi1_lez05b_g1-line2d_15">
       <path d="M 44.8 262 
 L 614.4 262 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_16">
+     <g id="analisi1_lez05b_g1-line2d_16">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" x="272.64" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m4a372300ac" x="272.64" y="262" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_8">
+     <g id="analisi1_lez05b_g1-text_8">
       <!-- 0 -->
       <g style="fill: currentColor" transform="translate(259.14125 266.178711) scale(0.11 -0.11)">
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-13"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-ytick_3">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_17">
+    <g id="analisi1_lez05b_g1-ytick_3">
+     <g id="analisi1_lez05b_g1-line2d_17">
       <path d="M 44.8 228 
 L 614.4 228 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_18">
+     <g id="analisi1_lez05b_g1-line2d_18">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" x="272.64" y="228" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m4a372300ac" x="272.64" y="228" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_9">
+     <g id="analisi1_lez05b_g1-text_9">
       <!-- 1 -->
       <g style="fill: currentColor" transform="translate(259.14125 232.178711) scale(0.11 -0.11)">
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-14"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-ytick_4">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_19">
+    <g id="analisi1_lez05b_g1-ytick_4">
+     <g id="analisi1_lez05b_g1-line2d_19">
       <path d="M 44.8 194 
 L 614.4 194 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_20">
+     <g id="analisi1_lez05b_g1-line2d_20">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" x="272.64" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m4a372300ac" x="272.64" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_10">
+     <g id="analisi1_lez05b_g1-text_10">
       <!-- 2 -->
       <g style="fill: currentColor" transform="translate(259.14125 198.178711) scale(0.11 -0.11)">
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-15"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-15"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-ytick_5">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_21">
+    <g id="analisi1_lez05b_g1-ytick_5">
+     <g id="analisi1_lez05b_g1-line2d_21">
       <path d="M 44.8 126 
 L 614.4 126 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_22">
+     <g id="analisi1_lez05b_g1-line2d_22">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" x="272.64" y="126" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m4a372300ac" x="272.64" y="126" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_11">
+     <g id="analisi1_lez05b_g1-text_11">
       <!-- 4 -->
       <g style="fill: currentColor" transform="translate(259.14125 130.178711) scale(0.11 -0.11)">
        <defs>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-17" d="M 2419 4116 
+        <path id="analisi1_lez05b_g1-DejaVuSans-17" d="M 2419 4116 
 L 825 1625 
 L 2419 1625 
 L 2419 4116 
@@ -1320,26 +1372,26 @@ L 2253 4666
 z
 " transform="scale(0.015625)"/>
        </defs>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-17"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-17"/>
       </g>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-ytick_6">
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_23">
+    <g id="analisi1_lez05b_g1-ytick_6">
+     <g id="analisi1_lez05b_g1-line2d_23">
       <path d="M 44.8 58 
 L 614.4 58 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_24">
+     <g id="analisi1_lez05b_g1-line2d_24">
       <g>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mbd305ff866" x="272.64" y="58" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+       <use xlink:href="#analisi1_lez05b_g1-m4a372300ac" x="272.64" y="58" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="analisi1_lez05a_g_2x1_controimmagine-text_12">
+     <g id="analisi1_lez05b_g1-text_12">
       <!-- 6 -->
       <g style="fill: currentColor" transform="translate(259.14125 62.178711) scale(0.11 -0.11)">
        <defs>
-        <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-19" d="M 2113 2584 
+        <path id="analisi1_lez05b_g1-DejaVuSans-19" d="M 2113 2584 
 Q 1688 2584 1439 2293 
 Q 1191 2003 1191 1497 
 Q 1191 994 1439 701 
@@ -1370,67 +1422,174 @@ Q 3103 4656 3366 4563
 z
 " transform="scale(0.015625)"/>
        </defs>
-       <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-19"/>
+       <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-19"/>
       </g>
      </g>
     </g>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_25">
+   <g id="analisi1_lez05b_g1-line2d_25">
     <defs>
-     <path id="analisi1_lez05a_g_2x1_controimmagine-ma737ef7a9f" d="M 3 0 
+     <path id="analisi1_lez05b_g1-mc198636ca1" d="M 3 0 
 L -3 -3 
 L -3 3 
 z
 " style="stroke: currentColor; stroke-linejoin: miter"/>
     </defs>
     <g>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-ma737ef7a9f" x="614.4" y="262" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+     <use xlink:href="#analisi1_lez05b_g1-mc198636ca1" x="614.4" y="262" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
     </g>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_26">
+   <g id="analisi1_lez05b_g1-line2d_26">
     <defs>
-     <path id="analisi1_lez05a_g_2x1_controimmagine-mb2ff9cf484" d="M 0 -3 
+     <path id="analisi1_lez05b_g1-m84a44a0a19" d="M 0 -3 
 L -3 3 
 L 3 3 
 z
 " style="stroke: currentColor; stroke-linejoin: miter"/>
     </defs>
     <g>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-mb2ff9cf484" x="272.64" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+     <use xlink:href="#analisi1_lez05b_g1-m84a44a0a19" x="272.64" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
     </g>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_27">
+   <g id="analisi1_lez05b_g1-line2d_27">
     <path d="M 44.8 364 
 L 614.4 24 
 L 614.4 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_28">
+   <g id="analisi1_lez05b_g1-line2d_28">
     <path d="M 44.8 228 
 L 614.4 228 
 L 614.4 228 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 2"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 2"/>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_29">
-    <path d="M 273.78015 227.319433 
+   <g id="analisi1_lez05b_g1-line2d_29">
+    <path d="M 272.830025 227.886572 
 L 614.4 24 
 L 614.4 24 
-" clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)" style="fill: none; stroke: #7c4dff; stroke-opacity: 0.9; stroke-width: 3.6; stroke-linecap: square"/>
+" clip-path="url(#analisi1_lez05b_g1-pa566c085cd)" style="fill: none; stroke: #7c4dff; stroke-opacity: 0.9; stroke-width: 3.6; stroke-linecap: square"/>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-patch_3">
+   <g id="analisi1_lez05b_g1-patch_3">
     <path d="M 272.64 364 
 L 272.64 24 
 " style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-patch_4">
+   <g id="analisi1_lez05b_g1-patch_4">
     <path d="M 44.8 262 
 L 614.4 262 
 " style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-text_13">
-    <g style="fill: currentColor" transform="translate(407.2946 115.66) scale(0.11 -0.11)">
+   <g id="analisi1_lez05b_g1-text_13">
+    <!-- x&gt;0 -->
+    <g style="fill: currentColor" transform="translate(432.156484 116) scale(0.11 -0.11)">
      <defs>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-49" d="M 3059 4863 
+      <path id="analisi1_lez05b_g1-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez05b_g1-DejaVuSans-21" d="M 678 3150 
+L 678 3719 
+L 4684 2266 
+L 4684 1747 
+L 678 294 
+L 678 863 
+L 3897 2003 
+L 678 3150 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-5b"/>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-21" transform="translate(59.1875 0)"/>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-13" transform="translate(142.984375 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez05b_g1-text_14">
+    <!-- (0,1) -->
+    <g style="fill: currentColor" transform="translate(278.64 222) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez05b_g1-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez05b_g1-DejaVuSans-f" d="M 750 794 
+L 1409 794 
+L 1409 256 
+L 897 -744 
+L 494 -744 
+L 750 256 
+L 750 794 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez05b_g1-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-b"/>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-13" transform="translate(39.015625 0)"/>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-f" transform="translate(102.640625 0)"/>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-14" transform="translate(134.421875 0)"/>
+     <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-c" transform="translate(198.046875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez05b_g1-line2d_30">
+    <defs>
+     <path id="analisi1_lez05b_g1-mff7f00c11e" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez05b_g1-pa566c085cd)">
+     <use xlink:href="#analisi1_lez05b_g1-mff7f00c11e" x="272.64" y="228" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez05b_g1-legend_1">
+    <g id="analisi1_lez05b_g1-line2d_31">
+     <path d="M 54.7 38.41 
+L 65.7 38.41 
+L 76.7 38.41 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez05b_g1-text_15">
+     <g style="fill: currentColor" transform="translate(85.5 42.26) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez05b_g1-DejaVuSans-Oblique-49" d="M 3059 4863 
 L 2969 4384 
 L 2419 4384 
 Q 2106 4384 1964 4261 
@@ -1451,36 +1610,35 @@ Q 1875 4863 2516 4863
 L 3059 4863 
 z
 " transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-c9c" d="M 678 2272 
-L 4684 2272 
-L 4684 1741 
-L 678 1741 
-L 678 2272 
+       <path id="analisi1_lez05b_g1-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
 z
 " transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-b" d="M 1984 4856 
-Q 1566 4138 1362 3434 
-Q 1159 2731 1159 2009 
-Q 1159 1288 1364 580 
-Q 1569 -128 1984 -844 
-L 1484 -844 
-Q 1016 -109 783 600 
-Q 550 1309 550 2009 
-Q 550 2706 781 3412 
-Q 1013 4119 1484 4856 
-L 1984 4856 
+       <path id="analisi1_lez05b_g1-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
 z
 " transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-f" d="M 750 794 
-L 1409 794 
-L 1409 256 
-L 897 -744 
-L 494 -744 
-L 750 256 
-L 750 794 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-e" d="M 2944 4013 
+       <path id="analisi1_lez05b_g1-DejaVuSans-e" d="M 2944 4013 
 L 2944 2272 
 L 4684 2272 
 L 4684 1741 
@@ -1495,339 +1653,28 @@ L 2419 4013
 L 2944 4013 
 z
 " transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-4c" d="M 1172 4863 
-L 1747 4863 
-L 1606 4134 
-L 1031 4134 
-L 1172 4863 
-z
-M 909 3500 
-L 1484 3500 
-L 800 0 
-L 225 0 
-L 909 3500 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-51" d="M 3566 2113 
-L 3156 0 
-L 2578 0 
-L 2988 2091 
-Q 3016 2238 3031 2350 
-Q 3047 2463 3047 2528 
-Q 3047 2791 2881 2937 
-Q 2716 3084 2419 3084 
-Q 1956 3084 1622 2776 
-Q 1288 2469 1184 1941 
-L 800 0 
-L 225 0 
-L 903 3500 
-L 1478 3500 
-L 1363 2950 
-Q 1603 3253 1940 3418 
-Q 2278 3584 2650 3584 
-Q 3113 3584 3367 3334 
-Q 3622 3084 3622 2631 
-Q 3622 2519 3608 2391 
-Q 3594 2263 3566 2113 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-c" d="M 513 4856 
-L 1013 4856 
-Q 1481 4119 1714 3412 
-Q 1947 2706 1947 2009 
-Q 1947 1309 1714 600 
-Q 1481 -109 1013 -844 
-L 513 -844 
-Q 928 -128 1133 580 
-Q 1338 1288 1338 2009 
-Q 1338 2731 1133 3434 
-Q 928 4138 513 4856 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-49" transform="translate(0 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-c9c" transform="translate(42.652786 41.965625) scale(0.7)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14" transform="translate(101.30513 41.965625) scale(0.7)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-b" transform="translate(148.575638 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-b" transform="translate(187.58931 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14" transform="translate(226.602982 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-f" transform="translate(290.226029 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-e" transform="translate(360.977982 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-4c" transform="translate(464.249466 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-51" transform="translate(492.032669 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-49" transform="translate(555.411576 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-c" transform="translate(590.616654 0.665625)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-c" transform="translate(629.630326 0.665625)"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-text_14">
-    <!-- Intersezione -->
-    <g style="fill: currentColor" transform="translate(278.64 222) scale(0.11 -0.11)">
-     <defs>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-2c" d="M 628 4666 
-L 1259 4666 
-L 1259 0 
-L 628 0 
-L 628 4666 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-51" d="M 3513 2113 
-L 3513 0 
-L 2938 0 
-L 2938 2094 
-Q 2938 2591 2744 2837 
-Q 2550 3084 2163 3084 
-Q 1697 3084 1428 2787 
-Q 1159 2491 1159 1978 
-L 1159 0 
-L 581 0 
-L 581 3500 
-L 1159 3500 
-L 1159 2956 
-Q 1366 3272 1645 3428 
-Q 1925 3584 2291 3584 
-Q 2894 3584 3203 3211 
-Q 3513 2838 3513 2113 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-57" d="M 1172 4494 
-L 1172 3500 
-L 2356 3500 
-L 2356 3053 
-L 1172 3053 
-L 1172 1153 
-Q 1172 725 1289 603 
-Q 1406 481 1766 481 
-L 2356 481 
-L 2356 0 
-L 1766 0 
-Q 1100 0 847 248 
-Q 594 497 594 1153 
-L 594 3053 
-L 172 3053 
-L 172 3500 
-L 594 3500 
-L 594 4494 
-L 1172 4494 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-48" d="M 3597 1894 
-L 3597 1613 
-L 953 1613 
-Q 991 1019 1311 708 
-Q 1631 397 2203 397 
-Q 2534 397 2845 478 
-Q 3156 559 3463 722 
-L 3463 178 
-Q 3153 47 2828 -22 
-Q 2503 -91 2169 -91 
-Q 1331 -91 842 396 
-Q 353 884 353 1716 
-Q 353 2575 817 3079 
-Q 1281 3584 2069 3584 
-Q 2775 3584 3186 3129 
-Q 3597 2675 3597 1894 
-z
-M 3022 2063 
-Q 3016 2534 2758 2815 
-Q 2500 3097 2075 3097 
-Q 1594 3097 1305 2825 
-Q 1016 2553 972 2059 
-L 3022 2063 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-55" d="M 2631 2963 
-Q 2534 3019 2420 3045 
-Q 2306 3072 2169 3072 
-Q 1681 3072 1420 2755 
-Q 1159 2438 1159 1844 
-L 1159 0 
-L 581 0 
-L 581 3500 
-L 1159 3500 
-L 1159 2956 
-Q 1341 3275 1631 3429 
-Q 1922 3584 2338 3584 
-Q 2397 3584 2469 3576 
-Q 2541 3569 2628 3553 
-L 2631 2963 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-56" d="M 2834 3397 
-L 2834 2853 
-Q 2591 2978 2328 3040 
-Q 2066 3103 1784 3103 
-Q 1356 3103 1142 2972 
-Q 928 2841 928 2578 
-Q 928 2378 1081 2264 
-Q 1234 2150 1697 2047 
-L 1894 2003 
-Q 2506 1872 2764 1633 
-Q 3022 1394 3022 966 
-Q 3022 478 2636 193 
-Q 2250 -91 1575 -91 
-Q 1294 -91 989 -36 
-Q 684 19 347 128 
-L 347 722 
-Q 666 556 975 473 
-Q 1284 391 1588 391 
-Q 1994 391 2212 530 
-Q 2431 669 2431 922 
-Q 2431 1156 2273 1281 
-Q 2116 1406 1581 1522 
-L 1381 1569 
-Q 847 1681 609 1914 
-Q 372 2147 372 2553 
-Q 372 3047 722 3315 
-Q 1072 3584 1716 3584 
-Q 2034 3584 2315 3537 
-Q 2597 3491 2834 3397 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-5d" d="M 353 3500 
-L 3084 3500 
-L 3084 2975 
-L 922 459 
-L 3084 459 
-L 3084 0 
-L 275 0 
-L 275 525 
-L 2438 3041 
-L 353 3041 
-L 353 3500 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-4c" d="M 603 3500 
-L 1178 3500 
-L 1178 0 
-L 603 0 
-L 603 3500 
-z
-M 603 4863 
-L 1178 4863 
-L 1178 4134 
-L 603 4134 
-L 603 4863 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-52" d="M 1959 3097 
-Q 1497 3097 1228 2736 
-Q 959 2375 959 1747 
-Q 959 1119 1226 758 
-Q 1494 397 1959 397 
-Q 2419 397 2687 759 
-Q 2956 1122 2956 1747 
-Q 2956 2369 2687 2733 
-Q 2419 3097 1959 3097 
-z
-M 1959 3584 
-Q 2709 3584 3137 3096 
-Q 3566 2609 3566 1747 
-Q 3566 888 3137 398 
-Q 2709 -91 1959 -91 
-Q 1206 -91 779 398 
-Q 353 888 353 1747 
-Q 353 2609 779 3096 
-Q 1206 3584 1959 3584 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-2c"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-51" transform="translate(29.5 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-57" transform="translate(92.875 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-48" transform="translate(132.078125 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-55" transform="translate(193.609375 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-56" transform="translate(234.71875 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-48" transform="translate(286.8125 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-5d" transform="translate(348.34375 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-4c" transform="translate(400.828125 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-52" transform="translate(428.609375 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-51" transform="translate(489.796875 0)"/>
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-48" transform="translate(553.171875 0)"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_30">
-    <defs>
-     <path id="analisi1_lez05a_g_2x1_controimmagine-m08d4ab9880" d="M 0 2.75 
-C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
-C 2.460243 1.428845 2.75 0.729309 2.75 0 
-C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
-C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
-C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
-C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
-C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
-C -1.428845 2.460243 -0.729309 2.75 0 2.75 
-z
-" style="stroke: #7c4dff"/>
-    </defs>
-    <g clip-path="url(#analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f)">
-     <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-m08d4ab9880" x="272.64" y="228" style="fill: #7c4dff; stroke: #7c4dff"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_g_2x1_controimmagine-legend_1">
-    <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_31">
-     <path d="M 54.7 38.408281 
-L 65.7 38.408281 
-L 76.7 38.408281 
-" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
-    </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-text_15">
-     <!-- f(x) -->
-     <g style="fill: currentColor" transform="translate(85.5 42.258281) scale(0.11 -0.11)">
-      <defs>
-       <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-49" d="M 2375 4863 
-L 2375 4384 
-L 1825 4384 
-Q 1516 4384 1395 4259 
-Q 1275 4134 1275 3809 
-L 1275 3500 
-L 2222 3500 
-L 2222 3053 
-L 1275 3053 
-L 1275 0 
-L 697 0 
-L 697 3053 
-L 147 3053 
-L 147 3500 
-L 697 3500 
-L 697 3744 
-Q 697 4328 969 4595 
-Q 1241 4863 1831 4863 
-L 2375 4863 
-z
-" transform="scale(0.015625)"/>
-       <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-5b" d="M 3513 3500 
-L 2247 1797 
-L 3578 0 
-L 2900 0 
-L 1881 1375 
-L 863 0 
-L 184 0 
-L 1544 1831 
-L 300 3500 
-L 978 3500 
-L 1906 2253 
-L 2834 3500 
-L 3513 3500 
-z
-" transform="scale(0.015625)"/>
       </defs>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-49"/>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-b" transform="translate(35.203125 0)"/>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-5b" transform="translate(74.21875 0)"/>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-c" transform="translate(133.40625 0)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-Oblique-49" transform="translate(0 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-b" transform="translate(35.205078 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-Oblique-5b" transform="translate(74.21875 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-c" transform="translate(133.398438 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-20" transform="translate(191.894531 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-15" transform="translate(295.166016 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-Oblique-5b" transform="translate(358.789062 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-e" transform="translate(437.451172 0.015625)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-14" transform="translate(540.722656 0.015625)"/>
      </g>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-line2d_32">
-     <path d="M 54.7 54.909141 
-L 65.7 54.909141 
-L 76.7 54.909141 
+    <g id="analisi1_lez05b_g1-line2d_32">
+     <path d="M 54.7 54.910859 
+L 65.7 54.910859 
+L 76.7 54.910859 
 " style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 2"/>
     </g>
-    <g id="analisi1_lez05a_g_2x1_controimmagine-text_16">
-     <g style="fill: currentColor" transform="translate(85.5 58.759141) scale(0.11 -0.11)">
+    <g id="analisi1_lez05b_g1-text_16">
+     <g style="fill: currentColor" transform="translate(85.5 58.760859) scale(0.11 -0.11)">
       <defs>
-       <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-5c" d="M 1588 -325 
+       <path id="analisi1_lez05b_g1-DejaVuSans-Oblique-5c" d="M 1588 -325 
 Q 1188 -997 936 -1164 
 Q 684 -1331 294 -1331 
 L -159 -1331 
@@ -1844,48 +1691,34 @@ L 3859 3500
 L 1588 -325 
 z
 " transform="scale(0.015625)"/>
-       <path id="analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-20" d="M 678 2906 
-L 4684 2906 
-L 4684 2381 
-L 678 2381 
-L 678 2906 
-z
-M 678 1631 
-L 4684 1631 
-L 4684 1100 
-L 678 1100 
-L 678 1631 
-z
-" transform="scale(0.015625)"/>
       </defs>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-Oblique-5c" transform="translate(0 0.09375)"/>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-20" transform="translate(78.662109 0.09375)"/>
-      <use xlink:href="#analisi1_lez05a_g_2x1_controimmagine-DejaVuSans-14" transform="translate(181.933594 0.09375)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-Oblique-5c" transform="translate(0 0.09375)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-20" transform="translate(78.662109 0.09375)"/>
+      <use xlink:href="#analisi1_lez05b_g1-DejaVuSans-14" transform="translate(181.933594 0.09375)"/>
      </g>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="analisi1_lez05a_g_2x1_controimmagine-pfe1dd4345f">
+  <clipPath id="analisi1_lez05b_g1-pa566c085cd">
    <rect x="44.8" y="24" width="569.6" height="340"/>
   </clipPath>
  </defs>
 </svg></figure>`
         ]
       },
-
       {
-        id: "s07-es-controimmagine-quadratica",
+        id: "s05-es-controimmagine-quadratica",
         type: "esercizio_svolto",
-        title: "Esercizio svolto — Controimmagine di una funzione quadratica",
+        title: "Esercizio svolto — Controimmagine, funzione quadratica",
         icon: "✎",
         source: "docente",
-        content: `<p>Data la funzione $f \\colon \\R \\to \\R$ definita da $f(x) = x^2$, calcolare la controimmagine dell'intervallo $B = [1, 4]$.</p>`,
+        content: `<p>Data la funzione $f \\colon \\mathbb{R} \\to \\mathbb{R}$ definita da $f(x) = x^2$, calcolare la controimmagine dell'intervallo $B = [1,4]$.</p>`,
         steps: [
-          `<strong>Impostare la condizione di appartenenza.</strong> Cerchiamo le $x \\in \\R$ tali che $f(x) \\in [1, 4]$. Questo si traduce nella doppia disequazione: $$1 \\le f(x) \\le 4 \\Rightarrow 1 \\le x^2 \\le 4$$`,
-          `<strong>Trasformare in sistema.</strong> La doppia disequazione equivale a un sistema, poiché le due condizioni devono valere <em>contemporaneamente</em>: $$\\begin{cases} x^2 \\ge 1 \\\\ x^2 \\le 4 \\end{cases}$$`,
-          `<strong>Risolvere separatamente.</strong> $x^2 \\ge 1 \\Rightarrow x \\le -1 \\lor x \\ge 1$, con soluzione $(-\\infty, -1] \\cup [1, +\\infty)$. Invece $x^2 \\le 4 \\Rightarrow -2 \\le x \\le 2$, con soluzione $[-2, 2]$.`,
+          `<strong>Impostare la condizione di appartenenza.</strong> Cerchiamo le $x \\in \\mathbb{R}$ tali che $f(x) \\in [1,4]$: si traduce nella doppia disequazione $$1 \\le f(x) \\le 4 \\quad \\Rightarrow \\quad 1 \\le x^2 \\le 4.$$`,
+          `<strong>Trasformare in sistema.</strong> Le due condizioni devono valere contemporaneamente: $$\\begin{cases} x^2 \\ge 1 \\\\ x^2 \\le 4 \\end{cases}$$`,
+          `<strong>Risolvere separatamente.</strong> $x^2 \\ge 1 \\Rightarrow x \\le -1 \\ \\lor \\ x \\ge 1$, cioè $(-\\infty,-1] \\cup [1,+\\infty)$; $x^2 \\le 4 \\Rightarrow -2 \\le x \\le 2$, cioè $[-2,2]$.`,
           `<strong>Intersecare le soluzioni.</strong> Ci aiutiamo con lo schema grafico sulla retta reale: nella prima riga le soluzioni di $x^2 \\ge 1$, nella seconda quelle di $x^2 \\le 4$, nella terza la loro intersezione. <figure class="figura" data-id="analisi1_lez05b_d2"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05b_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="301.459pt" height="110.896pt" viewBox="0 0 301.459 110.896" version="1.2"><style>#analisi1_lez05b_d2 [fill="rgb(0%,0%,0%)"],#analisi1_lez05b_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05b_d2 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05b_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05b_d2 [fill="rgb(0%,0%,100%)"],#analisi1_lez05b_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05b_d2 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05b_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05b_d2 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05b_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05b_d2 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05b_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez05b_d2 [fill="rgb(0%,50%,50%)"],#analisi1_lez05b_d2 [style*="fill:rgb(0%,50%,50%)"]{fill:#5cffff!important}[data-mode="light"] #analisi1_lez05b_d2 [fill="rgb(0%,50%,50%)"],[data-mode="light"] #analisi1_lez05b_d2 [style*="fill:rgb(0%,50%,50%)"]{fill:#008080!important}#analisi1_lez05b_d2 [stroke="rgb(0%,50%,50%)"],#analisi1_lez05b_d2 [style*="stroke:rgb(0%,50%,50%)"]{stroke:#5cffff!important}[data-mode="light"] #analisi1_lez05b_d2 [stroke="rgb(0%,50%,50%)"],[data-mode="light"] #analisi1_lez05b_d2 [style*="stroke:rgb(0%,50%,50%)"]{stroke:#008080!important}#analisi1_lez05b_d2 [fill="rgb(100%,0%,0%)"],#analisi1_lez05b_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez05b_d2 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez05b_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez05b_d2 [stroke="rgb(100%,0%,0%)"],#analisi1_lez05b_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez05b_d2 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez05b_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
 <defs>
@@ -2058,453 +1891,8 @@ z
 </g>
 </g>
 </svg></figure>`,
-          `Alternativamente lo stesso sistema, risolto con lo schema dei segni: <figure class="figura" data-id="analisi1_lez05a_s_x2_controimmagine"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
- <metadata>
-  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-   <cc:Work>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:format>image/svg+xml</dc:format>
-    <dc:creator>
-     <cc:Agent>
-      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
-     </cc:Agent>
-    </dc:creator>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <defs>
-  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
- </defs>
- <g id="analisi1_lez05a_s_x2_controimmagine-figure_1">
-  <g id="analisi1_lez05a_s_x2_controimmagine-patch_1">
-   <path d="M 0 400 
-L 640 400 
-L 640 0 
-L 0 0 
-L 0 400 
-z
-" style="fill: none; opacity: 0"/>
-  </g>
-  <g id="analisi1_lez05a_s_x2_controimmagine-axes_1">
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_1">
-    <path d="M 275.508966 86.583333 
-L 275.508966 355.333333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-opacity: 0.75; stroke-width: 0.9; stroke-linecap: square"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_2">
-    <path d="M 360.253793 86.583333 
-L 360.253793 355.333333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-opacity: 0.75; stroke-width: 0.9; stroke-linecap: square"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_3">
-    <path d="M 444.998621 86.583333 
-L 444.998621 355.333333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-opacity: 0.75; stroke-width: 0.9; stroke-linecap: square"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_4">
-    <path d="M 529.743448 86.583333 
-L 529.743448 355.333333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-opacity: 0.75; stroke-width: 0.9; stroke-linecap: square"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_5">
-    <path d="M 190.764138 176.166667 
-L 275.508966 176.166667 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_6">
-    <path d="M 275.508966 176.166667 
-L 360.253793 176.166667 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_7">
-    <path d="M 444.998621 176.166667 
-L 529.743448 176.166667 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_8">
-    <path d="M 529.743448 176.166667 
-L 614.488276 176.166667 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_9">
-    <path d="M 275.508966 247.833333 
-L 360.253793 247.833333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_10">
-    <path d="M 360.253793 247.833333 
-L 444.998621 247.833333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_11">
-    <path d="M 444.998621 247.833333 
-L 529.743448 247.833333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 1.6"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_12">
-    <path d="M 30.596414 294.416667 
-L 614.488276 294.416667 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: currentColor; stroke-width: 0.8; stroke-linecap: square"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_13">
-    <path d="M 275.508966 333.833333 
-L 360.253793 333.833333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: #7c4dff; stroke-width: 3.2"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_14">
-    <path d="M 444.998621 333.833333 
-L 529.743448 333.833333 
-" clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)" style="fill: none; stroke: #7c4dff; stroke-width: 3.2"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-patch_2">
-    <path d="M 192.765668 86.583333 
-Q 406.864801 86.583333 619.734096 86.583333 
-" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round"/>
-    <path d="M 615.734096 84.583333 
-L 619.734096 86.583333 
-L 615.734096 88.583333 
-" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round"/>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_1">
-    <!-- -2 -->
-    <g style="fill: currentColor" transform="translate(270.025294 69.607422) scale(0.11 -0.11)">
-     <defs>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-10" d="M 313 2009 
-L 1997 2009 
-L 1997 1497 
-L 313 1497 
-L 313 2009 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-15" d="M 1228 531 
-L 3431 531 
-L 3431 0 
-L 469 0 
-L 469 531 
-Q 828 903 1448 1529 
-Q 2069 2156 2228 2338 
-Q 2531 2678 2651 2914 
-Q 2772 3150 2772 3378 
-Q 2772 3750 2511 3984 
-Q 2250 4219 1831 4219 
-Q 1534 4219 1204 4116 
-Q 875 4013 500 3803 
-L 500 4441 
-Q 881 4594 1212 4672 
-Q 1544 4750 1819 4750 
-Q 2544 4750 2975 4387 
-Q 3406 4025 3406 3419 
-Q 3406 3131 3298 2873 
-Q 3191 2616 2906 2266 
-Q 2828 2175 2409 1742 
-Q 1991 1309 1228 531 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-10"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-15" transform="translate(36.078125 0)"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_2">
-    <!-- -1 -->
-    <g style="fill: currentColor" transform="translate(354.770121 69.607422) scale(0.11 -0.11)">
-     <defs>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-14" d="M 794 531 
-L 1825 531 
-L 1825 4091 
-L 703 3866 
-L 703 4441 
-L 1819 4666 
-L 2450 4666 
-L 2450 531 
-L 3481 531 
-L 3481 0 
-L 794 0 
-L 794 531 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-10"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-14" transform="translate(36.078125 0)"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_3">
-    <!-- 1 -->
-    <g style="fill: currentColor" transform="translate(441.499246 69.607422) scale(0.11 -0.11)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-14"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_4">
-    <!-- 2 -->
-    <g style="fill: currentColor" transform="translate(526.244073 69.607422) scale(0.11 -0.11)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-15"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_5">
-    <!-- x^2 \\ge 1 -->
-    <g style="fill: currentColor" transform="translate(115.402931 179.024089) scale(0.11 -0.11)">
-     <defs>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-5b" d="M 3513 3500 
-L 2247 1797 
-L 3578 0 
-L 2900 0 
-L 1881 1375 
-L 863 0 
-L 184 0 
-L 1544 1831 
-L 300 3500 
-L 978 3500 
-L 1906 2253 
-L 2834 3500 
-L 3513 3500 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-41" d="M 2988 4666 
-L 4684 2925 
-L 4056 2925 
-L 2681 4159 
-L 1306 2925 
-L 678 2925 
-L 2375 4666 
-L 2988 4666 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3f" d="M 531 4666 
-L 2156 -594 
-L 1625 -594 
-L 0 4666 
-L 531 4666 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-4a" d="M 2906 1791 
-Q 2906 2416 2648 2759 
-Q 2391 3103 1925 3103 
-Q 1463 3103 1205 2759 
-Q 947 2416 947 1791 
-Q 947 1169 1205 825 
-Q 1463 481 1925 481 
-Q 2391 481 2648 825 
-Q 2906 1169 2906 1791 
-z
-M 3481 434 
-Q 3481 -459 3084 -895 
-Q 2688 -1331 1869 -1331 
-Q 1566 -1331 1297 -1286 
-Q 1028 -1241 775 -1147 
-L 775 -588 
-Q 1028 -725 1275 -790 
-Q 1522 -856 1778 -856 
-Q 2344 -856 2625 -561 
-Q 2906 -266 2906 331 
-L 2906 616 
-Q 2728 306 2450 153 
-Q 2172 0 1784 0 
-Q 1141 0 747 490 
-Q 353 981 353 1791 
-Q 353 2603 747 3093 
-Q 1141 3584 1784 3584 
-Q 2172 3584 2450 3431 
-Q 2728 3278 2906 2969 
-L 2906 3500 
-L 3481 3500 
-L 3481 434 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-48" d="M 3597 1894 
-L 3597 1613 
-L 953 1613 
-Q 991 1019 1311 708 
-Q 1631 397 2203 397 
-Q 2534 397 2845 478 
-Q 3156 559 3463 722 
-L 3463 178 
-Q 3153 47 2828 -22 
-Q 2503 -91 2169 -91 
-Q 1331 -91 842 396 
-Q 353 884 353 1716 
-Q 353 2575 817 3079 
-Q 1281 3584 2069 3584 
-Q 2775 3584 3186 3129 
-Q 3597 2675 3597 1894 
-z
-M 3022 2063 
-Q 3016 2534 2758 2815 
-Q 2500 3097 2075 3097 
-Q 1594 3097 1305 2825 
-Q 1016 2553 972 2059 
-L 3022 2063 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-5b"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-41" transform="translate(59.1875 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-15" transform="translate(142.984375 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3" transform="translate(206.609375 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3f" transform="translate(238.390625 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-4a" transform="translate(272.078125 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-48" transform="translate(335.5625 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3" transform="translate(397.09375 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-14" transform="translate(428.875 0)"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_6">
-    <!-- x^2 \\le 4 -->
-    <g style="fill: currentColor" transform="translate(119.330275 250.691185) scale(0.11 -0.11)">
-     <defs>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-4f" d="M 603 4863 
-L 1178 4863 
-L 1178 0 
-L 603 0 
-L 603 4863 
-z
-" transform="scale(0.015625)"/>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-17" d="M 2419 4116 
-L 825 1625 
-L 2419 1625 
-L 2419 4116 
-z
-M 2253 4666 
-L 3047 4666 
-L 3047 1625 
-L 3713 1625 
-L 3713 1100 
-L 3047 1100 
-L 3047 0 
-L 2419 0 
-L 2419 1100 
-L 313 1100 
-L 313 1709 
-L 2253 4666 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-5b"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-41" transform="translate(59.1875 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-15" transform="translate(142.984375 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3" transform="translate(206.609375 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3f" transform="translate(238.390625 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-4f" transform="translate(272.078125 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-48" transform="translate(299.859375 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-3" transform="translate(361.390625 0)"/>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-17" transform="translate(393.171875 0)"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-text_7">
-    <!-- S -->
-    <g style="fill: currentColor" transform="translate(162.59465 336.690755) scale(0.11 -0.11)">
-     <defs>
-      <path id="analisi1_lez05a_s_x2_controimmagine-DejaVuSans-36" d="M 3425 4513 
-L 3425 3897 
-Q 3066 4069 2747 4153 
-Q 2428 4238 2131 4238 
-Q 1616 4238 1336 4038 
-Q 1056 3838 1056 3469 
-Q 1056 3159 1242 3001 
-Q 1428 2844 1947 2747 
-L 2328 2669 
-Q 3034 2534 3370 2195 
-Q 3706 1856 3706 1288 
-Q 3706 609 3251 259 
-Q 2797 -91 1919 -91 
-Q 1588 -91 1214 -16 
-Q 841 59 441 206 
-L 441 856 
-Q 825 641 1194 531 
-Q 1563 422 1919 422 
-Q 2459 422 2753 634 
-Q 3047 847 3047 1241 
-Q 3047 1584 2836 1778 
-Q 2625 1972 2144 2069 
-L 1759 2144 
-Q 1053 2284 737 2584 
-Q 422 2884 422 3419 
-Q 422 4038 858 4394 
-Q 1294 4750 2059 4750 
-Q 2388 4750 2728 4690 
-Q 3069 4631 3425 4513 
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-DejaVuSans-36"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_15">
-    <defs>
-     <path id="analisi1_lez05a_s_x2_controimmagine-m20255f6476" d="M 0 3.25 
-C 0.86191 3.25 1.688635 2.907559 2.298097 2.298097 
-C 2.907559 1.688635 3.25 0.86191 3.25 0 
-C 3.25 -0.86191 2.907559 -1.688635 2.298097 -2.298097 
-C 1.688635 -2.907559 0.86191 -3.25 0 -3.25 
-C -0.86191 -3.25 -1.688635 -2.907559 -2.298097 -2.298097 
-C -2.907559 -1.688635 -3.25 -0.86191 -3.25 0 
-C -3.25 0.86191 -2.907559 1.688635 -2.298097 2.298097 
-C -1.688635 2.907559 -0.86191 3.25 0 3.25 
-z
-" style="stroke: currentColor"/>
-    </defs>
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m20255f6476" x="360.253793" y="176.166667" style="fill: currentColor; stroke: currentColor"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_16">
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m20255f6476" x="444.998621" y="176.166667" style="fill: currentColor; stroke: currentColor"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_17">
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m20255f6476" x="275.508966" y="247.833333" style="fill: currentColor; stroke: currentColor"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_18">
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m20255f6476" x="529.743448" y="247.833333" style="fill: currentColor; stroke: currentColor"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_19">
-    <defs>
-     <path id="analisi1_lez05a_s_x2_controimmagine-m49480109c8" d="M 0 3.25 
-C 0.86191 3.25 1.688635 2.907559 2.298097 2.298097 
-C 2.907559 1.688635 3.25 0.86191 3.25 0 
-C 3.25 -0.86191 2.907559 -1.688635 2.298097 -2.298097 
-C 1.688635 -2.907559 0.86191 -3.25 0 -3.25 
-C -0.86191 -3.25 -1.688635 -2.907559 -2.298097 -2.298097 
-C -2.907559 -1.688635 -3.25 -0.86191 -3.25 0 
-C -3.25 0.86191 -2.907559 1.688635 -2.298097 2.298097 
-C -1.688635 2.907559 -0.86191 3.25 0 3.25 
-z
-" style="stroke: #7c4dff"/>
-    </defs>
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m49480109c8" x="275.508966" y="333.833333" style="fill: #7c4dff; stroke: #7c4dff"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_20">
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m49480109c8" x="360.253793" y="333.833333" style="fill: #7c4dff; stroke: #7c4dff"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_21">
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m49480109c8" x="444.998621" y="333.833333" style="fill: #7c4dff; stroke: #7c4dff"/>
-    </g>
-   </g>
-   <g id="analisi1_lez05a_s_x2_controimmagine-line2d_22">
-    <g clip-path="url(#analisi1_lez05a_s_x2_controimmagine-pddf814fad3)">
-     <use xlink:href="#analisi1_lez05a_s_x2_controimmagine-m49480109c8" x="529.743448" y="333.833333" style="fill: #7c4dff; stroke: #7c4dff"/>
-    </g>
-   </g>
-  </g>
- </g>
- <defs>
-  <clipPath id="analisi1_lez05a_s_x2_controimmagine-pddf814fad3">
-   <rect x="12.8" y="40" width="614.4" height="344"/>
-  </clipPath>
- </defs>
-</svg></figure>`,
-          `<strong>Scrivere la soluzione.</strong> L'intersezione è l'unione di due intervalli, dunque la controimmagine cercata è $$f^{-1}([1, 4]) = [-2, -1] \\cup [1, 2]$$`,
-          `<strong>Lettura grafica.</strong> Le rette orizzontali $y = 1$ e $y = 4$ tagliano la parabola nei punti di ascissa $-2, -1, 1, 2$: la controimmagine è l'unione dei due segmenti evidenziati sull'asse $x$. <figure class="figura" data-id="analisi1_lez05b_g2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+          `<strong>Scrivere la soluzione.</strong> L'intersezione è l'unione di due intervalli: $$f^{-1}([1,4]) = [-2,-1] \\cup [1,2].$$`,
+          `Sul grafico: le rette orizzontali $y=1$ e $y=4$ tagliano la parabola nei punti di ascissa $-2, -1, 1, 2$, e la controimmagine è l'unione dei due segmenti evidenziati sull'asse $x$. <figure class="figura" data-id="analisi1_lez05b_g2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -3393,52 +2781,60 @@ z
 </svg></figure>`
         ]
       },
-
       {
-        id: "s08-monotonia",
+        id: "s05-controimmagine-vuota",
+        type: "note_box",
+        title: "La controimmagine può essere vuota",
+        icon: "∅",
+        content: `<p>Consideriamo sempre $f(x) = x^2$ e chiediamoci: qual è la controimmagine dell'intervallo $B = [-6,-5]$?</p>
+        <p>Dobbiamo trovare le $x$ tali che $-6 \\le x^2 \\le -5$. Poiché $x^2 \\ge 0$ per ogni $x \\in \\mathbb{R}$, <strong>non esiste alcuna</strong> $x$ che soddisfi la condizione. Pertanto</p>
+        <p>$$f^{-1}([-6,-5]) = \\emptyset,$$</p>
+        <p>pur essendo $B \\neq \\emptyset$. Questo conferma che $f^{-1}$ applicata a insiemi è ben definita anche quando $f$ non è invertibile.</p>`
+      },
+      {
+        id: "s05-monotonia-def",
         type: "section",
         title: "Funzioni monotòne",
         icon: "📈",
         content: `<p>Un concetto fondamentale nell'analisi delle funzioni è quello di <strong>monotonia</strong>: studiare dove una funzione "cresce" e dove "decresce".</p>
-<p>Per poter parlare di crescenza o decrescenza abbiamo bisogno che <strong>sia il dominio sia il codominio siano insiemi ordinati</strong>. Per noi, lavorando con funzioni reali di variabile reale, questa condizione è sempre soddisfatta, poiché $\\R$ è un insieme ordinato.</p>
-<p>La monotonia <strong>non è necessariamente una proprietà globale</strong> della funzione: una funzione può crescere su un certo insieme e decrescere su un altro. Per questo la monotonia si definisce sempre <strong>rispetto a un sottoinsieme del dominio</strong>.</p>`,
+        <p>Per poter parlare di crescenza o decrescenza abbiamo bisogno che sia il dominio sia il codominio siano insiemi <strong>ordinati</strong>. Lavorando con funzioni reali di variabile reale questa condizione è sempre soddisfatta, perché $\\mathbb{R}$ è ordinato.</p>
+        <p>La monotonia <strong>non è necessariamente una proprietà globale</strong>: una funzione può crescere su un certo insieme e decrescere su un altro. Per questo si definisce sempre <em>rispetto a un sottoinsieme</em> $A$ del dominio.</p>`,
         subsections: [
           {
             subtitle: "Funzione crescente",
-            content: `<p>Sia $f \\colon X \\to Y$ una funzione, con $X, Y \\subseteq \\R$, e sia $A \\subseteq X$ un sottoinsieme del dominio. La funzione $f$ si dice <strong>crescente</strong> (o <em>non decrescente</em>) in $A$ se per ogni coppia di punti $x_1, x_2 \\in A$ tali che $x_1 \\le x_2$ risulta</p>
-<p>$$f(x_1) \\le f(x_2)$$</p>
-<p>Se la disuguaglianza è <strong>stretta</strong>, cioè se per ogni $x_1 \\lt x_2$ risulta $f(x_1) \\lt f(x_2)$, la funzione si dice <strong>strettamente crescente</strong> in $A$.</p>`
+            content: `<p>Sia $f \\colon X \\to Y$ con $X, Y \\subseteq \\mathbb{R}$ e sia $A \\subseteq X$. La funzione $f$ si dice <strong>crescente</strong> (o non decrescente) in $A$ se per ogni coppia $x_1, x_2 \\in A$ con $x_1 \\le x_2$ risulta</p>
+            <p>$$f(x_1) \\le f(x_2).$$</p>
+            <p>Se la disuguaglianza è stretta, cioè se per ogni $x_1 \\lt x_2$ risulta $f(x_1) \\lt f(x_2)$, la funzione si dice <strong>strettamente crescente</strong> in $A$.</p>`
           },
           {
             subtitle: "Funzione decrescente",
-            content: `<p>Con le stesse notazioni, $f$ si dice <strong>decrescente</strong> (o <em>non crescente</em>) in $A$ se per ogni $x_1, x_2 \\in A$ con $x_1 \\le x_2$ risulta</p>
-<p>$$f(x_1) \\ge f(x_2)$$</p>
-<p>Se per ogni $x_1 \\lt x_2$ risulta $f(x_1) \\gt f(x_2)$, la funzione si dice <strong>strettamente decrescente</strong> in $A$.</p>`
+            content: `<p>Con le stesse notazioni, $f$ si dice <strong>decrescente</strong> (o non crescente) in $A$ se per ogni $x_1, x_2 \\in A$ con $x_1 \\le x_2$ risulta</p>
+            <p>$$f(x_1) \\ge f(x_2),$$</p>
+            <p>e <strong>strettamente decrescente</strong> se per ogni $x_1 \\lt x_2$ risulta $f(x_1) \\gt f(x_2)$.</p>`
           },
           {
             subtitle: "Funzione monotòna",
-            content: `<p>Sia $f \\colon X \\to Y$ con $X, Y \\subseteq \\R$ e sia $A \\subseteq X$. La funzione $f$ si dice <strong>monotòna</strong> in $A$ se è <strong>crescente in $A$ oppure decrescente in $A$</strong>. Si dice <strong>strettamente monotòna</strong> in $A$ se è strettamente crescente oppure strettamente decrescente in $A$.</p>
-<p>Formulazione sintetica da ricordare: "monotòna" <strong>non</strong> significa "crescente", ma "di segno di variazione costante", cioè crescente <em>oppure</em> decrescente sull'insieme considerato. Di conseguenza, per dimostrare che una funzione <strong>non</strong> è monotòna su $A$ basta esibire <strong>due coppie</strong> di punti di $A$ che violano, rispettivamente, la condizione di crescenza e quella di decrescenza.</p>`
+            content: `<p>$f$ si dice <strong>monotòna</strong> in $A$ se è crescente in $A$ <em>oppure</em> decrescente in $A$; si dice <strong>strettamente monotòna</strong> se è strettamente crescente oppure strettamente decrescente in $A$.</p>
+            <p>Formulazione sintetica da ricordare: "monotòna" non significa "crescente", ma <strong>"di segno di variazione costante"</strong>. Di conseguenza, per dimostrare che una funzione <em>non</em> è monotòna su $A$ basta esibire <strong>due coppie</strong> di punti di $A$ che violano, rispettivamente, la condizione di crescenza e quella di decrescenza.</p>`
           },
           {
             subtitle: "Il caso della funzione costante",
-            content: `<p>Una funzione costante $f(x) = c$ è <strong>sia crescente sia decrescente</strong> secondo le definizioni date, perché vale l'uguaglianza $f(x_1) = f(x_2)$. Tuttavia non è né strettamente crescente né strettamente decrescente. In particolare una funzione costante <strong>è monotòna, ma non strettamente monotòna</strong>.</p>`
+            content: `<p>Una funzione costante $f(x) = c$ è, secondo le definizioni date, <strong>sia crescente sia decrescente</strong>, perché vale l'uguaglianza $f(x_1) = f(x_2)$. Tuttavia non è né strettamente crescente né strettamente decrescente. In particolare: una funzione costante è monotòna, ma <strong>non</strong> strettamente monotòna.</p>`
           }
         ],
         formulas: [
-          { label: "Crescente in $A$", latex: "\\forall x_1, x_2 \\in A: \\ x_1 \\le x_2 \\Rightarrow f(x_1) \\le f(x_2)" },
-          { label: "Strettamente crescente in $A$", latex: "\\forall x_1, x_2 \\in A: \\ x_1 \\lt x_2 \\Rightarrow f(x_1) \\lt f(x_2)" },
-          { label: "Decrescente in $A$", latex: "\\forall x_1, x_2 \\in A: \\ x_1 \\le x_2 \\Rightarrow f(x_1) \\ge f(x_2)" }
+          { label: "Crescente in A", latex: "\\forall x_1, x_2 \\in A: \\ x_1 \\le x_2 \\Rightarrow f(x_1) \\le f(x_2)" },
+          { label: "Strettamente crescente in A", latex: "\\forall x_1, x_2 \\in A: \\ x_1 \\lt x_2 \\Rightarrow f(x_1) \\lt f(x_2)" },
+          { label: "Decrescente in A", latex: "\\forall x_1, x_2 \\in A: \\ x_1 \\le x_2 \\Rightarrow f(x_1) \\ge f(x_2)" }
         ]
       },
-
       {
-        id: "s09-monotonia-a-tratti",
+        id: "s05-monotonia-tratti",
         type: "section",
-        title: "Analisi della monotonia a tratti",
-        icon: "🪜",
-        content: `<p>Vediamo un esempio grafico per capire come si analizza la monotonia su tratti diversi del dominio. Consideriamo la funzione spezzata rappresentata qui sotto.</p>
-<figure class="figura" data-id="analisi1_lez05b_d1"><?xml version="1.0" encoding="UTF-8"?>
+        title: "Esempio: monotonia a tratti",
+        icon: "📊",
+        content: `<p>Consideriamo la funzione rappresentata nel grafico seguente, con i punti notevoli $a \\lt b \\lt c \\lt d \\lt e$ sull'asse delle ascisse.</p>
+        <figure class="figura" data-id="analisi1_lez05b_d1"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05b_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="331.731pt" height="148.795pt" viewBox="0 0 331.731 148.795" version="1.2"><style>#analisi1_lez05b_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez05b_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05b_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05b_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05b_d1 [fill="rgb(0%,0%,100%)"],#analisi1_lez05b_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05b_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05b_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05b_d1 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05b_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05b_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05b_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
 <defs>
 <g>
@@ -3589,18 +2985,16 @@ z
 </g>
 </g>
 </svg></figure>
-<p>Analizziamo la monotonia nei diversi intervalli:</p>
-<p>• In $[a, b]$ la funzione è <strong>strettamente crescente</strong>.<br>
-• In $[b, c]$ la funzione è <strong>costante</strong>, quindi è sia crescente sia decrescente (ma non in senso stretto).<br>
-• In $[a, c]$, unendo i due intervalli precedenti, la funzione è complessivamente <strong>crescente</strong> (in senso lato).<br>
-• In $[c, d]$ la funzione è <strong>strettamente decrescente</strong>.<br>
-• In $[d, e]$ la funzione è <strong>strettamente crescente</strong>.</p>
-<p>In ciascuno di questi intervalli la funzione è dunque <strong>monotòna</strong>, secondo la definizione data.</p>`,
-        subsections: [
-          {
-            subtitle: "Una seconda funzione a tratti (stesso fenomeno)",
-            content: `<p>Lo stesso tipo di analisi si ripete su una funzione a tratti con andamento curvilineo.</p>
-<figure class="figura" data-id="analisi1_lez05c_d1"><?xml version="1.0" encoding="UTF-8"?>
+        <p>Analizziamo la monotonia nei vari intervalli:</p>
+        <ul>
+          <li>in $[a,b]$ la funzione è <strong>strettamente crescente</strong>;</li>
+          <li>in $[b,c]$ la funzione è <strong>costante</strong>, quindi è sia crescente sia decrescente (ma non in senso stretto);</li>
+          <li>in $[a,c]$, unendo i due tratti precedenti, la funzione è complessivamente <strong>crescente</strong> (non strettamente, per via del tratto costante);</li>
+          <li>in $[c,d]$ la funzione è <strong>strettamente decrescente</strong>; di conseguenza in $[b,d]$ è decrescente in senso lato;</li>
+          <li>in $[d,e]$ la funzione è <strong>strettamente crescente</strong>.</li>
+        </ul>
+        <p>In ciascuno di questi intervalli la funzione è dunque monotòna, secondo la definizione appena data.</p>
+        <figure class="figura" data-id="analisi1_lez05c_d1"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05c_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.955pt" height="148.795pt" viewBox="0 0 204.955 148.795" version="1.2"><style>#analisi1_lez05c_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez05c_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05c_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05c_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05c_d1 [fill="rgb(0%,0%,100%)"],#analisi1_lez05c_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05c_d1 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05c_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez05c_d1 [fill="rgb(100%,0%,0%)"],#analisi1_lez05c_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez05c_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez05c_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez05c_d1 [stroke="rgb(100%,0%,0%)"],#analisi1_lez05c_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez05c_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez05c_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
 <defs>
 <g>
@@ -3707,82 +3101,72 @@ z
   <use xlink:href="#analisi1_lez05c_d1-glyph1-2" x="164.395194" y="57.025434"/>
 </g>
 </g>
-</svg></figure>
-<p>• La funzione è <strong>crescente</strong> su $[a, c]$ (in $[a,b]$ cresce, in $[b,c]$ è costante, quindi vale $f(x) \\le f(y)$); è crescente anche su $[d, e]$.<br>
-• È <strong>strettamente crescente</strong> su $[a, b]$ e su $[d, e]$.<br>
-• È <strong>decrescente</strong> su $[b, d]$ (in $[b,c]$ è costante e in $[c,d]$ decresce).<br>
-• È <strong>strettamente decrescente</strong> su $[c, d]$.</p>`
-          }
-        ]
+</svg></figure>`
       },
-
       {
-        id: "s10-alert-unione",
+        id: "s05-alert-unione",
         type: "alert_box",
-        title: "Errore comune: la monotonia non si eredita sull'unione",
+        title: "Errore comune: la monotonia NON passa all'unione",
         icon: "⚠️",
-        content: `<p>Domanda cruciale: se una funzione è crescente su $I_1$ e crescente su $I_2$, possiamo dire che è crescente su $I_1 \\cup I_2$?</p>
-<p>La risposta è <strong>NO</strong>, e i grafici a tratti visti sopra ne sono il controesempio. La funzione è crescente su $[a, c]$ e su $[d, e]$, ma <strong>non</strong> è crescente su $[a, c] \\cup [d, e]$.</p>
-<p><strong>Perché?</strong> La definizione di funzione crescente deve valere <em>per ogni coppia</em> di punti presi nell'insieme. Prendiamo $x_1 = c$ nel primo intervallo e $x_2 = d$ nel secondo: abbiamo $c \\lt d$. Tuttavia dal grafico si vede che $f(c) \\gt f(d)$. Poiché $x_1 \\lt x_2$ ma $f(x_1) \\gt f(x_2)$, la condizione $f(x_1) \\le f(x_2)$ è <strong>violata</strong>.</p>
-<p><strong>Lezione da portare a casa.</strong> La monotonia va verificata per <strong>tutte le coppie di punti dell'insieme considerato</strong>, anche quando i due punti appartengono a tratti diversi. La monotonia sui singoli pezzi <strong>non garantisce</strong> la monotonia sull'unione: bisogna sempre tornare alla definizione sull'insieme complessivo.</p>`
+        content: `<p>Domanda cruciale: la funzione dell'esempio precedente è crescente sull'unione $[a,c] \\cup [d,e]$?</p>
+        <p>La risposta è <strong>NO</strong>.</p>
+        <p>Perché? La definizione di funzione crescente deve valere <strong>per ogni coppia</strong> di punti presi <em>nell'insieme considerato</em>. Prendiamo $x_1 = c$ nel primo intervallo e $x_2 = d$ nel secondo: chiaramente $c \\lt d$. Tuttavia dal grafico si vede che</p>
+        <p>$$f(c) \\gt f(d),$$</p>
+        <p>cioè $x_1 \\lt x_2$ ma $f(x_1) \\gt f(x_2)$: la condizione $f(x_1) \\le f(x_2)$ è violata.</p>
+        <p><strong>Morale:</strong> non possiamo concludere che una funzione sia monotòna sull'unione di due insiemi solo perché lo è su ciascuno separatamente. La monotonia va verificata su <strong>tutto l'insieme considerato</strong>, anche quando non è un intervallo: su un'unione di intervalli occorre controllare <em>anche</em> le coppie di punti appartenenti a intervalli diversi. È proprio lì che la proprietà può cadere.</p>`
       },
-
       {
-        id: "s11-operazioni-monotone",
+        id: "s05-operazioni-monotone",
         type: "section",
-        title: "Operazioni con funzioni monotòne",
-        icon: "🧮",
-        content: `<p>Vediamo come si comporta la monotonia rispetto alle operazioni algebriche fondamentali tra funzioni. Siano $f, g \\colon A \\subseteq \\R \\to \\R$ due funzioni.</p>
-<p><strong>1.</strong> Se $f$ è crescente in $A$, allora $-f$ è <strong>decrescente</strong> in $A$.</p>
-<p><strong>2.</strong> Se $f$ e $g$ sono crescenti in $A$, allora $f+g$ è <strong>crescente</strong> in $A$.</p>
-<p><strong>3.</strong> Se $f$ e $g$ sono crescenti in $A$ <em>e</em> $f(x), g(x) \\ge 0$ per ogni $x \\in A$, allora il prodotto $f \\cdot g$ è <strong>crescente</strong> in $A$.</p>
-<p><strong>4.</strong> Se $f$ è crescente in $A$ <em>e</em> $f$ ha <strong>segno costante</strong> in $A$ (cioè $f(x) \\gt 0$ per ogni $x \\in A$, oppure $f(x) \\lt 0$ per ogni $x \\in A$), allora il reciproco $1/f$ è <strong>decrescente</strong> in $A$.</p>
-<p>Affermazioni analoghe valgono per le funzioni decrescenti.</p>`,
+        title: "Operazioni con funzioni monotone",
+        icon: "➕",
+        content: `<p>Vediamo come si comporta la monotonia rispetto alle operazioni algebriche fondamentali. Siano $f, g \\colon A \\subseteq \\mathbb{R} \\to \\mathbb{R}$.</p>
+        <ol>
+          <li>Se $f$ è crescente in $A$, allora $-f$ è decrescente in $A$.</li>
+          <li>Se $f$ e $g$ sono crescenti in $A$, allora $f + g$ è crescente in $A$.</li>
+          <li>Se $f$ e $g$ sono crescenti in $A$ e $f(x), g(x) \\ge 0$ per ogni $x \\in A$, allora il prodotto $f \\cdot g$ è crescente in $A$.</li>
+          <li>Se $f$ è crescente in $A$ e $f$ ha <strong>segno costante</strong> in $A$ (cioè $f(x) \\gt 0$ ovunque, oppure $f(x) \\lt 0$ ovunque), allora $1/f$ è decrescente in $A$.</li>
+        </ol>
+        <p>Affermazioni analoghe valgono per le funzioni decrescenti.</p>
+        <p><strong>Attenzione al punto 4:</strong> la sola ipotesi $f(x) \\ne 0$ non è sufficiente. Per esempio $f(x) = x$ su $\\mathbb{R} \\setminus \\{0\\}$ è crescente e mai nulla, ma $1/x$ <strong>non</strong> è decrescente su $\\mathbb{R} \\setminus \\{0\\}$.</p>`,
         subsections: [
           {
-            subtitle: "Dimostrazione del punto 1: se $f$ cresce, $-f$ decresce",
-            content: `<p>Per ipotesi $f$ è crescente: per ogni $x, y \\in A$ con $x \\le y$ si ha $f(x) \\le f(y)$. Vogliamo dimostrare che $-f$ è decrescente, cioè che per $x \\le y$ vale $(-f)(x) \\ge (-f)(y)$, ovvero $-f(x) \\ge -f(y)$.</p>
-<p>Partiamo dall'ipotesi e moltiplichiamo entrambi i membri per $-1$. Ricordiamo che la moltiplicazione per un numero negativo <strong>inverte il verso</strong> della disuguaglianza:</p>
-<p>$$f(x) \\le f(y) \\Rightarrow -f(x) \\ge -f(y)$$</p>
-<p>Questa è esattamente la definizione di funzione decrescente per $-f$. $\\square$</p>`
+            subtitle: "Dimostrazione del punto 1",
+            content: `<p>Per ipotesi $f$ è crescente: per ogni $x, y \\in A$ con $x \\le y$ si ha $f(x) \\le f(y)$. Vogliamo mostrare che per $x \\le y$ vale $(-f)(x) \\ge (-f)(y)$.</p>
+            <p>Moltiplichiamo entrambi i membri dell'ipotesi per $-1$; ricordando che la moltiplicazione per un numero negativo <strong>inverte il verso</strong> della disuguaglianza:</p>
+            <p>$$f(x) \\le f(y) \\quad \\Rightarrow \\quad -f(x) \\ge -f(y).$$</p>
+            <p>Questa è esattamente la definizione di funzione decrescente per $-f$. $\\square$</p>`
           },
           {
-            subtitle: "Dimostrazione del punto 2: somma di funzioni crescenti",
-            content: `<p>Per ipotesi $f$ e $g$ sono crescenti, quindi per ogni $x, y \\in A$ con $x \\le y$ valgono entrambe:</p>
-<p>$$\\begin{aligned} f(x) &\\le f(y) \\\\ g(x) &\\le g(y) \\end{aligned}$$</p>
-<p>Vogliamo dimostrare che $(f+g)(x) \\le (f+g)(y)$. Sommando membro a membro le due disuguaglianze (operazione lecita, perché hanno lo stesso verso) otteniamo</p>
-<p>$$f(x) + g(x) \\le f(y) + g(y)$$</p>
-<p>che è proprio la tesi. $\\square$</p>
-<p>I punti 3 e 4 sono lasciati per esercizio.</p>`
+            subtitle: "Dimostrazione del punto 2 (somma)",
+            content: `<p>Per ipotesi, per ogni $x, y \\in A$ con $x \\le y$ valgono entrambe:</p>
+            <p>$$\\begin{aligned} f(x) &\\le f(y) \\\\ g(x) &\\le g(y) \\end{aligned}$$</p>
+            <p>Sommando membro a membro (operazione lecita fra disuguaglianze dello stesso verso):</p>
+            <p>$$f(x) + g(x) \\le f(y) + g(y),$$</p>
+            <p>cioè $(f+g)(x) \\le (f+g)(y)$: la tesi. $\\square$</p>`
           },
           {
             subtitle: "Suggerimento per il punto 3 (prodotto)",
-            content: `<p>Si parte dalle ipotesi $f(x) \\le f(y)$ e $g(x) \\le g(y)$. Poiché $f$ e $g$ sono <strong>non negative</strong>, possiamo moltiplicare membro a membro le disuguaglianze: per esempio moltiplicando la prima per $g(x) \\ge 0$ e la seconda per $f(y) \\ge 0$, si ottiene la tesi.</p>`
-          },
-          {
-            subtitle: "Perché nel punto 4 serve il segno costante e non basta $f \\ne 0$",
-            content: `<p>La sola ipotesi $f(x) \\ne 0$ <strong>non è sufficiente</strong>. Controesempio: $f(x) = x$ su $\\R \\setminus \\{0\\}$ è crescente e mai nulla, ma $1/x$ <strong>non</strong> è decrescente su $\\R \\setminus \\{0\\}$ — lo vedremo esplicitamente nel controesempio sulla funzione reciproco.</p>`
+            content: `<p>I punti 3 e 4 sono lasciati per esercizio. Per il prodotto si parte dalle ipotesi $f(x) \\le f(y)$ e $g(x) \\le g(y)$; poiché $f$ e $g$ sono non negative, si possono moltiplicare membro a membro le disuguaglianze (per esempio moltiplicando la prima per $g(x) \\ge 0$ e la seconda per $f(y) \\ge 0$) per ottenere la tesi.</p>`
           }
         ],
         formulas: [
           { label: "Opposto", latex: "f \\text{ crescente} \\Rightarrow -f \\text{ decrescente}" },
           { label: "Somma", latex: "f, g \\text{ crescenti} \\Rightarrow f+g \\text{ crescente}" },
-          { label: "Prodotto (con $f, g \\ge 0$)", latex: "f, g \\text{ crescenti e} \\ge 0 \\Rightarrow f \\cdot g \\text{ crescente}" },
-          { label: "Reciproco (con segno costante)", latex: "f \\text{ crescente, segno costante} \\Rightarrow 1/f \\text{ decrescente}" }
+          { label: "Prodotto (con $f,g \\ge 0$)", latex: "f, g \\text{ crescenti e } \\ge 0 \\Rightarrow f \\cdot g \\text{ crescente}" },
+          { label: "Reciproco (con $f$ di segno costante)", latex: "f \\text{ crescente, } \\operatorname{sgn} f \\text{ costante} \\Rightarrow 1/f \\text{ decrescente}" }
         ]
       },
-
       {
-        id: "s12-potenze",
+        id: "s05-monotone-elementari",
         type: "section",
-        title: "Funzioni potenza $f(x) = x^n$",
-        icon: "🅰️",
-        content: `<p>L'andamento delle funzioni potenza dipende dalla <strong>parità dell'esponente</strong> $n$.</p>`,
+        title: "Esempi di funzioni monotone elementari",
+        icon: "🧩",
+        content: `<p>Passiamo in rassegna l'andamento delle funzioni elementari: potenze, radici e reciproco. In tutti i casi la parità dell'esponente o dell'indice è decisiva.</p>`,
         subsections: [
           {
-            subtitle: "Esponente pari ($n = 2, 4, \\dots$)",
-            content: `<p>Consideriamo $f(x) = x^2$.</p>
-<figure class="figura" data-id="analisi1_lez05c_d2"><?xml version="1.0" encoding="UTF-8"?>
+            subtitle: "Potenza con esponente pari: $f(x) = x^2$",
+            content: `<figure class="figura" data-id="analisi1_lez05c_d2"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05c_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="181.071pt" height="222.654pt" viewBox="0 0 181.071 222.654" version="1.2"><style>#analisi1_lez05c_d2 [fill="rgb(0%,0%,0%)"],#analisi1_lez05c_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05c_d2 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05c_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05c_d2 [fill="rgb(0%,0%,100%)"],#analisi1_lez05c_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d2 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05c_d2 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05c_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d2 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
 <defs>
 <g>
@@ -3859,15 +3243,16 @@ z
 </g>
 </g>
 </svg></figure>
-<p>Questa funzione è:</p>
-<p>• <strong>strettamente decrescente</strong> per $x \\in (-\\infty, 0]$;<br>
-• <strong>strettamente crescente</strong> per $x \\in [0, +\\infty)$.</p>
-<p><strong>Monotonia e funzioni pari.</strong> La funzione $x^2$ è <em>pari</em>, cioè $f(-x) = f(x)$, e il suo grafico è simmetrico rispetto all'asse $y$. In generale, se una funzione pari è crescente per $x \\gt 0$, allora deve essere <strong>decrescente</strong> per $x \\lt 0$.</p>`
+            <p>La funzione $f(x) = x^2$ è:</p>
+            <ul>
+              <li><strong>strettamente decrescente</strong> per $x \\in (-\\infty, 0]$;</li>
+              <li><strong>strettamente crescente</strong> per $x \\in [0, +\\infty)$.</li>
+            </ul>
+            <p><strong>Monotonia e funzioni pari.</strong> La funzione $x^2$ è <em>pari</em>, cioè $f(-x) = f(x)$, e il suo grafico è simmetrico rispetto all'asse $y$. In generale, se una funzione pari è crescente per $x \\gt 0$, allora deve essere decrescente per $x \\lt 0$.</p>`
           },
           {
-            subtitle: "Esponente dispari ($n = 1, 3, 5, \\dots$)",
-            content: `<p>Consideriamo $f(x) = x^3$.</p>
-<figure class="figura" data-id="analisi1_lez05c_d3"><?xml version="1.0" encoding="UTF-8"?>
+            subtitle: "Potenza con esponente dispari: $f(x) = x^3$",
+            content: `<figure class="figura" data-id="analisi1_lez05c_d3"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05c_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="141.382pt" height="358.557pt" viewBox="0 0 141.382 358.557" version="1.2"><style>#analisi1_lez05c_d3 [fill="rgb(0%,0%,0%)"],#analisi1_lez05c_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05c_d3 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05c_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05c_d3 [fill="rgb(0%,0%,100%)"],#analisi1_lez05c_d3 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d3 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d3 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05c_d3 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05c_d3 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d3 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d3 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
 <defs>
 <g>
@@ -3944,23 +3329,13 @@ z
 </g>
 </g>
 </svg></figure>
-<p>Questa funzione è <strong>strettamente crescente su tutto il suo dominio</strong> $\\R$.</p>
-<p><strong>Monotonia e funzioni dispari.</strong> La funzione $x^3$ è <em>dispari</em>, cioè $f(-x) = -f(x)$, e il suo grafico è simmetrico rispetto all'origine. In generale, se una funzione dispari è crescente per $x \\gt 0$, allora è <strong>crescente anche</strong> per $x \\lt 0$.</p>`
-          }
-        ]
-      },
-
-      {
-        id: "s13-radici",
-        type: "section",
-        title: "Funzioni radice $f(x) = \\sqrt[n]{x}$",
-        icon: "🌱",
-        content: `<p>Anche per le radici l'andamento dipende dalla <strong>parità dell'indice</strong> $n$ — ma in entrambi i casi la funzione risulta strettamente crescente: cambia il <em>dominio</em>.</p>`,
-        subsections: [
+            <p>La funzione $f(x) = x^3$ è <strong>strettamente crescente</strong> su tutto il suo dominio $\\mathbb{R}$.</p>
+            <p><strong>Monotonia e funzioni dispari.</strong> La funzione $x^3$ è <em>dispari</em>, cioè $f(-x) = -f(x)$, e il suo grafico è simmetrico rispetto all'origine. In generale, se una funzione dispari è crescente per $x \\gt 0$, allora è crescente anche per $x \\lt 0$.</p>`
+          },
           {
-            subtitle: "Indice pari ($n = 2, 4, \\dots$)",
-            content: `<p>La funzione $f(x) = \\sqrt{x}$ ha dominio $[0, +\\infty)$ ed è <strong>strettamente crescente su tutto il suo dominio</strong>.</p>
-<figure class="figura" data-id="analisi1_lez05c_d4"><?xml version="1.0" encoding="UTF-8"?>
+            subtitle: "Radice di indice pari: $f(x) = \\sqrt{x}$",
+            content: `<p>La funzione $f(x) = \\sqrt{x}$ ha dominio $[0, +\\infty)$ ed è <strong>strettamente crescente</strong> su tutto il suo dominio.</p>
+            <figure class="figura" data-id="analisi1_lez05c_d4"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05c_d4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="277.187pt" height="123.442pt" viewBox="0 0 277.187 123.442" version="1.2"><style>#analisi1_lez05c_d4 [fill="rgb(0%,0%,0%)"],#analisi1_lez05c_d4 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05c_d4 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05c_d4 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05c_d4 [fill="rgb(0%,0%,100%)"],#analisi1_lez05c_d4 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d4 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d4 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05c_d4 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05c_d4 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d4 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d4 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
 <defs>
 <g>
@@ -4040,9 +3415,9 @@ z
 </svg></figure>`
           },
           {
-            subtitle: "Indice dispari ($n = 3, 5, \\dots$)",
-            content: `<p>La funzione $f(x) = \\sqrt[3]{x}$ ha dominio $\\R$ ed è <strong>strettamente crescente su tutto $\\R$</strong>.</p>
-<figure class="figura" data-id="analisi1_lez05c_d5"><?xml version="1.0" encoding="UTF-8"?>
+            subtitle: "Radice di indice dispari: $f(x) = \\sqrt[3]{x}$",
+            content: `<p>La funzione $f(x) = \\sqrt[3]{x}$ ha dominio $\\mathbb{R}$ ed è <strong>strettamente crescente</strong> su tutto $\\mathbb{R}$.</p>
+            <figure class="figura" data-id="analisi1_lez05c_d5"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05c_d5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="361.994pt" height="124.417pt" viewBox="0 0 361.994 124.417" version="1.2"><style>#analisi1_lez05c_d5 [fill="rgb(0%,0%,0%)"],#analisi1_lez05c_d5 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05c_d5 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05c_d5 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05c_d5 [fill="rgb(0%,0%,100%)"],#analisi1_lez05c_d5 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d5 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d5 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05c_d5 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05c_d5 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d5 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d5 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
 <defs>
 <g>
@@ -4261,17 +3636,11 @@ z
 <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 175.964844 68.320312 C 175.964844 67.707031 175.46875 67.210938 174.855469 67.210938 C 174.242188 67.210938 173.746094 67.707031 173.746094 68.320312 C 173.746094 68.933594 174.242188 69.433594 174.855469 69.433594 C 175.46875 69.433594 175.964844 68.933594 175.964844 68.320312 Z M 175.964844 68.320312 "/>
 </g>
 </svg></figure>`
-          }
-        ]
-      },
-
-      {
-        id: "s14-reciproco",
-        type: "section",
-        title: "Funzione reciproco $f(x) = 1/x$",
-        icon: "🪞",
-        content: `<p>Questo esempio è particolarmente istruttivo e <strong>rinforza il concetto visto all'inizio</strong> sulla monotonia e le unioni di intervalli. Il dominio di $f(x) = 1/x$ è $\\R \\setminus \\{0\\}$.</p>
-<figure class="figura" data-id="analisi1_lez05c_d6"><?xml version="1.0" encoding="UTF-8"?>
+          },
+          {
+            subtitle: "Funzione reciproco: $f(x) = 1/x$",
+            content: `<p>Questo esempio è particolarmente istruttivo e rinforza il concetto visto all'inizio. Il dominio di $f(x) = 1/x$ è $\\mathbb{R} \\setminus \\{0\\}$.</p>
+            <figure class="figura" data-id="analisi1_lez05c_d6"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="analisi1_lez05c_d6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="249.495pt" height="211.725pt" viewBox="0 0 249.495 211.725" version="1.2"><style>#analisi1_lez05c_d6 [fill="rgb(0%,0%,0%)"],#analisi1_lez05c_d6 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez05c_d6 [stroke="rgb(0%,0%,0%)"],#analisi1_lez05c_d6 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez05c_d6 [fill="rgb(0%,0%,100%)"],#analisi1_lez05c_d6 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d6 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d6 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez05c_d6 [stroke="rgb(0%,0%,100%)"],#analisi1_lez05c_d6 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez05c_d6 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez05c_d6 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
 <defs>
 <g>
@@ -4356,103 +3725,98 @@ z
 </g>
 </g>
 </svg></figure>
-<p>Osservando il grafico notiamo che:</p>
-<p>• la funzione è <strong>strettamente decrescente</strong> sull'intervallo $(-\\infty, 0)$;<br>
-• la funzione è <strong>strettamente decrescente</strong> sull'intervallo $(0, +\\infty)$.</p>`,
-        subsections: [
-          {
-            subtitle: "Controesempio: $1/x$ NON è decrescente sul suo dominio",
-            content: `<p>La funzione $f(x) = 1/x$ è decrescente sul suo <em>intero</em> dominio $\\R \\setminus \\{0\\}$? La risposta è di nuovo <strong>NO</strong>.</p>
-<p>Per dimostrarlo basta un <strong>controesempio</strong>: scegliamo due punti che appartengono a <em>rami diversi</em> dell'iperbole. Sia $x = -1$ e $y = 1$. Abbiamo $x \\lt y$; se la funzione fosse decrescente dovrebbe valere $f(x) \\ge f(y)$. Calcoliamo:</p>
-<p>$$\\begin{aligned} f(x) &= f(-1) = \\frac{1}{-1} = -1 \\\\ f(y) &= f(1) = \\frac{1}{1} = 1 \\end{aligned}$$</p>
-<p>Otteniamo $f(x) = -1 \\lt 1 = f(y)$, cioè $f(x) \\lt f(y)$: la condizione di decrescenza è <strong>violata</strong>. Pertanto $1/x$ non è decrescente sull'unione dei due intervalli che costituiscono il suo dominio.</p>`
+            <p>Osservando il grafico notiamo che la funzione è <strong>strettamente decrescente su $(-\\infty, 0)$</strong> e <strong>strettamente decrescente su $(0, +\\infty)$</strong>.</p>`
           }
         ]
       },
-
       {
-        id: "s15-integrazione-esercizi",
+        id: "s05-controesempio-iperbole",
+        type: "alert_box",
+        title: "Controesempio: $1/x$ non è decrescente sul suo dominio",
+        icon: "🚨",
+        content: `<p>La funzione $f(x) = 1/x$ è decrescente sul suo intero dominio $\\mathbb{R} \\setminus \\{0\\}$?</p>
+        <p>La risposta è di nuovo <strong>NO</strong>. Per dimostrarlo basta un controesempio: scegliamo due punti appartenenti a <strong>rami diversi</strong> dell'iperbole, $x = -1$ e $y = 1$.</p>
+        <p>Abbiamo $x \\lt y$. Se la funzione fosse decrescente dovrebbe valere $f(x) \\ge f(y)$. Calcoliamo:</p>
+        <p>$$\\begin{aligned} f(x) &= f(-1) = \\frac{1}{-1} = -1 \\\\ f(y) &= f(1) = \\frac{1}{1} = 1 \\end{aligned}$$</p>
+        <p>Otteniamo $f(x) = -1 \\lt 1 = f(y)$, cioè $f(x) \\lt f(y)$: la condizione di decrescenza è violata. Pertanto $1/x$ <strong>non è decrescente</strong> sull'unione dei due intervalli che costituiscono il suo dominio, pur essendolo su ciascuno di essi.</p>`
+      },
+      {
+        id: "s05-integrazione-esercizi",
         type: "integrazione_box",
         title: "Integrazione — non detto dal docente",
-        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e <strong>non svolti dal docente</strong>. Le soluzioni sono nel box sotto ogni traccia.</p>
-<p><strong>Nota terminologica preliminare</strong> (serve nell'esercizio Scritto 3). Una funzione $f \\colon A \\to \\R$ si dice <strong>iniettiva</strong> se punti distinti hanno immagini distinte, cioè se per ogni $x, y \\in A$ con $x \\ne y$ risulta $f(x) \\ne f(y)$ (equivalentemente: $f(x) = f(y) \\Rightarrow x = y$). Si dice <strong>surgettiva</strong> su $Y$ se $Im(f) = Y$, cioè se ogni elemento del codominio viene effettivamente assunto. Da notare: ogni funzione <strong>strettamente</strong> monotòna è automaticamente iniettiva.</p>`
+        icon: "📝",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e <strong>non svolti dal docente</strong>. Le soluzioni sono nel box sotto ogni traccia.</p>`
       },
-
       {
-        id: "s16-es-teoria-1",
+        id: "s05-ex-teoria-1",
         type: "esercizio",
-        title: "Teoria 1",
+        title: "Teoria 1 — Funzione, immagine e codominio",
         kind: "teoria",
         source: "integrazione",
         content: `<p>Dai la definizione di funzione $f \\colon X \\to Y$ e di immagine $Im(f)$. Spiega la differenza fra codominio e immagine e mostra con un esempio che l'inclusione $Im(f) \\subseteq Y$ può essere stretta.</p>`,
-        solution: `<p>Dati due insiemi non vuoti $X$ e $Y$, una funzione $f \\colon X \\to Y$ è una legge che associa ad ogni $x \\in X$ <strong>uno e un solo</strong> elemento $y = f(x) \\in Y$; l'insieme $X$ si dice <strong>dominio</strong>, l'insieme $Y$ <strong>codominio</strong>.</p>
-<p>L'<strong>immagine</strong> è il sottoinsieme del codominio</p>
-<p>$$Im(f) = \\{ y \\in Y \\mid \\exists\\, x \\in X : y = f(x) \\} = \\{ f(x) \\mid x \\in X \\}$$</p>
-<p>Il codominio è l'insieme di arrivo <em>dichiarato</em>, cioè dove i valori possono cadere; l'immagine è l'insieme dei valori <em>effettivamente assunti</em>. Vale sempre $Im(f) \\subseteq Y$, ma l'inclusione può essere <strong>stretta</strong>.</p>
-<p><strong>Esempio.</strong> $f \\colon \\R \\to \\R$, $f(x) = x^2$, ha codominio $\\R$, mentre $Im(f) = [0, +\\infty)$. Infatti $x^2 \\ge 0$ per ogni $x \\in \\R$, quindi nessun $y \\lt 0$ viene assunto; e ogni $y \\ge 0$ è assunto perché $f(\\sqrt{y}) = y$. Dunque $Im(f) = [0, +\\infty) \\subsetneq \\R$.</p>`
+        solution: `<p>Dati due insiemi non vuoti $X$ e $Y$, una funzione $f \\colon X \\to Y$ è una legge che associa ad ogni $x \\in X$ <strong>uno e un solo</strong> elemento $y = f(x) \\in Y$; l'insieme $X$ si dice dominio, l'insieme $Y$ codominio.</p>
+        <p>L'immagine è il sottoinsieme del codominio</p>
+        <p>$$Im(f) = \\{ y \\in Y \\mid \\exists\\, x \\in X : y = f(x) \\} = \\{ f(x) \\mid x \\in X \\}.$$</p>
+        <p>Il <strong>codominio</strong> è l'insieme di arrivo dichiarato, cioè dove i valori <em>possono</em> cadere; l'<strong>immagine</strong> è l'insieme dei valori <em>effettivamente</em> assunti. Vale sempre $Im(f) \\subseteq Y$, ma l'inclusione può essere stretta.</p>
+        <p><strong>Esempio.</strong> $f \\colon \\mathbb{R} \\to \\mathbb{R}$, $f(x) = x^2$ ha codominio $\\mathbb{R}$, mentre $Im(f) = [0,+\\infty)$: infatti $x^2 \\ge 0$ per ogni $x \\in \\mathbb{R}$, quindi nessun $y \\lt 0$ è assunto; inoltre ogni $y \\ge 0$ è assunto perché $f(\\sqrt{y}) = y$. Dunque</p>
+        <p>$$Im(f) = [0,+\\infty) \\subsetneq \\mathbb{R}.$$</p>`
       },
-
       {
-        id: "s17-es-teoria-2",
+        id: "s05-ex-teoria-2",
         type: "esercizio",
-        title: "Teoria 2",
+        title: "Teoria 2 — Controimmagine e simbolo $f^{-1}$",
         kind: "teoria",
         source: "integrazione",
-        content: `<p>Dare la definizione di controimmagine $f^{-1}(B)$ di un insieme $B \\subseteq Y$ tramite una funzione $f \\colon X \\to Y$. Spiegare perché la scrittura $f^{-1}$ non presuppone che $f$ sia invertibile ed esibire una funzione $f$ e un insieme $B \\ne \\emptyset$ per cui $f^{-1}(B) = \\emptyset$.</p>`,
+        content: `<p>Dare la definizione di controimmagine $f^{-1}(B)$ di un insieme $B \\subseteq Y$ tramite una funzione $f \\colon X \\to Y$. Spiegare perché la scrittura $f^{-1}$ non presuppone che $f$ sia invertibile ed esibire una funzione $f$ e un insieme $B \\neq \\emptyset$ per cui $f^{-1}(B) = \\emptyset$.</p>`,
         solution: `<p>Per definizione</p>
-<p>$$f^{-1}(B) = \\{ x \\in X \\mid f(x) \\in B \\}$$</p>
-<p>cioè è il sottoinsieme del dominio formato da tutti gli elementi la cui immagine cade in $B$.</p>
-<p>Il simbolo $f^{-1}$ qui <strong>non</strong> denota una funzione da $Y$ a $X$, ma un'operazione che a un <em>insieme</em> $B \\subseteq Y$ associa un <em>insieme</em> $f^{-1}(B) \\subseteq X$. Per calcolarlo basta saper risolvere la condizione $f(x) \\in B$, e non serve nessuna ipotesi aggiuntiva su $f$: infatti $f^{-1}(B)$ può essere vuoto, contenere un solo punto oppure infiniti punti, mentre una funzione inversa dovrebbe associare a ogni $y$ <em>uno e un solo</em> $x$. Sono quindi due oggetti di natura diversa.</p>
-<p><strong>Esempio con controimmagine vuota.</strong> Sia $f \\colon \\R \\to \\R$, $f(x) = x^2$, e $B = [-6, -5]$. La condizione $-6 \\le x^2 \\le -5$ non è mai soddisfatta, perché $x^2 \\ge 0$ per ogni $x \\in \\R$. Dunque $f^{-1}([-6, -5]) = \\emptyset$ pur essendo $B \\ne \\emptyset$.</p>`
+        <p>$$f^{-1}(B) = \\{ x \\in X \\mid f(x) \\in B \\}:$$</p>
+        <p>è il sottoinsieme del dominio formato da tutti gli elementi la cui immagine cade in $B$.</p>
+        <p>Il simbolo $f^{-1}$ qui <strong>non</strong> denota una funzione da $Y$ a $X$, ma un'operazione che a un <em>insieme</em> $B \\subseteq Y$ associa un <em>insieme</em> $f^{-1}(B) \\subseteq X$: per calcolarlo basta saper risolvere la condizione $f(x) \\in B$, e non serve alcuna ipotesi di iniettività o surgettività. Infatti $f^{-1}(B)$ può essere vuoto, contenere un solo punto oppure infiniti punti, mentre una funzione inversa dovrebbe associare a ogni $y$ uno e un solo $x$.</p>
+        <p><strong>Esempio con controimmagine vuota.</strong> $f \\colon \\mathbb{R} \\to \\mathbb{R}$, $f(x) = x^2$, e $B = [-6,-5]$. La condizione $-6 \\le x^2 \\le -5$ non è mai soddisfatta perché $x^2 \\ge 0$ per ogni $x \\in \\mathbb{R}$, dunque $f^{-1}([-6,-5]) = \\emptyset$ pur essendo $B \\neq \\emptyset$.</p>`
       },
-
       {
-        id: "s18-es-teoria-3",
+        id: "s05-ex-teoria-3",
         type: "esercizio",
-        title: "Teoria 3",
+        title: "Teoria 3 — Crescenza e funzione costante",
         kind: "teoria",
         source: "integrazione",
-        content: `<p>Enuncia la definizione di funzione crescente e di funzione strettamente crescente su un insieme $A \\subseteq \\R$. Stabilisci poi se la funzione costante $f(x) = k$, $x \\in \\R$, sia crescente, decrescente, strettamente crescente o strettamente decrescente.</p>`,
-        solution: `<p>Sia $f \\colon A \\subseteq \\R \\to \\R$. Si dice che $f$ è <strong>crescente</strong> (non decrescente) in $A$ se per ogni $x, y \\in A$ con $x \\le y$ si ha $f(x) \\le f(y)$; si dice <strong>strettamente crescente</strong> se per ogni $x, y \\in A$ con $x \\lt y$ si ha $f(x) \\lt f(y)$. Analogamente $f$ è <strong>decrescente</strong> se $x \\le y \\Rightarrow f(x) \\ge f(y)$ e <strong>strettamente decrescente</strong> se $x \\lt y \\Rightarrow f(x) \\gt f(y)$.</p>
-<p>Per $f(x) = k$: presi $x \\le y$ si ha $f(x) = k = f(y)$, dunque valgono <em>sia</em> $f(x) \\le f(y)$ <em>sia</em> $f(x) \\ge f(y)$. La funzione costante è quindi contemporaneamente <strong>crescente e decrescente</strong> (in senso lato). Non è però né strettamente crescente né strettamente decrescente, perché per $x \\lt y$ non vale mai $f(x) \\lt f(y)$ né $f(x) \\gt f(y)$.</p>
-<p>Questo mostra che "crescente" nel senso di "non decrescente" <strong>non esclude tratti costanti</strong>, come accade nell'intervallo $[b, c]$ della funzione a tratti studiata a lezione.</p>`
+        content: `<p>Enuncia la definizione di funzione crescente e di funzione strettamente crescente su un insieme $A \\subseteq \\mathbb{R}$. Stabilisci poi se la funzione costante $f(x) = k$, $x \\in \\mathbb{R}$, sia crescente, decrescente, strettamente crescente o strettamente decrescente.</p>`,
+        solution: `<p>Sia $f \\colon A \\subseteq \\mathbb{R} \\to \\mathbb{R}$. Si dice che $f$ è <strong>crescente</strong> (non decrescente) in $A$ se per ogni $x, y \\in A$ con $x \\le y$ si ha $f(x) \\le f(y)$; si dice <strong>strettamente crescente</strong> se per ogni $x, y \\in A$ con $x \\lt y$ si ha $f(x) \\lt f(y)$.</p>
+        <p>Analogamente $f$ è decrescente se $x \\le y \\Rightarrow f(x) \\ge f(y)$ e strettamente decrescente se $x \\lt y \\Rightarrow f(x) \\gt f(y)$.</p>
+        <p><strong>Funzione costante.</strong> Presi $x \\le y$ si ha $f(x) = k = f(y)$, dunque valgono sia $f(x) \\le f(y)$ sia $f(x) \\ge f(y)$: la funzione costante è contemporaneamente <strong>crescente e decrescente in senso lato</strong>. Non è però né strettamente crescente né strettamente decrescente, perché per $x \\lt y$ non vale mai $f(x) \\lt f(y)$ né $f(x) \\gt f(y)$.</p>
+        <p>Questo mostra che "crescente" nel senso di "non decrescente" non esclude tratti costanti, come accade nell'intervallo $[b,c]$ della funzione a tratti studiata a lezione.</p>`
       },
-
       {
-        id: "s19-es-teoria-4",
+        id: "s05-ex-teoria-4",
         type: "esercizio",
-        title: "Teoria 4",
+        title: "Teoria 4 — Schema risolutivo per $\\sqrt[n]{f(x)} \\ge g(x)$, $n$ pari",
         kind: "teoria",
         source: "integrazione",
         content: `<p>Enuncia lo schema risolutivo della disequazione $\\sqrt[n]{f(x)} \\ge g(x)$ con $n$ pari, giustificando la necessità dei due casi, e spiega perché nel sistema del secondo caso la condizione $f(x) \\ge 0$ è superflua.</p>`,
-        solution: `<p>Con $n$ pari la radice $\\sqrt[n]{f(x)}$ esiste solo se $f(x) \\ge 0$ ed è sempre una quantità <strong>non negativa</strong>. Si distinguono due casi in base al segno di $g(x)$, perché il confronto fra i due membri ha natura diversa a seconda che il secondo membro sia negativo o non negativo.</p>
-<p><strong>Caso 1: $g(x) \\lt 0$.</strong> La disuguaglianza confronta una quantità non negativa con una negativa ed è automaticamente vera, <em>purché la radice esista</em>. Il sistema è</p>
-<p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases}$$</p>
-<p>con soluzione $S_1$.</p>
-<p><strong>Caso 2: $g(x) \\ge 0$.</strong> Entrambi i membri sono non negativi e la funzione $t \\mapsto t^n$ è crescente su $[0, +\\infty)$, quindi si può elevare alla $n$ conservando il verso. Il sistema è</p>
-<p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases}$$</p>
-<p>con soluzione $S_2$. La soluzione della disequazione è $S = S_1 \\cup S_2$.</p>
-<p><strong>Perché $f(x) \\ge 0$ è superflua nel secondo sistema.</strong> Se $g(x) \\ge 0$ allora $[g(x)]^n \\ge 0$; dalla terza condizione segue $f(x) \\ge [g(x)]^n \\ge 0$, quindi $f(x) \\ge 0$ è <em>conseguenza</em> delle altre due e il sistema si riduce a $g(x) \\ge 0$, $f(x) \\ge [g(x)]^n$. Si osservi che nel <strong>primo</strong> sistema, invece, $f(x) \\ge 0$ <strong>non</strong> può essere omessa: lì nulla garantirebbe l'esistenza della radice.</p>`
+        solution: `<p>Con $n$ pari la radice $\\sqrt[n]{f(x)}$ esiste solo se $f(x) \\ge 0$ ed è sempre una quantità non negativa. Si distinguono due casi in base al segno di $g(x)$.</p>
+        <p><strong>Caso 1: $g(x) \\lt 0$.</strong> La disuguaglianza confronta una quantità non negativa con una negativa ed è automaticamente vera, purché la radice esista:</p>
+        <p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases} \\quad \\longrightarrow \\quad S_1$$</p>
+        <p><strong>Caso 2: $g(x) \\ge 0$.</strong> Entrambi i membri sono non negativi e la funzione $t \\mapsto t^n$ è crescente su $[0,+\\infty)$, quindi si può elevare alla $n$ conservando il verso:</p>
+        <p>$$\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases} \\quad \\longrightarrow \\quad S_2$$</p>
+        <p>La soluzione della disequazione è $S = S_1 \\cup S_2$.</p>
+        <p><strong>Perché $f(x) \\ge 0$ è superflua nel secondo sistema.</strong> Se $g(x) \\ge 0$ allora $[g(x)]^n \\ge 0$, e dalla terza condizione $f(x) \\ge [g(x)]^n \\ge 0$: dunque $f(x) \\ge 0$ è conseguenza delle altre due e il sistema si riduce a $g(x) \\ge 0$, $f(x) \\ge [g(x)]^n$. Si osservi che nel primo sistema, invece, $f(x) \\ge 0$ <strong>non</strong> può essere omessa.</p>`
       },
-
       {
-        id: "s20-es-scritto-1",
+        id: "s05-ex-scritto-1",
         type: "esercizio",
-        title: "Scritto 1",
+        title: "Scritto 1 — Disequazione irrazionale",
         kind: "scritto",
         source: "integrazione",
-        content: `<p>Risolvi la disequazione irrazionale $\\sqrt{x+3} \\ge x+1$.</p>`,
-        solution: `<p>La radice ha indice <strong>pari</strong>, quindi si distinguono due casi secondo il segno di $g(x) = x+1$. Condizione di esistenza: $x+3 \\ge 0$, cioè $x \\ge -3$.</p>
-<p><strong>Caso 1: $x+1 \\lt 0$, cioè $x \\lt -1$.</strong> Il primo membro è non negativo e il secondo è negativo, quindi la disequazione è vera ogni volta che la radice esiste. Dal sistema</p>
-<p>$$\\begin{cases} x \\ge -3 \\\\ x \\lt -1 \\end{cases}$$</p>
-<p>si ottiene $S_1 = [-3, -1)$.</p>
-<p><strong>Caso 2: $x+1 \\ge 0$, cioè $x \\ge -1$.</strong> Entrambi i membri sono non negativi e si può elevare al quadrato conservando il verso:</p>
-<p>$$\\begin{aligned} x+3 &\\ge (x+1)^2 \\\\ x+3 &\\ge x^2 + 2x + 1 \\\\ 0 &\\ge x^2 + x - 2 \\\\ x^2 + x - 2 &\\le 0 \\end{aligned}$$</p>
-<p>Fattorizziamo il trinomio: le radici di $x^2 + x - 2 = 0$ sono $x = -2$ e $x = 1$, quindi</p>
-<p>$$x^2 + x - 2 = (x+2)(x-1) \\le 0$$</p>
-<p>Il prodotto di due fattori è <strong>non positivo</strong> quando i fattori hanno segno opposto (o uno dei due si annulla): questo accade <em>fra</em> le due radici, cioè per $-2 \\le x \\le 1$. Da notare che qui la condizione di esistenza $x \\ge -3$ è superflua, perché già implicata da $x \\ge -1$.</p>
-<p>Intersecando con l'ipotesi del caso, $x \\ge -1$:</p>
-<figure class="figura" data-id="analisi1_lez05a_sp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        content: `<p>Risolvi la disequazione irrazionale</p>
+        <p>$$\\sqrt{x+3} \\ \\ge \\ x+1.$$</p>`,
+        solution: `<p><strong>Impostazione.</strong> La radice ha indice pari, quindi si distinguono due casi secondo il segno di $g(x) = x+1$. Condizione di esistenza: $x+3 \\ge 0$, cioè $x \\ge -3$.</p>
+        <p><strong>Caso 1: $x+1 \\lt 0$, cioè $x \\lt -1$.</strong> Il primo membro è non negativo e il secondo è negativo, quindi la disequazione è vera ogni volta che la radice esiste. Dal sistema</p>
+        <p>$$\\begin{cases} x \\ge -3 \\\\ x \\lt -1 \\end{cases} \\quad \\Rightarrow \\quad S_1 = [-3,-1).$$</p>
+        <p><strong>Caso 2: $x+1 \\ge 0$, cioè $x \\ge -1$.</strong> Entrambi i membri sono non negativi e si può elevare al quadrato conservando il verso:</p>
+        <p>$$\\begin{aligned} x+3 &\\ge (x+1)^2 \\\\ x+3 &\\ge x^2+2x+1 \\\\ 0 &\\ge x^2 + x - 2 \\\\ x^2+x-2 &\\le 0 \\end{aligned}$$</p>
+        <p>Fattorizzando, $x^2+x-2 = (x+2)(x-1)$, le cui radici sono $x = -2$ e $x = 1$; il trinomio è $\\le 0$ fra le radici, cioè $-2 \\le x \\le 1$. La condizione di esistenza è qui superflua (segue dalle altre due).</p>
+        <p>Mettendo a sistema $x \\ge -1$ con $-2 \\le x \\le 1$:</p>
+        <figure class="figura" data-id="analisi1_lez05a_sp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -4819,10 +4183,11 @@ z
   </clipPath>
  </defs>
 </svg></figure>
-<p>Quindi $S_2 = [-1, 1]$.</p>
-<p><strong>Soluzione complessiva:</strong> $S = S_1 \\cup S_2 = [-3, -1) \\cup [-1, 1] = [-3, 1]$.</p>
-<p>Verifica grafica: sull'intervallo $[-3, 1]$ il grafico della radice sta sopra a quello della retta, e lì la disequazione è verificata.</p>
-<figure class="figura" data-id="analisi1_lez05a_gp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <p>Quindi $S_2 = [-1,1]$.</p>
+        <p><strong>Unione finale.</strong></p>
+        <p>$$S = S_1 \\cup S_2 = [-3,-1) \\cup [-1,1] = [-3,1].$$</p>
+        <p>Verifica grafica: sull'intervallo $[-3,1]$ il grafico della radice sta sopra a quello della retta, ed è lì che la disequazione è verificata.</p>
+        <figure class="figura" data-id="analisi1_lez05a_gp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -6361,21 +5726,21 @@ z
  </defs>
 </svg></figure>`
       },
-
       {
-        id: "s21-es-scritto-2",
+        id: "s05-ex-scritto-2",
         type: "esercizio",
-        title: "Scritto 2",
+        title: "Scritto 2 — Controimmagine di una funzione affine",
         kind: "scritto",
         source: "integrazione",
-        content: `<p>Sia $f \\colon \\R \\to \\R$ definita da $f(x) = 3 - 2x$. Determinare la controimmagine $f^{-1}([-1, 5])$.</p>`,
-        solution: `<p>Per definizione $f^{-1}([-1,5]) = \\{x \\in \\R \\mid -1 \\le 3-2x \\le 5\\}$, quindi risolviamo la doppia disequazione</p>
-<p>$$-1 \\le 3-2x \\le 5$$</p>
-<p>Sottraendo $3$ a tutti i membri: $-4 \\le -2x \\le 2$. Dividendo per $-2 \\lt 0$ si <strong>invertono entrambe</strong> le disuguaglianze:</p>
-<p>$$2 \\ge x \\ge -1 \\quad \\text{cioè} \\quad -1 \\le x \\le 2$$</p>
-<p>Dunque $f^{-1}([-1,5]) = [-1, 2]$.</p>
-<p><strong>Verifica.</strong> $f(-1) = 5$ e $f(2) = -1$: poiché $f$ è strettamente decrescente gli estremi si scambiano, ed è proprio quello che accade.</p>
-<figure class="figura" data-id="analisi1_lez05b_gp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        content: `<p>Sia $f \\colon \\mathbb{R} \\to \\mathbb{R}$ definita da $f(x) = 3 - 2x$. Determinare la controimmagine $f^{-1}([-1,5])$.</p>`,
+        solution: `<p>Per definizione</p>
+        <p>$$f^{-1}([-1,5]) = \\{ x \\in \\mathbb{R} \\mid -1 \\le 3-2x \\le 5 \\},$$</p>
+        <p>quindi risolviamo la doppia disequazione:</p>
+        <p>$$\\begin{aligned} -1 &\\le 3-2x \\le 5 \\\\ -4 &\\le -2x \\le 2 \\\\ 2 &\\ge x \\ge -1 \\end{aligned}$$</p>
+        <p>(nel passaggio finale si divide per $-2 \\lt 0$, quindi <strong>entrambe</strong> le disuguaglianze si invertono). Dunque</p>
+        <p>$$f^{-1}([-1,5]) = [-1,2].$$</p>
+        <p><strong>Verifica.</strong> $f(-1) = 5$ e $f(2) = -1$: poiché $f$ è strettamente decrescente gli estremi si scambiano, ed è proprio quello che accade.</p>
+        <figure class="figura" data-id="analisi1_lez05b_gp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -7237,37 +6602,47 @@ L 529.15 71.411719
  </defs>
 </svg></figure>`
       },
-
       {
-        id: "s22-es-scritto-3",
+        id: "s05-integrazione-iniettivita",
+        type: "integrazione_box",
+        title: "Integrazione — definizione di funzione iniettiva",
+        icon: "🧷",
+        content: `<p>Prima dell'esercizio seguente serve una definizione non ancora introdotta a lezione.</p>
+        <p>Una funzione $f \\colon X \\to Y$ si dice <strong>iniettiva</strong> se punti distinti del dominio hanno immagini distinte, cioè</p>
+        <p>$$\\forall x, y \\in X: \\quad x \\ne y \\ \\Rightarrow \\ f(x) \\ne f(y),$$</p>
+        <p>equivalentemente $f(x) = f(y) \\Rightarrow x = y$.</p>
+        <p>Da questa definizione segue subito un criterio utile: <strong>ogni funzione strettamente monotòna è iniettiva</strong>.</p>`
+      },
+      {
+        id: "s05-ex-scritto-3",
         type: "esercizio",
-        title: "Scritto 3",
+        title: "Scritto 3 — Monotonia stretta e iniettività",
         kind: "scritto",
         source: "integrazione",
-        content: `<p>Dimostra, usando le proprietà algebriche delle funzioni monotòne e la monotonia delle funzioni elementari viste a lezione, che $h(x) = x^3 + \\sqrt[3]{x} - 5$ è strettamente crescente su $\\R$; deducine che $h$ è iniettiva.</p>`,
-        solution: `<p>Poniamo $f(x) = x^3$, $g(x) = \\sqrt[3]{x}$, $c(x) = -5$; tutte hanno dominio $\\R$, quindi $h = f + g + c$ è definita su $\\R$.</p>
-<p>• $f(x) = x^3$ è una potenza a esponente <strong>dispari</strong>, dunque strettamente crescente su $\\R$.<br>
-• $g(x) = \\sqrt[3]{x}$ è la radice di indice <strong>dispari</strong>, anch'essa strettamente crescente su $\\R$.<br>
-• $c(x) = -5$ è costante, quindi crescente in senso lato.</p>
-<p>Siano ora $x \\lt y$ reali. Allora $f(x) \\lt f(y)$, $g(x) \\lt g(y)$ e $c(x) = c(y)$. Sommando membro a membro (la somma di disuguaglianze con lo stesso verso, di cui almeno una stretta, resta stretta) si ottiene</p>
-<p>$$x^3 + \\sqrt[3]{x} - 5 \\lt y^3 + \\sqrt[3]{y} - 5$$</p>
-<p>cioè $h(x) \\lt h(y)$: dunque $h$ è <strong>strettamente crescente</strong> su $\\R$.</p>
-<p><strong>Iniettività.</strong> Ricordiamo che $h$ è iniettiva se punti distinti hanno immagini distinte. Se $x \\ne y$, allora $x \\lt y$ oppure $y \\lt x$: nel primo caso $h(x) \\lt h(y)$, nel secondo $h(y) \\lt h(x)$, e in entrambi $h(x) \\ne h(y)$. Dunque $h$ è iniettiva.</p>
-<p><strong>Osservazione.</strong> Il <em>prodotto</em> $f \\cdot g = x^3 \\sqrt[3]{x} = x^{10/3}$ non sarebbe crescente su $\\R$: l'ipotesi di non negatività del punto 3 della proposizione qui non vale.</p>`
+        content: `<p>Dimostra, usando le proprietà algebriche delle funzioni monotone e la monotonia delle funzioni elementari viste a lezione, che</p>
+        <p>$$h(x) = x^3 + \\sqrt[3]{x} - 5$$</p>
+        <p>è strettamente crescente su $\\mathbb{R}$; deducine che $h$ è iniettiva.</p>`,
+        solution: `<p><strong>Decomposizione.</strong> Poniamo $f(x) = x^3$, $g(x) = \\sqrt[3]{x}$, $c(x) = -5$; tutte hanno dominio $\\mathbb{R}$, quindi $h = f+g+c$ è definita su $\\mathbb{R}$.</p>
+        <p><strong>Monotonia dei pezzi.</strong> $f(x) = x^3$ è una potenza a esponente dispari, dunque strettamente crescente su $\\mathbb{R}$; $g(x) = \\sqrt[3]{x}$ è la radice di indice dispari, anch'essa strettamente crescente su $\\mathbb{R}$; $c(x) = -5$ è costante, quindi crescente in senso lato.</p>
+        <p><strong>Somma.</strong> Siano $x \\lt y$ reali. Allora $f(x) \\lt f(y)$, $g(x) \\lt g(y)$ e $c(x) = c(y)$. Sommando membro a membro (la somma di disuguaglianze con lo stesso verso, di cui almeno una stretta, resta stretta) si ottiene</p>
+        <p>$$x^3 + \\sqrt[3]{x} - 5 \\ \\lt \\ y^3 + \\sqrt[3]{y} - 5,$$</p>
+        <p>cioè $h(x) \\lt h(y)$: $h$ è strettamente crescente su $\\mathbb{R}$.</p>
+        <p><strong>Iniettività.</strong> Se $x \\ne y$, allora $x \\lt y$ oppure $y \\lt x$; nel primo caso $h(x) \\lt h(y)$, nel secondo $h(y) \\lt h(x)$, e in entrambi $h(x) \\ne h(y)$. Per la definizione di iniettività richiamata sopra, $h$ è iniettiva.</p>
+        <p><strong>Osservazione.</strong> Il prodotto $f \\cdot g = x^3 \\sqrt[3]{x} = x^{10/3}$ non sarebbe crescente su $\\mathbb{R}$: l'ipotesi di non negatività del punto 3 della proposizione qui non vale.</p>`
       },
-
       {
-        id: "s23-es-scritto-4",
+        id: "s05-ex-scritto-4",
         type: "esercizio",
-        title: "Scritto 4",
+        title: "Scritto 4 — Dominio naturale e controimmagine",
         kind: "scritto",
         source: "integrazione",
         content: `<p>Data $f(x) = \\sqrt{x^2-4}$, determina il dominio naturale $D$ e calcola la controimmagine $f^{-1}([0,3])$.</p>`,
         solution: `<p><strong>Dominio naturale.</strong> Occorre $x^2 - 4 \\ge 0$, cioè $x \\le -2$ oppure $x \\ge 2$, quindi</p>
-<p>$$D = (-\\infty, -2] \\cup [2, +\\infty)$$</p>
-<p><strong>Controimmagine.</strong> Per definizione $f^{-1}([0,3]) = \\{x \\in D \\mid 0 \\le f(x) \\le 3\\}$. La disuguaglianza $\\sqrt{x^2-4} \\ge 0$ è automaticamente vera su $D$. Resta $\\sqrt{x^2-4} \\le 3$: essendo $3 \\ge 0$ ed entrambi i membri non negativi, si eleva al quadrato ottenendo $x^2 - 4 \\le 9$, cioè $x^2 \\le 13$, ossia $-\\sqrt{13} \\le x \\le \\sqrt{13}$.</p>
-<p>Mettendo a sistema con la condizione di esistenza $x^2 \\ge 4$ si ha $4 \\le x^2 \\le 13$.</p>
-<figure class="figura" data-id="analisi1_lez05a_sp2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <p>$$D = (-\\infty,-2] \\cup [2,+\\infty).$$</p>
+        <p><strong>Controimmagine.</strong> Per definizione $f^{-1}([0,3]) = \\{ x \\in D \\mid 0 \\le f(x) \\le 3 \\}$. La disuguaglianza $\\sqrt{x^2-4} \\ge 0$ è automaticamente vera su $D$. Resta</p>
+        <p>$$\\sqrt{x^2-4} \\le 3.$$</p>
+        <p>Essendo $3 \\ge 0$ ed entrambi i membri non negativi, si eleva al quadrato: $x^2 - 4 \\le 9$, cioè $x^2 \\le 13$, ossia $-\\sqrt{13} \\le x \\le \\sqrt{13}$. Mettendo a sistema con la condizione di esistenza $x^2 \\ge 4$ si ha $4 \\le x^2 \\le 13$.</p>
+        <figure class="figura" data-id="analisi1_lez05a_sp2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -7723,9 +7098,9 @@ z
   </clipPath>
  </defs>
 </svg></figure>
-<p>Quindi</p>
-<p>$$f^{-1}([0,3]) = [-\\sqrt{13}, -2] \\cup [2, \\sqrt{13}], \\qquad \\sqrt{13} \\approx 3{,}606$$</p>
-<figure class="figura" data-id="analisi1_lez05a_gp2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <p>Quindi</p>
+        <p>$$f^{-1}([0,3]) = [-\\sqrt{13},-2] \\cup [2,\\sqrt{13}], \\qquad \\sqrt{13} \\approx 3{,}606.$$</p>
+        <figure class="figura" data-id="analisi1_lez05a_gp2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -9684,99 +9059,92 @@ L 76.7 347.607422
   </clipPath>
  </defs>
 </svg></figure>`
+      },
+      {
+        id: "s05-oral-riepilogo",
+        type: "oral_box",
+        title: "Domande tipiche dell'orale su questa lezione",
+        icon: "🎤",
+        content: `<p>Gli snodi su cui si concentrano le domande sono quattro:</p>
+        <ul>
+          <li>saper <strong>giustificare</strong> (non solo ricordare) i sistemi delle disequazioni irrazionali con indice pari, e in particolare perché $f(x) \\ge 0$ è superflua in un caso e non nell'altro;</li>
+          <li>distinguere con precisione <strong>codominio</strong> e <strong>immagine</strong>, con un esempio di inclusione stretta;</li>
+          <li>definire la <strong>controimmagine</strong> chiarendo che $f^{-1}$ agisce su insiemi e non richiede invertibilità;</li>
+          <li>spiegare perché la <strong>monotonia non passa all'unione</strong> di insiemi, con il controesempio di $1/x$.</li>
+        </ul>`
       }
     ],
 
     oral_cards: [
       {
+        type: "definizione",
+        front: "Che cos'è una funzione $f \\colon X \\to Y$? Come si chiamano $X$, $Y$ e $f(x)$?",
+        back: "Dati due insiemi non vuoti $X$ e $Y$, una funzione $f$ da $X$ a $Y$ è una legge che associa ad ogni $x \\in X$ <strong>uno e un solo</strong> elemento $y = f(x) \\in Y$. $X$ è il dominio, $Y$ il codominio, $x$ è l'argomento (variabile indipendente) e $y = f(x)$ è il valore, cioè l'immagine di $x$ tramite $f$. L'analogia usata a lezione: magliette e prezzi — magliette diverse possono avere lo stesso prezzo, ma ogni maglietta ha un solo prezzo."
+      },
+      {
+        type: "tranello",
+        front: "Codominio e immagine sono la stessa cosa?",
+        back: "No. Il codominio $Y$ è l'insieme di arrivo <em>dichiarato</em>, l'immagine $Im(f) = \\{f(x) \\mid x \\in X\\}$ è l'insieme dei valori <em>effettivamente</em> assunti. Vale sempre $Im(f) \\subseteq Y$, ma l'inclusione può essere stretta: per $f \\colon \\mathbb{R} \\to \\mathbb{R}$, $f(x) = x^2$, il codominio è $\\mathbb{R}$ mentre $Im(f) = [0,+\\infty)$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la controimmagine $f^{-1}(B)$ e spiega perché non serve che $f$ sia invertibile.",
+        back: "Data $f \\colon X \\to Y$ e $B \\subseteq Y$, si pone $f^{-1}(B) = \\{ x \\in X \\mid f(x) \\in B \\}$. Qui $f^{-1}$ non è una funzione che agisce su un punto, ma un'operazione che a un <em>insieme</em> $B$ associa un <em>insieme</em> contenuto nel dominio: basta saper risolvere la condizione $f(x) \\in B$. Infatti $f^{-1}(B)$ può essere vuoto, un singolo punto o infiniti punti; per esempio con $f(x)=x^2$ e $B = [-6,-5]$ si ha $f^{-1}(B) = \\emptyset$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Calcola $f^{-1}([1,4])$ per $f(x) = x^2$.",
+        back: "Cerchiamo le $x$ con $1 \\le x^2 \\le 4$, cioè il sistema $x^2 \\ge 1$ e $x^2 \\le 4$. Si ha $x^2 \\ge 1 \\Rightarrow x \\le -1 \\lor x \\ge 1$, ossia $(-\\infty,-1] \\cup [1,+\\infty)$; e $x^2 \\le 4 \\Rightarrow -2 \\le x \\le 2$. Intersecando: $f^{-1}([1,4]) = [-2,-1] \\cup [1,2]$."
+      },
+      {
         type: "formula",
-        front: "Enuncia lo schema risolutivo di $\\sqrt[n]{f(x)} \\ge g(x)$ con $n$ pari.",
-        back: "Due casi, soluzione finale $S = S_1 \\cup S_2$. Caso 1 ($g(x) \\lt 0$): la disuguaglianza è sempre vera se la radice esiste, quindi $\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\lt 0 \\end{cases}$. Caso 2 ($g(x) \\ge 0$): entrambi i membri non negativi, si eleva alla $n$ conservando il verso, $\\begin{cases} g(x) \\ge 0 \\\\ f(x) \\ge [g(x)]^n \\end{cases}$ (qui $f(x) \\ge 0$ è superflua)."
-      },
-      {
-        type: "tranello",
-        front: "Nel sistema del caso $g(x) \\ge 0$ della disequazione $\\sqrt[n]{f(x)} \\ge g(x)$, perché si può omettere $f(x) \\ge 0$? E nel caso $g(x) \\lt 0$?",
-        back: "Se $g(x) \\ge 0$ allora $[g(x)]^n \\ge 0$; dalla condizione $f(x) \\ge [g(x)]^n$ segue $f(x) \\ge 0$ automaticamente, quindi l'esistenza è conseguenza delle altre due condizioni. Nel caso $g(x) \\lt 0$, invece, $f(x) \\ge 0$ è l'<strong>unica</strong> cosa che garantisce l'esistenza della radice e NON può essere omessa."
-      },
-      {
-        type: "formula",
-        front: "Come si risolve $\\sqrt[n]{f(x)} \\le g(x)$ con $n$ pari?",
-        back: "Con un <strong>unico sistema</strong> (nessuna unione di casi): $\\begin{cases} f(x) \\ge 0 \\\\ g(x) \\ge 0 \\\\ f(x) \\le [g(x)]^n \\end{cases}$. La condizione $g(x) \\ge 0$ è necessaria perché il membro sinistro (radice pari) è non negativo: se $g(x)$ fosse negativo avremmo 'non negativo $\\le$ negativo', impossibile."
+        front: "Come si risolve $\\sqrt[n]{f(x)} \\ge g(x)$ con $n$ pari?",
+        back: "Con l'unione di due sistemi. Caso $g(x) \\lt 0$: la disequazione è vera appena la radice esiste, quindi $\\{ f(x) \\ge 0,\\ g(x) \\lt 0 \\} \\to S_1$. Caso $g(x) \\ge 0$: si eleva alla $n$, $\\{ g(x) \\ge 0,\\ f(x) \\ge [g(x)]^n \\} \\to S_2$ (la condizione $f(x) \\ge 0$ qui è superflua). La soluzione è $S = S_1 \\cup S_2$."
       },
       {
         type: "domanda",
-        front: "Che cosa cambia quando l'indice della radice è dispari?",
-        back: "La radice di indice dispari è definita per ogni valore reale dell'argomento e conserva il segno, quindi non impone la non negatività del radicando e si può sempre elevare alla $n$ mantenendo il verso: $\\sqrt[n]{f(x)} \\lessgtr g(x) \\iff f(x) \\lessgtr [g(x)]^n$. Attenzione: si lavora comunque nel dominio comune di $f$ e $g$ — eventuali denominatori devono essere non nulli (es. in $\\sqrt[3]{1/x}$ serve $x \\ne 0$)."
-      },
-      {
-        type: "definizione",
-        front: "Definizione di funzione $f \\colon X \\to Y$. Qual è la terminologia associata?",
-        back: "Dati due insiemi non vuoti $X$ e $Y$, una funzione $f$ da $X$ a $Y$ è una legge che associa ad ogni $x \\in X$ <strong>uno e un solo</strong> $y \\in Y$, indicato $y = f(x)$. $X$ è il <strong>dominio</strong>, $Y$ il <strong>codominio</strong>, $x$ è l'<strong>argomento</strong> o variabile indipendente, $y = f(x)$ è il <strong>valore</strong> o <strong>immagine</strong> di $x$."
+        front: "Perché nel secondo sistema di $\\sqrt[n]{f(x)} \\ge g(x)$ ($n$ pari) la condizione $f(x) \\ge 0$ si può omettere, mentre nel primo no?",
+        back: "Nel secondo sistema si ha $g(x) \\ge 0$, quindi $[g(x)]^n \\ge 0$; dalla condizione $f(x) \\ge [g(x)]^n$ segue $f(x) \\ge 0$ automaticamente. Nel primo sistema invece non c'è alcuna disuguaglianza che coinvolga $f(x)$: senza imporre $f(x) \\ge 0$ la radice potrebbe non esistere, quindi la condizione è indispensabile."
       },
       {
         type: "tranello",
-        front: "Qual è la differenza tra codominio e immagine? Fai un esempio in cui l'inclusione è stretta.",
-        back: "Il codominio $Y$ è l'insieme di arrivo <em>dichiarato</em>, l'immagine $Im(f) = \\{f(x) \\mid x \\in X\\}$ è l'insieme dei valori <em>effettivamente assunti</em>. Vale sempre $Im(f) \\subseteq Y$, ma può essere stretta: per $f \\colon \\R \\to \\R$, $f(x) = x^2$, il codominio è $\\R$ mentre $Im(f) = [0, +\\infty) \\subsetneq \\R$."
-      },
-      {
-        type: "tranello",
-        front: "Il test della retta verticale: come va enunciato con precisione?",
-        back: "Se ogni verticale incontra la curva <strong>al massimo una volta</strong>, è garantita solo l'<strong>unicità</strong> dell'immagine. Per essere il grafico di una funzione con dominio $X$ assegnato serve che ogni verticale di ascissa in $X$ incontri il grafico <strong>esattamente una volta</strong>: il criterio 'al massimo una volta' non garantisce l'<strong>esistenza</strong> di un'immagine per ogni punto di $X$."
+        front: "Per $n$ dispari basta scrivere $f(x) \\lessgtr [g(x)]^n$: non c'è davvero nulla da controllare?",
+        back: "La radice di indice dispari non impone restrizioni di segno sul radicando e conserva il verso quando si eleva alla $n$, quindi non servono né la discussione del segno di $g(x)$ né condizioni di esistenza <em>dovute alla radice</em>. Però l'equivalenza vale nel dominio comune in cui $f$ e $g$ sono definite: per esempio in $\\sqrt[3]{1/x}$ rimane la condizione $x \\ne 0$."
       },
       {
         type: "definizione",
-        front: "Definisci la controimmagine $f^{-1}(B)$ e spiega perché non richiede l'invertibilità di $f$.",
-        back: "$f^{-1}(B) = \\{x \\in X \\mid f(x) \\in B\\}$: l'insieme degli elementi del dominio la cui immagine cade in $B \\subseteq Y$. Qui $f^{-1}$ non è una funzione che agisce su un punto, ma un'<strong>operazione su insiemi</strong>: si calcola risolvendo la condizione $f(x) \\in B$ e $f^{-1}(B)$ può essere vuoto, un singolo punto o infiniti punti — mentre un'inversa dovrebbe dare uno e un solo $x$ per ogni $y$."
+        front: "Quando una funzione si dice crescente, strettamente crescente e monotòna su $A$?",
+        back: "$f$ è crescente in $A$ se per ogni $x_1, x_2 \\in A$ con $x_1 \\le x_2$ vale $f(x_1) \\le f(x_2)$; è strettamente crescente se $x_1 \\lt x_2 \\Rightarrow f(x_1) \\lt f(x_2)$. È monotòna in $A$ se è crescente <em>oppure</em> decrescente in $A$: «monotòna» non significa «crescente», ma «di segno di variazione costante»."
+      },
+      {
+        type: "tranello",
+        front: "Se $f$ è crescente su $I_1$ e su $I_2$, è crescente su $I_1 \\cup I_2$?",
+        back: "No. La definizione va verificata su <strong>ogni coppia</strong> di punti dell'insieme considerato, comprese le coppie con un punto in $I_1$ e l'altro in $I_2$. Nell'esempio a tratti visto a lezione, presi $x_1 = c \\in [a,c]$ e $x_2 = d \\in [d,e]$ si ha $c \\lt d$ ma $f(c) \\gt f(d)$: la crescenza cade. La monotonia va quindi controllata su tutto l'insieme, anche se non è un intervallo."
+      },
+      {
+        type: "domanda",
+        front: "La funzione $1/x$ è decrescente sul suo dominio $\\mathbb{R} \\setminus \\{0\\}$?",
+        back: "No: è strettamente decrescente su $(-\\infty,0)$ e su $(0,+\\infty)$ separatamente, ma non sull'unione. Controesempio: $x = -1 \\lt 1 = y$, però $f(-1) = -1 \\lt 1 = f(1)$, cioè $f(x) \\lt f(y)$, il che viola la decrescenza."
       },
       {
         type: "dimostrazione",
-        front: "Calcola $f^{-1}([1,4])$ per $f(x) = x^2$ su $\\R$.",
-        back: "Si impone $1 \\le x^2 \\le 4$, equivalente al sistema $\\begin{cases} x^2 \\ge 1 \\\\ x^2 \\le 4 \\end{cases}$. La prima dà $(-\\infty,-1] \\cup [1,+\\infty)$, la seconda $[-2,2]$. Intersecando: $f^{-1}([1,4]) = [-2,-1] \\cup [1,2]$."
-      },
-      {
-        type: "domanda",
-        front: "Può un insieme $B \\ne \\emptyset$ avere controimmagine vuota? Esempio.",
-        back: "Sì. Per $f(x) = x^2$ su $\\R$ e $B = [-6,-5]$: la condizione $-6 \\le x^2 \\le -5$ non è mai soddisfatta perché $x^2 \\ge 0$, quindi $f^{-1}([-6,-5]) = \\emptyset$ pur essendo $B \\ne \\emptyset$."
-      },
-      {
-        type: "definizione",
-        front: "Definisci funzione crescente, strettamente crescente e monotòna su $A \\subseteq X$.",
-        back: "$f$ è <strong>crescente</strong> in $A$ se per ogni $x_1, x_2 \\in A$ con $x_1 \\le x_2$ vale $f(x_1) \\le f(x_2)$; è <strong>strettamente crescente</strong> se $x_1 \\lt x_2 \\Rightarrow f(x_1) \\lt f(x_2)$. Analogamente decrescente con $\\ge$ (e $\\gt$ per lo stretto). $f$ è <strong>monotòna</strong> in $A$ se è crescente <em>oppure</em> decrescente in $A$; strettamente monotòna se strettamente crescente oppure strettamente decrescente."
+        front: "Dimostra che se $f$ e $g$ sono crescenti in $A$ allora $f+g$ è crescente in $A$.",
+        back: "Siano $x, y \\in A$ con $x \\le y$. Per ipotesi $f(x) \\le f(y)$ e $g(x) \\le g(y)$. Sommando membro a membro le due disuguaglianze (lecito perché hanno lo stesso verso) si ottiene $f(x)+g(x) \\le f(y)+g(y)$, cioè $(f+g)(x) \\le (f+g)(y)$: la tesi."
       },
       {
         type: "tranello",
-        front: "Se $f$ è crescente su $I_1$ e crescente su $I_2$, è crescente su $I_1 \\cup I_2$?",
-        back: "<strong>NO.</strong> La definizione va verificata per <em>ogni</em> coppia di punti dell'insieme, anche quando appartengono a tratti diversi. Controesempio dalla funzione a tratti vista a lezione: prendendo $x_1 = c \\in [a,c]$ e $x_2 = d \\in [d,e]$ si ha $c \\lt d$ ma $f(c) \\gt f(d)$, quindi la condizione $f(x_1) \\le f(x_2)$ è violata."
-      },
-      {
-        type: "dimostrazione",
-        front: "Mostra che $f(x) = 1/x$ non è decrescente su $\\R \\setminus \\{0\\}$, pur essendolo su ciascun ramo.",
-        back: "Prendiamo due punti su rami diversi: $x = -1$, $y = 1$, con $x \\lt y$. Se $f$ fosse decrescente dovrebbe valere $f(x) \\ge f(y)$, ma $f(-1) = -1$ e $f(1) = 1$, cioè $f(x) = -1 \\lt 1 = f(y)$. La condizione è violata: $1/x$ è strettamente decrescente su $(-\\infty,0)$ e su $(0,+\\infty)$ separatamente, ma non sull'unione."
-      },
-      {
-        type: "domanda",
-        front: "Una funzione costante $f(x) = c$ è monotòna?",
-        back: "Sì: è <strong>sia crescente sia decrescente</strong> (in senso lato), perché per $x_1 \\le x_2$ vale l'uguaglianza $f(x_1) = f(x_2)$, dunque valgono sia $\\le$ sia $\\ge$. Quindi è monotòna, ma <strong>non strettamente monotòna</strong>: non è né strettamente crescente né strettamente decrescente."
-      },
-      {
-        type: "dimostrazione",
-        front: "Dimostra che se $f$ è crescente in $A$, allora $-f$ è decrescente in $A$; e che la somma di due funzioni crescenti è crescente.",
-        back: "(1) Per $x \\le y$ vale $f(x) \\le f(y)$; moltiplicando per $-1$ il verso si inverte: $-f(x) \\ge -f(y)$, che è la definizione di decrescenza per $-f$. (2) Se $f(x) \\le f(y)$ e $g(x) \\le g(y)$, sommando membro a membro (lecito, stesso verso) si ottiene $f(x)+g(x) \\le f(y)+g(y)$, cioè $(f+g)(x) \\le (f+g)(y)$."
-      },
-      {
-        type: "tranello",
-        front: "Sotto quali ipotesi il reciproco $1/f$ di una funzione crescente è decrescente? Basta $f \\ne 0$?",
-        back: "Serve che $f$ sia crescente <strong>e abbia segno costante</strong> in $A$ ($f \\gt 0$ ovunque oppure $f \\lt 0$ ovunque). La sola ipotesi $f(x) \\ne 0$ non basta: $f(x) = x$ su $\\R \\setminus \\{0\\}$ è crescente e mai nulla, ma $1/x$ non è decrescente su $\\R \\setminus \\{0\\}$ (contro esempio $x=-1$, $y=1$)."
-      },
-      {
-        type: "domanda",
-        front: "Monotonia delle funzioni potenza e radice: riassumi i casi.",
-        back: "Potenze: $x^n$ con $n$ <strong>pari</strong> è strettamente decrescente su $(-\\infty,0]$ e strettamente crescente su $[0,+\\infty)$ (funzione pari, grafico simmetrico rispetto all'asse $y$); con $n$ <strong>dispari</strong> è strettamente crescente su tutto $\\R$ (funzione dispari, simmetrica rispetto all'origine). Radici: $\\sqrt{x}$ ha dominio $[0,+\\infty)$ ed è strettamente crescente lì; $\\sqrt[3]{x}$ ha dominio $\\R$ ed è strettamente crescente su tutto $\\R$."
+        front: "Se $f$ è crescente e non si annulla mai su $A$, allora $1/f$ è decrescente su $A$. Vero o falso?",
+        back: "Falso così com'è enunciato: serve che $f$ abbia <strong>segno costante</strong> su $A$ (sempre positiva oppure sempre negativa). Controesempio: $f(x) = x$ su $\\mathbb{R}\\setminus\\{0\\}$ è crescente e mai nulla, ma $1/x$ non è decrescente su $\\mathbb{R}\\setminus\\{0\\}$."
       },
       {
         type: "definizione",
-        front: "Che cos'è una successione? E che cos'è il dominio naturale di una funzione?",
-        back: "Una <strong>successione</strong> di numeri reali è una funzione con dominio $\\N$ (o un suo sottoinsieme del tipo $\\{n \\ge n_0\\}$): $a \\colon \\N \\to \\R$, scritta con notazione indiciale $a_n$ ($n$-esimo termine). Esempio: $a_n = 1/n$ ha dominio naturale $\\N \\setminus \\{0\\}$. Il <strong>dominio naturale</strong> di una funzione data da un'espressione analitica è il più grande sottoinsieme di $\\R$ per cui l'espressione ha significato: per $\\sqrt{x}$ è $[0,+\\infty)$, per $\\sqrt[3]{x}$ è tutto $\\R$."
+        front: "Che cos'è una successione e come si indica il suo termine generico?",
+        back: "Una successione di numeri reali è una funzione $a \\colon \\mathbb{N} \\to \\mathbb{R}$, cioè una funzione il cui dominio è l'insieme dei naturali (eventualmente i naturali da un certo $n_0$ in poi). Si usa la notazione indiciale $a_n$ invece di $a(n)$; $a_n$ è il termine $n$-esimo. Esempio: $a_n = 1/n$ ha dominio $\\mathbb{N} \\setminus \\{0\\}$."
+      },
+      {
+        type: "domanda",
+        front: "Qual è la monotonia di $x^2$, $x^3$, $\\sqrt{x}$ e $\\sqrt[3]{x}$?",
+        back: "$x^2$ (esponente pari, funzione pari) è strettamente decrescente su $(-\\infty,0]$ e strettamente crescente su $[0,+\\infty)$. $x^3$ (esponente dispari, funzione dispari) è strettamente crescente su tutto $\\mathbb{R}$. $\\sqrt{x}$ ha dominio $[0,+\\infty)$ ed è strettamente crescente lì. $\\sqrt[3]{x}$ ha dominio $\\mathbb{R}$ ed è strettamente crescente su tutto $\\mathbb{R}$."
       }
     ]
 };
