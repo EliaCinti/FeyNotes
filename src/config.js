@@ -266,6 +266,7 @@ const COURSES = {
     ],
     lessons: [
       { id: 'L01', num: 'Lezione 1', date: '23 Set 2026', title: 'Linguaggio matematico, insiemi e corrispondenze', abstract: 'Notazioni logiche, insiemi numerici, inclusione e insieme delle parti. Operazioni insiemistiche e loro proprietà, dimostrazioni per doppia inclusione, prodotto cartesiano, partizioni e corrispondenze.', category: 'insiemi-e-relazioni' },
+      { id: 'L02', num: 'Lezione 2', date: '24 Set 2026', title: 'Costruzioni tra Corrispondenze, Relazioni e Funzioni', abstract: 'Dalle costruzioni su una corrispondenza (complementare, inversa) alle costruzioni tra due corrispondenze (operazioni insiemistiche, composizione), fino alle potenze, alle relazioni e alla definizione di funzione con immagine e controimmagine.', category: 'insiemi-e-relazioni' },
     ],
   },
 };
