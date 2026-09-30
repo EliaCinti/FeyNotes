@@ -616,6 +616,24 @@ a:hover { color: var(--text-primary); }
   border-color: var(--border);
   background: var(--bg-card);
 }
+/* Categories with no lesson yet: one quiet line at the bottom of the course page */
+.fn-upcoming {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  padding: 14px 18px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+.fn-upcoming-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-right: 8px;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    SHARED FOOTER

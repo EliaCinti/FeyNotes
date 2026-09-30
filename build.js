@@ -213,6 +213,37 @@ function validateCategories(courses = COURSES) {
   return errors;
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  COURSE PAGE LAYOUT
+// ═══════════════════════════════════════════════════════════════
+
+// The teaching number of a lesson ("Lezione 22" -> 22, "Guida 3" -> 3). The id is
+// no good for ordering: in Fisica 1 "Lezione 22" is L27.
+function numeroLezione(lesson) {
+  const m = String(lesson.num || '').match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : Infinity;
+}
+
+// The order of a course page. Sections follow their FIRST lesson, not the order the
+// categories were written in config.js: Analisi 1 had them written backwards
+// (equazioni differenziali ... numeri reali), so L01 ended up at the bottom of the
+// page, under five empty "Prossimamente" cards. Lessons inside a section go by number.
+// Categories with no lesson yet are returned apart, in config order, for one
+// "In arrivo" line at the bottom.
+function ordinaCategorie(course) {
+  const piene = [];
+  const vuote = [];
+  for (const cat of course.categories) {
+    const lessons = course.lessons
+      .filter(l => l.category === cat.id)
+      .sort((a, b) => numeroLezione(a) - numeroLezione(b));
+    if (lessons.length) piene.push({ cat, lessons });
+    else vuote.push(cat);
+  }
+  piene.sort((a, b) => numeroLezione(a.lessons[0]) - numeroLezione(b.lessons[0]));
+  return { piene, vuote };
+}
+
 // Which course owns a --lesson id. An explicit --course always wins; without
 // one, an id that exists in more than one course (ids are only unique within
 // a course, e.g. every course's intro lesson is "L01") must not silently pick
@@ -242,31 +273,28 @@ function buildCourseIndex(courseId) {
   }
   const template = fs.readFileSync(templatePath, 'utf-8');
 
-  // Build category sections HTML
+  // Build category sections HTML — in the order of their first lesson, empty ones
+  // folded into one "In arrivo" line at the bottom (see ordinaCategorie).
+  const { piene, vuote } = ordinaCategorie(course);
   let categorySections = '';
-  for (const cat of course.categories) {
-    const hasLessons = course.lessons.some(l => l.category === cat.id);
+  for (const { cat } of piene) {
     categorySections += `
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// ${cat.label}</div>
-    <div class="fn-grid" id="${cat.gridId}">`;
-
-    if (!hasLessons) {
-      categorySections += `
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di ${cat.label} saranno aggiunte man mano che il corso procede.</div>
-      </div>`;
-    }
-
+    <div class="fn-grid" id="${cat.gridId}"></div>
+  </div>
+`;
+  }
+  if (vuote.length) {
     categorySections += `
-    </div>
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> ${vuote.map(c => c.label).join(' · ')}</div>
   </div>
 `;
   }
 
   // Build lesson index JSON for client-side JS
-  const lessonIndex = course.lessons.map(l => ({
+  const lessonIndex = piene.flatMap(p => p.lessons).map(l => ({
     id: l.id,
     num: l.num,
     date: l.date,
@@ -277,8 +305,8 @@ function buildCourseIndex(courseId) {
   }));
 
   // Build populate calls
-  const populateCalls = course.categories
-    .map(cat => `populateGrid('${cat.gridId}', '${cat.id}');`)
+  const populateCalls = piene
+    .map(({ cat }) => `populateGrid('${cat.gridId}', '${cat.id}');`)
     .join('\n');
 
   const vars = {
@@ -570,7 +598,7 @@ function main() {
   console.log('✅ Build complete!');
 }
 
-module.exports = { validateCategories, resolveCourseForLesson, renderHomeCourses, themeOf };
+module.exports = { validateCategories, resolveCourseForLesson, renderHomeCourses, themeOf, ordinaCategorie };
 
 if (require.main === module) {
   main();

@@ -10,7 +10,7 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 20,
+  cssVersion: 21,
 };
 
 const COURSES = {
@@ -203,13 +203,13 @@ const COURSES = {
       { label: 'Lezioni', href: '/analisi1/', active: true },
     ],
     categories: [
-      { id: 'equazioni-differenziali', label: 'equazioni differenziali', gridId: 'equazioni-differenziali-grid' },
-      { id: 'numeri-complessi', label: 'numeri complessi', gridId: 'numeri-complessi-grid' },
-      { id: 'integrali', label: 'integrali', gridId: 'integrali-grid' },
-      { id: 'derivate', label: 'derivate e studio di funzione', gridId: 'derivate-grid' },
-      { id: 'limiti-e-continuita', label: 'limiti e continuità', gridId: 'limiti-e-continuita-grid' },
-      { id: 'funzioni e successioni', label: 'funzioni e successioni', gridId: 'funzioni e successioni-grid' },
       { id: 'numeri-reali', label: 'numeri reali, insiemi e completezza', gridId: 'numeri-reali-grid' },
+      { id: 'funzioni e successioni', label: 'funzioni e successioni', gridId: 'funzioni e successioni-grid' },
+      { id: 'limiti-e-continuita', label: 'limiti e continuità', gridId: 'limiti-e-continuita-grid' },
+      { id: 'derivate', label: 'derivate e studio di funzione', gridId: 'derivate-grid' },
+      { id: 'integrali', label: 'integrali', gridId: 'integrali-grid' },
+      { id: 'numeri-complessi', label: 'numeri complessi', gridId: 'numeri-complessi-grid' },
+      { id: 'equazioni-differenziali', label: 'equazioni differenziali', gridId: 'equazioni-differenziali-grid' },
     ],   // si aggiungono man mano che il corso avanza
 
     lessons: [

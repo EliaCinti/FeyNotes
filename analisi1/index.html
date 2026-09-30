@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://feynotes.eliacinti.dev/analisi1/">
   <link rel="canonical" href="https://feynotes.eliacinti.dev/analisi1/">
-  <link rel="stylesheet" href="/css/base.css?v=20">
+  <link rel="stylesheet" href="/css/base.css?v=21">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script type="application/ld+json">{
@@ -67,65 +67,17 @@
 
   
   <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// equazioni differenziali</div>
-    <div class="fn-grid" id="equazioni-differenziali-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di equazioni differenziali saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// numeri complessi</div>
-    <div class="fn-grid" id="numeri-complessi-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di numeri complessi saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// integrali</div>
-    <div class="fn-grid" id="integrali-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di integrali saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// derivate e studio di funzione</div>
-    <div class="fn-grid" id="derivate-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di derivate e studio di funzione saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// limiti e continuità</div>
-    <div class="fn-grid" id="limiti-e-continuita-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di limiti e continuità saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
+    <div class="fn-section-label">// numeri reali, insiemi e completezza</div>
+    <div class="fn-grid" id="numeri-reali-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// funzioni e successioni</div>
-    <div class="fn-grid" id="funzioni e successioni-grid">
-    </div>
+    <div class="fn-grid" id="funzioni e successioni-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// numeri reali, insiemi e completezza</div>
-    <div class="fn-grid" id="numeri-reali-grid">
-    </div>
+    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> limiti e continuità · derivate e studio di funzione · integrali · numeri complessi · equazioni differenziali</div>
   </div>
 
 
@@ -223,13 +175,8 @@ function populateGrid(gridId, category) {
   }
 }
 
-populateGrid('equazioni-differenziali-grid', 'equazioni-differenziali');
-populateGrid('numeri-complessi-grid', 'numeri-complessi');
-populateGrid('integrali-grid', 'integrali');
-populateGrid('derivate-grid', 'derivate');
-populateGrid('limiti-e-continuita-grid', 'limiti-e-continuita');
-populateGrid('funzioni e successioni-grid', 'funzioni e successioni');
 populateGrid('numeri-reali-grid', 'numeri-reali');
+populateGrid('funzioni e successioni-grid', 'funzioni e successioni');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;

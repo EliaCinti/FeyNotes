@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://feynotes.eliacinti.dev/geometria/">
   <link rel="canonical" href="https://feynotes.eliacinti.dev/geometria/">
-  <link rel="stylesheet" href="/css/base.css?v=20">
+  <link rel="stylesheet" href="/css/base.css?v=21">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script type="application/ld+json">{
@@ -68,42 +68,31 @@
   
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// spazi vettoriali</div>
-    <div class="fn-grid" id="spazi-grid">
-    </div>
+    <div class="fn-grid" id="spazi-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// matrici</div>
-    <div class="fn-grid" id="matrici-grid">
-    </div>
+    <div class="fn-grid" id="matrici-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// sistemi lineari</div>
-    <div class="fn-grid" id="sistemi-grid">
-    </div>
+    <div class="fn-grid" id="sistemi-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// applicazioni lineari</div>
-    <div class="fn-grid" id="applicazioni-grid">
-    </div>
+    <div class="fn-grid" id="applicazioni-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// forme quadratiche</div>
-    <div class="fn-grid" id="forme-grid">
-    </div>
+    <div class="fn-grid" id="forme-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// geometria analitica</div>
-    <div class="fn-grid" id="geoanalitica-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di geometria analitica saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
+    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> geometria analitica</div>
   </div>
 
 
@@ -476,7 +465,6 @@ populateGrid('matrici-grid', 'matrici');
 populateGrid('sistemi-grid', 'sistemi-lineari');
 populateGrid('applicazioni-grid', 'applicazioni-lineari');
 populateGrid('forme-grid', 'forme-quadratiche');
-populateGrid('geoanalitica-grid', 'geometria-analitica');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;

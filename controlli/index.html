@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://feynotes.eliacinti.dev/controlli/">
   <link rel="canonical" href="https://feynotes.eliacinti.dev/controlli/">
-  <link rel="stylesheet" href="/css/base.css?v=20">
+  <link rel="stylesheet" href="/css/base.css?v=21">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script type="application/ld+json">{
@@ -68,68 +68,36 @@
   
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// blocco 1 — equilibrio e linearizzazione</div>
-    <div class="fn-grid" id="blocco1-grid">
-    </div>
+    <div class="fn-grid" id="blocco1-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// blocco 2 — sistemi meccanici</div>
-    <div class="fn-grid" id="blocco2-grid">
-    </div>
+    <div class="fn-grid" id="blocco2-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// blocco 4 — dalla soluzione al sistema</div>
-    <div class="fn-grid" id="blocco4-grid">
-    </div>
+    <div class="fn-grid" id="blocco4-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// blocco 5 — fratti semplici</div>
-    <div class="fn-grid" id="blocco5-grid">
-    </div>
+    <div class="fn-grid" id="blocco5-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// blocco 6 — equazioni differenziali</div>
-    <div class="fn-grid" id="blocco6-grid">
-    </div>
+    <div class="fn-grid" id="blocco6-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
     <div class="fn-section-label">// blocco 7 — equazioni alle differenze</div>
-    <div class="fn-grid" id="blocco7-grid">
-    </div>
+    <div class="fn-grid" id="blocco7-grid"></div>
   </div>
 
   <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// blocco 8</div>
-    <div class="fn-grid" id="blocco8-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di blocco 8 saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// blocco 9</div>
-    <div class="fn-grid" id="blocco9-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di blocco 9 saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="fn-section fn-fade fn-d3">
-    <div class="fn-section-label">// blocco 10</div>
-    <div class="fn-grid" id="blocco10-grid">
-      <div class="fn-card fn-card--placeholder">
-        <div class="fn-card-num">Prossimamente</div>
-        <div class="fn-card-title">Le lezioni di blocco 10 saranno aggiunte man mano che il corso procede.</div>
-      </div>
-    </div>
+    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> blocco 8 · blocco 9 · blocco 10</div>
   </div>
 
 
@@ -233,9 +201,6 @@ populateGrid('blocco4-grid', 'blocco-4');
 populateGrid('blocco5-grid', 'blocco-5');
 populateGrid('blocco6-grid', 'blocco-6');
 populateGrid('blocco7-grid', 'blocco-7');
-populateGrid('blocco8-grid', 'blocco-8');
-populateGrid('blocco9-grid', 'blocco-9');
-populateGrid('blocco10-grid', 'blocco-10');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;
