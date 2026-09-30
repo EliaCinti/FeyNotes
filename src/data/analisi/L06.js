@@ -1,0 +1,8112 @@
+const LESSON = {
+    id: "L06", date: "Lezione 6 — 30 Set 2026",
+    title: "Monotonia, Parità e Funzioni Limitate",
+    abstract: "Proprietà globali delle funzioni: monotonia (anche per successioni), parità e simmetrie del grafico, limitatezza, estremo superiore e inferiore, massimo e minimo assoluto. Con la caratterizzazione di sup e inf tramite $\\varepsilon$ e la distinzione fra estremo assunto e non assunto.",
+
+    sections: [
+      {
+        id: "s06-convenzione",
+        type: "alert_box",
+        title: "Convenzione valida per tutto il capitolo",
+        icon: "⚠️",
+        content: `<p>In tutto il capitolo, quando scriviamo $f: X \\to \\mathbb{R}$ con $X \\subseteq \\mathbb{R}$, assumiamo <strong>sempre</strong> che il dominio $X$ sia un insieme <strong>non vuoto</strong>, cioè $X \\neq \\emptyset$.</p>
+<p>Questa richiesta non è un dettaglio formale: se $X$ fosse vuoto, anche l'immagine $\\operatorname{Im}(f)$ sarebbe vuota, e l'insieme vuoto non possiede né estremo superiore né estremo inferiore reali (ogni numero reale ne è contemporaneamente maggiorante e minorante, quindi non esiste un minimo dei maggioranti in $\\mathbb{R}$). Le definizioni di $\\sup$, $\\inf$, $\\max$ e $\\min$ che incontreremo hanno senso solo su domini non vuoti.</p>`
+      },
+
+      {
+        id: "s06-funzioni-monotone",
+        type: "section",
+        title: "Funzioni Monotone",
+        icon: "📈",
+        content: `<p>Iniziamo con il concetto di <strong>monotonia</strong>, che descrive il comportamento di una funzione rispetto all'ordine: se una funzione "cresce" o "decresce" al crescere della variabile indipendente.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Funzione monotona",
+            content: `<p>Sia $f: X \\to \\mathbb{R}$ una funzione con $X \\subseteq \\mathbb{R}$ non vuoto. La funzione $f$ si dice:</p>
+<ul>
+  <li><strong>monotona crescente</strong> (o non decrescente) in $X$ se per ogni $x_1, x_2 \\in X$ con $x_1 \\le x_2$ si ha $f(x_1) \\le f(x_2)$;</li>
+  <li><strong>monotona decrescente</strong> (o non crescente) in $X$ se per ogni $x_1, x_2 \\in X$ con $x_1 \\le x_2$ si ha $f(x_1) \\ge f(x_2)$.</li>
+</ul>
+<p>Una funzione che sia crescente o decrescente si dice semplicemente <strong>monotona</strong>.</p>`
+          },
+          {
+            subtitle: "Monotonia stretta",
+            content: `<p>Se le disuguaglianze valgono in senso stretto, parliamo di funzioni <strong>strettamente monotone</strong>:</p>
+<ul>
+  <li>$f$ è <strong>strettamente crescente</strong> se $\\forall x_1, x_2 \\in X$ con $x_1 \\lt x_2 \\Rightarrow f(x_1) \\lt f(x_2)$;</li>
+  <li>$f$ è <strong>strettamente decrescente</strong> se $\\forall x_1, x_2 \\in X$ con $x_1 \\lt x_2 \\Rightarrow f(x_1) \\gt f(x_2)$.</li>
+</ul>
+<p>Una funzione monotona ha un comportamento "unico" in un intervallo: o cresce sempre, o decresce sempre. <strong>Non può oscillare.</strong></p>`
+          },
+          {
+            subtitle: "Intervalli di monotonia",
+            content: `<p>Spesso una funzione non è monotona su tutto il suo dominio, ma lo è su alcuni sottointervalli.</p>
+<p>Si dicono <strong>intervalli di monotonia</strong> di una funzione $f$ gli intervalli <em>massimali</em> del suo dominio in cui la funzione è crescente o decrescente — massimali nel senso che non sono contenuti propriamente in un intervallo più grande del dominio su cui $f$ conserva lo stesso tipo di monotonia. Se in tali intervalli la funzione è strettamente crescente o strettamente decrescente, si parla di <strong>intervalli di monotonia stretta</strong>.</p>
+<p><strong>Esempio.</strong> La funzione $f(x) = x^2$ non è monotona su tutto $\\mathbb{R}$. Tuttavia:</p>
+<ul>
+  <li>è strettamente decrescente nell'intervallo $(-\\infty, 0]$;</li>
+  <li>è strettamente crescente nell'intervallo $[0, +\\infty)$.</li>
+</ul>
+<p>Quindi $(-\\infty, 0]$ e $[0, +\\infty)$ sono i suoi intervalli di monotonia stretta.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-successioni-monotone",
+        type: "section",
+        title: "Successioni Monotone",
+        icon: "🔢",
+        content: `<p>Il concetto di monotonia si applica in modo naturale anche alle <strong>successioni</strong>, che sono funzioni definite sull'insieme dei numeri naturali $\\mathbb{N}$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Successione monotona",
+            content: `<p>Sia $\\{a_n\\}_{n \\in \\mathbb{N}}$ una successione. Essa si dice:</p>
+<ul>
+  <li><strong>crescente</strong> se $\\forall n, m \\in \\mathbb{N}$ con $n \\le m \\Rightarrow a_n \\le a_m$;</li>
+  <li><strong>decrescente</strong> se $\\forall n, m \\in \\mathbb{N}$ con $n \\le m \\Rightarrow a_n \\ge a_m$;</li>
+  <li><strong>strettamente crescente</strong> se $\\forall n, m \\in \\mathbb{N}$ con $n \\lt m \\Rightarrow a_n \\lt a_m$;</li>
+  <li><strong>strettamente decrescente</strong> se $\\forall n, m \\in \\mathbb{N}$ con $n \\lt m \\Rightarrow a_n \\gt a_m$.</li>
+</ul>`
+          },
+          {
+            subtitle: "Verifica della monotonia per successioni",
+            content: `<p>A differenza delle funzioni su domini continui, per le successioni la verifica della monotonia è <strong>più semplice</strong>. Poiché il dominio è discreto, è sufficiente confrontare ogni termine con il suo <strong>successivo</strong>. Una successione $\\{a_n\\}$ è:</p>
+<ul>
+  <li><strong>crescente</strong> se $a_n \\le a_{n+1}$ per ogni $n \\in \\mathbb{N}$;</li>
+  <li><strong>decrescente</strong> se $a_n \\ge a_{n+1}$ per ogni $n \\in \\mathbb{N}$;</li>
+  <li><strong>strettamente crescente</strong> se $a_n \\lt a_{n+1}$ per ogni $n \\in \\mathbb{N}$;</li>
+  <li><strong>strettamente decrescente</strong> se $a_n \\gt a_{n+1}$ per ogni $n \\in \\mathbb{N}$.</li>
+</ul>`
+          }
+        ],
+        formulas: [
+          { label: "Crescente (successione)", latex: "a_n \\le a_{n+1} \\quad \\forall n \\in \\mathbb{N}" },
+          { label: "Strettamente decrescente (successione)", latex: "a_n \\gt a_{n+1} \\quad \\forall n \\in \\mathbb{N}" }
+        ]
+      },
+
+      {
+        id: "s06-es-svolto-1-su-n",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Monotonia della successione $a_n = 1/n$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Studiamo la monotonia della successione $a_n = \\dfrac{1}{n}$ per $n \\ge 1$.</p>`,
+        steps: [
+          `<strong>Ipotesi.</strong> Ci aspettiamo che la successione sia decrescente, poiché al crescere del denominatore $n$ il valore della frazione diminuisce.`,
+          `<strong>Verifica.</strong> Dobbiamo dimostrare che $a_n \\ge a_{n+1}$ per ogni $n \\ge 1$. In questo caso proviamo la monotonia stretta, cioè $a_n \\gt a_{n+1}$: $$\\frac{1}{n} \\gt \\frac{1}{n+1}$$`,
+          `Poiché $n \\ge 1$, sia $n$ che $n+1$ sono positivi: possiamo moltiplicare entrambi i membri per $n(n+1)$ <strong>senza cambiare il verso</strong> della disuguaglianza. $$n(n+1) \\cdot \\frac{1}{n} \\gt n(n+1) \\cdot \\frac{1}{n+1} \\quad \\Longleftrightarrow \\quad n+1 \\gt n \\quad \\Longleftrightarrow \\quad 1 \\gt 0$$`,
+          `L'ultima disuguaglianza è vera, quindi la successione è <strong>strettamente decrescente</strong>.`,
+          `Nel grafico seguente i punti rappresentano i primi termini della successione; la curva tratteggiata $y = 1/x$ è mostrata solo come riferimento. <figure class="figura" data-id="analisi1_lez06a_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06a_g1-figure_1">
+  <g id="analisi1_lez06a_g1-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06a_g1-axes_1">
+   <g id="analisi1_lez06a_g1-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06a_g1-matplotlib.axis_1">
+    <g id="analisi1_lez06a_g1-xtick_1">
+     <g id="analisi1_lez06a_g1-line2d_1">
+      <path d="M 101.76 364 
+L 101.76 24 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_2">
+      <defs>
+       <path id="analisi1_lez06a_g1-m12b1cde133" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m12b1cde133" x="101.76" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_1">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(98.260625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-xtick_2">
+     <g id="analisi1_lez06a_g1-line2d_3">
+      <path d="M 215.68 364 
+L 215.68 24 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m12b1cde133" x="215.68" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(212.180625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-xtick_3">
+     <g id="analisi1_lez06a_g1-line2d_5">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m12b1cde133" x="329.6" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_3">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(326.100625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-xtick_4">
+     <g id="analisi1_lez06a_g1-line2d_7">
+      <path d="M 443.52 364 
+L 443.52 24 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m12b1cde133" x="443.52" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_4">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(440.020625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-xtick_5">
+     <g id="analisi1_lez06a_g1-line2d_9">
+      <path d="M 557.44 364 
+L 557.44 24 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m12b1cde133" x="557.44" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_5">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(553.940625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-18"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-matplotlib.axis_2">
+    <g id="analisi1_lez06a_g1-ytick_1">
+     <g id="analisi1_lez06a_g1-line2d_11">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_12">
+      <defs>
+       <path id="analisi1_lez06a_g1-m1610b38291" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m1610b38291" x="44.8" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_6">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(31.30125 368.178711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-ytick_2">
+     <g id="analisi1_lez06a_g1-line2d_13">
+      <path d="M 44.8 307.333333 
+L 614.4 307.333333 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m1610b38291" x="44.8" y="307.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_7">
+      <!-- 0.2 -->
+      <g style="fill: currentColor" transform="translate(20.806563 311.512044) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g1-DejaVuSans-11" d="M 684 794 
+L 1344 794 
+L 1344 0 
+L 684 0 
+L 684 794 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-15" transform="translate(95.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-ytick_3">
+     <g id="analisi1_lez06a_g1-line2d_15">
+      <path d="M 44.8 293.166667 
+L 614.4 293.166667 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m1610b38291" x="44.8" y="293.166667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_8">
+      <!-- 0.25 -->
+      <g style="fill: currentColor" transform="translate(13.807813 297.345378) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-15" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-18" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-ytick_4">
+     <g id="analisi1_lez06a_g1-line2d_17">
+      <path d="M 44.8 269.555556 
+L 614.4 269.555556 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m1610b38291" x="44.8" y="269.555556" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_9">
+      <!-- 0.33 -->
+      <g style="fill: currentColor" transform="translate(13.807813 273.734266) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-16" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-16" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-ytick_5">
+     <g id="analisi1_lez06a_g1-line2d_19">
+      <path d="M 44.8 222.333333 
+L 614.4 222.333333 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m1610b38291" x="44.8" y="222.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_10">
+      <!-- 0.5 -->
+      <g style="fill: currentColor" transform="translate(20.806563 226.512044) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-18" transform="translate(95.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g1-ytick_6">
+     <g id="analisi1_lez06a_g1-line2d_21">
+      <path d="M 44.8 80.666667 
+L 614.4 80.666667 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g1-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g1-m1610b38291" x="44.8" y="80.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g1-text_11">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(31.30125 84.845378) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_23">
+    <defs>
+     <path id="analisi1_lez06a_g1-m5ceaad6296" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g1-m5ceaad6296" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_24">
+    <defs>
+     <path id="analisi1_lez06a_g1-mccfc60a120" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g1-mccfc60a120" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_25">
+    <path d="M 76.271524 -1 
+L 79.479566 11.779506 
+L 82.805004 24.11339 
+L 86.130442 35.612695 
+L 89.45588 46.359358 
+L 92.781318 56.424928 
+L 96.581818 67.174603 
+L 100.382319 77.198255 
+L 104.182819 86.567034 
+L 107.983319 95.343087 
+L 111.78382 103.580938 
+L 115.58432 111.328623 
+L 119.859883 119.511575 
+L 124.135446 127.181132 
+L 128.411009 134.384139 
+L 132.686572 141.161911 
+L 136.962135 147.551025 
+L 141.712761 154.233611 
+L 146.463386 160.515923 
+L 151.214012 166.432878 
+L 155.964637 172.015447 
+L 161.190325 177.802868 
+L 166.416013 183.251574 
+L 171.641701 188.390454 
+L 177.342452 193.673268 
+L 183.043203 198.647522 
+L 188.743953 203.339481 
+L 194.919766 208.130917 
+L 201.09558 212.644836 
+L 207.746455 217.222438 
+L 214.397331 221.531278 
+L 221.523269 225.87572 
+L 228.649208 229.963043 
+L 236.250209 234.064385 
+L 244.326272 238.155708 
+L 252.402335 241.997247 
+L 260.953461 245.817128 
+L 269.97965 249.598024 
+L 279.480901 253.32508 
+L 288.982152 256.816953 
+L 298.958465 260.253881 
+L 309.409842 263.625745 
+L 320.33628 266.924227 
+L 332.212844 270.272129 
+L 344.56447 273.517468 
+L 357.391159 276.658011 
+L 371.167973 279.797083 
+L 385.41985 282.81547 
+L 400.621852 285.805348 
+L 416.773978 288.74988 
+L 433.87623 291.635176 
+L 451.928607 294.450063 
+L 470.931109 297.185826 
+L 491.358799 299.896468 
+L 512.736614 302.507256 
+L 535.539616 305.067453 
+L 559.767807 307.563973 
+L 585.896247 310.029603 
+L 613.924937 312.44576 
+L 614.4 312.484848 
+L 614.4 312.484848 
+" clip-path="url(#analisi1_lez06a_g1-p395c312b26)" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #7c4dff; stroke-width: 2"/>
+   </g>
+   <g id="analisi1_lez06a_g1-patch_3">
+    <path d="M 44.8 364 
+L 44.8 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g1-patch_4">
+    <path d="M 44.8 364 
+L 614.4 364 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g1-text_12">
+    <g style="fill: currentColor" transform="translate(107.76 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_g1-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-14" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-text_13">
+    <g style="fill: currentColor" transform="translate(221.68 216.333333) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-15" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-text_14">
+    <g style="fill: currentColor" transform="translate(335.6 263.555556) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-16" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-text_15">
+    <g style="fill: currentColor" transform="translate(449.52 287.166667) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-17" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-text_16">
+    <g style="fill: currentColor" transform="translate(563.44 301.333333) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-18" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_26">
+    <defs>
+     <path id="analisi1_lez06a_g1-m2b2eec118c" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06a_g1-p395c312b26)">
+     <use xlink:href="#analisi1_lez06a_g1-m2b2eec118c" x="101.76" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_27">
+    <g clip-path="url(#analisi1_lez06a_g1-p395c312b26)">
+     <use xlink:href="#analisi1_lez06a_g1-m2b2eec118c" x="215.68" y="222.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_28">
+    <g clip-path="url(#analisi1_lez06a_g1-p395c312b26)">
+     <use xlink:href="#analisi1_lez06a_g1-m2b2eec118c" x="329.6" y="269.555556" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_29">
+    <g clip-path="url(#analisi1_lez06a_g1-p395c312b26)">
+     <use xlink:href="#analisi1_lez06a_g1-m2b2eec118c" x="443.52" y="293.166667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-line2d_30">
+    <g clip-path="url(#analisi1_lez06a_g1-p395c312b26)">
+     <use xlink:href="#analisi1_lez06a_g1-m2b2eec118c" x="557.44" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g1-legend_1">
+    <g id="analisi1_lez06a_g1-line2d_31">
+     <path d="M 536.41 38.408281 
+L 547.41 38.408281 
+L 558.41 38.408281 
+" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #7c4dff; stroke-width: 2"/>
+    </g>
+    <g id="analisi1_lez06a_g1-text_17">
+     <g style="fill: currentColor" transform="translate(567.21 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06a_g1-DejaVuSans-Oblique-5c" d="M 1588 -325 
+Q 1188 -997 936 -1164 
+Q 684 -1331 294 -1331 
+L -159 -1331 
+L -63 -850 
+L 269 -850 
+Q 509 -850 678 -719 
+Q 847 -588 1056 -206 
+L 1234 128 
+L 459 3500 
+L 1069 3500 
+L 1650 819 
+L 3256 3500 
+L 3859 3500 
+L 1588 -325 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g1-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g1-DejaVuSans-12" d="M 1625 4666 
+L 2156 4666 
+L 531 -594 
+L 0 -594 
+L 1625 4666 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g1-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-5c" transform="translate(0 0.09375)"/>
+      <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-20" transform="translate(78.662109 0.09375)"/>
+      <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-14" transform="translate(181.933594 0.09375)"/>
+      <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-12" transform="translate(245.556641 0.09375)"/>
+      <use xlink:href="#analisi1_lez06a_g1-DejaVuSans-Oblique-5b" transform="translate(279.248047 0.09375)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06a_g1-p395c312b26">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+        ]
+      },
+
+      {
+        id: "s06-parita",
+        type: "section",
+        title: "Parità di una Funzione",
+        icon: "🪞",
+        content: `<p>La <strong>parità</strong> è una proprietà legata alla simmetria del grafico di una funzione.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Funzione pari e dispari",
+            content: `<p>Sia $f: X \\to \\mathbb{R}$ una funzione definita su un dominio $X$ non vuoto e <strong>simmetrico rispetto all'origine</strong> (cioè: se $x \\in X$ allora anche $-x \\in X$).</p>
+<ul>
+  <li>$f$ si dice <strong>pari</strong> se $f(x) = f(-x)$ per ogni $x \\in X$;</li>
+  <li>$f$ si dice <strong>dispari</strong> se $f(x) = -f(-x)$ per ogni $x \\in X$.</li>
+</ul>
+<blockquote><strong>Nota del Prof.</strong> La condizione per una funzione dispari può essere scritta in modo equivalente come $f(-x) = -f(x)$. Le due forme si ottengono l'una dall'altra moltiplicando per $-1$.</blockquote>`
+          },
+          {
+            subtitle: "Interpretazione geometrica",
+            content: `<ul>
+  <li>Il grafico di una <strong>funzione pari</strong> è <strong>simmetrico rispetto all'asse $y$</strong>: se il punto $(x, f(x))$ appartiene al grafico, anche il suo simmetrico $(-x, f(x))$ vi appartiene.</li>
+  <li>Il grafico di una <strong>funzione dispari</strong> è <strong>simmetrico rispetto all'origine</strong>: se il punto $(x, f(x))$ appartiene al grafico, anche $(-x, -f(x))$ vi appartiene.</li>
+</ul>
+<p><strong>Esempio.</strong> La funzione $f(x) = x^2$ è pari: infatti $f(-x) = (-x)^2 = x^2 = f(x)$.</p>
+<figure class="figura" data-id="analisi1_lez06a_g2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06a_g2-figure_1">
+  <g id="analisi1_lez06a_g2-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06a_g2-axes_1">
+   <g id="analisi1_lez06a_g2-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06a_g2-matplotlib.axis_1">
+    <g id="analisi1_lez06a_g2-xtick_1">
+     <g id="analisi1_lez06a_g2-line2d_1">
+      <path d="M 44.8 364 
+L 44.8 24 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_2">
+      <defs>
+       <path id="analisi1_lez06a_g2-meb5511d2e2" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-meb5511d2e2" x="44.8" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_1">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(39.316328 343.855222) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g2-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_g2-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-xtick_2">
+     <g id="analisi1_lez06a_g2-line2d_3">
+      <path d="M 187.2 364 
+L 187.2 24 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-meb5511d2e2" x="187.2" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_2">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(181.716328 343.855222) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g2-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-xtick_3">
+     <g id="analisi1_lez06a_g2-line2d_5">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-meb5511d2e2" x="329.6" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_3">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 343.855222) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g2-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-xtick_4">
+     <g id="analisi1_lez06a_g2-line2d_7">
+      <path d="M 472 364 
+L 472 24 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-meb5511d2e2" x="472" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_4">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(468.500625 343.855222) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-xtick_5">
+     <g id="analisi1_lez06a_g2-line2d_9">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-meb5511d2e2" x="614.4" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_5">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(610.900625 343.855222) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g2-matplotlib.axis_2">
+    <g id="analisi1_lez06a_g2-ytick_1">
+     <g id="analisi1_lez06a_g2-line2d_11">
+      <path d="M 44.8 328.9978 
+L 614.4 328.9978 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_12">
+      <defs>
+       <path id="analisi1_lez06a_g2-me72465baef" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-me72465baef" x="329.6" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_6">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 333.176511) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-ytick_2">
+     <g id="analisi1_lez06a_g2-line2d_13">
+      <path d="M 44.8 258.749828 
+L 614.4 258.749828 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-me72465baef" x="329.6" y="258.749828" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_7">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(316.10125 262.928538) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-ytick_3">
+     <g id="analisi1_lez06a_g2-line2d_15">
+      <path d="M 44.8 188.501855 
+L 614.4 188.501855 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-me72465baef" x="329.6" y="188.501855" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_8">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(316.10125 192.680566) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-ytick_4">
+     <g id="analisi1_lez06a_g2-line2d_17">
+      <path d="M 44.8 118.253882 
+L 614.4 118.253882 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-me72465baef" x="329.6" y="118.253882" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_9">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(316.10125 122.432593) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g2-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g2-ytick_5">
+     <g id="analisi1_lez06a_g2-line2d_19">
+      <path d="M 44.8 48.00591 
+L 614.4 48.00591 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g2-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g2-me72465baef" x="329.6" y="48.00591" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g2-text_10">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(316.10125 52.184621) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g2-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g2-line2d_21">
+    <defs>
+     <path id="analisi1_lez06a_g2-m6761be5084" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g2-m6761be5084" x="614.4" y="328.9978" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g2-line2d_22">
+    <defs>
+     <path id="analisi1_lez06a_g2-m58f2f4a88f" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g2-m58f2f4a88f" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g2-line2d_23">
+    <path d="M 44.8 48.00591 
+L 53.351126 64.62617 
+L 61.902252 80.7398 
+L 69.978315 95.493037 
+L 78.054379 109.794373 
+L 86.130442 123.643808 
+L 94.206505 137.041342 
+L 101.807506 149.237976 
+L 109.408507 161.034311 
+L 117.009508 172.430346 
+L 124.610509 183.426081 
+L 132.21151 194.021516 
+L 139.81251 204.216652 
+L 146.938449 213.411038 
+L 154.064387 222.253598 
+L 161.190325 230.744332 
+L 168.316264 238.88324 
+L 175.442202 246.670322 
+L 182.093078 253.62084 
+L 188.743953 260.264878 
+L 195.394829 266.602437 
+L 202.045705 272.633517 
+L 208.69658 278.358116 
+L 215.347456 283.776237 
+L 221.523269 288.532924 
+L 227.699083 293.025351 
+L 233.874896 297.253518 
+L 240.050709 301.217424 
+L 246.226522 304.91707 
+L 252.402335 308.352455 
+L 258.578148 311.52358 
+L 264.753962 314.430445 
+L 270.454712 316.879154 
+L 276.155463 319.102694 
+L 281.856214 321.101066 
+L 287.556964 322.874269 
+L 293.257715 324.422303 
+L 298.958465 325.745169 
+L 304.659216 326.842866 
+L 310.359967 327.715394 
+L 316.060717 328.362754 
+L 321.761468 328.784945 
+L 327.462219 328.981968 
+L 333.162969 328.953822 
+L 338.86372 328.700507 
+L 344.56447 328.222024 
+L 350.265221 327.518372 
+L 355.965972 326.589551 
+L 361.666722 325.435562 
+L 367.367473 324.056404 
+L 373.068224 322.452078 
+L 378.768974 320.622582 
+L 384.469725 318.567919 
+L 390.170475 316.288086 
+L 395.871226 313.783085 
+L 402.047039 310.815237 
+L 408.222852 307.583129 
+L 414.398666 304.086761 
+L 420.574479 300.326132 
+L 426.750292 296.301242 
+L 432.926105 292.012092 
+L 439.101918 287.458682 
+L 445.277731 282.641012 
+L 451.928607 277.157217 
+L 458.579483 271.366943 
+L 465.230359 265.270189 
+L 471.881234 258.866956 
+L 478.53211 252.157244 
+L 485.182986 245.141051 
+L 491.833862 237.81838 
+L 498.9598 229.632562 
+L 506.085738 221.094917 
+L 513.211676 212.205447 
+L 520.337615 202.964151 
+L 527.463553 193.371029 
+L 535.064554 182.750575 
+L 542.665555 171.729821 
+L 550.266555 160.308767 
+L 557.867556 148.487414 
+L 565.468557 136.265761 
+L 573.544621 122.841644 
+L 581.620684 108.965627 
+L 589.696747 94.637709 
+L 597.772811 79.85789 
+L 605.848874 64.62617 
+L 614.4 48.00591 
+L 614.4 48.00591 
+" clip-path="url(#analisi1_lez06a_g2-p6b2b1481fe)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g2-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g2-patch_4">
+    <path d="M 44.8 328.9978 
+L 614.4 328.9978 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g2-legend_1">
+    <g id="analisi1_lez06a_g2-line2d_24">
+     <path d="M 554.733594 38.408281 
+L 565.733594 38.408281 
+L 576.733594 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06a_g2-text_11">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(585.533594 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06a_g2-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g2-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g2-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g2-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06a_g2-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06a_g2-p6b2b1481fe">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>La funzione $f(x) = x^3$ è dispari: infatti $f(-x) = (-x)^3 = -x^3 = -f(x)$.</p>
+<figure class="figura" data-id="analisi1_lez06a_g3"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06a_g3-figure_1">
+  <g id="analisi1_lez06a_g3-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06a_g3-axes_1">
+   <g id="analisi1_lez06a_g3-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06a_g3-matplotlib.axis_1">
+    <g id="analisi1_lez06a_g3-xtick_1">
+     <g id="analisi1_lez06a_g3-line2d_1">
+      <path d="M 44.8 364 
+L 44.8 24 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_2">
+      <defs>
+       <path id="analisi1_lez06a_g3-m01df9542c9" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m01df9542c9" x="44.8" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_1">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(39.316328 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g3-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_g3-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-xtick_2">
+     <g id="analisi1_lez06a_g3-line2d_3">
+      <path d="M 187.2 364 
+L 187.2 24 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m01df9542c9" x="187.2" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_2">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(181.716328 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g3-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-xtick_3">
+     <g id="analisi1_lez06a_g3-line2d_5">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m01df9542c9" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_3">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g3-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-xtick_4">
+     <g id="analisi1_lez06a_g3-line2d_7">
+      <path d="M 472 364 
+L 472 24 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m01df9542c9" x="472" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_4">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(468.500625 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-xtick_5">
+     <g id="analisi1_lez06a_g3-line2d_9">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m01df9542c9" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_5">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(610.900625 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g3-matplotlib.axis_2">
+    <g id="analisi1_lez06a_g3-ytick_1">
+     <g id="analisi1_lez06a_g3-line2d_11">
+      <path d="M 44.8 310.218355 
+L 614.4 310.218355 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_12">
+      <defs>
+       <path id="analisi1_lez06a_g3-m4e8ee951af" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m4e8ee951af" x="329.6" y="310.218355" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_6">
+      <!-- -6 -->
+      <g style="fill: currentColor" transform="translate(312.132656 314.397066) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g3-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-19" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-ytick_2">
+     <g id="analisi1_lez06a_g3-line2d_13">
+      <path d="M 44.8 252.109177 
+L 614.4 252.109177 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m4e8ee951af" x="329.6" y="252.109177" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_7">
+      <!-- -3 -->
+      <g style="fill: currentColor" transform="translate(312.132656 256.287888) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g3-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-16" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-ytick_3">
+     <g id="analisi1_lez06a_g3-line2d_15">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m4e8ee951af" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_8">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 198.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-ytick_4">
+     <g id="analisi1_lez06a_g3-line2d_17">
+      <path d="M 44.8 135.890823 
+L 614.4 135.890823 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m4e8ee951af" x="329.6" y="135.890823" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_9">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(316.10125 140.069534) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g3-ytick_5">
+     <g id="analisi1_lez06a_g3-line2d_19">
+      <path d="M 44.8 77.781645 
+L 614.4 77.781645 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g3-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g3-m4e8ee951af" x="329.6" y="77.781645" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g3-text_10">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(316.10125 81.960356) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-19"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g3-line2d_21">
+    <defs>
+     <path id="analisi1_lez06a_g3-m2ad3e74546" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g3-m2ad3e74546" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g3-line2d_22">
+    <defs>
+     <path id="analisi1_lez06a_g3-mfa8a572d68" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g3-mfa8a572d68" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g3-line2d_23">
+    <path d="M 44.8 348.957806 
+L 50.975813 339.094165 
+L 57.151626 329.658236 
+L 63.32744 320.640538 
+L 69.503253 312.031593 
+L 75.679066 303.821919 
+L 81.854879 296.002035 
+L 88.030692 288.562462 
+L 94.206505 281.493718 
+L 100.382319 274.786325 
+L 106.558132 268.4308 
+L 112.733945 262.417664 
+L 118.909758 256.737437 
+L 125.085571 251.380637 
+L 131.261384 246.337785 
+L 137.437198 241.5994 
+L 143.613011 237.156001 
+L 149.788824 232.998109 
+L 155.964637 229.116243 
+L 162.14045 225.500922 
+L 168.316264 222.142666 
+L 174.492077 219.031994 
+L 180.66789 216.159427 
+L 187.318766 213.321302 
+L 193.969641 210.736484 
+L 200.620517 208.393135 
+L 207.271393 206.279413 
+L 214.397331 204.256074 
+L 221.523269 202.46818 
+L 228.649208 200.90117 
+L 236.250209 199.456744 
+L 244.326272 198.159482 
+L 252.402335 197.086072 
+L 260.953461 196.169949 
+L 269.97965 195.421599 
+L 279.955963 194.82072 
+L 290.882402 194.389331 
+L 303.709091 194.116422 
+L 320.33628 194.005333 
+L 358.816347 193.83271 
+L 371.643036 193.501488 
+L 382.569475 193.003057 
+L 392.545788 192.327009 
+L 401.571977 191.499172 
+L 410.123103 190.497687 
+L 418.199166 189.33467 
+L 425.800167 188.027984 
+L 433.401168 186.4976 
+L 440.527106 184.843984 
+L 447.653044 182.96366 
+L 454.778982 180.842064 
+L 461.429858 178.63138 
+L 468.080734 176.185995 
+L 474.73161 173.494067 
+L 480.907423 170.763313 
+L 487.083236 167.800289 
+L 493.259049 164.595515 
+L 499.434862 161.13951 
+L 505.610676 157.422793 
+L 511.786489 153.435885 
+L 517.962302 149.169305 
+L 524.138115 144.613572 
+L 530.313928 139.759206 
+L 536.014679 135.004995 
+L 541.71543 129.980793 
+L 547.41618 124.679144 
+L 553.116931 119.09259 
+L 558.817681 113.213675 
+L 564.518432 107.034943 
+L 570.219183 100.548937 
+L 575.919933 93.7482 
+L 581.620684 86.625276 
+L 587.796497 78.536547 
+L 593.97231 70.051463 
+L 600.148123 61.160546 
+L 606.323937 51.854313 
+L 612.49975 42.123285 
+L 614.4 39.042194 
+L 614.4 39.042194 
+" clip-path="url(#analisi1_lez06a_g3-p4aa9a7e86d)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g3-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g3-patch_4">
+    <path d="M 44.8 194 
+L 614.4 194 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g3-legend_1">
+    <g id="analisi1_lez06a_g3-line2d_24">
+     <path d="M 54.7 38.408281 
+L 65.7 38.408281 
+L 76.7 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06a_g3-text_11">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(85.5 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06a_g3-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g3-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g3-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g3-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06a_g3-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06a_g3-p4aa9a7e86d">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+          },
+          {
+            subtitle: "Proprietà delle funzioni pari e dispari (esercizio)",
+            content: `<p>Si verifichino le seguenti proprietà (i domini si intendono sempre non vuoti e simmetrici rispetto all'origine):</p>
+<ul>
+  <li>La <strong>somma</strong> e il <strong>prodotto</strong> di due funzioni pari è una funzione pari.</li>
+  <li>Il <strong>prodotto</strong> di due funzioni dispari è una funzione pari.</li>
+  <li>La <strong>somma</strong> di due funzioni dispari è una funzione dispari.</li>
+  <li>Il <strong>prodotto</strong> di una funzione pari e una dispari è una funzione dispari.</li>
+</ul>`
+          }
+        ],
+        formulas: [
+          { label: "Funzione pari", latex: "f(-x) = f(x) \\quad \\forall x \\in X" },
+          { label: "Funzione dispari", latex: "f(-x) = -f(x) \\quad \\forall x \\in X" }
+        ]
+      },
+
+      {
+        id: "s06-es-svolto-somma-pari",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Somma di funzioni pari",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Dimostrare che se $f$ e $g$ sono due funzioni pari definite su un dominio comune $A \\subseteq \\mathbb{R}$ non vuoto e simmetrico rispetto all'origine, allora anche la loro somma $f+g$ è una funzione pari.</p>`,
+        steps: [
+          `Sia $h(x) = f(x) + g(x)$ la funzione somma, definita su $A$. Per dimostrare che $h$ è pari dobbiamo verificare che $h(-x) = h(x)$ per ogni $x \\in A$. Osserviamo subito che, essendo $A$ simmetrico, per ogni $x \\in A$ anche $-x \\in A$: dunque la scrittura $h(-x)$ ha senso.`,
+          `Calcoliamo $h(-x)$: $$h(-x) = f(-x) + g(-x)$$`,
+          `Per ipotesi $f$ e $g$ sono pari, quindi per definizione $f(-x) = f(x)$ e $g(-x) = g(x)$.`,
+          `Sostituendo: $$h(-x) = f(x) + g(x) = h(x)$$`,
+          `Poiché la relazione vale <strong>per ogni</strong> $x \\in A$, la funzione somma $h = f+g$ è pari. $\\square$`,
+          `<strong>Verifica su un esempio.</strong> Siano $f(x) = x^2$ e $g(x) = x^4$, entrambe pari su $\\mathbb{R}$. La loro somma è $h(x) = x^2 + x^4$ e si verifica direttamente che $$h(-x) = (-x)^2 + (-x)^4 = x^2 + x^4 = h(x),$$ in accordo con la dimostrazione generale.`
+        ]
+      },
+
+      {
+        id: "s06-nota-prof-parita",
+        type: "note_box",
+        title: "Nota del Prof. — La strategia è sempre la stessa",
+        icon: "🗣️",
+        content: `<blockquote>Lascio a voi come esercizio la verifica delle altre proprietà, come il prodotto, il quoziente o la differenza di funzioni pari e dispari. La strategia è sempre la stessa: definite una nuova funzione $h(x)$ e calcolate $h(-x)$ per vedere se è uguale a $h(x)$ (pari) o a $-h(x)$ (dispari).</blockquote>`
+      },
+
+      {
+        id: "s06-esempi-parita",
+        type: "section",
+        title: "Esempi di verifica della parità",
+        icon: "🧪",
+        content: `<p>Tre casi tipici, dal più semplice al più insidioso.</p>`,
+        subsections: [
+          {
+            subtitle: "Caso pari",
+            content: `<p>$f(x) = x^4 + x^2$ è <strong>pari</strong>, in quanto somma di funzioni pari.</p>`
+          },
+          {
+            subtitle: "Caso dispari (verifica diretta)",
+            content: `<p>$f(x) = \\dfrac{x^3}{x^2+1}$ è <strong>dispari</strong>. Verifichiamolo direttamente, senza invocare proprietà sul quoziente: poiché $x^2+1 \\gt 0$ per ogni $x \\in \\mathbb{R}$, il denominatore non si annulla mai e il dominio è tutto $\\mathbb{R}$, che è simmetrico rispetto all'origine. Allora</p>
+<p>$$f(-x) = \\frac{(-x)^3}{(-x)^2+1} = \\frac{-x^3}{x^2+1} = -\\frac{x^3}{x^2+1} = -f(x).$$</p>`
+          },
+          {
+            subtitle: "Caso né pari né dispari",
+            content: `<p>$f(x) = x^4 + x^3$ non è <strong>né pari né dispari</strong>. Verifichiamo:</p>
+<p>$$f(-x) = (-x)^4 + (-x)^3 = x^4 - x^3$$</p>
+<p><strong>Attenzione a come si nega la definizione.</strong> Non basta osservare che le espressioni "sembrano" diverse: bisogna dire che le uguaglianze $f(-x) = f(x)$ e $f(-x) = -f(x)$ <strong>non valgono per ogni</strong> $x$. Infatti in $x = 0$ le tre espressioni coincidono (valgono tutte $0$), quindi il punto $x=0$ non dimostra nulla. Basta però <strong>esibire un solo punto</strong> in cui entrambe fallirebbero: prendiamo $x = 1$. Si ha</p>
+<p>$$f(-1) = 1 - 1 = 0, \\qquad f(1) = 1 + 1 = 2, \\qquad -f(1) = -2.$$</p>
+<p>Poiché $f(-1) \\neq f(1)$ la funzione non è pari, e poiché $f(-1) \\neq -f(1)$ non è dispari. Questo <strong>unico controesempio</strong> esclude entrambe le parità.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-massimo-dei-valori",
+        type: "note_box",
+        title: "Massimo dei valori, non della funzione",
+        icon: "💡",
+        content: `<p>Quando parliamo di "massimo" o "minimo" di una funzione, è fondamentale capire a cosa ci stiamo riferendo. Una funzione, in sé, è una <strong>legge</strong>, una mappa che associa elementi di un dominio a elementi di un codominio. Non è la funzione ad avere un massimo, ma l'insieme dei suoi <strong>valori</strong>, ovvero la sua <strong>immagine</strong>.</p>
+<p>Per definire rigorosamente il massimo di una funzione, riconduciamo il problema a qualcosa che già conosciamo: il massimo di un insieme numerico. Il massimo di una funzione $f$ sarà il massimo del suo insieme immagine $\\operatorname{Im}(f)$. Lo stesso vale per estremo superiore, estremo inferiore e minimo.</p>`
+      },
+
+      {
+        id: "s06-funzioni-limitate",
+        type: "section",
+        title: "Funzioni Limitate",
+        icon: "📏",
+        content: `<p>Per poter parlare di massimo serve che i valori della funzione <strong>non superino alcuna soglia dall'alto</strong>; per poter parlare di minimo serve la condizione speculare dal basso. Questo ci porta al concetto di funzione limitata.</p>
+<p><strong>Precisazione importante.</strong> Le due richieste sono <strong>indipendenti</strong>: un <strong>massimo</strong> richiede la limitatezza <strong>superiore</strong> e il raggiungimento del $\\sup$; un <strong>minimo</strong> richiede la limitatezza <strong>inferiore</strong> e il raggiungimento dell'$\\inf$. Non serve la limitatezza in entrambi i versi contemporaneamente: $f(x) = x^2$ su $\\mathbb{R}$ <strong>non</strong> è superiormente limitata, quindi non ha massimo, ma ha perfettamente un minimo, $\\min f = 0$ assunto in $x_0 = 0$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Funzione limitata",
+            content: `<p>Sia $f: X \\to \\mathbb{R}$ una funzione, con $X \\subseteq \\mathbb{R}$ non vuoto.</p>
+<ul>
+  <li>$f$ si dice <strong>superiormente limitata</strong> se l'insieme immagine $\\operatorname{Im}(f)$ è superiormente limitato in $\\mathbb{R}$;</li>
+  <li>$f$ si dice <strong>inferiormente limitata</strong> se $\\operatorname{Im}(f)$ è inferiormente limitato in $\\mathbb{R}$;</li>
+  <li>$f$ si dice <strong>limitata</strong> se è sia superiormente che inferiormente limitata.</li>
+</ul>`
+          },
+          {
+            subtitle: "Definizione con quantificatori",
+            content: `<p>Esplicitando le definizioni di insieme limitato:</p>
+<ul>
+  <li>$f$ è <strong>superiormente limitata</strong> se $\\exists M \\in \\mathbb{R}$ tale che $f(x) \\le M$ per ogni $x \\in X$. Un tale $M$ è detto <strong>maggiorante</strong> per $f$.</li>
+  <li>$f$ è <strong>inferiormente limitata</strong> se $\\exists m \\in \\mathbb{R}$ tale che $f(x) \\ge m$ per ogni $x \\in X$. Un tale $m$ è detto <strong>minorante</strong> per $f$.</li>
+  <li>$f$ è <strong>limitata</strong> se $\\exists M \\in \\mathbb{R}$, $M \\ge 0$, tale che $-M \\le f(x) \\le M$ per ogni $x \\in X$; condizione equivalente a $|f(x)| \\le M$ per ogni $x \\in X$.</li>
+</ul>
+<p>Un primo esempio di funzione limitata su tutto $\\mathbb{R}$ è la funzione seno: i suoi valori restano sempre compresi fra $-1$ e $1$.</p>
+<figure class="figura" data-id="analisi1_lez06a_g4"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06a_g4-figure_1">
+  <g id="analisi1_lez06a_g4-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06a_g4-axes_1">
+   <g id="analisi1_lez06a_g4-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06a_g4-matplotlib.axis_1">
+    <g id="analisi1_lez06a_g4-xtick_1">
+     <g id="analisi1_lez06a_g4-line2d_1">
+      <path d="M 126.171429 364 
+L 126.171429 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_2">
+      <defs>
+       <path id="analisi1_lez06a_g4-m87d19b46cc" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="126.171429" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_1">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(120.687757 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g4-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_g4-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-xtick_2">
+     <g id="analisi1_lez06a_g4-line2d_3">
+      <path d="M 169.8272 364 
+L 169.8272 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="169.8272" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_2">
+      <!-- -1.57 -->
+      <g style="fill: currentColor" transform="translate(155.596809 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g4-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_g4-DejaVuSans-11" d="M 684 794 
+L 1344 794 
+L 1344 0 
+L 684 0 
+L 684 794 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_g4-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_g4-DejaVuSans-1a" d="M 525 4666 
+L 3525 4666 
+L 3525 4397 
+L 1831 0 
+L 1172 0 
+L 2766 4134 
+L 525 4134 
+L 525 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-14" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-11" transform="translate(99.703125 0)"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-18" transform="translate(131.484375 0)"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-1a" transform="translate(195.109375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-xtick_3">
+     <g id="analisi1_lez06a_g4-line2d_5">
+      <path d="M 227.885714 364 
+L 227.885714 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="227.885714" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_3">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(222.402042 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-xtick_4">
+     <g id="analisi1_lez06a_g4-line2d_7">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_4">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_g4-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-xtick_5">
+     <g id="analisi1_lez06a_g4-line2d_9">
+      <path d="M 431.314286 364 
+L 431.314286 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="431.314286" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_5">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(427.814911 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-xtick_6">
+     <g id="analisi1_lez06a_g4-line2d_11">
+      <path d="M 489.3728 364 
+L 489.3728 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="489.3728" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_6">
+      <!-- 1.57 -->
+      <g style="fill: currentColor" transform="translate(477.126706 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-14"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-18" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-1a" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-xtick_7">
+     <g id="analisi1_lez06a_g4-line2d_13">
+      <path d="M 533.028571 364 
+L 533.028571 24 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-m87d19b46cc" x="533.028571" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_7">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(529.529196 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-matplotlib.axis_2">
+    <g id="analisi1_lez06a_g4-ytick_1">
+     <g id="analisi1_lez06a_g4-line2d_15">
+      <path d="M 44.8 300.25 
+L 614.4 300.25 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_16">
+      <defs>
+       <path id="analisi1_lez06a_g4-me2b3303f89" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-me2b3303f89" x="329.6" y="300.25" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_8">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(312.132656 304.428711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-ytick_2">
+     <g id="analisi1_lez06a_g4-line2d_17">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-me2b3303f89" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_9">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 198.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_g4-ytick_3">
+     <g id="analisi1_lez06a_g4-line2d_19">
+      <path d="M 44.8 87.75 
+L 614.4 87.75 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_g4-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06a_g4-me2b3303f89" x="329.6" y="87.75" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_g4-text_10">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(316.10125 91.928711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-line2d_21">
+    <defs>
+     <path id="analisi1_lez06a_g4-mee7a94117a" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g4-mee7a94117a" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-line2d_22">
+    <defs>
+     <path id="analisi1_lez06a_g4-m43602dc50e" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_g4-m43602dc50e" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-line2d_23">
+    <path d="M 44.8 229.592491 
+L 53.826188 238.324707 
+L 61.902252 245.844051 
+L 69.503253 252.623493 
+L 76.629191 258.682725 
+L 83.280067 264.052266 
+L 89.45588 268.770646 
+L 95.631693 273.213464 
+L 101.332444 277.055764 
+L 107.033194 280.637236 
+L 112.733945 283.946631 
+L 117.959633 286.732339 
+L 123.185321 289.273334 
+L 128.411009 291.562909 
+L 133.636697 293.595023 
+L 138.387323 295.214456 
+L 143.137948 296.613139 
+L 147.888574 297.788021 
+L 152.639199 298.73654 
+L 157.389825 299.456627 
+L 162.14045 299.946711 
+L 166.891076 300.205724 
+L 171.641701 300.233101 
+L 176.392327 300.028782 
+L 181.142952 299.593212 
+L 185.893578 298.927342 
+L 190.644204 298.032623 
+L 195.394829 296.911008 
+L 200.145455 295.564943 
+L 204.89608 293.997362 
+L 209.646706 292.211686 
+L 214.872394 290.000204 
+L 220.098082 287.535384 
+L 225.32377 284.823731 
+L 230.549458 281.872401 
+L 236.250209 278.388585 
+L 241.950959 274.639755 
+L 247.65171 270.637682 
+L 253.827523 266.030922 
+L 260.478399 260.773422 
+L 267.129274 255.230529 
+L 274.255213 249.001955 
+L 281.856214 242.061484 
+L 290.407339 233.934776 
+L 299.90859 224.576824 
+L 310.835029 213.490748 
+L 326.037031 197.72109 
+L 351.215346 171.590333 
+L 362.141785 160.584032 
+L 371.643036 151.322099 
+L 380.194162 143.302286 
+L 387.795163 136.472491 
+L 394.921101 130.360492 
+L 401.571977 124.937078 
+L 408.222852 119.808843 
+L 414.398666 115.330394 
+L 420.099416 111.45342 
+L 425.800167 107.835676 
+L 431.500917 104.488524 
+L 436.726606 101.667002 
+L 441.952294 99.089139 
+L 447.177982 96.761739 
+L 452.40367 94.690944 
+L 457.154295 93.035689 
+L 461.904921 91.600638 
+L 466.655546 90.388921 
+L 471.406172 89.403182 
+L 476.156797 88.64557 
+L 480.907423 88.117738 
+L 485.658048 87.820837 
+L 490.408674 87.755514 
+L 495.159299 87.921912 
+L 499.909925 88.319668 
+L 504.66055 88.947914 
+L 509.411176 89.805281 
+L 514.161802 90.889897 
+L 518.912427 92.199399 
+L 523.663053 93.730929 
+L 528.413678 95.481148 
+L 533.639366 97.654404 
+L 538.865054 100.081908 
+L 544.090742 102.757256 
+L 549.31643 105.673387 
+L 555.017181 109.120174 
+L 560.717932 112.833518 
+L 566.418682 116.801758 
+L 572.594495 121.373856 
+L 578.770309 126.213614 
+L 585.421184 131.704518 
+L 592.547123 137.882446 
+L 600.148123 144.774933 
+L 608.224187 152.398357 
+L 614.4 158.407509 
+L 614.4 158.407509 
+" clip-path="url(#analisi1_lez06a_g4-pff022cc841)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g4-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g4-patch_4">
+    <path d="M 44.8 194 
+L 614.4 194 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_g4-text_11">
+    <!-- max -->
+    <g style="fill: currentColor" transform="translate(495.3728 81.75) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_g4-DejaVuSans-50" d="M 3328 2828 
+Q 3544 3216 3844 3400 
+Q 4144 3584 4550 3584 
+Q 5097 3584 5394 3201 
+Q 5691 2819 5691 2113 
+L 5691 0 
+L 5113 0 
+L 5113 2094 
+Q 5113 2597 4934 2840 
+Q 4756 3084 4391 3084 
+Q 3944 3084 3684 2787 
+Q 3425 2491 3425 1978 
+L 3425 0 
+L 2847 0 
+L 2847 2094 
+Q 2847 2600 2669 2842 
+Q 2491 3084 2119 3084 
+Q 1678 3084 1418 2786 
+Q 1159 2488 1159 1978 
+L 1159 0 
+L 581 0 
+L 581 3500 
+L 1159 3500 
+L 1159 2956 
+Q 1356 3278 1631 3431 
+Q 1906 3584 2284 3584 
+Q 2666 3584 2933 3390 
+Q 3200 3197 3328 2828 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06a_g4-DejaVuSans-44" d="M 2194 1759 
+Q 1497 1759 1228 1600 
+Q 959 1441 959 1056 
+Q 959 750 1161 570 
+Q 1363 391 1709 391 
+Q 2188 391 2477 730 
+Q 2766 1069 2766 1631 
+L 2766 1759 
+L 2194 1759 
+z
+M 3341 1997 
+L 3341 0 
+L 2766 0 
+L 2766 531 
+Q 2569 213 2275 61 
+Q 1981 -91 1556 -91 
+Q 1019 -91 701 211 
+Q 384 513 384 1019 
+Q 384 1609 779 1909 
+Q 1175 2209 1959 2209 
+L 2766 2209 
+L 2766 2266 
+Q 2766 2663 2505 2880 
+Q 2244 3097 1772 3097 
+Q 1472 3097 1187 3025 
+Q 903 2953 641 2809 
+L 641 3341 
+Q 956 3463 1253 3523 
+Q 1550 3584 1831 3584 
+Q 2591 3584 2966 3190 
+Q 3341 2797 3341 1997 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06a_g4-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-50"/>
+     <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-44" transform="translate(97.40625 0)"/>
+     <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-5b" transform="translate(158.6875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-text_12">
+    <!-- min -->
+    <g style="fill: currentColor" transform="translate(175.8272 294.25) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_g4-DejaVuSans-4c" d="M 603 3500 
+L 1178 3500 
+L 1178 0 
+L 603 0 
+L 603 3500 
+z
+M 603 4863 
+L 1178 4863 
+L 1178 4134 
+L 603 4134 
+L 603 4863 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06a_g4-DejaVuSans-51" d="M 3513 2113 
+L 3513 0 
+L 2938 0 
+L 2938 2094 
+Q 2938 2591 2744 2837 
+Q 2550 3084 2163 3084 
+Q 1697 3084 1428 2787 
+Q 1159 2491 1159 1978 
+L 1159 0 
+L 581 0 
+L 581 3500 
+L 1159 3500 
+L 1159 2956 
+Q 1366 3272 1645 3428 
+Q 1925 3584 2291 3584 
+Q 2894 3584 3203 3211 
+Q 3513 2838 3513 2113 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-50"/>
+     <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-4c" transform="translate(97.40625 0)"/>
+     <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-51" transform="translate(125.1875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-line2d_24">
+    <defs>
+     <path id="analisi1_lez06a_g4-m7036bf2716" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06a_g4-pff022cc841)">
+     <use xlink:href="#analisi1_lez06a_g4-m7036bf2716" x="489.3728" y="87.75" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-line2d_25">
+    <g clip-path="url(#analisi1_lez06a_g4-pff022cc841)">
+     <use xlink:href="#analisi1_lez06a_g4-m7036bf2716" x="169.8272" y="300.25" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_g4-legend_1">
+    <g id="analisi1_lez06a_g4-line2d_26">
+     <path d="M 554.733594 38.408281 
+L 565.733594 38.408281 
+L 576.733594 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06a_g4-text_13">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(585.533594 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06a_g4-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g4-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_g4-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06a_g4-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06a_g4-pff022cc841">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>Qui $1$ è il massimo (assunto in $x = \\pi/2$) e $-1$ il minimo (assunto in $x = -\\pi/2$).</p>`
+          },
+          {
+            subtitle: "Esempio — $f(x) = x^2$ su $\\mathbb{R}$",
+            content: `<p>Consideriamo la funzione $f(x) = x^2$ definita su tutto $\\mathbb{R}$.</p>
+<figure class="figura" data-id="analisi1_lez06b_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06b_g1-figure_1">
+  <g id="analisi1_lez06b_g1-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06b_g1-axes_1">
+   <g id="analisi1_lez06b_g1-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06b_g1-matplotlib.axis_1">
+    <g id="analisi1_lez06b_g1-xtick_1">
+     <g id="analisi1_lez06b_g1-line2d_1">
+      <path d="M 44.8 364 
+L 44.8 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_2">
+      <defs>
+       <path id="analisi1_lez06b_g1-m9b2351d3c5" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="44.8" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_1">
+      <!-- -3 -->
+      <g style="fill: currentColor" transform="translate(39.316328 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06b_g1-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-16" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-xtick_2">
+     <g id="analisi1_lez06b_g1-line2d_3">
+      <path d="M 139.733333 364 
+L 139.733333 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="139.733333" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_2">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(134.249661 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-xtick_3">
+     <g id="analisi1_lez06b_g1-line2d_5">
+      <path d="M 234.666667 364 
+L 234.666667 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="234.666667" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_3">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(229.182995 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-xtick_4">
+     <g id="analisi1_lez06b_g1-line2d_7">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="329.6" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_4">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-xtick_5">
+     <g id="analisi1_lez06b_g1-line2d_9">
+      <path d="M 424.533333 364 
+L 424.533333 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="424.533333" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_5">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(421.033958 378.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-xtick_6">
+     <g id="analisi1_lez06b_g1-line2d_11">
+      <path d="M 519.466667 364 
+L 519.466667 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="519.466667" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_6">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(515.967292 378.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-xtick_7">
+     <g id="analisi1_lez06b_g1-line2d_13">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-m9b2351d3c5" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_7">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(610.900625 378.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g1-matplotlib.axis_2">
+    <g id="analisi1_lez06b_g1-ytick_1">
+     <g id="analisi1_lez06b_g1-line2d_15">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_16">
+      <defs>
+       <path id="analisi1_lez06b_g1-me221a51b30" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-me221a51b30" x="329.6" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_8">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 368.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-ytick_2">
+     <g id="analisi1_lez06b_g1-line2d_17">
+      <path d="M 44.8 288.444444 
+L 614.4 288.444444 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-me221a51b30" x="329.6" y="288.444444" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_9">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(316.10125 292.623155) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-ytick_3">
+     <g id="analisi1_lez06b_g1-line2d_19">
+      <path d="M 44.8 212.888889 
+L 614.4 212.888889 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-me221a51b30" x="329.6" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_10">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(316.10125 217.0676) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-ytick_4">
+     <g id="analisi1_lez06b_g1-line2d_21">
+      <path d="M 44.8 137.333333 
+L 614.4 137.333333 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-me221a51b30" x="329.6" y="137.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_11">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(316.10125 141.512044) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g1-ytick_5">
+     <g id="analisi1_lez06b_g1-line2d_23">
+      <path d="M 44.8 61.777778 
+L 614.4 61.777778 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g1-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g1-me221a51b30" x="329.6" y="61.777778" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g1-text_12">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(316.10125 65.956489) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g1-DejaVuSans-1b" d="M 2034 2216 
+Q 1584 2216 1326 1975 
+Q 1069 1734 1069 1313 
+Q 1069 891 1326 650 
+Q 1584 409 2034 409 
+Q 2484 409 2743 651 
+Q 3003 894 3003 1313 
+Q 3003 1734 2745 1975 
+Q 2488 2216 2034 2216 
+z
+M 1403 2484 
+Q 997 2584 770 2862 
+Q 544 3141 544 3541 
+Q 544 4100 942 4425 
+Q 1341 4750 2034 4750 
+Q 2731 4750 3128 4425 
+Q 3525 4100 3525 3541 
+Q 3525 3141 3298 2862 
+Q 3072 2584 2669 2484 
+Q 3125 2378 3379 2068 
+Q 3634 1759 3634 1313 
+Q 3634 634 3220 271 
+Q 2806 -91 2034 -91 
+Q 1263 -91 848 271 
+Q 434 634 434 1313 
+Q 434 1759 690 2068 
+Q 947 2378 1403 2484 
+z
+M 1172 3481 
+Q 1172 3119 1398 2916 
+Q 1625 2713 2034 2713 
+Q 2441 2713 2670 2916 
+Q 2900 3119 2900 3481 
+Q 2900 3844 2670 4047 
+Q 2441 4250 2034 4250 
+Q 1625 4250 1398 4047 
+Q 1172 3844 1172 3481 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-1b"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g1-line2d_25">
+    <defs>
+     <path id="analisi1_lez06b_g1-me29bef9a8c" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_g1-me29bef9a8c" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g1-line2d_26">
+    <defs>
+     <path id="analisi1_lez06b_g1-mab42f66da9" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_g1-mab42f66da9" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g1-line2d_27">
+    <path d="M 44.8 24 
+L 52.876063 43.009336 
+L 60.952127 61.471872 
+L 69.02819 79.387608 
+L 77.104254 96.756544 
+L 85.180317 113.57868 
+L 92.781318 128.91178 
+L 100.382319 143.760518 
+L 107.983319 158.124893 
+L 115.58432 172.004905 
+L 123.185321 185.400556 
+L 130.311259 197.519078 
+L 137.437198 209.211891 
+L 144.563136 220.478995 
+L 151.689074 231.32039 
+L 158.815013 241.736076 
+L 165.465888 251.073298 
+L 172.116764 260.03968 
+L 178.76764 268.635222 
+L 185.418515 276.859924 
+L 192.069391 284.713786 
+L 198.245204 291.674605 
+L 204.421018 298.315669 
+L 210.596831 304.636978 
+L 216.772644 310.638532 
+L 222.948457 316.320331 
+L 229.12427 321.682375 
+L 234.825021 326.348148 
+L 240.525771 330.741467 
+L 246.226522 334.862332 
+L 251.927273 338.710744 
+L 257.628023 342.286701 
+L 263.328774 345.590205 
+L 269.029525 348.621254 
+L 274.255213 351.160373 
+L 279.480901 353.470555 
+L 284.706589 355.551801 
+L 289.932277 357.404109 
+L 295.157965 359.02748 
+L 300.383653 360.421914 
+L 305.609341 361.587411 
+L 310.835029 362.523972 
+L 316.060717 363.231595 
+L 321.286405 363.710281 
+L 326.512093 363.960031 
+L 331.737781 363.980843 
+L 336.96347 363.772719 
+L 342.189158 363.335657 
+L 347.414846 362.669659 
+L 352.640534 361.774723 
+L 357.866222 360.650851 
+L 363.09191 359.298042 
+L 368.317598 357.716295 
+L 373.543286 355.905612 
+L 378.768974 353.865992 
+L 383.994662 351.597435 
+L 389.22035 349.099941 
+L 394.446038 346.37351 
+L 400.146789 343.13812 
+L 405.84754 339.630276 
+L 411.54829 335.849978 
+L 417.249041 331.797226 
+L 422.949791 327.47202 
+L 428.650542 322.874361 
+L 434.351293 318.004247 
+L 440.527106 312.420834 
+L 446.702919 306.517667 
+L 452.878732 300.294744 
+L 459.054545 293.752066 
+L 465.230359 286.889633 
+L 471.406172 279.707446 
+L 478.057048 271.615187 
+L 484.707923 263.152087 
+L 491.358799 254.318148 
+L 498.009675 245.113369 
+L 504.66055 235.537749 
+L 511.311426 225.59129 
+L 518.437364 214.52285 
+L 525.563303 203.028701 
+L 532.689241 191.108843 
+L 539.815179 178.763276 
+L 546.941118 165.991999 
+L 554.542118 151.900078 
+L 562.143119 137.323794 
+L 569.74412 122.263148 
+L 577.345121 106.718139 
+L 584.946122 90.688768 
+L 593.022185 73.126844 
+L 601.098249 55.01812 
+L 609.174312 36.362596 
+L 614.4 24 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06b_g1-p4b9741a7d0)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g1-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g1-patch_4">
+    <path d="M 44.8 364 
+L 614.4 364 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g1-legend_1">
+    <g id="analisi1_lez06b_g1-line2d_28">
+     <path d="M 54.7 347.607422 
+L 65.7 347.607422 
+L 76.7 347.607422 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06b_g1-text_13">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(85.5 351.457422) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06b_g1-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_g1-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_g1-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_g1-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06b_g1-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06b_g1-p4b9741a7d0">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>L'immagine di questa funzione è $\\operatorname{Im}(f) = [0, +\\infty)$. Questo insieme è <strong>inferiormente limitato</strong> (ad esempio da $0$, o da qualsiasi numero negativo), ma <strong>non è superiormente limitato</strong>. Quindi $f(x) = x^2$ è inferiormente limitata ma non superiormente limitata.</p>
+<p>Osserviamo che la finestra $[-3,3]$ usata per il disegno è solo una porzione del dominio: la funzione è definita su tutto $\\mathbb{R}$ e il suo grafico prosegue, salendo, oltre i bordi laterali del riquadro. È proprio questo proseguire senza fermarsi che esprime graficamente la mancata limitatezza superiore.</p>`
+          },
+          {
+            subtitle: "Esempio — La limitatezza dipende dal dominio",
+            content: `<p>Consideriamo $f(x) = \\dfrac{1}{x}$. Il suo comportamento dipende dal dominio che scegliamo.</p>
+<ul>
+  <li>Se il dominio è $X = (0, +\\infty)$, l'immagine è $\\operatorname{Im}(f) = (0, +\\infty)$. La funzione è inferiormente limitata (ad esempio da $0$) ma <strong>non</strong> superiormente: avvicinandosi a $0$ da destra i valori $1/x$ diventano arbitrariamente grandi, quindi nessun numero reale può essere un maggiorante.</li>
+  <li>Se il dominio è $X = [1, +\\infty)$, l'immagine è $\\operatorname{Im}(f) = (0, 1]$. In questo caso l'insieme immagine è sia inferiormente limitato (da $0$) che superiormente limitato (da $1$): su questo dominio la funzione è <strong>limitata</strong>.</li>
+</ul>
+<p>Questa è la situazione tipica in cui <strong>cambiando il dominio si perde (o si acquista) la limitatezza</strong>: la stessa legge $x \\mapsto 1/x$ è limitata su $[1,+\\infty)$ e illimitata su $(0,+\\infty)$.</p>
+<figure class="figura" data-id="analisi1_lez06b_g2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06b_g2-figure_1">
+  <g id="analisi1_lez06b_g2-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06b_g2-axes_1">
+   <g id="analisi1_lez06b_g2-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06b_g2-matplotlib.axis_1">
+    <g id="analisi1_lez06b_g2-xtick_1">
+     <g id="analisi1_lez06b_g2-line2d_1">
+      <path d="M 108.088889 364 
+L 108.088889 24 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_2">
+      <defs>
+       <path id="analisi1_lez06b_g2-m4a941c1f31" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-m4a941c1f31" x="108.088889" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_1">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(104.589514 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g2-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g2-xtick_2">
+     <g id="analisi1_lez06b_g2-line2d_3">
+      <path d="M 234.666667 364 
+L 234.666667 24 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-m4a941c1f31" x="234.666667" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(231.167292 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g2-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g2-xtick_3">
+     <g id="analisi1_lez06b_g2-line2d_5">
+      <path d="M 361.244444 364 
+L 361.244444 24 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-m4a941c1f31" x="361.244444" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_3">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(357.745069 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g2-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g2-xtick_4">
+     <g id="analisi1_lez06b_g2-line2d_7">
+      <path d="M 487.822222 364 
+L 487.822222 24 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-m4a941c1f31" x="487.822222" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_4">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(484.322847 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g2-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g2-xtick_5">
+     <g id="analisi1_lez06b_g2-line2d_9">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-m4a941c1f31" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_5">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(610.900625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g2-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-18"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g2-matplotlib.axis_2">
+    <g id="analisi1_lez06b_g2-ytick_1">
+     <g id="analisi1_lez06b_g2-line2d_11">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_12">
+      <defs>
+       <path id="analisi1_lez06b_g2-mf4e7f91015" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-mf4e7f91015" x="44.8" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_6">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(31.30125 368.178711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_g2-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g2-ytick_2">
+     <g id="analisi1_lez06b_g2-line2d_13">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-mf4e7f91015" x="44.8" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_7">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(31.30125 198.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_g2-ytick_3">
+     <g id="analisi1_lez06b_g2-line2d_15">
+      <path d="M 44.8 24 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_g2-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06b_g2-mf4e7f91015" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_g2-text_8">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(31.30125 28.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g2-line2d_17">
+    <defs>
+     <path id="analisi1_lez06b_g2-m954bda2e0f" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_g2-m954bda2e0f" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g2-line2d_18">
+    <defs>
+     <path id="analisi1_lez06b_g2-mfa85742ff4" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_g2-mfa85742ff4" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g2-line2d_19">
+    <path d="M 44.8 24 
+L 47.650375 38.652833 
+L 50.500751 52.094874 
+L 53.351126 64.470242 
+L 56.201501 75.90106 
+L 59.051877 86.491491 
+L 61.902252 96.330926 
+L 65.22769 106.96343 
+L 68.553128 116.783505 
+L 71.878565 125.880841 
+L 75.204003 134.332394 
+L 78.529441 142.20457 
+L 81.854879 149.554971 
+L 85.655379 157.380639 
+L 89.45588 164.655257 
+L 93.25638 171.43505 
+L 97.056881 177.768844 
+L 100.857381 183.699248 
+L 105.132944 189.935098 
+L 109.408507 195.754024 
+L 113.68407 201.196486 
+L 117.959633 206.297872 
+L 122.710259 211.603738 
+L 127.460884 216.564195 
+L 132.21151 221.211909 
+L 137.437198 225.997292 
+L 142.662886 230.472322 
+L 147.888574 234.666244 
+L 153.589324 238.95092 
+L 159.290075 242.960808 
+L 165.465888 247.02439 
+L 171.641701 250.823987 
+L 178.292577 254.649142 
+L 184.943453 258.224183 
+L 192.069391 261.803961 
+L 199.670392 265.364626 
+L 207.271393 268.685527 
+L 215.347456 271.977427 
+L 223.898582 275.223868 
+L 232.924771 278.411085 
+L 242.426022 281.527817 
+L 252.402335 284.565082 
+L 262.853711 287.515947 
+L 273.78015 290.375293 
+L 285.656714 293.25026 
+L 298.00834 296.011341 
+L 311.310092 298.753521 
+L 325.561968 301.456275 
+L 340.288907 304.02354 
+L 355.965972 306.534536 
+L 373.068224 309.044486 
+L 391.120601 311.466495 
+L 410.598165 313.85115 
+L 431.500917 316.180645 
+L 453.828857 318.441216 
+L 477.581985 320.622686 
+L 503.235363 322.755565 
+L 531.264053 324.858377 
+L 561.192994 326.879257 
+L 593.97231 328.865983 
+L 614.4 330 
+L 614.4 330 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g2-line2d_20">
+    <path d="M 108.458382 194.494802 
+L 112.733945 200.017699 
+L 117.009508 205.192053 
+L 121.760133 210.571321 
+L 126.510759 215.598107 
+L 131.261384 220.305957 
+L 136.487073 225.151226 
+L 141.712761 229.680395 
+L 146.938449 233.923421 
+L 152.639199 238.256632 
+L 158.33995 242.310448 
+L 164.515763 246.417075 
+L 170.691576 250.25558 
+L 177.342452 254.118598 
+L 183.993328 257.727842 
+L 191.119266 261.34072 
+L 198.720267 264.933171 
+L 206.321268 268.282695 
+L 214.397331 271.601995 
+L 222.948457 274.874508 
+L 231.974646 278.086407 
+L 241.475897 281.226396 
+L 251.45221 284.285491 
+L 261.903586 287.256777 
+L 272.830025 290.135169 
+L 284.706589 293.028552 
+L 297.058215 295.806624 
+L 310.359967 298.565008 
+L 324.136781 301.196118 
+L 338.86372 303.784343 
+L 354.540784 306.314985 
+L 371.167973 308.776483 
+L 389.22035 311.221647 
+L 408.697915 313.628074 
+L 429.125605 315.926887 
+L 451.453545 318.21094 
+L 475.206672 320.413985 
+L 500.86005 322.566928 
+L 528.413678 324.654377 
+L 558.342619 326.695827 
+L 590.646872 328.674177 
+L 614.4 330 
+L 614.4 330 
+" clip-path="url(#analisi1_lez06b_g2-p6734f5b232)" style="fill: none; stroke: #7c4dff; stroke-opacity: 0.9; stroke-width: 3.6; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g2-patch_3">
+    <path d="M 44.8 364 
+L 44.8 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g2-patch_4">
+    <path d="M 44.8 364 
+L 614.4 364 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_g2-text_9">
+    <g style="fill: currentColor" transform="translate(114.088889 188) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06b_g2-DejaVuSans-Oblique-33" d="M 1081 4666 
+L 2541 4666 
+Q 3178 4666 3512 4369 
+Q 3847 4072 3847 3500 
+Q 3847 2731 3353 2303 
+Q 2859 1875 1966 1875 
+L 1172 1875 
+L 806 0 
+L 172 0 
+L 1081 4666 
+z
+M 1613 4147 
+L 1275 2394 
+L 2069 2394 
+Q 2606 2394 2893 2669 
+Q 3181 2944 3181 3456 
+Q 3181 3784 2986 3965 
+Q 2791 4147 2438 4147 
+L 1613 4147 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_g2-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_g2-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_g2-DejaVuSans-f" d="M 750 794 
+L 1409 794 
+L 1409 256 
+L 897 -744 
+L 494 -744 
+L 750 256 
+L 750 794 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_g2-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-Oblique-33" transform="translate(0 0.125)"/>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-20" transform="translate(79.785156 0.125)"/>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-b" transform="translate(183.056641 0.125)"/>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-14" transform="translate(222.070312 0.125)"/>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-f" transform="translate(285.693359 0.125)"/>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-14" transform="translate(336.962891 0.125)"/>
+     <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-c" transform="translate(400.585938 0.125)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g2-line2d_21">
+    <defs>
+     <path id="analisi1_lez06b_g2-md8475f6c7e" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06b_g2-p6734f5b232)">
+     <use xlink:href="#analisi1_lez06b_g2-md8475f6c7e" x="108.088889" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_g2-legend_1">
+    <g id="analisi1_lez06b_g2-line2d_22">
+     <path d="M 554.733594 38.408281 
+L 565.733594 38.408281 
+L 576.733594 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06b_g2-text_10">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(585.533594 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06b_g2-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_g2-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06b_g2-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06b_g2-p6734f5b232">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+          },
+          {
+            subtitle: "Come leggere il grafico precedente",
+            content: `<p>Nel disegno la finestra degli assi è più ampia del dominio che stiamo studiando: l'intervallo $[0.5,\\,5]$ serve solo a inquadrare la curva, mentre il dominio della funzione considerata è $[1,+\\infty)$. Di conseguenza:</p>
+<ul>
+  <li>il tratto di curva con $x \\lt 1$ (a sinistra del punto $P=(1,1)$) <strong>non</strong> appartiene al grafico della funzione studiata ed è da considerare escluso;</li>
+  <li>il tratto <strong>evidenziato</strong> da $x=1$ a $x=5$ è la parte effettivamente rilevante, e la curva <strong>prosegue oltre il bordo destro</strong> del riquadro, avvicinandosi indefinitamente all'asse delle $x$ senza mai toccarlo;</li>
+  <li>il punto $P=(1,1)$ è incluso nel grafico ed è il punto in cui la funzione assume il suo valore più grande.</li>
+</ul>
+<p>Se invece si volesse disegnare $1/x$ su $(0,+\\infty)$, il tratto con $x \\lt 1$ andrebbe incluso e il grafico salirebbe oltre il bordo superiore del riquadro: ecco visualizzata la perdita di limitatezza.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Superiormente limitata", latex: "\\exists M \\in \\mathbb{R} : \\ f(x) \\le M \\quad \\forall x \\in X" },
+          { label: "Inferiormente limitata", latex: "\\exists m \\in \\mathbb{R} : \\ f(x) \\ge m \\quad \\forall x \\in X" },
+          { label: "Limitata", latex: "\\exists M \\ge 0 : \\ |f(x)| \\le M \\quad \\forall x \\in X" }
+        ]
+      },
+
+      {
+        id: "s06-sup-inf",
+        type: "section",
+        title: "Estremo Superiore e Inferiore di una Funzione",
+        icon: "🎯",
+        content: `<p>Se una funzione è superiormente limitata, l'insieme $\\operatorname{Im}(f)$ ammette estremo superiore finito; analogamente, se è inferiormente limitata, ammette estremo inferiore finito. L'esistenza di questi due numeri reali è garantita dall'<strong>assioma di completezza</strong> di $\\mathbb{R}$, che si applica appunto a insiemi <strong>non vuoti</strong> e limitati: entrambe le ipotesi sono essenziali, e la prima è assicurata dalla convenzione $X \\neq \\emptyset$ adottata all'inizio del capitolo.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Sup e inf di una funzione",
+            content: `<p>Sia $f: X \\to \\mathbb{R}$ una funzione, con $X \\neq \\emptyset$ (così che anche $\\operatorname{Im}(f) \\neq \\emptyset$).</p>
+<p>Se $f$ è superiormente limitata, si definisce <strong>estremo superiore</strong> di $f$ su $X$ il numero reale</p>
+<p>$$\\sup_{x \\in X} f(x) := \\sup(\\operatorname{Im}(f)) = \\sup\\{f(x) : x \\in X\\}$$</p>
+<p>Se $f$ è inferiormente limitata, si definisce <strong>estremo inferiore</strong> di $f$ su $X$ il numero reale</p>
+<p>$$\\inf_{x \\in X} f(x) := \\inf(\\operatorname{Im}(f)) = \\inf\\{f(x) : x \\in X\\}$$</p>`
+          },
+          {
+            subtitle: "Convenzione sui valori infiniti",
+            content: `<p>Si adotta inoltre la convenzione</p>
+<p>$$\\sup_{x \\in X} f(x) = +\\infty \\quad \\text{se } f \\text{ non è superiormente limitata}$$</p>
+<p>$$\\inf_{x \\in X} f(x) = -\\infty \\quad \\text{se } f \\text{ non è inferiormente limitata}$$</p>
+<p>Con questa convenzione estremo superiore e inferiore risultano definiti per <em>ogni</em> funzione con dominio non vuoto, a patto di accettare i simboli $\\pm\\infty$ come possibili valori. Va però tenuto presente che $+\\infty$ e $-\\infty$ <strong>non sono numeri reali</strong>: su di essi non si possono eseguire le operazioni algebriche usuali.</p>`
+          },
+          {
+            subtitle: "Caratterizzazione di sup e inf",
+            content: `<p>Siano $X \\neq \\emptyset$ e $M, m \\in \\mathbb{R}$ <em>numeri reali</em>. Le proprietà che caratterizzano l'estremo superiore e inferiore di un insieme si traducono direttamente per le funzioni.</p>
+<p>$M = \\sup_{x \\in X} f(x)$ se e solo se</p>
+<p>$$\\begin{cases} f(x) \\le M \\quad \\forall x \\in X & \\text{($M$ è un maggiorante)} \\\\ \\forall \\varepsilon \\gt 0, \\ \\exists x \\in X \\text{ t.c. } f(x) \\gt M - \\varepsilon & \\text{($M$ è il più piccolo dei maggioranti)} \\end{cases}$$</p>
+<p>$m = \\inf_{x \\in X} f(x)$ se e solo se</p>
+<p>$$\\begin{cases} f(x) \\ge m \\quad \\forall x \\in X & \\text{($m$ è un minorante)} \\\\ \\forall \\varepsilon \\gt 0, \\ \\exists x \\in X \\text{ t.c. } f(x) \\lt m + \\varepsilon & \\text{($m$ è il più grande dei minoranti)} \\end{cases}$$</p>
+<p>L'ipotesi che $M$ e $m$ siano <strong>reali</strong> è indispensabile: la condizione $f(x) \\gt M-\\varepsilon$ non ha senso, e non caratterizza nulla, se $M = +\\infty$. Il caso infinito si esprime invece così:</p>
+<p>$$\\sup_{x \\in X} f(x) = +\\infty \\iff \\forall K \\in \\mathbb{R} \\ \\exists x \\in X \\text{ t.c. } f(x) \\gt K$$</p>
+<p>$$\\inf_{x \\in X} f(x) = -\\infty \\iff \\forall K \\in \\mathbb{R} \\ \\exists x \\in X \\text{ t.c. } f(x) \\lt K$$</p>`
+          },
+          {
+            subtitle: "Che ruolo ha $\\varepsilon$?",
+            content: `<p>La prima condizione dice semplicemente che $M$ sta "sopra tutti i valori". Da sola però non basta: anche $M+1$, $M+10$ o $M+1000$ starebbero sopra tutti i valori. La seconda condizione serve a <strong>escludere questi candidati troppo grandi</strong>, e lo fa così: $\\varepsilon$ è un "margine di tolleranza" arbitrariamente piccolo che usiamo per <strong>abbassare</strong> $M$. Se scendiamo anche di poco, fino a $M-\\varepsilon$, troviamo sempre almeno un valore della funzione che sta <em>sopra</em> questa nuova soglia; dunque $M-\\varepsilon$ non è più un maggiorante. Poiché questo succede per <em>ogni</em> $\\varepsilon \\gt 0$, nessun numero strettamente più piccolo di $M$ può essere maggiorante: $M$ è davvero il più piccolo di tutti.</p>
+<p>In pratica, per verificare la seconda condizione si procede sempre allo stesso modo: <em>dato</em> $\\varepsilon \\gt 0$, si <strong>esibisce</strong> un punto $x \\in X$ (di solito costruito a partire da $\\varepsilon$) per cui $f(x) \\gt M-\\varepsilon$. Per l'estremo inferiore il ragionamento è speculare: si alza $m$ di $\\varepsilon$ e si trova un valore della funzione che sta <em>sotto</em> $m+\\varepsilon$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Sup di una funzione", latex: "\\sup_{x \\in X} f(x) := \\sup\\{f(x) : x \\in X\\}" },
+          { label: "Inf di una funzione", latex: "\\inf_{x \\in X} f(x) := \\inf\\{f(x) : x \\in X\\}" },
+          { label: "Caratterizzazione del sup ($\\varepsilon$)", latex: "\\forall \\varepsilon \\gt 0 \\ \\exists x \\in X : f(x) \\gt M - \\varepsilon" },
+          { label: "Caratterizzazione dell'inf ($\\varepsilon$)", latex: "\\forall \\varepsilon \\gt 0 \\ \\exists x \\in X : f(x) \\lt m + \\varepsilon" }
+        ]
+      },
+
+      {
+        id: "s06-es-svolto-caratterizzazione",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Caratterizzazione per $f(x)=1/x$ su $[1,+\\infty)$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Riprendiamo la funzione $f(x) = \\dfrac{1}{x}$ sul dominio $X = [1,+\\infty)$, che abbiamo già visto essere limitata. Verifichiamo con la caratterizzazione che</p>
+<p>$$\\sup_{x \\in X} \\frac{1}{x} = 1, \\qquad \\inf_{x \\in X} \\frac{1}{x} = 0 .$$</p>`,
+        steps: [
+          `<strong>Estremo superiore, $M=1$ — $1$ è un maggiorante.</strong> Se $x \\ge 1$ allora $\\dfrac{1}{x} \\le 1$, cioè $f(x) \\le 1$ per ogni $x \\in X$.`,
+          `<strong>Nessun numero più piccolo lo è.</strong> Sia $\\varepsilon \\gt 0$. Scegliamo $x = 1 \\in X$; allora $f(1) = 1 \\gt 1 - \\varepsilon$. La seconda condizione è verificata (qui la scelta di $x$ non dipende nemmeno da $\\varepsilon$).`,
+          `Dunque $\\sup_{x\\in X} f(x) = 1$. Inoltre questo valore è <em>assunto</em> dalla funzione, perché $1 = f(1)$ con $1 \\in X$: quindi $1$ è anche il <strong>massimo</strong>, $\\max_{x \\in X} f(x) = 1$, con punto di massimo $x_0 = 1$.`,
+          `<strong>Estremo inferiore, $m=0$ — $0$ è un minorante.</strong> Se $x \\ge 1 \\gt 0$ allora $\\dfrac{1}{x} \\gt 0$, quindi $f(x) \\ge 0$ per ogni $x \\in X$.`,
+          `<strong>Nessun numero più grande lo è.</strong> Sia $\\varepsilon \\gt 0$. Scegliamo un punto che dipende da $\\varepsilon$, ad esempio $$x \\gt \\max\\left\\{1,\\ \\frac{1}{\\varepsilon}\\right\\}.$$ Tale $x$ appartiene a $X$ (perché $x \\gt 1$) e soddisfa $x \\gt \\dfrac{1}{\\varepsilon}$, da cui, passando ai reciproci di numeri positivi, $$0 \\lt \\frac{1}{x} \\lt \\varepsilon = 0 + \\varepsilon.$$ Abbiamo trovato un valore della funzione strettamente minore di $0+\\varepsilon$.`,
+          `Dunque $\\inf_{x\\in X} f(x) = 0$.`,
+          `<strong>Che cosa ci dice questo conto.</strong> La seconda verifica mostra in concreto perché <strong>nessun numero positivo può essere un minorante</strong>: se prendessimo un candidato $c \\gt 0$, basterebbe applicare il conto sopra con $\\varepsilon = c$, cioè scegliere $x \\gt \\max\\{1, 1/c\\}$, per ottenere $f(x) \\lt c$; il candidato $c$ verrebbe così "scavalcato dal basso" e non sarebbe più un minorante.`,
+          `<strong>Minoranti vs estremo inferiore.</strong> Di minoranti ce ne sono <strong>infiniti</strong>, e sono esattamente tutti i numeri minori o uguali a $0$ (ad esempio $-1$, $-5$, $-100$ sono tutti minoranti di $\\operatorname{Im}(f) = (0,1]$); $0$ è il <em>più grande</em> fra essi, e per questo è l'estremo inferiore. L'estremo inferiore, a differenza dei minoranti, è <strong>unico</strong>.`,
+          `Infine $0 \\notin \\operatorname{Im}(f) = (0,1]$: non esiste alcun $x \\in X$ con $1/x = 0$. Quindi l'estremo inferiore <strong>non è assunto</strong> e la funzione <strong>non ha minimo</strong> su $[1,+\\infty)$. Questo esempio illustra bene la differenza fra $\\inf$ e $\\min$: l'estremo inferiore esiste sempre (se la funzione è inferiormente limitata su un dominio non vuoto), il minimo no.`
+        ]
+      },
+
+      {
+        id: "s06-max-min",
+        type: "section",
+        title: "Massimo e Minimo Assoluto",
+        icon: "🏔️",
+        content: `<p>Se l'estremo superiore o inferiore <strong>appartengono all'immagine</strong> della funzione, allora diventano rispettivamente massimo e minimo.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Massimo e minimo assoluto",
+            content: `<p>Sia $f: X \\to \\mathbb{R}$ una funzione, con $X \\neq \\emptyset$.</p>
+<ul>
+  <li>Un numero $M \\in \\mathbb{R}$ si dice <strong>massimo assoluto</strong> di $f$ in $X$ se esiste un punto $x_0 \\in X$, detto <strong>punto di massimo assoluto</strong>, tale che $M = f(x_0)$ e $f(x_0) \\ge f(x)$ per ogni $x \\in X$. Si scrive $M = \\max_{x \\in X} f(x)$.</li>
+  <li>Un numero $m \\in \\mathbb{R}$ si dice <strong>minimo assoluto</strong> di $f$ in $X$ se esiste un punto $x_0 \\in X$, detto <strong>punto di minimo assoluto</strong>, tale che $m = f(x_0)$ e $f(x_0) \\le f(x)$ per ogni $x \\in X$. Si scrive $m = \\min_{x \\in X} f(x)$.</li>
+  </ul>`
+          }
+        ],
+        formulas: [
+          { label: "Massimo assoluto", latex: "\\exists x_0 \\in X : \\ M = f(x_0) \\ \\text{e} \\ f(x) \\le f(x_0) \\ \\forall x \\in X" },
+          { label: "Minimo assoluto", latex: "\\exists x_0 \\in X : \\ m = f(x_0) \\ \\text{e} \\ f(x) \\ge f(x_0) \\ \\forall x \\in X" }
+        ]
+      },
+
+      {
+        id: "s06-tre-situazioni",
+        type: "alert_box",
+        title: "Tre situazioni da non confondere",
+        icon: "🚨",
+        content: `<p>Conviene tenere distinti tre fenomeni diversi, che spesso vengono sovrapposti. In ciascun caso <strong>ragioniamo separatamente sul verso superiore e su quello inferiore</strong>: le due questioni sono indipendenti.</p>
+<ol>
+  <li><strong>La funzione non è limitata (in un verso).</strong> Non esiste alcun maggiorante (rispettivamente minorante) reale, quindi non esiste nemmeno l'estremo superiore (rispettivamente inferiore) come numero reale; con la convenzione precedente si scrive $\\sup f = +\\infty$ (rispettivamente $\\inf f = -\\infty$) e <strong>non c'è massimo</strong> (rispettivamente minimo). Esempio: $1/x$ su $(0,+\\infty)$ dal lato superiore.</li>
+  <li><strong>La funzione è limitata in quel verso, ma l'estremo non è assunto.</strong> Il $\\sup$ (o l'$\\inf$) esiste come numero reale, ma non appartiene all'immagine, quindi non è un massimo (o un minimo). Esempio: $\\inf = 0$ per $1/x$ su $[1,+\\infty)$, non assunto.</li>
+  <li><strong>La funzione è limitata in quel verso e l'estremo è assunto.</strong> Allora l'estremo è un massimo (o un minimo). Esempio: $\\max = 1$ per $1/x$ su $[1,+\\infty)$, raggiunto in $x_0=1$.</li>
+</ol>
+<p><strong>I due versi si combinano liberamente.</strong> La funzione $f(x) = x^2$ su $\\mathbb{R}$ cade nel caso 1 dal lato superiore ($\\sup f = +\\infty$, nessun massimo) e nel caso 3 dal lato inferiore ($\\min f = 0$ in $x_0 = 0$): <strong>ha minimo pur non essendo superiormente limitata</strong>. Non è vero, quindi, che serva la limitatezza in entrambi i versi per parlare di minimo: per un <strong>massimo</strong> basta la limitatezza <strong>superiore</strong> più il raggiungimento del $\\sup$; per un <strong>minimo</strong> basta la limitatezza <strong>inferiore</strong> più il raggiungimento dell'$\\inf$.</p>
+<p>In particolare, il fatto che i valori di una funzione superino una soglia raggiunta in precedenza cambia il valore del massimo, ma <strong>non</strong> fa perdere la limitatezza: sono due questioni indipendenti.</p>`,
+        table_compare: {
+          headers: ["Situazione", "Esiste $\\sup$ in $\\mathbb{R}$?", "Esiste $\\max$?", "Esempio"],
+          rows: [
+            ["Non superiormente limitata", "No ($\\sup = +\\infty$)", "No", "$1/x$ su $(0,+\\infty)$ ; $x^2$ su $\\mathbb{R}$"],
+            ["Sup. limitata, estremo non assunto", "Sì", "No", "$1/x$ su $[1,+\\infty)$ dal lato inferiore ($\\inf = 0$)"],
+            ["Sup. limitata, estremo assunto", "Sì", "Sì", "$1/x$ su $[1,+\\infty)$: $\\max = 1$ in $x_0=1$"]
+          ]
+        }
+      },
+
+      {
+        id: "s06-esempio-co2",
+        type: "section",
+        title: "Un esempio dal mondo reale: la concentrazione di CO₂",
+        icon: "🌍",
+        content: `<p>Consideriamo i dati sulla concentrazione di anidride carbonica (CO$_2$) nell'atmosfera, ottenuti da carotaggi di ghiaccio in Antartide. Questi dati ci forniscono una funzione che associa a un'epoca (il tempo) la concentrazione di CO$_2$.</p>
+<p>Se consideriamo il dominio temporale che va da 800.000 anni fa fino all'inizio della rivoluzione industriale (circa 1800), osserviamo che la funzione è <strong>limitata</strong>: ha oscillato tra valori minimi e massimi, ma sempre all'interno di un range definito.</p>
+<p>Tuttavia, se estendiamo il dominio fino ai giorni nostri, il grafico cambia drasticamente. Negli ultimi 200 anni la concentrazione di CO$_2$ è aumentata in modo molto rapido, superando di gran lunga tutti i massimi registrati negli 800.000 anni precedenti.</p>
+<figure class="figura" data-id="analisi1_lez06b_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="analisi1_lez06b_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="343.696pt" height="184.992pt" viewBox="0 0 343.696 184.992" version="1.2"><style>#analisi1_lez06b_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez06b_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez06b_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez06b_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez06b_d1 [fill="rgb(34.999084%,34.999084%,34.999084%)"],#analisi1_lez06b_d1 [style*="fill:rgb(34.999084%,34.999084%,34.999084%)"]{fill:#adadad!important}[data-mode="light"] #analisi1_lez06b_d1 [fill="rgb(34.999084%,34.999084%,34.999084%)"],[data-mode="light"] #analisi1_lez06b_d1 [style*="fill:rgb(34.999084%,34.999084%,34.999084%)"]{fill:#595959!important}#analisi1_lez06b_d1 [stroke="rgb(34.999084%,34.999084%,34.999084%)"],#analisi1_lez06b_d1 [style*="stroke:rgb(34.999084%,34.999084%,34.999084%)"]{stroke:#adadad!important}[data-mode="light"] #analisi1_lez06b_d1 [stroke="rgb(34.999084%,34.999084%,34.999084%)"],[data-mode="light"] #analisi1_lez06b_d1 [style*="stroke:rgb(34.999084%,34.999084%,34.999084%)"]{stroke:#595959!important}#analisi1_lez06b_d1 [fill="rgb(0%,0%,100%)"],#analisi1_lez06b_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez06b_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez06b_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez06b_d1 [stroke="rgb(0%,0%,100%)"],#analisi1_lez06b_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez06b_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez06b_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez06b_d1 [fill="rgb(100%,0%,0%)"],#analisi1_lez06b_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez06b_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez06b_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez06b_d1 [stroke="rgb(100%,0%,0%)"],#analisi1_lez06b_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez06b_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez06b_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-1">
+<path style="stroke:none;" d="M 6.296875 -4.046875 L 6.125 -6.0625 L 0.515625 -6.0625 L 0.328125 -4.046875 L 0.578125 -4.046875 C 0.703125 -5.53125 0.890625 -5.78125 2.234375 -5.78125 C 2.40625 -5.78125 2.65625 -5.78125 2.75 -5.765625 C 2.90625 -5.734375 2.921875 -5.640625 2.921875 -5.421875 L 2.921875 -0.71875 C 2.921875 -0.40625 2.921875 -0.28125 1.984375 -0.28125 L 1.625 -0.28125 L 1.625 0 C 1.953125 -0.03125 2.9375 -0.03125 3.328125 -0.03125 C 3.703125 -0.03125 4.6875 -0.03125 5.015625 0 L 5.015625 -0.28125 L 4.671875 -0.28125 C 3.71875 -0.28125 3.71875 -0.40625 3.71875 -0.71875 L 3.71875 -5.421875 C 3.71875 -5.65625 3.734375 -5.734375 3.90625 -5.765625 C 4 -5.78125 4.25 -5.78125 4.40625 -5.78125 C 5.75 -5.78125 5.921875 -5.53125 6.046875 -4.046875 Z M 6.296875 -4.046875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-2">
+<path style="stroke:none;" d="M 3.828125 -1.0625 C 3.828125 -1.125 3.78125 -1.1875 3.703125 -1.1875 C 3.609375 -1.1875 3.578125 -1.125 3.578125 -1.078125 C 3.265625 -0.171875 2.46875 -0.15625 2.34375 -0.15625 C 1.90625 -0.15625 1.546875 -0.390625 1.328125 -0.703125 C 1.03125 -1.140625 1.03125 -1.671875 1.03125 -2.046875 L 3.578125 -2.046875 C 3.78125 -2.046875 3.828125 -2.046875 3.828125 -2.234375 C 3.828125 -3.15625 3.328125 -4.015625 2.171875 -4.015625 C 1.09375 -4.015625 0.265625 -3.078125 0.265625 -1.96875 C 0.265625 -0.796875 1.203125 0.09375 2.296875 0.09375 C 3.390625 0.09375 3.828125 -0.859375 3.828125 -1.0625 Z M 3.21875 -2.265625 L 1.03125 -2.265625 C 1.125 -3.640625 1.921875 -3.78125 2.171875 -3.78125 C 2.671875 -3.78125 3.203125 -3.40625 3.21875 -2.265625 Z M 3.21875 -2.265625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-3">
+<path style="stroke:none;" d="M 7.453125 0 L 7.453125 -0.28125 C 7 -0.28125 6.78125 -0.28125 6.765625 -0.5625 L 6.765625 -2.28125 C 6.765625 -3.046875 6.765625 -3.296875 6.46875 -3.640625 C 6.28125 -3.84375 5.921875 -3.953125 5.515625 -3.953125 C 4.875 -3.953125 4.4375 -3.578125 4.1875 -3.109375 C 4.078125 -3.640625 3.71875 -3.953125 2.96875 -3.953125 C 2.25 -3.953125 1.8125 -3.484375 1.625 -3.078125 L 1.609375 -3.078125 L 1.609375 -3.953125 L 0.3125 -3.859375 L 0.3125 -3.578125 C 0.921875 -3.578125 1 -3.515625 1 -3.078125 L 1 -0.6875 C 1 -0.28125 0.90625 -0.28125 0.3125 -0.28125 L 0.3125 0 C 0.734375 -0.015625 0.90625 -0.03125 1.328125 -0.03125 C 1.765625 -0.03125 1.875 -0.015625 2.359375 0 L 2.359375 -0.28125 C 1.765625 -0.28125 1.671875 -0.28125 1.671875 -0.6875 L 1.671875 -2.3125 C 1.671875 -3.28125 2.359375 -3.734375 2.90625 -3.734375 C 3.390625 -3.734375 3.546875 -3.390625 3.546875 -2.75 L 3.546875 -0.6875 C 3.546875 -0.28125 3.453125 -0.28125 2.859375 -0.28125 L 2.859375 0 C 3.28125 -0.015625 3.453125 -0.03125 3.890625 -0.03125 C 4.3125 -0.03125 4.4375 -0.015625 4.90625 0 L 4.90625 -0.28125 C 4.3125 -0.28125 4.21875 -0.28125 4.21875 -0.6875 L 4.21875 -2.3125 C 4.21875 -3.28125 4.921875 -3.734375 5.453125 -3.734375 C 5.9375 -3.734375 6.109375 -3.390625 6.109375 -2.75 L 6.109375 -0.6875 C 6.109375 -0.28125 6 -0.28125 5.421875 -0.28125 L 5.421875 0 C 5.84375 -0.015625 6 -0.03125 6.4375 -0.03125 C 6.859375 -0.03125 6.984375 -0.015625 7.453125 0 Z M 7.453125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-4">
+<path style="stroke:none;" d="M 4.796875 -1.9375 C 4.796875 -3.0625 3.921875 -3.953125 2.859375 -3.953125 C 2.375 -3.953125 1.9375 -3.765625 1.59375 -3.390625 L 1.59375 -3.953125 L 0.265625 -3.859375 L 0.265625 -3.578125 C 0.90625 -3.578125 0.953125 -3.53125 0.953125 -3.140625 L 0.953125 1.046875 C 0.953125 1.453125 0.859375 1.453125 0.265625 1.453125 L 0.265625 1.734375 C 0.6875 1.71875 0.859375 1.703125 1.296875 1.703125 C 1.71875 1.703125 1.828125 1.71875 2.3125 1.734375 L 2.3125 1.453125 C 1.71875 1.453125 1.625 1.453125 1.625 1.046875 L 1.625 -0.4375 C 1.859375 -0.203125 2.15625 0.09375 2.75 0.09375 C 3.8125 0.09375 4.796875 -0.765625 4.796875 -1.9375 Z M 4.03125 -1.9375 C 4.03125 -0.90625 3.421875 -0.125 2.6875 -0.125 C 2.296875 -0.125 1.953125 -0.359375 1.734375 -0.671875 C 1.625 -0.84375 1.625 -0.875 1.625 -1.03125 L 1.625 -3.015625 C 1.921875 -3.53125 2.421875 -3.703125 2.796875 -3.703125 C 3.484375 -3.703125 4.03125 -2.90625 4.03125 -1.9375 Z M 4.03125 -1.9375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-5">
+<path style="stroke:none;" d="M 4.328125 -1.90625 C 4.328125 -3.078125 3.40625 -4.015625 2.296875 -4.015625 C 1.15625 -4.015625 0.265625 -3.046875 0.265625 -1.90625 C 0.265625 -0.78125 1.1875 0.09375 2.296875 0.09375 C 3.421875 0.09375 4.328125 -0.8125 4.328125 -1.90625 Z M 3.5625 -1.984375 C 3.5625 -1.65625 3.5625 -1.140625 3.34375 -0.75 C 3.09375 -0.328125 2.671875 -0.15625 2.296875 -0.15625 C 1.859375 -0.15625 1.484375 -0.375 1.265625 -0.71875 C 1.03125 -1.09375 1.03125 -1.578125 1.03125 -1.984375 C 1.03125 -2.3125 1.03125 -2.828125 1.25 -3.203125 C 1.515625 -3.65625 1.96875 -3.78125 2.296875 -3.78125 C 2.796875 -3.78125 3.171875 -3.5 3.34375 -3.203125 C 3.546875 -2.8125 3.5625 -2.359375 3.5625 -1.984375 Z M 3.5625 -1.984375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-6">
+<path style="stroke:none;" d="M 6.125 -2.078125 C 6.125 -2.171875 6.125 -2.25 6 -2.25 C 5.875 -2.25 5.875 -2.1875 5.875 -2.109375 C 5.796875 -0.75 4.734375 -0.078125 3.8125 -0.078125 C 3.046875 -0.078125 1.421875 -0.5625 1.421875 -3.0625 C 1.421875 -5.5625 3.046875 -6.03125 3.796875 -6.03125 C 4.6875 -6.03125 5.625 -5.359375 5.84375 -3.90625 C 5.859375 -3.796875 5.859375 -3.75 5.984375 -3.75 C 6.125 -3.75 6.125 -3.796875 6.125 -3.984375 L 6.125 -6.078125 C 6.125 -6.234375 6.125 -6.3125 6.015625 -6.3125 C 5.953125 -6.3125 5.921875 -6.28125 5.875 -6.203125 L 5.421875 -5.53125 C 5.125 -5.8125 4.625 -6.3125 3.71875 -6.3125 C 1.984375 -6.3125 0.515625 -4.875 0.515625 -3.0625 C 0.515625 -1.21875 2 0.203125 3.71875 0.203125 C 5.203125 0.203125 6.125 -1.03125 6.125 -2.078125 Z M 6.125 -2.078125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-7">
+<path style="stroke:none;" d="M 4.890625 0 L 4.890625 -0.28125 C 4.4375 -0.28125 4.21875 -0.28125 4.203125 -0.5625 L 4.203125 -2.28125 C 4.203125 -3.015625 4.203125 -3.28125 3.953125 -3.59375 C 3.75 -3.84375 3.40625 -3.953125 2.96875 -3.953125 C 2.125 -3.953125 1.75 -3.34375 1.625 -3.09375 L 1.609375 -3.09375 L 1.609375 -3.953125 L 0.3125 -3.859375 L 0.3125 -3.578125 C 0.921875 -3.578125 1 -3.515625 1 -3.078125 L 1 -0.6875 C 1 -0.28125 0.90625 -0.28125 0.3125 -0.28125 L 0.3125 0 C 0.734375 -0.015625 0.90625 -0.03125 1.328125 -0.03125 C 1.765625 -0.03125 1.875 -0.015625 2.359375 0 L 2.359375 -0.28125 C 1.765625 -0.28125 1.671875 -0.28125 1.671875 -0.6875 L 1.671875 -2.3125 C 1.671875 -3.265625 2.34375 -3.734375 2.90625 -3.734375 C 3.421875 -3.734375 3.546875 -3.296875 3.546875 -2.75 L 3.546875 -0.6875 C 3.546875 -0.28125 3.453125 -0.28125 2.859375 -0.28125 L 2.859375 0 C 3.28125 -0.015625 3.453125 -0.03125 3.875 -0.03125 C 4.3125 -0.03125 4.421875 -0.015625 4.890625 0 Z M 4.890625 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-8">
+<path style="stroke:none;" d="M 3.828125 -1.0625 C 3.828125 -1.171875 3.71875 -1.171875 3.703125 -1.171875 C 3.59375 -1.171875 3.59375 -1.15625 3.546875 -1 C 3.34375 -0.390625 2.84375 -0.15625 2.375 -0.15625 C 1.8125 -0.15625 1.078125 -0.625 1.078125 -1.9375 C 1.078125 -3.34375 1.796875 -3.765625 2.328125 -3.765625 C 2.4375 -3.765625 2.921875 -3.75 3.265625 -3.515625 C 3.078125 -3.484375 2.890625 -3.359375 2.890625 -3.09375 C 2.890625 -2.859375 3.078125 -2.6875 3.296875 -2.6875 C 3.53125 -2.6875 3.71875 -2.84375 3.71875 -3.109375 C 3.71875 -3.671875 3.09375 -4.015625 2.3125 -4.015625 C 1.15625 -4.015625 0.296875 -3.046875 0.296875 -1.9375 C 0.296875 -0.78125 1.234375 0.09375 2.296875 0.09375 C 3.53125 0.09375 3.828125 -0.984375 3.828125 -1.0625 Z M 3.828125 -1.0625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-9">
+<path style="stroke:none;" d="M 3.0625 -1.109375 L 3.0625 -1.625 L 2.8125 -1.625 L 2.8125 -1.140625 C 2.8125 -0.46875 2.53125 -0.15625 2.21875 -0.15625 C 1.609375 -0.15625 1.609375 -0.9375 1.609375 -1.09375 L 1.609375 -3.578125 L 2.90625 -3.578125 L 2.90625 -3.859375 L 1.609375 -3.859375 L 1.609375 -5.5 L 1.359375 -5.5 C 1.359375 -4.75 1.03125 -3.828125 0.171875 -3.8125 L 0.171875 -3.578125 L 0.953125 -3.578125 L 0.953125 -1.109375 C 0.953125 -0.109375 1.671875 0.09375 2.15625 0.09375 C 2.75 0.09375 3.0625 -0.46875 3.0625 -1.109375 Z M 3.0625 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-10">
+<path style="stroke:none;" d="M 3.34375 -3.40625 C 3.34375 -3.6875 3.078125 -3.953125 2.671875 -3.953125 C 2.125 -3.953125 1.75 -3.578125 1.546875 -3.03125 L 1.546875 -3.953125 L 0.265625 -3.859375 L 0.265625 -3.578125 C 0.875 -3.578125 0.953125 -3.515625 0.953125 -3.078125 L 0.953125 -0.6875 C 0.953125 -0.28125 0.859375 -0.28125 0.265625 -0.28125 L 0.265625 0 C 0.75 -0.015625 0.859375 -0.03125 1.3125 -0.03125 L 2.453125 0 L 2.453125 -0.28125 L 2.28125 -0.28125 C 1.625 -0.28125 1.59375 -0.375 1.59375 -0.703125 L 1.59375 -2.046875 C 1.59375 -2.421875 1.6875 -3.734375 2.71875 -3.734375 L 2.71875 -3.71875 C 2.6875 -3.71875 2.546875 -3.609375 2.546875 -3.390625 C 2.546875 -3.15625 2.734375 -3 2.953125 -3 C 3.140625 -3 3.34375 -3.140625 3.34375 -3.40625 Z M 3.34375 -3.40625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-11">
+<path style="stroke:none;" d="M 4.453125 -0.796875 L 4.453125 -1.296875 L 4.203125 -1.296875 L 4.203125 -0.8125 C 4.203125 -0.703125 4.203125 -0.265625 3.875 -0.265625 C 3.546875 -0.265625 3.546875 -0.6875 3.546875 -0.828125 L 3.546875 -2.40625 C 3.546875 -2.90625 3.546875 -3.21875 3.15625 -3.578125 C 2.8125 -3.875 2.390625 -4.015625 1.9375 -4.015625 C 1.1875 -4.015625 0.5625 -3.640625 0.5625 -3.0625 C 0.5625 -2.78125 0.75 -2.625 0.984375 -2.625 C 1.234375 -2.625 1.390625 -2.8125 1.390625 -3.046875 C 1.390625 -3.421875 1 -3.46875 1 -3.46875 C 1.234375 -3.703125 1.671875 -3.78125 1.921875 -3.78125 C 2.375 -3.78125 2.890625 -3.453125 2.890625 -2.65625 L 2.890625 -2.359375 C 2.40625 -2.34375 1.734375 -2.296875 1.140625 -2.015625 C 0.5 -1.703125 0.296875 -1.234375 0.296875 -0.875 C 0.296875 -0.140625 1.15625 0.09375 1.765625 0.09375 C 2.5 0.09375 2.84375 -0.390625 2.96875 -0.640625 C 3.015625 -0.265625 3.28125 0.046875 3.65625 0.046875 C 3.890625 0.046875 4.453125 -0.078125 4.453125 -0.796875 Z M 2.890625 -1.265625 C 2.890625 -0.390625 2.21875 -0.125 1.828125 -0.125 C 1.40625 -0.125 1.015625 -0.4375 1.015625 -0.875 C 1.015625 -1.46875 1.515625 -2.09375 2.890625 -2.15625 Z M 2.890625 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-12">
+<path style="stroke:none;" d="M 3.703125 -1.703125 L 3.453125 -1.703125 C 3.359375 -0.703125 3.234375 -0.25 2.125 -0.25 L 1.078125 -0.25 L 3.59375 -3.578125 C 3.671875 -3.671875 3.671875 -3.6875 3.671875 -3.71875 C 3.671875 -3.859375 3.578125 -3.859375 3.421875 -3.859375 L 0.484375 -3.859375 L 0.390625 -2.390625 L 0.640625 -2.390625 C 0.6875 -3.296875 0.84375 -3.640625 1.859375 -3.640625 L 2.859375 -3.640625 L 0.34375 -0.296875 C 0.265625 -0.203125 0.265625 -0.1875 0.265625 -0.140625 C 0.265625 0 0.34375 0 0.5 0 L 3.546875 0 Z M 3.703125 -1.703125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-13">
+<path style="stroke:none;" d="M 2.265625 0 L 2.265625 -0.28125 C 1.6875 -0.28125 1.640625 -0.328125 1.640625 -0.671875 L 1.640625 -3.953125 L 0.359375 -3.859375 L 0.359375 -3.578125 C 0.9375 -3.578125 1.015625 -3.53125 1.015625 -3.09375 L 1.015625 -0.6875 C 1.015625 -0.28125 0.90625 -0.28125 0.328125 -0.28125 L 0.328125 0 C 0.71875 -0.015625 0.90625 -0.03125 1.3125 -0.03125 C 1.453125 -0.03125 1.828125 -0.03125 2.265625 0 Z M 1.765625 -5.40625 C 1.765625 -5.671875 1.546875 -5.875 1.28125 -5.875 C 1.015625 -5.875 0.796875 -5.671875 0.796875 -5.40625 C 0.796875 -5.125 1.015625 -4.921875 1.28125 -4.921875 C 1.546875 -4.921875 1.765625 -5.125 1.765625 -5.40625 Z M 1.765625 -5.40625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph0-14">
+<path style="stroke:none;" d="M 6.640625 -3.03125 C 6.640625 -4.859375 5.25 -6.3125 3.578125 -6.3125 C 1.890625 -6.3125 0.515625 -4.859375 0.515625 -3.03125 C 0.515625 -1.21875 1.90625 0.203125 3.578125 0.203125 C 5.234375 0.203125 6.640625 -1.21875 6.640625 -3.03125 Z M 5.71875 -3.171875 C 5.71875 -0.859375 4.46875 -0.078125 3.578125 -0.078125 C 2.671875 -0.078125 1.421875 -0.859375 1.421875 -3.171875 C 1.421875 -5.359375 2.703125 -6.0625 3.578125 -6.0625 C 4.4375 -6.0625 5.71875 -5.359375 5.71875 -3.171875 Z M 5.71875 -3.171875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph1-1">
+<path style="stroke:none;" d="M 3.21875 -1.109375 L 2.984375 -1.109375 C 2.984375 -1.03125 2.921875 -0.640625 2.828125 -0.578125 C 2.78125 -0.53125 2.296875 -0.53125 2.21875 -0.53125 L 1.109375 -0.53125 L 1.875 -1.15625 C 2.078125 -1.3125 2.609375 -1.703125 2.78125 -1.875 C 2.96875 -2.0625 3.21875 -2.359375 3.21875 -2.78125 C 3.21875 -3.53125 2.53125 -3.96875 1.734375 -3.96875 C 0.96875 -3.96875 0.4375 -3.46875 0.4375 -2.90625 C 0.4375 -2.59375 0.6875 -2.5625 0.75 -2.5625 C 0.90625 -2.5625 1.078125 -2.671875 1.078125 -2.890625 C 1.078125 -3.015625 1 -3.203125 0.734375 -3.203125 C 0.875 -3.515625 1.234375 -3.734375 1.640625 -3.734375 C 2.28125 -3.734375 2.609375 -3.265625 2.609375 -2.78125 C 2.609375 -2.359375 2.328125 -1.921875 1.90625 -1.546875 L 0.5 -0.25 C 0.4375 -0.1875 0.4375 -0.1875 0.4375 0 L 3.03125 0 Z M 3.21875 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph2-1">
+<path style="stroke:none;" d="M 5.46875 -1.734375 C 5.46875 -1.921875 5.296875 -1.921875 5.203125 -1.921875 L 1.015625 -1.921875 C 0.90625 -1.921875 0.75 -1.921875 0.75 -1.734375 C 0.75 -1.578125 0.921875 -1.578125 1.015625 -1.578125 L 5.203125 -1.578125 C 5.296875 -1.578125 5.46875 -1.578125 5.46875 -1.734375 Z M 5.46875 -1.734375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph2-2">
+<path style="stroke:none;" d="M 5.671875 -2.390625 C 5.671875 -2.640625 5.578125 -2.671875 5.546875 -2.671875 C 5.453125 -2.671875 5.4375 -2.484375 5.4375 -2.390625 C 5.40625 -1.875 5.03125 -1.296875 4.390625 -1.296875 C 3.9375 -1.296875 3.59375 -1.5625 3.234375 -1.890625 C 2.78125 -2.296875 2.375 -2.671875 1.828125 -2.671875 C 1.015625 -2.671875 0.546875 -1.84375 0.546875 -1.09375 C 0.546875 -0.8125 0.65625 -0.8125 0.65625 -0.8125 C 0.703125 -0.8125 0.78125 -0.859375 0.78125 -1.046875 C 0.8125 -1.71875 1.25 -2.1875 1.828125 -2.1875 C 2.28125 -2.1875 2.625 -1.921875 2.984375 -1.59375 C 3.4375 -1.1875 3.84375 -0.8125 4.390625 -0.8125 C 5.203125 -0.8125 5.671875 -1.640625 5.671875 -2.390625 Z M 5.671875 -2.390625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph3-1">
+<path style="stroke:none;" d="M 3.578125 -1.171875 C 3.578125 -1.640625 3.3125 -2.03125 2.90625 -2.265625 L 2.46875 -2.515625 C 3.015625 -2.78125 3.359375 -3.109375 3.359375 -3.59375 C 3.359375 -4.265625 2.65625 -4.625 1.984375 -4.625 C 1.21875 -4.625 0.59375 -4.125 0.59375 -3.46875 C 0.59375 -3.140625 0.75 -2.90625 0.875 -2.765625 C 1 -2.609375 1.046875 -2.578125 1.453125 -2.34375 C 1.0625 -2.171875 0.375 -1.796875 0.375 -1.0625 C 0.375 -0.296875 1.171875 0.140625 1.96875 0.140625 C 2.859375 0.140625 3.578125 -0.421875 3.578125 -1.171875 Z M 3 -3.59375 C 3 -2.96875 2.265625 -2.65625 2.265625 -2.65625 C 2.265625 -2.65625 2.234375 -2.65625 2.1875 -2.6875 L 1.34375 -3.171875 C 1.15625 -3.28125 0.96875 -3.46875 0.96875 -3.734375 C 0.96875 -4.171875 1.46875 -4.421875 1.96875 -4.421875 C 2.515625 -4.421875 3 -4.078125 3 -3.59375 Z M 3.15625 -0.9375 C 3.15625 -0.40625 2.578125 -0.078125 1.984375 -0.078125 C 1.34375 -0.078125 0.796875 -0.5 0.796875 -1.0625 C 0.796875 -1.578125 1.171875 -1.984375 1.671875 -2.203125 C 2.0625 -1.984375 2.078125 -1.984375 2.640625 -1.65625 C 2.8125 -1.546875 3.15625 -1.34375 3.15625 -0.9375 Z M 3.15625 -0.9375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph3-2">
+<path style="stroke:none;" d="M 3.59375 -2.21875 C 3.59375 -2.984375 3.5 -3.546875 3.1875 -4.03125 C 2.96875 -4.34375 2.53125 -4.625 1.984375 -4.625 C 0.359375 -4.625 0.359375 -2.71875 0.359375 -2.21875 C 0.359375 -1.71875 0.359375 0.140625 1.984375 0.140625 C 3.59375 0.140625 3.59375 -1.71875 3.59375 -2.21875 Z M 2.96875 -2.3125 C 2.96875 -1.796875 2.96875 -1.28125 2.875 -0.84375 C 2.734375 -0.203125 2.265625 -0.0625 1.984375 -0.0625 C 1.65625 -0.0625 1.234375 -0.25 1.09375 -0.8125 C 1 -1.21875 1 -1.796875 1 -2.3125 C 1 -2.828125 1 -3.359375 1.09375 -3.734375 C 1.25 -4.28125 1.6875 -4.4375 1.984375 -4.4375 C 2.359375 -4.4375 2.71875 -4.203125 2.84375 -3.796875 C 2.953125 -3.421875 2.96875 -2.921875 2.96875 -2.3125 Z M 2.96875 -2.3125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph3-3">
+<path style="stroke:none;" d="M 3.296875 0 L 3.296875 -0.25 L 3.03125 -0.25 C 2.328125 -0.25 2.328125 -0.34375 2.328125 -0.578125 L 2.328125 -4.4375 C 2.328125 -4.625 2.328125 -4.625 2.125 -4.625 C 1.671875 -4.1875 1.046875 -4.1875 0.765625 -4.1875 L 0.765625 -3.9375 C 0.921875 -3.9375 1.390625 -3.9375 1.765625 -4.125 L 1.765625 -0.578125 C 1.765625 -0.34375 1.765625 -0.25 1.078125 -0.25 L 0.8125 -0.25 L 0.8125 0 L 2.046875 -0.03125 Z M 3.296875 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-1">
+<path style="stroke:none;" d="M 3.796875 -0.625 L 3.796875 -1.015625 L 3.546875 -1.015625 L 3.546875 -0.640625 C 3.546875 -0.5625 3.546875 -0.234375 3.296875 -0.234375 C 3.03125 -0.234375 3.03125 -0.5625 3.03125 -0.640625 L 3.03125 -1.875 C 3.03125 -2.234375 3.03125 -2.5 2.71875 -2.765625 C 2.4375 -3 2.09375 -3.109375 1.6875 -3.109375 C 1.03125 -3.109375 0.5625 -2.859375 0.5625 -2.4375 C 0.5625 -2.203125 0.703125 -2.09375 0.890625 -2.09375 C 1.078125 -2.09375 1.21875 -2.234375 1.21875 -2.421875 C 1.21875 -2.53125 1.15625 -2.6875 0.96875 -2.734375 C 1.21875 -2.90625 1.625 -2.90625 1.671875 -2.90625 C 2.0625 -2.90625 2.484375 -2.65625 2.484375 -2.0625 L 2.484375 -1.859375 C 2.109375 -1.84375 1.640625 -1.8125 1.140625 -1.625 C 0.515625 -1.40625 0.3125 -1.015625 0.3125 -0.703125 C 0.3125 -0.109375 1.03125 0.0625 1.53125 0.0625 C 2.09375 0.0625 2.421875 -0.25 2.5625 -0.515625 C 2.59375 -0.234375 2.78125 0.03125 3.09375 0.03125 C 3.09375 0.03125 3.796875 0.03125 3.796875 -0.625 Z M 2.484375 -0.984375 C 2.484375 -0.3125 1.90625 -0.125 1.59375 -0.125 C 1.234375 -0.125 0.90625 -0.359375 0.90625 -0.703125 C 0.90625 -1.09375 1.234375 -1.625 2.484375 -1.671875 Z M 2.484375 -0.984375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-2">
+<path style="stroke:none;" d="M 4.109375 0 L 4.109375 -0.25 C 3.65625 -0.25 3.59375 -0.25 3.59375 -0.546875 L 3.59375 -2.109375 C 3.59375 -2.71875 3.296875 -3.078125 2.546875 -3.078125 C 1.96875 -3.078125 1.609375 -2.765625 1.40625 -2.390625 L 1.40625 -3.078125 L 0.375 -3 L 0.375 -2.75 C 0.84375 -2.75 0.90625 -2.703125 0.90625 -2.359375 L 0.90625 -0.546875 C 0.90625 -0.25 0.828125 -0.25 0.375 -0.25 L 0.375 0 C 0.375 0 0.875 -0.03125 1.171875 -0.03125 C 1.421875 -0.03125 1.90625 0 1.96875 0 L 1.96875 -0.25 C 1.515625 -0.25 1.453125 -0.25 1.453125 -0.546875 L 1.453125 -1.8125 C 1.453125 -2.53125 2.03125 -2.875 2.484375 -2.875 C 2.96875 -2.875 3.03125 -2.5 3.03125 -2.140625 L 3.03125 -0.546875 C 3.03125 -0.25 2.96875 -0.25 2.515625 -0.25 L 2.515625 0 C 2.515625 0 3.015625 -0.03125 3.3125 -0.03125 C 3.5625 -0.03125 4.046875 0 4.109375 0 Z M 4.109375 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-3">
+<path style="stroke:none;" d="M 1.90625 0 L 1.90625 -0.25 C 1.5 -0.25 1.4375 -0.25 1.4375 -0.546875 L 1.4375 -3.078125 L 0.40625 -3 L 0.40625 -2.75 C 0.84375 -2.75 0.90625 -2.703125 0.90625 -2.359375 L 0.90625 -0.546875 C 0.90625 -0.25 0.84375 -0.25 0.390625 -0.25 L 0.390625 0 C 0.390625 0 0.890625 -0.03125 1.171875 -0.03125 C 1.421875 -0.03125 1.671875 -0.015625 1.90625 0 Z M 1.53125 -4.1875 C 1.53125 -4.421875 1.359375 -4.59375 1.125 -4.59375 C 0.890625 -4.59375 0.734375 -4.40625 0.734375 -4.203125 C 0.734375 -3.984375 0.90625 -3.796875 1.125 -3.796875 C 1.359375 -3.796875 1.53125 -4 1.53125 -4.1875 Z M 1.53125 -4.1875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-4">
+<path style="stroke:none;" d="M 5.609375 -2.359375 C 5.609375 -3.75 4.46875 -4.90625 3.046875 -4.90625 C 1.625 -4.90625 0.484375 -3.75 0.484375 -2.359375 C 0.484375 -0.984375 1.625 0.140625 3.046875 0.140625 C 4.484375 0.140625 5.609375 -0.984375 5.609375 -2.359375 Z M 4.875 -2.46875 C 4.875 -0.75 3.875 -0.09375 3.046875 -0.09375 C 2.234375 -0.09375 1.234375 -0.75 1.234375 -2.46875 C 1.234375 -4.078125 2.265625 -4.671875 3.046875 -4.671875 C 3.84375 -4.671875 4.875 -4.078125 4.875 -2.46875 Z M 4.875 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-5">
+<path style="stroke:none;" d="M 3.796875 -2.78125 C 3.796875 -2.953125 3.671875 -3.140625 3.390625 -3.140625 C 3.28125 -3.140625 2.90625 -3.125 2.578125 -2.828125 C 2.375 -2.96875 2.078125 -3.078125 1.765625 -3.078125 C 1.046875 -3.078125 0.53125 -2.59375 0.53125 -2.046875 C 0.53125 -1.78125 0.671875 -1.53125 0.859375 -1.34375 C 0.8125 -1.28125 0.65625 -1.046875 0.65625 -0.78125 C 0.65625 -0.6875 0.671875 -0.359375 0.953125 -0.15625 C 0.640625 -0.0625 0.265625 0.171875 0.265625 0.53125 C 0.265625 1.046875 1.03125 1.421875 1.984375 1.421875 C 2.859375 1.421875 3.6875 1.078125 3.6875 0.515625 C 3.6875 0.3125 3.609375 -0.0625 3.21875 -0.265625 C 2.8125 -0.484375 2.390625 -0.484375 1.71875 -0.484375 C 1.5625 -0.484375 1.3125 -0.484375 1.265625 -0.5 C 1.03125 -0.546875 0.90625 -0.75 0.90625 -0.953125 C 0.90625 -1.125 0.96875 -1.1875 1 -1.234375 C 1.109375 -1.171875 1.359375 -1.03125 1.765625 -1.03125 C 2.484375 -1.03125 3 -1.5 3 -2.046875 C 3 -2.328125 2.875 -2.53125 2.703125 -2.71875 C 3.03125 -2.9375 3.296875 -2.953125 3.421875 -2.953125 C 3.390625 -2.921875 3.359375 -2.890625 3.359375 -2.78125 C 3.359375 -2.640625 3.453125 -2.5625 3.578125 -2.5625 C 3.671875 -2.5625 3.796875 -2.625 3.796875 -2.78125 Z M 2.453125 -2.046875 C 2.453125 -1.9375 2.453125 -1.65625 2.3125 -1.484375 C 2.203125 -1.359375 2.015625 -1.234375 1.765625 -1.234375 C 1.09375 -1.234375 1.09375 -1.90625 1.09375 -2.046875 C 1.09375 -2.15625 1.09375 -2.4375 1.21875 -2.625 C 1.328125 -2.734375 1.515625 -2.859375 1.765625 -2.859375 C 2.453125 -2.859375 2.453125 -2.1875 2.453125 -2.046875 Z M 3.265625 0.53125 C 3.265625 0.90625 2.703125 1.21875 1.984375 1.21875 C 1.25 1.21875 0.703125 0.890625 0.703125 0.53125 C 0.703125 0.28125 0.921875 -0.015625 1.359375 -0.015625 L 1.765625 -0.015625 C 2.390625 -0.015625 3.265625 -0.015625 3.265625 0.53125 Z M 3.265625 0.53125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-6">
+<path style="stroke:none;" d="M 6.71875 0 L 6.71875 -0.25 L 6.5625 -0.25 C 6.015625 -0.25 6 -0.328125 6 -0.5625 L 6 -4.1875 C 6 -4.4375 6.015625 -4.515625 6.5625 -4.515625 L 6.71875 -4.515625 L 6.71875 -4.765625 L 5.515625 -4.765625 C 5.375 -4.765625 5.3125 -4.765625 5.25 -4.625 L 3.578125 -0.671875 L 1.921875 -4.609375 C 1.859375 -4.765625 1.796875 -4.765625 1.65625 -4.765625 L 0.4375 -4.765625 L 0.4375 -4.515625 L 0.59375 -4.515625 C 1.140625 -4.515625 1.15625 -4.4375 1.15625 -4.1875 L 1.15625 -0.75 C 1.15625 -0.5625 1.15625 -0.25 0.4375 -0.25 L 0.4375 0 C 0.71875 -0.015625 1 -0.03125 1.28125 -0.03125 C 1.5625 -0.03125 1.84375 -0.015625 2.125 0 L 2.125 -0.25 C 1.421875 -0.25 1.421875 -0.5625 1.421875 -0.75 L 1.421875 -4.4375 L 3.234375 -0.15625 C 3.265625 -0.078125 3.296875 0 3.40625 0 C 3.453125 0 3.515625 -0.015625 3.578125 -0.140625 L 5.421875 -4.5 L 5.421875 -0.5625 C 5.421875 -0.328125 5.40625 -0.25 4.875 -0.25 L 4.703125 -0.25 L 4.703125 0 L 5.71875 -0.03125 Z M 6.71875 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-7">
+<path style="stroke:none;" d="M 2.84375 -0.90625 C 2.84375 -1.171875 2.71875 -1.390625 2.53125 -1.546875 C 2.265625 -1.796875 1.953125 -1.859375 1.703125 -1.890625 C 1.15625 -2 0.703125 -2.078125 0.703125 -2.453125 C 0.703125 -2.671875 0.890625 -2.9375 1.546875 -2.9375 C 2.359375 -2.9375 2.390625 -2.375 2.40625 -2.171875 C 2.40625 -2.09375 2.5 -2.09375 2.515625 -2.09375 C 2.640625 -2.09375 2.640625 -2.140625 2.640625 -2.28125 L 2.640625 -2.921875 C 2.640625 -3.046875 2.640625 -3.109375 2.546875 -3.109375 C 2.515625 -3.109375 2.5 -3.109375 2.40625 -3.03125 C 2.390625 -3.015625 2.328125 -2.953125 2.28125 -2.921875 C 2.0625 -3.0625 1.8125 -3.109375 1.546875 -3.109375 C 0.546875 -3.109375 0.3125 -2.578125 0.3125 -2.234375 C 0.3125 -2.015625 0.40625 -1.828125 0.578125 -1.6875 C 0.84375 -1.46875 1.109375 -1.421875 1.546875 -1.34375 C 1.890625 -1.28125 2.453125 -1.1875 2.453125 -0.71875 C 2.453125 -0.453125 2.265625 -0.125 1.59375 -0.125 C 0.921875 -0.125 0.6875 -0.5625 0.5625 -1.03125 C 0.53125 -1.125 0.53125 -1.15625 0.4375 -1.15625 C 0.3125 -1.15625 0.3125 -1.109375 0.3125 -0.96875 L 0.3125 -0.109375 C 0.3125 0 0.3125 0.0625 0.40625 0.0625 C 0.46875 0.0625 0.609375 -0.078125 0.75 -0.234375 C 1.046875 0.0625 1.421875 0.0625 1.59375 0.0625 C 2.5 0.0625 2.84375 -0.421875 2.84375 -0.90625 Z M 2.84375 -0.90625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-8">
+<path style="stroke:none;" d="M 6.25 0 L 6.25 -0.25 C 5.796875 -0.25 5.734375 -0.25 5.734375 -0.546875 L 5.734375 -2.109375 C 5.734375 -2.71875 5.421875 -3.078125 4.6875 -3.078125 C 4.125 -3.078125 3.75 -2.78125 3.5625 -2.421875 C 3.421875 -2.921875 3.046875 -3.078125 2.546875 -3.078125 C 1.96875 -3.078125 1.609375 -2.765625 1.40625 -2.390625 L 1.40625 -3.078125 L 0.375 -3 L 0.375 -2.75 C 0.84375 -2.75 0.90625 -2.703125 0.90625 -2.359375 L 0.90625 -0.546875 C 0.90625 -0.25 0.828125 -0.25 0.375 -0.25 L 0.375 0 C 0.375 0 0.875 -0.03125 1.171875 -0.03125 C 1.421875 -0.03125 1.90625 0 1.96875 0 L 1.96875 -0.25 C 1.515625 -0.25 1.453125 -0.25 1.453125 -0.546875 L 1.453125 -1.8125 C 1.453125 -2.53125 2.03125 -2.875 2.484375 -2.875 C 2.96875 -2.875 3.03125 -2.5 3.03125 -2.140625 L 3.03125 -0.546875 C 3.03125 -0.25 2.96875 -0.25 2.515625 -0.25 L 2.515625 0 C 2.515625 0 3.015625 -0.03125 3.3125 -0.03125 C 3.5625 -0.03125 4.046875 0 4.109375 0 L 4.109375 -0.25 C 3.65625 -0.25 3.59375 -0.25 3.59375 -0.546875 L 3.59375 -1.8125 C 3.59375 -2.53125 4.171875 -2.875 4.625 -2.875 C 5.109375 -2.875 5.171875 -2.5 5.171875 -2.140625 L 5.171875 -0.546875 C 5.171875 -0.25 5.109375 -0.25 4.65625 -0.25 L 4.65625 0 C 4.65625 0 5.15625 -0.03125 5.453125 -0.03125 C 5.703125 -0.03125 6.1875 0 6.25 0 Z M 6.25 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-9">
+<path style="stroke:none;" d="M 3.6875 -1.484375 C 3.6875 -2.359375 2.9375 -3.109375 1.984375 -3.109375 C 1.015625 -3.109375 0.265625 -2.359375 0.265625 -1.484375 C 0.265625 -0.625 1.03125 0.0625 1.984375 0.0625 C 2.921875 0.0625 3.6875 -0.625 3.6875 -1.484375 Z M 3.046875 -1.546875 C 3.046875 -1.21875 3.03125 -0.84375 2.828125 -0.5625 C 2.640625 -0.296875 2.328125 -0.15625 1.984375 -0.15625 C 1.71875 -0.15625 1.34375 -0.234375 1.109375 -0.578125 C 0.921875 -0.859375 0.90625 -1.21875 0.90625 -1.546875 C 0.90625 -1.84375 0.90625 -2.265625 1.15625 -2.5625 C 1.328125 -2.765625 1.625 -2.90625 1.984375 -2.90625 C 2.390625 -2.90625 2.6875 -2.71875 2.84375 -2.5 C 3.03125 -2.234375 3.046875 -1.875 3.046875 -1.546875 Z M 3.046875 -1.546875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-10">
+<path style="stroke:none;" d="M 4.109375 0 L 4.109375 -0.25 C 3.640625 -0.25 3.59375 -0.296875 3.59375 -0.640625 L 3.59375 -3.078125 L 2.515625 -3 L 2.515625 -2.75 C 2.984375 -2.75 3.03125 -2.703125 3.03125 -2.359375 L 3.03125 -1.15625 C 3.03125 -0.546875 2.640625 -0.125 2.109375 -0.125 C 1.484375 -0.125 1.453125 -0.421875 1.453125 -0.78125 L 1.453125 -3.078125 L 0.375 -3 L 0.375 -2.75 C 0.90625 -2.75 0.90625 -2.71875 0.90625 -2.109375 L 0.90625 -1.0625 C 0.90625 -0.578125 0.90625 0.0625 2.0625 0.0625 C 2.21875 0.0625 2.71875 0.0625 3.0625 -0.515625 L 3.0625 0.0625 Z M 4.109375 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-11">
+<path style="stroke:none;" d="M 1.953125 0 L 1.953125 -0.25 C 1.5 -0.25 1.4375 -0.25 1.4375 -0.546875 L 1.4375 -4.84375 L 0.390625 -4.765625 L 0.390625 -4.515625 C 0.859375 -4.515625 0.90625 -4.453125 0.90625 -4.125 L 0.90625 -0.546875 C 0.90625 -0.25 0.84375 -0.25 0.390625 -0.25 L 0.390625 0 C 0.390625 0 0.890625 -0.03125 1.171875 -0.03125 C 1.4375 -0.03125 1.6875 -0.015625 1.953125 0 Z M 1.953125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-12">
+<path style="stroke:none;" d="M 4.0625 -1.5 C 4.0625 -2.359375 3.359375 -3.078125 2.46875 -3.078125 C 2.078125 -3.078125 1.671875 -2.921875 1.390625 -2.640625 L 1.390625 -3.078125 L 0.34375 -3 L 0.34375 -2.75 C 0.828125 -2.75 0.859375 -2.703125 0.859375 -2.421875 L 0.859375 0.796875 C 0.859375 1.09375 0.796875 1.09375 0.34375 1.09375 L 0.34375 1.359375 C 0.34375 1.359375 0.84375 1.328125 1.140625 1.328125 C 1.390625 1.328125 1.875 1.34375 1.9375 1.359375 L 1.9375 1.09375 C 1.484375 1.09375 1.421875 1.09375 1.421875 0.796875 L 1.421875 -0.328125 C 1.453125 -0.296875 1.78125 0.0625 2.359375 0.0625 C 3.28125 0.0625 4.0625 -0.625 4.0625 -1.5 Z M 3.4375 -1.5 C 3.4375 -0.703125 2.90625 -0.125 2.328125 -0.125 C 1.703125 -0.125 1.4375 -0.65625 1.421875 -0.703125 L 1.421875 -2.328125 C 1.625 -2.671875 2.03125 -2.84375 2.390625 -2.84375 C 2.984375 -2.84375 3.4375 -2.234375 3.4375 -1.5 Z M 3.4375 -1.5 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-13">
+<path style="stroke:none;" d="M 3.265625 -0.84375 C 3.265625 -0.859375 3.25 -0.9375 3.140625 -0.9375 C 3.046875 -0.9375 3.03125 -0.890625 3.015625 -0.828125 C 2.796875 -0.265625 2.265625 -0.15625 2.015625 -0.15625 C 1.6875 -0.15625 1.375 -0.296875 1.171875 -0.5625 C 0.90625 -0.890625 0.90625 -1.3125 0.90625 -1.59375 L 3.0625 -1.59375 C 3.21875 -1.59375 3.265625 -1.59375 3.265625 -1.734375 C 3.265625 -2.359375 2.921875 -3.109375 1.875 -3.109375 C 0.96875 -3.109375 0.265625 -2.390625 0.265625 -1.53125 C 0.265625 -0.640625 1.046875 0.0625 1.96875 0.0625 C 2.90625 0.0625 3.265625 -0.6875 3.265625 -0.84375 Z M 2.78125 -1.765625 L 0.90625 -1.765625 C 0.984375 -2.75 1.609375 -2.90625 1.875 -2.90625 C 2.734375 -2.90625 2.765625 -1.9375 2.78125 -1.765625 Z M 2.78125 -1.765625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-14">
+<path style="stroke:none;" d="M 2.84375 -2.625 C 2.84375 -2.859375 2.609375 -3.078125 2.28125 -3.078125 C 1.9375 -3.078125 1.546875 -2.859375 1.34375 -2.328125 L 1.34375 -3.078125 L 0.34375 -3 L 0.34375 -2.75 C 0.8125 -2.75 0.859375 -2.703125 0.859375 -2.359375 L 0.859375 -0.546875 C 0.859375 -0.25 0.796875 -0.25 0.34375 -0.25 L 0.34375 0 C 0.375 0 0.84375 -0.03125 1.140625 -0.03125 L 2.046875 0 L 2.046875 -0.25 L 1.90625 -0.25 C 1.390625 -0.25 1.390625 -0.328125 1.390625 -0.5625 L 1.390625 -1.59375 C 1.390625 -2.171875 1.65625 -2.875 2.328125 -2.875 C 2.265625 -2.828125 2.203125 -2.734375 2.203125 -2.625 C 2.203125 -2.390625 2.390625 -2.3125 2.515625 -2.3125 C 2.6875 -2.3125 2.84375 -2.421875 2.84375 -2.625 Z M 2.84375 -2.625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-15">
+<path style="stroke:none;" d="M 4.046875 0 L 4.046875 -0.25 C 3.578125 -0.25 3.53125 -0.296875 3.53125 -0.640625 L 3.53125 -4.84375 L 2.484375 -4.765625 L 2.484375 -4.515625 C 2.953125 -4.515625 3 -4.453125 3 -4.125 L 3 -2.671875 C 2.75 -2.921875 2.40625 -3.078125 2.03125 -3.078125 C 1.09375 -3.078125 0.328125 -2.375 0.328125 -1.5 C 0.328125 -0.625 1.0625 0.0625 1.9375 0.0625 C 2.515625 0.0625 2.859375 -0.234375 2.96875 -0.359375 L 2.96875 0.0625 Z M 2.96875 -0.734375 C 2.796875 -0.40625 2.4375 -0.125 1.984375 -0.125 C 1.59375 -0.125 1.3125 -0.359375 1.171875 -0.5625 C 1.03125 -0.765625 0.953125 -1.046875 0.953125 -1.484375 C 0.953125 -1.65625 0.953125 -2.171875 1.234375 -2.5 C 1.515625 -2.8125 1.859375 -2.875 2.0625 -2.875 C 2.390625 -2.875 2.703125 -2.71875 2.890625 -2.46875 C 2.96875 -2.359375 2.96875 -2.359375 2.96875 -2.21875 Z M 2.96875 -0.734375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez06b_d1-glyph4-16">
+<path style="stroke:none;" d="M 2.609375 -0.875 L 2.609375 -1.265625 L 2.375 -1.265625 L 2.375 -0.890625 C 2.375 -0.40625 2.15625 -0.15625 1.875 -0.15625 C 1.40625 -0.15625 1.40625 -0.734375 1.40625 -0.859375 L 1.40625 -2.75 L 2.484375 -2.75 L 2.484375 -3 L 1.40625 -3 L 1.40625 -4.28125 L 1.15625 -4.28125 C 1.15625 -3.65625 0.875 -2.96875 0.203125 -2.953125 L 0.203125 -2.75 L 0.84375 -2.75 L 0.84375 -0.875 C 0.84375 -0.09375 1.4375 0.0625 1.828125 0.0625 C 2.296875 0.0625 2.609375 -0.328125 2.609375 -0.875 Z M 2.609375 -0.875 "/>
+</symbol>
+</g>
+</defs>
+<g id="analisi1_lez06b_d1-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -12.756616 0.000675277 L 287.887977 0.000675277 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.070672 2.389505 C -1.69534 0.954643 -0.850844 0.278264 0.00147157 0.000675277 C -0.850844 -0.280823 -1.69534 -0.957202 -2.070672 -2.392064 " transform="matrix(0.999116,0,0,-0.999116,304.756342,163.348331)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-1" x="308.468159" y="173.035762"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-2" x="314.347607" y="173.035762"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-3" x="318.443422" y="173.035762"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-4" x="326.115461" y="173.035762"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-5" x="331.490547" y="173.035762"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000752147 -12.756692 L 0.000752147 145.019456 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.072092 2.391987 C -1.692851 0.957126 -0.848355 0.280747 0.0000513687 -0.000752147 C -0.848355 -0.278341 -1.692851 -0.95472 -2.072092 -2.389582 " transform="matrix(0,-0.999116,-0.999116,0,16.92503,18.257864)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-6" x="20.441919" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-5" x="27.091796" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-7" x="31.695557" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-8" x="36.810847" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-2" x="40.903079" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-7" x="44.998894" y="13.54783"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-9" x="49.854388" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-10" x="53.435091" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-11" x="57.036399" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-12" x="61.640159" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-13" x="65.732391" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-5" x="68.290036" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-7" x="72.893797" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-2" x="78.009087" y="13.54783"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-6" x="85.17766" y="13.54783"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph0-14" x="91.827537" y="13.54783"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph1-1" x="98.986446" y="14.543949"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000752147 3.061974 L 0.000752147 -3.060624 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 204.095177 3.061974 L 204.095177 -3.060624 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 242.363371 3.061974 L 242.363371 -3.060624 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph2-1" x="19.167047" y="175.942192"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-1" x="25.388544" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="29.355916" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="33.323289" y="175.942192"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="38.649351" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="42.616723" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="46.584096" y="175.942192"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-1" x="53.234914" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-2" x="57.202286" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-2" x="61.598865" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="65.995444" y="175.942192"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph2-2" x="208.65944" y="175.942192"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-3" x="217.145934" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-1" x="221.113306" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="225.080679" y="175.942192"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph3-2" x="229.048052" y="175.942192"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-4" x="250.922059" y="176.251918"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-5" x="257.032677" y="176.251918"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-5" x="261.000049" y="176.251918"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="264.967422" y="176.251918"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 0.000752147 73.984025 L 204.095177 73.984025 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-6" x="24.264538" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-1" x="31.425875" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="35.393248" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="38.5468" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="41.700353" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-8" x="43.953687" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="50.492814" y="83.284148"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="57.142727" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-10" x="60.29628" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-11" x="64.692859" y="83.284148"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-12" x="69.628733" y="83.284148"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-13" x="74.241309" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-14" x="77.780172" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="80.890525" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="83.143859" y="83.284148"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-15" x="87.32026" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="91.716839" y="83.284148"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-14" x="98.366752" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="101.477105" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="103.730439" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-16" x="106.883992" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-14" x="109.994345" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-13" x="113.104698" y="83.284148"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-16" x="116.650529" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-16" x="119.760882" y="83.284148"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="122.871235" y="83.284148"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 0.000752147 122.456548 L 242.363371 122.456548 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-6" x="24.264538" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-1" x="31.425875" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="35.393248" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="38.5468" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="41.700353" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-8" x="43.953687" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="50.492814" y="34.853985"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="57.142727" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-10" x="60.29628" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-11" x="64.692859" y="34.853985"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-12" x="69.628733" y="34.853985"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-13" x="74.241309" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-14" x="77.780172" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-3" x="80.890525" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="83.143859" y="34.853985"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-15" x="87.32026" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="91.716839" y="34.853985"/>
+</g>
+<g style="fill:rgb(34.999084%,34.999084%,34.999084%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-13" x="98.366752" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="101.905615" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-16" x="105.059168" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-13" x="108.169521" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-7" x="111.708384" y="34.853985"/>
+  <use xlink:href="#analisi1_lez06b_d1-glyph4-9" x="114.861936" y="34.853985"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000752147 51.022327 C 0.000752147 51.022327 18.431102 64.487351 25.511578 63.779694 C 32.592054 63.072038 43.945837 45.568288 51.022404 45.920162 C 58.102879 46.275945 69.456663 65.625075 76.537139 66.332732 C 83.613705 67.040388 94.967489 50.31467 102.047965 51.022327 C 109.128441 51.729983 120.482224 70.72724 127.55879 71.434897 C 134.639266 72.142554 145.99305 55.772618 153.073526 56.124492 C 160.150092 56.480275 171.503876 72.924495 178.584351 73.984025 C 185.664827 75.047464 204.095177 63.779694 204.095177 63.779694 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 204.095177 63.779694 C 219.401673 79.08619 232.15904 104.600925 242.363371 122.456548 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 260.867188 41 C 260.867188 40.007812 260.0625 39.207031 259.074219 39.207031 C 258.085938 39.207031 257.28125 40.007812 257.28125 41 C 257.28125 41.988281 258.085938 42.789062 259.074219 42.789062 C 260.0625 42.789062 260.867188 41.988281 260.867188 41 Z M 260.867188 41 "/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M 204.095177 0.000675277 L 204.095177 63.779694 " transform="matrix(0.999116,0,0,-0.999116,16.92503,163.348331)"/>
+</g>
+</svg></figure>`,
+        subsections: [
+          {
+            subtitle: "Che cosa cambia e che cosa no",
+            content: `<p>Passando dal dominio ristretto (fino al 1800) al dominio esteso (fino a oggi) cambia il <strong>valore del massimo</strong>: il punto di massimo assoluto si sposta dalla parte antica della serie all'epoca attuale, e il massimo assume un valore più alto. La funzione, tuttavia, <strong>resta limitata anche sul periodo esteso</strong>: si tratta di una serie di dati su un intervallo di tempo finito, con un valore più grande di tutti (quello di oggi) e uno più piccolo di tutti, quindi esistono sia un maggiorante sia un minorante. <strong>Superare un massimo precedente non significa perdere la limitatezza.</strong></p>`
+          },
+          {
+            subtitle: "Il confronto corretto",
+            content: `<p>Se si vuole un esempio in cui <em>cambia proprio la limitatezza</em> al variare del dominio, il riferimento è quello matematico già visto: $f(x)=1/x$ è limitata su $[1,+\\infty)$ (con $\\sup = \\max = 1$ e $\\inf = 0$), mentre sulla stessa legge, ma sul dominio più grande $(0,+\\infty)$, la funzione <strong>non</strong> è superiormente limitata e il $\\sup$ non esiste in $\\mathbb{R}$. L'esempio della CO$_2$ illustra invece il fatto, più debole ma altrettanto importante, che <strong>massimo e minimo dipendono dal dominio scelto</strong>.</p>`
+          }
+        ],
+        extra_content: `<p>In entrambi i casi la morale è la stessa: <strong>il dominio è parte integrante della funzione</strong>, e non si può parlare di $\\sup$, $\\inf$, $\\max$ o $\\min$ senza dire su quale insieme li stiamo calcolando.</p>`
+      },
+
+      {
+        id: "s06-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s06-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia la definizione di funzione monotona crescente e di funzione strettamente crescente su $X\\subseteq\\mathbb{R}$ non vuoto. Qual è la differenza? Esibisci una funzione crescente ma non strettamente crescente, giustificando la risposta.</p>`,
+        solution: `<p>Sia $f:X\\to\\mathbb{R}$ con $X\\subseteq\\mathbb{R}$ non vuoto. Si dice che $f$ è <em>crescente</em> (o non decrescente) se per ogni $x_1,x_2\\in X$ con $x_1\\le x_2$ si ha $f(x_1)\\le f(x_2)$; si dice <em>strettamente crescente</em> se per ogni $x_1,x_2\\in X$ con $x_1 \\lt x_2$ si ha $f(x_1) \\lt f(x_2)$.</p>
+<p>La differenza sta nel <strong>verso stretto</strong> della disuguaglianza sulle immagini: la monotonia semplice ammette tratti in cui la funzione resta costante, la monotonia stretta no. Ogni funzione strettamente crescente è crescente, ma <strong>non viceversa</strong>.</p>
+<p><strong>Esempio.</strong> $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=3$. Se $x_1\\le x_2$ allora $f(x_1)=3\\le 3=f(x_2)$, dunque $f$ è crescente; non è però strettamente crescente perché presi $x_1=0 \\lt 1=x_2$ si ha $f(0)=f(1)$ e non $f(0) \\lt f(1)$. Si noti che la stessa funzione costante è anche decrescente, quindi è monotona in entrambi i sensi, ma non strettamente.</p>`
+      },
+
+      {
+        id: "s06-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $f: X \\to \\mathbb{R}$ con $X \\neq \\emptyset$. Dai la definizione di funzione superiormente limitata, inferiormente limitata e limitata. Dimostra poi che $f$ è limitata se e solo se esiste $M \\ge 0$ tale che $|f(x)| \\le M$ per ogni $x \\in X$.</p>`,
+        solution: `<p>$f$ si dice <strong>superiormente limitata</strong> se esiste $M_1 \\in \\mathbb{R}$ con $f(x) \\le M_1$ per ogni $x \\in X$ (cioè se $\\operatorname{Im}(f)$ è superiormente limitato); <strong>inferiormente limitata</strong> se esiste $m_1 \\in \\mathbb{R}$ con $f(x) \\ge m_1$ per ogni $x \\in X$; <strong>limitata</strong> se è sia superiormente sia inferiormente limitata.</p>
+<p>($\\Rightarrow$) Se $f$ è limitata esistono $m_1, M_1 \\in \\mathbb{R}$ con $m_1 \\le f(x) \\le M_1$ per ogni $x \\in X$. Poniamo $M := \\max\\{|m_1|, |M_1|\\} \\ge 0$. Allora</p>
+<p>$$-M \\le -|m_1| \\le m_1 \\le f(x) \\le M_1 \\le |M_1| \\le M,$$</p>
+<p>quindi $-M \\le f(x) \\le M$, cioè $|f(x)| \\le M$ per ogni $x \\in X$.</p>
+<p>($\\Leftarrow$) Se esiste $M \\ge 0$ con $|f(x)| \\le M$ per ogni $x \\in X$, allora $-M \\le f(x) \\le M$: dunque $M$ è un maggiorante e $-M$ un minorante di $\\operatorname{Im}(f)$, quindi $f$ è limitata sia superiormente sia inferiormente.</p>`
+      },
+
+      {
+        id: "s06-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $X\\subseteq\\mathbb{R}$ simmetrico rispetto all'origine e siano $f,g:X\\to\\mathbb{R}$ dispari. Dimostra che $h=fg$ è pari. Dimostra inoltre che se $f$ è pari e $g$ è dispari allora $fg$ è dispari. Le stesse conclusioni valgono per la somma?</p>`,
+        solution: `<p>Poiché $X$ è simmetrico, per ogni $x\\in X$ anche $-x\\in X$ e le scritture $f(-x),g(-x)$ hanno senso.</p>
+<p>Sia $h(x)=f(x)g(x)$ con $f,g$ dispari, cioè $f(-x)=-f(x)$ e $g(-x)=-g(x)$. Allora</p>
+<p>$$h(-x)=f(-x)g(-x)=(-f(x))(-g(x))=f(x)g(x)=h(x)$$</p>
+<p>per ogni $x\\in X$: dunque $h$ è <strong>pari</strong>.</p>
+<p>Se invece $f$ è pari e $g$ è dispari, posto $p(x)=f(x)g(x)$ si ha $p(-x)=f(-x)g(-x)=f(x)\\,(-g(x))=-f(x)g(x)=-p(x)$, quindi $p$ è <strong>dispari</strong>.</p>
+<p>Per la <strong>somma</strong> le conclusioni sono diverse: se $f,g$ sono dispari allora $(f+g)(-x)=f(-x)+g(-x)=-f(x)-g(x)=-(f+g)(x)$, quindi la somma di due dispari è <strong>dispari</strong> (non pari); la somma di due funzioni pari è pari, mentre la somma di una pari e una dispari in generale non è né pari né dispari, come mostra $f(x)=x^2+x^3$, per cui $f(-x)=x^2-x^3$ non coincide (per ogni $x$) né con $f(x)$ né con $-f(x)=-x^2-x^3$.</p>`
+      },
+
+      {
+        id: "s06-ex-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Siano $f$ e $g$ definite su $A \\subseteq \\mathbb{R}$ non vuoto e simmetrico rispetto all'origine. Dimostra che: (a) se $f$ e $g$ sono entrambe dispari, il prodotto $f \\cdot g$ è pari; (b) se $f$ è pari e $g$ è dispari, il prodotto $f \\cdot g$ è dispari.</p>`,
+        solution: `<p>Poiché $A$ è simmetrico, per ogni $x \\in A$ anche $-x \\in A$, quindi ha senso valutare le funzioni in $-x$. Poniamo $h(x) := f(x)\\,g(x)$, definita su $A$.</p>
+<p><strong>(a)</strong> Se $f$ e $g$ sono dispari valgono $f(-x) = -f(x)$ e $g(-x) = -g(x)$ per ogni $x \\in A$. Allora</p>
+<p>$$h(-x) = f(-x)\\,g(-x) = (-f(x))\\cdot(-g(x)) = f(x)\\,g(x) = h(x),$$</p>
+<p>quindi $h$ è pari.</p>
+<p><strong>(b)</strong> Se $f$ è pari e $g$ è dispari valgono $f(-x) = f(x)$ e $g(-x) = -g(x)$. Allora</p>
+<p>$$h(-x) = f(-x)\\,g(-x) = f(x)\\cdot(-g(x)) = -f(x)\\,g(x) = -h(x),$$</p>
+<p>quindi $h$ è dispari.</p>
+<p><strong>Esempi.</strong> $f(x) = x$ e $g(x) = x^3$ sono dispari e $h(x) = x^4$ è pari; $f(x) = x^2$ è pari, $g(x) = x$ è dispari e $h(x) = x^3$ è dispari.</p>`
+      },
+
+      {
+        id: "s06-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $f(x)=\\dfrac{x}{x^2+1}$, definita su $\\mathbb{R}$. (a) Stabilisci se $f$ è pari, dispari o nessuna delle due. (b) Dimostra che $f$ è limitata provando che $|f(x)|\\le\\frac12$ per ogni $x\\in\\mathbb{R}$. (c) Determina $\\sup f$, $\\inf f$ e, se esistono, massimo e minimo assoluti con i relativi punti.</p>`,
+        solution: `<p><strong>(a) Parità.</strong> Il denominatore $x^2+1$ non si annulla mai, quindi il dominio è $\\mathbb{R}$, non vuoto e simmetrico rispetto all'origine. Si ha</p>
+<p>$$f(-x)=\\frac{-x}{(-x)^2+1}=\\frac{-x}{x^2+1}=-f(x)$$</p>
+<p>per ogni $x \\in \\mathbb{R}$: dunque $f$ è <strong>dispari</strong> (grafico simmetrico rispetto all'origine).</p>
+<p><strong>(b) Limitatezza.</strong> Poiché $x^2+1 \\gt 0$, si ha $\\left|\\dfrac{x}{x^2+1}\\right|=\\dfrac{|x|}{x^2+1}$ e quindi, usando $x^2=|x|^2$,</p>
+<p>$$|f(x)|\\le\\tfrac12 \\iff \\frac{|x|}{x^2+1}\\le\\frac12 \\iff 2|x|\\le x^2+1 \\iff |x|^2-2|x|+1\\ge 0 \\iff (|x|-1)^2\\ge 0,$$</p>
+<p>disuguaglianza vera per ogni $x\\in\\mathbb{R}$. Dunque $-\\frac12\\le f(x)\\le\\frac12$ per ogni $x$: $f$ è sia superiormente sia inferiormente limitata, cioè limitata, con $M=\\frac12$.</p>
+<p><strong>(c) Sup, inf, massimo e minimo.</strong> L'uguaglianza $(|x|-1)^2=0$ vale esattamente per $|x|=1$. Si ha $f(1)=\\frac{1}{2}$ e $f(-1)=-\\frac{1}{2}$: entrambi i valori appartengono a $\\operatorname{Im}(f)$. Quindi</p>
+<p>$$\\sup_{x\\in\\mathbb{R}} f(x)=\\max_{x\\in\\mathbb{R}} f(x)=\\frac12 \\quad \\text{(punto di massimo assoluto } x_0=1\\text{)},$$</p>
+<p>$$\\inf_{x\\in\\mathbb{R}} f(x)=\\min_{x\\in\\mathbb{R}} f(x)=-\\frac12 \\quad \\text{(punto di minimo assoluto } x_0=-1\\text{)}.$$</p>
+<figure class="figura" data-id="analisi1_lez06a_gp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06a_gp1-figure_1">
+  <g id="analisi1_lez06a_gp1-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06a_gp1-axes_1">
+   <g id="analisi1_lez06a_gp1-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06a_gp1-matplotlib.axis_1">
+    <g id="analisi1_lez06a_gp1-xtick_1">
+     <g id="analisi1_lez06a_gp1-line2d_1">
+      <path d="M 44.8 364 
+L 44.8 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_2">
+      <defs>
+       <path id="analisi1_lez06a_gp1-me45e83047e" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="44.8" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_1">
+      <!-- -6 -->
+      <g style="fill: currentColor" transform="translate(39.316328 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-19" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_2">
+     <g id="analisi1_lez06a_gp1-line2d_3">
+      <path d="M 139.733333 364 
+L 139.733333 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="139.733333" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_2">
+      <!-- -4 -->
+      <g style="fill: currentColor" transform="translate(134.249661 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-17" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_3">
+     <g id="analisi1_lez06a_gp1-line2d_5">
+      <path d="M 234.666667 364 
+L 234.666667 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="234.666667" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_3">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(229.182995 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_4">
+     <g id="analisi1_lez06a_gp1-line2d_7">
+      <path d="M 282.133333 364 
+L 282.133333 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="282.133333" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_4">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(276.649661 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_5">
+     <g id="analisi1_lez06a_gp1-line2d_9">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_5">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_6">
+     <g id="analisi1_lez06a_gp1-line2d_11">
+      <path d="M 377.066667 364 
+L 377.066667 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="377.066667" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_6">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(373.567292 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_7">
+     <g id="analisi1_lez06a_gp1-line2d_13">
+      <path d="M 424.533333 364 
+L 424.533333 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="424.533333" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_7">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(421.033958 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_8">
+     <g id="analisi1_lez06a_gp1-line2d_15">
+      <path d="M 519.466667 364 
+L 519.466667 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="519.466667" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_8">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(515.967292 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-xtick_9">
+     <g id="analisi1_lez06a_gp1-line2d_17">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-me45e83047e" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_9">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(610.900625 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-19"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-matplotlib.axis_2">
+    <g id="analisi1_lez06a_gp1-ytick_1">
+     <g id="analisi1_lez06a_gp1-line2d_19">
+      <path d="M 44.8 353.375 
+L 614.4 353.375 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_20">
+      <defs>
+       <path id="analisi1_lez06a_gp1-m0535bf8b5b" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="353.375" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_10">
+      <!-- -0.75 -->
+      <g style="fill: currentColor" transform="translate(294.639219 357.553711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-11" d="M 684 794 
+L 1344 794 
+L 1344 0 
+L 684 0 
+L 684 794 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-1a" d="M 525 4666 
+L 3525 4666 
+L 3525 4397 
+L 1831 0 
+L 1172 0 
+L 2766 4134 
+L 525 4134 
+L 525 4666 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06a_gp1-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-11" transform="translate(99.703125 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-1a" transform="translate(131.484375 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-18" transform="translate(195.109375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-ytick_2">
+     <g id="analisi1_lez06a_gp1-line2d_21">
+      <path d="M 44.8 300.25 
+L 614.4 300.25 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="300.25" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_11">
+      <!-- -0.5 -->
+      <g style="fill: currentColor" transform="translate(301.637969 304.428711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-11" transform="translate(99.703125 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-18" transform="translate(131.484375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-ytick_3">
+     <g id="analisi1_lez06a_gp1-line2d_23">
+      <path d="M 44.8 247.125 
+L 614.4 247.125 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="247.125" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_12">
+      <!-- -0.25 -->
+      <g style="fill: currentColor" transform="translate(294.639219 251.303711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13" transform="translate(36.078125 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-11" transform="translate(99.703125 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-15" transform="translate(131.484375 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-18" transform="translate(195.109375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-ytick_4">
+     <g id="analisi1_lez06a_gp1-line2d_25">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_13">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 198.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-ytick_5">
+     <g id="analisi1_lez06a_gp1-line2d_27">
+      <path d="M 44.8 140.875 
+L 614.4 140.875 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_28">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="140.875" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_14">
+      <!-- 0.25 -->
+      <g style="fill: currentColor" transform="translate(298.607813 145.053711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-15" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-18" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-ytick_6">
+     <g id="analisi1_lez06a_gp1-line2d_29">
+      <path d="M 44.8 87.75 
+L 614.4 87.75 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_30">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="87.75" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_15">
+      <!-- 0.5 -->
+      <g style="fill: currentColor" transform="translate(305.606562 91.928711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-18" transform="translate(95.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp1-ytick_7">
+     <g id="analisi1_lez06a_gp1-line2d_31">
+      <path d="M 44.8 34.625 
+L 614.4 34.625 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp1-line2d_32">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp1-m0535bf8b5b" x="329.6" y="34.625" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp1-text_16">
+      <!-- 0.75 -->
+      <g style="fill: currentColor" transform="translate(298.607813 38.803711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-1a" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-18" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_33">
+    <defs>
+     <path id="analisi1_lez06a_gp1-m88ff6f1243" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_gp1-m88ff6f1243" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_34">
+    <defs>
+     <path id="analisi1_lez06a_gp1-mcc00f2aed7" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_gp1-mcc00f2aed7" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_35">
+    <path d="M 44.8 228.459459 
+L 61.902252 230.530769 
+L 77.579316 232.652043 
+L 92.306255 234.871678 
+L 105.608007 237.096064 
+L 117.959633 239.376939 
+L 129.836197 241.79447 
+L 140.762636 244.240232 
+L 151.214012 246.805245 
+L 161.190325 249.485796 
+L 170.691576 252.275148 
+L 179.717765 255.16297 
+L 188.268891 258.134765 
+L 196.344954 261.171404 
+L 204.421018 264.448495 
+L 212.022018 267.765053 
+L 219.623019 271.313879 
+L 227.699083 275.33657 
+L 236.250209 279.854401 
+L 247.65171 286.16427 
+L 259.053211 292.421639 
+L 264.278899 295.055089 
+L 268.554462 296.973719 
+L 271.8799 298.249824 
+L 274.730275 299.143748 
+L 277.580651 299.80592 
+L 279.955963 300.143225 
+L 282.331276 300.249072 
+L 284.231526 300.141507 
+L 286.131776 299.839946 
+L 288.032027 299.321353 
+L 289.932277 298.56117 
+L 291.832527 297.533465 
+L 293.732777 296.211164 
+L 295.633028 294.566379 
+L 297.533278 292.570844 
+L 299.433528 290.196485 
+L 301.333778 287.416122 
+L 303.234028 284.204313 
+L 305.134279 280.538341 
+L 307.034529 276.399315 
+L 308.934779 271.773371 
+L 310.835029 266.652918 
+L 313.210342 259.557627 
+L 315.585655 251.709255 
+L 317.960967 243.150726 
+L 320.811343 232.041157 
+L 324.136781 218.138122 
+L 328.887406 197.18944 
+L 336.013344 165.803316 
+L 339.338782 152.16233 
+L 342.189158 141.344441 
+L 344.56447 133.063215 
+L 346.939783 125.512309 
+L 349.315096 118.724847 
+L 351.690409 112.711109 
+L 353.590659 108.45143 
+L 355.490909 104.66879 
+L 357.391159 101.34544 
+L 359.29141 98.459512 
+L 361.19166 95.986148 
+L 363.09191 93.898517 
+L 364.99216 92.168698 
+L 366.89241 90.768414 
+L 368.792661 89.669636 
+L 370.692911 88.845052 
+L 372.593161 88.268421 
+L 374.493411 87.914824 
+L 376.393661 87.760832 
+L 378.768974 87.815921 
+L 381.144287 88.109807 
+L 383.5196 88.607352 
+L 386.369975 89.429373 
+L 389.695413 90.63945 
+L 393.495913 92.276522 
+L 398.246539 94.592701 
+L 404.422352 97.876823 
+L 432.926105 113.391579 
+L 441.002168 117.369289 
+L 448.603169 120.874378 
+L 456.20417 124.14796 
+L 464.280234 127.381491 
+L 472.356297 130.377391 
+L 480.907423 133.309409 
+L 489.933611 136.158995 
+L 499.434862 138.912063 
+L 509.411176 141.558541 
+L 519.862552 144.091832 
+L 530.788991 146.508266 
+L 542.665555 148.897785 
+L 555.017181 151.153198 
+L 568.318932 153.353716 
+L 582.570809 155.483235 
+L 597.772811 157.530009 
+L 614.4 159.540541 
+L 614.4 159.540541 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_36">
+    <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #8b95a5"/>
+   </g>
+   <g id="analisi1_lez06a_gp1-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_gp1-patch_4">
+    <path d="M 44.8 194 
+L 614.4 194 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_gp1-text_17">
+    <!-- O -->
+    <g style="fill: currentColor" transform="translate(335.6 188) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_gp1-DejaVuSans-32" d="M 2522 4238 
+Q 1834 4238 1429 3725 
+Q 1025 3213 1025 2328 
+Q 1025 1447 1429 934 
+Q 1834 422 2522 422 
+Q 3209 422 3611 934 
+Q 4013 1447 4013 2328 
+Q 4013 3213 3611 3725 
+Q 3209 4238 2522 4238 
+z
+M 2522 4750 
+Q 3503 4750 4090 4092 
+Q 4678 3434 4678 2328 
+Q 4678 1225 4090 567 
+Q 3503 -91 2522 -91 
+Q 1538 -91 948 565 
+Q 359 1222 359 2328 
+Q 359 3434 948 4092 
+Q 1538 4750 2522 4750 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-32"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-text_18">
+    <!-- max -->
+    <g style="fill: currentColor" transform="translate(383.066667 81.75) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_gp1-DejaVuSans-50" d="M 3328 2828 
+Q 3544 3216 3844 3400 
+Q 4144 3584 4550 3584 
+Q 5097 3584 5394 3201 
+Q 5691 2819 5691 2113 
+L 5691 0 
+L 5113 0 
+L 5113 2094 
+Q 5113 2597 4934 2840 
+Q 4756 3084 4391 3084 
+Q 3944 3084 3684 2787 
+Q 3425 2491 3425 1978 
+L 3425 0 
+L 2847 0 
+L 2847 2094 
+Q 2847 2600 2669 2842 
+Q 2491 3084 2119 3084 
+Q 1678 3084 1418 2786 
+Q 1159 2488 1159 1978 
+L 1159 0 
+L 581 0 
+L 581 3500 
+L 1159 3500 
+L 1159 2956 
+Q 1356 3278 1631 3431 
+Q 1906 3584 2284 3584 
+Q 2666 3584 2933 3390 
+Q 3200 3197 3328 2828 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06a_gp1-DejaVuSans-44" d="M 2194 1759 
+Q 1497 1759 1228 1600 
+Q 959 1441 959 1056 
+Q 959 750 1161 570 
+Q 1363 391 1709 391 
+Q 2188 391 2477 730 
+Q 2766 1069 2766 1631 
+L 2766 1759 
+L 2194 1759 
+z
+M 3341 1997 
+L 3341 0 
+L 2766 0 
+L 2766 531 
+Q 2569 213 2275 61 
+Q 1981 -91 1556 -91 
+Q 1019 -91 701 211 
+Q 384 513 384 1019 
+Q 384 1609 779 1909 
+Q 1175 2209 1959 2209 
+L 2766 2209 
+L 2766 2266 
+Q 2766 2663 2505 2880 
+Q 2244 3097 1772 3097 
+Q 1472 3097 1187 3025 
+Q 903 2953 641 2809 
+L 641 3341 
+Q 956 3463 1253 3523 
+Q 1550 3584 1831 3584 
+Q 2591 3584 2966 3190 
+Q 3341 2797 3341 1997 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06a_gp1-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-50"/>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-44" transform="translate(97.40625 0)"/>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-5b" transform="translate(158.6875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-text_19">
+    <!-- min -->
+    <g style="fill: currentColor" transform="translate(288.133333 294.25) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_gp1-DejaVuSans-4c" d="M 603 3500 
+L 1178 3500 
+L 1178 0 
+L 603 0 
+L 603 3500 
+z
+M 603 4863 
+L 1178 4863 
+L 1178 4134 
+L 603 4134 
+L 603 4863 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06a_gp1-DejaVuSans-51" d="M 3513 2113 
+L 3513 0 
+L 2938 0 
+L 2938 2094 
+Q 2938 2591 2744 2837 
+Q 2550 3084 2163 3084 
+Q 1697 3084 1428 2787 
+Q 1159 2491 1159 1978 
+L 1159 0 
+L 581 0 
+L 581 3500 
+L 1159 3500 
+L 1159 2956 
+Q 1366 3272 1645 3428 
+Q 1925 3584 2291 3584 
+Q 2894 3584 3203 3211 
+Q 3513 2838 3513 2113 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-50"/>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-4c" transform="translate(97.40625 0)"/>
+     <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-51" transform="translate(125.1875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_37">
+    <defs>
+     <path id="analisi1_lez06a_gp1-m095c7f71a5" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)">
+     <use xlink:href="#analisi1_lez06a_gp1-m095c7f71a5" x="329.6" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_38">
+    <g clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)">
+     <use xlink:href="#analisi1_lez06a_gp1-m095c7f71a5" x="377.066667" y="87.75" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-line2d_39">
+    <g clip-path="url(#analisi1_lez06a_gp1-pa0a52933d7)">
+     <use xlink:href="#analisi1_lez06a_gp1-m095c7f71a5" x="282.133333" y="300.25" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp1-legend_1">
+    <g id="analisi1_lez06a_gp1-line2d_40">
+     <path d="M 554.733594 38.408281 
+L 565.733594 38.408281 
+L 576.733594 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06a_gp1-text_20">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(585.533594 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06a_gp1-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp1-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp1-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06a_gp1-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06a_gp1-pa0a52933d7">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+      },
+
+      {
+        id: "s06-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $f(x) = 3 - x^2$ definita su $X = [-1,2]$. Stabilisci se $f$ è limitata, determina $\\operatorname{Im}(f)$, $\\sup_{x \\in X} f(x)$ e $\\inf_{x \\in X} f(x)$, e di' se sono massimo e minimo, indicando i punti in cui vengono assunti.</p>`,
+        solution: `<p>Per $x \\in [-1,2]$ il quadrato $x^2$ assume tutti e soli i valori dell'intervallo $[0,4]$: infatti $x^2 \\ge 0$ con uguaglianza in $x = 0 \\in X$, e $x^2 \\le 4$ con uguaglianza in $x = 2 \\in X$; inoltre $x \\mapsto x^2$ è continua su $[-1,2]$, quindi assume tutti i valori intermedi.</p>
+<p>Di conseguenza $f(x) = 3 - x^2$ assume tutti e soli i valori $3 - t$ con $t \\in [0,4]$, cioè $\\operatorname{Im}(f) = [-1, 3]$.</p>
+<p>In particolare $-1 \\le f(x) \\le 3$ per ogni $x \\in X$, quindi $|f(x)| \\le 3$ e $f$ è <strong>limitata</strong>.</p>
+<p><strong>Estremo superiore:</strong> $\\sup_{x \\in X} f(x) = 3$; poiché $3 = f(0)$ con $0 \\in X$, l'estremo superiore è assunto ed è quindi il massimo: $\\max_{x \\in X} f(x) = 3$, con punto di massimo $x_0 = 0$.</p>
+<p><strong>Estremo inferiore:</strong> $\\inf_{x \\in X} f(x) = -1$; poiché $-1 = f(2)$ con $2 \\in X$, è assunto ed è il minimo: $\\min_{x \\in X} f(x) = -1$, con punto di minimo $x_0 = 2$.</p>
+<figure class="figura" data-id="analisi1_lez06b_gp1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06b_gp1-figure_1">
+  <g id="analisi1_lez06b_gp1-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06b_gp1-axes_1">
+   <g id="analisi1_lez06b_gp1-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06b_gp1-matplotlib.axis_1">
+    <g id="analisi1_lez06b_gp1-xtick_1">
+     <g id="analisi1_lez06b_gp1-line2d_1">
+      <path d="M 44.8 364 
+L 44.8 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_2">
+      <defs>
+       <path id="analisi1_lez06b_gp1-m932d977565" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-m932d977565" x="44.8" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_1">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(39.316328 265.524089) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp1-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06b_gp1-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-xtick_2">
+     <g id="analisi1_lez06b_gp1-line2d_3">
+      <path d="M 158.72 364 
+L 158.72 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-m932d977565" x="158.72" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_2">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(153.236328 265.524089) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp1-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-xtick_3">
+     <g id="analisi1_lez06b_gp1-line2d_5">
+      <path d="M 272.64 364 
+L 272.64 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-m932d977565" x="272.64" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_3">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(269.140625 265.524089) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp1-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-xtick_4">
+     <g id="analisi1_lez06b_gp1-line2d_7">
+      <path d="M 386.56 364 
+L 386.56 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-m932d977565" x="386.56" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_4">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(383.060625 265.524089) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-xtick_5">
+     <g id="analisi1_lez06b_gp1-line2d_9">
+      <path d="M 500.48 364 
+L 500.48 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-m932d977565" x="500.48" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_5">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(496.980625 265.524089) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-xtick_6">
+     <g id="analisi1_lez06b_gp1-line2d_11">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-m932d977565" x="614.4" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_6">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(610.900625 265.524089) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp1-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-matplotlib.axis_2">
+    <g id="analisi1_lez06b_gp1-ytick_1">
+     <g id="analisi1_lez06b_gp1-line2d_13">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_14">
+      <defs>
+       <path id="analisi1_lez06b_gp1-mf9c7cb228d" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_7">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(255.172656 368.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-ytick_2">
+     <g id="analisi1_lez06b_gp1-line2d_15">
+      <path d="M 44.8 307.333333 
+L 614.4 307.333333 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="307.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_8">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(255.172656 311.512044) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-ytick_3">
+     <g id="analisi1_lez06b_gp1-line2d_17">
+      <path d="M 44.8 250.666667 
+L 614.4 250.666667 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_9">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(259.14125 254.845378) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-ytick_4">
+     <g id="analisi1_lez06b_gp1-line2d_19">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_10">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(259.14125 198.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-ytick_5">
+     <g id="analisi1_lez06b_gp1-line2d_21">
+      <path d="M 44.8 137.333333 
+L 614.4 137.333333 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="137.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_11">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(259.14125 141.512044) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-ytick_6">
+     <g id="analisi1_lez06b_gp1-line2d_23">
+      <path d="M 44.8 80.666667 
+L 614.4 80.666667 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="80.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_12">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(259.14125 84.845378) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp1-ytick_7">
+     <g id="analisi1_lez06b_gp1-line2d_25">
+      <path d="M 44.8 24 
+L 614.4 24 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp1-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp1-mf9c7cb228d" x="272.64" y="24" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp1-text_13">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(259.14125 28.178711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp1-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-line2d_27">
+    <defs>
+     <path id="analisi1_lez06b_gp1-m510df633cf" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_gp1-m510df633cf" x="614.4" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-line2d_28">
+    <defs>
+     <path id="analisi1_lez06b_gp1-m92709ae81c" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_gp1-m92709ae81c" x="272.64" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-line2d_29">
+    <path d="M 44.8 307.333333 
+L 52.401001 292.461891 
+L 60.002002 278.094993 
+L 67.12794 265.084255 
+L 74.253878 252.516964 
+L 81.379817 240.393121 
+L 88.505755 228.712724 
+L 95.631693 217.475774 
+L 102.282569 207.388043 
+L 108.933445 197.686602 
+L 115.58432 188.371454 
+L 122.235196 179.442597 
+L 128.886072 170.900032 
+L 135.061885 163.313539 
+L 141.237698 156.060124 
+L 147.413511 149.139787 
+L 153.589324 142.552528 
+L 159.765138 136.298348 
+L 165.940951 130.377245 
+L 171.641701 125.207243 
+L 177.342452 120.321047 
+L 183.043203 115.718657 
+L 188.743953 111.400074 
+L 194.444704 107.365296 
+L 200.145455 103.614325 
+L 205.846205 100.14716 
+L 211.071893 97.218241 
+L 216.297581 94.527798 
+L 221.523269 92.075831 
+L 226.748957 89.862341 
+L 231.974646 87.887326 
+L 237.200334 86.150787 
+L 242.426022 84.652724 
+L 247.65171 83.393137 
+L 252.877398 82.372026 
+L 258.103086 81.589391 
+L 263.328774 81.045233 
+L 268.554462 80.73955 
+L 273.78015 80.672343 
+L 279.005838 80.843612 
+L 284.231526 81.253357 
+L 289.457214 81.901578 
+L 294.682902 82.788275 
+L 299.90859 83.913448 
+L 305.134279 85.277098 
+L 310.359967 86.879223 
+L 315.585655 88.719824 
+L 320.811343 90.798901 
+L 326.037031 93.116454 
+L 331.262719 95.672483 
+L 336.488407 98.466988 
+L 341.714095 101.499969 
+L 346.939783 104.771426 
+L 352.640534 108.61227 
+L 358.341284 112.736919 
+L 364.042035 117.145374 
+L 369.742786 121.837636 
+L 375.443536 126.813704 
+L 381.144287 132.073578 
+L 386.845038 137.617258 
+L 393.020851 143.943178 
+L 399.196664 150.602177 
+L 405.372477 157.594254 
+L 411.54829 164.919409 
+L 417.724103 172.577642 
+L 424.374979 181.197465 
+L 431.025855 190.20358 
+L 437.676731 199.595987 
+L 444.327606 209.374686 
+L 450.978482 219.539676 
+L 457.629358 230.090958 
+L 464.755296 241.824568 
+L 471.881234 254.001625 
+L 479.007173 266.62213 
+L 486.133111 279.686082 
+L 493.259049 293.19348 
+L 500.86005 308.09015 
+L 508.461051 323.491363 
+L 516.062052 339.397121 
+L 523.663053 355.807423 
+L 531.264053 372.722269 
+L 539.340117 391.247124 
+L 543.495141 401 
+L 543.495141 401 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp1-line2d_30">
+    <path d="M 158.815013 137.23885 
+L 164.990826 131.266504 
+L 170.691576 126.049201 
+L 176.392327 121.115704 
+L 182.093078 116.466013 
+L 187.793828 112.100129 
+L 193.494579 108.01805 
+L 199.195329 104.219778 
+L 204.89608 100.705312 
+L 210.121768 97.733034 
+L 215.347456 94.999232 
+L 220.573144 92.503906 
+L 225.798832 90.247056 
+L 231.02452 88.228681 
+L 236.250209 86.448783 
+L 241.475897 84.907361 
+L 246.701585 83.604415 
+L 251.927273 82.539945 
+L 257.152961 81.713951 
+L 262.378649 81.126433 
+L 267.604337 80.77739 
+L 272.830025 80.666824 
+L 278.055713 80.794734 
+L 283.281401 81.16112 
+L 288.507089 81.765982 
+L 293.732777 82.60932 
+L 298.958465 83.691134 
+L 304.184153 85.011423 
+L 309.409842 86.570189 
+L 314.63553 88.367431 
+L 319.861218 90.403149 
+L 325.086906 92.677343 
+L 330.312594 95.190013 
+L 335.538282 97.941158 
+L 340.76397 100.93078 
+L 345.989658 104.158878 
+L 351.690409 107.95242 
+L 357.391159 112.029769 
+L 363.09191 116.390923 
+L 368.792661 121.035884 
+L 374.493411 125.96465 
+L 380.194162 131.177223 
+L 385.894912 136.673602 
+L 392.070726 142.94828 
+L 398.246539 149.556036 
+L 404.422352 156.49687 
+L 410.598165 163.770782 
+L 416.773978 171.377773 
+L 422.949791 179.317841 
+L 429.600667 188.241179 
+L 436.251543 197.550809 
+L 442.902419 207.246731 
+L 449.553294 217.328944 
+L 456.20417 227.797449 
+L 463.330108 239.44237 
+L 470.456047 251.530738 
+L 477.581985 264.062553 
+L 484.707923 277.037816 
+L 491.833862 290.456525 
+L 499.434862 305.258592 
+L 500.384987 307.144326 
+L 500.384987 307.144326 
+" clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)" style="fill: none; stroke: #7c4dff; stroke-opacity: 0.9; stroke-width: 3.6; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp1-patch_3">
+    <path d="M 272.64 364 
+L 272.64 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp1-patch_4">
+    <path d="M 44.8 250.666667 
+L 614.4 250.666667 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp1-text_14">
+    <g style="fill: currentColor" transform="translate(278.64 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-Oblique-50" d="M 5747 2113 
+L 5338 0 
+L 4763 0 
+L 5166 2094 
+Q 5191 2228 5203 2325 
+Q 5216 2422 5216 2491 
+Q 5216 2772 5059 2928 
+Q 4903 3084 4622 3084 
+Q 4203 3084 3875 2770 
+Q 3547 2456 3450 1953 
+L 3066 0 
+L 2491 0 
+L 2900 2094 
+Q 2925 2209 2937 2307 
+Q 2950 2406 2950 2484 
+Q 2950 2769 2794 2926 
+Q 2638 3084 2363 3084 
+Q 1938 3084 1609 2770 
+Q 1281 2456 1184 1953 
+L 800 0 
+L 225 0 
+L 909 3500 
+L 1484 3500 
+L 1375 2956 
+Q 1609 3263 1923 3423 
+Q 2238 3584 2597 3584 
+Q 2978 3584 3223 3384 
+Q 3469 3184 3519 2828 
+Q 3781 3197 4126 3390 
+Q 4472 3584 4856 3584 
+Q 5306 3584 5551 3325 
+Q 5797 3066 5797 2591 
+Q 5797 2488 5784 2364 
+Q 5772 2241 5747 2113 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-Oblique-50" transform="translate(0 0.78125)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-Oblique-44" transform="translate(97.412109 0.78125)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-Oblique-5b" transform="translate(158.691406 0.78125)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-20" transform="translate(237.353516 0.78125)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-16" transform="translate(340.625 0.78125)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-text_15">
+    <g style="fill: currentColor" transform="translate(506.48 301.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-Oblique-4c" d="M 1172 4863 
+L 1747 4863 
+L 1606 4134 
+L 1031 4134 
+L 1172 4863 
+z
+M 909 3500 
+L 1484 3500 
+L 800 0 
+L 225 0 
+L 909 3500 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-Oblique-51" d="M 3566 2113 
+L 3156 0 
+L 2578 0 
+L 2988 2091 
+Q 3016 2238 3031 2350 
+Q 3047 2463 3047 2528 
+Q 3047 2791 2881 2937 
+Q 2716 3084 2419 3084 
+Q 1956 3084 1622 2776 
+Q 1288 2469 1184 1941 
+L 800 0 
+L 225 0 
+L 903 3500 
+L 1478 3500 
+L 1363 2950 
+Q 1603 3253 1940 3418 
+Q 2278 3584 2650 3584 
+Q 3113 3584 3367 3334 
+Q 3622 3084 3622 2631 
+Q 3622 2519 3608 2391 
+Q 3594 2263 3566 2113 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp1-DejaVuSans-c9c" d="M 678 2272 
+L 4684 2272 
+L 4684 1741 
+L 678 1741 
+L 678 2272 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-Oblique-50" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-Oblique-4c" transform="translate(97.412109 0.015625)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-Oblique-51" transform="translate(125.195312 0.015625)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-20" transform="translate(208.056641 0.015625)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-c9c" transform="translate(311.328125 0.015625)"/>
+     <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-14" transform="translate(395.117188 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-line2d_31">
+    <defs>
+     <path id="analisi1_lez06b_gp1-m6165acc88c" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)">
+     <use xlink:href="#analisi1_lez06b_gp1-m6165acc88c" x="272.64" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-line2d_32">
+    <g clip-path="url(#analisi1_lez06b_gp1-p74ab2c4e5c)">
+     <use xlink:href="#analisi1_lez06b_gp1-m6165acc88c" x="500.48" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp1-legend_1">
+    <g id="analisi1_lez06b_gp1-line2d_33">
+     <path d="M 554.733594 38.408281 
+L 565.733594 38.408281 
+L 576.733594 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06b_gp1-text_16">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(585.533594 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06b_gp1-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_gp1-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_gp1-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_gp1-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06b_gp1-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06b_gp1-p74ab2c4e5c">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+      },
+
+      {
+        id: "s06-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Si consideri la successione $a_n=\\dfrac{n}{n+1}$, $n\\ge 1$. (a) Studiane la monotonia usando il confronto fra termini consecutivi. (b) Stabilisci se è limitata. (c) Determina $\\inf$, $\\sup$ e, se esistono, minimo e massimo.</p>`,
+        solution: `<p><strong>(a) Monotonia.</strong> Il dominio è discreto, quindi basta confrontare $a_n$ con $a_{n+1}$:</p>
+<p>$$a_{n+1}-a_n = \\frac{n+1}{n+2}-\\frac{n}{n+1} = \\frac{(n+1)^2-n(n+2)}{(n+1)(n+2)} = \\frac{n^2+2n+1-n^2-2n}{(n+1)(n+2)} = \\frac{1}{(n+1)(n+2)} \\gt 0$$</p>
+<p>per ogni $n\\ge1$ (il denominatore è positivo). Dunque $a_n \\lt a_{n+1}$ per ogni $n$ e la successione è <strong>strettamente crescente</strong>.</p>
+<p><strong>(b) Limitatezza.</strong> Riscriviamo il termine generale:</p>
+<p>$$a_n=\\frac{n+1-1}{n+1}=1-\\frac{1}{n+1},$$</p>
+<p>da cui $0 \\lt a_n \\lt 1$ per ogni $n\\ge1$: la successione è limitata (ad esempio $|a_n|\\le 1$).</p>
+<p><strong>(c) Inf, sup, minimo e massimo.</strong> Essendo strettamente crescente, il primo termine è il più piccolo: $a_n\\ge a_1=\\frac12$ per ogni $n\\ge1$ e $\\frac12\\in\\operatorname{Im}$, quindi</p>
+<p>$$\\min_n a_n=\\inf_n a_n=\\frac12 \\quad \\text{(raggiunto per } n=1\\text{)}.$$</p>
+<p>Per l'estremo superiore, $1$ è un maggiorante perché $a_n=1-\\frac{1}{n+1} \\lt 1$; inoltre è il più piccolo dei maggioranti, poiché per ogni $\\varepsilon \\gt 0$</p>
+<p>$$a_n \\gt 1-\\varepsilon \\iff 1-\\frac{1}{n+1} \\gt 1-\\varepsilon \\iff \\frac{1}{n+1} \\lt \\varepsilon \\iff n \\gt \\frac{1}{\\varepsilon}-1,$$</p>
+<p>condizione soddisfatta da infiniti indici $n$. Quindi $\\sup_n a_n=1$. Tale valore <strong>non è massimo</strong>: se fosse $a_n=1$ si avrebbe $\\frac{1}{n+1}=0$, impossibile; dunque $1\\notin\\operatorname{Im}$ e il massimo non esiste.</p>
+<figure class="figura" data-id="analisi1_lez06a_gp2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06a_gp2-figure_1">
+  <g id="analisi1_lez06a_gp2-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06a_gp2-axes_1">
+   <g id="analisi1_lez06a_gp2-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06a_gp2-matplotlib.axis_1">
+    <g id="analisi1_lez06a_gp2-xtick_1">
+     <g id="analisi1_lez06a_gp2-line2d_1">
+      <path d="M 92.266667 364 
+L 92.266667 24 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_2">
+      <defs>
+       <path id="analisi1_lez06a_gp2-meb844e6d72" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-meb844e6d72" x="92.266667" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_1">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(88.767292 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-xtick_2">
+     <g id="analisi1_lez06a_gp2-line2d_3">
+      <path d="M 187.2 364 
+L 187.2 24 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-meb844e6d72" x="187.2" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(183.700625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-xtick_3">
+     <g id="analisi1_lez06a_gp2-line2d_5">
+      <path d="M 282.133333 364 
+L 282.133333 24 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-meb844e6d72" x="282.133333" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_3">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(278.633958 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-xtick_4">
+     <g id="analisi1_lez06a_gp2-line2d_7">
+      <path d="M 377.066667 364 
+L 377.066667 24 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-meb844e6d72" x="377.066667" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_4">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(373.567292 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-xtick_5">
+     <g id="analisi1_lez06a_gp2-line2d_9">
+      <path d="M 472 364 
+L 472 24 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-meb844e6d72" x="472" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_5">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(468.500625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-xtick_6">
+     <g id="analisi1_lez06a_gp2-line2d_11">
+      <path d="M 566.933333 364 
+L 566.933333 24 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-meb844e6d72" x="566.933333" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_6">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(563.433958 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-19"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-matplotlib.axis_2">
+    <g id="analisi1_lez06a_gp2-ytick_1">
+     <g id="analisi1_lez06a_gp2-line2d_13">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_14">
+      <defs>
+       <path id="analisi1_lez06a_gp2-md64956f3c8" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_7">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(31.30125 368.178711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-ytick_2">
+     <g id="analisi1_lez06a_gp2-line2d_15">
+      <path d="M 44.8 222.333333 
+L 614.4 222.333333 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="222.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_8">
+      <!-- 0.5 -->
+      <g style="fill: currentColor" transform="translate(20.806563 226.512044) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-11" d="M 684 794 
+L 1344 794 
+L 1344 0 
+L 684 0 
+L 684 794 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-18" transform="translate(95.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-ytick_3">
+     <g id="analisi1_lez06a_gp2-line2d_17">
+      <path d="M 44.8 175.101667 
+L 614.4 175.101667 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="175.101667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_9">
+      <!-- 0.67 -->
+      <g style="fill: currentColor" transform="translate(13.807813 179.280378) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-1a" d="M 525 4666 
+L 3525 4666 
+L 3525 4397 
+L 1831 0 
+L 1172 0 
+L 2766 4134 
+L 525 4134 
+L 525 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-19" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-1a" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-ytick_4">
+     <g id="analisi1_lez06a_gp2-line2d_19">
+      <path d="M 44.8 151.5 
+L 614.4 151.5 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="151.5" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_10">
+      <!-- 0.75 -->
+      <g style="fill: currentColor" transform="translate(13.807813 155.678711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-1a" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-18" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-ytick_5">
+     <g id="analisi1_lez06a_gp2-line2d_21">
+      <path d="M 44.8 137.333333 
+L 614.4 137.333333 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="137.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_11">
+      <!-- 0.8 -->
+      <g style="fill: currentColor" transform="translate(20.806563 141.512044) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06a_gp2-DejaVuSans-1b" d="M 2034 2216 
+Q 1584 2216 1326 1975 
+Q 1069 1734 1069 1313 
+Q 1069 891 1326 650 
+Q 1584 409 2034 409 
+Q 2484 409 2743 651 
+Q 3003 894 3003 1313 
+Q 3003 1734 2745 1975 
+Q 2488 2216 2034 2216 
+z
+M 1403 2484 
+Q 997 2584 770 2862 
+Q 544 3141 544 3541 
+Q 544 4100 942 4425 
+Q 1341 4750 2034 4750 
+Q 2731 4750 3128 4425 
+Q 3525 4100 3525 3541 
+Q 3525 3141 3298 2862 
+Q 3072 2584 2669 2484 
+Q 3125 2378 3379 2068 
+Q 3634 1759 3634 1313 
+Q 3634 634 3220 271 
+Q 2806 -91 2034 -91 
+Q 1263 -91 848 271 
+Q 434 634 434 1313 
+Q 434 1759 690 2068 
+Q 947 2378 1403 2484 
+z
+M 1172 3481 
+Q 1172 3119 1398 2916 
+Q 1625 2713 2034 2713 
+Q 2441 2713 2670 2916 
+Q 2900 3119 2900 3481 
+Q 2900 3844 2670 4047 
+Q 2441 4250 2034 4250 
+Q 1625 4250 1398 4047 
+Q 1172 3844 1172 3481 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-1b" transform="translate(95.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-ytick_6">
+     <g id="analisi1_lez06a_gp2-line2d_23">
+      <path d="M 44.8 127.898333 
+L 614.4 127.898333 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="127.898333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_12">
+      <!-- 0.83 -->
+      <g style="fill: currentColor" transform="translate(13.807813 132.077044) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-13"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-11" transform="translate(63.625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-1b" transform="translate(95.40625 0)"/>
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-16" transform="translate(159.03125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06a_gp2-ytick_7">
+     <g id="analisi1_lez06a_gp2-line2d_25">
+      <path d="M 44.8 80.666667 
+L 614.4 80.666667 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06a_gp2-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez06a_gp2-md64956f3c8" x="44.8" y="80.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06a_gp2-text_13">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(31.30125 84.845378) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_27">
+    <defs>
+     <path id="analisi1_lez06a_gp2-mf2fdfca5aa" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_gp2-mf2fdfca5aa" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_28">
+    <defs>
+     <path id="analisi1_lez06a_gp2-m5ac2277404" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06a_gp2-m5ac2277404" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_29">
+    <path d="M 44.8 269.555556 
+L 49.550626 263.457448 
+L 54.301251 257.74077 
+L 59.051877 252.37082 
+L 63.802502 247.316981 
+L 69.02819 242.0906 
+L 74.253878 237.182063 
+L 79.479566 232.563231 
+L 85.180317 227.825717 
+L 90.881068 223.374781 
+L 97.056881 218.847129 
+L 103.232694 214.597937 
+L 109.88357 210.304776 
+L 116.534445 206.278302 
+L 123.660384 202.232838 
+L 130.786322 198.439822 
+L 138.387323 194.646424 
+L 146.463386 190.874831 
+L 154.53945 187.344847 
+L 163.090575 183.845609 
+L 172.116764 180.392681 
+L 181.618015 176.999197 
+L 191.594329 173.676021 
+L 202.045705 170.431937 
+L 212.972143 167.273847 
+L 224.373645 164.206976 
+L 236.725271 161.120584 
+L 249.55196 158.147945 
+L 263.328774 155.19045 
+L 277.580651 152.359537 
+L 292.782652 149.567725 
+L 308.934779 146.830201 
+L 326.037031 144.159175 
+L 344.089408 141.56416 
+L 363.566972 138.992131 
+L 384.469725 136.463114 
+L 406.322602 134.04347 
+L 430.07573 131.640733 
+L 455.254045 129.319251 
+L 482.332611 127.047535 
+L 511.311426 124.840214 
+L 542.665555 122.677013 
+L 576.394996 120.574645 
+L 612.974812 118.520215 
+L 614.4 118.444444 
+L 614.4 118.444444 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #7c4dff; stroke-width: 2"/>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_30">
+    <path d="M 44.8 80.666667 
+L 614.4 80.666667 
+" clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #8b95a5"/>
+   </g>
+   <g id="analisi1_lez06a_gp2-patch_3">
+    <path d="M 44.8 364 
+L 44.8 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_gp2-patch_4">
+    <path d="M 44.8 364 
+L 614.4 364 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06a_gp2-text_14">
+    <g style="fill: currentColor" transform="translate(98.266667 216.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06a_gp2-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-14" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-text_15">
+    <g style="fill: currentColor" transform="translate(193.2 169.101667) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-15" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-text_16">
+    <g style="fill: currentColor" transform="translate(288.133333 145.5) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-16" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-text_17">
+    <g style="fill: currentColor" transform="translate(383.066667 131.333333) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-17" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-text_18">
+    <g style="fill: currentColor" transform="translate(478 121.898333) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-18" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_31">
+    <defs>
+     <path id="analisi1_lez06a_gp2-m5e758f298d" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)">
+     <use xlink:href="#analisi1_lez06a_gp2-m5e758f298d" x="92.266667" y="222.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_32">
+    <g clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)">
+     <use xlink:href="#analisi1_lez06a_gp2-m5e758f298d" x="187.2" y="175.101667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_33">
+    <g clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)">
+     <use xlink:href="#analisi1_lez06a_gp2-m5e758f298d" x="282.133333" y="151.5" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_34">
+    <g clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)">
+     <use xlink:href="#analisi1_lez06a_gp2-m5e758f298d" x="377.066667" y="137.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-line2d_35">
+    <g clip-path="url(#analisi1_lez06a_gp2-p8a750403fb)">
+     <use xlink:href="#analisi1_lez06a_gp2-m5e758f298d" x="472" y="127.898333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06a_gp2-legend_1">
+    <g id="analisi1_lez06a_gp2-line2d_36">
+     <path d="M 507.81 38.41 
+L 518.81 38.41 
+L 529.81 38.41 
+" style="fill: none; stroke-dasharray: 7.4,3.2; stroke-dashoffset: 0; stroke: #7c4dff; stroke-width: 2"/>
+    </g>
+    <g id="analisi1_lez06a_gp2-text_19">
+     <g style="fill: currentColor" transform="translate(538.61 42.26) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-Oblique-5c" d="M 1588 -325 
+Q 1188 -997 936 -1164 
+Q 684 -1331 294 -1331 
+L -159 -1331 
+L -63 -850 
+L 269 -850 
+Q 509 -850 678 -719 
+Q 847 -588 1056 -206 
+L 1234 128 
+L 459 3500 
+L 1069 3500 
+L 1650 819 
+L 3256 3500 
+L 3859 3500 
+L 1588 -325 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-12" d="M 1625 4666 
+L 2156 4666 
+L 531 -594 
+L 0 -594 
+L 1625 4666 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-e" d="M 2944 4013 
+L 2944 2272 
+L 4684 2272 
+L 4684 1741 
+L 2944 1741 
+L 2944 0 
+L 2419 0 
+L 2419 1741 
+L 678 1741 
+L 678 2272 
+L 2419 2272 
+L 2419 4013 
+L 2944 4013 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06a_gp2-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-5c" transform="translate(0 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-20" transform="translate(78.662109 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-5b" transform="translate(181.933594 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-12" transform="translate(241.113281 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-b" transform="translate(274.804688 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-Oblique-5b" transform="translate(313.818359 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-e" transform="translate(392.480469 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-14" transform="translate(495.751953 0.125)"/>
+      <use xlink:href="#analisi1_lez06a_gp2-DejaVuSans-c" transform="translate(559.375 0.125)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06a_gp2-p8a750403fb">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+      },
+
+      {
+        id: "s06-ex-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $f(x) = \\dfrac{1}{x^2+1}$ definita su $X = \\mathbb{R}$. Verifica che $f$ è pari, che è limitata, e determina $\\sup_{x \\in \\mathbb{R}} f(x)$ e $\\inf_{x \\in \\mathbb{R}} f(x)$ usando la caratterizzazione con $\\varepsilon$, precisando se sono massimo e minimo.</p>`,
+        solution: `<p><strong>Dominio.</strong> Si ha $x^2 + 1 \\ge 1 \\gt 0$ per ogni $x \\in \\mathbb{R}$, quindi il denominatore non si annulla mai e $f$ è definita su tutto $\\mathbb{R}$ (insieme non vuoto e simmetrico rispetto all'origine).</p>
+<p><strong>Parità.</strong> $f(-x) = \\dfrac{1}{(-x)^2+1} = \\dfrac{1}{x^2+1} = f(x)$, quindi $f$ è pari.</p>
+<p><strong>Limitatezza.</strong> Da $x^2 + 1 \\ge 1 \\gt 0$, passando ai reciproci di numeri positivi si ottiene $0 \\lt \\dfrac{1}{x^2+1} \\le 1$, cioè $0 \\lt f(x) \\le 1$ per ogni $x \\in \\mathbb{R}$. Dunque $|f(x)| \\le 1$ e $f$ è limitata.</p>
+<p><strong>Estremo superiore $M = 1$.</strong> Il numero $1$ è un maggiorante per quanto appena visto; inoltre, dato $\\varepsilon \\gt 0$, scegliendo $x = 0 \\in \\mathbb{R}$ si ha $f(0) = 1 \\gt 1 - \\varepsilon$. Quindi $\\sup_{x \\in \\mathbb{R}} f(x) = 1$. Poiché $1 = f(0)$ con $0 \\in \\mathbb{R}$, l'estremo superiore è assunto: $\\max_{x \\in \\mathbb{R}} f(x) = 1$, con punto di massimo $x_0 = 0$.</p>
+<p><strong>Estremo inferiore $m = 0$.</strong> Il numero $0$ è un minorante perché $f(x) \\gt 0$ per ogni $x$. Dato $\\varepsilon \\gt 0$, scegliamo $x \\gt \\dfrac{1}{\\sqrt{\\varepsilon}}$: allora $x^2 \\gt \\dfrac{1}{\\varepsilon}$, dunque $x^2 + 1 \\gt \\dfrac{1}{\\varepsilon}$ e, passando ai reciproci,</p>
+<p>$$0 \\lt f(x) = \\frac{1}{x^2+1} \\lt \\varepsilon = 0 + \\varepsilon .$$</p>
+<p>Abbiamo esibito un valore della funzione minore di $0 + \\varepsilon$, quindi $\\inf_{x \\in \\mathbb{R}} f(x) = 0$. Tale valore <strong>non è assunto</strong>: $f(x) = 0$ richiederebbe $1 = 0$, impossibile. Dunque $0 \\notin \\operatorname{Im}(f) = (0,1]$ e $f$ non ha minimo.</p>
+<figure class="figura" data-id="analisi1_lez06b_gp2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez06b_gp2-figure_1">
+  <g id="analisi1_lez06b_gp2-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez06b_gp2-axes_1">
+   <g id="analisi1_lez06b_gp2-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez06b_gp2-matplotlib.axis_1">
+    <g id="analisi1_lez06b_gp2-xtick_1">
+     <g id="analisi1_lez06b_gp2-line2d_1">
+      <path d="M 101.76 364 
+L 101.76 24 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_2">
+      <defs>
+       <path id="analisi1_lez06b_gp2-m368136b3cb" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m368136b3cb" x="101.76" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_1">
+      <!-- -4 -->
+      <g style="fill: currentColor" transform="translate(96.276328 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp2-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez06b_gp2-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-17" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp2-xtick_2">
+     <g id="analisi1_lez06b_gp2-line2d_3">
+      <path d="M 215.68 364 
+L 215.68 24 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m368136b3cb" x="215.68" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_2">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(210.196328 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp2-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp2-xtick_3">
+     <g id="analisi1_lez06b_gp2-line2d_5">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m368136b3cb" x="329.6" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_3">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 378.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp2-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp2-xtick_4">
+     <g id="analisi1_lez06b_gp2-line2d_7">
+      <path d="M 443.52 364 
+L 443.52 24 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m368136b3cb" x="443.52" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_4">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(440.020625 378.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp2-xtick_5">
+     <g id="analisi1_lez06b_gp2-line2d_9">
+      <path d="M 557.44 364 
+L 557.44 24 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m368136b3cb" x="557.44" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_5">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(553.940625 378.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp2-matplotlib.axis_2">
+    <g id="analisi1_lez06b_gp2-ytick_1">
+     <g id="analisi1_lez06b_gp2-line2d_11">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_12">
+      <defs>
+       <path id="analisi1_lez06b_gp2-m0e73064477" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m0e73064477" x="329.6" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_6">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 368.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez06b_gp2-ytick_2">
+     <g id="analisi1_lez06b_gp2-line2d_13">
+      <path d="M 44.8 102.461538 
+L 614.4 102.461538 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez06b_gp2-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez06b_gp2-m0e73064477" x="329.6" y="102.461538" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez06b_gp2-text_7">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(316.10125 106.640249) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez06b_gp2-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp2-line2d_15">
+    <defs>
+     <path id="analisi1_lez06b_gp2-m14141333d7" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_gp2-m14141333d7" x="614.4" y="364" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp2-line2d_16">
+    <defs>
+     <path id="analisi1_lez06b_gp2-me3868d6404" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez06b_gp2-me3868d6404" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp2-line2d_17">
+    <path d="M 44.8 353.940828 
+L 62.377314 352.63337 
+L 78.054379 351.243673 
+L 91.831193 349.805147 
+L 104.182819 348.30285 
+L 115.58432 346.699378 
+L 126.035696 345.009583 
+L 135.536947 343.255638 
+L 144.563136 341.361887 
+L 152.639199 339.446849 
+L 160.2402 337.422452 
+L 167.366138 335.298248 
+L 174.017014 333.088139 
+L 180.192827 330.810807 
+L 185.893578 328.489995 
+L 191.594329 325.931539 
+L 196.820017 323.35101 
+L 202.045705 320.517229 
+L 206.79633 317.695073 
+L 211.546956 314.611251 
+L 215.822519 311.587461 
+L 220.098082 308.303246 
+L 224.373645 304.731673 
+L 228.649208 300.84299 
+L 232.449708 297.093776 
+L 236.250209 293.043159 
+L 240.050709 288.664183 
+L 243.851209 283.928045 
+L 247.65171 278.804283 
+L 251.45221 273.261127 
+L 254.777648 268.041279 
+L 258.103086 262.453705 
+L 261.428524 256.477363 
+L 264.753962 250.092768 
+L 268.554462 242.274803 
+L 272.354962 233.883523 
+L 276.155463 224.911387 
+L 279.955963 215.366189 
+L 284.231526 203.979659 
+L 288.982152 190.623884 
+L 295.157965 172.48463 
+L 304.184153 145.887526 
+L 307.984654 135.383917 
+L 310.835029 128.067633 
+L 313.210342 122.459672 
+L 315.585655 117.390042 
+L 317.485905 113.779417 
+L 319.386155 110.609135 
+L 321.286405 107.91684 
+L 322.711593 106.231419 
+L 324.136781 104.845592 
+L 325.561968 103.769388 
+L 326.987156 103.010712 
+L 328.412344 102.575193 
+L 329.837531 102.466087 
+L 331.262719 102.684209 
+L 332.687907 103.227928 
+L 334.113094 104.093187 
+L 335.538282 105.273585 
+L 336.96347 106.760492 
+L 338.388657 108.543204 
+L 340.288907 111.358295 
+L 342.189158 114.642346 
+L 344.089408 118.356744 
+L 346.464721 123.540994 
+L 348.840033 129.246097 
+L 351.690409 136.655676 
+L 355.490909 147.245522 
+L 360.716597 162.573494 
+L 371.167973 193.346625 
+L 375.918599 206.566008 
+L 380.194162 217.805058 
+L 383.994662 227.208762 
+L 387.795163 236.035727 
+L 391.595663 244.282481 
+L 395.396163 251.95964 
+L 399.196664 259.087553 
+L 402.997164 265.692883 
+L 406.797665 271.806003 
+L 410.598165 277.459075 
+L 414.398666 282.684666 
+L 418.199166 287.514796 
+L 421.999666 291.980293 
+L 425.800167 296.110399 
+L 429.600667 299.932541 
+L 433.87623 303.896031 
+L 438.151793 307.535399 
+L 442.427356 310.881047 
+L 446.702919 313.960519 
+L 451.453545 317.100148 
+L 456.20417 319.97241 
+L 461.429858 322.855477 
+L 466.655546 325.479904 
+L 472.356297 328.080876 
+L 478.057048 330.439314 
+L 484.232861 332.752627 
+L 490.883736 334.996698 
+L 498.009675 337.152589 
+L 505.610676 339.206249 
+L 513.686739 341.148071 
+L 522.237865 342.972327 
+L 531.739116 344.760623 
+L 541.71543 346.408954 
+L 552.641868 347.987311 
+L 564.518432 349.477835 
+L 577.820183 350.9168 
+L 592.547123 352.277421 
+L 608.699249 353.542303 
+L 614.4 353.940828 
+L 614.4 353.940828 
+" clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp2-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp2-patch_4">
+    <path d="M 44.8 364 
+L 614.4 364 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez06b_gp2-text_8">
+    <g style="fill: currentColor" transform="translate(335.6 96.461538) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez06b_gp2-DejaVuSans-Oblique-50" d="M 5747 2113 
+L 5338 0 
+L 4763 0 
+L 5166 2094 
+Q 5191 2228 5203 2325 
+Q 5216 2422 5216 2491 
+Q 5216 2772 5059 2928 
+Q 4903 3084 4622 3084 
+Q 4203 3084 3875 2770 
+Q 3547 2456 3450 1953 
+L 3066 0 
+L 2491 0 
+L 2900 2094 
+Q 2925 2209 2937 2307 
+Q 2950 2406 2950 2484 
+Q 2950 2769 2794 2926 
+Q 2638 3084 2363 3084 
+Q 1938 3084 1609 2770 
+Q 1281 2456 1184 1953 
+L 800 0 
+L 225 0 
+L 909 3500 
+L 1484 3500 
+L 1375 2956 
+Q 1609 3263 1923 3423 
+Q 2238 3584 2597 3584 
+Q 2978 3584 3223 3384 
+Q 3469 3184 3519 2828 
+Q 3781 3197 4126 3390 
+Q 4472 3584 4856 3584 
+Q 5306 3584 5551 3325 
+Q 5797 3066 5797 2591 
+Q 5797 2488 5784 2364 
+Q 5772 2241 5747 2113 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp2-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp2-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez06b_gp2-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-Oblique-50" transform="translate(0 0.09375)"/>
+     <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-Oblique-44" transform="translate(97.412109 0.09375)"/>
+     <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-Oblique-5b" transform="translate(158.691406 0.09375)"/>
+     <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-20" transform="translate(237.353516 0.09375)"/>
+     <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-14" transform="translate(340.625 0.09375)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp2-line2d_18">
+    <defs>
+     <path id="analisi1_lez06b_gp2-m422c030b29" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez06b_gp2-p73c0c48254)">
+     <use xlink:href="#analisi1_lez06b_gp2-m422c030b29" x="329.6" y="102.461538" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez06b_gp2-legend_1">
+    <g id="analisi1_lez06b_gp2-line2d_19">
+     <path d="M 554.733594 38.408281 
+L 565.733594 38.408281 
+L 576.733594 38.408281 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez06b_gp2-text_9">
+     <!-- f(x) -->
+     <g style="fill: currentColor" transform="translate(585.533594 42.258281) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez06b_gp2-DejaVuSans-49" d="M 2375 4863 
+L 2375 4384 
+L 1825 4384 
+Q 1516 4384 1395 4259 
+Q 1275 4134 1275 3809 
+L 1275 3500 
+L 2222 3500 
+L 2222 3053 
+L 1275 3053 
+L 1275 0 
+L 697 0 
+L 697 3053 
+L 147 3053 
+L 147 3500 
+L 697 3500 
+L 697 3744 
+Q 697 4328 969 4595 
+Q 1241 4863 1831 4863 
+L 2375 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_gp2-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_gp2-DejaVuSans-5b" d="M 3513 3500 
+L 2247 1797 
+L 3578 0 
+L 2900 0 
+L 1881 1375 
+L 863 0 
+L 184 0 
+L 1544 1831 
+L 300 3500 
+L 978 3500 
+L 1906 2253 
+L 2834 3500 
+L 3513 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez06b_gp2-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-49"/>
+      <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-b" transform="translate(35.203125 0)"/>
+      <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-5b" transform="translate(74.21875 0)"/>
+      <use xlink:href="#analisi1_lez06b_gp2-DejaVuSans-c" transform="translate(133.40625 0)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez06b_gp2-p73c0c48254">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Definisci funzione monotona crescente e strettamente crescente. Che relazione c'è tra le due?",
+        back: "Sia $f: X \\to \\mathbb{R}$ con $X \\subseteq \\mathbb{R}$ non vuoto. $f$ è <b>crescente</b> (non decrescente) se per ogni $x_1, x_2 \\in X$ con $x_1 \\le x_2$ si ha $f(x_1) \\le f(x_2)$. È <b>strettamente crescente</b> se $x_1 \\lt x_2 \\Rightarrow f(x_1) \\lt f(x_2)$. Ogni funzione strettamente crescente è crescente, ma non viceversa: una funzione costante è crescente (e anche decrescente) ma non strettamente monotona."
+      },
+      {
+        type: "domanda",
+        front: "Perché per una successione basta confrontare $a_n$ con $a_{n+1}$ per stabilire la monotonia?",
+        back: "Perché il dominio è <b>discreto</b>: $\\mathbb{N}$ non ha punti intermedi fra $n$ e $n+1$. Quindi la condizione locale $a_n \\le a_{n+1}$ per ogni $n$ si propaga per transitività a tutte le coppie $n \\le m$. Su un dominio continuo questo non si può fare, perché non esiste un \"successivo\"."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $a_n = 1/n$ ($n \\ge 1$) è strettamente decrescente.",
+        back: "Vogliamo $\\frac{1}{n} \\gt \\frac{1}{n+1}$. Poiché $n \\ge 1$, sia $n$ che $n+1$ sono positivi, quindi possiamo moltiplicare entrambi i membri per $n(n+1) \\gt 0$ <b>senza cambiare il verso</b>: si ottiene $n+1 \\gt n$, cioè $1 \\gt 0$, che è vera. Dunque $a_n \\gt a_{n+1}$ per ogni $n \\ge 1$."
+      },
+      {
+        type: "definizione",
+        front: "Quando una funzione si dice pari e quando dispari? Che ipotesi serve sul dominio?",
+        back: "Il dominio $X$ deve essere non vuoto e <b>simmetrico rispetto all'origine</b>: se $x \\in X$ allora $-x \\in X$ (altrimenti $f(-x)$ potrebbe non avere senso). Allora $f$ è <b>pari</b> se $f(-x) = f(x)$ per ogni $x \\in X$ (grafico simmetrico rispetto all'asse $y$); è <b>dispari</b> se $f(-x) = -f(x)$ per ogni $x \\in X$ (grafico simmetrico rispetto all'origine)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che la somma di due funzioni pari è pari.",
+        back: "Siano $f, g$ pari su $A$ non vuoto e simmetrico, e sia $h = f+g$. Poiché $A$ è simmetrico, per ogni $x \\in A$ anche $-x \\in A$, quindi $h(-x)$ ha senso. Allora $h(-x) = f(-x) + g(-x) = f(x) + g(x) = h(x)$, dove si è usata la parità di $f$ e $g$. Valendo per ogni $x \\in A$, $h$ è pari. $\\square$"
+      },
+      {
+        type: "tranello",
+        front: "Come si dimostra che $f(x) = x^4 + x^3$ non è né pari né dispari? Basta guardare $x = 0$?",
+        back: "<b>No, $x=0$ non basta.</b> In $x=0$ si ha $f(0) = f(-0) = -f(0) = 0$: le tre espressioni coincidono, quindi quel punto non esclude nulla. Bisogna negare le uguaglianze <b>per ogni</b> $x$, ed è sufficiente <b>un solo controesempio</b>: prendiamo $x=1$. Si ha $f(-1) = 1 - 1 = 0$, $f(1) = 2$, $-f(1) = -2$. Poiché $f(-1) \\neq f(1)$ non è pari e $f(-1) \\neq -f(1)$ non è dispari."
+      },
+      {
+        type: "definizione",
+        front: "Che significa che una funzione è superiormente limitata, inferiormente limitata, limitata?",
+        back: "$f$ è <b>superiormente limitata</b> se $\\exists M \\in \\mathbb{R}$ con $f(x) \\le M$ per ogni $x \\in X$ (equivalentemente: $\\operatorname{Im}(f)$ è superiormente limitato). È <b>inferiormente limitata</b> se $\\exists m \\in \\mathbb{R}$ con $f(x) \\ge m$ per ogni $x$. È <b>limitata</b> se vale entrambe, cioè se $\\exists M \\ge 0$ con $|f(x)| \\le M$ per ogni $x \\in X$."
+      },
+      {
+        type: "tranello",
+        front: "Una funzione non superiormente limitata può avere minimo?",
+        back: "<b>Sì.</b> Le due questioni sono indipendenti: per un <b>massimo</b> serve la limitatezza <b>superiore</b> più il raggiungimento del $\\sup$; per un <b>minimo</b> serve la limitatezza <b>inferiore</b> più il raggiungimento dell'$\\inf$. Esempio: $f(x) = x^2$ su $\\mathbb{R}$ ha $\\sup f = +\\infty$ (nessun massimo), ma $\\min f = 0$ assunto in $x_0 = 0$."
+      },
+      {
+        type: "formula",
+        front: "Scrivi la caratterizzazione di $M = \\sup_{x \\in X} f(x)$ con $M \\in \\mathbb{R}$.",
+        back: "Due condizioni: (i) $f(x) \\le M$ per ogni $x \\in X$ ($M$ è maggiorante); (ii) $\\forall \\varepsilon \\gt 0 \\ \\exists x \\in X$ tale che $f(x) \\gt M - \\varepsilon$ ($M$ è il più piccolo dei maggioranti). <b>Attenzione</b>: serve $M$ reale; se $\\sup f = +\\infty$ la caratterizzazione corretta è $\\forall K \\in \\mathbb{R} \\ \\exists x \\in X : f(x) \\gt K$."
+      },
+      {
+        type: "domanda",
+        front: "A cosa serve $\\varepsilon$ nella caratterizzazione del sup?",
+        back: "La prima condizione dice solo che $M$ sta sopra tutti i valori, ma la soddisfano anche $M+1$, $M+10$, ecc. $\\varepsilon$ è un margine arbitrariamente piccolo con cui <b>abbassiamo</b> $M$: se anche scendendo a $M-\\varepsilon$ troviamo sempre un valore della funzione sopra quella soglia, allora $M-\\varepsilon$ non è maggiorante. Valendo per ogni $\\varepsilon \\gt 0$, nessun numero minore di $M$ è maggiorante: $M$ è il minimo dei maggioranti. In pratica: dato $\\varepsilon$, si <b>esibisce</b> un $x$ costruito a partire da $\\varepsilon$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Mostra che $\\inf_{x \\in [1,+\\infty)} \\frac{1}{x} = 0$ e che non è minimo.",
+        back: "$0$ è minorante: $x \\ge 1 \\gt 0 \\Rightarrow 1/x \\gt 0$. È il più grande: dato $\\varepsilon \\gt 0$, scegliamo $x \\gt \\max\\{1, 1/\\varepsilon\\}$; allora $x \\in X$ e $0 \\lt 1/x \\lt \\varepsilon = 0+\\varepsilon$. Quindi $\\inf f = 0$. Ma $0 \\notin \\operatorname{Im}(f) = (0,1]$ (nessun $x$ dà $1/x = 0$), dunque l'estremo inferiore <b>non è assunto</b> e il minimo <b>non esiste</b>."
+      },
+      {
+        type: "definizione",
+        front: "Definisci massimo assoluto di $f$ su $X$ e spiega la differenza con il $\\sup$.",
+        back: "$M \\in \\mathbb{R}$ è <b>massimo assoluto</b> se esiste $x_0 \\in X$ (punto di massimo) con $M = f(x_0)$ e $f(x_0) \\ge f(x)$ per ogni $x \\in X$. Differenza: il $\\sup$ è il minimo dei maggioranti e <b>esiste sempre</b> come numero reale se $f$ è superiormente limitata su $X \\neq \\emptyset$; diventa <b>massimo</b> solo se appartiene all'immagine, cioè se è effettivamente <b>assunto</b>."
+      },
+      {
+        type: "tranello",
+        front: "Dire \"il massimo di una funzione\" è corretto? Massimo di che cosa, esattamente?",
+        back: "Una funzione in sé è una <b>legge</b>: non è la legge ad avere un massimo, ma l'insieme dei suoi <b>valori</b>. Per questo si definisce $\\max f := \\max(\\operatorname{Im}(f))$, riconducendo il problema al massimo di un insieme numerico. Lo stesso per $\\sup$, $\\inf$ e $\\min$."
+      },
+      {
+        type: "domanda",
+        front: "Perché nell'esempio della CO₂ il massimo cambia ma la limitatezza no? Qual è invece l'esempio in cui cambia la limitatezza?",
+        back: "Estendendo il dominio fino a oggi cambia il <b>valore del massimo</b> (il punto di massimo si sposta all'epoca attuale), ma la funzione resta <b>limitata</b>: è una serie su un intervallo di tempo finito, con un valore massimo e uno minimo, quindi esistono maggioranti e minoranti. Superare un massimo precedente non fa perdere la limitatezza. L'esempio in cui cambia proprio la limitatezza è $f(x)=1/x$: limitata su $[1,+\\infty)$, non superiormente limitata su $(0,+\\infty)$."
+      },
+      {
+        type: "tranello",
+        front: "Perché si richiede sempre $X \\neq \\emptyset$?",
+        back: "Se $X = \\emptyset$ allora $\\operatorname{Im}(f) = \\emptyset$, e l'insieme vuoto non ha né sup né inf reali: <b>ogni</b> numero reale ne è contemporaneamente maggiorante e minorante, quindi non esiste un minimo dei maggioranti in $\\mathbb{R}$. Inoltre l'assioma di completezza si applica a insiemi <b>non vuoti</b> e limitati: senza questa ipotesi l'esistenza di $\\sup$ e $\\inf$ non è garantita."
+      }
+    ]
+};
+
