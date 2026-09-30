@@ -6,7 +6,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 const SITE = {
-  url: 'https://eliacinti.dev',
+  url: 'https://feynotes.eliacinti.dev',
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',

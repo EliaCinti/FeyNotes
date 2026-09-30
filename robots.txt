@@ -3,4 +3,4 @@ cat > robots.txt << 'EOF'
 User-agent: *
 Allow: /
 
-Sitemap: https://eliacinti.dev/sitemap.xml
+Sitemap: https://feynotes.eliacinti.dev/sitemap.xml

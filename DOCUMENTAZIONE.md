@@ -21,7 +21,7 @@ FeyNotes è una piattaforma di appunti universitari automatizzata. L'obiettivo �
 
 Il nome "FeyNotes" si ispira a Richard Feynman e alla sua filosofia: capire davvero le cose, non solo memorizzarle.
 
-Il sito è live su **eliacinti.dev** e copre attualmente tre corsi del corso di laurea in Ingegneria Informatica all'Università di Roma Tor Vergata:
+Il sito è live su **feynotes.eliacinti.dev** e copre attualmente tre corsi del corso di laurea in Ingegneria Informatica all'Università di Roma Tor Vergata:
 
 - **Fisica 1** (Prof. Mercuri) — lezioni complete con formule KaTeX, flashcard per l'orale, placeholder per diagrammi
 - **Geometria** (Trusiani / Di Gennaro) — spazi vettoriali, matrici, sistemi lineari
@@ -116,7 +116,7 @@ Tempo totale: circa 5 minuti da audio a lezione live.
 | Componente | Dettaglio |
 |-----------|----------|
 | Repository | github.com/EliaCinti/FeyNotes |
-| Dominio | eliacinti.dev |
+| Dominio | feynotes.eliacinti.dev |
 | Server | Hetzner CX23, Nginx in Docker, HTTPS via Cloudflare |
 | Deploy | GitHub Actions → rsync (solo file necessari, no sorgenti) |
 

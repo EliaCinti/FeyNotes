@@ -2,7 +2,7 @@
 
 Appunti di Ingegneria Informatica — Università di Roma Tor Vergata.
 
-🌐 **[eliacinti.dev](https://eliacinti.dev)**
+🌐 **[feynotes.eliacinti.dev](https://feynotes.eliacinti.dev)**
 
 ---
 
