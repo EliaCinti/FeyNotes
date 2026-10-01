@@ -1,0 +1,1561 @@
+const LESSON = {
+    id: "L03", date: "Lezione 3 — 30 Set 2026",
+    title: "Funzioni e loro proprietà",
+    abstract: "Dall'esercizio di riepilogo sulla teoria degli insiemi alla definizione di funzione: dominio, codominio, immagine. Iniettività, suriettività e biiettività lette tramite le fibre. Relazione inversa, preimmagine e funzione inversa: tre oggetti dai nomi simili da non confondere. Composizione, invertibilità e la biiezione tra sottoinsiemi e funzioni caratteristiche.",
+
+    sections: [
+      {
+        id: "s03-riepilogo-insiemi",
+        type: "section",
+        title: "Esercizio di riepilogo sulla teoria degli insiemi",
+        icon: "🧩",
+        content: `<p>Prima di continuare, riprendiamo l'esercizio lasciato in sospeso la volta scorsa. Vogliamo dimostrare alcune proprietà delle operazioni tra insiemi.</p>`,
+        subsections: [
+          {
+            subtitle: "Proprietà distributiva della differenza rispetto all'unione",
+            content: `<p>Dimostrare che $(A \\cup B) \\setminus C = (A \\setminus C) \\cup (B \\setminus C)$.</p>
+<p>Ricordiamo la definizione di differenza insiemistica in termini di intersezione e complemento: $X \\setminus Y = X \\cap Y^c$. Usando questa e la proprietà distributiva dell'intersezione rispetto all'unione, otteniamo:</p>
+<p>$$\\begin{aligned}(A \\cup B) \\setminus C &= (A \\cup B) \\cap C^c \\\\ &= (A \\cap C^c) \\cup (B \\cap C^c) \\\\ &= (A \\setminus C) \\cup (B \\setminus C)\\end{aligned}$$</p>
+<p>Questo completa la dimostrazione.</p>`
+          },
+          {
+            subtitle: "Differenza simmetrica",
+            content: `<p>Dimostrare che la differenza simmetrica tra $A$ e $B$, definita come $(A \\setminus B) \\cup (B \\setminus A)$, è uguale a $(A \\cup B) \\setminus (A \\cap B)$.</p>
+<p>Partiamo dall'espressione $(A \\cup B) \\setminus (A \\cap B)$ e applichiamo la proprietà appena dimostrata agli insiemi $A$, $B$ e $C := A \\cap B$:</p>
+<p>$$(A \\cup B) \\setminus (A \\cap B) = (A \\setminus (A \\cap B)) \\cup (B \\setminus (A \\cap B))$$</p>
+<p>Ora analizziamo i due termini separatamente. L'espressione $A \\setminus (A \\cap B)$ rappresenta gli elementi di $A$ che non sono in $A \\cap B$. Questo è esattamente l'insieme degli elementi di $A$ che non sono in $B$, cioè $A \\setminus B$. Analogamente, $B \\setminus (A \\cap B)$ è uguale a $B \\setminus A$.</p>
+<p>Sostituendo, otteniamo $(A \\setminus B) \\cup (B \\setminus A)$, che è la definizione di differenza simmetrica.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s03-funzioni-base",
+        type: "section",
+        title: "Funzioni: concetti di base",
+        icon: "➡️",
+        content: `<p>La scorsa settimana ci eravamo fermati alle relazioni di equivalenza e d'ordine. Adesso introduciamo un concetto fondamentale: le <strong>funzioni</strong>. Una funzione è un tipo particolare di corrispondenza: precisamente, è una corrispondenza in cui <strong>ogni elemento di partenza ha uno e un solo elemento associato</strong>. Rendiamo formale questa idea.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: funzione, dominio, codominio, immagine",
+            content: `<p>Siano $A$ e $B$ due insiemi. Una <strong>corrispondenza</strong> da $A$ a $B$ è un sottoinsieme $f \\subseteq A \\times B$; si scrive $a \\mapsto b$ quando $(a,b) \\in f$. La scrittura $f(a) = b$ si usa <strong>soltanto</strong> quando $f$ è una funzione, perché presuppone che $b$ sia l'unico elemento associato ad $a$.</p>
+<p>La corrispondenza $f$ si dice <strong>funzione</strong> da $A$ a $B$, e si scrive $f: A \\to B$, se</p>
+<p>$$\\forall a \\in A, \\quad \\exists! \\, b \\in B \\mid (a,b) \\in f,$$</p>
+<p>cioè se ad ogni elemento di $A$ è associato <em>esattamente un</em> elemento di $B$. Le due richieste nascoste in $\\exists!$ sono:</p>
+<ul>
+  <li><strong>esistenza</strong>: per ogni $a \\in A$ esiste almeno un $b \\in B$ con $(a,b) \\in f$;</li>
+  <li><strong>unicità</strong>: tale $b$ è unico, cioè se $(a,b) \\in f$ e $(a,b') \\in f$ allora $b = b'$.</li>
+</ul>
+<p>In tal caso: $A$ si dice <strong>dominio</strong> di $f$; $B$ si dice <strong>codominio</strong> di $f$; l'elemento $b = f(a)$ si dice <strong>immagine</strong> di $a$; e l'insieme</p>
+<p>$$\\operatorname{Im}(f) := \\{ f(a) \\mid a \\in A \\} = \\{ b \\in B \\mid \\exists a \\in A \\text{ con } f(a) = b \\} \\subseteq B$$</p>
+<p>si dice <strong>immagine</strong> di $f$.</p>`
+          },
+          {
+            subtitle: "Osservazione: immagine contro codominio",
+            content: `<p>Dalla definizione segue che $\\operatorname{Im}(f) \\subseteq B$ sempre, ma l'inclusione può essere stretta: il <strong>codominio</strong> è l'insieme in cui si dichiara di andare a cercare i valori, l'<strong>immagine</strong> è l'insieme dei valori effettivamente assunti.</p>`
+          },
+          {
+            subtitle: "Non tutte le corrispondenze sono funzioni",
+            content: `<p>Può fallire l'esistenza, l'unicità, o entrambe. Consideriamo due esempi:</p>
+<ul>
+  <li>La corrispondenza $\\varphi := \\{(a, b) \\in P \\times P \\mid b \\text{ è fratello di } a\\}$, dove $P$ è l'insieme delle persone, non è una funzione. Infatti, una persona può non avere fratelli (e allora fallisce l'<em>esistenza</em>), oppure può averne più di uno (e allora fallisce l'<em>unicità</em>).</li>
+  <li>La corrispondenza $\\omega := \\{(a, b) \\in \\mathbb{N} \\times \\mathbb{N} \\mid a \\leq b\\}$ non è una funzione. Per un dato $a \\in \\mathbb{N}$ esistono infiniti $b \\in \\mathbb{N}$ che soddisfano la relazione (ad esempio, per $a=5$, $b$ può essere $5, 6, 7, \\dots$): qui l'esistenza è garantita, ma fallisce l'<em>unicità</em>.</li>
+</ul>`
+          }
+        ],
+        formulas: [
+          { label: "Funzione", latex: "f: A \\to B \\iff \\forall a \\in A, \\ \\exists! \\, b \\in B \\mid (a,b) \\in f" },
+          { label: "Immagine di f", latex: "\\operatorname{Im}(f) = \\{ f(a) \\mid a \\in A \\} \\subseteq B" }
+        ]
+      },
+
+      {
+        id: "s03-iniettivita-suriettivita",
+        type: "section",
+        title: "Iniettività, suriettività e biiettività",
+        icon: "🔀",
+        content: `<p>Introduciamo ora tre proprietà fondamentali delle funzioni. Sia $f: A \\to B$ una funzione.</p>
+<ol>
+  <li><strong>iniettiva</strong> se elementi distinti del dominio hanno immagini distinte. Formalmente: $$\\forall a, a' \\in A, \\quad a \\neq a' \\Rightarrow f(a) \\neq f(a')$$ Equivalentemente, usando la contronominale: $$\\forall a, a' \\in A, \\quad f(a) = f(a') \\Rightarrow a = a'$$</li>
+  <li><strong>suriettiva</strong> se ogni elemento del codominio è immagine di almeno un elemento del dominio: $$\\forall b \\in B, \\quad \\exists a \\in A \\mid f(a) = b$$ Questo equivale a dire che l'immagine della funzione coincide con il codominio: $\\operatorname{Im}(f) = B$.</li>
+  <li><strong>biiettiva</strong> se è sia iniettiva che suriettiva. Questo significa che per ogni elemento del codominio esiste uno e un solo elemento del dominio che ha quello come immagine: $$\\forall b \\in B, \\quad \\exists! a \\in A \\mid f(a) = b$$</li>
+</ol>`,
+        subsections: [
+          {
+            subtitle: "Esempio: $f(x) = x^2$ su $\\mathbb{R}$",
+            content: `<p>La funzione $f: \\mathbb{R} \\to \\mathbb{R}$ definita da $f(x) = x^2$ non è né iniettiva né suriettiva.</p>
+<ul>
+  <li>Non è iniettiva perché, ad esempio, $f(1) = 1$ e $f(-1) = 1$, ma $1 \\neq -1$.</li>
+  <li>Non è suriettiva perché nessun numero reale $x$ ha come quadrato un numero negativo. Ad esempio, non esiste $x \\in \\mathbb{R}$ tale che $x^2 = -1$. L'immagine è $\\operatorname{Im}(f) = \\mathbb{R}_{\\ge 0}$, che è un sottoinsieme proprio di $\\mathbb{R}$.</li>
+</ul>`
+          },
+          {
+            subtitle: "Rappresentazioni grafiche",
+            content: `<p>Possiamo visualizzare queste proprietà con dei <strong>diagrammi a frecce</strong>: a sinistra il dominio $A$, a destra il codominio $B$, e una freccia da $a$ al suo valore $f(a)$.</p>
+<p><em>Una precisazione di vocabolario, utile per leggere le didascalie:</em> l'insieme degli elementi di partenza che arrivano in uno stesso elemento $b$ si chiama <strong>fibra</strong> di $b$; lo definiremo formalmente nella prossima sottosezione. Per ora basta leggerlo come «l'insieme delle frecce che cadono in $b$».</p>
+<p>Nel primo diagramma: $A = \\{a_1,a_2\\}$, $B = \\{b_1\\}$ e le due frecce arrivano entrambe in $b_1$. In $b_1$ arriva almeno una freccia (suriettività), ma ne arrivano due, quindi fallisce l'iniettività: la fibra di $b_1$ è $\\{a_1,a_2\\}$.</p>
+<figure class="figura" data-id="algebra_lez03a_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez03a_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144.432pt" height="121.046pt" viewBox="0 0 144.432 121.046" version="1.2"><style>#algebra_lez03a_d1 [fill="rgb(0%,0%,0%)"],#algebra_lez03a_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez03a_d1 [stroke="rgb(0%,0%,0%)"],#algebra_lez03a_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph0-1">
+<path style="stroke:none;" d="M 5.703125 -0.15625 C 5.703125 -0.25 5.625 -0.25 5.515625 -0.25 C 5.03125 -0.25 5.03125 -0.296875 5 -0.53125 L 4.515625 -5.46875 C 4.5 -5.625 4.5 -5.65625 4.375 -5.65625 C 4.25 -5.65625 4.21875 -5.609375 4.171875 -5.53125 L 1.421875 -0.90625 C 1.09375 -0.375 0.796875 -0.265625 0.4375 -0.25 C 0.34375 -0.234375 0.28125 -0.234375 0.28125 -0.09375 C 0.28125 -0.046875 0.3125 0 0.375 0 C 0.59375 0 0.84375 -0.03125 1.0625 -0.03125 C 1.328125 -0.03125 1.59375 0 1.84375 0 C 1.890625 0 2 0 2 -0.15625 C 2 -0.234375 1.921875 -0.25 1.875 -0.25 C 1.6875 -0.265625 1.5 -0.328125 1.5 -0.515625 C 1.5 -0.609375 1.546875 -0.703125 1.609375 -0.8125 C 1.671875 -0.90625 1.671875 -0.90625 2.21875 -1.828125 L 4.203125 -1.828125 C 4.21875 -1.65625 4.328125 -0.578125 4.328125 -0.5 C 4.328125 -0.265625 3.90625 -0.25 3.75 -0.25 C 3.640625 -0.25 3.5625 -0.25 3.5625 -0.09375 C 3.5625 0 3.671875 0 3.671875 0 C 4 0 4.34375 -0.03125 4.671875 -0.03125 C 4.859375 -0.03125 5.359375 0 5.5625 0 C 5.609375 0 5.703125 0 5.703125 -0.15625 Z M 4.171875 -2.078125 L 2.359375 -2.078125 L 3.921875 -4.6875 Z M 4.171875 -2.078125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph0-2">
+<path style="stroke:none;" d="M 3.9375 -1.125 C 3.9375 -1.203125 3.859375 -1.203125 3.84375 -1.203125 C 3.765625 -1.203125 3.75 -1.171875 3.734375 -1.0625 C 3.59375 -0.546875 3.453125 -0.09375 3.125 -0.09375 C 2.921875 -0.09375 2.890625 -0.296875 2.890625 -0.453125 C 2.890625 -0.625 2.90625 -0.6875 3 -1.03125 L 3.171875 -1.75 L 3.453125 -2.859375 C 3.515625 -3.078125 3.515625 -3.09375 3.515625 -3.125 C 3.515625 -3.25 3.421875 -3.34375 3.28125 -3.34375 C 3.09375 -3.34375 2.96875 -3.15625 2.953125 -2.984375 C 2.8125 -3.28125 2.578125 -3.5 2.21875 -3.5 C 1.296875 -3.5 0.3125 -2.328125 0.3125 -1.171875 C 0.3125 -0.4375 0.75 0.09375 1.375 0.09375 C 1.53125 0.09375 1.921875 0.0625 2.390625 -0.5 C 2.453125 -0.171875 2.734375 0.09375 3.109375 0.09375 C 3.390625 0.09375 3.578125 -0.09375 3.703125 -0.34375 C 3.828125 -0.625 3.9375 -1.125 3.9375 -1.125 Z M 2.828125 -2.484375 L 2.4375 -0.9375 C 2.390625 -0.796875 2.390625 -0.78125 2.28125 -0.640625 C 1.921875 -0.21875 1.609375 -0.09375 1.390625 -0.09375 C 0.984375 -0.09375 0.875 -0.515625 0.875 -0.828125 C 0.875 -1.21875 1.125 -2.203125 1.3125 -2.5625 C 1.5625 -3.03125 1.90625 -3.328125 2.234375 -3.328125 C 2.75 -3.328125 2.859375 -2.671875 2.859375 -2.625 C 2.859375 -2.578125 2.84375 -2.53125 2.828125 -2.484375 Z M 2.828125 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph0-3">
+<path style="stroke:none;" d="M 5.546875 -1.703125 C 5.546875 -2.28125 5.09375 -2.734375 4.328125 -2.828125 C 5.140625 -2.96875 5.984375 -3.5625 5.984375 -4.3125 C 5.984375 -4.890625 5.453125 -5.40625 4.5 -5.40625 L 1.84375 -5.40625 C 1.703125 -5.40625 1.625 -5.40625 1.625 -5.234375 C 1.625 -5.15625 1.6875 -5.15625 1.84375 -5.15625 C 1.84375 -5.15625 2.015625 -5.15625 2.140625 -5.140625 C 2.28125 -5.125 2.359375 -5.109375 2.359375 -5.015625 C 2.359375 -4.984375 2.34375 -4.953125 2.328125 -4.859375 L 1.265625 -0.609375 C 1.1875 -0.3125 1.171875 -0.25 0.546875 -0.25 C 0.40625 -0.25 0.328125 -0.25 0.328125 -0.09375 C 0.328125 0 0.40625 0 0.546875 0 L 3.375 0 C 4.625 0 5.546875 -0.9375 5.546875 -1.703125 Z M 5.25 -4.34375 C 5.25 -3.640625 4.578125 -2.890625 3.609375 -2.890625 L 2.453125 -2.890625 L 2.953125 -4.859375 C 3.015625 -5.125 3.03125 -5.15625 3.375 -5.15625 L 4.390625 -5.15625 C 5.09375 -5.15625 5.25 -4.6875 5.25 -4.34375 Z M 4.8125 -1.796875 C 4.8125 -1.015625 4.109375 -0.25 3.171875 -0.25 L 2.109375 -0.25 C 2 -0.25 1.96875 -0.25 1.921875 -0.25 C 1.84375 -0.265625 1.828125 -0.265625 1.828125 -0.328125 C 1.828125 -0.359375 1.828125 -0.375 1.859375 -0.515625 L 2.40625 -2.71875 L 3.90625 -2.71875 C 4.671875 -2.71875 4.8125 -2.140625 4.8125 -1.796875 Z M 4.8125 -1.796875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph0-4">
+<path style="stroke:none;" d="M 3.28125 -2.234375 C 3.28125 -2.953125 2.859375 -3.5 2.234375 -3.5 C 1.859375 -3.5 1.546875 -3.265625 1.296875 -3.015625 L 1.890625 -5.40625 C 1.890625 -5.40625 1.890625 -5.484375 1.78125 -5.484375 C 1.609375 -5.484375 1.03125 -5.421875 0.828125 -5.40625 C 0.765625 -5.40625 0.671875 -5.390625 0.671875 -5.25 C 0.671875 -5.15625 0.75 -5.15625 0.859375 -5.15625 C 1.234375 -5.15625 1.25 -5.09375 1.25 -5.015625 C 1.25 -4.96875 1.1875 -4.703125 1.140625 -4.53125 L 0.5 -1.953125 C 0.40625 -1.5625 0.375 -1.4375 0.375 -1.15625 C 0.375 -0.40625 0.796875 0.09375 1.375 0.09375 C 2.3125 0.09375 3.28125 -1.09375 3.28125 -2.234375 Z M 2.3125 -0.90625 C 2.046875 -0.375 1.6875 -0.09375 1.375 -0.09375 C 1.109375 -0.09375 0.84375 -0.296875 0.84375 -0.890625 C 0.84375 -1.03125 0.84375 -1.1875 0.96875 -1.6875 L 1.140625 -2.40625 C 1.1875 -2.578125 1.1875 -2.59375 1.265625 -2.6875 C 1.65625 -3.203125 2.015625 -3.328125 2.21875 -3.328125 C 2.5 -3.328125 2.71875 -3.078125 2.71875 -2.578125 C 2.71875 -2.109375 2.453125 -1.203125 2.3125 -0.90625 Z M 2.3125 -0.90625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph1-1">
+<path style="stroke:none;" d="M 2.609375 0 L 2.609375 -0.203125 L 2.40625 -0.203125 C 1.859375 -0.203125 1.859375 -0.265625 1.859375 -0.453125 L 1.859375 -3.515625 C 1.859375 -3.671875 1.84375 -3.671875 1.6875 -3.671875 C 1.328125 -3.328125 0.828125 -3.3125 0.609375 -3.3125 L 0.609375 -3.125 C 0.734375 -3.125 1.09375 -3.125 1.40625 -3.28125 L 1.40625 -0.453125 C 1.40625 -0.265625 1.40625 -0.203125 0.859375 -0.203125 L 0.640625 -0.203125 L 0.640625 0 L 1.625 -0.015625 Z M 2.609375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph1-2">
+<path style="stroke:none;" d="M 2.796875 -1 L 2.609375 -1 C 2.59375 -0.890625 2.53125 -0.5625 2.46875 -0.5 C 2.421875 -0.46875 1.984375 -0.46875 1.90625 -0.46875 L 0.890625 -0.46875 C 1.484375 -0.984375 1.671875 -1.140625 2 -1.40625 C 2.40625 -1.71875 2.796875 -2.0625 2.796875 -2.59375 C 2.796875 -3.265625 2.203125 -3.671875 1.5 -3.671875 C 0.8125 -3.671875 0.34375 -3.1875 0.34375 -2.6875 C 0.34375 -2.40625 0.59375 -2.375 0.640625 -2.375 C 0.78125 -2.375 0.9375 -2.46875 0.9375 -2.671875 C 0.9375 -2.765625 0.890625 -2.953125 0.609375 -2.953125 C 0.78125 -3.359375 1.15625 -3.46875 1.421875 -3.46875 C 1.96875 -3.46875 2.25 -3.046875 2.25 -2.59375 C 2.25 -2.109375 1.90625 -1.734375 1.734375 -1.53125 L 0.40625 -0.21875 C 0.34375 -0.171875 0.34375 -0.15625 0.34375 0 L 2.625 0 Z M 2.796875 -1 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-1">
+<path style="stroke:none;" d="M 4.828125 -3.59375 L 4.59375 -5.375 L 0.265625 -5.375 L 0.265625 -5.125 L 0.453125 -5.125 C 1.0625 -5.125 1.078125 -5.046875 1.078125 -4.765625 L 1.078125 -0.609375 C 1.078125 -0.328125 1.0625 -0.25 0.453125 -0.25 L 0.265625 -0.25 L 0.265625 0 C 0.53125 -0.03125 1.15625 -0.03125 1.46875 -0.03125 C 1.78125 -0.03125 2.5 -0.03125 2.796875 0 L 2.796875 -0.25 L 2.53125 -0.25 C 1.78125 -0.25 1.78125 -0.34375 1.78125 -0.625 L 1.78125 -2.5625 L 2.453125 -2.5625 C 3.21875 -2.5625 3.296875 -2.3125 3.296875 -1.640625 L 3.5 -1.640625 L 3.5 -3.734375 L 3.296875 -3.734375 C 3.296875 -3.078125 3.21875 -2.8125 2.453125 -2.8125 L 1.78125 -2.8125 L 1.78125 -4.8125 C 1.78125 -5.078125 1.796875 -5.125 2.171875 -5.125 L 3.109375 -5.125 C 4.296875 -5.125 4.5 -4.6875 4.625 -3.59375 Z M 4.828125 -3.59375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-2">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.671875 -0.25 3.609375 -0.296875 3.609375 -0.6875 L 3.609375 -3.5 L 2.453125 -3.40625 L 2.453125 -3.15625 C 3 -3.15625 3.0625 -3.109375 3.0625 -2.71875 L 3.0625 -1.3125 C 3.0625 -0.625 2.6875 -0.09375 2.109375 -0.09375 C 1.453125 -0.09375 1.421875 -0.453125 1.421875 -0.875 L 1.421875 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.875 -3.15625 0.875 -3.140625 0.875 -2.4375 L 0.875 -1.25 C 0.875 -0.625 0.875 0.09375 2.078125 0.09375 C 2.515625 0.09375 2.859375 -0.140625 3.09375 -0.625 L 3.09375 0.09375 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-3">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.8125 -0.25 3.625 -0.25 3.609375 -0.484375 L 3.609375 -2 C 3.609375 -2.671875 3.609375 -2.921875 3.375 -3.203125 C 3.25 -3.34375 3 -3.5 2.53125 -3.5 C 1.953125 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.59375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.140625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.59375 L 1.421875 -2.0625 C 1.421875 -2.875 1.96875 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.0625 -2.890625 3.0625 -2.4375 L 3.0625 -0.59375 C 3.0625 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-4">
+<path style="stroke:none;" d="M 3.171875 -1.484375 L 2.96875 -1.484375 C 2.90625 -0.546875 2.734375 -0.203125 1.8125 -0.203125 L 0.890625 -0.203125 L 3.078125 -3.171875 C 3.15625 -3.25 3.15625 -3.265625 3.15625 -3.3125 C 3.15625 -3.40625 3.09375 -3.40625 2.953125 -3.40625 L 0.421875 -3.40625 L 0.328125 -2.140625 L 0.53125 -2.140625 C 0.578125 -2.9375 0.734375 -3.234375 1.59375 -3.234375 L 2.5 -3.234375 L 0.296875 -0.25 C 0.21875 -0.171875 0.21875 -0.15625 0.21875 -0.109375 C 0.21875 0 0.28125 0 0.421875 0 L 3.03125 0 Z M 3.171875 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-5">
+<path style="stroke:none;" d="M 1.953125 0 L 1.953125 -0.25 C 1.4375 -0.25 1.40625 -0.28125 1.40625 -0.59375 L 1.40625 -3.5 L 0.296875 -3.40625 L 0.296875 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.734375 L 0.875 -0.59375 C 0.875 -0.25 0.796875 -0.25 0.265625 -0.25 L 0.265625 0 L 1.125 -0.03125 C 1.40625 -0.03125 1.6875 -0.015625 1.953125 0 Z M 1.515625 -4.78125 C 1.515625 -4.984375 1.34375 -5.1875 1.09375 -5.1875 C 0.828125 -5.1875 0.671875 -4.96875 0.671875 -4.78125 C 0.671875 -4.5625 0.859375 -4.359375 1.09375 -4.359375 C 1.359375 -4.359375 1.515625 -4.578125 1.515625 -4.78125 Z M 1.515625 -4.78125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-6">
+<path style="stroke:none;" d="M 3.71875 -1.6875 C 3.71875 -2.703125 2.9375 -3.546875 1.96875 -3.546875 C 0.984375 -3.546875 0.21875 -2.6875 0.21875 -1.6875 C 0.21875 -0.671875 1.046875 0.09375 1.96875 0.09375 C 2.921875 0.09375 3.71875 -0.6875 3.71875 -1.6875 Z M 3.0625 -1.75 C 3.0625 -1.46875 3.0625 -1.046875 2.890625 -0.703125 C 2.71875 -0.34375 2.375 -0.109375 1.96875 -0.109375 C 1.640625 -0.109375 1.28125 -0.28125 1.078125 -0.640625 C 0.875 -0.984375 0.875 -1.46875 0.875 -1.75 C 0.875 -2.0625 0.875 -2.484375 1.0625 -2.84375 C 1.28125 -3.203125 1.65625 -3.375 1.96875 -3.375 C 2.3125 -3.375 2.65625 -3.1875 2.859375 -2.859375 C 3.0625 -2.515625 3.0625 -2.0625 3.0625 -1.75 Z M 3.0625 -1.75 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-7">
+<path style="stroke:none;" d="M 3.28125 -0.9375 C 3.28125 -1.015625 3.21875 -1.03125 3.171875 -1.03125 C 3.109375 -1.03125 3.09375 -0.984375 3.078125 -0.921875 C 2.796875 -0.109375 2.09375 -0.109375 2.015625 -0.109375 C 1.609375 -0.109375 1.296875 -0.34375 1.109375 -0.640625 C 0.875 -1.015625 0.875 -1.546875 0.875 -1.828125 L 3.078125 -1.828125 C 3.25 -1.828125 3.28125 -1.828125 3.28125 -2 C 3.28125 -2.78125 2.859375 -3.546875 1.859375 -3.546875 C 0.953125 -3.546875 0.21875 -2.734375 0.21875 -1.734375 C 0.21875 -0.6875 1.046875 0.09375 1.953125 0.09375 C 2.921875 0.09375 3.28125 -0.796875 3.28125 -0.9375 Z M 2.765625 -2 L 0.890625 -2 C 0.9375 -3.171875 1.59375 -3.375 1.859375 -3.375 C 2.6875 -3.375 2.765625 -2.296875 2.765625 -2 Z M 2.765625 -2 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-8">
+<path style="stroke:none;" d="M 2.84375 -1.015625 C 2.84375 -1.4375 2.609375 -1.671875 2.515625 -1.765625 C 2.25 -2.015625 1.9375 -2.078125 1.609375 -2.140625 C 1.171875 -2.234375 0.640625 -2.328125 0.640625 -2.796875 C 0.640625 -3.0625 0.84375 -3.390625 1.53125 -3.390625 C 2.390625 -3.390625 2.4375 -2.6875 2.453125 -2.4375 C 2.453125 -2.359375 2.546875 -2.359375 2.546875 -2.359375 C 2.65625 -2.359375 2.65625 -2.40625 2.65625 -2.546875 L 2.65625 -3.359375 C 2.65625 -3.484375 2.65625 -3.546875 2.5625 -3.546875 C 2.515625 -3.546875 2.5 -3.546875 2.40625 -3.453125 C 2.375 -3.421875 2.296875 -3.34375 2.265625 -3.328125 C 1.96875 -3.546875 1.640625 -3.546875 1.53125 -3.546875 C 0.5625 -3.546875 0.265625 -3.015625 0.265625 -2.5625 C 0.265625 -2.296875 0.390625 -2.078125 0.59375 -1.890625 C 0.859375 -1.6875 1.078125 -1.640625 1.640625 -1.53125 C 1.8125 -1.5 2.46875 -1.375 2.46875 -0.8125 C 2.46875 -0.40625 2.1875 -0.09375 1.578125 -0.09375 C 0.90625 -0.09375 0.625 -0.53125 0.46875 -1.203125 C 0.453125 -1.3125 0.4375 -1.34375 0.359375 -1.34375 C 0.265625 -1.34375 0.265625 -1.28125 0.265625 -1.140625 L 0.265625 -0.109375 C 0.265625 0.03125 0.265625 0.09375 0.34375 0.09375 C 0.390625 0.09375 0.390625 0.078125 0.546875 -0.078125 C 0.5625 -0.09375 0.5625 -0.109375 0.703125 -0.25 C 1.046875 0.078125 1.40625 0.09375 1.578125 0.09375 C 2.484375 0.09375 2.84375 -0.4375 2.84375 -1.015625 Z M 2.84375 -1.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-9">
+<path style="stroke:none;" d="M 2.875 -3.015625 C 2.875 -3.265625 2.625 -3.5 2.296875 -3.5 C 1.71875 -3.5 1.4375 -2.96875 1.328125 -2.625 L 1.328125 -3.5 L 0.21875 -3.40625 L 0.21875 -3.15625 C 0.78125 -3.15625 0.84375 -3.109375 0.84375 -2.71875 L 0.84375 -0.59375 C 0.84375 -0.25 0.75 -0.25 0.21875 -0.25 L 0.21875 0 L 1.125 -0.03125 C 1.4375 -0.03125 1.8125 -0.03125 2.125 0 L 2.125 -0.25 L 1.953125 -0.25 C 1.375 -0.25 1.359375 -0.328125 1.359375 -0.609375 L 1.359375 -1.828125 C 1.359375 -2.609375 1.6875 -3.328125 2.296875 -3.328125 C 2.34375 -3.328125 2.359375 -3.328125 2.375 -3.3125 C 2.359375 -3.3125 2.203125 -3.203125 2.203125 -3 C 2.203125 -2.78125 2.359375 -2.671875 2.53125 -2.671875 C 2.6875 -2.671875 2.875 -2.765625 2.875 -3.015625 Z M 2.875 -3.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-10">
+<path style="stroke:none;" d="M 2.625 -0.984375 L 2.625 -1.4375 L 2.421875 -1.4375 L 2.421875 -1 C 2.421875 -0.40625 2.1875 -0.109375 1.890625 -0.109375 C 1.375 -0.109375 1.375 -0.828125 1.375 -0.96875 L 1.375 -3.15625 L 2.5 -3.15625 L 2.5 -3.40625 L 1.375 -3.40625 L 1.375 -4.859375 L 1.171875 -4.859375 C 1.15625 -4.21875 0.921875 -3.375 0.15625 -3.34375 L 0.15625 -3.15625 L 0.828125 -3.15625 L 0.828125 -0.984375 C 0.828125 -0.015625 1.5625 0.09375 1.84375 0.09375 C 2.40625 0.09375 2.625 -0.46875 2.625 -0.984375 Z M 2.625 -0.984375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-11">
+<path style="stroke:none;" d="M 4.015625 -3.15625 L 4.015625 -3.40625 C 3.828125 -3.390625 3.609375 -3.390625 3.421875 -3.390625 L 2.734375 -3.40625 L 2.734375 -3.15625 C 3.03125 -3.15625 3.109375 -2.96875 3.109375 -2.828125 C 3.109375 -2.75 3.09375 -2.71875 3.0625 -2.625 L 2.265625 -0.609375 L 1.375 -2.828125 C 1.328125 -2.921875 1.328125 -2.953125 1.328125 -2.953125 C 1.328125 -3.15625 1.640625 -3.15625 1.78125 -3.15625 L 1.78125 -3.40625 L 0.921875 -3.390625 C 0.703125 -3.390625 0.390625 -3.390625 0.15625 -3.40625 L 0.15625 -3.15625 C 0.640625 -3.15625 0.6875 -3.109375 0.78125 -2.875 L 1.921875 -0.0625 C 1.96875 0.046875 1.984375 0.09375 2.09375 0.09375 C 2.1875 0.09375 2.21875 0.015625 2.25 -0.0625 L 3.28125 -2.625 C 3.359375 -2.8125 3.5 -3.15625 4.015625 -3.15625 Z M 4.015625 -3.15625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-12">
+<path style="stroke:none;" d="M 3.8125 -0.703125 L 3.8125 -1.140625 L 3.625 -1.140625 L 3.625 -0.703125 C 3.625 -0.25 3.421875 -0.203125 3.34375 -0.203125 C 3.078125 -0.203125 3.046875 -0.546875 3.046875 -0.59375 L 3.046875 -2.171875 C 3.046875 -2.5 3.046875 -2.8125 2.765625 -3.109375 C 2.453125 -3.421875 2.0625 -3.546875 1.671875 -3.546875 C 1.03125 -3.546875 0.484375 -3.171875 0.484375 -2.65625 C 0.484375 -2.40625 0.640625 -2.28125 0.84375 -2.28125 C 1.0625 -2.28125 1.203125 -2.4375 1.203125 -2.640625 C 1.203125 -2.734375 1.171875 -3 0.8125 -3 C 1.015625 -3.28125 1.40625 -3.375 1.65625 -3.375 C 2.046875 -3.375 2.5 -3.0625 2.5 -2.359375 L 2.5 -2.0625 C 2.09375 -2.046875 1.546875 -2.015625 1.046875 -1.78125 C 0.453125 -1.515625 0.25 -1.09375 0.25 -0.75 C 0.25 -0.109375 1.015625 0.09375 1.515625 0.09375 C 2.046875 0.09375 2.40625 -0.234375 2.546875 -0.59375 C 2.578125 -0.28125 2.796875 0.046875 3.171875 0.046875 C 3.34375 0.046875 3.8125 -0.0625 3.8125 -0.703125 Z M 2.5 -1.109375 C 2.5 -0.359375 1.921875 -0.09375 1.578125 -0.09375 C 1.1875 -0.09375 0.859375 -0.359375 0.859375 -0.765625 C 0.859375 -1.1875 1.1875 -1.84375 2.5 -1.890625 Z M 2.5 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-13">
+<path style="stroke:none;" d="M 1.609375 -0.015625 C 1.609375 -0.515625 1.421875 -0.84375 1.09375 -0.84375 C 0.828125 -0.84375 0.6875 -0.625 0.6875 -0.421875 C 0.6875 -0.21875 0.8125 0 1.09375 0 C 1.21875 0 1.328125 -0.046875 1.421875 -0.125 C 1.4375 0.5 1.203125 0.984375 0.859375 1.359375 C 0.8125 1.40625 0.8125 1.40625 0.8125 1.4375 C 0.8125 1.5 0.84375 1.53125 0.890625 1.53125 C 0.984375 1.53125 1.609375 0.90625 1.609375 -0.015625 Z M 1.609375 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-14">
+<path style="stroke:none;" d="M 6.421875 0 L 6.421875 -0.25 C 6.015625 -0.25 5.8125 -0.25 5.8125 -0.484375 L 5.8125 -2 C 5.8125 -2.671875 5.8125 -2.921875 5.5625 -3.203125 C 5.453125 -3.34375 5.1875 -3.5 4.734375 -3.5 C 4.078125 -3.5 3.71875 -3.015625 3.59375 -2.71875 C 3.484375 -3.40625 2.890625 -3.5 2.53125 -3.5 C 1.953125 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.59375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.140625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.59375 L 1.421875 -2.0625 C 1.421875 -2.875 1.96875 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.0625 -2.890625 3.0625 -2.4375 L 3.0625 -0.59375 C 3.0625 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 L 4.234375 0 L 4.234375 -0.25 C 3.703125 -0.25 3.609375 -0.25 3.609375 -0.59375 L 3.609375 -2.0625 C 3.609375 -2.875 4.171875 -3.328125 4.6875 -3.328125 C 5.171875 -3.328125 5.265625 -2.890625 5.265625 -2.4375 L 5.265625 -0.59375 C 5.265625 -0.25 5.171875 -0.25 4.65625 -0.25 L 4.65625 0 L 5.546875 -0.03125 Z M 6.421875 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d1-glyph2-15">
+<path style="stroke:none;" d="M 1.515625 -0.421875 C 1.515625 -0.640625 1.328125 -0.84375 1.09375 -0.84375 C 0.875 -0.84375 0.6875 -0.640625 0.6875 -0.421875 C 0.6875 -0.1875 0.875 0 1.09375 0 C 1.328125 0 1.515625 -0.1875 1.515625 -0.421875 Z M 1.515625 -0.421875 "/>
+</symbol>
+</g>
+<clipPath id="algebra_lez03a_d1-clip1">
+  <path d="M 0.28125 10 L 56 10 L 56 90 L 0.28125 90 Z M 0.28125 10 "/>
+</clipPath>
+<clipPath id="algebra_lez03a_d1-clip2">
+  <path d="M 88 10 L 143.585938 10 L 143.585938 90 L 88 90 Z M 88 10 "/>
+</clipPath>
+</defs>
+<g id="algebra_lez03a_d1-surface1">
+<g clip-path="url(#algebra_lez03a_d1-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 22.676039 -0.00140214 C 22.676039 18.786135 12.526359 34.014592 -0.00129054 34.014592 C -12.525003 34.014592 -22.67862 18.786135 -22.67862 -0.00140214 C -22.67862 -18.785002 -12.525003 -34.017396 -0.00129054 -34.017396 C 12.526359 -34.017396 22.676039 -18.785002 22.676039 -0.00140214 Z M 22.676039 -0.00140214 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph0-1" x="23.969247" y="11.993476"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 38.542969 C 28.515625 37.667969 27.808594 36.960938 26.933594 36.960938 C 26.0625 36.960938 25.351562 37.667969 25.351562 38.542969 C 25.351562 39.414062 26.0625 40.125 26.933594 40.125 C 27.808594 40.125 28.515625 39.414062 28.515625 38.542969 Z M 28.515625 38.542969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph0-2" x="16.412802" y="39.651495"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph1-1" x="20.593453" y="40.837349"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 61.042969 C 28.515625 60.167969 27.808594 59.460938 26.933594 59.460938 C 26.0625 59.460938 25.351562 60.167969 25.351562 61.042969 C 25.351562 61.914062 26.0625 62.625 26.933594 62.625 C 27.808594 62.625 28.515625 61.914062 28.515625 61.042969 Z M 28.515625 61.042969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph0-2" x="16.412802" y="62.151168"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph1-2" x="20.592659" y="63.337022"/>
+</g>
+<g clip-path="url(#algebra_lez03a_d1-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 113.389293 -0.00140214 C 113.389293 18.786135 103.235676 34.014592 90.711964 34.014592 C 78.184314 34.014592 68.030697 18.786135 68.030697 -0.00140214 C 68.030697 -18.785002 78.184314 -34.017396 90.711964 -34.017396 C 103.235676 -34.017396 113.389293 -18.785002 113.389293 -0.00140214 Z M 113.389293 -0.00140214 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph0-3" x="113.736762" y="11.993476"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.515625 49.792969 C 118.515625 48.917969 117.808594 48.210938 116.9375 48.210938 C 116.0625 48.210938 115.355469 48.917969 115.355469 49.792969 C 115.355469 50.664062 116.0625 51.375 116.9375 51.375 C 117.808594 51.375 118.515625 50.664062 118.515625 49.792969 Z M 118.515625 49.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph0-4" x="119.727547" y="51.944609"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph1-1" x="123.121598" y="53.130463"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 11.337262 L 85.381216 2.356883 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.551683 3.109209 C -2.083014 1.243958 -1.046493 0.364797 0.0000363197 0.00172987 C -1.044767 -0.363909 -2.083927 -1.243902 -2.550053 -3.110007 " transform="matrix(0.986078,0.109547,0.109547,-0.986078,112.042743,47.497796)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 -11.340067 L 85.381216 -2.35575 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.549928 3.111133 C -2.083802 1.245028 -1.045077 0.361122 0.000161396 -0.000604003 C -1.046368 -0.363671 -2.082889 -1.242832 -2.551992 -3.111996 " transform="matrix(0.986078,-0.109547,-0.109547,-0.986078,112.042743,52.08536)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-1" x="37.908389" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-2" x="42.414228" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-3" x="46.807778" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-4" x="51.201327" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-5" x="54.716325" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-6" x="56.9131" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-3" x="60.866978" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-7" x="65.25262" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-8" x="71.408809" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-2" x="74.528419" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-9" x="78.921968" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-5" x="82.019436" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-7" x="84.216211" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-10" x="87.731209" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-10" x="90.806536" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-5" x="93.881862" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-11" x="96.078637" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-12" x="99.809516" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-13" x="103.763395" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-14" x="42.389869" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-12" x="48.979402" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-3" x="55.566564" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-6" x="59.960113" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-3" x="63.913991" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-5" x="70.948732" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-3" x="73.145506" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-5" x="77.531148" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-7" x="79.727923" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-10" x="83.242921" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-10" x="86.318247" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-5" x="89.393574" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-11" x="91.590349" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d1-glyph2-12" x="95.329136" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d1-glyph2-15" x="99.283014" y="113.51039"/>
+</g>
+</g>
+</svg></figure>
+<p>Nel secondo diagramma la funzione è <em>iniettiva ma non suriettiva</em>: $A = \\{a_1,a_2\\}$, $B = \\{b_1,b_2,b_3\\}$ con $a_1 \\mapsto b_1$ e $a_2 \\mapsto b_3$. In nessun punto di $B$ arrivano due frecce (iniettività), ma in $b_2$ non ne arriva nessuna: la fibra di $b_2$ è vuota e $\\operatorname{Im}(f) = \\{b_1,b_3\\} \\subsetneq B$.</p>
+<figure class="figura" data-id="algebra_lez03a_d2"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez03a_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144.432pt" height="121.046pt" viewBox="0 0 144.432 121.046" version="1.2"><style>#algebra_lez03a_d2 [fill="rgb(0%,0%,0%)"],#algebra_lez03a_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez03a_d2 [stroke="rgb(0%,0%,0%)"],#algebra_lez03a_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph0-1">
+<path style="stroke:none;" d="M 5.703125 -0.15625 C 5.703125 -0.25 5.625 -0.25 5.515625 -0.25 C 5.03125 -0.25 5.03125 -0.296875 5 -0.53125 L 4.515625 -5.46875 C 4.5 -5.625 4.5 -5.65625 4.375 -5.65625 C 4.25 -5.65625 4.21875 -5.609375 4.171875 -5.53125 L 1.421875 -0.90625 C 1.09375 -0.375 0.796875 -0.265625 0.4375 -0.25 C 0.34375 -0.234375 0.28125 -0.234375 0.28125 -0.09375 C 0.28125 -0.046875 0.3125 0 0.375 0 C 0.59375 0 0.84375 -0.03125 1.0625 -0.03125 C 1.328125 -0.03125 1.59375 0 1.84375 0 C 1.890625 0 2 0 2 -0.15625 C 2 -0.234375 1.921875 -0.25 1.875 -0.25 C 1.6875 -0.265625 1.5 -0.328125 1.5 -0.515625 C 1.5 -0.609375 1.546875 -0.703125 1.609375 -0.8125 C 1.671875 -0.90625 1.671875 -0.90625 2.21875 -1.828125 L 4.203125 -1.828125 C 4.21875 -1.65625 4.328125 -0.578125 4.328125 -0.5 C 4.328125 -0.265625 3.90625 -0.25 3.75 -0.25 C 3.640625 -0.25 3.5625 -0.25 3.5625 -0.09375 C 3.5625 0 3.671875 0 3.671875 0 C 4 0 4.34375 -0.03125 4.671875 -0.03125 C 4.859375 -0.03125 5.359375 0 5.5625 0 C 5.609375 0 5.703125 0 5.703125 -0.15625 Z M 4.171875 -2.078125 L 2.359375 -2.078125 L 3.921875 -4.6875 Z M 4.171875 -2.078125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph0-2">
+<path style="stroke:none;" d="M 3.9375 -1.125 C 3.9375 -1.203125 3.859375 -1.203125 3.84375 -1.203125 C 3.765625 -1.203125 3.75 -1.171875 3.734375 -1.0625 C 3.59375 -0.546875 3.453125 -0.09375 3.125 -0.09375 C 2.921875 -0.09375 2.890625 -0.296875 2.890625 -0.453125 C 2.890625 -0.625 2.90625 -0.6875 3 -1.03125 L 3.171875 -1.75 L 3.453125 -2.859375 C 3.515625 -3.078125 3.515625 -3.09375 3.515625 -3.125 C 3.515625 -3.25 3.421875 -3.34375 3.28125 -3.34375 C 3.09375 -3.34375 2.96875 -3.15625 2.953125 -2.984375 C 2.8125 -3.28125 2.578125 -3.5 2.21875 -3.5 C 1.296875 -3.5 0.3125 -2.328125 0.3125 -1.171875 C 0.3125 -0.4375 0.75 0.09375 1.375 0.09375 C 1.53125 0.09375 1.921875 0.0625 2.390625 -0.5 C 2.453125 -0.171875 2.734375 0.09375 3.109375 0.09375 C 3.390625 0.09375 3.578125 -0.09375 3.703125 -0.34375 C 3.828125 -0.625 3.9375 -1.125 3.9375 -1.125 Z M 2.828125 -2.484375 L 2.4375 -0.9375 C 2.390625 -0.796875 2.390625 -0.78125 2.28125 -0.640625 C 1.921875 -0.21875 1.609375 -0.09375 1.390625 -0.09375 C 0.984375 -0.09375 0.875 -0.515625 0.875 -0.828125 C 0.875 -1.21875 1.125 -2.203125 1.3125 -2.5625 C 1.5625 -3.03125 1.90625 -3.328125 2.234375 -3.328125 C 2.75 -3.328125 2.859375 -2.671875 2.859375 -2.625 C 2.859375 -2.578125 2.84375 -2.53125 2.828125 -2.484375 Z M 2.828125 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph0-3">
+<path style="stroke:none;" d="M 5.546875 -1.703125 C 5.546875 -2.28125 5.09375 -2.734375 4.328125 -2.828125 C 5.140625 -2.96875 5.984375 -3.5625 5.984375 -4.3125 C 5.984375 -4.890625 5.453125 -5.40625 4.5 -5.40625 L 1.84375 -5.40625 C 1.703125 -5.40625 1.625 -5.40625 1.625 -5.234375 C 1.625 -5.15625 1.6875 -5.15625 1.84375 -5.15625 C 1.84375 -5.15625 2.015625 -5.15625 2.140625 -5.140625 C 2.28125 -5.125 2.359375 -5.109375 2.359375 -5.015625 C 2.359375 -4.984375 2.34375 -4.953125 2.328125 -4.859375 L 1.265625 -0.609375 C 1.1875 -0.3125 1.171875 -0.25 0.546875 -0.25 C 0.40625 -0.25 0.328125 -0.25 0.328125 -0.09375 C 0.328125 0 0.40625 0 0.546875 0 L 3.375 0 C 4.625 0 5.546875 -0.9375 5.546875 -1.703125 Z M 5.25 -4.34375 C 5.25 -3.640625 4.578125 -2.890625 3.609375 -2.890625 L 2.453125 -2.890625 L 2.953125 -4.859375 C 3.015625 -5.125 3.03125 -5.15625 3.375 -5.15625 L 4.390625 -5.15625 C 5.09375 -5.15625 5.25 -4.6875 5.25 -4.34375 Z M 4.8125 -1.796875 C 4.8125 -1.015625 4.109375 -0.25 3.171875 -0.25 L 2.109375 -0.25 C 2 -0.25 1.96875 -0.25 1.921875 -0.25 C 1.84375 -0.265625 1.828125 -0.265625 1.828125 -0.328125 C 1.828125 -0.359375 1.828125 -0.375 1.859375 -0.515625 L 2.40625 -2.71875 L 3.90625 -2.71875 C 4.671875 -2.71875 4.8125 -2.140625 4.8125 -1.796875 Z M 4.8125 -1.796875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph0-4">
+<path style="stroke:none;" d="M 3.28125 -2.234375 C 3.28125 -2.953125 2.859375 -3.5 2.234375 -3.5 C 1.859375 -3.5 1.546875 -3.265625 1.296875 -3.015625 L 1.890625 -5.40625 C 1.890625 -5.40625 1.890625 -5.484375 1.78125 -5.484375 C 1.609375 -5.484375 1.03125 -5.421875 0.828125 -5.40625 C 0.765625 -5.40625 0.671875 -5.390625 0.671875 -5.25 C 0.671875 -5.15625 0.75 -5.15625 0.859375 -5.15625 C 1.234375 -5.15625 1.25 -5.09375 1.25 -5.015625 C 1.25 -4.96875 1.1875 -4.703125 1.140625 -4.53125 L 0.5 -1.953125 C 0.40625 -1.5625 0.375 -1.4375 0.375 -1.15625 C 0.375 -0.40625 0.796875 0.09375 1.375 0.09375 C 2.3125 0.09375 3.28125 -1.09375 3.28125 -2.234375 Z M 2.3125 -0.90625 C 2.046875 -0.375 1.6875 -0.09375 1.375 -0.09375 C 1.109375 -0.09375 0.84375 -0.296875 0.84375 -0.890625 C 0.84375 -1.03125 0.84375 -1.1875 0.96875 -1.6875 L 1.140625 -2.40625 C 1.1875 -2.578125 1.1875 -2.59375 1.265625 -2.6875 C 1.65625 -3.203125 2.015625 -3.328125 2.21875 -3.328125 C 2.5 -3.328125 2.71875 -3.078125 2.71875 -2.578125 C 2.71875 -2.109375 2.453125 -1.203125 2.3125 -0.90625 Z M 2.3125 -0.90625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph1-1">
+<path style="stroke:none;" d="M 2.609375 0 L 2.609375 -0.203125 L 2.40625 -0.203125 C 1.859375 -0.203125 1.859375 -0.265625 1.859375 -0.453125 L 1.859375 -3.515625 C 1.859375 -3.671875 1.84375 -3.671875 1.6875 -3.671875 C 1.328125 -3.328125 0.828125 -3.3125 0.609375 -3.3125 L 0.609375 -3.125 C 0.734375 -3.125 1.09375 -3.125 1.40625 -3.28125 L 1.40625 -0.453125 C 1.40625 -0.265625 1.40625 -0.203125 0.859375 -0.203125 L 0.640625 -0.203125 L 0.640625 0 L 1.625 -0.015625 Z M 2.609375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph1-2">
+<path style="stroke:none;" d="M 2.796875 -1 L 2.609375 -1 C 2.59375 -0.890625 2.53125 -0.5625 2.46875 -0.5 C 2.421875 -0.46875 1.984375 -0.46875 1.90625 -0.46875 L 0.890625 -0.46875 C 1.484375 -0.984375 1.671875 -1.140625 2 -1.40625 C 2.40625 -1.71875 2.796875 -2.0625 2.796875 -2.59375 C 2.796875 -3.265625 2.203125 -3.671875 1.5 -3.671875 C 0.8125 -3.671875 0.34375 -3.1875 0.34375 -2.6875 C 0.34375 -2.40625 0.59375 -2.375 0.640625 -2.375 C 0.78125 -2.375 0.9375 -2.46875 0.9375 -2.671875 C 0.9375 -2.765625 0.890625 -2.953125 0.609375 -2.953125 C 0.78125 -3.359375 1.15625 -3.46875 1.421875 -3.46875 C 1.96875 -3.46875 2.25 -3.046875 2.25 -2.59375 C 2.25 -2.109375 1.90625 -1.734375 1.734375 -1.53125 L 0.40625 -0.21875 C 0.34375 -0.171875 0.34375 -0.15625 0.34375 0 L 2.625 0 Z M 2.796875 -1 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph1-3">
+<path style="stroke:none;" d="M 2.84375 -0.953125 C 2.84375 -1.390625 2.484375 -1.8125 1.875 -1.953125 C 2.46875 -2.15625 2.671875 -2.578125 2.671875 -2.90625 C 2.671875 -3.34375 2.171875 -3.671875 1.546875 -3.671875 C 0.9375 -3.671875 0.46875 -3.375 0.46875 -2.9375 C 0.46875 -2.75 0.59375 -2.640625 0.75 -2.640625 C 0.921875 -2.640625 1.046875 -2.765625 1.046875 -2.921875 C 1.046875 -3.078125 0.921875 -3.203125 0.75 -3.203125 C 0.953125 -3.453125 1.328125 -3.515625 1.53125 -3.515625 C 1.78125 -3.515625 2.140625 -3.390625 2.140625 -2.90625 C 2.140625 -2.671875 2.0625 -2.421875 1.90625 -2.25 C 1.734375 -2.046875 1.578125 -2.03125 1.296875 -2.015625 C 1.15625 -2 1.15625 -2 1.125 -2 C 1.125 -2 1.0625 -1.984375 1.0625 -1.921875 C 1.0625 -1.84375 1.125 -1.84375 1.21875 -1.84375 L 1.515625 -1.84375 C 1.9375 -1.84375 2.25 -1.546875 2.25 -0.953125 C 2.25 -0.265625 1.859375 -0.0625 1.53125 -0.0625 C 1.3125 -0.0625 0.828125 -0.125 0.59375 -0.453125 C 0.859375 -0.46875 0.90625 -0.640625 0.90625 -0.765625 C 0.90625 -0.9375 0.78125 -1.0625 0.609375 -1.0625 C 0.453125 -1.0625 0.296875 -0.96875 0.296875 -0.75 C 0.296875 -0.234375 0.875 0.109375 1.546875 0.109375 C 2.3125 0.109375 2.84375 -0.40625 2.84375 -0.953125 Z M 2.84375 -0.953125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-1">
+<path style="stroke:none;" d="M 4.828125 -3.59375 L 4.59375 -5.375 L 0.265625 -5.375 L 0.265625 -5.125 L 0.453125 -5.125 C 1.0625 -5.125 1.078125 -5.046875 1.078125 -4.765625 L 1.078125 -0.609375 C 1.078125 -0.328125 1.0625 -0.25 0.453125 -0.25 L 0.265625 -0.25 L 0.265625 0 C 0.53125 -0.03125 1.15625 -0.03125 1.46875 -0.03125 C 1.78125 -0.03125 2.5 -0.03125 2.796875 0 L 2.796875 -0.25 L 2.53125 -0.25 C 1.78125 -0.25 1.78125 -0.34375 1.78125 -0.625 L 1.78125 -2.5625 L 2.453125 -2.5625 C 3.21875 -2.5625 3.296875 -2.3125 3.296875 -1.640625 L 3.5 -1.640625 L 3.5 -3.734375 L 3.296875 -3.734375 C 3.296875 -3.078125 3.21875 -2.8125 2.453125 -2.8125 L 1.78125 -2.8125 L 1.78125 -4.8125 C 1.78125 -5.078125 1.796875 -5.125 2.171875 -5.125 L 3.109375 -5.125 C 4.296875 -5.125 4.5 -4.6875 4.625 -3.59375 Z M 4.828125 -3.59375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-2">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.671875 -0.25 3.609375 -0.296875 3.609375 -0.6875 L 3.609375 -3.5 L 2.453125 -3.40625 L 2.453125 -3.15625 C 3 -3.15625 3.0625 -3.109375 3.0625 -2.71875 L 3.0625 -1.3125 C 3.0625 -0.625 2.6875 -0.09375 2.109375 -0.09375 C 1.453125 -0.09375 1.421875 -0.453125 1.421875 -0.875 L 1.421875 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.875 -3.15625 0.875 -3.140625 0.875 -2.4375 L 0.875 -1.25 C 0.875 -0.625 0.875 0.09375 2.078125 0.09375 C 2.515625 0.09375 2.859375 -0.140625 3.09375 -0.625 L 3.09375 0.09375 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-3">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.8125 -0.25 3.625 -0.25 3.609375 -0.484375 L 3.609375 -2 C 3.609375 -2.671875 3.609375 -2.921875 3.375 -3.203125 C 3.25 -3.34375 3 -3.5 2.53125 -3.5 C 1.953125 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.59375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.140625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.59375 L 1.421875 -2.0625 C 1.421875 -2.875 1.96875 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.0625 -2.890625 3.0625 -2.4375 L 3.0625 -0.59375 C 3.0625 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-4">
+<path style="stroke:none;" d="M 3.171875 -1.484375 L 2.96875 -1.484375 C 2.90625 -0.546875 2.734375 -0.203125 1.8125 -0.203125 L 0.890625 -0.203125 L 3.078125 -3.171875 C 3.15625 -3.25 3.15625 -3.265625 3.15625 -3.3125 C 3.15625 -3.40625 3.09375 -3.40625 2.953125 -3.40625 L 0.421875 -3.40625 L 0.328125 -2.140625 L 0.53125 -2.140625 C 0.578125 -2.9375 0.734375 -3.234375 1.59375 -3.234375 L 2.5 -3.234375 L 0.296875 -0.25 C 0.21875 -0.171875 0.21875 -0.15625 0.21875 -0.109375 C 0.21875 0 0.28125 0 0.421875 0 L 3.03125 0 Z M 3.171875 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-5">
+<path style="stroke:none;" d="M 1.953125 0 L 1.953125 -0.25 C 1.4375 -0.25 1.40625 -0.28125 1.40625 -0.59375 L 1.40625 -3.5 L 0.296875 -3.40625 L 0.296875 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.734375 L 0.875 -0.59375 C 0.875 -0.25 0.796875 -0.25 0.265625 -0.25 L 0.265625 0 L 1.125 -0.03125 C 1.40625 -0.03125 1.6875 -0.015625 1.953125 0 Z M 1.515625 -4.78125 C 1.515625 -4.984375 1.34375 -5.1875 1.09375 -5.1875 C 0.828125 -5.1875 0.671875 -4.96875 0.671875 -4.78125 C 0.671875 -4.5625 0.859375 -4.359375 1.09375 -4.359375 C 1.359375 -4.359375 1.515625 -4.578125 1.515625 -4.78125 Z M 1.515625 -4.78125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-6">
+<path style="stroke:none;" d="M 3.71875 -1.6875 C 3.71875 -2.703125 2.9375 -3.546875 1.96875 -3.546875 C 0.984375 -3.546875 0.21875 -2.6875 0.21875 -1.6875 C 0.21875 -0.671875 1.046875 0.09375 1.96875 0.09375 C 2.921875 0.09375 3.71875 -0.6875 3.71875 -1.6875 Z M 3.0625 -1.75 C 3.0625 -1.46875 3.0625 -1.046875 2.890625 -0.703125 C 2.71875 -0.34375 2.375 -0.109375 1.96875 -0.109375 C 1.640625 -0.109375 1.28125 -0.28125 1.078125 -0.640625 C 0.875 -0.984375 0.875 -1.46875 0.875 -1.75 C 0.875 -2.0625 0.875 -2.484375 1.0625 -2.84375 C 1.28125 -3.203125 1.65625 -3.375 1.96875 -3.375 C 2.3125 -3.375 2.65625 -3.1875 2.859375 -2.859375 C 3.0625 -2.515625 3.0625 -2.0625 3.0625 -1.75 Z M 3.0625 -1.75 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-7">
+<path style="stroke:none;" d="M 3.28125 -0.9375 C 3.28125 -1.015625 3.21875 -1.03125 3.171875 -1.03125 C 3.109375 -1.03125 3.09375 -0.984375 3.078125 -0.921875 C 2.796875 -0.109375 2.09375 -0.109375 2.015625 -0.109375 C 1.609375 -0.109375 1.296875 -0.34375 1.109375 -0.640625 C 0.875 -1.015625 0.875 -1.546875 0.875 -1.828125 L 3.078125 -1.828125 C 3.25 -1.828125 3.28125 -1.828125 3.28125 -2 C 3.28125 -2.78125 2.859375 -3.546875 1.859375 -3.546875 C 0.953125 -3.546875 0.21875 -2.734375 0.21875 -1.734375 C 0.21875 -0.6875 1.046875 0.09375 1.953125 0.09375 C 2.921875 0.09375 3.28125 -0.796875 3.28125 -0.9375 Z M 2.765625 -2 L 0.890625 -2 C 0.9375 -3.171875 1.59375 -3.375 1.859375 -3.375 C 2.6875 -3.375 2.765625 -2.296875 2.765625 -2 Z M 2.765625 -2 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-8">
+<path style="stroke:none;" d="M 2.625 -0.984375 L 2.625 -1.4375 L 2.421875 -1.4375 L 2.421875 -1 C 2.421875 -0.40625 2.1875 -0.109375 1.890625 -0.109375 C 1.375 -0.109375 1.375 -0.828125 1.375 -0.96875 L 1.375 -3.15625 L 2.5 -3.15625 L 2.5 -3.40625 L 1.375 -3.40625 L 1.375 -4.859375 L 1.171875 -4.859375 C 1.15625 -4.21875 0.921875 -3.375 0.15625 -3.34375 L 0.15625 -3.15625 L 0.828125 -3.15625 L 0.828125 -0.984375 C 0.828125 -0.015625 1.5625 0.09375 1.84375 0.09375 C 2.40625 0.09375 2.625 -0.46875 2.625 -0.984375 Z M 2.625 -0.984375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-9">
+<path style="stroke:none;" d="M 4.015625 -3.15625 L 4.015625 -3.40625 C 3.828125 -3.390625 3.609375 -3.390625 3.421875 -3.390625 L 2.734375 -3.40625 L 2.734375 -3.15625 C 3.03125 -3.15625 3.109375 -2.96875 3.109375 -2.828125 C 3.109375 -2.75 3.09375 -2.71875 3.0625 -2.625 L 2.265625 -0.609375 L 1.375 -2.828125 C 1.328125 -2.921875 1.328125 -2.953125 1.328125 -2.953125 C 1.328125 -3.15625 1.640625 -3.15625 1.78125 -3.15625 L 1.78125 -3.40625 L 0.921875 -3.390625 C 0.703125 -3.390625 0.390625 -3.390625 0.15625 -3.40625 L 0.15625 -3.15625 C 0.640625 -3.15625 0.6875 -3.109375 0.78125 -2.875 L 1.921875 -0.0625 C 1.96875 0.046875 1.984375 0.09375 2.09375 0.09375 C 2.1875 0.09375 2.21875 0.015625 2.25 -0.0625 L 3.28125 -2.625 C 3.359375 -2.8125 3.5 -3.15625 4.015625 -3.15625 Z M 4.015625 -3.15625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-10">
+<path style="stroke:none;" d="M 3.8125 -0.703125 L 3.8125 -1.140625 L 3.625 -1.140625 L 3.625 -0.703125 C 3.625 -0.25 3.421875 -0.203125 3.34375 -0.203125 C 3.078125 -0.203125 3.046875 -0.546875 3.046875 -0.59375 L 3.046875 -2.171875 C 3.046875 -2.5 3.046875 -2.8125 2.765625 -3.109375 C 2.453125 -3.421875 2.0625 -3.546875 1.671875 -3.546875 C 1.03125 -3.546875 0.484375 -3.171875 0.484375 -2.65625 C 0.484375 -2.40625 0.640625 -2.28125 0.84375 -2.28125 C 1.0625 -2.28125 1.203125 -2.4375 1.203125 -2.640625 C 1.203125 -2.734375 1.171875 -3 0.8125 -3 C 1.015625 -3.28125 1.40625 -3.375 1.65625 -3.375 C 2.046875 -3.375 2.5 -3.0625 2.5 -2.359375 L 2.5 -2.0625 C 2.09375 -2.046875 1.546875 -2.015625 1.046875 -1.78125 C 0.453125 -1.515625 0.25 -1.09375 0.25 -0.75 C 0.25 -0.109375 1.015625 0.09375 1.515625 0.09375 C 2.046875 0.09375 2.40625 -0.234375 2.546875 -0.59375 C 2.578125 -0.28125 2.796875 0.046875 3.171875 0.046875 C 3.34375 0.046875 3.8125 -0.0625 3.8125 -0.703125 Z M 2.5 -1.109375 C 2.5 -0.359375 1.921875 -0.09375 1.578125 -0.09375 C 1.1875 -0.09375 0.859375 -0.359375 0.859375 -0.765625 C 0.859375 -1.1875 1.1875 -1.84375 2.5 -1.890625 Z M 2.5 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-11">
+<path style="stroke:none;" d="M 1.609375 -0.015625 C 1.609375 -0.515625 1.421875 -0.84375 1.09375 -0.84375 C 0.828125 -0.84375 0.6875 -0.625 0.6875 -0.421875 C 0.6875 -0.21875 0.8125 0 1.09375 0 C 1.21875 0 1.328125 -0.046875 1.421875 -0.125 C 1.4375 0.5 1.203125 0.984375 0.859375 1.359375 C 0.8125 1.40625 0.8125 1.40625 0.8125 1.4375 C 0.8125 1.5 0.84375 1.53125 0.890625 1.53125 C 0.984375 1.53125 1.609375 0.90625 1.609375 -0.015625 Z M 1.609375 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-12">
+<path style="stroke:none;" d="M 6.421875 0 L 6.421875 -0.25 C 6.015625 -0.25 5.8125 -0.25 5.8125 -0.484375 L 5.8125 -2 C 5.8125 -2.671875 5.8125 -2.921875 5.5625 -3.203125 C 5.453125 -3.34375 5.1875 -3.5 4.734375 -3.5 C 4.078125 -3.5 3.71875 -3.015625 3.59375 -2.71875 C 3.484375 -3.40625 2.890625 -3.5 2.53125 -3.5 C 1.953125 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.59375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.140625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.59375 L 1.421875 -2.0625 C 1.421875 -2.875 1.96875 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.0625 -2.890625 3.0625 -2.4375 L 3.0625 -0.59375 C 3.0625 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 L 4.234375 0 L 4.234375 -0.25 C 3.703125 -0.25 3.609375 -0.25 3.609375 -0.59375 L 3.609375 -2.0625 C 3.609375 -2.875 4.171875 -3.328125 4.6875 -3.328125 C 5.171875 -3.328125 5.265625 -2.890625 5.265625 -2.4375 L 5.265625 -0.59375 C 5.265625 -0.25 5.171875 -0.25 4.65625 -0.25 L 4.65625 0 L 5.546875 -0.03125 Z M 6.421875 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-13">
+<path style="stroke:none;" d="M 2.84375 -1.015625 C 2.84375 -1.4375 2.609375 -1.671875 2.515625 -1.765625 C 2.25 -2.015625 1.9375 -2.078125 1.609375 -2.140625 C 1.171875 -2.234375 0.640625 -2.328125 0.640625 -2.796875 C 0.640625 -3.0625 0.84375 -3.390625 1.53125 -3.390625 C 2.390625 -3.390625 2.4375 -2.6875 2.453125 -2.4375 C 2.453125 -2.359375 2.546875 -2.359375 2.546875 -2.359375 C 2.65625 -2.359375 2.65625 -2.40625 2.65625 -2.546875 L 2.65625 -3.359375 C 2.65625 -3.484375 2.65625 -3.546875 2.5625 -3.546875 C 2.515625 -3.546875 2.5 -3.546875 2.40625 -3.453125 C 2.375 -3.421875 2.296875 -3.34375 2.265625 -3.328125 C 1.96875 -3.546875 1.640625 -3.546875 1.53125 -3.546875 C 0.5625 -3.546875 0.265625 -3.015625 0.265625 -2.5625 C 0.265625 -2.296875 0.390625 -2.078125 0.59375 -1.890625 C 0.859375 -1.6875 1.078125 -1.640625 1.640625 -1.53125 C 1.8125 -1.5 2.46875 -1.375 2.46875 -0.8125 C 2.46875 -0.40625 2.1875 -0.09375 1.578125 -0.09375 C 0.90625 -0.09375 0.625 -0.53125 0.46875 -1.203125 C 0.453125 -1.3125 0.4375 -1.34375 0.359375 -1.34375 C 0.265625 -1.34375 0.265625 -1.28125 0.265625 -1.140625 L 0.265625 -0.109375 C 0.265625 0.03125 0.265625 0.09375 0.34375 0.09375 C 0.390625 0.09375 0.390625 0.078125 0.546875 -0.078125 C 0.5625 -0.09375 0.5625 -0.109375 0.703125 -0.25 C 1.046875 0.078125 1.40625 0.09375 1.578125 0.09375 C 2.484375 0.09375 2.84375 -0.4375 2.84375 -1.015625 Z M 2.84375 -1.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-14">
+<path style="stroke:none;" d="M 2.875 -3.015625 C 2.875 -3.265625 2.625 -3.5 2.296875 -3.5 C 1.71875 -3.5 1.4375 -2.96875 1.328125 -2.625 L 1.328125 -3.5 L 0.21875 -3.40625 L 0.21875 -3.15625 C 0.78125 -3.15625 0.84375 -3.109375 0.84375 -2.71875 L 0.84375 -0.59375 C 0.84375 -0.25 0.75 -0.25 0.21875 -0.25 L 0.21875 0 L 1.125 -0.03125 C 1.4375 -0.03125 1.8125 -0.03125 2.125 0 L 2.125 -0.25 L 1.953125 -0.25 C 1.375 -0.25 1.359375 -0.328125 1.359375 -0.609375 L 1.359375 -1.828125 C 1.359375 -2.609375 1.6875 -3.328125 2.296875 -3.328125 C 2.34375 -3.328125 2.359375 -3.328125 2.375 -3.3125 C 2.359375 -3.3125 2.203125 -3.203125 2.203125 -3 C 2.203125 -2.78125 2.359375 -2.671875 2.53125 -2.671875 C 2.6875 -2.671875 2.875 -2.765625 2.875 -3.015625 Z M 2.875 -3.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d2-glyph2-15">
+<path style="stroke:none;" d="M 1.515625 -0.421875 C 1.515625 -0.640625 1.328125 -0.84375 1.09375 -0.84375 C 0.875 -0.84375 0.6875 -0.640625 0.6875 -0.421875 C 0.6875 -0.1875 0.875 0 1.09375 0 C 1.328125 0 1.515625 -0.1875 1.515625 -0.421875 Z M 1.515625 -0.421875 "/>
+</symbol>
+</g>
+<clipPath id="algebra_lez03a_d2-clip1">
+  <path d="M 0.28125 10 L 56 10 L 56 90 L 0.28125 90 Z M 0.28125 10 "/>
+</clipPath>
+<clipPath id="algebra_lez03a_d2-clip2">
+  <path d="M 88 10 L 143.585938 10 L 143.585938 90 L 88 90 Z M 88 10 "/>
+</clipPath>
+</defs>
+<g id="algebra_lez03a_d2-surface1">
+<g clip-path="url(#algebra_lez03a_d2-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 22.676039 -0.00140214 C 22.676039 18.786135 12.526359 34.014592 -0.00129054 34.014592 C -12.525003 34.014592 -22.67862 18.786135 -22.67862 -0.00140214 C -22.67862 -18.785002 -12.525003 -34.017396 -0.00129054 -34.017396 C 12.526359 -34.017396 22.676039 -18.785002 22.676039 -0.00140214 Z M 22.676039 -0.00140214 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-1" x="23.969247" y="11.993476"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 38.542969 C 28.515625 37.667969 27.808594 36.960938 26.933594 36.960938 C 26.0625 36.960938 25.351562 37.667969 25.351562 38.542969 C 25.351562 39.414062 26.0625 40.125 26.933594 40.125 C 27.808594 40.125 28.515625 39.414062 28.515625 38.542969 Z M 28.515625 38.542969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-2" x="16.412802" y="39.651495"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph1-1" x="20.593453" y="40.837349"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 61.042969 C 28.515625 60.167969 27.808594 59.460938 26.933594 59.460938 C 26.0625 59.460938 25.351562 60.167969 25.351562 61.042969 C 25.351562 61.914062 26.0625 62.625 26.933594 62.625 C 27.808594 62.625 28.515625 61.914062 28.515625 61.042969 Z M 28.515625 61.042969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-2" x="16.412802" y="62.151168"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph1-2" x="20.592659" y="63.337022"/>
+</g>
+<g clip-path="url(#algebra_lez03a_d2-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 113.389293 -0.00140214 C 113.389293 18.786135 103.235676 34.014592 90.711964 34.014592 C 78.184314 34.014592 68.030697 18.786135 68.030697 -0.00140214 C 68.030697 -18.785002 78.184314 -34.017396 90.711964 -34.017396 C 103.235676 -34.017396 113.389293 -18.785002 113.389293 -0.00140214 Z M 113.389293 -0.00140214 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-3" x="113.736762" y="11.993476"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.515625 31.792969 C 118.515625 30.917969 117.808594 30.210938 116.9375 30.210938 C 116.0625 30.210938 115.355469 30.917969 115.355469 31.792969 C 115.355469 32.664062 116.0625 33.371094 116.9375 33.371094 C 117.808594 33.371094 118.515625 32.664062 118.515625 31.792969 Z M 118.515625 31.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-4" x="119.727547" y="33.944473"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph1-1" x="123.121598" y="35.130327"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.515625 49.792969 C 118.515625 48.917969 117.808594 48.210938 116.9375 48.210938 C 116.0625 48.210938 115.355469 48.917969 115.355469 49.792969 C 115.355469 50.664062 116.0625 51.375 116.9375 51.375 C 117.808594 51.375 118.515625 50.664062 118.515625 49.792969 Z M 118.515625 49.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-4" x="119.727547" y="51.944609"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph1-2" x="123.121598" y="53.130463"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.515625 67.792969 C 118.515625 66.917969 117.808594 66.210938 116.9375 66.210938 C 116.0625 66.210938 115.355469 66.917969 115.355469 67.792969 C 115.355469 68.664062 116.0625 69.375 116.9375 69.375 C 117.808594 69.375 118.515625 68.664062 118.515625 67.792969 Z M 118.515625 67.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph0-4" x="119.727547" y="69.944744"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph1-3" x="123.121598" y="71.130598"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 11.337262 L 85.377279 15.829421 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.549832 3.111876 C -2.085748 1.244606 -1.046412 0.362729 -0.00183366 0.00106656 C -1.047287 -0.362776 -2.085971 -1.243558 -2.548532 -3.110608 " transform="matrix(0.990623,-0.0550362,-0.0550362,-0.990623,112.040938,34.063456)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 -11.340067 L 85.377279 -15.828288 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548595 3.111739 C -2.086033 1.244689 -1.04735 0.363907 -0.0018965 0.0000644841 C -1.046475 -0.361598 -2.085811 -1.243475 -2.549895 -3.110745 " transform="matrix(0.990623,0.0550362,0.0550362,-0.990623,112.040938,65.5197)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-1" x="39.918546" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-2" x="44.424386" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-3" x="48.817935" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-4" x="53.211485" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-5" x="56.726483" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-6" x="58.91535" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-3" x="62.869228" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-7" x="67.262777" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-5" x="73.418966" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-3" x="75.615741" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-5" x="80.00929" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-7" x="82.206065" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-8" x="85.721063" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-8" x="88.796389" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-5" x="91.871716" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-9" x="94.068491" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-10" x="97.79937" y="104.020384"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-11" x="101.753249" y="104.020384"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-12" x="40.379711" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-10" x="46.969245" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-3" x="53.556406" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-6" x="57.949956" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-3" x="61.903834" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-13" x="68.938574" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-2" x="72.058184" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-14" x="76.451734" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-5" x="79.541294" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-7" x="81.738069" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-8" x="85.253067" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-8" x="88.328393" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-5" x="91.40372" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-9" x="93.600495" y="113.51039"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d2-glyph2-10" x="97.339282" y="113.51039"/>
+  <use xlink:href="#algebra_lez03a_d2-glyph2-15" x="101.29316" y="113.51039"/>
+</g>
+</g>
+</svg></figure>
+<p>Un secondo esempio di funzione <em>suriettiva ma non iniettiva</em>: $A = \\{a_1,a_2,a_3\\}$, $B = \\{b_1,b_2\\}$ con $a_1, a_3 \\mapsto b_1$ e $a_2 \\mapsto b_2$. Ogni punto di $B$ riceve almeno una freccia, ma in $b_1$ ne arrivano due.</p>
+<figure class="figura" data-id="algebra_lez03a_d3"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez03a_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144.432pt" height="121.046pt" viewBox="0 0 144.432 121.046" version="1.2"><style>#algebra_lez03a_d3 [fill="rgb(0%,0%,0%)"],#algebra_lez03a_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez03a_d3 [stroke="rgb(0%,0%,0%)"],#algebra_lez03a_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph0-1">
+<path style="stroke:none;" d="M 5.703125 -0.15625 C 5.703125 -0.25 5.625 -0.25 5.515625 -0.25 C 5.03125 -0.25 5.03125 -0.296875 5 -0.53125 L 4.515625 -5.46875 C 4.5 -5.625 4.5 -5.65625 4.375 -5.65625 C 4.25 -5.65625 4.21875 -5.609375 4.171875 -5.53125 L 1.421875 -0.90625 C 1.09375 -0.375 0.796875 -0.265625 0.4375 -0.25 C 0.34375 -0.234375 0.28125 -0.234375 0.28125 -0.09375 C 0.28125 -0.046875 0.3125 0 0.375 0 C 0.59375 0 0.84375 -0.03125 1.0625 -0.03125 C 1.328125 -0.03125 1.59375 0 1.84375 0 C 1.890625 0 2 0 2 -0.15625 C 2 -0.234375 1.921875 -0.25 1.875 -0.25 C 1.6875 -0.265625 1.5 -0.328125 1.5 -0.515625 C 1.5 -0.609375 1.546875 -0.703125 1.609375 -0.8125 C 1.671875 -0.90625 1.671875 -0.90625 2.21875 -1.828125 L 4.203125 -1.828125 C 4.21875 -1.65625 4.328125 -0.578125 4.328125 -0.5 C 4.328125 -0.265625 3.90625 -0.25 3.75 -0.25 C 3.640625 -0.25 3.5625 -0.25 3.5625 -0.09375 C 3.5625 0 3.671875 0 3.671875 0 C 4 0 4.34375 -0.03125 4.671875 -0.03125 C 4.859375 -0.03125 5.359375 0 5.5625 0 C 5.609375 0 5.703125 0 5.703125 -0.15625 Z M 4.171875 -2.078125 L 2.359375 -2.078125 L 3.921875 -4.6875 Z M 4.171875 -2.078125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph0-2">
+<path style="stroke:none;" d="M 3.9375 -1.125 C 3.9375 -1.203125 3.859375 -1.203125 3.84375 -1.203125 C 3.765625 -1.203125 3.75 -1.171875 3.734375 -1.0625 C 3.59375 -0.546875 3.453125 -0.09375 3.125 -0.09375 C 2.921875 -0.09375 2.890625 -0.296875 2.890625 -0.453125 C 2.890625 -0.625 2.90625 -0.6875 3 -1.03125 L 3.171875 -1.75 L 3.453125 -2.859375 C 3.515625 -3.078125 3.515625 -3.09375 3.515625 -3.125 C 3.515625 -3.25 3.421875 -3.34375 3.28125 -3.34375 C 3.09375 -3.34375 2.96875 -3.15625 2.953125 -2.984375 C 2.8125 -3.28125 2.578125 -3.5 2.21875 -3.5 C 1.296875 -3.5 0.3125 -2.328125 0.3125 -1.171875 C 0.3125 -0.4375 0.75 0.09375 1.375 0.09375 C 1.53125 0.09375 1.921875 0.0625 2.390625 -0.5 C 2.453125 -0.171875 2.734375 0.09375 3.109375 0.09375 C 3.390625 0.09375 3.578125 -0.09375 3.703125 -0.34375 C 3.828125 -0.625 3.9375 -1.125 3.9375 -1.125 Z M 2.828125 -2.484375 L 2.4375 -0.9375 C 2.390625 -0.796875 2.390625 -0.78125 2.28125 -0.640625 C 1.921875 -0.21875 1.609375 -0.09375 1.390625 -0.09375 C 0.984375 -0.09375 0.875 -0.515625 0.875 -0.828125 C 0.875 -1.21875 1.125 -2.203125 1.3125 -2.5625 C 1.5625 -3.03125 1.90625 -3.328125 2.234375 -3.328125 C 2.75 -3.328125 2.859375 -2.671875 2.859375 -2.625 C 2.859375 -2.578125 2.84375 -2.53125 2.828125 -2.484375 Z M 2.828125 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph0-3">
+<path style="stroke:none;" d="M 5.546875 -1.703125 C 5.546875 -2.28125 5.09375 -2.734375 4.328125 -2.828125 C 5.140625 -2.96875 5.984375 -3.5625 5.984375 -4.3125 C 5.984375 -4.890625 5.453125 -5.40625 4.5 -5.40625 L 1.84375 -5.40625 C 1.703125 -5.40625 1.625 -5.40625 1.625 -5.234375 C 1.625 -5.15625 1.6875 -5.15625 1.84375 -5.15625 C 1.84375 -5.15625 2.015625 -5.15625 2.140625 -5.140625 C 2.28125 -5.125 2.359375 -5.109375 2.359375 -5.015625 C 2.359375 -4.984375 2.34375 -4.953125 2.328125 -4.859375 L 1.265625 -0.609375 C 1.1875 -0.3125 1.171875 -0.25 0.546875 -0.25 C 0.40625 -0.25 0.328125 -0.25 0.328125 -0.09375 C 0.328125 0 0.40625 0 0.546875 0 L 3.375 0 C 4.625 0 5.546875 -0.9375 5.546875 -1.703125 Z M 5.25 -4.34375 C 5.25 -3.640625 4.578125 -2.890625 3.609375 -2.890625 L 2.453125 -2.890625 L 2.953125 -4.859375 C 3.015625 -5.125 3.03125 -5.15625 3.375 -5.15625 L 4.390625 -5.15625 C 5.09375 -5.15625 5.25 -4.6875 5.25 -4.34375 Z M 4.8125 -1.796875 C 4.8125 -1.015625 4.109375 -0.25 3.171875 -0.25 L 2.109375 -0.25 C 2 -0.25 1.96875 -0.25 1.921875 -0.25 C 1.84375 -0.265625 1.828125 -0.265625 1.828125 -0.328125 C 1.828125 -0.359375 1.828125 -0.375 1.859375 -0.515625 L 2.40625 -2.71875 L 3.90625 -2.71875 C 4.671875 -2.71875 4.8125 -2.140625 4.8125 -1.796875 Z M 4.8125 -1.796875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph0-4">
+<path style="stroke:none;" d="M 3.28125 -2.234375 C 3.28125 -2.953125 2.859375 -3.5 2.234375 -3.5 C 1.859375 -3.5 1.546875 -3.265625 1.296875 -3.015625 L 1.890625 -5.40625 C 1.890625 -5.40625 1.890625 -5.484375 1.78125 -5.484375 C 1.609375 -5.484375 1.03125 -5.421875 0.828125 -5.40625 C 0.765625 -5.40625 0.671875 -5.390625 0.671875 -5.25 C 0.671875 -5.15625 0.75 -5.15625 0.859375 -5.15625 C 1.234375 -5.15625 1.25 -5.09375 1.25 -5.015625 C 1.25 -4.96875 1.1875 -4.703125 1.140625 -4.53125 L 0.5 -1.953125 C 0.40625 -1.5625 0.375 -1.4375 0.375 -1.15625 C 0.375 -0.40625 0.796875 0.09375 1.375 0.09375 C 2.3125 0.09375 3.28125 -1.09375 3.28125 -2.234375 Z M 2.3125 -0.90625 C 2.046875 -0.375 1.6875 -0.09375 1.375 -0.09375 C 1.109375 -0.09375 0.84375 -0.296875 0.84375 -0.890625 C 0.84375 -1.03125 0.84375 -1.1875 0.96875 -1.6875 L 1.140625 -2.40625 C 1.1875 -2.578125 1.1875 -2.59375 1.265625 -2.6875 C 1.65625 -3.203125 2.015625 -3.328125 2.21875 -3.328125 C 2.5 -3.328125 2.71875 -3.078125 2.71875 -2.578125 C 2.71875 -2.109375 2.453125 -1.203125 2.3125 -0.90625 Z M 2.3125 -0.90625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph1-1">
+<path style="stroke:none;" d="M 2.609375 0 L 2.609375 -0.203125 L 2.40625 -0.203125 C 1.859375 -0.203125 1.859375 -0.265625 1.859375 -0.453125 L 1.859375 -3.515625 C 1.859375 -3.671875 1.84375 -3.671875 1.6875 -3.671875 C 1.328125 -3.328125 0.828125 -3.3125 0.609375 -3.3125 L 0.609375 -3.125 C 0.734375 -3.125 1.09375 -3.125 1.40625 -3.28125 L 1.40625 -0.453125 C 1.40625 -0.265625 1.40625 -0.203125 0.859375 -0.203125 L 0.640625 -0.203125 L 0.640625 0 L 1.625 -0.015625 Z M 2.609375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph1-2">
+<path style="stroke:none;" d="M 2.796875 -1 L 2.609375 -1 C 2.59375 -0.890625 2.53125 -0.5625 2.46875 -0.5 C 2.421875 -0.46875 1.984375 -0.46875 1.90625 -0.46875 L 0.890625 -0.46875 C 1.484375 -0.984375 1.671875 -1.140625 2 -1.40625 C 2.40625 -1.71875 2.796875 -2.0625 2.796875 -2.59375 C 2.796875 -3.265625 2.203125 -3.671875 1.5 -3.671875 C 0.8125 -3.671875 0.34375 -3.1875 0.34375 -2.6875 C 0.34375 -2.40625 0.59375 -2.375 0.640625 -2.375 C 0.78125 -2.375 0.9375 -2.46875 0.9375 -2.671875 C 0.9375 -2.765625 0.890625 -2.953125 0.609375 -2.953125 C 0.78125 -3.359375 1.15625 -3.46875 1.421875 -3.46875 C 1.96875 -3.46875 2.25 -3.046875 2.25 -2.59375 C 2.25 -2.109375 1.90625 -1.734375 1.734375 -1.53125 L 0.40625 -0.21875 C 0.34375 -0.171875 0.34375 -0.15625 0.34375 0 L 2.625 0 Z M 2.796875 -1 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph1-3">
+<path style="stroke:none;" d="M 2.84375 -0.953125 C 2.84375 -1.390625 2.484375 -1.8125 1.875 -1.953125 C 2.46875 -2.15625 2.671875 -2.578125 2.671875 -2.90625 C 2.671875 -3.34375 2.171875 -3.671875 1.546875 -3.671875 C 0.9375 -3.671875 0.46875 -3.375 0.46875 -2.9375 C 0.46875 -2.75 0.59375 -2.640625 0.75 -2.640625 C 0.921875 -2.640625 1.046875 -2.765625 1.046875 -2.921875 C 1.046875 -3.078125 0.921875 -3.203125 0.75 -3.203125 C 0.953125 -3.453125 1.328125 -3.515625 1.53125 -3.515625 C 1.78125 -3.515625 2.140625 -3.390625 2.140625 -2.90625 C 2.140625 -2.671875 2.0625 -2.421875 1.90625 -2.25 C 1.734375 -2.046875 1.578125 -2.03125 1.296875 -2.015625 C 1.15625 -2 1.15625 -2 1.125 -2 C 1.125 -2 1.0625 -1.984375 1.0625 -1.921875 C 1.0625 -1.84375 1.125 -1.84375 1.21875 -1.84375 L 1.515625 -1.84375 C 1.9375 -1.84375 2.25 -1.546875 2.25 -0.953125 C 2.25 -0.265625 1.859375 -0.0625 1.53125 -0.0625 C 1.3125 -0.0625 0.828125 -0.125 0.59375 -0.453125 C 0.859375 -0.46875 0.90625 -0.640625 0.90625 -0.765625 C 0.90625 -0.9375 0.78125 -1.0625 0.609375 -1.0625 C 0.453125 -1.0625 0.296875 -0.96875 0.296875 -0.75 C 0.296875 -0.234375 0.875 0.109375 1.546875 0.109375 C 2.3125 0.109375 2.84375 -0.40625 2.84375 -0.953125 Z M 2.84375 -0.953125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-1">
+<path style="stroke:none;" d="M 4.828125 -3.59375 L 4.59375 -5.375 L 0.265625 -5.375 L 0.265625 -5.125 L 0.453125 -5.125 C 1.0625 -5.125 1.078125 -5.046875 1.078125 -4.765625 L 1.078125 -0.609375 C 1.078125 -0.328125 1.0625 -0.25 0.453125 -0.25 L 0.265625 -0.25 L 0.265625 0 C 0.53125 -0.03125 1.15625 -0.03125 1.46875 -0.03125 C 1.78125 -0.03125 2.5 -0.03125 2.796875 0 L 2.796875 -0.25 L 2.53125 -0.25 C 1.78125 -0.25 1.78125 -0.34375 1.78125 -0.625 L 1.78125 -2.5625 L 2.453125 -2.5625 C 3.21875 -2.5625 3.296875 -2.3125 3.296875 -1.640625 L 3.5 -1.640625 L 3.5 -3.734375 L 3.296875 -3.734375 C 3.296875 -3.078125 3.21875 -2.8125 2.453125 -2.8125 L 1.78125 -2.8125 L 1.78125 -4.8125 C 1.78125 -5.078125 1.796875 -5.125 2.171875 -5.125 L 3.109375 -5.125 C 4.296875 -5.125 4.5 -4.6875 4.625 -3.59375 Z M 4.828125 -3.59375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-2">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.671875 -0.25 3.609375 -0.296875 3.609375 -0.6875 L 3.609375 -3.5 L 2.453125 -3.40625 L 2.453125 -3.15625 C 3 -3.15625 3.0625 -3.109375 3.0625 -2.71875 L 3.0625 -1.3125 C 3.0625 -0.625 2.6875 -0.09375 2.109375 -0.09375 C 1.453125 -0.09375 1.421875 -0.453125 1.421875 -0.875 L 1.421875 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.875 -3.15625 0.875 -3.140625 0.875 -2.4375 L 0.875 -1.25 C 0.875 -0.625 0.875 0.09375 2.078125 0.09375 C 2.515625 0.09375 2.859375 -0.140625 3.09375 -0.625 L 3.09375 0.09375 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-3">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.8125 -0.25 3.625 -0.25 3.609375 -0.484375 L 3.609375 -2 C 3.609375 -2.671875 3.609375 -2.921875 3.375 -3.203125 C 3.25 -3.34375 3 -3.5 2.53125 -3.5 C 1.953125 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.59375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.140625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.59375 L 1.421875 -2.0625 C 1.421875 -2.875 1.96875 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.0625 -2.890625 3.0625 -2.4375 L 3.0625 -0.59375 C 3.0625 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-4">
+<path style="stroke:none;" d="M 3.171875 -1.484375 L 2.96875 -1.484375 C 2.90625 -0.546875 2.734375 -0.203125 1.8125 -0.203125 L 0.890625 -0.203125 L 3.078125 -3.171875 C 3.15625 -3.25 3.15625 -3.265625 3.15625 -3.3125 C 3.15625 -3.40625 3.09375 -3.40625 2.953125 -3.40625 L 0.421875 -3.40625 L 0.328125 -2.140625 L 0.53125 -2.140625 C 0.578125 -2.9375 0.734375 -3.234375 1.59375 -3.234375 L 2.5 -3.234375 L 0.296875 -0.25 C 0.21875 -0.171875 0.21875 -0.15625 0.21875 -0.109375 C 0.21875 0 0.28125 0 0.421875 0 L 3.03125 0 Z M 3.171875 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-5">
+<path style="stroke:none;" d="M 1.953125 0 L 1.953125 -0.25 C 1.4375 -0.25 1.40625 -0.28125 1.40625 -0.59375 L 1.40625 -3.5 L 0.296875 -3.40625 L 0.296875 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.734375 L 0.875 -0.59375 C 0.875 -0.25 0.796875 -0.25 0.265625 -0.25 L 0.265625 0 L 1.125 -0.03125 C 1.40625 -0.03125 1.6875 -0.015625 1.953125 0 Z M 1.515625 -4.78125 C 1.515625 -4.984375 1.34375 -5.1875 1.09375 -5.1875 C 0.828125 -5.1875 0.671875 -4.96875 0.671875 -4.78125 C 0.671875 -4.5625 0.859375 -4.359375 1.09375 -4.359375 C 1.359375 -4.359375 1.515625 -4.578125 1.515625 -4.78125 Z M 1.515625 -4.78125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-6">
+<path style="stroke:none;" d="M 3.71875 -1.6875 C 3.71875 -2.703125 2.9375 -3.546875 1.96875 -3.546875 C 0.984375 -3.546875 0.21875 -2.6875 0.21875 -1.6875 C 0.21875 -0.671875 1.046875 0.09375 1.96875 0.09375 C 2.921875 0.09375 3.71875 -0.6875 3.71875 -1.6875 Z M 3.0625 -1.75 C 3.0625 -1.46875 3.0625 -1.046875 2.890625 -0.703125 C 2.71875 -0.34375 2.375 -0.109375 1.96875 -0.109375 C 1.640625 -0.109375 1.28125 -0.28125 1.078125 -0.640625 C 0.875 -0.984375 0.875 -1.46875 0.875 -1.75 C 0.875 -2.0625 0.875 -2.484375 1.0625 -2.84375 C 1.28125 -3.203125 1.65625 -3.375 1.96875 -3.375 C 2.3125 -3.375 2.65625 -3.1875 2.859375 -2.859375 C 3.0625 -2.515625 3.0625 -2.0625 3.0625 -1.75 Z M 3.0625 -1.75 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-7">
+<path style="stroke:none;" d="M 3.28125 -0.9375 C 3.28125 -1.015625 3.21875 -1.03125 3.171875 -1.03125 C 3.109375 -1.03125 3.09375 -0.984375 3.078125 -0.921875 C 2.796875 -0.109375 2.09375 -0.109375 2.015625 -0.109375 C 1.609375 -0.109375 1.296875 -0.34375 1.109375 -0.640625 C 0.875 -1.015625 0.875 -1.546875 0.875 -1.828125 L 3.078125 -1.828125 C 3.25 -1.828125 3.28125 -1.828125 3.28125 -2 C 3.28125 -2.78125 2.859375 -3.546875 1.859375 -3.546875 C 0.953125 -3.546875 0.21875 -2.734375 0.21875 -1.734375 C 0.21875 -0.6875 1.046875 0.09375 1.953125 0.09375 C 2.921875 0.09375 3.28125 -0.796875 3.28125 -0.9375 Z M 2.765625 -2 L 0.890625 -2 C 0.9375 -3.171875 1.59375 -3.375 1.859375 -3.375 C 2.6875 -3.375 2.765625 -2.296875 2.765625 -2 Z M 2.765625 -2 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-8">
+<path style="stroke:none;" d="M 2.84375 -1.015625 C 2.84375 -1.4375 2.609375 -1.671875 2.515625 -1.765625 C 2.25 -2.015625 1.9375 -2.078125 1.609375 -2.140625 C 1.171875 -2.234375 0.640625 -2.328125 0.640625 -2.796875 C 0.640625 -3.0625 0.84375 -3.390625 1.53125 -3.390625 C 2.390625 -3.390625 2.4375 -2.6875 2.453125 -2.4375 C 2.453125 -2.359375 2.546875 -2.359375 2.546875 -2.359375 C 2.65625 -2.359375 2.65625 -2.40625 2.65625 -2.546875 L 2.65625 -3.359375 C 2.65625 -3.484375 2.65625 -3.546875 2.5625 -3.546875 C 2.515625 -3.546875 2.5 -3.546875 2.40625 -3.453125 C 2.375 -3.421875 2.296875 -3.34375 2.265625 -3.328125 C 1.96875 -3.546875 1.640625 -3.546875 1.53125 -3.546875 C 0.5625 -3.546875 0.265625 -3.015625 0.265625 -2.5625 C 0.265625 -2.296875 0.390625 -2.078125 0.59375 -1.890625 C 0.859375 -1.6875 1.078125 -1.640625 1.640625 -1.53125 C 1.8125 -1.5 2.46875 -1.375 2.46875 -0.8125 C 2.46875 -0.40625 2.1875 -0.09375 1.578125 -0.09375 C 0.90625 -0.09375 0.625 -0.53125 0.46875 -1.203125 C 0.453125 -1.3125 0.4375 -1.34375 0.359375 -1.34375 C 0.265625 -1.34375 0.265625 -1.28125 0.265625 -1.140625 L 0.265625 -0.109375 C 0.265625 0.03125 0.265625 0.09375 0.34375 0.09375 C 0.390625 0.09375 0.390625 0.078125 0.546875 -0.078125 C 0.5625 -0.09375 0.5625 -0.109375 0.703125 -0.25 C 1.046875 0.078125 1.40625 0.09375 1.578125 0.09375 C 2.484375 0.09375 2.84375 -0.4375 2.84375 -1.015625 Z M 2.84375 -1.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-9">
+<path style="stroke:none;" d="M 2.875 -3.015625 C 2.875 -3.265625 2.625 -3.5 2.296875 -3.5 C 1.71875 -3.5 1.4375 -2.96875 1.328125 -2.625 L 1.328125 -3.5 L 0.21875 -3.40625 L 0.21875 -3.15625 C 0.78125 -3.15625 0.84375 -3.109375 0.84375 -2.71875 L 0.84375 -0.59375 C 0.84375 -0.25 0.75 -0.25 0.21875 -0.25 L 0.21875 0 L 1.125 -0.03125 C 1.4375 -0.03125 1.8125 -0.03125 2.125 0 L 2.125 -0.25 L 1.953125 -0.25 C 1.375 -0.25 1.359375 -0.328125 1.359375 -0.609375 L 1.359375 -1.828125 C 1.359375 -2.609375 1.6875 -3.328125 2.296875 -3.328125 C 2.34375 -3.328125 2.359375 -3.328125 2.375 -3.3125 C 2.359375 -3.3125 2.203125 -3.203125 2.203125 -3 C 2.203125 -2.78125 2.359375 -2.671875 2.53125 -2.671875 C 2.6875 -2.671875 2.875 -2.765625 2.875 -3.015625 Z M 2.875 -3.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-10">
+<path style="stroke:none;" d="M 2.625 -0.984375 L 2.625 -1.4375 L 2.421875 -1.4375 L 2.421875 -1 C 2.421875 -0.40625 2.1875 -0.109375 1.890625 -0.109375 C 1.375 -0.109375 1.375 -0.828125 1.375 -0.96875 L 1.375 -3.15625 L 2.5 -3.15625 L 2.5 -3.40625 L 1.375 -3.40625 L 1.375 -4.859375 L 1.171875 -4.859375 C 1.15625 -4.21875 0.921875 -3.375 0.15625 -3.34375 L 0.15625 -3.15625 L 0.828125 -3.15625 L 0.828125 -0.984375 C 0.828125 -0.015625 1.5625 0.09375 1.84375 0.09375 C 2.40625 0.09375 2.625 -0.46875 2.625 -0.984375 Z M 2.625 -0.984375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-11">
+<path style="stroke:none;" d="M 4.015625 -3.15625 L 4.015625 -3.40625 C 3.828125 -3.390625 3.609375 -3.390625 3.421875 -3.390625 L 2.734375 -3.40625 L 2.734375 -3.15625 C 3.03125 -3.15625 3.109375 -2.96875 3.109375 -2.828125 C 3.109375 -2.75 3.09375 -2.71875 3.0625 -2.625 L 2.265625 -0.609375 L 1.375 -2.828125 C 1.328125 -2.921875 1.328125 -2.953125 1.328125 -2.953125 C 1.328125 -3.15625 1.640625 -3.15625 1.78125 -3.15625 L 1.78125 -3.40625 L 0.921875 -3.390625 C 0.703125 -3.390625 0.390625 -3.390625 0.15625 -3.40625 L 0.15625 -3.15625 C 0.640625 -3.15625 0.6875 -3.109375 0.78125 -2.875 L 1.921875 -0.0625 C 1.96875 0.046875 1.984375 0.09375 2.09375 0.09375 C 2.1875 0.09375 2.21875 0.015625 2.25 -0.0625 L 3.28125 -2.625 C 3.359375 -2.8125 3.5 -3.15625 4.015625 -3.15625 Z M 4.015625 -3.15625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-12">
+<path style="stroke:none;" d="M 3.8125 -0.703125 L 3.8125 -1.140625 L 3.625 -1.140625 L 3.625 -0.703125 C 3.625 -0.25 3.421875 -0.203125 3.34375 -0.203125 C 3.078125 -0.203125 3.046875 -0.546875 3.046875 -0.59375 L 3.046875 -2.171875 C 3.046875 -2.5 3.046875 -2.8125 2.765625 -3.109375 C 2.453125 -3.421875 2.0625 -3.546875 1.671875 -3.546875 C 1.03125 -3.546875 0.484375 -3.171875 0.484375 -2.65625 C 0.484375 -2.40625 0.640625 -2.28125 0.84375 -2.28125 C 1.0625 -2.28125 1.203125 -2.4375 1.203125 -2.640625 C 1.203125 -2.734375 1.171875 -3 0.8125 -3 C 1.015625 -3.28125 1.40625 -3.375 1.65625 -3.375 C 2.046875 -3.375 2.5 -3.0625 2.5 -2.359375 L 2.5 -2.0625 C 2.09375 -2.046875 1.546875 -2.015625 1.046875 -1.78125 C 0.453125 -1.515625 0.25 -1.09375 0.25 -0.75 C 0.25 -0.109375 1.015625 0.09375 1.515625 0.09375 C 2.046875 0.09375 2.40625 -0.234375 2.546875 -0.59375 C 2.578125 -0.28125 2.796875 0.046875 3.171875 0.046875 C 3.34375 0.046875 3.8125 -0.0625 3.8125 -0.703125 Z M 2.5 -1.109375 C 2.5 -0.359375 1.921875 -0.09375 1.578125 -0.09375 C 1.1875 -0.09375 0.859375 -0.359375 0.859375 -0.765625 C 0.859375 -1.1875 1.1875 -1.84375 2.5 -1.890625 Z M 2.5 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-13">
+<path style="stroke:none;" d="M 1.609375 -0.015625 C 1.609375 -0.515625 1.421875 -0.84375 1.09375 -0.84375 C 0.828125 -0.84375 0.6875 -0.625 0.6875 -0.421875 C 0.6875 -0.21875 0.8125 0 1.09375 0 C 1.21875 0 1.328125 -0.046875 1.421875 -0.125 C 1.4375 0.5 1.203125 0.984375 0.859375 1.359375 C 0.8125 1.40625 0.8125 1.40625 0.8125 1.4375 C 0.8125 1.5 0.84375 1.53125 0.890625 1.53125 C 0.984375 1.53125 1.609375 0.90625 1.609375 -0.015625 Z M 1.609375 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-14">
+<path style="stroke:none;" d="M 6.421875 0 L 6.421875 -0.25 C 6.015625 -0.25 5.8125 -0.25 5.8125 -0.484375 L 5.8125 -2 C 5.8125 -2.671875 5.8125 -2.921875 5.5625 -3.203125 C 5.453125 -3.34375 5.1875 -3.5 4.734375 -3.5 C 4.078125 -3.5 3.71875 -3.015625 3.59375 -2.71875 C 3.484375 -3.40625 2.890625 -3.5 2.53125 -3.5 C 1.953125 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.40625 L 0.25 -3.15625 C 0.8125 -3.15625 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.59375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.140625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.59375 L 1.421875 -2.0625 C 1.421875 -2.875 1.96875 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.0625 -2.890625 3.0625 -2.4375 L 3.0625 -0.59375 C 3.0625 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 L 4.234375 0 L 4.234375 -0.25 C 3.703125 -0.25 3.609375 -0.25 3.609375 -0.59375 L 3.609375 -2.0625 C 3.609375 -2.875 4.171875 -3.328125 4.6875 -3.328125 C 5.171875 -3.328125 5.265625 -2.890625 5.265625 -2.4375 L 5.265625 -0.59375 C 5.265625 -0.25 5.171875 -0.25 4.65625 -0.25 L 4.65625 0 L 5.546875 -0.03125 Z M 6.421875 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d3-glyph2-15">
+<path style="stroke:none;" d="M 1.515625 -0.421875 C 1.515625 -0.640625 1.328125 -0.84375 1.09375 -0.84375 C 0.875 -0.84375 0.6875 -0.640625 0.6875 -0.421875 C 0.6875 -0.1875 0.875 0 1.09375 0 C 1.328125 0 1.515625 -0.1875 1.515625 -0.421875 Z M 1.515625 -0.421875 "/>
+</symbol>
+</g>
+<clipPath id="algebra_lez03a_d3-clip1">
+  <path d="M 0.28125 10 L 56 10 L 56 90 L 0.28125 90 Z M 0.28125 10 "/>
+</clipPath>
+<clipPath id="algebra_lez03a_d3-clip2">
+  <path d="M 88 10 L 143.585938 10 L 143.585938 90 L 88 90 Z M 88 10 "/>
+</clipPath>
+</defs>
+<g id="algebra_lez03a_d3-surface1">
+<g clip-path="url(#algebra_lez03a_d3-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 22.676039 -0.00140214 C 22.676039 18.786135 12.526359 34.014592 -0.00129054 34.014592 C -12.525003 34.014592 -22.67862 18.786135 -22.67862 -0.00140214 C -22.67862 -18.785002 -12.525003 -34.017396 -0.00129054 -34.017396 C 12.526359 -34.017396 22.676039 -18.785002 22.676039 -0.00140214 Z M 22.676039 -0.00140214 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-1" x="23.969247" y="11.993476"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 31.792969 C 28.515625 30.917969 27.808594 30.210938 26.933594 30.210938 C 26.0625 30.210938 25.351562 30.917969 25.351562 31.792969 C 25.351562 32.664062 26.0625 33.371094 26.933594 33.371094 C 27.808594 33.371094 28.515625 32.664062 28.515625 31.792969 Z M 28.515625 31.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-2" x="16.412802" y="32.9007"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph1-1" x="20.593453" y="34.087347"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 49.792969 C 28.515625 48.917969 27.808594 48.210938 26.933594 48.210938 C 26.0625 48.210938 25.351562 48.917969 25.351562 49.792969 C 25.351562 50.664062 26.0625 51.375 26.933594 51.375 C 27.808594 51.375 28.515625 50.664062 28.515625 49.792969 Z M 28.515625 49.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-2" x="16.412802" y="50.900835"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph1-2" x="20.592659" y="52.087483"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.515625 67.792969 C 28.515625 66.917969 27.808594 66.210938 26.933594 66.210938 C 26.0625 66.210938 25.351562 66.917969 25.351562 67.792969 C 25.351562 68.664062 26.0625 69.375 26.933594 69.375 C 27.808594 69.375 28.515625 68.664062 28.515625 67.792969 Z M 28.515625 67.792969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-2" x="16.412802" y="68.900971"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph1-3" x="20.592659" y="70.086825"/>
+</g>
+<g clip-path="url(#algebra_lez03a_d3-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 113.389293 -0.00140214 C 113.389293 18.786135 103.235676 34.014592 90.711964 34.014592 C 78.184314 34.014592 68.030697 18.786135 68.030697 -0.00140214 C 68.030697 -18.785002 78.184314 -34.017396 90.711964 -34.017396 C 103.235676 -34.017396 113.389293 -18.785002 113.389293 -0.00140214 Z M 113.389293 -0.00140214 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-3" x="113.736762" y="11.993476"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.515625 38.542969 C 118.515625 37.667969 117.808594 36.960938 116.9375 36.960938 C 116.0625 36.960938 115.355469 37.667969 115.355469 38.542969 C 115.355469 39.414062 116.0625 40.125 116.9375 40.125 C 117.808594 40.125 118.515625 39.414062 118.515625 38.542969 Z M 118.515625 38.542969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-4" x="119.727547" y="40.694276"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph1-1" x="123.121598" y="41.88013"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.515625 61.042969 C 118.515625 60.167969 117.808594 59.460938 116.9375 59.460938 C 116.0625 59.460938 115.355469 60.167969 115.355469 61.042969 C 115.355469 61.914062 116.0625 62.625 116.9375 62.625 C 117.808594 62.625 118.515625 61.914062 118.515625 61.042969 Z M 118.515625 61.042969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph0-4" x="119.727547" y="63.193949"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph1-2" x="123.121598" y="64.380597"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 18.140461 L 85.381216 11.404192 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.549405 3.111151 C -2.085803 1.245458 -1.044427 0.364255 0.00121082 0.000969743 C -1.047059 -0.362924 -2.083895 -1.243428 -2.548558 -3.11139 " transform="matrix(0.988708,0.0823708,0.0823708,-0.988708,112.041692,38.508672)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 -0.00140214 L 85.385153 -11.22983 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.55181 3.110737 C -2.0858 1.243629 -1.045224 0.362611 -0.000963657 -0.00115182 C -1.047502 -0.365123 -2.086026 -1.244725 -2.550426 -3.109879 " transform="matrix(0.982715,0.136484,0.136484,-0.982715,112.044073,60.987281)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 -18.143266 L 85.41665 8.817559 " transform="matrix(0.99218,0,0,-0.99218,26.934874,49.791578)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.550978 3.110794 C -2.08532 1.245698 -1.046939 0.3642 0.00140135 -0.00184339 C -1.044447 -0.362914 -2.085313 -1.244418 -2.549713 -3.110762 " transform="matrix(0.941222,-0.313737,-0.313737,-0.941222,112.060603,40.916673)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-1" x="37.908389" y="104.020186"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-2" x="42.414228" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-3" x="46.807778" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-4" x="51.201327" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-5" x="54.716325" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-6" x="56.9131" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-3" x="60.866978" y="104.020186"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-7" x="65.25262" y="104.020186"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-8" x="71.408809" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-2" x="74.528419" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-9" x="78.921968" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-5" x="82.019436" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-7" x="84.216211" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-10" x="87.731209" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-10" x="90.806536" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-5" x="93.881862" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-11" x="96.078637" y="104.020186"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-12" x="99.809516" y="104.020186"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-13" x="103.763395" y="104.020186"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-14" x="42.389869" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-12" x="48.979402" y="113.509398"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-3" x="55.566564" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-6" x="59.960113" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-3" x="63.913991" y="113.509398"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-5" x="70.948732" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-3" x="73.145506" y="113.509398"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-5" x="77.531148" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-7" x="79.727923" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-10" x="83.242921" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-10" x="86.318247" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-5" x="89.393574" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-11" x="91.590349" y="113.509398"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d3-glyph2-12" x="95.329136" y="113.509398"/>
+  <use xlink:href="#algebra_lez03a_d3-glyph2-15" x="99.283014" y="113.509398"/>
+</g>
+</g>
+</svg></figure>
+<p>Infine una funzione <em>biiettiva</em>: $A = \\{a_1,a_2\\}$, $B = \\{b_1,b_2\\}$ con $a_1 \\mapsto b_1$ e $a_2 \\mapsto b_2$. In ogni punto di $B$ arriva esattamente una freccia: ogni fibra è un singoletto e i due insiemi hanno la stessa cardinalità.</p>
+<figure class="figura" data-id="algebra_lez03a_d4"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez03a_d4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144.432pt" height="116.263pt" viewBox="0 0 144.432 116.263" version="1.2"><style>#algebra_lez03a_d4 [fill="rgb(0%,0%,0%)"],#algebra_lez03a_d4 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez03a_d4 [stroke="rgb(0%,0%,0%)"],#algebra_lez03a_d4 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph0-1">
+<path style="stroke:none;" d="M 5.71875 -0.15625 C 5.71875 -0.25 5.625 -0.25 5.53125 -0.25 C 5.03125 -0.25 5.03125 -0.296875 5.015625 -0.53125 L 4.53125 -5.484375 C 4.515625 -5.640625 4.515625 -5.671875 4.375 -5.671875 C 4.25 -5.671875 4.21875 -5.609375 4.171875 -5.53125 L 1.421875 -0.90625 C 1.09375 -0.375 0.796875 -0.265625 0.4375 -0.25 C 0.34375 -0.234375 0.28125 -0.234375 0.28125 -0.09375 C 0.28125 -0.046875 0.3125 0 0.375 0 C 0.59375 0 0.84375 -0.03125 1.0625 -0.03125 C 1.328125 -0.03125 1.59375 0 1.859375 0 C 1.90625 0 2 0 2 -0.15625 C 2 -0.234375 1.9375 -0.25 1.875 -0.25 C 1.6875 -0.265625 1.5 -0.328125 1.5 -0.515625 C 1.5 -0.625 1.546875 -0.703125 1.609375 -0.8125 C 1.671875 -0.90625 1.671875 -0.90625 2.21875 -1.828125 L 4.203125 -1.828125 C 4.21875 -1.65625 4.328125 -0.59375 4.328125 -0.5 C 4.328125 -0.265625 3.921875 -0.25 3.765625 -0.25 C 3.65625 -0.25 3.578125 -0.25 3.578125 -0.09375 C 3.578125 0 3.6875 0 3.6875 0 C 4.015625 0 4.34375 -0.03125 4.671875 -0.03125 C 4.875 -0.03125 5.375 0 5.5625 0 C 5.609375 0 5.71875 0 5.71875 -0.15625 Z M 4.1875 -2.078125 L 2.375 -2.078125 L 3.921875 -4.6875 Z M 4.1875 -2.078125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph0-2">
+<path style="stroke:none;" d="M 3.9375 -1.140625 C 3.9375 -1.21875 3.875 -1.21875 3.84375 -1.21875 C 3.765625 -1.21875 3.765625 -1.1875 3.734375 -1.0625 C 3.609375 -0.546875 3.46875 -0.09375 3.140625 -0.09375 C 2.921875 -0.09375 2.90625 -0.296875 2.90625 -0.453125 C 2.90625 -0.625 2.921875 -0.6875 3 -1.03125 L 3.171875 -1.75 L 3.46875 -2.859375 C 3.515625 -3.078125 3.515625 -3.09375 3.515625 -3.125 C 3.515625 -3.265625 3.421875 -3.34375 3.28125 -3.34375 C 3.09375 -3.34375 2.984375 -3.171875 2.953125 -3 C 2.8125 -3.28125 2.578125 -3.5 2.21875 -3.5 C 1.296875 -3.5 0.3125 -2.34375 0.3125 -1.1875 C 0.3125 -0.4375 0.75 0.09375 1.375 0.09375 C 1.53125 0.09375 1.921875 0.0625 2.40625 -0.5 C 2.46875 -0.171875 2.734375 0.09375 3.125 0.09375 C 3.40625 0.09375 3.578125 -0.09375 3.703125 -0.34375 C 3.84375 -0.640625 3.9375 -1.140625 3.9375 -1.140625 Z M 2.84375 -2.5 L 2.4375 -0.9375 C 2.40625 -0.796875 2.40625 -0.78125 2.28125 -0.65625 C 1.9375 -0.21875 1.609375 -0.09375 1.390625 -0.09375 C 0.984375 -0.09375 0.875 -0.515625 0.875 -0.828125 C 0.875 -1.234375 1.140625 -2.203125 1.3125 -2.5625 C 1.5625 -3.03125 1.921875 -3.328125 2.234375 -3.328125 C 2.75 -3.328125 2.859375 -2.671875 2.859375 -2.625 C 2.859375 -2.578125 2.84375 -2.53125 2.84375 -2.5 Z M 2.84375 -2.5 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph0-3">
+<path style="stroke:none;" d="M 5.5625 -1.71875 C 5.5625 -2.28125 5.109375 -2.734375 4.328125 -2.828125 C 5.15625 -2.984375 5.984375 -3.5625 5.984375 -4.3125 C 5.984375 -4.90625 5.46875 -5.40625 4.515625 -5.40625 L 1.859375 -5.40625 C 1.703125 -5.40625 1.625 -5.40625 1.625 -5.25 C 1.625 -5.171875 1.6875 -5.171875 1.84375 -5.171875 C 1.84375 -5.171875 2.015625 -5.171875 2.140625 -5.15625 C 2.296875 -5.140625 2.359375 -5.125 2.359375 -5.015625 C 2.359375 -4.984375 2.359375 -4.96875 2.328125 -4.875 L 1.265625 -0.625 C 1.1875 -0.3125 1.171875 -0.25 0.546875 -0.25 C 0.40625 -0.25 0.328125 -0.25 0.328125 -0.09375 C 0.328125 0 0.40625 0 0.546875 0 L 3.375 0 C 4.625 0 5.5625 -0.9375 5.5625 -1.71875 Z M 5.265625 -4.34375 C 5.265625 -3.65625 4.59375 -2.90625 3.625 -2.90625 L 2.46875 -2.90625 L 2.953125 -4.859375 C 3.03125 -5.140625 3.046875 -5.171875 3.375 -5.171875 L 4.40625 -5.171875 C 5.109375 -5.171875 5.265625 -4.703125 5.265625 -4.34375 Z M 4.828125 -1.796875 C 4.828125 -1.015625 4.125 -0.25 3.1875 -0.25 L 2.109375 -0.25 C 2 -0.25 1.984375 -0.25 1.9375 -0.25 C 1.859375 -0.265625 1.828125 -0.265625 1.828125 -0.328125 C 1.828125 -0.359375 1.828125 -0.375 1.875 -0.515625 L 2.421875 -2.71875 L 3.90625 -2.71875 C 4.671875 -2.71875 4.828125 -2.140625 4.828125 -1.796875 Z M 4.828125 -1.796875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph0-4">
+<path style="stroke:none;" d="M 3.28125 -2.234375 C 3.28125 -2.953125 2.875 -3.5 2.234375 -3.5 C 1.875 -3.5 1.546875 -3.265625 1.3125 -3.03125 L 1.890625 -5.40625 C 1.890625 -5.40625 1.890625 -5.5 1.796875 -5.5 C 1.609375 -5.5 1.03125 -5.4375 0.828125 -5.421875 C 0.765625 -5.40625 0.671875 -5.40625 0.671875 -5.265625 C 0.671875 -5.171875 0.75 -5.171875 0.859375 -5.171875 C 1.25 -5.171875 1.265625 -5.109375 1.265625 -5.03125 C 1.265625 -4.96875 1.1875 -4.703125 1.15625 -4.546875 L 0.5 -1.953125 C 0.40625 -1.5625 0.375 -1.4375 0.375 -1.15625 C 0.375 -0.40625 0.796875 0.09375 1.375 0.09375 C 2.3125 0.09375 3.28125 -1.09375 3.28125 -2.234375 Z M 2.3125 -0.90625 C 2.046875 -0.375 1.6875 -0.09375 1.375 -0.09375 C 1.109375 -0.09375 0.84375 -0.296875 0.84375 -0.890625 C 0.84375 -1.03125 0.84375 -1.1875 0.96875 -1.6875 L 1.15625 -2.421875 C 1.203125 -2.59375 1.203125 -2.609375 1.265625 -2.6875 C 1.65625 -3.203125 2.015625 -3.328125 2.21875 -3.328125 C 2.5 -3.328125 2.71875 -3.09375 2.71875 -2.578125 C 2.71875 -2.109375 2.453125 -1.203125 2.3125 -0.90625 Z M 2.3125 -0.90625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph1-1">
+<path style="stroke:none;" d="M 2.625 0 L 2.625 -0.203125 L 2.40625 -0.203125 C 1.859375 -0.203125 1.859375 -0.265625 1.859375 -0.453125 L 1.859375 -3.53125 C 1.859375 -3.671875 1.84375 -3.6875 1.6875 -3.6875 C 1.34375 -3.328125 0.828125 -3.328125 0.609375 -3.328125 L 0.609375 -3.125 C 0.734375 -3.125 1.109375 -3.125 1.40625 -3.28125 L 1.40625 -0.453125 C 1.40625 -0.265625 1.40625 -0.203125 0.859375 -0.203125 L 0.640625 -0.203125 L 0.640625 0 L 1.625 -0.015625 Z M 2.625 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph1-2">
+<path style="stroke:none;" d="M 2.796875 -1.015625 L 2.609375 -1.015625 C 2.59375 -0.890625 2.546875 -0.5625 2.46875 -0.5 C 2.421875 -0.46875 2 -0.46875 1.921875 -0.46875 L 0.90625 -0.46875 C 1.484375 -0.984375 1.671875 -1.140625 2.015625 -1.40625 C 2.421875 -1.734375 2.796875 -2.078125 2.796875 -2.59375 C 2.796875 -3.265625 2.21875 -3.6875 1.5 -3.6875 C 0.8125 -3.6875 0.34375 -3.203125 0.34375 -2.6875 C 0.34375 -2.40625 0.59375 -2.375 0.640625 -2.375 C 0.78125 -2.375 0.9375 -2.46875 0.9375 -2.671875 C 0.9375 -2.765625 0.90625 -2.96875 0.609375 -2.96875 C 0.78125 -3.359375 1.15625 -3.484375 1.421875 -3.484375 C 1.96875 -3.484375 2.265625 -3.046875 2.265625 -2.59375 C 2.265625 -2.125 1.921875 -1.734375 1.734375 -1.53125 L 0.40625 -0.21875 C 0.34375 -0.171875 0.34375 -0.15625 0.34375 0 L 2.640625 0 Z M 2.796875 -1.015625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-1">
+<path style="stroke:none;" d="M 4.828125 -3.609375 L 4.609375 -5.390625 L 0.265625 -5.390625 L 0.265625 -5.140625 L 0.453125 -5.140625 C 1.0625 -5.140625 1.078125 -5.046875 1.078125 -4.765625 L 1.078125 -0.625 C 1.078125 -0.328125 1.0625 -0.25 0.453125 -0.25 L 0.265625 -0.25 L 0.265625 0 C 0.53125 -0.03125 1.15625 -0.03125 1.46875 -0.03125 C 1.796875 -0.03125 2.515625 -0.03125 2.796875 0 L 2.796875 -0.25 L 2.53125 -0.25 C 1.78125 -0.25 1.78125 -0.34375 1.78125 -0.625 L 1.78125 -2.578125 L 2.46875 -2.578125 C 3.21875 -2.578125 3.296875 -2.328125 3.296875 -1.640625 L 3.5 -1.640625 L 3.5 -3.75 L 3.296875 -3.75 C 3.296875 -3.078125 3.21875 -2.8125 2.46875 -2.8125 L 1.78125 -2.8125 L 1.78125 -4.828125 C 1.78125 -5.078125 1.796875 -5.140625 2.171875 -5.140625 L 3.125 -5.140625 C 4.3125 -5.140625 4.5 -4.703125 4.640625 -3.609375 Z M 4.828125 -3.609375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-2">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.6875 -0.25 3.625 -0.296875 3.625 -0.6875 L 3.625 -3.5 L 2.453125 -3.421875 L 2.453125 -3.171875 C 3.015625 -3.171875 3.078125 -3.109375 3.078125 -2.71875 L 3.078125 -1.3125 C 3.078125 -0.625 2.6875 -0.09375 2.109375 -0.09375 C 1.453125 -0.09375 1.421875 -0.453125 1.421875 -0.875 L 1.421875 -3.5 L 0.25 -3.421875 L 0.25 -3.171875 C 0.875 -3.171875 0.875 -3.140625 0.875 -2.4375 L 0.875 -1.25 C 0.875 -0.640625 0.875 0.09375 2.078125 0.09375 C 2.515625 0.09375 2.875 -0.140625 3.09375 -0.625 L 3.09375 0.09375 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-3">
+<path style="stroke:none;" d="M 4.234375 0 L 4.234375 -0.25 C 3.828125 -0.25 3.625 -0.25 3.625 -0.484375 L 3.625 -2 C 3.625 -2.671875 3.625 -2.921875 3.375 -3.203125 C 3.265625 -3.34375 3 -3.5 2.546875 -3.5 C 1.96875 -3.5 1.59375 -3.15625 1.375 -2.671875 L 1.375 -3.5 L 0.25 -3.421875 L 0.25 -3.171875 C 0.8125 -3.171875 0.875 -3.109375 0.875 -2.71875 L 0.875 -0.609375 C 0.875 -0.25 0.78125 -0.25 0.25 -0.25 L 0.25 0 L 1.15625 -0.03125 L 2.03125 0 L 2.03125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.609375 L 1.421875 -2.0625 C 1.421875 -2.890625 1.984375 -3.328125 2.484375 -3.328125 C 2.984375 -3.328125 3.078125 -2.90625 3.078125 -2.453125 L 3.078125 -0.609375 C 3.078125 -0.25 2.984375 -0.25 2.453125 -0.25 L 2.453125 0 L 3.34375 -0.03125 Z M 4.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-4">
+<path style="stroke:none;" d="M 3.171875 -1.484375 L 2.984375 -1.484375 C 2.90625 -0.546875 2.734375 -0.203125 1.828125 -0.203125 L 0.890625 -0.203125 L 3.09375 -3.171875 C 3.15625 -3.265625 3.15625 -3.28125 3.15625 -3.3125 C 3.15625 -3.421875 3.09375 -3.421875 2.953125 -3.421875 L 0.421875 -3.421875 L 0.328125 -2.140625 L 0.53125 -2.140625 C 0.578125 -2.953125 0.734375 -3.234375 1.59375 -3.234375 L 2.5 -3.234375 L 0.296875 -0.25 C 0.21875 -0.171875 0.21875 -0.15625 0.21875 -0.109375 C 0.21875 0 0.28125 0 0.421875 0 L 3.046875 0 Z M 3.171875 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-5">
+<path style="stroke:none;" d="M 1.953125 0 L 1.953125 -0.25 C 1.4375 -0.25 1.40625 -0.28125 1.40625 -0.59375 L 1.40625 -3.5 L 0.296875 -3.421875 L 0.296875 -3.171875 C 0.8125 -3.171875 0.875 -3.125 0.875 -2.734375 L 0.875 -0.609375 C 0.875 -0.25 0.796875 -0.25 0.265625 -0.25 L 0.265625 0 L 1.140625 -0.03125 C 1.40625 -0.03125 1.6875 -0.015625 1.953125 0 Z M 1.515625 -4.78125 C 1.515625 -5 1.34375 -5.203125 1.09375 -5.203125 C 0.828125 -5.203125 0.671875 -4.984375 0.671875 -4.78125 C 0.671875 -4.578125 0.859375 -4.359375 1.09375 -4.359375 C 1.359375 -4.359375 1.515625 -4.59375 1.515625 -4.78125 Z M 1.515625 -4.78125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-6">
+<path style="stroke:none;" d="M 3.734375 -1.6875 C 3.734375 -2.703125 2.9375 -3.546875 1.984375 -3.546875 C 0.984375 -3.546875 0.21875 -2.6875 0.21875 -1.6875 C 0.21875 -0.671875 1.046875 0.09375 1.96875 0.09375 C 2.9375 0.09375 3.734375 -0.6875 3.734375 -1.6875 Z M 3.078125 -1.765625 C 3.078125 -1.46875 3.078125 -1.046875 2.90625 -0.703125 C 2.71875 -0.34375 2.375 -0.109375 1.984375 -0.109375 C 1.640625 -0.109375 1.296875 -0.28125 1.078125 -0.640625 C 0.875 -0.984375 0.875 -1.46875 0.875 -1.765625 C 0.875 -2.0625 0.875 -2.5 1.0625 -2.84375 C 1.28125 -3.203125 1.65625 -3.375 1.96875 -3.375 C 2.328125 -3.375 2.65625 -3.203125 2.875 -2.859375 C 3.078125 -2.515625 3.078125 -2.0625 3.078125 -1.765625 Z M 3.078125 -1.765625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-7">
+<path style="stroke:none;" d="M 3.28125 -0.9375 C 3.28125 -1.015625 3.21875 -1.03125 3.1875 -1.03125 C 3.109375 -1.03125 3.09375 -0.984375 3.078125 -0.921875 C 2.796875 -0.109375 2.09375 -0.109375 2.015625 -0.109375 C 1.609375 -0.109375 1.296875 -0.34375 1.109375 -0.640625 C 0.875 -1.015625 0.875 -1.546875 0.875 -1.828125 L 3.09375 -1.828125 C 3.265625 -1.828125 3.28125 -1.828125 3.28125 -2 C 3.28125 -2.78125 2.859375 -3.546875 1.875 -3.546875 C 0.953125 -3.546875 0.21875 -2.734375 0.21875 -1.75 C 0.21875 -0.6875 1.046875 0.09375 1.96875 0.09375 C 2.9375 0.09375 3.28125 -0.796875 3.28125 -0.9375 Z M 2.765625 -2 L 0.890625 -2 C 0.9375 -3.171875 1.59375 -3.375 1.875 -3.375 C 2.6875 -3.375 2.765625 -2.3125 2.765625 -2 Z M 2.765625 -2 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-8">
+<path style="stroke:none;" d="M 4.125 -1.71875 C 4.125 -2.71875 3.34375 -3.5 2.453125 -3.5 C 1.828125 -3.5 1.484375 -3.125 1.359375 -2.984375 L 1.359375 -5.5 L 0.21875 -5.40625 L 0.21875 -5.171875 C 0.78125 -5.171875 0.84375 -5.109375 0.84375 -4.71875 L 0.84375 0 L 1.03125 0 L 1.328125 -0.484375 C 1.4375 -0.3125 1.78125 0.09375 2.359375 0.09375 C 3.296875 0.09375 4.125 -0.6875 4.125 -1.71875 Z M 3.46875 -1.71875 C 3.46875 -1.421875 3.453125 -0.953125 3.21875 -0.59375 C 3.0625 -0.34375 2.75 -0.09375 2.328125 -0.09375 C 1.96875 -0.09375 1.6875 -0.28125 1.5 -0.578125 C 1.390625 -0.734375 1.390625 -0.765625 1.390625 -0.90625 L 1.390625 -2.53125 C 1.390625 -2.6875 1.390625 -2.6875 1.46875 -2.8125 C 1.78125 -3.265625 2.21875 -3.328125 2.40625 -3.328125 C 2.765625 -3.328125 3.046875 -3.125 3.234375 -2.8125 C 3.453125 -2.5 3.46875 -2.046875 3.46875 -1.71875 Z M 3.46875 -1.71875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-9">
+<path style="stroke:none;" d="M 2.625 -0.984375 L 2.625 -1.4375 L 2.4375 -1.4375 L 2.4375 -1 C 2.4375 -0.40625 2.1875 -0.109375 1.90625 -0.109375 C 1.375 -0.109375 1.375 -0.828125 1.375 -0.96875 L 1.375 -3.171875 L 2.5 -3.171875 L 2.5 -3.421875 L 1.375 -3.421875 L 1.375 -4.875 L 1.171875 -4.875 C 1.171875 -4.21875 0.921875 -3.375 0.15625 -3.34375 L 0.15625 -3.171875 L 0.828125 -3.171875 L 0.828125 -0.984375 C 0.828125 -0.015625 1.5625 0.09375 1.84375 0.09375 C 2.40625 0.09375 2.625 -0.46875 2.625 -0.984375 Z M 2.625 -0.984375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-10">
+<path style="stroke:none;" d="M 4.03125 -3.171875 L 4.03125 -3.421875 C 3.84375 -3.40625 3.609375 -3.390625 3.4375 -3.390625 L 2.734375 -3.421875 L 2.734375 -3.171875 C 3.03125 -3.15625 3.125 -2.984375 3.125 -2.828125 C 3.125 -2.75 3.109375 -2.71875 3.078125 -2.640625 L 2.265625 -0.625 L 1.375 -2.828125 C 1.328125 -2.9375 1.328125 -2.96875 1.328125 -2.96875 C 1.328125 -3.171875 1.640625 -3.171875 1.78125 -3.171875 L 1.78125 -3.421875 L 0.921875 -3.390625 C 0.703125 -3.390625 0.390625 -3.40625 0.15625 -3.421875 L 0.15625 -3.171875 C 0.65625 -3.171875 0.6875 -3.125 0.78125 -2.875 L 1.921875 -0.0625 C 1.96875 0.046875 1.984375 0.09375 2.09375 0.09375 C 2.1875 0.09375 2.21875 0.015625 2.25 -0.0625 L 3.296875 -2.640625 C 3.359375 -2.8125 3.5 -3.15625 4.03125 -3.171875 Z M 4.03125 -3.171875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-11">
+<path style="stroke:none;" d="M 3.828125 -0.703125 L 3.828125 -1.15625 L 3.625 -1.15625 L 3.625 -0.703125 C 3.625 -0.25 3.4375 -0.203125 3.34375 -0.203125 C 3.078125 -0.203125 3.046875 -0.546875 3.046875 -0.59375 L 3.046875 -2.171875 C 3.046875 -2.515625 3.046875 -2.8125 2.765625 -3.109375 C 2.453125 -3.421875 2.0625 -3.546875 1.671875 -3.546875 C 1.03125 -3.546875 0.484375 -3.171875 0.484375 -2.65625 C 0.484375 -2.421875 0.640625 -2.28125 0.84375 -2.28125 C 1.0625 -2.28125 1.21875 -2.4375 1.21875 -2.640625 C 1.21875 -2.734375 1.171875 -3 0.8125 -3.015625 C 1.015625 -3.28125 1.40625 -3.375 1.65625 -3.375 C 2.046875 -3.375 2.5 -3.0625 2.5 -2.359375 L 2.5 -2.0625 C 2.09375 -2.046875 1.546875 -2.015625 1.046875 -1.78125 C 0.453125 -1.515625 0.25 -1.09375 0.25 -0.75 C 0.25 -0.109375 1.015625 0.09375 1.515625 0.09375 C 2.046875 0.09375 2.40625 -0.234375 2.5625 -0.609375 C 2.59375 -0.28125 2.796875 0.046875 3.171875 0.046875 C 3.34375 0.046875 3.828125 -0.0625 3.828125 -0.703125 Z M 2.5 -1.109375 C 2.5 -0.359375 1.9375 -0.09375 1.578125 -0.09375 C 1.1875 -0.09375 0.859375 -0.359375 0.859375 -0.765625 C 0.859375 -1.203125 1.203125 -1.859375 2.5 -1.90625 Z M 2.5 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03a_d4-glyph2-12">
+<path style="stroke:none;" d="M 1.515625 -0.421875 C 1.515625 -0.65625 1.328125 -0.84375 1.09375 -0.84375 C 0.875 -0.84375 0.6875 -0.65625 0.6875 -0.421875 C 0.6875 -0.1875 0.875 0 1.09375 0 C 1.328125 0 1.515625 -0.1875 1.515625 -0.421875 Z M 1.515625 -0.421875 "/>
+</symbol>
+</g>
+<clipPath id="algebra_lez03a_d4-clip1">
+  <path d="M 0.171875 10 L 55 10 L 55 90 L 0.171875 90 Z M 0.171875 10 "/>
+</clipPath>
+<clipPath id="algebra_lez03a_d4-clip2">
+  <path d="M 88 10 L 143.695312 10 L 143.695312 90 L 88 90 Z M 88 10 "/>
+</clipPath>
+</defs>
+<g id="algebra_lez03a_d4-surface1">
+<g clip-path="url(#algebra_lez03a_d4-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 22.675795 -0.000299394 C 22.675795 18.786007 12.525922 34.014748 0.00171793 34.014748 C -12.526417 34.014748 -22.67629 18.786007 -22.67629 -0.000299394 C -22.67629 -18.786606 -12.526417 -34.015346 0.00171793 -34.015346 C 12.525922 -34.015346 22.675795 -18.786606 22.675795 -0.000299394 Z M 22.675795 -0.000299394 " transform="matrix(0.993701,0,0,-0.993701,26.86548,49.86689)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph0-1" x="23.895309" y="12.010862"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.449219 38.597656 C 28.449219 37.726562 27.742188 37.015625 26.867188 37.015625 C 25.992188 37.015625 25.28125 37.726562 25.28125 38.597656 C 25.28125 39.472656 25.992188 40.183594 26.867188 40.183594 C 27.742188 40.183594 28.449219 39.472656 28.449219 38.597656 Z M 28.449219 38.597656 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph0-2" x="16.327283" y="39.711267"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph1-1" x="20.514341" y="40.898939"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 28.449219 61.132812 C 28.449219 60.257812 27.742188 59.550781 26.867188 59.550781 C 25.992188 59.550781 25.28125 60.257812 25.28125 61.132812 C 25.28125 62.007812 25.992188 62.71875 26.867188 62.71875 C 27.742188 62.71875 28.449219 62.007812 28.449219 61.132812 Z M 28.449219 61.132812 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph0-2" x="16.327283" y="62.245422"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph1-2" x="20.513546" y="63.433093"/>
+</g>
+<g clip-path="url(#algebra_lez03a_d4-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 113.387829 -0.000299394 C 113.387829 18.786007 103.234024 34.014748 90.70982 34.014748 C 78.185616 34.014748 68.031812 18.786007 68.031812 -0.000299394 C 68.031812 -18.786606 78.185616 -34.015346 90.70982 -34.015346 C 103.234024 -34.015346 113.387829 -18.786606 113.387829 -0.000299394 Z M 113.387829 -0.000299394 " transform="matrix(0.993701,0,0,-0.993701,26.86548,49.86689)"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph0-3" x="113.800393" y="12.010862"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.589844 38.597656 C 118.589844 37.726562 117.878906 37.015625 117.003906 37.015625 C 116.128906 37.015625 115.421875 37.726562 115.421875 38.597656 C 115.421875 39.472656 116.128906 40.183594 117.003906 40.183594 C 117.878906 40.183594 118.589844 39.472656 118.589844 38.597656 Z M 118.589844 38.597656 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph0-4" x="119.800359" y="40.755647"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph1-1" x="123.199611" y="41.944113"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.589844 61.132812 C 118.589844 60.257812 117.878906 59.550781 117.003906 59.550781 C 116.128906 59.550781 115.421875 60.257812 115.421875 61.132812 C 115.421875 62.007812 116.128906 62.71875 117.003906 62.71875 C 117.878906 62.71875 118.589844 62.007812 118.589844 61.132812 Z M 118.589844 61.132812 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph0-4" x="119.800359" y="63.289801"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph1-2" x="123.199611" y="64.478267"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 11.34067 L 85.379368 11.34067 " transform="matrix(0.993701,0,0,-0.993701,26.86548,49.86689)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.550997 3.111341 C -2.083206 1.24411 -1.045419 0.363563 0.000230114 0.00191027 C -1.045419 -0.363674 -2.083206 -1.244221 -2.550997 -3.111451 " transform="matrix(0.993701,0,0,-0.993701,112.101334,38.599554)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534175 -11.337338 L 85.379368 -11.337338 " transform="matrix(0.993701,0,0,-0.993701,26.86548,49.86689)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.550997 3.110852 C -2.083206 1.243622 -1.045419 0.363075 0.000230114 0.00142195 C -1.045419 -0.364162 -2.083206 -1.244709 -2.550997 -3.11194 " transform="matrix(0.993701,0,0,-0.993701,112.101334,61.134225)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph2-1" x="39.86905" y="108.930481"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph2-2" x="44.381795" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-3" x="48.782077" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-4" x="53.18236" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-5" x="56.702745" y="108.930481"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph2-6" x="58.894966" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-3" x="62.854904" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-7" x="67.255187" y="108.930481"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph2-8" x="73.42081" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-5" x="77.821092" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-5" x="80.021234" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-7" x="82.221375" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-9" x="85.74176" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-9" x="88.821799" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-5" x="91.901839" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-10" x="94.10198" y="108.930481"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03a_d4-glyph2-11" x="97.838577" y="108.930481"/>
+  <use xlink:href="#algebra_lez03a_d4-glyph2-12" x="101.798515" y="108.930481"/>
+</g>
+</g>
+</svg></figure>`
+          },
+          {
+            subtitle: "Come leggere i diagrammi",
+            content: `<p>Nei diagrammi, l'<strong>iniettività</strong> si legge così: in nessun punto di $B$ arrivano due frecce. La <strong>suriettività</strong> si legge: in ogni punto di $B$ arriva almeno una freccia. La <strong>biiettività</strong>: in ogni punto di $B$ arriva esattamente una freccia.</p>
+<p>Per insiemi finiti, se una funzione $f: A \\to B$ è biiettiva, allora i due insiemi devono avere la stessa cardinalità, cioè $|A| = |B|$.</p>`
+          },
+          {
+            subtitle: "Esempi notevoli",
+            content: `<ol>
+  <li>Sia $P := \\{\\text{persone}\\}$ e sia $\\mu: P \\to P$ la funzione <strong>madre</strong>. Questa funzione non è né iniettiva (fratelli diversi hanno la stessa madre) né suriettiva (non tutti sono madri). Se però consideriamo come codominio l'insieme $M = \\{\\text{madri}\\} \\subseteq P$, la funzione $\\mu: P \\to M$ diventa suriettiva, ma rimane non iniettiva. Si noti che qui cambia solo il codominio: l'immagine era e resta $M$.</li>
+  <li>Sia $\\eta: P \\to \\mathbb{N}$ la funzione <strong>età</strong>. Non è iniettiva (ci sono più persone con la stessa età) e non è suriettiva (non esistono persone con età, ad esempio, di 200 anni).</li>
+  <li>Sia $Y$ l'insieme delle stringhe alfanumeriche che rappresentano i <strong>codici fiscali</strong> italiani. La corrispondenza $k$ che associa ad ogni persona il suo codice fiscale non è una funzione, perché non tutti hanno un codice fiscale (es. neonati, stranieri): fallisce l'esistenza. Se restringiamo il dominio a $P' \\subseteq P$, l'insieme delle persone che hanno un codice fiscale, allora $k': P' \\to Y$ è una funzione. Questa funzione è iniettiva (per legge, il codice fiscale è unico), ma non suriettiva (non tutte le possibili combinazioni di stringhe corrispondono a una persona reale).</li>
+  <li><strong>Automobilisti e patenti.</strong> Per ottenere una biiezione bisogna scegliere con cura dominio e codominio. Fissiamo il modello seguente: $G$ è l'insieme dei <em>titolari di patente italiana</em>, e supponiamo che ciascun titolare possieda <em>esattamente una</em> patente valida; $Q$ è l'insieme delle patenti valide <em>intestate agli elementi di $G$</em>, e supponiamo che ogni patente sia intestata a <em>un solo</em> titolare.
+  <br>Sotto queste ipotesi la corrispondenza $f$ che associa a ogni titolare la sua patente è biiettiva, e si vede esattamente quale ipotesi serve a ciascun passo:
+  <ul>
+    <li><em>esistenza</em>: ogni $g \\in G$ possiede almeno una patente valida (per come è definito $G$), quindi $f$ è definita su tutto $G$;</li>
+    <li><em>unicità</em>: ne possiede al più una, quindi $f$ è una funzione $f: G \\to Q$;</li>
+    <li><em>iniettività</em>: due titolari distinti non possono avere la stessa patente, perché ogni patente ha un solo intestatario;</li>
+    <li><em>suriettività</em>: ogni elemento di $Q$ è per costruzione la patente di qualche titolare di $G$.</li>
+  </ul>
+  Se si prendesse come dominio l'insieme di tutti gli italiani, fallirebbe l'esistenza (non tutti hanno la patente); se $Q$ contenesse anche patenti rilasciate ad altri soggetti, fallirebbe la suriettività.</li>
+  <li>Sia $X$ un insieme e $Y \\subseteq X$ un suo sottoinsieme. La <strong>funzione identità</strong> $\\mathrm{id}_X: X \\to X$, definita da $\\mathrm{id}_X(x) = x$, è biiettiva. La <strong>funzione di inclusione</strong> $i: Y \\to X$, definita da $i(y) = y$, è iniettiva; non è suriettiva a meno che $Y=X$.</li>
+</ol>`
+          }
+        ],
+        formulas: [
+          { label: "Iniettività (contronominale)", latex: "f(a) = f(a') \\Rightarrow a = a'" },
+          { label: "Suriettività", latex: "\\forall b \\in B, \\ \\exists a \\in A \\mid f(a) = b \\iff \\operatorname{Im}(f) = B" },
+          { label: "Biiettività", latex: "\\forall b \\in B, \\ \\exists! a \\in A \\mid f(a) = b" }
+        ]
+      },
+
+      {
+        id: "s03-inversa-fibre",
+        type: "section",
+        title: "Relazione inversa, fibre e funzione inversa",
+        icon: "↩️",
+        content: `<p>Il concetto di biiettività è strettamente legato alla possibilità di <em>invertire</em> una funzione. Prima di procedere, è indispensabile distinguere tre oggetti che si scrivono in modo molto simile ma sono di natura diversa: la <strong>relazione inversa</strong>, la <strong>preimmagine</strong> di un insieme e la <strong>funzione inversa</strong>.</p>
+<p>Per evitare ogni ambiguità, nel seguito la relazione inversa sarà sempre denotata con $f^{\\leftarrow}$, il simbolo $f^{-1}(S)$ sarà riservato alla preimmagine di un sottoinsieme $S$ del codominio, e la scrittura $f^{-1}: B \\to A$ indicherà la funzione inversa (che esiste solo nel caso biiettivo).</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: relazione inversa di una funzione",
+            content: `<p>Sia $f: A \\to B$ una funzione, pensata come relazione $f \\subseteq A \\times B$, cioè $f = \\{(a,b) \\in A \\times B \\mid f(a) = b\\}$. Si dice <strong>relazione inversa</strong> (o corrispondenza inversa) di $f$ la relazione $f^{\\leftarrow} \\subseteq B \\times A$ definita da</p>
+<p>$$b \\mathrel{f^{\\leftarrow}} a \\quad \\Longleftrightarrow \\quad f(a) = b,$$</p>
+<p>ossia $f^{\\leftarrow} := \\{ (b,a) \\in B \\times A \\mid f(a) = b \\}$.</p>
+<p>Essa esiste <em>sempre</em>, qualunque sia $f$ (si ottiene semplicemente scambiando le componenti delle coppie di $f$), ma <strong>non è necessariamente una funzione</strong>.</p>`
+          },
+          {
+            subtitle: "Definizione: preimmagine e fibra",
+            content: `<p>Sia $f: A \\to B$ una funzione. Per ogni sottoinsieme $S \\subseteq B$, la <strong>preimmagine</strong> (o controimmagine) di $S$ è il sottoinsieme di $A$</p>
+<p>$$f^{-1}(S) := \\{ a \\in A \\mid f(a) \\in S \\} \\subseteq A .$$</p>
+<p>Nel caso particolare $S = \\{b\\}$ con $b \\in B$, l'insieme</p>
+<p>$$f^{-1}(\\{b\\}) = \\{ a \\in A \\mid f(a) = b \\} \\subseteq A$$</p>
+<p>si dice <strong>fibra</strong> di $b$. Anche questo oggetto è sempre definito: può essere vuoto, contenere un solo elemento o contenerne molti.</p>`
+          },
+          {
+            subtitle: "Quando la relazione inversa è una funzione",
+            content: `<p>Sia $f: A \\to B$ una funzione. La relazione inversa $f^{\\leftarrow} \\subseteq B \\times A$ è sempre definita, ma non è detto che sia una funzione da $B$ ad $A$.</p>
+<ul>
+  <li>Se $f$ <strong>non è suriettiva</strong>, esiste qualche $b \\in B$ che non è nell'immagine di $f$. Per questo $b$, la fibra $f^{-1}(\\{b\\})$ è l'insieme vuoto: nessuna coppia $(b,a)$ appartiene a $f^{\\leftarrow}$. Quindi per la relazione inversa fallisce l'<em>esistenza</em>, cioè essa non è definita su tutto $B$.</li>
+  <li>Se $f$ <strong>non è iniettiva</strong>, esistono $a_1 \\neq a_2$ in $A$ con $f(a_1) = f(a_2) = b$. Allora la fibra $f^{-1}(\\{b\\})$ contiene sia $a_1$ che $a_2$, cioè entrambe le coppie $(b,a_1)$ e $(b,a_2)$ stanno in $f^{\\leftarrow}$: fallisce l'<em>unicità</em>.</li>
+</ul>
+<p>Di conseguenza, la relazione inversa $f^{\\leftarrow}$ è una funzione <strong>se e solo se</strong> $f$ è biiettiva; solo in quel caso ha senso scrivere $f^{-1}(b)$ per indicare un elemento di $A$.</p>`
+          },
+          {
+            subtitle: "Caratterizzazione tramite le fibre",
+            content: `<p>Possiamo caratterizzare le proprietà di una funzione $f$ tramite la cardinalità delle fibre $f^{-1}(\\{b\\})$ per ogni $b \\in B$:</p>
+<ul>
+  <li>$f$ è <strong>iniettiva</strong> $\\iff |f^{-1}(\\{b\\})| \\le 1$, $\\forall b \\in B$.</li>
+  <li>$f$ è <strong>suriettiva</strong> $\\iff |f^{-1}(\\{b\\})| \\ge 1$, $\\forall b \\in B$.</li>
+  <li>$f$ è <strong>biiettiva</strong> $\\iff |f^{-1}(\\{b\\})| = 1$, $\\forall b \\in B$.</li>
+</ul>
+<p>L'ultima condizione è esattamente quella che garantisce che la relazione inversa $f^{\\leftarrow}$ sia una funzione: a ogni $b$ corrisponde uno e un solo elemento di $A$.</p>`
+          },
+          {
+            subtitle: "Terminologia e notazioni",
+            content: `<p>A volte si usano i seguenti termini come sinonimi: <strong>iniezione</strong> per funzione iniettiva, <strong>suriezione</strong> per funzione suriettiva, <strong>biiezione</strong> per funzione biiettiva.</p>
+<p>Esistono anche delle notazioni speciali con le frecce: iniezione $f: A \\hookrightarrow B$, suriezione $f: A \\twoheadrightarrow B$. Per una biiezione, a volte si combina una freccia con una tilde sopra ($f: A \\overset{\\sim}{\\longrightarrow} B$) o si dichiara esplicitamente.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Relazione inversa (esiste sempre)", latex: "f^{\\leftarrow} = \\{ (b,a) \\in B \\times A \\mid f(a) = b \\}" },
+          { label: "Preimmagine di un insieme", latex: "f^{-1}(S) = \\{ a \\in A \\mid f(a) \\in S \\} \\subseteq A" },
+          { label: "Fibra di b", latex: "f^{-1}(\\{b\\}) = \\{ a \\in A \\mid f(a) = b \\}" },
+          { label: "Biiettiva via fibre", latex: "f \\text{ biiettiva} \\iff |f^{-1}(\\{b\\})| = 1 \\ \\ \\forall b \\in B" }
+        ]
+      },
+
+      {
+        id: "s03-tre-oggetti",
+        type: "alert_box",
+        title: "Tre oggetti diversi con nomi simili",
+        icon: "⚠️",
+        content: `<p>È essenziale non confondere le tre nozioni seguenti.</p>
+<ol>
+  <li>La <strong>relazione inversa</strong> $f^{\\leftarrow} \\subseteq B \\times A$: esiste <em>sempre</em>. In generale non è una funzione, perché un $b \\in B$ può non avere alcuna controimmagine (se $f$ non è suriettiva) oppure averne più di una (se $f$ non è iniettiva).</li>
+  <li>La <strong>preimmagine</strong> $f^{-1}(S) \\subseteq A$ di un sottoinsieme $S \\subseteq B$: è definita per <em>ogni</em> funzione $f$ ed è un <em>insieme</em> di elementi di $A$, non un elemento. Ad esempio, per $f: \\mathbb{R} \\to \\mathbb{R}$, $f(x)=x^2$, si ha $f^{-1}(\\{4\\}) = \\{-2,2\\}$ e $f^{-1}(\\{-1\\}) = \\emptyset$.</li>
+  <li>La <strong>funzione inversa</strong> $f^{-1}: B \\to A$: esiste <em>soltanto</em> quando $f$ è biiettiva. In tal caso $f^{-1}$ coincide con la relazione inversa $f^{\\leftarrow}$, che risulta essere una funzione, e per ogni $b \\in B$ la scrittura $f^{-1}(b) = a$ indica l'<em>elemento</em> $a \\in A$ tale che $f(a) = b$.</li>
+</ol>
+<p>La differenza fra i punti 2 e 3 è dunque la differenza fra un <strong>insieme</strong> e un <strong>elemento</strong>:</p>
+<p>$$f^{-1}(\\{b\\}) \\subseteq A \\quad \\text{(sempre definito)}, \\qquad f^{-1}(b) \\in A \\quad \\text{(definito solo se } f \\text{ è biiettiva)}$$</p>
+<p>Quando $f$ è biiettiva i due oggetti sono legati da $f^{-1}(\\{b\\}) = \\{\\, f^{-1}(b) \\,\\}$: la fibra è il singoletto che contiene il valore dell'inversa. Per questo, nelle formule che coinvolgono cardinalità, scriveremo sempre $f^{-1}(\\{b\\})$.</p>
+<p><strong>In breve:</strong> la notazione $f^{-1}$ applicata a un <em>insieme</em> denota sempre la preimmagine; applicata a un <em>elemento</em> ha senso solo nel caso biiettivo.</p>`
+      },
+
+      {
+        id: "s03-es217",
+        type: "esercizio",
+        title: "Esercizio 2.17 — Biiettività dell'inversa",
+        kind: "teoria",
+        source: "docente",
+        icon: "✎",
+        content: `<p>Si dimostri che $f^{-1}$ è biiettiva se (e solo se) $f$ lo è.</p>
+<p><strong>Hint per lo svolgimento.</strong> Se $f$ è biiettiva, $f^{-1}$ è una funzione. Bisogna dimostrare che $f^{-1}$ è iniettiva e suriettiva. Per l'iniettività, si prenda $f^{-1}(b_1) = f^{-1}(b_2)$ e si applichi $f$ ad entrambi i membri. Per la suriettività, si prenda un generico $a \\in A$ e si cerchi un $b \\in B$ tale che $f^{-1}(b)=a$ (suggerimento: $b = f(a)$).</p>`,
+        solution: `<p><em>Integrazione del curatore: traccia di soluzione.</em></p>
+<p>Sia $f: A \\to B$ biiettiva; allora la relazione inversa è una funzione $f^{-1}: B \\to A$, e per definizione vale l'equivalenza</p>
+<p>$$f^{-1}(b) = a \\quad \\Longleftrightarrow \\quad f(a) = b .$$</p>
+<p>In particolare, per ogni $b \\in B$ si ha l'uguaglianza puntuale $f\\bigl(f^{-1}(b)\\bigr) = b$: essa segue <em>direttamente dalla definizione di funzione inversa</em>, senza bisogno della nozione di composizione (la riscrittura compatta $f \\circ f^{-1} = \\mathrm{id}_B$ sarà disponibile dopo la sezione sulla composizione).</p>
+<p><strong>Iniettività di $f^{-1}$.</strong> Siano $b_1, b_2 \\in B$ con $f^{-1}(b_1) = f^{-1}(b_2) =: a$. Per l'equivalenza sopra, $f(a) = b_1$ e $f(a) = b_2$; poiché $f$ è una funzione, il valore $f(a)$ è unico e quindi $b_1 = f(a) = b_2$.</p>
+<p><strong>Suriettività di $f^{-1}$.</strong> Sia $a \\in A$ e poniamo $b := f(a) \\in B$. Allora $(b,a) \\in f^{\\leftarrow}$, cioè $f^{-1}(b) = a$: ogni elemento di $A$ è immagine tramite $f^{-1}$.</p>
+<p>Quindi $f^{-1}$ è biiettiva. Viceversa, se $f^{-1}$ è biiettiva, la sua relazione inversa è $f$ ed è una funzione; applicando lo stesso argomento a $f^{-1}$ si conclude che $f$ è biiettiva.</p>`
+      },
+
+      {
+        id: "s03-composizione",
+        type: "section",
+        title: "Composizione di funzioni",
+        icon: "🔗",
+        content: `<p>Per ogni coppia di funzioni $f: A \\to B$ e $g: B \\to C$, si definisce la loro <strong>composizione</strong> (o <strong>prodotto operatorio</strong>) la funzione $g \\circ f: A \\to C$ definita da</p>
+<p>$$(g \\circ f)(a) := g(f(a)) \\quad \\text{per ogni } a \\in A.$$</p>
+<p>Graficamente, la composizione può essere visualizzata come segue: tre insiemi $A$, $B$, $C$, dove la freccia $f$ porta $a \\in A$ in $f(a) \\in B$ e la freccia $g$ porta $f(a)$ in $g(f(a)) \\in C$. L'arco tratteggiato in basso rappresenta la funzione composta $g \\circ f: A \\to C$, che realizza in un solo passo il cammino $a \\mapsto g(f(a))$.</p>
+<figure class="figura" data-id="algebra_lez03b_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez03b_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="313.856pt" height="182.742pt" viewBox="0 0 313.856 182.742" version="1.2"><style>#algebra_lez03b_d1 [fill="rgb(0%,0%,0%)"],#algebra_lez03b_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez03b_d1 [stroke="rgb(0%,0%,0%)"],#algebra_lez03b_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-1">
+<path style="stroke:none;" d="M 7.171875 -0.203125 C 7.171875 -0.3125 7.078125 -0.3125 6.953125 -0.3125 C 6.328125 -0.3125 6.328125 -0.375 6.296875 -0.671875 L 5.6875 -6.890625 C 5.671875 -7.09375 5.671875 -7.125 5.5 -7.125 C 5.34375 -7.125 5.3125 -7.0625 5.25 -6.953125 L 1.78125 -1.140625 C 1.390625 -0.484375 1 -0.34375 0.5625 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.484375 0 C 0.75 0 1.0625 -0.03125 1.328125 -0.03125 C 1.65625 -0.03125 2.015625 0 2.328125 0 C 2.390625 0 2.515625 0 2.515625 -0.1875 C 2.515625 -0.296875 2.421875 -0.3125 2.359375 -0.3125 C 2.125 -0.328125 1.890625 -0.40625 1.890625 -0.65625 C 1.890625 -0.78125 1.953125 -0.890625 2.03125 -1.03125 C 2.09375 -1.140625 2.109375 -1.140625 2.78125 -2.296875 L 5.28125 -2.296875 C 5.3125 -2.09375 5.4375 -0.734375 5.4375 -0.640625 C 5.4375 -0.34375 4.921875 -0.3125 4.734375 -0.3125 C 4.59375 -0.3125 4.484375 -0.3125 4.484375 -0.109375 C 4.484375 0 4.625 0 4.625 0 C 5.03125 0 5.46875 -0.03125 5.875 -0.03125 C 6.125 -0.03125 6.75 0 7 0 C 7.0625 0 7.171875 0 7.171875 -0.203125 Z M 5.25 -2.609375 L 2.96875 -2.609375 L 4.9375 -5.890625 Z M 5.25 -2.609375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-2">
+<path style="stroke:none;" d="M 6.984375 -2.15625 C 6.984375 -2.859375 6.40625 -3.4375 5.4375 -3.546875 C 6.484375 -3.75 7.53125 -4.484375 7.53125 -5.421875 C 7.53125 -6.15625 6.875 -6.796875 5.671875 -6.796875 L 2.328125 -6.796875 C 2.140625 -6.796875 2.046875 -6.796875 2.046875 -6.59375 C 2.046875 -6.484375 2.125 -6.484375 2.3125 -6.484375 C 2.3125 -6.484375 2.53125 -6.484375 2.703125 -6.46875 C 2.875 -6.453125 2.96875 -6.4375 2.96875 -6.3125 C 2.96875 -6.265625 2.953125 -6.234375 2.921875 -6.125 L 1.59375 -0.78125 C 1.5 -0.390625 1.46875 -0.3125 0.6875 -0.3125 C 0.515625 -0.3125 0.421875 -0.3125 0.421875 -0.109375 C 0.421875 0 0.5 0 0.6875 0 L 4.234375 0 C 5.8125 0 6.984375 -1.171875 6.984375 -2.15625 Z M 6.625 -5.46875 C 6.625 -4.59375 5.765625 -3.640625 4.546875 -3.640625 L 3.09375 -3.640625 L 3.71875 -6.109375 C 3.796875 -6.453125 3.828125 -6.484375 4.25 -6.484375 L 5.53125 -6.484375 C 6.40625 -6.484375 6.625 -5.90625 6.625 -5.46875 Z M 6.0625 -2.265625 C 6.0625 -1.28125 5.171875 -0.3125 4 -0.3125 L 2.640625 -0.3125 C 2.515625 -0.3125 2.484375 -0.3125 2.421875 -0.3125 C 2.328125 -0.328125 2.296875 -0.34375 2.296875 -0.421875 C 2.296875 -0.453125 2.296875 -0.46875 2.34375 -0.640625 L 3.03125 -3.421875 L 4.921875 -3.421875 C 5.875 -3.421875 6.0625 -2.6875 6.0625 -2.265625 Z M 6.0625 -2.265625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-3">
+<path style="stroke:none;" d="M 6.4375 -2.390625 C 6.4375 -2.484375 6.3125 -2.484375 6.3125 -2.484375 C 6.265625 -2.484375 6.203125 -2.46875 6.1875 -2.390625 C 6.09375 -2.09375 5.875 -1.390625 5.1875 -0.8125 C 4.5 -0.265625 3.875 -0.09375 3.359375 -0.09375 C 2.453125 -0.09375 1.40625 -0.609375 1.40625 -2.15625 C 1.40625 -2.734375 1.609375 -4.34375 2.609375 -5.5 C 3.21875 -6.203125 4.15625 -6.703125 5.03125 -6.703125 C 6.046875 -6.703125 6.640625 -5.9375 6.640625 -4.78125 C 6.640625 -4.390625 6.609375 -4.375 6.609375 -4.28125 C 6.609375 -4.1875 6.71875 -4.1875 6.765625 -4.1875 C 6.890625 -4.1875 6.890625 -4.203125 6.9375 -4.375 L 7.5625 -6.921875 C 7.5625 -6.953125 7.546875 -7.015625 7.453125 -7.015625 C 7.421875 -7.015625 7.421875 -7 7.3125 -6.890625 L 6.609375 -6.125 C 6.515625 -6.265625 6.0625 -7.015625 4.953125 -7.015625 C 2.734375 -7.015625 0.5 -4.8125 0.5 -2.515625 C 0.5 -0.859375 1.671875 0.21875 3.1875 0.21875 C 4.0625 0.21875 4.8125 -0.171875 5.34375 -0.640625 C 6.265625 -1.453125 6.4375 -2.359375 6.4375 -2.390625 Z M 6.4375 -2.390625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-4">
+<path style="stroke:none;" d="M 4.953125 -1.421875 C 4.953125 -1.515625 4.859375 -1.515625 4.84375 -1.515625 C 4.734375 -1.515625 4.734375 -1.484375 4.703125 -1.34375 C 4.53125 -0.703125 4.34375 -0.109375 3.9375 -0.109375 C 3.671875 -0.109375 3.640625 -0.375 3.640625 -0.5625 C 3.640625 -0.78125 3.65625 -0.859375 3.765625 -1.296875 L 3.984375 -2.203125 L 4.34375 -3.59375 C 4.421875 -3.875 4.421875 -3.890625 4.421875 -3.9375 C 4.421875 -4.09375 4.296875 -4.203125 4.125 -4.203125 C 3.890625 -4.203125 3.75 -3.984375 3.71875 -3.765625 C 3.53125 -4.125 3.25 -4.40625 2.796875 -4.40625 C 1.625 -4.40625 0.390625 -2.9375 0.390625 -1.484375 C 0.390625 -0.546875 0.953125 0.109375 1.71875 0.109375 C 1.921875 0.109375 2.421875 0.0625 3.015625 -0.640625 C 3.09375 -0.21875 3.4375 0.109375 3.921875 0.109375 C 4.265625 0.109375 4.5 -0.125 4.65625 -0.4375 C 4.828125 -0.796875 4.953125 -1.421875 4.953125 -1.421875 Z M 3.5625 -3.140625 L 3.0625 -1.1875 C 3.015625 -1 3.015625 -0.984375 2.859375 -0.8125 C 2.421875 -0.265625 2.015625 -0.109375 1.734375 -0.109375 C 1.25 -0.109375 1.109375 -0.65625 1.109375 -1.046875 C 1.109375 -1.546875 1.421875 -2.765625 1.65625 -3.21875 C 1.953125 -3.8125 2.40625 -4.1875 2.8125 -4.1875 C 3.453125 -4.1875 3.59375 -3.359375 3.59375 -3.296875 C 3.59375 -3.25 3.578125 -3.1875 3.5625 -3.140625 Z M 3.5625 -3.140625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-5">
+<path style="stroke:none;" d="M 5.5 -6.328125 C 5.5 -6.78125 5.03125 -7.015625 4.625 -7.015625 C 4.296875 -7.015625 3.65625 -6.84375 3.359375 -5.859375 C 3.296875 -5.640625 3.28125 -5.546875 3.03125 -4.296875 L 2.34375 -4.296875 C 2.15625 -4.296875 2.046875 -4.296875 2.046875 -4.09375 C 2.046875 -3.984375 2.140625 -3.984375 2.328125 -3.984375 L 2.984375 -3.984375 L 2.234375 -0.046875 C 2.0625 0.921875 1.890625 1.828125 1.375 1.828125 C 1.328125 1.828125 1.078125 1.828125 0.890625 1.640625 C 1.359375 1.609375 1.4375 1.25 1.4375 1.109375 C 1.4375 0.875 1.265625 0.75 1.078125 0.75 C 0.8125 0.75 0.53125 0.96875 0.53125 1.359375 C 0.53125 1.796875 0.96875 2.046875 1.375 2.046875 C 1.921875 2.046875 2.3125 1.453125 2.5 1.078125 C 2.8125 0.453125 3.046875 -0.75 3.0625 -0.828125 L 3.65625 -3.984375 L 4.515625 -3.984375 C 4.703125 -3.984375 4.8125 -3.984375 4.8125 -4.1875 C 4.8125 -4.296875 4.703125 -4.296875 4.53125 -4.296875 L 3.71875 -4.296875 C 3.828125 -4.859375 3.8125 -4.84375 3.921875 -5.421875 C 3.96875 -5.640625 4.09375 -6.34375 4.15625 -6.453125 C 4.25 -6.65625 4.421875 -6.796875 4.625 -6.796875 C 4.671875 -6.796875 4.921875 -6.796875 5.109375 -6.625 C 4.671875 -6.578125 4.578125 -6.234375 4.578125 -6.078125 C 4.578125 -5.859375 4.75 -5.734375 4.953125 -5.734375 C 5.203125 -5.734375 5.5 -5.953125 5.5 -6.328125 Z M 5.5 -6.328125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph0-6">
+<path style="stroke:none;" d="M 3.578125 0.671875 L 4.6875 -3.75 C 4.703125 -3.8125 4.71875 -3.859375 4.71875 -3.9375 C 4.71875 -4.09375 4.59375 -4.203125 4.421875 -4.203125 C 4.328125 -4.203125 4.0625 -4.125 4.015625 -3.765625 C 3.84375 -4.140625 3.5 -4.40625 3.09375 -4.40625 C 1.953125 -4.40625 0.734375 -3 0.734375 -1.578125 C 0.734375 -0.59375 1.328125 0 2.046875 0 C 2.640625 0 3.109375 -0.46875 3.203125 -0.578125 L 3.21875 -0.5625 L 2.890625 0.75 C 2.84375 0.84375 2.515625 1.828125 1.453125 1.828125 C 1.265625 1.828125 0.9375 1.8125 0.65625 1.71875 C 0.953125 1.625 1.0625 1.375 1.0625 1.203125 C 1.0625 1.046875 0.953125 0.859375 0.6875 0.859375 C 0.46875 0.859375 0.15625 1.03125 0.15625 1.4375 C 0.15625 1.84375 0.515625 2.046875 1.46875 2.046875 C 2.71875 2.046875 3.4375 1.265625 3.578125 0.671875 Z M 3.875 -3.171875 L 3.390625 -1.28125 C 3.328125 -1.015625 3.109375 -0.765625 2.890625 -0.578125 C 2.671875 -0.390625 2.375 -0.21875 2.078125 -0.21875 C 1.578125 -0.21875 1.4375 -0.734375 1.4375 -1.140625 C 1.4375 -1.609375 1.71875 -2.78125 1.984375 -3.296875 C 2.265625 -3.78125 2.6875 -4.1875 3.109375 -4.1875 C 3.765625 -4.1875 3.90625 -3.375 3.90625 -3.328125 C 3.90625 -3.28125 3.875 -3.21875 3.875 -3.171875 Z M 3.875 -3.171875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph1-1">
+<path style="stroke:none;" d="M 3.296875 2.390625 C 3.296875 2.359375 3.296875 2.34375 3.125 2.171875 C 1.875 0.921875 1.5625 -0.96875 1.5625 -2.484375 C 1.5625 -4.21875 1.9375 -5.953125 3.171875 -7.203125 C 3.296875 -7.3125 3.296875 -7.328125 3.296875 -7.359375 C 3.296875 -7.4375 3.25 -7.46875 3.1875 -7.46875 C 3.09375 -7.46875 2.203125 -6.78125 1.609375 -5.53125 C 1.109375 -4.421875 0.984375 -3.328125 0.984375 -2.484375 C 0.984375 -1.71875 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.84375 3.09375 2.484375 3.1875 2.484375 C 3.25 2.484375 3.296875 2.453125 3.296875 2.390625 Z M 3.296875 2.390625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph1-2">
+<path style="stroke:none;" d="M 2.875 -2.484375 C 2.875 -3.265625 2.765625 -4.46875 2.21875 -5.59375 C 1.625 -6.8125 0.765625 -7.46875 0.671875 -7.46875 C 0.609375 -7.46875 0.5625 -7.421875 0.5625 -7.359375 C 0.5625 -7.328125 0.5625 -7.3125 0.75 -7.140625 C 1.734375 -6.15625 2.296875 -4.5625 2.296875 -2.484375 C 2.296875 -0.78125 1.9375 0.96875 0.703125 2.21875 C 0.5625 2.34375 0.5625 2.359375 0.5625 2.390625 C 0.5625 2.453125 0.609375 2.484375 0.671875 2.484375 C 0.765625 2.484375 1.65625 1.8125 2.25 0.546875 C 2.75 -0.546875 2.875 -1.65625 2.875 -2.484375 Z M 2.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez03b_d1-glyph2-1">
+<path style="stroke:none;" d="M 4.40625 -2.484375 C 4.40625 -3.546875 3.53125 -4.421875 2.484375 -4.421875 C 1.40625 -4.421875 0.5625 -3.53125 0.5625 -2.484375 C 0.5625 -1.421875 1.4375 -0.5625 2.484375 -0.5625 C 3.5625 -0.5625 4.40625 -1.4375 4.40625 -2.484375 Z M 4.015625 -2.484375 C 4.015625 -1.640625 3.328125 -0.953125 2.484375 -0.953125 C 1.625 -0.953125 0.953125 -1.65625 0.953125 -2.484375 C 0.953125 -3.3125 1.625 -4.015625 2.484375 -4.015625 C 3.328125 -4.015625 4.015625 -3.328125 4.015625 -2.484375 Z M 4.015625 -2.484375 "/>
+</symbol>
+</g>
+<clipPath id="algebra_lez03b_d1-clip1">
+  <path d="M 0.148438 18 L 61 18 L 61 141 L 0.148438 141 Z M 0.148438 18 "/>
+</clipPath>
+</defs>
+<g id="algebra_lez03b_d1-surface1">
+<g clip-path="url(#algebra_lez03b_d1-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -80.789169 -0.000681383 C -80.789169 30.530644 -92.211523 55.276469 -106.3017 55.276469 C -120.391878 55.276469 -131.814231 30.530644 -131.814231 -0.000681383 C -131.814231 -30.528095 -120.391878 -55.277832 -106.3017 -55.277832 C -92.211523 -55.277832 -80.789169 -30.528095 -80.789169 -0.000681383 Z M -80.789169 -0.000681383 " transform="matrix(0.99859,0,0,-0.99859,135.952614,79.479788)"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 25.513043 -0.000681383 C 25.513043 30.530644 14.090689 55.276469 0.000512115 55.276469 C -14.089665 55.276469 -25.512019 30.530644 -25.512019 -0.000681383 C -25.512019 -30.528095 -14.089665 -55.277832 0.000512115 -55.277832 C 14.090689 -55.277832 25.513043 -30.528095 25.513043 -0.000681383 Z M 25.513043 -0.000681383 " transform="matrix(0.99859,0,0,-0.99859,135.952614,79.479788)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 131.811344 -0.000681383 C 131.811344 30.530644 120.38899 55.276469 106.298813 55.276469 C 92.208635 55.276469 80.786282 30.530644 80.786282 -0.000681383 C 80.786282 -30.528095 92.208635 -55.277832 106.298813 -55.277832 C 120.38899 -55.277832 131.811344 -30.528095 131.811344 -0.000681383 Z M 131.811344 -0.000681383 " transform="matrix(0.99859,0,0,-0.99859,135.952614,79.479788)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-1" x="26.072745" y="14.094102"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-2" x="131.930292" y="14.094102"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-3" x="238.19127" y="14.094102"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 31.59375 49.757812 C 31.59375 48.769531 30.789062 47.96875 29.800781 47.96875 C 28.8125 47.96875 28.011719 48.769531 28.011719 49.757812 C 28.011719 50.746094 28.8125 51.546875 29.800781 51.546875 C 30.789062 51.546875 31.59375 50.746094 31.59375 49.757812 Z M 31.59375 49.757812 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-4" x="19.040673" y="51.899727"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 31.59375 79.480469 C 31.59375 78.492188 30.789062 77.6875 29.800781 77.6875 C 28.8125 77.6875 28.011719 78.492188 28.011719 79.480469 C 28.011719 80.46875 28.8125 81.269531 29.800781 81.269531 C 30.789062 81.269531 31.59375 80.46875 31.59375 79.480469 Z M 31.59375 79.480469 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 31.59375 109.203125 C 31.59375 108.210938 30.789062 107.410156 29.800781 107.410156 C 28.8125 107.410156 28.011719 108.210938 28.011719 109.203125 C 28.011719 110.191406 28.8125 110.992188 29.800781 110.992188 C 30.789062 110.992188 31.59375 110.191406 31.59375 109.203125 Z M 31.59375 109.203125 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 137.742188 64.617188 C 137.742188 63.628906 136.941406 62.828125 135.953125 62.828125 C 134.964844 62.828125 134.160156 63.628906 134.160156 64.617188 C 134.160156 65.609375 134.964844 66.410156 135.953125 66.410156 C 136.941406 66.410156 137.742188 65.609375 137.742188 64.617188 Z M 137.742188 64.617188 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-5" x="126.483982" y="55.631458"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph1-1" x="132.425593" y="55.631458"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-4" x="136.294131" y="55.631458"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph1-2" x="141.553706" y="55.631458"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 137.742188 94.339844 C 137.742188 93.351562 136.941406 92.550781 135.953125 92.550781 C 134.964844 92.550781 134.160156 93.351562 134.160156 94.339844 C 134.160156 95.332031 134.964844 96.132812 135.953125 96.132812 C 136.941406 96.132812 137.742188 95.332031 137.742188 94.339844 Z M 137.742188 94.339844 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 137.742188 119.816406 C 137.742188 118.828125 136.941406 118.027344 135.953125 118.027344 C 134.964844 118.027344 134.160156 118.828125 134.160156 119.816406 C 134.160156 120.804688 134.964844 121.609375 135.953125 121.609375 C 136.941406 121.609375 137.742188 120.804688 137.742188 119.816406 Z M 137.742188 119.816406 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 243.894531 58.25 C 243.894531 57.261719 243.09375 56.457031 242.101562 56.457031 C 241.113281 56.457031 240.3125 57.261719 240.3125 58.25 C 240.3125 59.238281 241.113281 60.039062 242.101562 60.039062 C 243.09375 60.039062 243.894531 59.238281 243.894531 58.25 Z M 243.894531 58.25 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-6" x="274.489024" y="60.736251"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph1-1" x="279.59182" y="60.736251"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-5" x="283.460358" y="60.736251"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph1-1" x="289.40197" y="60.736251"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-4" x="293.271507" y="60.736251"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph1-2" x="298.530082" y="60.736251"/>
+  <use xlink:href="#algebra_lez03b_d1-glyph1-2" x="302.399075" y="60.736251"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 243.894531 87.972656 C 243.894531 86.984375 243.09375 86.179688 242.101562 86.179688 C 241.113281 86.179688 240.3125 86.984375 240.3125 87.972656 C 240.3125 88.960938 241.113281 89.761719 242.101562 89.761719 C 243.09375 89.761719 243.894531 88.960938 243.894531 87.972656 Z M 243.894531 87.972656 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 243.894531 117.695312 C 243.894531 116.703125 243.09375 115.902344 242.101562 115.902344 C 241.113281 115.902344 240.3125 116.703125 240.3125 117.695312 C 240.3125 118.683594 241.113281 119.484375 242.101562 119.484375 C 243.09375 119.484375 243.894531 118.683594 243.894531 117.695312 Z M 243.894531 117.695312 "/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -81.638022 28.915085 L -27.143225 18.012996 " transform="matrix(0.99859,0,0,-0.99859,135.952614,79.479788)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.551842 3.11018 C -2.08311 1.245147 -1.045116 0.363641 0.00132132 -0.00155014 C -1.047425 -0.362884 -2.083902 -1.244371 -2.551903 -3.11323 " transform="matrix(0.979168,0.195824,0.195824,-0.979168,109.237291,61.568536)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-5" x="79.058938" y="50.478733"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 27.214661 16.15882 L 79.143341 20.344408 " transform="matrix(0.99859,0,0,-0.99859,135.952614,79.479788)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.549947 3.112069 C -2.084272 1.245601 -1.044896 0.361148 0.00120498 -0.00186076 C -1.044575 -0.364951 -2.084752 -1.242631 -2.549514 -3.112566 " transform="matrix(0.995295,-0.0802567,-0.0802567,-0.995295,215.381464,59.131057)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-6" x="186.901682" y="55.57354"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M -106.3017 -55.277832 C -28.391078 -83.634216 28.392102 -83.634216 105.551666 -55.547744 " transform="matrix(0.99859,0,0,-0.99859,135.952614,79.479788)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.550432 3.111566 C -2.085419 1.243867 -1.04528 0.361586 0.00169537 0.00133908 C -1.046492 -0.362312 -2.084135 -1.245996 -2.550898 -3.111754 " transform="matrix(0.938355,-0.341528,-0.341528,-0.938355,241.729335,134.814336)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-6" x="125.733042" y="173.254395"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph2-1" x="133.045718" y="173.254395"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez03b_d1-glyph0-5" x="140.231572" y="173.254395"/>
+</g>
+</g>
+</svg></figure>`,
+        subsections: [
+          {
+            subtitle: "Osservazioni sull'ordine e sulla buona definizione",
+            content: `<p>Si noti l'<strong>ordine dei simboli</strong>: in $g \\circ f$ si applica <em>prima</em> $f$ e <em>poi</em> $g$. Perché la scrittura abbia senso, il codominio di $f$ deve coincidere con il dominio di $g$.</p>
+<p>A priori, $g \\circ f$ sarebbe soltanto una corrispondenza. Poiché $f$ e $g$ sono funzioni, anche $g \\circ f$ è una funzione: per ogni $a \\in A$ esiste un unico $b = f(a) \\in B$, e per questo $b$ esiste un unico $c = g(b) \\in C$. Di conseguenza, per ogni $a \\in A$ esiste un unico $c = g(f(a)) \\in C$.</p>`
+          },
+          {
+            subtitle: "Composizione di corrispondenze",
+            content: `<p>La composizione si definisce più in generale fra corrispondenze. Siano $\\rho \\subseteq A \\times B$ e $\\sigma \\subseteq B \\times C$ due corrispondenze. La loro composizione $\\sigma \\circ \\rho \\subseteq A \\times C$ è</p>
+<p>$$\\sigma \\circ \\rho := \\{ (a,c) \\in A \\times C \\mid \\exists\\, b \\in B \\text{ tale che } (a,b) \\in \\rho \\text{ e } (b,c) \\in \\sigma \\} .$$</p>
+<p>Quando $\\rho$ e $\\sigma$ sono funzioni, questa definizione restituisce esattamente la funzione $\\sigma \\circ \\rho$ data sopra: l'unico $b$ con $(a,b) \\in \\rho$ è $b = \\rho(a)$, e l'unico $c$ con $(b,c) \\in \\sigma$ è $c = \\sigma(\\rho(a))$.</p>
+<p>Avere a disposizione la composizione fra corrispondenze è necessario per enunciare esercizi in cui <em>non</em> si sa ancora che gli oggetti coinvolti siano funzioni: in quei casi le uguaglianze del tipo $g \\circ f = \\mathrm{id}_A$ vanno lette come <strong>uguaglianze tra relazioni</strong>, cioè tra sottoinsiemi di $A \\times A$. Ci servirà questa versione più generale nell'Esercizio 3.9.</p>`
+          },
+          {
+            subtitle: "Proposizione: associatività ed elemento neutro",
+            content: `<p><strong>(1) Associatività</strong>: date $f: A \\to B$, $g: B \\to C$, $h: C \\to D$, le funzioni $h \\circ (g \\circ f)$ e $(h \\circ g) \\circ f$ sono entrambe funzioni da $A$ a $D$ e</p>
+<p>$$h \\circ (g \\circ f) = (h \\circ g) \\circ f .$$</p>
+<p><strong>(2) Elemento neutro</strong>: per ogni funzione $f: A \\to B$, indicando con $\\mathrm{id}_A$ e $\\mathrm{id}_B$ le funzioni identità su $A$ e su $B$,</p>
+<p>$$f \\circ \\mathrm{id}_A = f \\quad \\text{e} \\quad \\mathrm{id}_B \\circ f = f .$$</p>
+<p><em>Dimostrazione.</em> Due funzioni con lo stesso dominio e lo stesso codominio coincidono se e solo se assumono lo stesso valore su ogni elemento del dominio; verifichiamo dunque le uguaglianze puntualmente.</p>
+<p><strong>(1)</strong> Per ogni $a \\in A$:</p>
+<p>$$\\begin{aligned}\\bigl(h \\circ (g \\circ f)\\bigr)(a) &= h\\bigl((g \\circ f)(a)\\bigr) && \\text{(def. di composizione)} \\\\ &= h\\bigl(g(f(a))\\bigr) && \\text{(def. di composizione)} \\\\ &= (h \\circ g)\\bigl(f(a)\\bigr) && \\text{(def. di composizione)} \\\\ &= \\bigl((h \\circ g) \\circ f\\bigr)(a) && \\text{(def. di composizione)}\\end{aligned}$$</p>
+<p><strong>(2)</strong> Per ogni $a \\in A$:</p>
+<p>$$\\begin{aligned}(f \\circ \\mathrm{id}_A)(a) &= f(\\mathrm{id}_A(a)) = f(a), \\\\ (\\mathrm{id}_B \\circ f)(a) &= \\mathrm{id}_B(f(a)) = f(a).\\end{aligned}$$</p>`
+          },
+          {
+            subtitle: "La composizione non è commutativa",
+            content: `<p>Date $f: A \\to B$ e $g: B \\to C$, la composizione $g \\circ f: A \\to C$ è definita, ma scambiando l'ordine la scrittura $f \\circ g$ ha senso solo se $C = A$: in generale la composizione nell'ordine opposto <em>non è nemmeno definita</em>.</p>
+<p>Anche quando entrambe le scritture hanno senso, ad esempio per $f: A \\to B$ e $g: B \\to A$, le due composizioni non hanno in generale lo stesso dominio e codominio ($g \\circ f: A \\to A$ mentre $f \\circ g: B \\to B$), e anche nel caso $A = B$ può accadere che $g \\circ f \\neq f \\circ g$.</p>
+<p>Due controesempi espliciti sono discussi nell'Esercizio 3.5 qui sotto.</p>`
+          },
+          {
+            subtitle: "Notazione per la composizione ripetuta",
+            content: `<p>Per ogni funzione $f: A \\to A$, indichiamo con un esponente il numero di volte che $f$ viene composta con se stessa:</p>
+<p>$$\\begin{aligned} f^0 &:= \\mathrm{id}_A \\\\ f^1 &:= f \\\\ f^2 &:= f \\circ f \\\\ &\\vdots \\\\ f^n &:= \\underbrace{f \\circ \\dots \\circ f}_{n \\text{ volte}} \\end{aligned}$$</p>
+<p>per ogni $n \\in \\mathbb{N}$. La definizione è ben posta proprio grazie all'<strong>associatività</strong>: il risultato non dipende dall'ordine in cui si eseguono le composizioni.</p>
+<p><strong>Attenzione a non confondere l'esponente con un elevamento a potenza.</strong> Se $f(x) = x+1$, allora $f^2(x) = f(f(x)) = x+2$, mentre $(f(x))^2 = (x+1)^2$. Qui l'esponente indica <em>iterazione</em>, non elevamento al quadrato.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Composizione", latex: "(g \\circ f)(a) = g(f(a))" },
+          { label: "Associatività", latex: "h \\circ (g \\circ f) = (h \\circ g) \\circ f" },
+          { label: "Elemento neutro", latex: "f \\circ \\mathrm{id}_A = f = \\mathrm{id}_B \\circ f" },
+          { label: "Iterazione", latex: "f^n := \\underbrace{f \\circ \\dots \\circ f}_{n \\text{ volte}}, \\quad f^0 = \\mathrm{id}_A" }
+        ]
+      },
+
+      {
+        id: "s03-es35",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Esercizio 3.5 (non commutatività)",
+        icon: "✎",
+        source: "docente",
+        content: `<p><strong>(1)</strong> Sia $A=B=\\mathbb{N}$ e siano $f: \\mathbb{N} \\to \\mathbb{N}, n \\mapsto n+1$ e $g: \\mathbb{N} \\to \\mathbb{N}, n \\mapsto 3n$: si calcolino $f \\circ g$ e $g \\circ f$ e si confrontino.</p>
+<p><strong>(2)</strong> Sia $A=B=\\mathbb{Z}$ e siano $q: \\mathbb{Z} \\to \\mathbb{Z}, z \\mapsto z^2$ e $t: \\mathbb{Z} \\to \\mathbb{Z}, z \\mapsto z-3$: si calcolino $q \\circ t$ e $t \\circ q$ e si stabilisca se esiste $z_0$ in cui coincidono.</p>`,
+        steps: [
+          `<strong>Punto 1.</strong> Qui dominio e codominio di entrambe le funzioni sono $\\mathbb{N}$, quindi entrambe le composizioni sono definite: $$\\begin{aligned}(f \\circ g)(n) &= f(g(n)) = f(3n) = 3n + 1 \\\\ (g \\circ f)(n) &= g(f(n)) = g(n+1) = 3(n+1) = 3n + 3\\end{aligned}$$`,
+          `Come si vede, $f \\circ g \\neq g \\circ f$: ad esempio per $n=0$ si ottiene $1$ nel primo caso e $3$ nel secondo. Qui le due composizioni differiscono in <em>ogni</em> punto.`,
+          `<strong>Punto 2.</strong> Analogamente su $\\mathbb{Z}$, con $q(z) = z^2$ e $t(z) = z-3$: $$\\begin{aligned}(q \\circ t)(z) &= q(t(z)) = q(z-3) = (z-3)^2 = z^2 - 6z + 9 \\\\ (t \\circ q)(z) &= t(q(z)) = t(z^2) = z^2 - 3\\end{aligned}$$ Anche in questo caso le due funzioni composte sono diverse.`,
+          `Ci chiediamo se esista uno $z_0 \\in \\mathbb{Z}$ in cui assumano lo stesso valore: $$\\begin{aligned}(q \\circ t)(z_0) &= (t \\circ q)(z_0) \\\\ z_0^2 - 6z_0 + 9 &= z_0^2 - 3 \\\\ -6z_0 &= -12 \\\\ z_0 &= 2\\end{aligned}$$`,
+          `Esiste ed è unico: per $z_0 = 2$ entrambe le composte valgono $1$. Dunque due funzioni possono coincidere in alcuni punti senza essere uguali: per l'uguaglianza serve l'accordo su <em>tutti</em> i punti del dominio.`
+        ]
+      },
+
+      {
+        id: "s03-invertibili",
+        type: "section",
+        title: "Funzioni invertibili",
+        icon: "🔁",
+        content: `<p>Una funzione $f: A \\to B$ si dice <strong>invertibile</strong> se esiste una funzione $\\tilde{f}: B \\to A$ tale che</p>
+<p>$$\\tilde{f} \\circ f = \\mathrm{id}_A \\quad \\text{e} \\quad f \\circ \\tilde{f} = \\mathrm{id}_B .$$</p>
+<p>La funzione $\\tilde{f}$ è chiamata <strong>funzione inversa</strong> di $f$.</p>`,
+        subsections: [
+          {
+            subtitle: "Lemma: unicità dell'inversa",
+            content: `<p>Se una tale funzione $\\tilde{f}$ esiste, essa è <strong>unica</strong>.</p>
+<p><em>Dimostrazione.</em> Supponiamo che esistano due funzioni inverse per $f$, che chiamiamo $\\tilde{f}: B \\to A$ e $\\hat{f}: B \\to A$. Per definizione, entrambe soddisfano le condizioni di invertibilità. Mostriamo direttamente che devono coincidere:</p>
+<p>$$\\begin{aligned}\\tilde{f} &= \\tilde{f} \\circ \\mathrm{id}_B && \\text{(proprietà dell'identità)} \\\\ &= \\tilde{f} \\circ (f \\circ \\hat{f}) && \\text{(perché } \\hat{f} \\text{ è inversa di } f) \\\\ &= (\\tilde{f} \\circ f) \\circ \\hat{f} && \\text{(associatività della composizione)} \\\\ &= \\mathrm{id}_A \\circ \\hat{f} && \\text{(perché } \\tilde{f} \\text{ è inversa di } f) \\\\ &= \\hat{f} && \\text{(proprietà dell'identità)}\\end{aligned}$$</p>
+<p>Dato che $\\tilde{f} = \\hat{f}$, l'inversa, se esiste, è unica. A questo punto possiamo denotarla senza ambiguità con il simbolo $f^{-1}$.</p>`
+          },
+          {
+            subtitle: "Proposizione: invertibilità ⟺ biiettività",
+            content: `<p>Per ogni funzione $f: A \\to B$, le seguenti proprietà sono equivalenti:</p>
+<ol>
+  <li>$f$ è invertibile.</li>
+  <li>$f$ è biiettiva.</li>
+  <li>La relazione inversa $f^{\\leftarrow} \\subseteq B \\times A$ è una funzione $B \\to A$.</li>
+</ol>
+<p>In tali casi si ha $\\tilde{f} = f^{\\leftarrow} = f^{-1}$: l'inversa nel senso della composizione coincide con la relazione inversa.</p>`
+          },
+          {
+            subtitle: "Dimostrazione: ciclo $1 \\Rightarrow 2 \\Rightarrow 3 \\Rightarrow 1$",
+            content: `<p><strong>($1 \\Rightarrow 2$)</strong> Assumiamo che $f$ sia invertibile. Esiste quindi $\\tilde f: B \\to A$ tale che $\\tilde f \\circ f = \\mathrm{id}_A$ e $f \\circ \\tilde f = \\mathrm{id}_B$.</p>
+<p><em>Iniettività</em>: siano $a, a' \\in A$ tali che $f(a) = f(a')$. Applichiamo $\\tilde f$ a entrambi i membri, un passaggio per riga:</p>
+<p>$$\\begin{aligned} f(a) &= f(a') && \\text{(ipotesi)} \\\\ \\tilde f(f(a)) &= \\tilde f(f(a')) && \\text{(}\\tilde f \\text{ è una funzione)} \\\\ (\\tilde f \\circ f)(a) &= (\\tilde f \\circ f)(a') && \\text{(definizione di composizione)} \\\\ \\mathrm{id}_A(a) &= \\mathrm{id}_A(a') && \\text{(qui si usa } \\tilde f \\circ f = \\mathrm{id}_A) \\\\ a &= a' && \\text{(definizione di } \\mathrm{id}_A)\\end{aligned}$$</p>
+<p><em>Suriettività</em>: sia $b \\in B$ generico. Scegliamo $a := \\tilde f(b)$; questo elemento appartiene ad $A$ perché $\\tilde f$ ha codominio $A$. Verifichiamo che sia la controimmagine corretta:</p>
+<p>$$\\begin{aligned} f(a) &= f(\\tilde f(b)) && \\text{(scelta di } a) \\\\ &= (f \\circ \\tilde f)(b) && \\text{(definizione di composizione)} \\\\ &= \\mathrm{id}_B(b) && \\text{(qui si usa } f \\circ \\tilde f = \\mathrm{id}_B) \\\\ &= b && \\text{(definizione di } \\mathrm{id}_B)\\end{aligned}$$</p>
+<p>Essendo sia iniettiva che suriettiva, $f$ è biiettiva.</p>
+<p><strong>($2 \\Rightarrow 3$)</strong> Assumiamo che $f$ sia biiettiva e consideriamo $f^{\\leftarrow}$.</p>
+<ul>
+  <li><em>Totalità (esistenza)</em>: la suriettività di $f$ dice che per ogni $b \\in B$ esiste almeno un $a \\in A$ con $f(a) = b$, cioè almeno un $a$ con $b \\mathrel{f^{\\leftarrow}} a$.</li>
+  <li><em>Univocità (unicità)</em>: se $b \\mathrel{f^{\\leftarrow}} a$ e $b \\mathrel{f^{\\leftarrow}} a'$, allora $f(a) = b = f(a')$ e l'iniettività di $f$ dà $a = a'$.</li>
+</ul>
+<p>Equivalentemente: ogni fibra $f^{-1}(\\{b\\})$ ha esattamente un elemento. Poiché a ogni elemento del dominio $B$ viene associato uno e un solo elemento di $A$, la relazione $f^{\\leftarrow}$ è una funzione $B \\to A$.</p>
+<p><strong>($3 \\Rightarrow 1$)</strong> Assumiamo che $f^{\\leftarrow}: B \\to A$ sia una funzione. Ricordiamo che, per definizione di relazione inversa, $b \\mathrel{f^{\\leftarrow}} a \\iff f(a) = b$, e, essendo $f^{\\leftarrow}$ una funzione, $b \\mathrel{f^{\\leftarrow}} a \\iff f^{\\leftarrow}(b) = a$.</p>
+<ul>
+  <li>Sia $a \\in A$ e poniamo $b := f(a)$. Per definizione di relazione inversa vale $b \\mathrel{f^{\\leftarrow}} a$, cioè $f^{\\leftarrow}(b) = a$. Dunque $(f^{\\leftarrow} \\circ f)(a) = f^{\\leftarrow}(f(a)) = f^{\\leftarrow}(b) = a = \\mathrm{id}_A(a)$. Questo vale per ogni $a \\in A$, quindi $f^{\\leftarrow} \\circ f = \\mathrm{id}_A$.</li>
+  <li>Sia $b \\in B$ e poniamo $a := f^{\\leftarrow}(b) \\in A$, ben definito perché $f^{\\leftarrow}$ è una funzione. Allora $b \\mathrel{f^{\\leftarrow}} a$, che significa $f(a)=b$. Dunque $(f \\circ f^{\\leftarrow})(b) = f(f^{\\leftarrow}(b)) = f(a) = b = \\mathrm{id}_B(b)$, quindi $f \\circ f^{\\leftarrow} = \\mathrm{id}_B$.</li>
+</ul>
+<p>Entrambe le condizioni sono soddisfatte, quindi $f$ è invertibile e, per l'unicità dell'inversa, $\\tilde f = f^{\\leftarrow} = f^{-1}$.</p>`
+          },
+          {
+            subtitle: "Il ruolo di dominio e codominio",
+            content: `<p>L'invertibilità non dipende solo dalla <em>formula</em>, ma anche da dominio e codominio. La funzione $q: \\mathbb{Z} \\to \\mathbb{Z}$, $z \\mapsto z^2$ dell'Esercizio 3.5 non è invertibile: non è iniettiva ($q(-2)=q(2)=4$) né suriettiva ($3$ non è un quadrato). Se invece si restringe il dominio ai naturali e si restringe il codominio all'immagine, cioè $q: \\mathbb{N} \\to \\{n^2 \\mid n \\in \\mathbb{N}\\}$, la funzione diventa biiettiva e quindi invertibile.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Invertibilità", latex: "\\tilde{f} \\circ f = \\mathrm{id}_A \\quad \\text{e} \\quad f \\circ \\tilde{f} = \\mathrm{id}_B" },
+          { label: "Equivalenza fondamentale", latex: "f \\text{ invertibile} \\iff f \\text{ biiettiva} \\iff f^{\\leftarrow} \\text{ è una funzione}" }
+        ]
+      },
+
+      {
+        id: "s03-int-inversa-esempio",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><em>Esempio illustrativo di calcolo dell'inversa.</em></p>
+<p>Consideriamo $f: \\mathbb{R} \\to \\mathbb{R}$ definita da $f(x) = 2x+1$. Dominio e codominio sono entrambi $\\mathbb{R}$, quindi l'eventuale inversa sarà una funzione $f^{-1}: \\mathbb{R} \\to \\mathbb{R}$. Questo è il modello operativo da seguire negli esercizi.</p>
+<p><strong>Passo 1: ricavare la candidata inversa.</strong> Fissato $y \\in \\mathbb{R}$, cerchiamo gli $x \\in \\mathbb{R}$ con $f(x) = y$:</p>
+<p>$$\\begin{aligned}2x + 1 &= y \\\\ 2x &= y - 1 \\\\ x &= \\frac{y-1}{2}\\end{aligned}$$</p>
+<p>Per ogni $y$ esiste una e una sola soluzione, dunque $f$ è biiettiva (esistenza $\\Rightarrow$ suriettività, unicità $\\Rightarrow$ iniettività) e la fibra è il singoletto $f^{-1}(\\{y\\}) = \\left\\{ \\tfrac{y-1}{2} \\right\\}$. La candidata funzione inversa è quindi</p>
+<p>$$f^{-1}: \\mathbb{R} \\to \\mathbb{R}, \\qquad f^{-1}(y) = \\frac{y-1}{2} .$$</p>
+<p><strong>Passo 2: verifica delle due identità.</strong> Non basta trovare il candidato: la definizione richiede <em>entrambe</em> le uguaglianze. Per ogni $x \\in \\mathbb{R}$ e per ogni $y \\in \\mathbb{R}$:</p>
+<p>$$\\begin{aligned}(f^{-1} \\circ f)(x) &= f^{-1}(2x+1) = \\frac{(2x+1)-1}{2} = \\frac{2x}{2} = x = \\mathrm{id}_{\\mathbb{R}}(x) , \\\\ (f \\circ f^{-1})(y) &= f\\!\\left( \\frac{y-1}{2} \\right) = 2 \\cdot \\frac{y-1}{2} + 1 = (y-1) + 1 = y = \\mathrm{id}_{\\mathbb{R}}(y) .\\end{aligned}$$</p>
+<p>Entrambe le composizioni danno l'identità, dunque $f$ è invertibile con inversa $f^{-1}$, unica per il lemma di unicità. Un controllo numerico: $f(3) = 7$ e $f^{-1}(7) = \\frac{7-1}{2} = 3$.</p>`
+      },
+
+      {
+        id: "s03-es39-punto1",
+        type: "esercizio",
+        title: "Esercizio 3.9 (punto 1) — Inversa sinistra",
+        kind: "teoria",
+        source: "docente",
+        icon: "✎",
+        content: `<p>Siano $f: A \\to B$ e $g: B \\to A$ due funzioni tali che $g \\circ f = \\mathrm{id}_A$. Dimostrare che $g$ è suriettiva e $f$ è iniettiva.</p>
+<p><em>Nota.</em> Questo esercizio mostra che le condizioni di <em>inversa sinistra</em> e <em>inversa destra</em> hanno implicazioni importanti sull'iniettività e sulla suriettività, e permette di riconoscere l'invertibilità senza calcolare esplicitamente l'inversa.</p>`,
+        solution: `<p><em>Integrazione del curatore: soluzione del punto 1.</em></p>
+<p><strong>$f$ è iniettiva.</strong> Siano $a, a' \\in A$ con $f(a) = f(a')$; applichiamo $g$ e seguiamo i passaggi uno per riga:</p>
+<p>$$\\begin{aligned} f(a) &= f(a') && \\text{(ipotesi)} \\\\ g(f(a)) &= g(f(a')) && \\text{(}g \\text{ è una funzione)} \\\\ (g \\circ f)(a) &= (g \\circ f)(a') && \\text{(definizione di composizione)} \\\\ \\mathrm{id}_A(a) &= \\mathrm{id}_A(a') && \\text{(qui si usa } g \\circ f = \\mathrm{id}_A) \\\\ a &= a' && \\text{(definizione di } \\mathrm{id}_A)\\end{aligned}$$</p>
+<p><strong>$g$ è suriettiva.</strong> Sia $a \\in A$; dobbiamo trovare $b \\in B$ con $g(b) = a$. Scegliamo $b := f(a) \\in B$:</p>
+<p>$$\\begin{aligned} g(b) &= g(f(a)) && \\text{(scelta di } b) \\\\ &= (g \\circ f)(a) && \\text{(definizione di composizione)} \\\\ &= \\mathrm{id}_A(a) && \\text{(qui si usa } g \\circ f = \\mathrm{id}_A) \\\\ &= a && \\text{(definizione di } \\mathrm{id}_A)\\end{aligned}$$</p>
+<p>Si noti che, in generale, da $g \\circ f = \\mathrm{id}_A$ <em>non</em> segue che $f$ sia suriettiva né che $g$ sia iniettiva: serve anche l'altra uguaglianza $f \\circ g = \\mathrm{id}_B$, come nel punto 2.</p>`
+      },
+
+      {
+        id: "s03-es39-punto2",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Esercizio 3.9 (punto 2), uguaglianze fra relazioni",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Siano $f \\subseteq A \\times B$ e $g \\subseteq B \\times A$ due <em>corrispondenze</em> tali che $g \\circ f = \\mathrm{id}_A$ e $f \\circ g = \\mathrm{id}_B$, dove la composizione è quella fra corrispondenze e le uguaglianze sono uguaglianze fra relazioni (cioè fra sottoinsiemi di $A \\times A$ e di $B \\times B$ rispettivamente, con $\\mathrm{id}_A = \\{(a,a) \\mid a \\in A\\}$). Dimostrare che $f$ e $g$ sono funzioni, e che come tali sono invertibili, una l'inversa dell'altra.</p>
+<p><em>Nel punto 2 è essenziale che le uguaglianze siano lette fra relazioni: non si sta assumendo in partenza che $f$ e $g$ siano funzioni, lo si deve dedurre.</em></p>`,
+        steps: [
+          `<strong>Attenzione al punto di partenza.</strong> Qui non possiamo invocare direttamente il punto 1, perché quel risultato presuppone che $f$ e $g$ siano funzioni, mentre per ipotesi sono soltanto corrispondenze. Dimostriamo quindi <em>prima</em> che $f$ e $g$ sono funzioni, ragionando direttamente sulle relazioni; solo dopo potremo usare il punto 1.`,
+          `Ricordiamo la composizione di corrispondenze: $a \\mathrel{(g \\circ f)} a'$ significa che esiste $b \\in B$ con $a \\mathrel{f} b$ e $b \\mathrel{g} a'$.`,
+          `<strong>$f$ è totale.</strong> Sia $a \\in A$. Poiché $(a,a) \\in \\mathrm{id}_A = g \\circ f$, esiste $b \\in B$ tale che $$a \\mathrel{f} b \\qquad \\text{e} \\qquad b \\mathrel{g} a .$$ In particolare $a$ ha almeno un'immagine tramite $f$.`,
+          `<strong>$f$ è univoca.</strong> Con le notazioni precedenti, sia $b' \\in B$ un qualunque elemento con $a \\mathrel{f} b'$. Da $b \\mathrel{g} a$ e $a \\mathrel{f} b'$ segue, per definizione di composizione, $b \\mathrel{(f \\circ g)} b'$. Ma $f \\circ g = \\mathrm{id}_B$, dunque $b = b'$. Quindi l'immagine di $a$ tramite $f$ è unica (ed è il $b$ costruito sopra).`,
+          `Essendo totale e univoca, $f$ è una funzione $A \\to B$, e per ogni $a \\in A$ vale $f(a) = b$ con $b \\mathrel{g} a$.`,
+          `<strong>$g$ è totale.</strong> Simmetricamente, sia $b \\in B$. Poiché $(b,b) \\in \\mathrm{id}_B = f \\circ g$, esiste $a \\in A$ tale che $$b \\mathrel{g} a \\qquad \\text{e} \\qquad a \\mathrel{f} b .$$`,
+          `<strong>$g$ è univoca.</strong> Sia $a' \\in A$ con $b \\mathrel{g} a'$. Da $b \\mathrel{g} a'$ e da $a \\mathrel{f} b$ otteniamo, componendo, $a \\mathrel{(g \\circ f)} a'$. Ma $g \\circ f = \\mathrm{id}_A$, dunque $a = a'$. Quindi anche l'immagine di $b$ tramite $g$ è unica. Essendo totale e univoca, anche $g$ è una funzione $B \\to A$.`,
+          `<strong>Conclusione.</strong> Ora che sappiamo che $f$ e $g$ sono funzioni, le ipotesi $g \\circ f = \\mathrm{id}_A$ e $f \\circ g = \\mathrm{id}_B$ sono esattamente le due condizioni della definizione di invertibilità: $f$ è invertibile con inversa $g$ e, simmetricamente, $g$ è invertibile con inversa $f$. Per l'unicità dell'inversa, $g = f^{-1}$ e $f = g^{-1}$. Dalla proposizione precedente segue inoltre che $f$ e $g$ sono biiettive; lo si può anche riottenere applicando il punto 1 a ciascuna delle due uguaglianze.`
+        ]
+      },
+
+      {
+        id: "s03-una-sola-uguaglianza",
+        type: "note_box",
+        title: "Una sola delle due uguaglianze non basta",
+        icon: "📌",
+        content: `<p>Se vale soltanto $g \\circ f = \\mathrm{id}_A$ (con $f,g$ funzioni), $f$ è iniettiva e $g$ è suriettiva, ma <strong>nessuna delle due è necessariamente biiettiva</strong>.</p>
+<p>Si pensi a $f: \\mathbb{N} \\to \\mathbb{N}$, $n \\mapsto n+1$, e a $g: \\mathbb{N} \\to \\mathbb{N}$ definita da $g(0)=0$ e $g(n) = n-1$ per $n \\geq 1$. Si ha $g \\circ f = \\mathrm{id}_{\\mathbb{N}}$, ma $(f \\circ g)(0) = 1 \\neq 0$, e infatti $f$ non è suriettiva.</p>`
+      },
+
+      {
+        id: "s03-caratteristiche",
+        type: "section",
+        title: "Funzioni caratteristiche",
+        icon: "0️⃣",
+        content: `<p>Un tipo particolare e molto utile di funzione è la <strong>funzione caratteristica</strong>, che permette di <em>rappresentare</em> un sottoinsieme: l'obiettivo di questa sezione è associare a ogni sottoinsieme $F$ di un insieme $E$ una funzione che codifichi l'appartenenza a $F$.</p>
+<p>Sia $E$ un insieme e $F \\subseteq E$ un suo sottoinsieme. La funzione $\\chi_F: E \\to \\{0, 1\\}$ definita da</p>
+<p>$$\\chi_F(x) := \\begin{cases}1 & \\text{se } x \\in F \\\\ 0 & \\text{se } x \\in E \\setminus F\\end{cases}$$</p>
+<p>si dice <strong>funzione caratteristica</strong> di $F$ in $E$.</p>
+<p>La risposta di questa funzione è $1$ se $x$ appartiene al sottoinsieme $F$, ed è $0$ se non vi appartiene. L'insieme di tutte le funzioni da $E$ a $\\{0,1\\}$ si denota con $\\{0,1\\}^E$; come vedremo, <strong>ogni</strong> funzione di questo insieme è la funzione caratteristica di un qualche sottoinsieme di $E$.</p>`,
+        subsections: [
+          {
+            subtitle: "Teorema: corrispondenza tra sottoinsiemi e funzioni caratteristiche",
+            content: `<p>La corrispondenza $\\varphi: \\mathcal{P}(E) \\to \\{0,1\\}^E$ data da</p>
+<p>$$\\varphi := \\{ (F, \\chi) \\in \\mathcal{P}(E) \\times \\{0,1\\}^E \\mid \\chi = \\chi_F \\}$$</p>
+<p>è una funzione, ed è invertibile (quindi biiettiva).</p>`
+          },
+          {
+            subtitle: "Come leggere la definizione di $\\varphi$",
+            content: `<p>La scrittura insiemistica sopra dice semplicemente che $\\varphi$ è l'applicazione</p>
+<p>$$\\varphi(F) = \\chi_F \\qquad \\text{per ogni } F \\in \\mathcal{P}(E),$$</p>
+<p>cioè: <em>all'ingresso un sottoinsieme, in uscita la sua funzione caratteristica</em>. L'aspetto inizialmente spiazzante è che i <strong>valori</strong> di $\\varphi$ sono essi stessi funzioni: gli elementi del codominio di $\\varphi$ sono gli elementi di $\\{0,1\\}^E$.</p>
+<p>Nell'esempio con $E = \\{a,b,c\\}$ si ha $\\varphi(\\{a,c\\}) = \\chi_{\\{a,c\\}} = (1,0,1)$. L'inversa $\\varphi^{-1}$ fa il percorso opposto: $\\varphi^{-1}(h) = h^{-1}(\\{1\\})$.</p>`
+          },
+          {
+            subtitle: "Cenno della dimostrazione",
+            content: `<ul>
+  <li><strong>$\\varphi$ è una funzione</strong>: per ogni sottoinsieme $F \\in \\mathcal{P}(E)$, la definizione di $\\chi_F$ è univoca (ogni $x \\in E$ sta in $F$ oppure in $E \\setminus F$, mai in entrambi, mai in nessuno dei due). Quindi a ogni $F$ corrisponde una e una sola funzione caratteristica.</li>
+  <li><strong>Iniettività</strong>: siano $F_1, F_2 \\in \\mathcal{P}(E)$ con $F_1 \\neq F_2$. Allora deve esistere un elemento $x \\in E$ che appartiene a uno dei due insiemi ma non all'altro. Supponiamo $x \\in F_1$ e $x \\notin F_2$. Allora $\\chi_{F_1}(x) = 1$ mentre $\\chi_{F_2}(x) = 0$. Poiché le due funzioni assumono valori diversi su almeno un punto, sono diverse: $\\chi_{F_1} \\neq \\chi_{F_2}$.</li>
+  <li><strong>Suriettività</strong>: sia $h: E \\to \\{0,1\\}$ una qualsiasi funzione. Dobbiamo trovare un sottoinsieme $F \\subseteq E$ tale che $\\chi_F = h$. Definiamo $F$ come la preimmagine di $1$: $$F := h^{-1}(\\{1\\}) = \\{ x \\in E \\mid h(x) = 1 \\}$$ (si noti che qui $h^{-1}$ denota la <em>preimmagine di un insieme</em>, nel senso della nota sui tre oggetti, e non una funzione inversa: $h$ in generale non è biiettiva). Per costruzione, $\\chi_F = h$: se $x \\in F$ allora $h(x)=1$ e $\\chi_F(x)=1$; se $x \\notin F$ allora $h(x)=0$ (perché $h$ ha valori in $\\{0,1\\}$) e $\\chi_F(x)=0$.</li>
+</ul>
+<p>Essendo $\\varphi$ biiettiva, è anche invertibile, con $\\varphi^{-1}(h) = h^{-1}(\\{1\\})$.</p>`
+          },
+          {
+            subtitle: "Conseguenza: cardinalità dell'insieme delle parti",
+            content: `<p>Questo teorema stabilisce una corrispondenza biunivoca tra i sottoinsiemi di un insieme $E$ (elementi di $\\mathcal{P}(E)$) e le funzioni caratteristiche da $E$ in $\\{0,1\\}$. Questo ha una conseguenza importante per la cardinalità degli insiemi finiti.</p>
+<p>Se $|E| = n$, allora il numero di funzioni da $E$ a $\\{0,1\\}$ è $|\\{0,1\\}|^{|E|} = 2^n$. Poiché c'è una biiezione tra $\\mathcal{P}(E)$ e $\\{0,1\\}^E$, i due insiemi hanno la stessa cardinalità e ritroviamo il noto risultato:</p>
+<p>$$|\\mathcal{P}(E)| = |\\{0,1\\}^E| = 2^n .$$</p>
+<p>Nell'esempio con $E = \\{a,b,c\\}$ e $n=3$ si ritrovano i $2^3 = 8$ sottoinsiemi contati nell'esempio precedente.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Funzione caratteristica", latex: "\\chi_F(x) = \\begin{cases}1 & x \\in F \\\\ 0 & x \\in E \\setminus F\\end{cases}" },
+          { label: "Biiezione sottoinsiemi ↔ funzioni", latex: "\\varphi: \\mathcal{P}(E) \\to \\{0,1\\}^E, \\quad \\varphi(F) = \\chi_F" },
+          { label: "Inversa", latex: "\\varphi^{-1}(h) = h^{-1}(\\{1\\})" },
+          { label: "Cardinalità", latex: "|\\mathcal{P}(E)| = |\\{0,1\\}^E| = 2^n" }
+        ]
+      },
+
+      {
+        id: "s03-int-caratteristiche-esempio",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><em>Esempio illustrativo del passaggio sottoinsieme $\\leftrightarrow$ funzione caratteristica.</em></p>
+<p>Sia $E = \\{a, b, c\\}$ e $F = \\{a, c\\} \\subseteq E$.</p>
+<p><strong>Dal sottoinsieme alla funzione.</strong> La funzione caratteristica $\\chi_F: E \\to \\{0,1\\}$ assume i valori</p>
+<p>$$\\chi_F(a) = 1, \\qquad \\chi_F(b) = 0, \\qquad \\chi_F(c) = 1,$$</p>
+<p>perché $a \\in F$, $b \\notin F$ e $c \\in F$. Possiamo riassumerla nella tabella dei valori, ossia nella terna ordinata $(1,0,1)$ relativa all'ordine $(a,b,c)$. Chiameremo $\\varphi$ questa associazione: $\\varphi(F) = \\chi_F$ (la definiremo formalmente nel teorema seguente).</p>
+<p><strong>Dalla funzione al sottoinsieme.</strong> Data la funzione $\\chi: E \\to \\{0,1\\}$ con valori $1, 0, 1$ su $a, b, c$, ricostruiamo il sottoinsieme prendendo gli elementi a cui $\\chi$ assegna il valore $1$:</p>
+<p>$$\\chi^{-1}(\\{1\\}) = \\{x \\in E \\mid \\chi(x) = 1\\} = \\{a, c\\} = F .$$</p>
+<p>Si ottiene di nuovo $F$: le due costruzioni sono una l'inversa dell'altra, ed è proprio questo il contenuto del teorema. Analogamente, al sottoinsieme $\\emptyset$ corrisponde la funzione costante $(0,0,0)$, all'insieme $E$ stesso la funzione costante $(1,1,1)$ e alla terna $(0,1,0)$ il sottoinsieme $\\{b\\}$; in totale si ottengono $2^3 = 8$ funzioni, tante quante i sottoinsiemi di $E$.</p>`,
+        table_compare: {
+          headers: ["$x$", "$a$", "$b$", "$c$"],
+          rows: [["$\\chi_F(x)$", "$1$", "$0$", "$1$"]]
+        }
+      },
+
+      {
+        id: "s03-esercizi-intro",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "📝",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s03-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1 — Iniettività, suriettività e fibre",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Sia $f: A \\to B$ una funzione. Dai le definizioni di funzione iniettiva, suriettiva e biiettiva, poi dimostra la caratterizzazione tramite le fibre: $f$ è iniettiva $\\iff |f^{-1}(\\{b\\})| \\le 1$ per ogni $b \\in B$; $f$ è suriettiva $\\iff |f^{-1}(\\{b\\})| \\ge 1$ per ogni $b \\in B$; $f$ è biiettiva $\\iff |f^{-1}(\\{b\\})| = 1$ per ogni $b \\in B$.</p>`,
+        solution: `<p><strong>Definizioni.</strong> $f$ è iniettiva se $\\forall a, a' \\in A$, $f(a) = f(a') \\Rightarrow a = a'$ (equivalentemente $a \\neq a' \\Rightarrow f(a) \\neq f(a')$); $f$ è suriettiva se $\\forall b \\in B$ esiste $a \\in A$ con $f(a) = b$, cioè $\\operatorname{Im}(f) = B$; $f$ è biiettiva se è iniettiva e suriettiva, cioè se $\\forall b \\in B$ esiste un unico $a \\in A$ con $f(a) = b$. Ricordiamo che la fibra di $b \\in B$ è il sottoinsieme</p>
+<p>$$f^{-1}(\\{b\\}) = \\{a \\in A \\mid f(a) = b\\} \\subseteq A ,$$</p>
+<p>sempre definito.</p>
+<p><strong>Iniettività.</strong> Se $f$ è iniettiva e $a, a' \\in f^{-1}(\\{b\\})$, allora $f(a) = b = f(a')$, dunque $a = a'$: la fibra ha al più un elemento, cioè $|f^{-1}(\\{b\\})| \\le 1$ per ogni $b$. Viceversa, se tutte le fibre hanno al più un elemento e $f(a) = f(a') =: b$, allora $a, a' \\in f^{-1}(\\{b\\})$, insieme con al più un elemento, quindi $a = a'$: $f$ è iniettiva.</p>
+<p><strong>Suriettività.</strong> $f$ è suriettiva se e solo se per ogni $b \\in B$ esiste $a \\in A$ con $f(a) = b$, cioè se e solo se $f^{-1}(\\{b\\}) \\neq \\emptyset$, cioè $|f^{-1}(\\{b\\})| \\ge 1$ per ogni $b$.</p>
+<p><strong>Biiettività.</strong> Combinando le due equivalenze, $f$ è biiettiva $\\iff$ per ogni $b$ si ha sia $|f^{-1}(\\{b\\})| \\le 1$ sia $|f^{-1}(\\{b\\})| \\ge 1$, cioè $|f^{-1}(\\{b\\})| = 1$.</p>`
+      },
+
+      {
+        id: "s03-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2 — Composizione: associatività, neutro, non commutatività",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Dai la definizione di composizione di due funzioni e dimostra che la composizione è associativa e che le funzioni identità sono elementi neutri. Mostra poi con un controesempio esplicito che la composizione non è commutativa.</p>`,
+        solution: `<p><strong>Definizione.</strong> Date $f: A \\to B$ e $g: B \\to C$, la composizione è la funzione $g \\circ f : A \\to C$ definita da $(g \\circ f)(a) := g(f(a))$ per ogni $a \\in A$. È effettivamente una funzione: per ogni $a \\in A$ esiste un unico $b = f(a) \\in B$ e per tale $b$ esiste un unico $c = g(b) \\in C$.</p>
+<p><strong>Associatività.</strong> Siano $f: A \\to B$, $g: B \\to C$, $h: C \\to D$. Le funzioni $h \\circ (g \\circ f)$ e $(h \\circ g) \\circ f$ hanno entrambe dominio $A$ e codominio $D$, quindi basta confrontarle puntualmente: per ogni $a \\in A$</p>
+<p>$$\\begin{aligned}\\bigl(h \\circ (g \\circ f)\\bigr)(a) &= h\\bigl((g\\circ f)(a)\\bigr) \\\\ &= h\\bigl(g(f(a))\\bigr) \\\\ &= (h \\circ g)\\bigl(f(a)\\bigr) \\\\ &= \\bigl((h\\circ g)\\circ f\\bigr)(a) .\\end{aligned}$$</p>
+<p>Dunque $h \\circ (g\\circ f) = (h\\circ g)\\circ f$.</p>
+<p><strong>Elemento neutro.</strong> Per $f: A \\to B$ e per ogni $a \\in A$:</p>
+<p>$$\\begin{aligned}(f \\circ \\mathrm{id}_A)(a) &= f(\\mathrm{id}_A(a)) = f(a), \\\\ (\\mathrm{id}_B \\circ f)(a) &= \\mathrm{id}_B(f(a)) = f(a);\\end{aligned}$$</p>
+<p>quindi $f \\circ \\mathrm{id}_A = f = \\mathrm{id}_B \\circ f$.</p>
+<p><strong>Non commutatività.</strong> Siano $f,g: \\mathbb{N} \\to \\mathbb{N}$ con $f(n) = n+1$ e $g(n) = 3n$. Allora</p>
+<p>$$\\begin{aligned}(f\\circ g)(n) &= f(3n) = 3n+1, \\\\ (g \\circ f)(n) &= g(n+1) = 3n+3 :\\end{aligned}$$</p>
+<p>le due funzioni sono diverse (per $n=0$ valgono $1$ e $3$), anzi differiscono in ogni punto. Si noti inoltre che per $f: A \\to B$ e $g: B \\to A$ con $A \\neq B$ le due composizioni non hanno nemmeno lo stesso dominio: $g\\circ f: A \\to A$ e $f \\circ g: B \\to B$.</p>`
+      },
+
+      {
+        id: "s03-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3 — La relazione inversa e le notazioni",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Sia $f: A \\to B$ una funzione. Spiega perché la relazione inversa $f^{\\leftarrow} \\subseteq B \\times A$ è sempre definita, e dimostra che essa è una funzione da $B$ ad $A$ se e solo se $f$ è biiettiva. Chiarisci infine la differenza fra i simboli $f^{-1}(\\{b\\})$ e $f^{-1}(b)$.</p>`,
+        solution: `<p><strong>La relazione inversa esiste sempre.</strong> Per definizione $f^{\\leftarrow} := \\{(b,a) \\in B \\times A \\mid f(a) = b\\}$: è un sottoinsieme di $B \\times A$, quindi una corrispondenza da $B$ ad $A$, e come tale esiste sempre, qualunque sia $f$ (nessuna ipotesi serve per formare quell'insieme di coppie).</p>
+<p><strong>Quando è una funzione.</strong> Perché $f^{\\leftarrow}$ sia una funzione servono esistenza e unicità.</p>
+<ul>
+  <li><em>Esistenza</em>: per ogni $b \\in B$ deve esistere $a \\in A$ con $(b,a) \\in f^{\\leftarrow}$, cioè con $f(a) = b$; questo è esattamente dire che $f$ è suriettiva. Se $f$ non è suriettiva, per un $b \\notin \\operatorname{Im}(f)$ la fibra $f^{-1}(\\{b\\})$ è vuota e nessuna coppia $(b,a)$ sta in $f^{\\leftarrow}$: l'esistenza fallisce.</li>
+  <li><em>Unicità</em>: se $f$ non è iniettiva esistono $a_1 \\neq a_2$ con $f(a_1) = f(a_2) = b$, dunque $(b,a_1), (b,a_2) \\in f^{\\leftarrow}$ e l'unicità fallisce.</li>
+</ul>
+<p>Viceversa, se $f$ è biiettiva allora per ogni $b \\in B$ esiste uno e un solo $a \\in A$ con $f(a) = b$, cioè $|f^{-1}(\\{b\\})| = 1$: esistenza e unicità sono soddisfatte e $f^{\\leftarrow}$ è una funzione $B \\to A$, che in tal caso si denota $f^{-1}: B \\to A$. Quindi $f^{\\leftarrow}$ è una funzione $\\iff$ $f$ è biiettiva.</p>
+<p><strong>Notazione.</strong> $f^{-1}(\\{b\\}) = \\{a \\in A \\mid f(a) = b\\}$ è un sottoinsieme di $A$, definito per ogni funzione $f$ e ogni $b \\in B$, e può essere vuoto, un singoletto o avere molti elementi; $f^{-1}(b)$ è invece un elemento di $A$ e ha senso solo quando $f$ è biiettiva. In tal caso i due oggetti sono legati da $f^{-1}(\\{b\\}) = \\{\\, f^{-1}(b) \\,\\}$: la fibra è il singoletto che contiene il valore dell'inversa.</p>`
+      },
+
+      {
+        id: "s03-ex-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4 — Invertibilità, unicità dell'inversa e i tre oggetti",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Enuncia la definizione di funzione invertibile, dimostra che l'inversa è unica e che $f: A \\to B$ è invertibile se e solo se è biiettiva. Distingui infine i tre oggetti $f^{\\leftarrow}$, $f^{-1}(S)$ e $f^{-1}$, usando come esempio $f: \\mathbb{R} \\to \\mathbb{R}$, $f(x) = x^2$.</p>`,
+        solution: `<p><strong>Definizione.</strong> $f: A \\to B$ è invertibile se esiste $\\tilde f : B \\to A$ con $\\tilde f \\circ f = \\mathrm{id}_A$ e $f \\circ \\tilde f = \\mathrm{id}_B$.</p>
+<p><strong>Unicità.</strong> Se $\\tilde f, \\hat f : B \\to A$ sono due inverse, allora</p>
+<p>$$\\begin{aligned}\\tilde f &= \\tilde f \\circ \\mathrm{id}_B && \\text{(elemento neutro)} \\\\ &= \\tilde f \\circ (f \\circ \\hat f) && \\text{(ipotesi su } \\hat f) \\\\ &= (\\tilde f \\circ f) \\circ \\hat f && \\text{(associatività)} \\\\ &= \\mathrm{id}_A \\circ \\hat f && \\text{(ipotesi su } \\tilde f) \\\\ &= \\hat f .\\end{aligned}$$</p>
+<p>Si può dunque scrivere $f^{-1}$.</p>
+<p><strong>Invertibile $\\Rightarrow$ biiettiva.</strong> Sia $\\tilde f$ l'inversa. Se $f(a) = f(a')$, applicando $\\tilde f$ si ottiene $a = (\\tilde f \\circ f)(a) = (\\tilde f \\circ f)(a') = a'$, quindi $f$ è iniettiva. Dato $b \\in B$, posto $a := \\tilde f(b) \\in A$ si ha $f(a) = (f \\circ \\tilde f)(b) = b$, quindi $f$ è suriettiva.</p>
+<p><strong>Biiettiva $\\Rightarrow$ invertibile.</strong> Se $f$ è biiettiva, la relazione inversa $f^{\\leftarrow} = \\{(b,a) \\in B \\times A \\mid f(a) = b\\}$ è totale per la suriettività (per ogni $b$ esiste $a$ con $f(a) = b$) e univoca per l'iniettività (se $f(a) = b = f(a')$ allora $a = a'$); dunque $f^{\\leftarrow}$ è una funzione $B \\to A$. Inoltre, per $a \\in A$ e $b := f(a)$ vale $f^{\\leftarrow}(b) = a$, da cui $(f^{\\leftarrow}\\circ f)(a) = a$, e per $b \\in B$ e $a := f^{\\leftarrow}(b)$ vale $f(a) = b$, da cui $(f \\circ f^{\\leftarrow})(b) = b$. Quindi $f$ è invertibile e $f^{-1} = f^{\\leftarrow}$.</p>
+<p><strong>I tre oggetti.</strong></p>
+<ol>
+  <li>La <em>relazione inversa</em> $f^{\\leftarrow} \\subseteq B \\times A$ esiste sempre (si scambiano le componenti delle coppie), ma in generale non è una funzione; per $f(x) = x^2$ si ha $4 \\mathrel{f^{\\leftarrow}} 2$ e $4 \\mathrel{f^{\\leftarrow}} (-2)$ (non univoca) e nessun $a$ con $-1 \\mathrel{f^{\\leftarrow}} a$ (non totale).</li>
+  <li>La <em>preimmagine</em> di $S \\subseteq B$ è l'insieme $f^{-1}(S) = \\{a \\in A \\mid f(a) \\in S\\}$, definita per ogni funzione: $f^{-1}(\\{4\\}) = \\{-2,2\\}$, $f^{-1}(\\{-1\\}) = \\emptyset$.</li>
+  <li>La <em>funzione inversa</em> $f^{-1}: B \\to A$ esiste solo se $f$ è biiettiva: per $f(x) = x^2$ su $\\mathbb{R}$ non esiste.</li>
+</ol>
+<p>La notazione $f^{-1}$ applicata a un insieme indica sempre la preimmagine, applicata a un elemento ha senso solo nel caso biiettivo (e allora $f^{-1}(\\{b\\}) = \\{f^{-1}(b)\\}$).</p>`
+      },
+
+      {
+        id: "s03-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1 — Composizioni su $\\mathbb{Z}$ e proprietà",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Siano $f: \\mathbb{Z} \\to \\mathbb{Z}$, $f(z) = 2z+1$, e $g: \\mathbb{Z} \\to \\mathbb{Z}$, $g(z) = z^2$. Calcola $g \\circ f$ e $f \\circ g$, stabilisci se sono uguali e determina tutti gli $z_0 \\in \\mathbb{Z}$ in cui assumono lo stesso valore. Di' infine se $f$ e $g$ sono iniettive e/o suriettive, giustificando.</p>`,
+        solution: `<p><strong>Obiettivo 1: calcolare le due composizioni.</strong> Entrambe sono definite perché dominio e codominio sono $\\mathbb{Z}$ in tutti i casi:</p>
+<p>$$\\begin{aligned}(g \\circ f)(z) &= g(f(z)) = g(2z+1) = (2z+1)^2 = 4z^2 + 4z + 1, \\\\ (f \\circ g)(z) &= f(g(z)) = f(z^2) = 2z^2 + 1 .\\end{aligned}$$</p>
+<p>Le due funzioni sono diverse: per esempio $(g \\circ f)(1) = 9$ mentre $(f \\circ g)(1) = 3$.</p>
+<p><strong>Obiettivo 2: punti di coincidenza.</strong></p>
+<p>$$\\begin{aligned}4z_0^2 + 4z_0 + 1 &= 2z_0^2 + 1 \\\\ 2z_0^2 + 4z_0 &= 0 \\\\ 2z_0(z_0 + 2) &= 0 \\\\ z_0 = 0 \\quad &\\text{oppure} \\quad z_0 = -2 .\\end{aligned}$$</p>
+<p>Verifica: per $z_0 = 0$ entrambe valgono $1$; per $z_0 = -2$ si ha $(2(-2)+1)^2 = (-3)^2 = 9$ e $2 \\cdot (-2)^2 + 1 = 9$.</p>
+<p><strong>Obiettivo 3: proprietà di $f$ e di $g$.</strong> La funzione $f$ è iniettiva, perché $2z + 1 = 2z' + 1 \\Rightarrow 2z = 2z' \\Rightarrow z = z'$; non è suriettiva, perché $\\operatorname{Im}(f)$ è l'insieme degli interi dispari e, per esempio, non esiste $z \\in \\mathbb{Z}$ con $2z + 1 = 0$ (sarebbe $z = -1/2 \\notin \\mathbb{Z}$). La funzione $g$ non è iniettiva, perché $g(1) = g(-1) = 1$ con $1 \\neq -1$; non è suriettiva, perché $\\operatorname{Im}(g)$ è l'insieme dei quadrati perfetti e, per esempio, $-1$ non è il quadrato di alcun intero. Di conseguenza nessuna delle due è invertibile.</p>`
+      },
+
+      {
+        id: "s03-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2 — Due composizioni che non coincidono mai",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Siano $f, g: \\mathbb{Z} \\to \\mathbb{Z}$ definite da $f(z) = 2z - 1$ e $g(z) = z^2 + 1$. Calcola $f \\circ g$ e $g \\circ f$, stabilisci se coincidono e determina tutti gli $z \\in \\mathbb{Z}$ in cui i loro valori sono uguali.</p>`,
+        solution: `<p><strong>Obiettivo 1: le due composizioni.</strong> Entrambe sono funzioni $\\mathbb{Z} \\to \\mathbb{Z}$:</p>
+<p>$$\\begin{aligned}(f \\circ g)(z) &= f(g(z)) = f(z^2+1) = 2(z^2+1) - 1 = 2z^2 + 1, \\\\ (g \\circ f)(z) &= g(f(z)) = g(2z-1) = (2z-1)^2 + 1 = 4z^2 - 4z + 2 .\\end{aligned}$$</p>
+<p>Le due funzioni sono diverse: ad esempio $(f\\circ g)(1) = 3$ mentre $(g \\circ f)(1) = 2$.</p>
+<p><strong>Obiettivo 2: punti di coincidenza.</strong> Risolviamo $2z^2 + 1 = 4z^2 - 4z + 2$:</p>
+<p>$$\\begin{aligned}0 &= 2z^2 - 4z + 1 \\\\ \\Delta &= 16 - 8 = 8 \\\\ z &= \\frac{4 \\pm 2\\sqrt{2}}{4} = 1 \\pm \\frac{\\sqrt{2}}{2} .\\end{aligned}$$</p>
+<p>Nessuna delle due soluzioni è intera (sono irrazionali), dunque non esiste alcun $z \\in \\mathbb{Z}$ con $(f\\circ g)(z) = (g\\circ f)(z)$: le due composizioni differiscono in ogni punto del dominio $\\mathbb{Z}$. Questo conferma che la composizione non è commutativa.</p>`
+      },
+
+      {
+        id: "s03-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3 — Omografia biiettiva e sua inversa",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Sia $f: \\mathbb{R} \\setminus \\{-2\\} \\to \\mathbb{R} \\setminus \\{1\\}$ definita da $f(x) = \\frac{x-1}{x+2}$. Verifica che $f$ è ben definita, dimostra che è biiettiva determinando per ogni $y$ del codominio la fibra $f^{-1}(\\{y\\})$, scrivi $f^{-1}$ e controlla le due identità $f^{-1} \\circ f = \\mathrm{id}$ e $f \\circ f^{-1} = \\mathrm{id}$.</p>`,
+        solution: `<p><strong>Buona definizione.</strong> Per $x \\neq -2$ il denominatore $x+2$ non è nullo, quindi $f(x)$ è un numero reale ben determinato; inoltre $f(x) \\neq 1$, perché $\\frac{x-1}{x+2} = 1$ darebbe $x - 1 = x + 2$, cioè $-1 = 2$, assurdo. Dunque $f$ manda effettivamente $\\mathbb{R} \\setminus \\{-2\\}$ in $\\mathbb{R} \\setminus \\{1\\}$.</p>
+<p><strong>Fibre.</strong> Fissiamo $y \\in \\mathbb{R} \\setminus \\{1\\}$ e cerchiamo gli $x \\neq -2$ con $f(x) = y$. Poiché $x + 2 \\neq 0$, l'equazione $\\frac{x-1}{x+2} = y$ è equivalente a $x - 1 = y(x+2)$, cioè $x - yx = 2y + 1$, cioè $x(1-y) = 2y+1$. Essendo $y \\neq 1$ si ha $1 - y \\neq 0$ e quindi l'unica soluzione è $x = \\frac{2y+1}{1-y}$; questo valore è ammissibile, perché $\\frac{2y+1}{1-y} = -2$ darebbe $2y + 1 = -2(1-y) = -2 + 2y$, cioè $1 = -2$, assurdo.</p>
+<p>Dunque $f^{-1}(\\{y\\}) = \\left\\{ \\frac{2y+1}{1-y} \\right\\}$ per ogni $y \\in \\mathbb{R} \\setminus \\{1\\}$: ogni fibra ha esattamente un elemento, quindi $f$ è suriettiva (esistenza) e iniettiva (unicità), cioè biiettiva, e l'inversa è $f^{-1}: \\mathbb{R} \\setminus \\{1\\} \\to \\mathbb{R} \\setminus \\{-2\\}$, $f^{-1}(y) = \\frac{2y+1}{1-y}$.</p>
+<p><strong>Verifica.</strong> Per ogni $x \\neq -2$,</p>
+<p>$$f^{-1}(f(x)) = \\frac{2\\frac{x-1}{x+2} + 1}{1 - \\frac{x-1}{x+2}} = \\frac{\\frac{2x-2+x+2}{x+2}}{\\frac{x+2-x+1}{x+2}} = \\frac{3x}{3} = x,$$</p>
+<p>dunque $f^{-1} \\circ f = \\mathrm{id}_{\\mathbb{R} \\setminus \\{-2\\}}$. Per ogni $y \\neq 1$,</p>
+<p>$$f\\left( \\frac{2y+1}{1-y} \\right) = \\frac{\\frac{2y+1}{1-y} - 1}{\\frac{2y+1}{1-y} + 2} = \\frac{\\frac{2y+1-(1-y)}{1-y}}{\\frac{2y+1+2(1-y)}{1-y}} = \\frac{3y}{3} = y,$$</p>
+<p>dunque $f \\circ f^{-1} = \\mathrm{id}_{\\mathbb{R} \\setminus \\{1\\}}$. Controllo numerico: $f(0) = -\\frac{1}{2}$ e $f^{-1}\\left(-\\frac{1}{2}\\right) = \\frac{-1+1}{1+\\frac{1}{2}} = 0$.</p>`
+      },
+
+      {
+        id: "s03-ex-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4 — Restringere dominio e codominio per invertire",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Sia $f: \\mathbb{R} \\to \\mathbb{R}$, $f(x) = x^2 + 4x + 5$. Mostra che $f$ non è invertibile. Determina poi una restrizione del dominio e del codominio che la renda biiettiva, calcola l'inversa e verifica entrambe le composizioni.</p>`,
+        solution: `<p><strong>Obiettivo 0: forma utile.</strong> Completiamo il quadrato: $f(x) = (x+2)^2 + 1$.</p>
+<p><strong>Obiettivo 1: $f$ non è invertibile.</strong> Non è iniettiva: $f(-1) = 1 - 4 + 5 = 2$ e $f(-3) = 9 - 12 + 5 = 2$, quindi $f(-1) = f(-3)$ con $-1 \\neq -3$. Non è suriettiva: da $(x+2)^2 \\geq 0$ segue $f(x) \\geq 1$ per ogni $x$, dunque $0$ non ha controimmagine. Non essendo biiettiva, per la proposizione sull'equivalenza non è invertibile.</p>
+<p><strong>Obiettivo 2: restrizione che la rende biiettiva.</strong> Consideriamo $\\bar f: [-2, +\\infty) \\to [1, +\\infty)$, $\\bar f(x) = (x+2)^2 + 1$. Fissato $y \\geq 1$, risolviamo $\\bar f(x) = y$ con $x \\geq -2$:</p>
+<p>$$\\begin{aligned}(x+2)^2 + 1 &= y \\\\ (x+2)^2 &= y - 1 \\\\ x + 2 &= \\sqrt{y-1} \\qquad (\\text{si prende la radice positiva perché } x + 2 \\geq 0) \\\\ x &= -2 + \\sqrt{y-1} .\\end{aligned}$$</p>
+<p>La soluzione esiste (perché $y - 1 \\geq 0$) ed è unica: quindi $\\bar f$ è suriettiva e iniettiva, dunque biiettiva. Il candidato inverso è</p>
+<p>$$g: [1,+\\infty) \\to [-2,+\\infty), \\qquad g(y) = -2 + \\sqrt{y-1}$$</p>
+<p>(ben definito: $\\sqrt{y-1} \\geq 0$ implica $g(y) \\geq -2$).</p>
+<p><strong>Obiettivo 3: verifica delle due composizioni.</strong> Per $x \\geq -2$:</p>
+<p>$$\\begin{aligned}(g \\circ \\bar f)(x) &= -2 + \\sqrt{(x+2)^2 + 1 - 1} \\\\ &= -2 + |x+2| \\\\ &= -2 + (x+2) \\qquad (\\text{poiché } x+2 \\geq 0) \\\\ &= x ,\\end{aligned}$$</p>
+<p>dunque $g \\circ \\bar f = \\mathrm{id}_{[-2,+\\infty)}$. Per $y \\geq 1$:</p>
+<p>$$\\begin{aligned}(\\bar f \\circ g)(y) &= \\bigl(-2 + \\sqrt{y-1} + 2\\bigr)^2 + 1 \\\\ &= \\bigl(\\sqrt{y-1}\\bigr)^2 + 1 \\\\ &= (y-1) + 1 = y ,\\end{aligned}$$</p>
+<p>dunque $\\bar f \\circ g = \\mathrm{id}_{[1,+\\infty)}$. Per l'unicità dell'inversa, $\\bar f^{-1}(y) = -2 + \\sqrt{y-1}$. (Analogamente, restringendo a $(-\\infty,-2]$ si otterrebbe l'inversa $y \\mapsto -2 - \\sqrt{y-1}$.)</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Quando una corrispondenza $f \\subseteq A \\times B$ è una funzione?",
+        back: "Quando $\\forall a \\in A$, $\\exists! \\, b \\in B$ tale che $(a,b) \\in f$. Dentro $\\exists!$ ci sono due richieste: <strong>esistenza</strong> (per ogni $a$ esiste almeno un $b$ associato) e <strong>unicità</strong> (se $(a,b) \\in f$ e $(a,b') \\in f$ allora $b = b'$). Solo in questo caso ha senso la scrittura $f(a) = b$; per una corrispondenza generica si scrive $a \\mapsto b$."
+      },
+      {
+        type: "tranello",
+        front: "Qual è la differenza tra codominio e immagine?",
+        back: "Il <strong>codominio</strong> $B$ è l'insieme in cui si dichiara di andare a cercare i valori; l'<strong>immagine</strong> $\\operatorname{Im}(f) = \\{f(a) \\mid a \\in A\\}$ è l'insieme dei valori effettivamente assunti. Vale sempre $\\operatorname{Im}(f) \\subseteq B$, ma l'inclusione può essere stretta. $f$ è suriettiva esattamente quando $\\operatorname{Im}(f) = B$. Esempio: $f: \\mathbb{R} \\to \\mathbb{R}$, $f(x)=x^2$ ha codominio $\\mathbb{R}$ ma immagine $\\mathbb{R}_{\\ge 0}$."
+      },
+      {
+        type: "tranello",
+        front: "Distingui $f^{\\leftarrow}$, $f^{-1}(S)$ e $f^{-1}: B \\to A$.",
+        back: "Tre oggetti diversi: (1) la <strong>relazione inversa</strong> $f^{\\leftarrow} = \\{(b,a) \\in B \\times A \\mid f(a)=b\\}$ esiste <em>sempre</em>, ma in generale non è una funzione; (2) la <strong>preimmagine</strong> $f^{-1}(S) = \\{a \\in A \\mid f(a) \\in S\\}$ è un <em>insieme</em>, definito per ogni $f$ (es. $f(x)=x^2$: $f^{-1}(\\{4\\})=\\{-2,2\\}$, $f^{-1}(\\{-1\\})=\\emptyset$); (3) la <strong>funzione inversa</strong> $f^{-1}: B \\to A$ esiste solo se $f$ è biiettiva e $f^{-1}(b)$ è un <em>elemento</em>. Nel caso biiettivo $f^{-1}(\\{b\\}) = \\{f^{-1}(b)\\}$."
+      },
+      {
+        type: "formula",
+        front: "Caratterizza iniettività, suriettività e biiettività tramite le fibre.",
+        back: "Per ogni $b \\in B$ si guarda la cardinalità della fibra $f^{-1}(\\{b\\})$: $f$ iniettiva $\\iff |f^{-1}(\\{b\\})| \\le 1$; $f$ suriettiva $\\iff |f^{-1}(\\{b\\})| \\ge 1$; $f$ biiettiva $\\iff |f^{-1}(\\{b\\})| = 1$. L'ultima condizione è esattamente quella che garantisce che $f^{\\leftarrow}$ sia una funzione."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che la relazione inversa $f^{\\leftarrow}$ è una funzione se e solo se $f$ è biiettiva.",
+        back: "Se $f$ non è suriettiva, esiste $b \\notin \\operatorname{Im}(f)$: la fibra $f^{-1}(\\{b\\})$ è vuota, nessuna coppia $(b,a)$ sta in $f^{\\leftarrow}$ e fallisce l'<em>esistenza</em>. Se $f$ non è iniettiva, esistono $a_1 \\neq a_2$ con $f(a_1)=f(a_2)=b$: allora $(b,a_1),(b,a_2) \\in f^{\\leftarrow}$ e fallisce l'<em>unicità</em>. Viceversa, se $f$ è biiettiva, per ogni $b$ esiste uno e un solo $a$ con $f(a)=b$: esistenza e unicità valgono, quindi $f^{\\leftarrow}$ è una funzione $B \\to A$, che si denota $f^{-1}$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la composizione $g \\circ f$ e dì quando è ben posta.",
+        back: "Date $f: A \\to B$ e $g: B \\to C$, la composizione è $g \\circ f: A \\to C$ con $(g \\circ f)(a) := g(f(a))$. Perché la scrittura abbia senso il <strong>codominio di $f$ deve coincidere con il dominio di $g$</strong>. Attenzione all'ordine: in $g \\circ f$ si applica prima $f$ e poi $g$. È una funzione perché per ogni $a$ esiste un unico $b = f(a)$ e per questo $b$ un unico $c = g(b)$."
+      },
+      {
+        type: "tranello",
+        front: "Nella notazione $f^2$ per una funzione $f: A \\to A$, cosa significa l'esponente?",
+        back: "Significa <strong>iterazione</strong>, non elevamento a potenza: $f^0 := \\mathrm{id}_A$, $f^1 := f$, $f^2 := f \\circ f$, e in generale $f^n$ è la composizione di $f$ con se stessa $n$ volte. Esempio: se $f(x) = x+1$, allora $f^2(x) = f(f(x)) = x+2$, mentre $(f(x))^2 = (x+1)^2$. La definizione è ben posta grazie all'associatività della composizione."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che la funzione inversa, se esiste, è unica.",
+        back: "Siano $\\tilde f, \\hat f: B \\to A$ due inverse di $f$. Allora $\\tilde f = \\tilde f \\circ \\mathrm{id}_B = \\tilde f \\circ (f \\circ \\hat f) = (\\tilde f \\circ f) \\circ \\hat f = \\mathrm{id}_A \\circ \\hat f = \\hat f$. Si usano: la proprietà dell'identità, l'ipotesi su $\\hat f$, l'associatività, l'ipotesi su $\\tilde f$. Dunque l'inversa è unica e si può denotare senza ambiguità $f^{-1}$."
+      },
+      {
+        type: "domanda",
+        front: "Enuncia l'equivalenza fra invertibilità e biiettività.",
+        back: "Per $f: A \\to B$ sono equivalenti: (1) $f$ è invertibile, cioè esiste $\\tilde f: B \\to A$ con $\\tilde f \\circ f = \\mathrm{id}_A$ e $f \\circ \\tilde f = \\mathrm{id}_B$; (2) $f$ è biiettiva; (3) la relazione inversa $f^{\\leftarrow}$ è una funzione $B \\to A$. In tali casi $\\tilde f = f^{\\leftarrow} = f^{-1}$. La dimostrazione si fa con il ciclo $1 \\Rightarrow 2 \\Rightarrow 3 \\Rightarrow 1$."
+      },
+      {
+        type: "tranello",
+        front: "Se $g \\circ f = \\mathrm{id}_A$, cosa si può concludere su $f$ e $g$?",
+        back: "Solo che $f$ è <strong>iniettiva</strong> e $g$ è <strong>suriettiva</strong>: una sola delle due uguaglianze non basta per la biiettività. Controesempio: $f: \\mathbb{N} \\to \\mathbb{N}$, $n \\mapsto n+1$, e $g: \\mathbb{N} \\to \\mathbb{N}$ con $g(0)=0$ e $g(n)=n-1$ per $n \\ge 1$. Si ha $g \\circ f = \\mathrm{id}_{\\mathbb{N}}$, ma $(f \\circ g)(0) = 1 \\neq 0$ e $f$ non è suriettiva."
+      },
+      {
+        type: "domanda",
+        front: "Perché serve la composizione fra corrispondenze e non solo fra funzioni?",
+        back: "Perché permette di enunciare risultati in cui <em>non</em> si sa ancora che gli oggetti coinvolti siano funzioni. Date $\\rho \\subseteq A \\times B$ e $\\sigma \\subseteq B \\times C$, si pone $\\sigma \\circ \\rho := \\{(a,c) \\mid \\exists b \\in B: (a,b) \\in \\rho, (b,c) \\in \\sigma\\}$. Nell'Esercizio 3.9 punto 2 le uguaglianze $g \\circ f = \\mathrm{id}_A$ e $f \\circ g = \\mathrm{id}_B$ vanno lette come <strong>uguaglianze fra relazioni</strong>, e da esse si <em>deduce</em> che $f$ e $g$ sono funzioni."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è la funzione caratteristica di $F \\subseteq E$?",
+        back: "È la funzione $\\chi_F: E \\to \\{0,1\\}$ definita da $\\chi_F(x) = 1$ se $x \\in F$ e $\\chi_F(x) = 0$ se $x \\in E \\setminus F$. Codifica l'appartenenza a $F$: risponde $1$ se $x$ sta in $F$, $0$ altrimenti. L'insieme di tutte le funzioni da $E$ a $\\{0,1\\}$ si denota $\\{0,1\\}^E$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\varphi: \\mathcal{P}(E) \\to \\{0,1\\}^E$, $\\varphi(F) = \\chi_F$, è biiettiva, e deduci $|\\mathcal{P}(E)| = 2^n$.",
+        back: "È una funzione perché $\\chi_F$ è univocamente determinata da $F$ (ogni $x$ sta in $F$ o in $E \\setminus F$, mai in entrambi). <strong>Iniettiva</strong>: se $F_1 \\neq F_2$ esiste $x$ in uno ma non nell'altro, quindi $\\chi_{F_1}(x) \\neq \\chi_{F_2}(x)$ e le due funzioni sono diverse. <strong>Suriettiva</strong>: data $h: E \\to \\{0,1\\}$, si pone $F := h^{-1}(\\{1\\})$ (preimmagine, non inversa!) e si verifica $\\chi_F = h$. Quindi $\\varphi^{-1}(h) = h^{-1}(\\{1\\})$. Se $|E| = n$, le funzioni $E \\to \\{0,1\\}$ sono $2^n$, dunque $|\\mathcal{P}(E)| = |\\{0,1\\}^E| = 2^n$."
+      },
+      {
+        type: "tranello",
+        front: "L'invertibilità dipende solo dalla formula della funzione?",
+        back: "No: dipende anche da <strong>dominio e codominio</strong>. Esempio: $q: \\mathbb{Z} \\to \\mathbb{Z}$, $z \\mapsto z^2$ non è invertibile (non iniettiva perché $q(-2)=q(2)=4$, non suriettiva perché $3$ non è un quadrato). Ma $q: \\mathbb{N} \\to \\{n^2 \\mid n \\in \\mathbb{N}\\}$, con lo stesso $z \\mapsto z^2$, è biiettiva e quindi invertibile. Lo stesso vale per $f(x)=x^2+4x+5$, invertibile se restretta a $[-2,+\\infty) \\to [1,+\\infty)$."
+      }
+    ]
+};
+
