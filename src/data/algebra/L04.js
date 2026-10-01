@@ -1,0 +1,886 @@
+const LESSON = {
+    id: "L04", date: "Lezione 4 — 1 Ott 2026",
+    title: "Funzioni Caratteristiche e Relazioni Binarie",
+    abstract: "Dalla corrispondenza biunivoca tra sottoinsiemi di $E$ e funzioni caratteristiche, alle relazioni binarie: proprietà fondamentali, caratterizzazioni insiemistiche, chiusure, preordini, ordini ed equivalenze.",
+
+    sections: [
+      {
+        id: "s04-richiamo-corrispondenze",
+        type: "section",
+        title: "Richiamo: corrispondenze, composizione, identità",
+        icon: "🔗",
+        content: `<p>La lezione precedente si era chiusa con una proposizione dimostrata: <strong>se una funzione è invertibile, anche la sua inversa è invertibile, e l'inversa dell'inversa è la funzione di partenza</strong>. Questo permette di parlare di "coppie" di funzioni, una l'inversa dell'altra. Erano poi stati lasciati alcuni esercizi per consolidare questi concetti.</p>
+<p>Prima di riepilogare gli esercizi conviene ricordare il significato della parola <em>corrispondenza</em>, perché la notazione $f: A \\to B$ verrà usata in due accezioni diverse.</p>`,
+        subsections: [
+          {
+            subtitle: "Corrispondenza vs funzione",
+            content: `<p>Una <strong>corrispondenza</strong> (o relazione) $f$ da $A$ a $B$ è semplicemente un sottoinsieme del prodotto cartesiano:</p>
+<p>$$f \\subseteq A \\times B$$</p>
+<p>e si scrive $f: A \\to B$ anche in questo caso più generale. Per una corrispondenza <strong>non si richiede nulla</strong>: un elemento $a \\in A$ può essere in relazione con nessun elemento di $B$, con esattamente uno, oppure con molti.</p>
+<p>Una <strong>funzione</strong> è il caso particolare in cui ogni $a \\in A$ è in relazione con <em>uno e un solo</em> $b \\in B$.</p>`
+          },
+          {
+            subtitle: "Composizione di corrispondenze",
+            content: `<p>La composizione di due corrispondenze $f \\subseteq A \\times B$ e $g \\subseteq B \\times C$ è la corrispondenza</p>
+<p>$$g \\circ f := \\{ (a, c) \\in A \\times C \\mid \\exists\\, b \\in B \\text{ tale che } (a,b) \\in f \\text{ e } (b,c) \\in g \\}$$</p>
+<p>cioè si collega $a$ a $c$ quando esiste almeno un "passaggio intermedio" $b$. Quando $f$ e $g$ sono funzioni, questa definizione restituisce esattamente la composizione usuale $c = g(f(a))$.</p>`
+          },
+          {
+            subtitle: "Relazione identità",
+            content: `<p>La <strong>relazione identità</strong> su $A$ è</p>
+<p>$$\\mathrm{id}_A := \\{ (a,a) \\mid a \\in A \\} \\subseteq A \\times A$$</p>
+<p>e scrivere $g \\circ f = \\mathrm{id}_A$ significa chiedere un'<strong>uguaglianza tra sottoinsiemi</strong> di $A \\times A$: la corrispondenza composta deve collegare ogni $a$ a se stesso e a nient'altro.</p>`
+          },
+          {
+            subtitle: "Riepilogo degli esercizi assegnati",
+            content: `<p>Si noti la differenza tra i due punti: nel primo si parte da <em>funzioni</em>, nel secondo soltanto da <em>corrispondenze</em>.</p>
+<p><strong>1.</strong> Date due <em>funzioni</em> $f: A \\to B$ e $g: B \\to A$ tali che $g \\circ f = \\mathrm{id}_A$, si può concludere che $g$ è suriettiva e $f$ è iniettiva.</p>
+<p><strong>2.</strong> Date due <em>corrispondenze</em> $f \\subseteq A \\times B$ e $g \\subseteq B \\times A$ (di cui non si assume a priori che siano funzioni) tali che $g \\circ f = \\mathrm{id}_A$ e $f \\circ g = \\mathrm{id}_B$, si può dimostrare che $f$ e $g$ non sono solo corrispondenze, ma <strong>vere e proprie funzioni</strong>. Inoltre sono una l'inversa dell'altra, e quindi entrambe invertibili.</p>
+<p>Il punto interessante è proprio questo: le due uguaglianze con le relazioni identità sono così rigide da <strong>forzare</strong> le corrispondenze a essere funzioni, senza che lo si debba richiedere come ipotesi.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Corrispondenza", latex: "f \\subseteq A \\times B" },
+          { label: "Composizione", latex: "g \\circ f = \\{ (a,c) \\mid \\exists b \\in B : (a,b) \\in f,\\ (b,c) \\in g \\}" },
+          { label: "Identità", latex: "\\mathrm{id}_A = \\{(a,a) \\mid a \\in A\\}" }
+        ]
+      },
+
+      {
+        id: "s04-funzioni-caratteristiche",
+        type: "section",
+        title: "Funzioni Caratteristiche",
+        icon: "🔘",
+        content: `<p>Passiamo a un nuovo argomento. L'obiettivo è: dato un insieme $E$ e un suo sottoinsieme $F$, trovare una funzione che per ogni elemento di $E$ ci dica se questo appartiene o meno a $F$.</p>
+<p>Immaginiamo questa funzione come un <strong>interruttore</strong>: per ogni elemento che le diamo in input, ci risponde "sì" o "no". Formalmente codifichiamo queste risposte con i valori $1$ (sì, l'elemento appartiene a $F$) e $0$ (no, non appartiene).</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione (Funzione caratteristica)",
+            content: `<p>Sia $E$ un insieme e $F \\subseteq E$ un suo sottoinsieme. La funzione</p>
+<p>$$\\chi_F : E \\to \\{0, 1\\}$$</p>
+<p>definita da</p>
+<p>$$\\chi_F(x) = \\begin{cases} 1 & \\text{se } x \\in F \\\\ 0 & \\text{se } x \\in E \\setminus F \\end{cases}$$</p>
+<p>si dice <strong>funzione caratteristica</strong> di $F$ in $E$. La lettera greca $\\chi$ (chi) è quella usata convenzionalmente per denotarla.</p>`
+          },
+          {
+            subtitle: "Notazione per gli insiemi di funzioni",
+            content: `<p>In generale, dati due insiemi $A$ e $B$, l'insieme di tutte le funzioni da $A$ a $B$ si denota con $B^A$:</p>
+<p>$$B^A := \\{ f \\mid f: A \\to B \\text{ è una funzione} \\}$$</p>
+<p>Nel nostro caso, l'insieme di tutte le funzioni caratteristiche definite su $E$ è l'insieme di tutte le funzioni da $E$ a $\\{0,1\\}$, che denoteremo quindi con $\\{0,1\\}^E$.</p>
+<p>Per l'insieme delle parti di $E$ (la famiglia di tutti i sottoinsiemi di $E$) useremo la notazione $P(E)$; in alcuni testi si trova scritto $\\mathcal{P}(E)$, ma si tratta dello stesso insieme.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Funzione caratteristica", latex: "\\chi_F : E \\to \\{0,1\\}, \\quad \\chi_F(x) = 1 \\iff x \\in F" },
+          { label: "Insieme di funzioni", latex: "B^A = \\{ f \\mid f : A \\to B \\text{ funzione} \\}" }
+        ]
+      },
+
+      {
+        id: "s04-nota-notazione",
+        type: "note_box",
+        title: "Nota del Prof. sulla notazione: tonde vs graffe",
+        icon: "📝",
+        content: `<blockquote><p>Un piccolo chiarimento sulla notazione che a volte può generare confusione. Quando scriviamo $(x, y)$ con le parentesi tonde, indichiamo una <strong>coppia ordinata</strong>, dove l'ordine degli elementi conta. Quando invece usiamo le parentesi graffe, come in $\\{x, y\\}$, indichiamo un <strong>insieme</strong>, dove l'ordine non ha importanza e gli elementi non possono essere ripetuti. Questa distinzione è fondamentale.</p></blockquote>`
+      },
+
+      {
+        id: "s04-biettivita",
+        type: "section",
+        title: "Corrispondenza tra Sottoinsiemi e Funzioni Caratteristiche",
+        icon: "↔️",
+        content: `<p>Esiste un legame molto stretto tra i sottoinsiemi di un dato insieme $E$ e le funzioni caratteristiche definite su $E$. L'obiettivo è concludere il confronto fra i due insiemi $P(E)$ e $\\{0,1\\}^E$: vogliamo mostrare che <strong>"scegliere un sottoinsieme di $E$" e "scegliere una funzione da $E$ in $\\{0,1\\}$" sono due operazioni equivalenti</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Teorema (biettività della corrispondenza $\\varphi$)",
+            content: `<p>Sia $E$ un insieme. Le corrispondenze</p>
+<p>$$\\varphi: P(E) \\longrightarrow \\{0,1\\}^E, \\quad \\varphi(F) = \\chi_F$$</p>
+<p>$$\\tilde{\\varphi}: \\{0,1\\}^E \\longrightarrow P(E), \\quad \\tilde{\\varphi}(f) = \\{x \\in E \\mid f(x)=1\\}$$</p>
+<p>sono l'una inversa dell'altra, cioè</p>
+<p>$$\\tilde{\\varphi} \\circ \\varphi = \\mathrm{id}_{P(E)} \\qquad\\text{e}\\qquad \\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}_{\\{0,1\\}^E}$$</p>
+<p>In particolare $\\varphi$ è una <strong>biiezione</strong> fra $P(E)$ e $\\{0,1\\}^E$.</p>`
+          },
+          {
+            subtitle: "Passo 1 — $\\varphi$ è una funzione",
+            content: `<p>Per definizione, a ogni elemento del dominio $P(E)$ (cioè a ogni sottoinsieme $F \\subseteq E$) viene associato <strong>uno e un solo</strong> elemento del codominio $\\{0,1\\}^E$ (la funzione caratteristica $\\chi_F$). La definizione di $\\chi_F$ è univoca per ogni dato $F$, quindi $\\varphi$ è a tutti gli effetti una funzione.</p>`
+          },
+          {
+            subtitle: "Passo 2 — come si scopre chi è l'inversa",
+            content: `<p>Per dimostrare che $\\varphi$ è invertibile dobbiamo trovare $\\tilde{\\varphi}: \\{0,1\\}^E \\to P(E)$ con $\\tilde{\\varphi} \\circ \\varphi = \\mathrm{id}_{P(E)}$ e $\\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}_{\\{0,1\\}^E}$.</p>
+<p>Il bello è che l'inversa non va indovinata: si <em>deduce</em>. Prendiamo una generica $\\chi: E \\to \\{0,1\\}$ e usiamo la proprietà che deve soddisfare l'inversa, cioè $\\varphi(\\tilde{\\varphi}(\\chi)) = \\chi$. Per definizione di $\\varphi$ questo significa</p>
+<p>$$\\chi_{\\tilde{\\varphi}(\\chi)} = \\chi$$</p>
+<p>Si tratta di un'uguaglianza tra funzioni: due funzioni sono uguali se e solo se assumono gli stessi valori su ogni elemento del dominio. Quindi per ogni $y \\in E$:</p>
+<p>$$\\chi_{\\tilde{\\varphi}(\\chi)}(y) = \\chi(y)$$</p>
+<p>Il termine a sinistra vale $1$ se $y \\in \\tilde{\\varphi}(\\chi)$ e $0$ altrimenti. Dunque un elemento $y \\in E$ appartiene a $\\tilde{\\varphi}(\\chi)$ <strong>se e solo se</strong> $\\chi(y) = 1$, e questo ci costringe a porre</p>
+<p>$$\\tilde{\\varphi}(\\chi) := \\{ y \\in E \\mid \\chi(y) = 1 \\}$$</p>
+<p>In altre parole, $\\tilde{\\varphi}$ associa a ogni funzione caratteristica la <strong>controimmagine dell'elemento $1$</strong>.</p>`
+          },
+          {
+            subtitle: "Verifica di $\\tilde{\\varphi} \\circ \\varphi = \\mathrm{id}_{P(E)}$",
+            content: `<p>Prendiamo un generico $F \\in P(E)$ e calcoliamo:</p>
+<p>$$(\\tilde{\\varphi} \\circ \\varphi)(F) = \\tilde{\\varphi}(\\varphi(F)) = \\tilde{\\varphi}(\\chi_F) = \\{ y \\in E \\mid \\chi_F(y) = 1 \\}$$</p>
+<p>Per definizione di $\\chi_F$, la condizione $\\chi_F(y) = 1$ è vera se e solo se $y \\in F$. Quindi l'insieme risultante è</p>
+<p>$$\\{ y \\in E \\mid y \\in F \\} = F$$</p>
+<p>Poiché $(\\tilde{\\varphi} \\circ \\varphi)(F) = F$ per ogni $F \\in P(E)$, si ha $\\tilde{\\varphi} \\circ \\varphi = \\mathrm{id}_{P(E)}$.</p>`
+          },
+          {
+            subtitle: "Verifica di $\\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}_{\\{0,1\\}^E}$",
+            content: `<p>Prendiamo una generica $f \\in \\{0,1\\}^E$ e calcoliamo $(\\varphi \\circ \\tilde{\\varphi})(f) = \\varphi(\\tilde{\\varphi}(f))$. Per definizione</p>
+<p>$$\\tilde{\\varphi}(f) = \\{ y \\in E \\mid f(y) = 1 \\}$$</p>
+<p>Applicando $\\varphi$ otteniamo la funzione caratteristica di questo insieme; chiamiamola $g$. Per ogni $x \\in E$:</p>
+<p>$$g(x) = \\chi_{\\{y \\in E \\mid f(y)=1\\}}(x) = \\begin{cases} 1 & \\text{se } x \\in \\{y \\in E \\mid f(y)=1\\} \\\\ 0 & \\text{se } x \\notin \\{y \\in E \\mid f(y)=1\\} \\end{cases}$$</p>
+<p>Ma la condizione $x \\in \\{y \\in E \\mid f(y)=1\\}$ è equivalente a $f(x)=1$, e la condizione $x \\notin \\{y \\in E \\mid f(y)=1\\}$ è equivalente a $f(x)=0$. Dunque</p>
+<p>$$g(x) = \\begin{cases} 1 & \\text{se } f(x)=1 \\\\ 0 & \\text{se } f(x)=0 \\end{cases}$$</p>
+<p>cioè $g(x) = f(x)$ per ogni $x \\in E$, e quindi $g = f$. Pertanto $\\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}_{\\{0,1\\}^E}$.</p>
+<p>Avendo verificato <strong>entrambe</strong> le composizioni, concludiamo che $\\varphi$ è una biiezione (una funzione invertibile).</p>`
+          }
+        ],
+        formulas: [
+          { label: "Mappa diretta", latex: "\\varphi : P(E) \\to \\{0,1\\}^E, \\quad \\varphi(F) = \\chi_F" },
+          { label: "Mappa inversa", latex: "\\tilde{\\varphi}(f) = \\{ x \\in E \\mid f(x) = 1 \\}" },
+          { label: "Biettività", latex: "\\tilde{\\varphi} \\circ \\varphi = \\mathrm{id}_{P(E)}, \\quad \\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}_{\\{0,1\\}^E}" }
+        ],
+        extra_content: `<h4>Esempio illustrativo: un caso con tre elementi</h4>
+<p>Prendiamo $E = \\{a, b, c\\}$ e $F = \\{a, c\\} \\subseteq E$. Attenzione ai <strong>tre livelli</strong> di oggetti in gioco: $a, b, c$ sono <em>elementi</em> di $E$; $F$ è un <em>sottoinsieme</em> di $E$, cioè un elemento di $P(E)$; $\\chi_F$ è una <em>funzione</em> da $E$ in $\\{0,1\\}$, cioè un elemento di $\\{0,1\\}^E$.</p>
+<p><strong>Passo 1: applichiamo $\\varphi$.</strong> Elemento per elemento: $\\chi_F(a) = 1$ (perché $a \\in F$), $\\chi_F(b) = 0$ (perché $b \\notin F$), $\\chi_F(c) = 1$ (perché $c \\in F$). In tabella:</p>
+<p>$$\\begin{array}{c|ccc} x & a & b & c \\\\ \\hline \\chi_F(x) & 1 & 0 & 1 \\end{array}$$</p>
+<p>In forma di insieme di coppie ordinate, $\\chi_F = \\{(a,1), (b,0), (c,1)\\}$. Possiamo anche pensare a $\\chi_F$ come alla "stringa di risposte" $(1,0,1)$ alle tre domande "$a \\in F$?", "$b \\in F$?", "$c \\in F$?".</p>
+<p><strong>Passo 2: applichiamo $\\tilde{\\varphi}$ al risultato.</strong> Scorriamo i tre elementi e teniamo solo quelli su cui la funzione vale $1$: $\\chi_F(a) = 1$ (lo prendiamo), $\\chi_F(b) = 0$ (lo scartiamo), $\\chi_F(c) = 1$ (lo prendiamo). Quindi</p>
+<p>$$\\tilde{\\varphi}(\\chi_F) = \\{a, c\\} = F$$</p>
+<p>La mappa inversa ha ricostruito esattamente il sottoinsieme di partenza: è il contenuto di $\\tilde{\\varphi} \\circ \\varphi = \\mathrm{id}_{P(E)}$ su questo caso particolare.</p>
+<p><strong>Passo 3: partiamo dall'altro lato.</strong> Consideriamo $\\psi: E \\to \\{0,1\\}$ data da</p>
+<p>$$\\begin{array}{c|ccc} x & a & b & c \\\\ \\hline \\psi(x) & 0 & 1 & 1 \\end{array}$$</p>
+<p>Raccogliendo gli elementi su cui $\\psi$ vale $1$ otteniamo $\\tilde{\\varphi}(\\psi) = \\{b, c\\}$; calcolando poi la funzione caratteristica di $\\{b,c\\}$ si trova $\\chi_{\\{b,c\\}}(a) = 0$, $\\chi_{\\{b,c\\}}(b) = 1$, $\\chi_{\\{b,c\\}}(c) = 1$, cioè di nuovo $\\psi$. Questo illustra l'altra verifica, $\\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}_{\\{0,1\\}^E}$.</p>
+<p><strong>Un conteggio utile.</strong> Poiché $\\varphi$ è biunivoca, i sottoinsiemi di $E$ sono tanti quante le funzioni da $E$ a $\\{0,1\\}$. Con $E$ di tre elementi, ogni funzione si costruisce scegliendo indipendentemente il valore $0$ oppure $1$ su $a$, su $b$ e su $c$: in tutto $2^3 = 8$ possibilità, che sono esattamente gli $8$ sottoinsiemi di $\\{a,b,c\\}$ (compresi $\\emptyset$, corrispondente alla funzione costante $0$, ed $E$ stesso, corrispondente alla funzione costante $1$).</p>`
+      },
+
+      {
+        id: "s04-nota-prof-studio",
+        type: "note_box",
+        title: "Nota del Prof.: come affrontare il formalismo",
+        icon: "💬",
+        content: `<blockquote><p>La teoria degli insiemi è abbastanza formale. Nessuno si aspetta da voi che capiate tutto subito. Perciò, insomma, ci sono le serate, ci sono le nottate in cui potete magari ricapitolare. Se non ci riuscite, chiedete a me, oppure approfittate del tutore. L'importante è non rimanere indietro con questi concetti fondamentali.</p></blockquote>`
+      },
+
+      {
+        id: "s04-relazioni-binarie",
+        type: "section",
+        title: "Relazioni Binarie",
+        icon: "🧩",
+        content: `<p>Dopo aver parlato di corrispondenze e funzioni, introduciamo il concetto di <strong>relazione</strong>. L'idea è semplice: una relazione binaria su un insieme $E$ è un qualsiasi sottoinsieme del prodotto cartesiano $E \\times E$, cioè una qualsiasi collezione di coppie ordinate di elementi di $E$. <strong>Non viene richiesta nessuna proprietà particolare</strong>: ogni sottoinsieme di $E \\times E$ è una relazione.</p>
+<p>Imponendo particolari proprietà (riflessività, simmetria, antisimmetria, transitività) otteniamo poi le famiglie di relazioni che ci interesseranno davvero: le <strong>relazioni di equivalenza</strong> e le <strong>relazioni d'ordine</strong>.</p>
+<p>Le relazioni d'ordine, come suggerisce il nome, servono a introdurre un ordinamento in un insieme. Per esempio la relazione "minore o uguale" ($\\le$) permette di ordinare i numeri interi: possiamo dire se un numero viene "prima" o "dopo" un altro. Non tutti gli insiemi, però, hanno un ordinamento naturale.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione (relazione binaria e notazione infissa)",
+            content: `<p>Sia $E$ un insieme. Una <strong>relazione binaria</strong> $\\rho$ su $E$ è un qualsiasi sottoinsieme del prodotto cartesiano:</p>
+<p>$$\\rho \\subseteq E \\times E$$</p>
+<p>Per una coppia $(a,b) \\in E \\times E$ si scrive:</p>
+<ul>
+<li>$a \\rho b$ per indicare che $(a,b) \\in \\rho$ (cioè $a$ è in relazione $\\rho$ con $b$);</li>
+<li>$a \\mathbin{\\not\\rho} b$ per indicare che $(a,b) \\notin \\rho$.</li>
+</ul>
+<p>Questa notazione infissa è una convenzione per migliorare la leggibilità, specialmente per relazioni comuni come $\\le$, $=$ ecc. Scrivere $3 \\le 5$ è molto più naturale che scrivere $(3,5) \\in {\\le}$.</p>`
+          },
+          {
+            subtitle: "Definizione (le quattro proprietà)",
+            content: `<p>Una relazione binaria $\\rho \\subseteq E \\times E$ si dice:</p>
+<ul>
+<li><strong>Riflessiva</strong> se $\\forall a \\in E$ si ha $a \\rho a$;</li>
+<li><strong>Simmetrica</strong> se $\\forall a, b \\in E$ si ha $a \\rho b \\Rightarrow b \\rho a$;</li>
+<li><strong>Antisimmetrica</strong> se $\\forall a, b \\in E$ si ha $(a \\rho b \\land b \\rho a) \\Rightarrow a = b$;</li>
+<li><strong>Transitiva</strong> se $\\forall a, b, c \\in E$ si ha $(a \\rho b \\land b \\rho c) \\Rightarrow a \\rho c$.</li>
+</ul>
+<p>Queste quattro nozioni sono centrali e vanno comprese a fondo.</p>`
+          },
+          {
+            subtitle: "Formulazione equivalente dell'antisimmetria",
+            content: `<p>La proprietà antisimmetrica ha una formulazione equivalente che a volte è più comoda:</p>
+<p>$$\\forall a, b \\in E, \\quad (a \\rho b \\land a \\neq b) \\Rightarrow b \\mathbin{\\not\\rho} a$$</p>
+<p>In altre parole: <strong>se due elementi distinti sono in relazione, la relazione non può valere in senso opposto</strong>.</p>`
+          },
+          {
+            subtitle: "Come si verifica un'implicazione \"a vuoto\"",
+            content: `<p>Tutte le proprietà precedenti, tranne la riflessività, sono <em>implicazioni</em>. Per verificarle bisogna ricordare che un'implicazione $P \\Rightarrow Q$ è vera ogni volta che la premessa $P$ è falsa, indipendentemente da $Q$.</p>
+<p>Quindi, se per una certa relazione la premessa $(a \\rho b \\land b \\rho a)$ <strong>non può mai essere soddisfatta</strong>, la proprietà antisimmetrica è automaticamente vera. Terremo presente questa osservazione negli esempi.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Relazione binaria", latex: "\\rho \\subseteq E \\times E" },
+          { label: "Riflessiva", latex: "\\forall a \\in E : a \\rho a" },
+          { label: "Simmetrica", latex: "\\forall a,b \\in E : a \\rho b \\Rightarrow b \\rho a" },
+          { label: "Antisimmetrica", latex: "\\forall a,b \\in E : (a \\rho b \\land b \\rho a) \\Rightarrow a = b" },
+          { label: "Transitiva", latex: "\\forall a,b,c \\in E : (a \\rho b \\land b \\rho c) \\Rightarrow a \\rho c" }
+        ],
+        extra_content: `<h4>Esempio: perché i numeri complessi non si ordinano in modo naturale</h4>
+<p>Come si ordinano i numeri complessi? Non esiste un unico modo standard per dire se un numero complesso è "più grande" di un altro. Un primo tentativo è usare il modulo: si definisce su $\\mathbb{C}$ la relazione</p>
+<p>$$z \\rho w \\quad \\overset{\\text{def}}{\\Longleftrightarrow} \\quad |z| \\le |w|$$</p>
+<p>Questa relazione è certamente <strong>riflessiva</strong> (vale $|z| \\le |z|$ per ogni $z$) ed è <strong>transitiva</strong> (se $|z| \\le |w|$ e $|w| \\le |u|$, allora $|z| \\le |u|$, perché $\\le$ è transitiva sui reali).</p>
+<p>Non è invece <strong>antisimmetrica</strong>: prendendo $z = 1$ e $w = -1$ si ha $|1| = |-1| = 1$, dunque valgono sia $1 \\rho (-1)$ sia $(-1) \\rho 1$, eppure $1 \\neq -1$. La premessa $(a \\rho b \\land b \\rho a)$ è soddisfatta su una coppia di elementi distinti: esattamente il controesempio che nega la definizione.</p>
+<p>Una relazione riflessiva e transitiva, ma non necessariamente antisimmetrica, si chiama <strong>preordine</strong>; per avere un ordine serve in più l'antisimmetria. Quindi il modulo fornisce su $\\mathbb{C}$ soltanto un preordine, non un ordine. (Torneremo sulla terminologia degli ordini nella sezione dedicata alla classificazione delle relazioni.)</p>`
+      },
+
+      {
+        id: "s04-esempi-relazioni",
+        type: "section",
+        title: "Esempi di Relazioni e Loro Proprietà",
+        icon: "📋",
+        content: `<p>Analizziamo alcune relazioni comuni per vedere quali proprietà soddisfano. La tabella va letta come un "indice": è nell'analisi dettagliata riga per riga che si vedono le verifiche. R, S, A, T stanno per Riflessiva, Simmetrica, Antisimmetrica, Transitiva.</p>`,
+        table_compare: {
+          headers: ["Relazione $\\rho$ su un insieme $E$", "R", "S", "A", "T"],
+          rows: [
+            ["$b$ è fratello/sorella di $a$ ($E$ = persone)", "✗", "✓", "✗", "✗"],
+            ["$b$ è coetaneo di $a$ ($E$ = persone)", "✓", "✓", "✗", "✓"],
+            ["$b$ confina con $a$ ($E$ = stati)", "✗", "✓", "✗", "✗"],
+            ["$b$ è più alta di $a$ ($E$ = montagne)", "✗", "✗", "✓", "✓"],
+            ["Identità, $b = a$ (su qualsiasi $E$)", "✓", "✓", "✓", "✓"],
+            ["$b \\ge a$ (su $E = \\mathbb{N}$ o $E = \\mathbb{Z}$)", "✓", "✗", "✓", "✓"],
+            ["$a$ divide $b$ (su $E = \\mathbb{Z}$)", "✓", "✗", "✗", "✓"],
+            ["$a$ divide $b$ (su $E = \\mathbb{N}$)", "✓", "✗", "✓", "✓"]
+          ]
+        },
+        subsections: [
+          {
+            subtitle: "$b$ è fratello/sorella di $a$",
+            content: `<ul>
+<li><strong>Non riflessiva</strong>: una persona non è sorella di se stessa, quindi $a \\mathbin{\\not\\rho} a$.</li>
+<li><strong>Simmetrica</strong>: se $b$ è fratello di $a$, allora $a$ è fratello/sorella di $b$.</li>
+<li><strong>Non antisimmetrica</strong>: se $a$ e $b$ sono due fratelli <em>distinti</em>, valgono sia $a \\rho b$ sia $b \\rho a$ ma $a \\neq b$, e questo contraddice la definizione.</li>
+<li><strong>Non transitiva</strong>: prendiamo due fratelli distinti $a$ e $b$; per simmetria valgono $a \\rho b$ e $b \\rho a$. Se la relazione fosse transitiva, da $a \\rho b$ e $b \\rho a$ dovrebbe seguire $a \\rho a$, cioè che $a$ è fratello di se stesso; ma la relazione non è riflessiva. Dunque la transitività cade. Questo controesempio usa soltanto la simmetria e l'assenza di riflessività già verificate, e non dipende da interpretazioni della parola "fratellastro".</li>
+</ul>`
+          },
+          {
+            subtitle: "$b$ è coetaneo di $a$",
+            content: `<ul>
+<li>È riflessiva, simmetrica e transitiva.</li>
+<li><strong>Non antisimmetrica</strong>: due persone distinte possono avere la stessa età, quindi esistono $a \\neq b$ con $a \\rho b$ e $b \\rho a$.</li>
+</ul>`
+          },
+          {
+            subtitle: "$b$ confina con $a$ (stati)",
+            content: `<ul>
+<li><strong>Non riflessiva</strong>: uno stato non confina con se stesso.</li>
+<li><strong>Simmetrica</strong>: se $b$ confina con $a$, allora $a$ confina con $b$.</li>
+<li><strong>Non antisimmetrica</strong>: Italia e Francia sono distinte e confinano l'una con l'altra.</li>
+<li><strong>Non transitiva</strong>: Italia confina con Francia, Francia confina con Belgio, ma Italia non confina con Belgio.</li>
+</ul>`
+          },
+          {
+            subtitle: "$b$ è più alta di $a$ (montagne), cioè la relazione $\\gt$",
+            content: `<ul>
+<li><strong>Non riflessiva</strong>: una montagna non è più alta di se stessa.</li>
+<li><strong>Non simmetrica</strong>: se $b$ è più alta di $a$, non è vero che $a$ è più alta di $b$.</li>
+<li><strong>È antisimmetrica.</strong> La premessa $(a \\rho b \\land b \\rho a)$ significherebbe "$a$ è più alta di $b$ <em>e</em> $b$ è più alta di $a$", condizione impossibile da soddisfare. Poiché la premessa è sempre falsa, l'implicazione $(a \\rho b \\land b \\rho a) \\Rightarrow a=b$ è vera per ogni coppia $a,b$.</li>
+<li><strong>È transitiva</strong>: se $a$ è più alta di $b$ e $b$ è più alta di $c$, allora $a$ è più alta di $c$.</li>
+</ul>`
+          },
+          {
+            subtitle: "Identità ($b = a$)",
+            content: `<p>È riflessiva, simmetrica, antisimmetrica e transitiva. È un esercizio dimostrare che <strong>l'unica relazione con le tre proprietà R, S, A è l'identità</strong>.</p>`
+          },
+          {
+            subtitle: "Minore o uguale ($\\le$)",
+            content: `<ul>
+<li><strong>Riflessiva</strong>: $a \\le a$.</li>
+<li><strong>Non simmetrica</strong>: da $3 \\le 5$ non segue $5 \\le 3$.</li>
+<li><strong>Antisimmetrica</strong>: se $a \\le b$ e $b \\le a$, allora deve essere $a = b$.</li>
+<li><strong>Transitiva</strong>.</li>
+</ul>`
+          },
+          {
+            subtitle: "Divisibilità in $\\mathbb{Z}$ ($a \\mid b$)",
+            content: `<ul>
+<li><strong>Riflessiva</strong>: ogni intero divide se stesso ($a = a \\cdot 1$).</li>
+<li><strong>Non simmetrica</strong>: $2 \\mid 18$ ma $18 \\nmid 2$.</li>
+<li><strong>Non antisimmetrica</strong>: siamo in $\\mathbb{Z}$, quindi possiamo usare i negativi. Per esempio $5 \\mid (-5)$ e $(-5) \\mid 5$, ma $5 \\neq -5$.</li>
+<li><strong>Transitiva.</strong> Se $a \\mid b$ e $b \\mid c$, esistono interi $k, l$ con $b = ak$ e $c = bl$. Sostituendo, $c = (ak)l = a(kl)$. Poiché $kl$ è un intero, segue $a \\mid c$.</li>
+</ul>`
+          },
+          {
+            subtitle: "Divisibilità in $\\mathbb{N}$ ($a \\mid b$)",
+            content: `<ul>
+<li>Riflessività, transitività e non-simmetria valgono come in $\\mathbb{Z}$.</li>
+<li><strong>È antisimmetrica.</strong> A differenza di $\\mathbb{Z}$, qui non abbiamo i negativi. Se $a \\mid b$ e $b \\mid a$ con $a,b \\in \\mathbb{N}$, allora $b = ak$ e $a = bl$ per qualche $k,l \\in \\mathbb{N}$. Sostituendo, $a = (ak)l = a(kl)$. Se $a \\neq 0$ possiamo dividere per $a$ e ottenere $kl = 1$; poiché $k,l$ sono naturali, l'unica soluzione è $k = 1$ e $l = 1$, da cui $a = b$. Se $a = 0$, allora $b = 0$, quindi anche in questo caso $a = b$.</li>
+</ul>`
+          }
+        ]
+      },
+
+      {
+        id: "s04-verita-vacua",
+        type: "alert_box",
+        title: "Antisimmetria e verità vacua — attenzione",
+        icon: "⚠️",
+        content: `<p>A lezione il professore ha concluso che la relazione "più alta di" <strong>non</strong> è antisimmetrica: si tratta di un'interpretazione comune ma formalmente imprecisa della definizione, e nella tabella sopra abbiamo riportato la risposta corretta.</p>
+<p>Formalmente, una relazione $\\rho$ è antisimmetrica se l'implicazione $(a \\rho b \\land b \\rho a) \\Rightarrow a=b$ è vera per ogni $a,b$. Nel caso della relazione "più alta di" ($\\gt$), la premessa $(a \\gt b \\land b \\gt a)$ è <strong>sempre falsa</strong>. In logica, un'implicazione con premessa falsa è sempre vera: si dice che l'implicazione è <em>vacuamente vera</em> (principio di verità vacua).</p>
+<p>Pertanto la relazione $\\gt$ è formalmente antisimmetrica. Lo stesso vale per qualsiasi relazione strettamente asimmetrica, cioè dove $a \\rho b \\Rightarrow b \\mathbin{\\not\\rho} a$.</p>`
+      },
+
+      {
+        id: "s04-caratterizzazioni",
+        type: "section",
+        title: "Caratterizzazione Insiemistica delle Proprietà",
+        icon: "🧮",
+        content: `<p>Vogliamo ora dimostrare le caratterizzazioni delle proprietà delle relazioni <strong>in termini di operazioni insiemistiche</strong> (Osservazioni 3.13 del materiale di riferimento).</p>
+<p>L'utilità di queste caratterizzazioni è duplice: da un lato permettono di verificare una proprietà con un semplice calcolo insiemistico (senza ragionare elemento per elemento), dall'altro rendono immediate molte dimostrazioni, come vedremo negli esercizi.</p>`,
+        subsections: [
+          {
+            subtitle: "Richiami di notazione",
+            content: `<p>Data $\\rho \\subseteq E \\times E$:</p>
+<ul>
+<li>$\\mathrm{id}_E := \\{(a,a) \\mid a \\in E\\}$ è la <em>relazione identità</em>;</li>
+<li>$\\rho^{-1} := \\{(a,b) \\mid (b,a) \\in \\rho\\}$ è la <em>relazione inversa</em>;</li>
+<li>$\\rho^2 := \\rho \\circ \\rho = \\{(a,c) \\mid \\exists\\, b \\in E : (a,b) \\in \\rho \\text{ e } (b,c) \\in \\rho\\}$ è la <em>composizione</em> di $\\rho$ con sé stessa.</li>
+</ul>
+<p>Due fatti elementari che useremo costantemente: $(\\rho^{-1})^{-1} = \\rho$, e l'inversione <strong>conserva</strong> l'inclusione, cioè se $\\sigma \\subseteq \\tau$ allora $\\sigma^{-1} \\subseteq \\tau^{-1}$. Quest'ultima è immediata: se $(a,b) \\in \\sigma^{-1}$ allora $(b,a) \\in \\sigma \\subseteq \\tau$, dunque $(a,b) \\in \\tau^{-1}$.</p>`
+          },
+          {
+            subtitle: "Proposizione (caratterizzazione delle proprietà)",
+            content: `<p>Sia $\\rho \\subseteq E \\times E$ una relazione binaria. Allora:</p>
+<p>$$\\rho \\text{ riflessiva} \\iff \\mathrm{id}_E \\subseteq \\rho$$</p>
+<p>$$\\rho \\text{ simmetrica} \\iff \\rho^{-1} \\subseteq \\rho \\iff \\rho = \\rho^{-1}$$</p>
+<p>$$\\rho \\text{ antisimmetrica} \\iff \\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$$</p>
+<p>$$\\rho \\text{ transitiva} \\iff \\rho^2 \\subseteq \\rho$$</p>`
+          },
+          {
+            subtitle: "Dimostrazione — riflessività",
+            content: `<p>Per definizione, $\\rho$ è riflessiva se per ogni $a \\in E$ si ha $(a,a) \\in \\rho$. L'insieme di tutte queste coppie è esattamente $\\mathrm{id}_E = \\{(a,a) \\mid a \\in E\\}$.</p>
+<p>Quindi dire che $\\rho$ è riflessiva significa esattamente dire che ogni elemento di $\\mathrm{id}_E$ è anche elemento di $\\rho$, cioè $\\mathrm{id}_E \\subseteq \\rho$. Le due affermazioni sono letteralmente la stessa cosa riscritta, quindi l'equivalenza è provata in entrambi i versi.</p>`
+          },
+          {
+            subtitle: "Dimostrazione — simmetria",
+            content: `<p><strong>($\\Rightarrow$) Da simmetrica a $\\rho^{-1} \\subseteq \\rho$.</strong> Prendiamo $(a,b) \\in \\rho^{-1}$: per definizione di inversa, $(b,a) \\in \\rho$. Per simmetria segue $(a,b) \\in \\rho$. Dunque $\\rho^{-1} \\subseteq \\rho$.</p>
+<p><strong>($\\Leftarrow$) Da $\\rho^{-1} \\subseteq \\rho$ a simmetrica.</strong> Se $\\rho^{-1} \\subseteq \\rho$, per ogni $(a,b) \\in \\rho$ si ha $(b,a) \\in \\rho^{-1}$, e per l'inclusione $(b,a) \\in \\rho$. Questa è esattamente la definizione di simmetria.</p>
+<p><strong>Equivalenza con $\\rho = \\rho^{-1}$.</strong> Supponiamo $\\rho^{-1} \\subseteq \\rho$. Poiché l'inversione <em>conserva</em> l'inclusione (non la rovescia), applicandola ai due membri otteniamo</p>
+<p>$$(\\rho^{-1})^{-1} \\subseteq \\rho^{-1}, \\qquad \\text{cioè} \\qquad \\rho \\subseteq \\rho^{-1}$$</p>
+<p>dove si è usato $(\\rho^{-1})^{-1} = \\rho$. Mettendo insieme questa inclusione con quella di partenza otteniamo la doppia inclusione, dunque $\\rho = \\rho^{-1}$. Viceversa, se $\\rho = \\rho^{-1}$ allora in particolare $\\rho^{-1} \\subseteq \\rho$. Le tre condizioni sono quindi equivalenti.</p>`
+          },
+          {
+            subtitle: "Dimostrazione — antisimmetria",
+            content: `<p><strong>Osservazione preliminare.</strong> Per ogni coppia $(a,b)$:</p>
+<p>$$(a,b) \\in \\rho \\cap \\rho^{-1} \\iff \\big( (a,b) \\in \\rho \\text{ e } (a,b) \\in \\rho^{-1} \\big) \\iff \\big( (a,b) \\in \\rho \\text{ e } (b,a) \\in \\rho \\big)$$</p>
+<p><strong>($\\Rightarrow$)</strong> Sia $(a,b) \\in \\rho \\cap \\rho^{-1}$. Per l'osservazione preliminare valgono $(a,b) \\in \\rho$ e $(b,a) \\in \\rho$; per l'antisimmetria questo implica $a=b$, dunque la coppia è della forma $(a,a)$ e appartiene a $\\mathrm{id}_E$. Pertanto $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$.</p>
+<p><strong>($\\Leftarrow$)</strong> Supponiamo $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$ e siano $a,b \\in E$ con $a \\rho b$ e $b \\rho a$. Allora $(a,b) \\in \\rho \\cap \\rho^{-1}$ e quindi, per ipotesi, $(a,b) \\in \\mathrm{id}_E$. Ma gli elementi di $\\mathrm{id}_E$ sono tutti della forma $(c,c)$: dunque $a = b$. Questa è la definizione di antisimmetria.</p>`
+          },
+          {
+            subtitle: "Dimostrazione — transitività",
+            content: `<p>Ricordiamo che $(a,c) \\in \\rho^2$ se e solo se esiste $b \\in E$ con $(a,b) \\in \\rho$ e $(b,c) \\in \\rho$.</p>
+<p><strong>($\\Rightarrow$)</strong> Sia $(a,c) \\in \\rho^2$: esiste allora $b \\in E$ con $(a,b) \\in \\rho$ e $(b,c) \\in \\rho$. Se $\\rho$ è transitiva, queste due condizioni implicano $(a,c) \\in \\rho$. Dunque ogni elemento di $\\rho^2$ sta in $\\rho$, cioè $\\rho^2 \\subseteq \\rho$.</p>
+<p><strong>($\\Leftarrow$)</strong> Supponiamo $\\rho^2 \\subseteq \\rho$ e siano $a,b,c \\in E$ con $a \\rho b$ e $b \\rho c$. Per definizione di composizione, $(a,c) \\in \\rho^2$ (l'elemento intermedio richiesto è proprio $b$). Per l'inclusione ipotizzata, $(a,c) \\in \\rho$, cioè $a \\rho c$: $\\rho$ è transitiva.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Riflessiva", latex: "\\mathrm{id}_E \\subseteq \\rho" },
+          { label: "Simmetrica", latex: "\\rho = \\rho^{-1}" },
+          { label: "Antisimmetrica", latex: "\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E" },
+          { label: "Transitiva", latex: "\\rho^2 \\subseteq \\rho" }
+        ],
+        extra_content: `<p><strong>Come usare queste caratterizzazioni.</strong> Lo schema da ricordare è che ciascuna proprietà "puntuale" (formulata con quantificatori su elementi) diventa una "relazione fra insiemi" (un'inclusione). Nelle dimostrazioni conviene quasi sempre passare alla forma insiemistica: le manipolazioni diventano algebriche e si evitano lunghe catene di quantificatori. Vedremo un'applicazione immediata negli Esercizi 3.15 e 3.18.</p>`
+      },
+
+      {
+        id: "s04-chiusure",
+        type: "section",
+        title: "Costruzione di Chiusure",
+        icon: "🧱",
+        content: `<p>A partire da una relazione qualsiasi è possibile "aggiungere" elementi per far sì che essa soddisfi una certa proprietà. Questo processo porta al concetto di <strong>chiusura</strong>.</p>
+<p>Per poter definire la chiusura transitiva ci serve anzitutto la nozione di <em>potenza $n$-esima</em> di una relazione, che generalizza il quadrato $\\rho^2$ già introdotto.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione (potenze di una relazione)",
+            content: `<p>Sia $\\rho$ una relazione in $E$. Si pone</p>
+<p>$$\\rho^1 := \\rho, \\qquad \\rho^{n+1} := \\rho^n \\circ \\rho \\quad (n \\ge 1)$$</p>
+<p>Concretamente, per ogni $n \\ge 1$:</p>
+<p>$$x \\,\\rho^n\\, y \\iff \\text{esistono } z_0, z_1, \\dots, z_n \\in E \\text{ con } z_0 = x,\\ z_n = y \\text{ e } z_{i-1} \\,\\rho\\, z_i \\ \\forall i=1,\\dots,n$$</p>
+<p>cioè $x \\rho^n y$ significa che si può passare da $x$ a $y$ con una <strong>catena di esattamente $n$ passi</strong> della relazione $\\rho$. Per $n=2$ si ritrova la definizione di $\\rho^2$.</p>`
+          },
+          {
+            subtitle: "Definizione (le tre chiusure)",
+            content: `<p>Sia $\\rho$ una relazione in $E$.</p>
+<p><strong>(cr) Chiusura riflessiva:</strong> la relazione $\\rho \\cup \\mathrm{id}_E$. È la più piccola (rispetto a $\\subseteq$) relazione riflessiva in $E$ che contiene $\\rho$.</p>
+<p><strong>(cs) Chiusura simmetrica:</strong> la relazione $\\rho \\cup \\rho^{-1}$. È la più piccola relazione simmetrica in $E$ che contiene $\\rho$.</p>
+<p><strong>(ct) Chiusura transitiva:</strong> la relazione</p>
+<p>$$\\rho^* := \\rho \\cup \\rho^2 \\cup \\rho^3 \\cup \\dots = \\bigcup_{n=1}^{\\infty} \\rho^n$$</p>
+<p>È la più piccola relazione transitiva in $E$ che contiene $\\rho$.</p>`
+          },
+          {
+            subtitle: "Attenzione: l'indice parte da 1",
+            content: `<p>Nell'unione che definisce $\\rho^*$ l'indice $n$ parte da $1$ e non da $0$: in altre parole $x \\rho^* y$ significa che esiste <em>almeno un</em> passo di $\\rho$ che collega $x$ a $y$ attraverso una catena finita.</p>
+<p>Di conseguenza la chiusura transitiva <strong>non</strong> aggiunge automaticamente le coppie dell'identità: se $\\rho$ non è riflessiva, in generale $\\rho^*$ non lo è. Se si vuole anche la riflessività bisogna considerare $\\rho^* \\cup \\mathrm{id}_E$ (che si ottiene ammettendo anche catene di lunghezza $0$, cioè ponendo $\\rho^0 := \\mathrm{id}_E$).</p>`
+          },
+          {
+            subtitle: "Esempio: \"essere figlio di\"",
+            content: `<p>Sia $E$ l'insieme delle persone e $\\rho$ la relazione "essere figlio di".</p>
+<ul>
+<li>$x \\rho y$: $x$ è figlio di $y$ (catena di $1$ passo);</li>
+<li>$x \\rho^2 y$: $x$ è figlio del figlio di $y$, cioè $x$ è nipote (di nonno) di $y$ (catena di $2$ passi: $x$ figlio di $z$, $z$ figlio di $y$);</li>
+<li>$x \\rho^3 y$: $x$ è pronipote di $y$ (catena di $3$ passi).</li>
+</ul>
+<p>La chiusura transitiva $\\rho^*$ rappresenta la relazione "<strong>essere discendente di</strong>". Infatti $x \\rho^* y$ significa che esiste $n \\ge 1$ con $x \\rho^n y$, cioè $x$ è discendente di $y$ di una qualche generazione.</p>
+<p>Si noti che $\\rho^*$ non è riflessiva: nessuno è discendente di sé stesso, coerentemente con il fatto che $n \\ge 1$.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo: chiusure di una relazione finita",
+            content: `<p>Sia $E = \\{1,2,3\\}$ e $\\rho = \\{(1,2), (2,3)\\}$. Allora:</p>
+<ul>
+<li>chiusura riflessiva: $\\rho \\cup \\mathrm{id}_E = \\{(1,2),(2,3),(1,1),(2,2),(3,3)\\}$;</li>
+<li>chiusura simmetrica: $\\rho \\cup \\rho^{-1} = \\{(1,2),(2,3),(2,1),(3,2)\\}$;</li>
+<li>potenze: $\\rho^2 = \\{(1,3)\\}$ (l'unica catena di due passi è $1 \\to 2 \\to 3$) e $\\rho^n = \\emptyset$ per ogni $n \\ge 3$; dunque la chiusura transitiva è $\\rho^* = \\rho \\cup \\rho^2 = \\{(1,2),(2,3),(1,3)\\}$.</li>
+</ul>
+<p>Si osservi che $\\rho^*$ è transitiva ma non riflessiva, e che togliendo una qualsiasi delle sue coppie si perderebbe la transitività oppure non si conterrebbe più $\\rho$: $\\rho^*$ è dunque davvero la <strong>più piccola</strong> relazione transitiva contenente $\\rho$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Potenza n-esima", latex: "\\rho^1 = \\rho, \\quad \\rho^{n+1} = \\rho^n \\circ \\rho" },
+          { label: "Chiusura riflessiva", latex: "\\rho \\cup \\mathrm{id}_E" },
+          { label: "Chiusura simmetrica", latex: "\\rho \\cup \\rho^{-1}" },
+          { label: "Chiusura transitiva", latex: "\\rho^* = \\bigcup_{n=1}^{\\infty} \\rho^n" }
+        ],
+        extra_content: `<h4>Esercizio 3.15 (con hint)</h4>
+<p>Verificare che per ogni relazione $\\rho$ la chiusura riflessiva, simmetrica e transitiva siano effettivamente riflessiva, simmetrica e transitiva.</p>
+<p><strong>Hint per lo svolgimento.</strong> Utilizzare le caratterizzazioni viste nella sezione precedente.</p>
+<p>Per la <em>chiusura simmetrica</em> $\\rho' = \\rho \\cup \\rho^{-1}$ bisogna dimostrare che $(\\rho')^{-1} = \\rho'$. Infatti:</p>
+<p>$$(\\rho \\cup \\rho^{-1})^{-1} = \\rho^{-1} \\cup (\\rho^{-1})^{-1} = \\rho^{-1} \\cup \\rho = \\rho'$$</p>
+<p>Per la <em>chiusura riflessiva</em> basta osservare che $\\mathrm{id}_E \\subseteq \\rho \\cup \\mathrm{id}_E$.</p>
+<p>Per la <em>chiusura transitiva</em> si verifica che $(\\rho^*)^2 \\subseteq \\rho^*$: una coppia di $(\\rho^*)^2$ si ottiene concatenando una catena di $m$ passi e una di $n$ passi, ottenendo una catena di $m+n$ passi, cioè un elemento di $\\rho^{m+n} \\subseteq \\rho^*$.</p>`
+      },
+
+      {
+        id: "s04-classificazione",
+        type: "section",
+        title: "Classificazione delle Relazioni",
+        icon: "🗂️",
+        content: `<p>Utilizzando le proprietà di riflessività, simmetria, antisimmetria e transitività possiamo classificare le relazioni in categorie importanti. Riprendiamo prima la tabella degli esempi (Esempio 3.17), ora con l'ordine di colonne R, S, T, A.</p>`,
+        table_compare: {
+          headers: ["Relazione", "R", "S", "T", "A"],
+          rows: [
+            ["$b$ è fratello/sorella di $a$", "✗", "✓", "✗", "✗"],
+            ["$b$ è coetaneo di $a$", "✓", "✓", "✓", "✗"],
+            ["$b$ confina con $a$ (stati)", "✗", "✓", "✗", "✗"],
+            ["$b$ è più alta di $a$ (montagne)", "✗", "✗", "✓", "✓"],
+            ["Identità $\\mathrm{id}_E$", "✓", "✓", "✓", "✓"],
+            ["$\\le$ in $\\mathbb{Z}$ o $\\mathbb{N}$", "✓", "✗", "✓", "✓"],
+            ["Divisibilità $\\delta_Z$ in $\\mathbb{Z}$", "✓", "✗", "✓", "✗"],
+            ["Divisibilità $\\delta_N$ in $\\mathbb{N}$", "✓", "✗", "✓", "✓"]
+          ]
+        },
+        subsections: [
+          {
+            subtitle: "Osservazione: simmetria + transitività forzano la riflessività sugli elementi coinvolti",
+            content: `<p>La relazione "essere fratello/sorella di" è simmetrica ma <strong>non</strong> transitiva. Qui si intende che $a \\neq b$ e che $a, b$ hanno gli stessi genitori: nessuno è fratello di sé stesso, quindi la relazione non è riflessiva. Ma allora la transitività cade: se $a$ e $b$ sono due fratelli distinti si ha $a \\rho b$ (per simmetria anche $b \\rho a$) e quindi la transitività applicata a $a \\rho b$ e $b \\rho a$ costringerebbe a concludere $a \\rho a$, cioè che $a$ è fratello di sé stesso: assurdo.</p>
+<p>In generale, se $\\rho$ è simmetrica e transitiva, allora $a \\rho a$ vale per ogni elemento $a$ che compaia in almeno una coppia di $\\rho$ (infatti da $(a,b) \\in \\rho$ segue $(b,a) \\in \\rho$ e quindi $(a,a) \\in \\rho$), mentre gli elementi di $E$ che non compaiono in alcuna coppia possono restare "non riflessivi". È questa la tensione che rende i tre segni incompatibili nel caso della fratellanza, dove ogni elemento coinvolto dovrebbe essere fratello di sé stesso.</p>`
+          },
+          {
+            subtitle: "Osservazione sulla divisibilità",
+            content: `<p>La relazione di divisibilità in $\\mathbb{Z}$ non è antisimmetrica. Per esempio $2 \\mid -2$ e $-2 \\mid 2$, ma $2 \\neq -2$. In $\\mathbb{N}$ invece, se $a \\mid b$ e $b \\mid a$, allora necessariamente $a = b$, quindi è antisimmetrica.</p>`
+          },
+          {
+            subtitle: "Esercizio 3.18 (con hint)",
+            content: `<p>Dimostrare che se una relazione $\\rho$ è contemporaneamente riflessiva, simmetrica e antisimmetrica, allora $\\rho = \\mathrm{id}_E$.</p>
+<p><strong>Hint.</strong> Usare le caratterizzazioni. Se $\\rho$ è simmetrica, $\\rho = \\rho^{-1}$. Se è antisimmetrica, $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$. Combinando le due si ottiene</p>
+<p>$$\\rho = \\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$$</p>
+<p>Poiché $\\rho$ è anche riflessiva, $\\mathrm{id}_E \\subseteq \\rho$. Le due inclusioni implicano l'uguaglianza.</p>`
+          },
+          {
+            subtitle: "Definizione (preordine, ordine, equivalenza)",
+            content: `<p>Una relazione $\\rho$ in $E$ si dice:</p>
+<ul>
+<li><strong>preordine</strong> se è riflessiva e transitiva (r, t);</li>
+<li><strong>ordine</strong> se è un preordine antisimmetrico (r, t, a);</li>
+<li><strong>equivalenza</strong> se è un preordine simmetrico (r, t, s).</li>
+</ul>
+<p>Si ricordi l'esempio del modulo su $\\mathbb{C}$: $z \\rho w \\iff |z| \\le |w|$ è riflessiva e transitiva ma non antisimmetrica, dunque è un <strong>preordine e non un ordine</strong>.</p>`
+          },
+          {
+            subtitle: "Definizione (ordine totale e non totale)",
+            content: `<p>Una relazione d'ordine $\\rho$ in $E$ si dice <strong>totale</strong> se per ogni coppia $a,b \\in E$ vale $(a \\rho b) \\lor (b \\rho a)$: due elementi qualsiasi sono sempre confrontabili. Equivalentemente:</p>
+<p>$$\\rho \\cup \\rho^{-1} = E \\times E$$</p>
+<p>Un ordine che non è totale lo chiameremo, in questi appunti, <strong>ordine non totale</strong>: esistono cioè almeno due elementi <em>non confrontabili</em>.</p>`
+          },
+          {
+            subtitle: "Identità: unica relazione sia d'ordine sia di equivalenza",
+            content: `<p>La relazione di identità $\\mathrm{id}_E$ è sia una relazione d'ordine che di equivalenza. Come conseguenza dell'Esercizio 3.18, è <strong>l'unica</strong> relazione con questa doppia natura:</p>
+<p>$$\\{\\text{ordini in } E\\} \\cap \\{\\text{equivalenze in } E\\} = \\{\\mathrm{id}_E\\}$$</p>`
+          },
+          {
+            subtitle: "Esempi 3.22",
+            content: `<ol>
+<li>La relazione $\\le$ in $\\mathbb{Z}$ o $\\mathbb{N}$ è un <strong>ordine totale</strong>.</li>
+<li>La divisibilità $\\delta_Z$ in $\\mathbb{Z}$ è un <strong>preordine</strong>, ma non un ordine (non è antisimmetrica).</li>
+<li>La divisibilità $\\delta_N$ in $\\mathbb{N}$ è un <strong>ordine non totale</strong>. Per esempio, $5$ non divide $7$ e $7$ non divide $5$, quindi non sono confrontabili.</li>
+<li>L'inclusione $\\subseteq$ in $P(E)$ è un <strong>ordine non totale</strong> appena $|E| \\gt 1$. Se $E=\\{a,b\\}$, i sottoinsiemi $\\{a\\}$ e $\\{b\\}$ non sono confrontabili. È totale solo se $|E| \\le 1$.</li>
+</ol>`
+          }
+        ],
+        formulas: [
+          { label: "Preordine", latex: "\\text{r} + \\text{t}" },
+          { label: "Ordine", latex: "\\text{r} + \\text{t} + \\text{a}" },
+          { label: "Equivalenza", latex: "\\text{r} + \\text{t} + \\text{s}" },
+          { label: "Ordine totale", latex: "\\rho \\cup \\rho^{-1} = E \\times E" }
+        ]
+      },
+
+      {
+        id: "s04-terminologia-parziale",
+        type: "alert_box",
+        title: "Sulla terminologia \"parziale\" — possibile ambiguità",
+        icon: "⚠️",
+        content: `<p>Nella terminologia standard, <strong>ogni</strong> relazione riflessiva, antisimmetrica e transitiva si chiama <strong>ordine parziale</strong>; gli ordini totali sono dunque un <em>caso particolare</em> di ordini parziali, non il loro contrario.</p>
+<p>A lezione si è usata talvolta l'espressione "parziale" nel senso più restrittivo di "non totale": è una convenzione abbreviata, comoda ma potenzialmente ambigua. Per evitare equivoci, in questi appunti useremo:</p>
+<ul>
+<li><strong>ordine</strong> (o <em>ordine parziale</em>) per ogni relazione r, t, a;</li>
+<li><strong>ordine totale</strong> quando ogni coppia di elementi è confrontabile;</li>
+<li><strong>ordine non totale</strong> quando esistono elementi non confrontabili.</li>
+</ul>
+<p>In particolare le qualifiche "parziale" e "totale" <strong>non</strong> sono incompatibili: $\\le$ in $\\mathbb{N}$ è un ordine parziale che è anche totale.</p>`
+      },
+
+      {
+        id: "s04-relazione-indotta",
+        type: "section",
+        title: "Relazione indotta da una funzione",
+        icon: "🎯",
+        content: `<p>Sia $f: X \\to Y$ una funzione e $\\rho$ una relazione in $Y$. Si definisce una relazione $\\rho_f$ in $X$ ponendo</p>
+<p>$$x' \\rho_f x'' \\iff f(x') \\rho f(x'')$$</p>
+<p>per ogni $x', x'' \\in X$. In altre parole, <strong>si confrontano due elementi di $X$ guardando le loro immagini in $Y$</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Proposizione (proprietà della relazione indotta)",
+            content: `<p>Siano $f : X \\to Y$ una funzione e $\\rho$ una relazione in $Y$. Allora:</p>
+<ol>
+<li>se $\\rho$ è un <strong>preordine</strong> in $Y$, allora $\\rho_f$ è un preordine in $X$;</li>
+<li>se $\\rho$ è un <strong>ordine</strong> in $Y$, allora $\\rho_f$ è un ordine in $X$ <em>se e solo se</em> $f$ è iniettiva;</li>
+<li>se $\\rho$ è un'<strong>equivalenza</strong> in $Y$, allora $\\rho_f$ è un'equivalenza in $X$.</li>
+</ol>`
+          },
+          {
+            subtitle: "Dimostrazione (1) — preordini",
+            content: `<p><em>Riflessività:</em> per ogni $x \\in X$ si ha $f(x) \\rho f(x)$ (riflessività di $\\rho$), dunque $x \\rho_f x$.</p>
+<p><em>Transitività:</em> se $x' \\rho_f x''$ e $x'' \\rho_f x'''$, allora $f(x') \\rho f(x'')$ e $f(x'') \\rho f(x''')$; per la transitività di $\\rho$ segue $f(x') \\rho f(x''')$, cioè $x' \\rho_f x'''$.</p>
+<p>Si noti che questo argomento <strong>non usa alcuna ipotesi su $f$</strong>: riflessività e transitività vengono sempre "ereditate".</p>`
+          },
+          {
+            subtitle: "Dimostrazione (3) — equivalenze",
+            content: `<p>Per il punto (1), $\\rho_f$ è riflessiva e transitiva. <em>Simmetria:</em> se $x' \\rho_f x''$, allora $f(x') \\rho f(x'')$ e per simmetria di $\\rho$ si ha $f(x'') \\rho f(x')$, cioè $x'' \\rho_f x'$. Dunque $\\rho_f$ è un'equivalenza, di nuovo senza ipotesi su $f$.</p>`
+          },
+          {
+            subtitle: "Dimostrazione (2) — ordini, verso sufficienza",
+            content: `<p>Per il punto (1) sappiamo già che $\\rho_f$ è riflessiva e transitiva; resta da discutere la sola antisimmetria.</p>
+<p><strong>$f$ iniettiva $\\Rightarrow \\rho_f$ ordine.</strong> Supponiamo $f$ iniettiva e siano $x', x'' \\in X$ con $x' \\rho_f x''$ e $x'' \\rho_f x'$. Per definizione, $f(x') \\rho f(x'')$ e $f(x'') \\rho f(x')$. Poiché $\\rho$ è antisimmetrica, $f(x') = f(x'')$; per l'iniettività di $f$ segue $x' = x''$. Quindi $\\rho_f$ è antisimmetrica e, unendo al punto (1), è un ordine.</p>`
+          },
+          {
+            subtitle: "Dimostrazione (2) — ordini, verso necessità",
+            content: `<p><strong>$\\rho_f$ ordine $\\Rightarrow f$ iniettiva.</strong> Supponiamo che $\\rho_f$ sia un ordine e siano $x', x'' \\in X$ con $f(x') = f(x'') =: y$. Poiché $\\rho$ è riflessiva, vale $y \\rho y$. Riscrivendo $y$ nei due modi possibili otteniamo</p>
+<p>$$f(x') \\rho f(x'') \\quad\\text{e}\\quad f(x'') \\rho f(x')$$</p>
+<p>cioè $x' \\rho_f x''$ e $x'' \\rho_f x'$. L'antisimmetria di $\\rho_f$ dà allora $x' = x''$. Dunque $f(x') = f(x'')$ implica $x' = x''$, cioè $f$ è iniettiva.</p>
+<p><strong>Punto chiave del verso "necessità":</strong> la riflessività di $\\rho$ trasforma una semplice <em>uguaglianza</em> di immagini in una coppia di relazioni nei due versi; è questo passaggio che permette di far intervenire l'antisimmetria di $\\rho_f$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Relazione indotta", latex: "x' \\rho_f x'' \\iff f(x') \\rho f(x'')" },
+          { label: "Criterio ordine", latex: "\\rho_f \\text{ ordine} \\iff f \\text{ iniettiva}" }
+        ],
+        extra_content: `<h4>Esempio illustrativo: perdita dell'antisimmetria</h4>
+<p>Siano $X = Y = \\mathbb{R}$, $f : \\mathbb{R} \\to \\mathbb{R}$ definita da $f(x) = x^2$, e $\\rho$ la relazione $\\le$ (che è un ordine totale in $\\mathbb{R}$). La relazione indotta è</p>
+<p>$$x' \\rho_f x'' \\iff (x')^2 \\le (x'')^2$$</p>
+<p>Calcoliamo qualche coppia: $2 \\rho_f 3$ perché $4 \\le 9$; invece $(-3) \\rho_f 2$ è falso perché $9 \\le 4$ è falso.</p>
+<p>La relazione $\\rho_f$ è riflessiva e transitiva (come garantisce il punto (1): è un preordine), ma <strong>non</strong> è antisimmetrica. Prendendo $x' = 1$ e $x'' = -1$:</p>
+<p>$$1^2 = 1 \\le 1 = (-1)^2 \\Rightarrow 1 \\,\\rho_f\\, (-1), \\qquad (-1)^2 = 1 \\le 1 = 1^2 \\Rightarrow (-1) \\,\\rho_f\\, 1$$</p>
+<p>e tuttavia $1 \\neq -1$. Coerentemente, $f(x)=x^2$ non è iniettiva su $\\mathbb{R}$, poiché $f(1) = f(-1) = 1$.</p>
+<p>Se invece restringiamo $f$ a $X = [0, +\\infty)$, dove $x \\mapsto x^2$ è iniettiva, la relazione indotta diventa $x' \\rho_f x'' \\iff (x')^2 \\le (x'')^2 \\iff x' \\le x''$, che è esattamente l'ordine usuale: un ordine (totale) su $[0,+\\infty)$, in accordo con il punto (2).</p>`
+      },
+
+      {
+        id: "s04-ordine-opposto",
+        type: "section",
+        title: "Ordine Opposto",
+        icon: "🔄",
+        content: `<p>Se $\\rho$ è un ordine (o preordine) in $E$, allora anche la sua relazione inversa $\\rho^{-1}$ lo è. $\\rho^{-1}$ è detto <strong>ordine (o preordine) opposto</strong> o <strong>inverso</strong> di $\\rho$.</p>`,
+        subsections: [
+          {
+            subtitle: "Verifica con le caratterizzazioni insiemistiche",
+            content: `<p>La verifica è immediata usando la forma insiemistica:</p>
+<ul>
+<li><em>Riflessività:</em> se $\\mathrm{id}_E \\subseteq \\rho$ allora $\\mathrm{id}_E = (\\mathrm{id}_E)^{-1} \\subseteq \\rho^{-1}$.</li>
+<li><em>Antisimmetria:</em> se $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$ allora $\\rho^{-1} \\cap \\rho \\subseteq \\mathrm{id}_E$, che è la stessa condizione.</li>
+<li><em>Transitività:</em> $(\\rho^{-1})^2 = (\\rho^2)^{-1} \\subseteq \\rho^{-1}$.</li>
+</ul>
+<p>Si usa ancora, in tutti e tre i casi, il fatto che l'inversione <strong>conserva</strong> l'inclusione.</p>`
+          },
+          {
+            subtitle: "Esempi e caso delle equivalenze",
+            content: `<p>Se $\\rho$ è la relazione $\\le$, allora $\\rho^{-1}$ è la relazione $\\ge$.</p>
+<p>Se $\\rho$ è un'equivalenza, lo è anche $\\rho^{-1}$: questo è banale, poiché per una relazione di equivalenza (che è simmetrica) si ha $\\rho = \\rho^{-1}$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Relazione inversa", latex: "\\rho^{-1} = \\{(a,b) \\mid (b,a) \\in \\rho\\}" },
+          { label: "Transitività dell'inversa", latex: "(\\rho^{-1})^2 = (\\rho^2)^{-1} \\subseteq \\rho^{-1}" }
+        ],
+        extra_content: `<p><strong>Anticipazione.</strong> Le relazioni di equivalenza e gli insiemi quoziente, che introdurremo prossimamente, sono un argomento di fondamentale importanza.</p>`
+      },
+
+      {
+        id: "s04-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s04-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1 — Funzione caratteristica e iniettività di $\\varphi$",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $E$ un insieme. Dai la definizione di funzione caratteristica $\\chi_F$ di un sottoinsieme $F \\subseteq E$ e dimostra che, per ogni $F, G \\subseteq E$, vale $F = G$ se e solo se $\\chi_F = \\chi_G$. Quale proprietà della funzione $\\varphi : P(E) \\to \\{0,1\\}^E$, $\\varphi(F) = \\chi_F$, hai dimostrato?</p>`,
+        solution: `<p><strong>Definizione.</strong> $\\chi_F : E \\to \\{0,1\\}$ è la funzione data da $\\chi_F(x) = 1$ se $x \\in F$ e $\\chi_F(x) = 0$ se $x \\in E \\setminus F$. Si tratta effettivamente di una funzione: ogni $x \\in E$ sta in esattamente uno dei due insiemi $F$ e $E \\setminus F$, quindi gli viene assegnato uno e un solo valore.</p>
+<p><strong>($\\Rightarrow$)</strong> Se $F = G$ allora i due insiemi hanno gli stessi elementi, quindi per ogni $x \\in E$ le condizioni $x \\in F$ e $x \\in G$ sono equivalenti e dunque $\\chi_F(x) = \\chi_G(x)$: le due funzioni, avendo lo stesso dominio $E$, lo stesso codominio $\\{0,1\\}$ e gli stessi valori, sono uguali.</p>
+<p><strong>($\\Leftarrow$)</strong> Supponiamo $\\chi_F = \\chi_G$. Sia $x \\in F$: allora $\\chi_F(x) = 1$, quindi $\\chi_G(x) = 1$, e per definizione di $\\chi_G$ questo accade solo se $x \\in G$. Dunque $F \\subseteq G$. Scambiando i ruoli di $F$ e $G$ si ottiene $G \\subseteq F$, da cui $F = G$.</p>
+<p>In modo equivalente:</p>
+<p>$$F = \\{ y \\in E \\mid \\chi_F(y) = 1 \\} = \\{ y \\in E \\mid \\chi_G(y) = 1 \\} = G$$</p>
+<p>cioè $F$ si riottiene da $\\chi_F$ come controimmagine di $1$.</p>
+<p><strong>Conclusione.</strong> L'implicazione ($\\Leftarrow$) dice esattamente che $\\varphi(F) = \\varphi(G) \\Rightarrow F = G$, cioè che $\\varphi$ è <strong>iniettiva</strong>; l'implicazione ($\\Rightarrow$) garantisce la buona definizione di $\\varphi$ come funzione.</p>`
+      },
+
+      {
+        id: "s04-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2 — Relazione binaria e le due forme dell'antisimmetria",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $E$ un insieme. Dai la definizione di relazione binaria $\\rho$ su $E$ e scrivi con i quantificatori le definizioni di relazione riflessiva, simmetrica, antisimmetrica e transitiva. Enuncia infine la formulazione equivalente dell'antisimmetria vista a lezione e dimostra che le due formulazioni sono effettivamente equivalenti.</p>`,
+        solution: `<p><strong>Definizione.</strong> Una relazione binaria $\\rho$ su $E$ è un qualsiasi sottoinsieme $\\rho \\subseteq E \\times E$; si scrive $a \\rho b$ per indicare $(a,b) \\in \\rho$ e $a \\mathbin{\\not\\rho} b$ per $(a,b) \\notin \\rho$. Nessuna proprietà è richiesta: ogni sottoinsieme di $E \\times E$ è una relazione.</p>
+<p><strong>Le quattro proprietà.</strong></p>
+<ul>
+<li>Riflessività: $$\\forall a \\in E : \\ a \\rho a$$</li>
+<li>Simmetria: $$\\forall a,b \\in E : \\ (a \\rho b \\Rightarrow b \\rho a)$$</li>
+<li>Antisimmetria: $$\\forall a,b \\in E : \\ ((a \\rho b \\wedge b \\rho a) \\Rightarrow a = b)$$</li>
+<li>Transitività: $$\\forall a,b,c \\in E : \\ ((a \\rho b \\wedge b \\rho c) \\Rightarrow a \\rho c)$$</li>
+</ul>
+<p><strong>Formulazione equivalente dell'antisimmetria.</strong></p>
+<p>$$\\forall a,b \\in E : \\ ((a \\rho b \\wedge a \\neq b) \\Rightarrow b \\mathbin{\\not\\rho} a)$$</p>
+<p><strong>Dimostrazione dell'equivalenza — primo verso (prima forma $\\Rightarrow$ seconda forma).</strong> Supponiamo valga la prima forma e siano $a,b$ con $a \\rho b$ e $a \\neq b$. Se fosse $b \\rho a$ avremmo $a \\rho b \\wedge b \\rho a$, dunque $a = b$, contro l'ipotesi $a \\neq b$. Quindi $b \\mathbin{\\not\\rho} a$.</p>
+<p><strong>Secondo verso (seconda forma $\\Rightarrow$ prima forma).</strong> Supponiamo valga la seconda forma e siano $a,b$ con $a \\rho b \\wedge b \\rho a$. Se fosse $a \\neq b$, dalla seconda forma seguirebbe $b \\mathbin{\\not\\rho} a$: contraddizione. Quindi $a = b$.</p>
+<p><strong>Osservazione logica.</strong> Le due formulazioni sono dunque logicamente equivalenti. Più precisamente: fissati $a,b$ per cui vale $a \\rho b$, le condizioni $b \\rho a \\Rightarrow a=b$ e $a \\neq b \\Rightarrow b \\mathbin{\\not\\rho} a$ sono contronominali l'una dell'altra.</p>`
+      },
+
+      {
+        id: "s04-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3 — Caratterizzazioni insiemistiche, con dettaglio sull'antisimmetria",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare le caratterizzazioni insiemistiche delle quattro proprietà (riflessiva, simmetrica, antisimmetrica, transitiva) di una relazione $\\rho \\subseteq E \\times E$ e dimostrare in dettaglio, nei due versi, quella dell'antisimmetria.</p>`,
+        solution: `<p><strong>Le caratterizzazioni.</strong></p>
+<p>$$\\rho \\text{ riflessiva} \\iff \\mathrm{id}_E \\subseteq \\rho$$</p>
+<p>$$\\rho \\text{ simmetrica} \\iff \\rho^{-1} \\subseteq \\rho \\iff \\rho = \\rho^{-1}$$</p>
+<p>$$\\rho \\text{ antisimmetrica} \\iff \\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$$</p>
+<p>$$\\rho \\text{ transitiva} \\iff \\rho^2 \\subseteq \\rho$$</p>
+<p><strong>Dimostrazione della terza. Osservazione preliminare.</strong> Per ogni coppia $(a,b)$ si ha $(a,b) \\in \\rho \\cap \\rho^{-1}$ se e solo se $(a,b) \\in \\rho$ e $(a,b) \\in \\rho^{-1}$, cioè se e solo se $(a,b) \\in \\rho$ e $(b,a) \\in \\rho$ (per definizione di relazione inversa).</p>
+<p><strong>($\\Rightarrow$)</strong> Sia $\\rho$ antisimmetrica, cioè $(a,b) \\in \\rho \\land (b,a) \\in \\rho \\Rightarrow a = b$. Preso $(a,b) \\in \\rho \\cap \\rho^{-1}$, per l'osservazione preliminare valgono $(a,b) \\in \\rho$ e $(b,a) \\in \\rho$, dunque $a=b$ e la coppia è della forma $(a,a) \\in \\mathrm{id}_E$. Quindi $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$.</p>
+<p><strong>($\\Leftarrow$)</strong> Sia $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$ e siano $a,b \\in E$ con $a \\rho b$ e $b \\rho a$. Per l'osservazione preliminare $(a,b) \\in \\rho \\cap \\rho^{-1}$, quindi per ipotesi $(a,b) \\in \\mathrm{id}_E$; ma gli elementi di $\\mathrm{id}_E$ sono tutti della forma $(c,c)$, dunque $a=b$. Questa è esattamente la definizione di antisimmetria. $\\square$</p>`
+      },
+
+      {
+        id: "s04-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4 — Corrispondenze, funzioni e la sola uguaglianza $g \\circ f = \\mathrm{id}_A$",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Spiega la differenza fra una corrispondenza e una funzione da $A$ a $B$, descrivendole come sottoinsiemi di $A \\times B$. Dimostra poi che se $f : A \\to B$ e $g : B \\to A$ sono funzioni con $g \\circ f = \\mathrm{id}_A$, allora $f$ è iniettiva e $g$ è suriettiva. Mostra con un esempio che da questa sola ipotesi non si può concludere che $f$ sia suriettiva né che $g$ sia iniettiva.</p>`,
+        solution: `<p><strong>Corrispondenza vs funzione.</strong> Una corrispondenza (o relazione) da $A$ a $B$ è un qualsiasi sottoinsieme $f \\subseteq A \\times B$: un elemento $a \\in A$ può essere in relazione con nessun elemento di $B$, con esattamente uno o con più di uno. Una funzione è il caso particolare in cui per ogni $a \\in A$ esiste uno e un solo $b \\in B$ con $(a,b) \\in f$; in tal caso si scrive $b = f(a)$.</p>
+<p><strong>$f$ è iniettiva.</strong> Siano $a_1, a_2 \\in A$ con $f(a_1) = f(a_2)$. Applicando $g$ si ottiene $g(f(a_1)) = g(f(a_2))$, cioè $(g \\circ f)(a_1) = (g \\circ f)(a_2)$; poiché $g \\circ f = \\mathrm{id}_A$ questo dà $a_1 = a_2$.</p>
+<p><strong>$g$ è suriettiva.</strong> Sia $a \\in A$. Posto $b := f(a) \\in B$ si ha $g(b) = g(f(a)) = (g \\circ f)(a) = a$, dunque $a$ appartiene all'immagine di $g$. Siccome $a$ era arbitrario, $g$ è suriettiva.</p>
+<p><strong>Controesempio.</strong> $A = \\{1\\}$, $B = \\{1,2\\}$, $f(1) = 1$ e $g(1) = g(2) = 1$. Allora $(g \\circ f)(1) = g(1) = 1$, quindi $g \\circ f = \\mathrm{id}_A$; però $f$ non è suriettiva (l'elemento $2$ non è immagine di nulla) e $g$ non è iniettiva (perché $g(1) = g(2)$ con $1 \\neq 2$).</p>
+<p>Si noti che qui $f \\circ g \\neq \\mathrm{id}_B$, coerentemente col fatto che servono <strong>entrambe</strong> le uguaglianze per avere l'invertibilità.</p>`
+      },
+
+      {
+        id: "s04-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1 — Calcolo con $\\varphi$ e $\\tilde{\\varphi}$ su $E = \\{1,2,3,4\\}$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $E = \\{1,2,3,4\\}$ e $F = \\{1,3,4\\}$.</p>
+<p><strong>(a)</strong> Scrivi $\\chi_F$ in tabella e come insieme di coppie ordinate.</p>
+<p><strong>(b)</strong> Determina $\\tilde{\\varphi}(\\psi)$ per la funzione $\\psi : E \\to \\{0,1\\}$ con $\\psi(1) = 0$, $\\psi(2) = 0$, $\\psi(3) = 1$, $\\psi(4) = 0$.</p>
+<p><strong>(c)</strong> Scrivi $\\varphi(\\emptyset)$, $\\varphi(E)$ e $\\chi_{E \\setminus F}$.</p>
+<p><strong>(d)</strong> Quanti elementi hanno $P(E)$ e $\\{0,1\\}^E$?</p>`,
+        solution: `<p><strong>(a)</strong> Per definizione $\\chi_F(x) = 1$ se $x \\in F$ e $0$ altrimenti. Poiché $1,3,4 \\in F$ e $2 \\notin F$:</p>
+<p>$$\\begin{array}{c|cccc} x & 1 & 2 & 3 & 4 \\\\ \\hline \\chi_F(x) & 1 & 0 & 1 & 1 \\end{array}$$</p>
+<p>Come insieme di coppie ordinate, $\\chi_F = \\{(1,1), (2,0), (3,1), (4,1)\\}$ (il primo elemento di ogni coppia è l'argomento, il secondo il valore).</p>
+<p><strong>(b)</strong> $\\tilde{\\varphi}(\\psi) = \\{ y \\in E \\mid \\psi(y) = 1 \\}$. Scorrendo gli elementi: $\\psi(1) = 0$ si scarta, $\\psi(2) = 0$ si scarta, $\\psi(3) = 1$ si prende, $\\psi(4) = 0$ si scarta. Dunque</p>
+<p>$$\\tilde{\\varphi}(\\psi) = \\{3\\}$$</p>
+<p>Si osservi che $\\psi = \\chi_{\\{3\\}}$, coerentemente con $\\varphi \\circ \\tilde{\\varphi} = \\mathrm{id}$.</p>
+<p><strong>(c)</strong> $\\varphi(\\emptyset) = \\chi_{\\emptyset}$ è la funzione costante $0$ (nessun elemento appartiene a $\\emptyset$); $\\varphi(E) = \\chi_E$ è la funzione costante $1$. Inoltre $E \\setminus F = \\{2\\}$, quindi $\\chi_{E \\setminus F}(1) = 0$, $\\chi_{E \\setminus F}(2) = 1$, $\\chi_{E \\setminus F}(3) = 0$, $\\chi_{E \\setminus F}(4) = 0$, cioè $\\chi_{E \\setminus F} = 1 - \\chi_F$ puntualmente.</p>
+<p><strong>(d)</strong> $|E| = 4$, quindi $|\\{0,1\\}^E| = 2^4 = 16$ e, per la biunivocità di $\\varphi$, anche $|P(E)| = 16$.</p>`
+      },
+
+      {
+        id: "s04-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2 — Proprietà di una relazione su $E = \\{1,2,3\\}$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $E = \\{1,2,3\\}$ e sia $\\rho = \\{(1,1),(2,2),(3,3),(1,2),(2,1)\\} \\subseteq E \\times E$. Stabilisci quali delle proprietà R (riflessiva), S (simmetrica), A (antisimmetrica), T (transitiva) valgono, giustificando ogni risposta con una verifica completa o con un controesempio esplicito.</p>`,
+        solution: `<p><strong>R (riflessiva) — sì.</strong> Occorre $(a,a) \\in \\rho$ per ogni $a \\in E$: infatti $(1,1),(2,2),(3,3) \\in \\rho$. Equivalentemente $\\mathrm{id}_E \\subseteq \\rho$. Quindi $\\rho$ è riflessiva.</p>
+<p><strong>S (simmetrica) — sì.</strong> Le coppie di $\\rho$ fuori dalla diagonale sono $(1,2)$ e $(2,1)$, e ciascuna compare assieme alla sua simmetrica; le coppie diagonali sono simmetriche di se stesse. Dunque $\\rho = \\rho^{-1}$ e $\\rho$ è simmetrica.</p>
+<p><strong>A (antisimmetrica) — no.</strong> Si ha $1 \\rho 2$ e $2 \\rho 1$ con $1 \\neq 2$: la premessa $(a \\rho b \\wedge b \\rho a)$ è soddisfatta senza che sia $a = b$. Quindi $\\rho$ non è antisimmetrica.</p>
+<p><strong>T (transitiva) — sì.</strong> Controlliamo tutte le catene $a \\rho b \\wedge b \\rho c$ che coinvolgono almeno una coppia non diagonale:</p>
+<p>$$\\begin{array}{c|c|c} (a,b) & (b,c) & (a,c) \\text{ richiesta} \\\\ \\hline (1,2) & (2,1) & (1,1) \\in \\rho \\\\ (1,2) & (2,2) & (1,2) \\in \\rho \\\\ (1,1) & (1,2) & (1,2) \\in \\rho \\\\ (2,1) & (1,2) & (2,2) \\in \\rho \\\\ (2,1) & (1,1) & (2,1) \\in \\rho \\\\ (2,2) & (2,1) & (2,1) \\in \\rho \\end{array}$$</p>
+<p>Le catene con sole coppie diagonali sono banali, e $3$ è in relazione solo con sé stesso. Quindi $\\rho$ è transitiva.</p>
+<p><strong>Conclusione.</strong> $\\rho$ soddisfa R, S, T ma non A: è dunque una <strong>relazione di equivalenza</strong> (e non una relazione d'ordine).</p>
+<p><strong>Come renderla antisimmetrica.</strong> Nessuna <em>aggiunta</em> di coppie può eliminare il controesempio già presente: bisogna togliere. Per ottenere la sola antisimmetria basta <strong>eliminare una fra $(1,2)$ e $(2,1)$</strong>. Se vogliamo conservare anche la simmetria, dobbiamo eliminarle <strong>entrambe</strong>, ottenendo $\\mathrm{id}_E$ — in accordo con il fatto che l'unica relazione R, S, A è $\\mathrm{id}_E$.</p>`
+      },
+
+      {
+        id: "s04-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3 — Potenze e chiusure su $E = \\{1,2,3,4\\}$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $E = \\{1,2,3,4\\}$ e $\\rho = \\{(1,2),(2,3),(3,4)\\}$. Stabilire quali delle proprietà R, S, T, A possiede $\\rho$; calcolare le potenze $\\rho^2, \\rho^3, \\rho^4$ e le tre chiusure (riflessiva, simmetrica, transitiva); dire infine se $\\rho^* \\cup \\mathrm{id}_E$ è un ordine e se è totale.</p>`,
+        solution: `<p><strong>Proprietà.</strong></p>
+<ul>
+<li>Non è riflessiva: $\\mathrm{id}_E \\not\\subseteq \\rho$, ad esempio $(1,1) \\notin \\rho$.</li>
+<li>Non è simmetrica: $(1,2) \\in \\rho$ ma $(2,1) \\notin \\rho$.</li>
+<li><strong>È antisimmetrica</strong>: non esiste alcuna coppia $(a,b) \\in \\rho$ con $(b,a) \\in \\rho$, dunque $\\rho \\cap \\rho^{-1} = \\emptyset \\subseteq \\mathrm{id}_E$.</li>
+<li>Non è transitiva: $(1,2),(2,3) \\in \\rho$ ma $(1,3) \\notin \\rho$.</li>
+</ul>
+<p><strong>Potenze.</strong> $\\rho^2 = \\{(1,3),(2,4)\\}$ (catene $1 \\to 2 \\to 3$ e $2 \\to 3 \\to 4$); $\\rho^3 = \\{(1,4)\\}$ (catena $1 \\to 2 \\to 3 \\to 4$); $\\rho^4 = \\emptyset$, e quindi $\\rho^n = \\emptyset$ per ogni $n \\ge 4$.</p>
+<p><strong>Chiusure.</strong></p>
+<ul>
+<li>Riflessiva: $\\rho \\cup \\mathrm{id}_E = \\{(1,2),(2,3),(3,4),(1,1),(2,2),(3,3),(4,4)\\}$.</li>
+<li>Simmetrica: $\\rho \\cup \\rho^{-1} = \\{(1,2),(2,1),(2,3),(3,2),(3,4),(4,3)\\}$.</li>
+<li>Transitiva: $\\rho^* = \\rho \\cup \\rho^2 \\cup \\rho^3 = \\{(1,2),(2,3),(3,4),(1,3),(2,4),(1,4)\\}$.</li>
+</ul>
+<p><strong>Ultima domanda.</strong> $\\rho^*$ non è riflessiva, quindi non è un ordine. Invece $\\rho^* \\cup \\mathrm{id}_E$:</p>
+<ul>
+<li>è riflessiva per costruzione;</li>
+<li>è transitiva: l'unione di $\\rho^*$ con l'identità non crea nuove catene — se $(a,b)$ e $(b,c)$ stanno in $\\rho^* \\cup \\mathrm{id}_E$ e una delle due è in $\\mathrm{id}_E$ la conclusione è immediata, altrimenti si usa la transitività di $\\rho^*$;</li>
+<li>è antisimmetrica, perché $\\rho^*$ contiene solo coppie $(a,b)$ con $a \\lt b$ nell'ordine usuale e quindi non contiene mai contemporaneamente $(a,b)$ e $(b,a)$ con $a \\neq b$.</li>
+</ul>
+<p>Dunque $\\rho^* \\cup \\mathrm{id}_E$ è un <strong>ordine</strong>; esso coincide con $\\le$ su $\\{1,2,3,4\\}$ e per ogni $a,b$ vale $a \\le b$ oppure $b \\le a$, quindi è un <strong>ordine totale</strong>.</p>`
+      },
+
+      {
+        id: "s04-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4 — Algebra delle funzioni caratteristiche",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $E$ un insieme e siano $A, B \\subseteq E$. Dimostra che per ogni $x \\in E$ valgono</p>
+<p>$$\\chi_{A \\cap B}(x) = \\chi_A(x)\\,\\chi_B(x), \\qquad \\chi_{E \\setminus A}(x) = 1 - \\chi_A(x),$$</p>
+<p>$$\\chi_{A \\cup B}(x) = \\chi_A(x) + \\chi_B(x) - \\chi_A(x)\\chi_B(x)$$</p>
+<p>Verifica poi le tre formule su $E = \\{a,b,c\\}$, $A = \\{a,b\\}$, $B = \\{b,c\\}$.</p>`,
+        solution: `<p>Tutte le funzioni in gioco hanno dominio $E$ e valori in $\\{0,1\\}$, quindi basta confrontare i valori in un generico $x \\in E$ distinguendo i casi secondo l'appartenenza di $x$ ad $A$ e a $B$.</p>
+<p><strong>1) Intersezione.</strong> Se $x \\in A$ e $x \\in B$: allora $x \\in A \\cap B$, quindi il membro sinistro è $1$, e il destro è $1 \\cdot 1 = 1$. In tutti gli altri casi $x \\notin A \\cap B$, quindi il membro sinistro è $0$; e almeno uno fra $\\chi_A(x)$ e $\\chi_B(x)$ è $0$, quindi il prodotto è $0$. Dunque $\\chi_{A \\cap B} = \\chi_A \\chi_B$.</p>
+<p><strong>2) Complementare.</strong> Se $x \\in A$ allora $x \\notin E \\setminus A$, quindi $\\chi_{E \\setminus A}(x) = 0 = 1 - 1 = 1 - \\chi_A(x)$. Se $x \\notin A$ allora $x \\in E \\setminus A$, quindi $\\chi_{E \\setminus A}(x) = 1 = 1 - 0 = 1 - \\chi_A(x)$.</p>
+<p><strong>3) Unione — quattro casi.</strong></p>
+<ul>
+<li>$x \\in A$ e $x \\in B$: sinistra $= 1$, destra $= 1 + 1 - 1 = 1$.</li>
+<li>$x \\in A$, $x \\notin B$: $x \\in A \\cup B$, sinistra $= 1$, destra $= 1 + 0 - 0 = 1$.</li>
+<li>$x \\notin A$, $x \\in B$: sinistra $= 1$, destra $= 0 + 1 - 0 = 1$.</li>
+<li>$x \\notin A$ e $x \\notin B$: $x \\notin A \\cup B$, sinistra $= 0$, destra $= 0 + 0 - 0 = 0$.</li>
+</ul>
+<p>In ogni caso i valori coincidono.</p>
+<p><strong>Verifica numerica</strong> con $E = \\{a,b,c\\}$, $A = \\{a,b\\}$, $B = \\{b,c\\}$: si ha $\\chi_A = (1,1,0)$ e $\\chi_B = (0,1,1)$ (valori in $a,b,c$).</p>
+<ul>
+<li>$A \\cap B = \\{b\\}$ e $\\chi_A \\chi_B = (1\\cdot 0,\\ 1 \\cdot 1,\\ 0 \\cdot 1) = (0,1,0) = \\chi_{\\{b\\}}$.</li>
+<li>$E \\setminus A = \\{c\\}$ e $1 - \\chi_A = (0,0,1) = \\chi_{\\{c\\}}$.</li>
+<li>$A \\cup B = \\{a,b,c\\} = E$ e $\\chi_A + \\chi_B - \\chi_A\\chi_B = (1+0-0,\\ 1+1-1,\\ 0+1-0) = (1,1,1) = \\chi_E$.</li>
+</ul>
+<p>Tutte le formule sono verificate.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Che cos'è una corrispondenza da $A$ a $B$, e in che senso una funzione è un caso particolare?",
+        back: "Una corrispondenza (o relazione) da $A$ a $B$ è un qualsiasi sottoinsieme $f \\subseteq A \\times B$: non si richiede nulla, un $a \\in A$ può essere in relazione con nessun elemento, con uno o con molti elementi di $B$. Una funzione è il caso particolare in cui ogni $a \\in A$ è in relazione con uno e un solo $b \\in B$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la funzione caratteristica $\\chi_F$ di $F \\subseteq E$ e di' che cos'è l'insieme $\\{0,1\\}^E$.",
+        back: "$\\chi_F : E \\to \\{0,1\\}$ è definita da $\\chi_F(x) = 1$ se $x \\in F$ e $\\chi_F(x) = 0$ se $x \\in E \\setminus F$. In generale $B^A$ denota l'insieme di tutte le funzioni da $A$ a $B$; quindi $\\{0,1\\}^E$ è l'insieme di tutte le funzioni da $E$ in $\\{0,1\\}$, cioè di tutte le possibili funzioni caratteristiche su $E$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\varphi : P(E) \\to \\{0,1\\}^E$, $\\varphi(F) = \\chi_F$, è invertibile. Chi è l'inversa e come si trova?",
+        back: "L'inversa non si indovina, si deduce: imponendo $\\varphi(\\tilde{\\varphi}(\\chi)) = \\chi$ si ottiene $\\chi_{\\tilde{\\varphi}(\\chi)} = \\chi$, cioè $y \\in \\tilde{\\varphi}(\\chi) \\iff \\chi(y) = 1$. Si pone quindi $\\tilde{\\varphi}(\\chi) = \\{ y \\in E \\mid \\chi(y) = 1 \\}$ (la controimmagine di $1$). Verifiche: $(\\tilde{\\varphi} \\circ \\varphi)(F) = \\{y \\mid \\chi_F(y)=1\\} = F$, e $(\\varphi \\circ \\tilde{\\varphi})(f)$ è la caratteristica di $\\{y \\mid f(y)=1\\}$, che vale $1$ esattamente dove $f$ vale $1$, dunque uguale a $f$."
+      },
+      {
+        type: "domanda",
+        front: "Che conseguenza di conteggio si ricava dalla biettività di $\\varphi$?",
+        back: "Poiché $\\varphi$ è biunivoca, $|P(E)| = |\\{0,1\\}^E|$. Se $|E| = n$, ogni funzione si costruisce scegliendo indipendentemente $0$ o $1$ su ciascuno degli $n$ elementi, quindi ci sono $2^n$ funzioni e dunque $2^n$ sottoinsiemi. Con $E = \\{a,b,c\\}$: $2^3 = 8$, compresi $\\emptyset$ (funzione costante $0$) ed $E$ stesso (costante $1$)."
+      },
+      {
+        type: "definizione",
+        front: "Definisci relazione binaria su $E$ e le quattro proprietà fondamentali.",
+        back: "Una relazione binaria è un qualsiasi $\\rho \\subseteq E \\times E$; si scrive $a \\rho b$ per $(a,b) \\in \\rho$. Riflessiva: $\\forall a,\\ a \\rho a$. Simmetrica: $a \\rho b \\Rightarrow b \\rho a$. Antisimmetrica: $(a \\rho b \\land b \\rho a) \\Rightarrow a = b$. Transitiva: $(a \\rho b \\land b \\rho c) \\Rightarrow a \\rho c$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia le caratterizzazioni insiemistiche delle quattro proprietà.",
+        back: "Riflessiva $\\iff \\mathrm{id}_E \\subseteq \\rho$. Simmetrica $\\iff \\rho^{-1} \\subseteq \\rho \\iff \\rho = \\rho^{-1}$. Antisimmetrica $\\iff \\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$. Transitiva $\\iff \\rho^2 \\subseteq \\rho$."
+      },
+      {
+        type: "tranello",
+        front: "La relazione \"$a$ è più alta di $b$\" sulle montagne è antisimmetrica?",
+        back: "Sì, formalmente lo è — ed è il tranello classico. L'antisimmetria chiede che $(a \\rho b \\land b \\rho a) \\Rightarrow a=b$ sia vera per ogni coppia. Qui la premessa $(a \\gt b \\land b \\gt a)$ è sempre falsa, e un'implicazione con premessa falsa è <strong>vacuamente vera</strong>. Lo stesso vale per ogni relazione strettamente asimmetrica. Attenzione: a lezione si era concluso il contrario, ma la risposta formalmente corretta è che $\\gt$ è antisimmetrica."
+      },
+      {
+        type: "tranello",
+        front: "Il modulo su $\\mathbb{C}$, cioè $z \\rho w \\iff |z| \\le |w|$, è un ordine?",
+        back: "No, è soltanto un <strong>preordine</strong>. È riflessiva ($|z| \\le |z|$) e transitiva (per transitività di $\\le$ sui reali), ma non antisimmetrica: con $z=1$ e $w=-1$ si ha $|1| = |-1| = 1$, dunque $1 \\rho (-1)$ e $(-1) \\rho 1$ pur essendo $1 \\neq -1$. Per avere un ordine serve in più l'antisimmetria."
+      },
+      {
+        type: "dimostrazione",
+        front: "Perché la relazione \"essere fratello/sorella di\" non può essere transitiva?",
+        back: "Non è riflessiva (nessuno è fratello di sé stesso) ma è simmetrica. Presi due fratelli distinti $a \\neq b$, valgono $a \\rho b$ e $b \\rho a$; se fosse transitiva seguirebbe $a \\rho a$, cioè che $a$ è fratello di sé stesso — assurdo. In generale, se $\\rho$ è simmetrica e transitiva, allora $a \\rho a$ vale per ogni $a$ che compaia in almeno una coppia di $\\rho$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci le tre chiusure di una relazione $\\rho$ in $E$.",
+        back: "Chiusura riflessiva: $\\rho \\cup \\mathrm{id}_E$, la più piccola relazione riflessiva contenente $\\rho$. Chiusura simmetrica: $\\rho \\cup \\rho^{-1}$, la più piccola simmetrica contenente $\\rho$. Chiusura transitiva: $\\rho^* = \\bigcup_{n=1}^{\\infty} \\rho^n$, la più piccola transitiva contenente $\\rho$, dove $x \\rho^n y$ significa che esiste una catena di esattamente $n$ passi da $x$ a $y$."
+      },
+      {
+        type: "tranello",
+        front: "La chiusura transitiva $\\rho^*$ è automaticamente riflessiva?",
+        back: "No. Nell'unione $\\rho^* = \\bigcup_{n \\ge 1} \\rho^n$ l'indice parte da $1$, quindi serve almeno un passo: $\\rho^*$ non aggiunge le coppie dell'identità. Esempio: se $\\rho$ è \"essere figlio di\", allora $\\rho^*$ è \"essere discendente di\" e nessuno è discendente di sé stesso. Per avere anche la riflessività serve $\\rho^* \\cup \\mathrm{id}_E$ (cioè ammettere catene di lunghezza $0$, ponendo $\\rho^0 := \\mathrm{id}_E$)."
+      },
+      {
+        type: "definizione",
+        front: "Che cosa sono un preordine, un ordine, un'equivalenza e un ordine totale?",
+        back: "Preordine: riflessiva + transitiva (r, t). Ordine: preordine antisimmetrico (r, t, a). Equivalenza: preordine simmetrico (r, t, s). Un ordine è <strong>totale</strong> se per ogni $a,b$ vale $(a \\rho b) \\lor (b \\rho a)$, equivalentemente $\\rho \\cup \\rho^{-1} = E \\times E$; altrimenti si dirà non totale (esistono elementi non confrontabili)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che se $\\rho$ è riflessiva, simmetrica e antisimmetrica, allora $\\rho = \\mathrm{id}_E$.",
+        back: "Con le caratterizzazioni: dalla simmetria $\\rho = \\rho^{-1}$, quindi $\\rho = \\rho \\cap \\rho^{-1}$; dall'antisimmetria $\\rho \\cap \\rho^{-1} \\subseteq \\mathrm{id}_E$, dunque $\\rho \\subseteq \\mathrm{id}_E$. Dalla riflessività $\\mathrm{id}_E \\subseteq \\rho$. Le due inclusioni danno $\\rho = \\mathrm{id}_E$. Conseguenza: $\\mathrm{id}_E$ è l'unica relazione che è sia un ordine sia un'equivalenza."
+      },
+      {
+        type: "dimostrazione",
+        front: "Data $f : X \\to Y$ e $\\rho$ ordine in $Y$, quando la relazione indotta $\\rho_f$ è un ordine in $X$? Dimostra entrambi i versi.",
+        back: "Se e solo se $f$ è iniettiva. Riflessività e transitività si ereditano sempre, senza ipotesi su $f$. <strong>Sufficienza:</strong> se $x' \\rho_f x''$ e $x'' \\rho_f x'$ allora $f(x') \\rho f(x'')$ e $f(x'') \\rho f(x')$; per antisimmetria di $\\rho$, $f(x')=f(x'')$ e per iniettività $x'=x''$. <strong>Necessità:</strong> se $f(x')=f(x'')=:y$, dalla riflessività $y \\rho y$ si riscrive nei due modi come $x' \\rho_f x''$ e $x'' \\rho_f x'$; l'antisimmetria di $\\rho_f$ dà $x'=x''$, cioè $f$ iniettiva."
+      },
+      {
+        type: "domanda",
+        front: "Perché $x' \\rho_f x'' \\iff (x')^2 \\le (x'')^2$ su $\\mathbb{R}$ non è un ordine, e cosa cambia su $[0,+\\infty)$?",
+        back: "Su $\\mathbb{R}$ è un preordine ma non antisimmetrica: $1 \\rho_f (-1)$ e $(-1) \\rho_f 1$ perché $1^2 = (-1)^2$, eppure $1 \\neq -1$ — coerentemente $f(x)=x^2$ non è iniettiva ($f(1)=f(-1)$). Restringendo a $X = [0,+\\infty)$, dove $x \\mapsto x^2$ è iniettiva, si ha $(x')^2 \\le (x'')^2 \\iff x' \\le x''$: è l'ordine usuale, totale, in accordo col criterio di iniettività."
+      },
+      {
+        type: "domanda",
+        front: "Che relazione c'è tra \"ordine parziale\" e \"ordine totale\"? Sono termini opposti?",
+        back: "No, e qui c'è un'ambiguità terminologica. Nella terminologia standard <strong>ogni</strong> relazione riflessiva, antisimmetrica e transitiva è un ordine parziale; gli ordini totali sono un caso particolare di ordini parziali. Le qualifiche non sono incompatibili: $\\le$ su $\\mathbb{N}$ è un ordine parziale che è anche totale. In questi appunti si usa \"ordine non totale\" per indicare che esistono elementi non confrontabili."
+      },
+      {
+        type: "domanda",
+        front: "Perché se $f \\subseteq A \\times B$ e $g \\subseteq B \\times A$ sono corrispondenze con $g \\circ f = \\mathrm{id}_A$ e $f \\circ g = \\mathrm{id}_B$, allora sono necessariamente funzioni?",
+        back: "È il punto interessante dell'esercizio assegnato: le due uguaglianze con le relazioni identità sono così rigide da <strong>forzare</strong> le corrispondenze a essere funzioni, senza che lo si debba richiedere come ipotesi. Inoltre risultano una l'inversa dell'altra, e quindi entrambe invertibili. Attenzione: con la sola $g \\circ f = \\mathrm{id}_A$ (su funzioni) si ottiene soltanto $f$ iniettiva e $g$ suriettiva."
+      }
+    ]
+};
+
