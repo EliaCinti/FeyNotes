@@ -1,0 +1,3040 @@
+const LESSON = {
+    id: "L05", date: "Lezione 5 — 6 Ott 2026",
+    title: "Flusso del Campo Elettrico e Teorema di Gauss",
+    abstract: "Dal flusso infinitesimo di un campo vettoriale al teorema di Gauss: convenzioni sull'orientazione delle superfici, strategia delle superfici Gaussiane e applicazione ai tre casi classici — piano indefinito, sfera uniformemente carica in volume, filo rettilineo infinito — con l'esercizio sul cilindro carico.",
+
+    sections: [
+      {
+        id: "s05-flusso",
+        type: "section",
+        title: "Il Concetto di Flusso",
+        icon: "🌊",
+        content: `<p>Venerdì avevamo introdotto il concetto di flusso. Supponete di avere una superficie qualsiasi, e definiamo con $\\hat{n}$ la normale a questa superficie. Immaginiamo che questa superficie sia attraversata da un campo vettoriale, che nel nostro caso sarà il campo elettrostatico $\\vec{E}$.</p>
+        <p>Supponiamo che ci sia un angolo $\\alpha$ tra la normale alla superficie e il campo elettrostatico. Allora, possiamo definire il flusso. Se consideriamo una superficie infinitesima $dS$, possiamo definire il flusso infinitesimo che attraversa questa superficie.</p>
+        <figure class="figura" data-id="fisica2_lez05a_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05a_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="184.767pt" height="132.302pt" viewBox="0 0 184.767 132.302" version="1.2"><style>#fisica2_lez05a_d1 [fill="rgb(0%,0%,59.999084%)"],#fisica2_lez05a_d1 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d1 [fill="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05a_d1 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#000099!important}#fisica2_lez05a_d1 [stroke="rgb(0%,0%,59.999084%)"],#fisica2_lez05a_d1 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d1 [stroke="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05a_d1 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#000099!important}#fisica2_lez05a_d1 [fill="rgb(89.99939%,89.99939%,100%)"],#fisica2_lez05a_d1 [style*="fill:rgb(89.99939%,89.99939%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05a_d1 [fill="rgb(89.99939%,89.99939%,100%)"],[data-mode="light"] #fisica2_lez05a_d1 [style*="fill:rgb(89.99939%,89.99939%,100%)"]{fill:#e5e5ff!important}#fisica2_lez05a_d1 [stroke="rgb(89.99939%,89.99939%,100%)"],#fisica2_lez05a_d1 [style*="stroke:rgb(89.99939%,89.99939%,100%)"]{stroke:#e5e5ff!important}[data-mode="light"] #fisica2_lez05a_d1 [stroke="rgb(89.99939%,89.99939%,100%)"],[data-mode="light"] #fisica2_lez05a_d1 [style*="stroke:rgb(89.99939%,89.99939%,100%)"]{stroke:#e5e5ff!important}#fisica2_lez05a_d1 [fill="rgb(0%,0%,0%)"],#fisica2_lez05a_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05a_d1 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05a_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-1">
+<path style="stroke:none;" d="M 2.53125 0 L 2.53125 -0.3125 C 1.859375 -0.3125 1.75 -0.3125 1.75 -0.75 L 1.75 -6.875 L 0.328125 -6.765625 L 0.328125 -6.453125 C 1.015625 -6.453125 1.09375 -6.390625 1.09375 -5.90625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 Z M 2.53125 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-2">
+<path style="stroke:none;" d="M 2.453125 0 L 2.453125 -0.3125 C 1.796875 -0.3125 1.75 -0.359375 1.75 -0.75 L 1.75 -4.375 L 0.359375 -4.265625 L 0.359375 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.421875 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 C 1.765625 -0.03125 2.109375 -0.015625 2.453125 0 Z M 1.90625 -5.984375 C 1.90625 -6.25 1.671875 -6.515625 1.375 -6.515625 C 1.046875 -6.515625 0.84375 -6.234375 0.84375 -5.984375 C 0.84375 -5.71875 1.0625 -5.453125 1.359375 -5.453125 C 1.703125 -5.453125 1.90625 -5.734375 1.90625 -5.984375 Z M 1.90625 -5.984375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-3">
+<path style="stroke:none;" d="M 5.296875 0 L 5.296875 -0.3125 C 4.78125 -0.3125 4.53125 -0.3125 4.53125 -0.609375 L 4.53125 -2.5 C 4.53125 -3.34375 4.53125 -3.65625 4.21875 -4.015625 C 4.078125 -4.1875 3.75 -4.375 3.1875 -4.375 C 2.453125 -4.375 1.984375 -3.953125 1.71875 -3.34375 L 1.71875 -4.375 L 0.3125 -4.265625 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.890625 1.09375 -3.40625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -2.578125 C 1.765625 -3.609375 2.484375 -4.15625 3.109375 -4.15625 C 3.734375 -4.15625 3.84375 -3.625 3.84375 -3.0625 L 3.84375 -0.75 C 3.84375 -0.3125 3.734375 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.1875 -0.03125 Z M 5.296875 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-4">
+<path style="stroke:none;" d="M 4.109375 -1.171875 C 4.109375 -1.28125 4.03125 -1.296875 3.984375 -1.296875 C 3.890625 -1.296875 3.875 -1.234375 3.859375 -1.15625 C 3.5 -0.140625 2.609375 -0.140625 2.515625 -0.140625 C 2.015625 -0.140625 1.625 -0.4375 1.390625 -0.796875 C 1.09375 -1.28125 1.09375 -1.9375 1.09375 -2.28125 L 3.859375 -2.28125 C 4.078125 -2.28125 4.109375 -2.28125 4.109375 -2.5 C 4.109375 -3.484375 3.578125 -4.4375 2.34375 -4.4375 C 1.1875 -4.4375 0.28125 -3.421875 0.28125 -2.171875 C 0.28125 -0.859375 1.3125 0.109375 2.453125 0.109375 C 3.671875 0.109375 4.109375 -0.984375 4.109375 -1.171875 Z M 3.453125 -2.5 L 1.109375 -2.5 C 1.171875 -3.96875 2 -4.21875 2.34375 -4.21875 C 3.359375 -4.21875 3.453125 -2.875 3.453125 -2.5 Z M 3.453125 -2.5 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-5">
+<path style="stroke:none;" d="M 5.21875 0 L 5.21875 -0.3125 C 4.53125 -0.3125 4.453125 -0.375 4.453125 -0.859375 L 4.453125 -6.875 L 3.015625 -6.765625 L 3.015625 -6.453125 C 3.71875 -6.453125 3.796875 -6.390625 3.796875 -5.90625 L 3.796875 -3.765625 C 3.5 -4.125 3.078125 -4.375 2.546875 -4.375 C 1.375 -4.375 0.34375 -3.40625 0.34375 -2.125 C 0.34375 -0.875 1.3125 0.109375 2.4375 0.109375 C 3.078125 0.109375 3.515625 -0.234375 3.765625 -0.546875 L 3.765625 0.109375 Z M 3.765625 -1.171875 C 3.765625 -0.984375 3.765625 -0.96875 3.65625 -0.796875 C 3.359375 -0.328125 2.90625 -0.109375 2.484375 -0.109375 C 2.046875 -0.109375 1.6875 -0.359375 1.453125 -0.75 C 1.1875 -1.15625 1.15625 -1.71875 1.15625 -2.125 C 1.15625 -2.484375 1.171875 -3.078125 1.46875 -3.53125 C 1.671875 -3.828125 2.046875 -4.15625 2.578125 -4.15625 C 2.9375 -4.15625 3.34375 -4.015625 3.65625 -3.5625 C 3.765625 -3.390625 3.765625 -3.375 3.765625 -3.203125 Z M 3.765625 -1.171875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-6">
+<path style="stroke:none;" d="M 4.109375 -1.171875 C 4.109375 -1.28125 4.015625 -1.28125 3.984375 -1.28125 C 3.890625 -1.28125 3.875 -1.234375 3.859375 -1.171875 C 3.5625 -0.25 2.921875 -0.140625 2.5625 -0.140625 C 2.03125 -0.140625 1.15625 -0.5625 1.15625 -2.15625 C 1.15625 -3.78125 1.96875 -4.1875 2.5 -4.1875 C 2.578125 -4.1875 3.203125 -4.1875 3.5625 -3.828125 C 3.15625 -3.796875 3.09375 -3.5 3.09375 -3.375 C 3.09375 -3.109375 3.265625 -2.90625 3.546875 -2.90625 C 3.796875 -2.90625 4 -3.078125 4 -3.375 C 4 -4.046875 3.25 -4.4375 2.484375 -4.4375 C 1.25 -4.4375 0.34375 -3.375 0.34375 -2.140625 C 0.34375 -0.875 1.3125 0.109375 2.46875 0.109375 C 3.796875 0.109375 4.109375 -1.078125 4.109375 -1.171875 Z M 4.109375 -1.171875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-7">
+<path style="stroke:none;" d="M 4.78125 -0.875 L 4.78125 -1.4375 L 4.53125 -1.4375 L 4.53125 -0.875 C 4.53125 -0.3125 4.296875 -0.25 4.1875 -0.25 C 3.859375 -0.25 3.8125 -0.6875 3.8125 -0.75 L 3.8125 -2.71875 C 3.8125 -3.140625 3.8125 -3.53125 3.453125 -3.890625 C 3.078125 -4.28125 2.578125 -4.4375 2.09375 -4.4375 C 1.28125 -4.4375 0.609375 -3.96875 0.609375 -3.3125 C 0.609375 -3.015625 0.796875 -2.859375 1.0625 -2.859375 C 1.34375 -2.859375 1.515625 -3.046875 1.515625 -3.3125 C 1.515625 -3.421875 1.46875 -3.75 1.015625 -3.765625 C 1.28125 -4.109375 1.765625 -4.21875 2.078125 -4.21875 C 2.5625 -4.21875 3.125 -3.828125 3.125 -2.953125 L 3.125 -2.578125 C 2.625 -2.5625 1.9375 -2.53125 1.3125 -2.234375 C 0.5625 -1.890625 0.3125 -1.375 0.3125 -0.9375 C 0.3125 -0.140625 1.28125 0.109375 1.90625 0.109375 C 2.5625 0.109375 3.015625 -0.28125 3.203125 -0.75 C 3.234375 -0.359375 3.5 0.0625 3.96875 0.0625 C 4.1875 0.0625 4.78125 -0.078125 4.78125 -0.875 Z M 3.125 -1.390625 C 3.125 -0.453125 2.421875 -0.109375 1.96875 -0.109375 C 1.484375 -0.109375 1.078125 -0.453125 1.078125 -0.953125 C 1.078125 -1.5 1.5 -2.3125 3.125 -2.375 Z M 3.125 -1.390625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-8">
+<path style="stroke:none;" d="M 8.046875 0 L 8.046875 -0.3125 C 7.53125 -0.3125 7.296875 -0.3125 7.28125 -0.609375 L 7.28125 -2.5 C 7.28125 -3.34375 7.28125 -3.65625 6.96875 -4.015625 C 6.828125 -4.1875 6.515625 -4.375 5.9375 -4.375 C 5.109375 -4.375 4.671875 -3.78125 4.5 -3.40625 C 4.359375 -4.265625 3.625 -4.375 3.1875 -4.375 C 2.453125 -4.375 1.984375 -3.953125 1.71875 -3.34375 L 1.71875 -4.375 L 0.3125 -4.265625 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.890625 1.09375 -3.40625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -2.578125 C 1.765625 -3.609375 2.484375 -4.15625 3.109375 -4.15625 C 3.734375 -4.15625 3.84375 -3.625 3.84375 -3.0625 L 3.84375 -0.75 C 3.84375 -0.3125 3.734375 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.1875 -0.03125 L 5.296875 0 L 5.296875 -0.3125 C 4.640625 -0.3125 4.53125 -0.3125 4.53125 -0.75 L 4.53125 -2.578125 C 4.53125 -3.609375 5.234375 -4.15625 5.859375 -4.15625 C 6.484375 -4.15625 6.59375 -3.625 6.59375 -3.0625 L 6.59375 -0.75 C 6.59375 -0.3125 6.484375 -0.3125 5.828125 -0.3125 L 5.828125 0 L 6.9375 -0.03125 Z M 8.046875 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-9">
+<path style="stroke:none;" d="M 5.15625 -2.140625 C 5.15625 -3.390625 4.203125 -4.375 3.09375 -4.375 C 2.3125 -4.375 1.90625 -3.9375 1.703125 -3.71875 L 1.703125 -4.375 L 0.28125 -4.265625 L 0.28125 -3.96875 C 0.984375 -3.96875 1.046875 -3.90625 1.046875 -3.46875 L 1.046875 1.171875 C 1.046875 1.609375 0.9375 1.609375 0.28125 1.609375 L 0.28125 1.921875 L 1.390625 1.890625 L 2.5 1.921875 L 2.5 1.609375 C 1.84375 1.609375 1.734375 1.609375 1.734375 1.171875 L 1.734375 -0.578125 C 1.78125 -0.421875 2.203125 0.109375 2.953125 0.109375 C 4.125 0.109375 5.15625 -0.859375 5.15625 -2.140625 Z M 4.34375 -2.140625 C 4.34375 -0.9375 3.640625 -0.109375 2.90625 -0.109375 C 2.515625 -0.109375 2.140625 -0.3125 1.875 -0.71875 C 1.734375 -0.921875 1.734375 -0.9375 1.734375 -1.125 L 1.734375 -3.34375 C 2.015625 -3.84375 2.5 -4.125 3.015625 -4.125 C 3.734375 -4.125 4.34375 -3.265625 4.34375 -2.140625 Z M 4.34375 -2.140625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-10">
+<path style="stroke:none;" d="M 4.671875 -2.125 C 4.671875 -3.390625 3.671875 -4.4375 2.484375 -4.4375 C 1.234375 -4.4375 0.28125 -3.359375 0.28125 -2.125 C 0.28125 -0.84375 1.3125 0.109375 2.46875 0.109375 C 3.671875 0.109375 4.671875 -0.859375 4.671875 -2.125 Z M 3.84375 -2.203125 C 3.84375 -1.84375 3.84375 -1.3125 3.625 -0.875 C 3.40625 -0.421875 2.96875 -0.140625 2.484375 -0.140625 C 2.046875 -0.140625 1.609375 -0.34375 1.34375 -0.796875 C 1.09375 -1.234375 1.09375 -1.84375 1.09375 -2.203125 C 1.09375 -2.578125 1.09375 -3.125 1.34375 -3.5625 C 1.609375 -4.015625 2.078125 -4.21875 2.46875 -4.21875 C 2.90625 -4.21875 3.328125 -4 3.59375 -3.578125 C 3.84375 -3.15625 3.84375 -2.578125 3.84375 -2.203125 Z M 3.84375 -2.203125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-11">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.953125 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.921875 3.15625 -7.15625 C 3.28125 -7.28125 3.28125 -7.296875 3.28125 -7.328125 C 3.28125 -7.40625 3.234375 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.75 1.609375 -5.5 C 1.09375 -4.40625 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.234375 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-12">
+<path style="stroke:none;" d="M 5.03125 -3.96875 L 5.03125 -4.265625 C 4.796875 -4.25 4.515625 -4.234375 4.296875 -4.234375 L 3.421875 -4.265625 L 3.421875 -3.96875 C 3.796875 -3.953125 3.90625 -3.71875 3.90625 -3.53125 C 3.90625 -3.453125 3.890625 -3.40625 3.84375 -3.296875 L 2.828125 -0.765625 L 1.71875 -3.53125 C 1.671875 -3.671875 1.671875 -3.703125 1.671875 -3.703125 C 1.671875 -3.96875 2.046875 -3.96875 2.234375 -3.96875 L 2.234375 -4.265625 L 1.15625 -4.234375 C 0.875 -4.234375 0.484375 -4.25 0.1875 -4.265625 L 0.1875 -3.96875 C 0.8125 -3.96875 0.859375 -3.90625 0.984375 -3.59375 L 2.40625 -0.078125 C 2.46875 0.0625 2.484375 0.109375 2.609375 0.109375 C 2.75 0.109375 2.78125 0.015625 2.828125 -0.078125 L 4.125 -3.296875 C 4.203125 -3.53125 4.375 -3.953125 5.03125 -3.96875 Z M 5.03125 -3.96875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-13">
+<path style="stroke:none;" d="M 3.609375 -3.78125 C 3.609375 -4.09375 3.296875 -4.375 2.875 -4.375 C 2.15625 -4.375 1.796875 -3.71875 1.65625 -3.28125 L 1.65625 -4.375 L 0.28125 -4.265625 L 0.28125 -3.96875 C 0.96875 -3.96875 1.046875 -3.890625 1.046875 -3.40625 L 1.046875 -0.75 C 1.046875 -0.3125 0.9375 -0.3125 0.28125 -0.3125 L 0.28125 0 L 1.40625 -0.03125 C 1.796875 -0.03125 2.265625 -0.03125 2.671875 0 L 2.671875 -0.3125 L 2.453125 -0.3125 C 1.71875 -0.3125 1.703125 -0.421875 1.703125 -0.765625 L 1.703125 -2.296875 C 1.703125 -3.28125 2.125 -4.15625 2.875 -4.15625 C 2.9375 -4.15625 2.96875 -4.15625 2.984375 -4.15625 C 2.953125 -4.140625 2.75 -4.015625 2.75 -3.765625 C 2.75 -3.484375 2.96875 -3.34375 3.1875 -3.34375 C 3.359375 -3.34375 3.609375 -3.453125 3.609375 -3.78125 Z M 3.609375 -3.78125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-14">
+<path style="stroke:none;" d="M 3.5625 -1.265625 C 3.5625 -1.796875 3.265625 -2.09375 3.15625 -2.203125 C 2.828125 -2.53125 2.4375 -2.609375 2.015625 -2.6875 C 1.46875 -2.796875 0.796875 -2.921875 0.796875 -3.5 C 0.796875 -3.84375 1.0625 -4.25 1.90625 -4.25 C 3 -4.25 3.046875 -3.359375 3.078125 -3.046875 C 3.078125 -2.96875 3.1875 -2.96875 3.1875 -2.96875 C 3.3125 -2.96875 3.3125 -3.015625 3.3125 -3.203125 L 3.3125 -4.203125 C 3.3125 -4.375 3.3125 -4.4375 3.203125 -4.4375 C 3.15625 -4.4375 3.140625 -4.4375 3.015625 -4.3125 C 2.984375 -4.28125 2.875 -4.1875 2.84375 -4.15625 C 2.46875 -4.4375 2.0625 -4.4375 1.90625 -4.4375 C 0.703125 -4.4375 0.328125 -3.78125 0.328125 -3.21875 C 0.328125 -2.875 0.484375 -2.59375 0.75 -2.375 C 1.0625 -2.125 1.34375 -2.0625 2.0625 -1.921875 C 2.28125 -1.875 3.09375 -1.71875 3.09375 -1.015625 C 3.09375 -0.5 2.75 -0.109375 1.96875 -0.109375 C 1.140625 -0.109375 0.78125 -0.671875 0.59375 -1.515625 C 0.5625 -1.640625 0.5625 -1.6875 0.453125 -1.6875 C 0.328125 -1.6875 0.328125 -1.609375 0.328125 -1.4375 L 0.328125 -0.125 C 0.328125 0.046875 0.328125 0.109375 0.4375 0.109375 C 0.484375 0.109375 0.5 0.09375 0.6875 -0.09375 C 0.703125 -0.109375 0.703125 -0.125 0.875 -0.3125 C 1.3125 0.09375 1.765625 0.109375 1.96875 0.109375 C 3.109375 0.109375 3.5625 -0.5625 3.5625 -1.265625 Z M 3.5625 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph0-15">
+<path style="stroke:none;" d="M 2.859375 -2.484375 C 2.859375 -3.25 2.75 -4.453125 2.203125 -5.5625 C 1.609375 -6.78125 0.765625 -7.4375 0.65625 -7.4375 C 0.609375 -7.4375 0.5625 -7.390625 0.5625 -7.328125 C 0.5625 -7.296875 0.5625 -7.28125 0.75 -7.109375 C 1.71875 -6.125 2.28125 -4.546875 2.28125 -2.484375 C 2.28125 -0.78125 1.921875 0.953125 0.6875 2.203125 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.65625 2.484375 C 0.765625 2.484375 1.65625 1.796875 2.234375 0.546875 C 2.75 -0.546875 2.859375 -1.640625 2.859375 -2.484375 Z M 2.859375 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph1-1">
+<path style="stroke:none;" d="M 7.15625 -2.71875 L 6.703125 -2.71875 C 6.484375 -1.34375 6.203125 -0.46875 4.375 -0.46875 L 2.859375 -0.46875 L 2.859375 -3.265625 L 3.40625 -3.265625 C 4.359375 -3.265625 4.453125 -2.828125 4.453125 -2.09375 L 4.921875 -2.09375 L 4.921875 -4.890625 L 4.453125 -4.890625 C 4.453125 -4.15625 4.375 -3.71875 3.40625 -3.71875 L 2.859375 -3.71875 L 2.859375 -6.265625 L 4.375 -6.265625 C 5.96875 -6.265625 6.21875 -5.546875 6.375 -4.34375 L 6.84375 -4.34375 L 6.53125 -6.734375 L 0.390625 -6.734375 L 0.390625 -6.265625 L 1.453125 -6.265625 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.703125 0 Z M 7.15625 -2.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph1-2">
+<path style="stroke:none;" d="M 6.09375 0 L 6.09375 -0.46875 L 5.40625 -0.46875 L 5.40625 -3.03125 C 5.40625 -4.078125 4.875 -4.453125 3.890625 -4.453125 C 2.9375 -4.453125 2.40625 -3.890625 2.15625 -3.390625 L 2.15625 -4.453125 L 0.453125 -4.375 L 0.453125 -3.90625 C 1.0625 -3.90625 1.125 -3.90625 1.125 -3.53125 L 1.125 -0.46875 L 0.453125 -0.46875 L 0.453125 0 L 1.6875 -0.03125 L 2.9375 0 L 2.9375 -0.46875 L 2.265625 -0.46875 L 2.265625 -2.53125 C 2.265625 -3.609375 3.109375 -4.09375 3.734375 -4.09375 C 4.078125 -4.09375 4.28125 -3.890625 4.28125 -3.140625 L 4.28125 -0.46875 L 3.59375 -0.46875 L 3.59375 0 L 4.84375 -0.03125 Z M 6.09375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph2-1">
+<path style="stroke:none;" d="M 4.9375 -1.421875 C 4.9375 -1.515625 4.84375 -1.515625 4.8125 -1.515625 C 4.71875 -1.515625 4.703125 -1.46875 4.671875 -1.34375 C 4.5 -0.6875 4.328125 -0.109375 3.921875 -0.109375 C 3.65625 -0.109375 3.625 -0.359375 3.625 -0.5625 C 3.625 -0.796875 3.640625 -0.875 3.6875 -1.046875 L 5.109375 -6.765625 C 5.109375 -6.765625 5.109375 -6.875 4.984375 -6.875 C 4.828125 -6.875 3.890625 -6.78125 3.71875 -6.765625 C 3.640625 -6.75 3.59375 -6.703125 3.59375 -6.578125 C 3.59375 -6.453125 3.671875 -6.453125 3.828125 -6.453125 C 4.296875 -6.453125 4.3125 -6.390625 4.3125 -6.296875 L 4.296875 -6.09375 L 3.6875 -3.75 C 3.515625 -4.109375 3.234375 -4.375 2.78125 -4.375 C 1.625 -4.375 0.390625 -2.921875 0.390625 -1.46875 C 0.390625 -0.546875 0.9375 0.109375 1.71875 0.109375 C 1.90625 0.109375 2.40625 0.0625 3 -0.640625 C 3.078125 -0.21875 3.421875 0.109375 3.90625 0.109375 C 4.25 0.109375 4.484375 -0.125 4.640625 -0.4375 C 4.796875 -0.796875 4.9375 -1.421875 4.9375 -1.421875 Z M 3.546875 -3.125 L 3.046875 -1.171875 C 3 -1 3 -0.984375 2.859375 -0.8125 C 2.421875 -0.265625 2.015625 -0.109375 1.734375 -0.109375 C 1.234375 -0.109375 1.09375 -0.65625 1.09375 -1.046875 C 1.09375 -1.53125 1.421875 -2.75 1.640625 -3.203125 C 1.953125 -3.796875 2.390625 -4.15625 2.796875 -4.15625 C 3.4375 -4.15625 3.578125 -3.34375 3.578125 -3.28125 C 3.578125 -3.234375 3.5625 -3.171875 3.546875 -3.125 Z M 3.546875 -3.125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph2-2">
+<path style="stroke:none;" d="M 5.484375 -2.328125 C 5.484375 -3.015625 5.140625 -3.34375 5 -3.484375 C 4.765625 -3.71875 4.609375 -3.75 3.734375 -3.984375 L 3.078125 -4.15625 C 2.796875 -4.25 2.46875 -4.53125 2.46875 -5.0625 C 2.46875 -5.859375 3.265625 -6.703125 4.203125 -6.703125 C 5.015625 -6.703125 5.625 -6.28125 5.625 -5.171875 C 5.625 -4.859375 5.59375 -4.671875 5.59375 -4.609375 C 5.59375 -4.609375 5.59375 -4.515625 5.703125 -4.515625 C 5.8125 -4.515625 5.8125 -4.546875 5.859375 -4.71875 L 6.390625 -6.890625 C 6.390625 -6.921875 6.375 -6.984375 6.28125 -6.984375 C 6.234375 -6.984375 6.21875 -6.96875 6.109375 -6.828125 L 5.625 -6.265625 C 5.375 -6.734375 4.859375 -6.984375 4.203125 -6.984375 C 2.953125 -6.984375 1.765625 -5.84375 1.765625 -4.640625 C 1.765625 -3.84375 2.28125 -3.390625 2.796875 -3.234375 L 3.859375 -2.96875 C 4.21875 -2.875 4.765625 -2.71875 4.765625 -1.90625 C 4.765625 -1.015625 3.953125 -0.09375 2.984375 -0.09375 C 2.34375 -0.09375 1.25 -0.3125 1.25 -1.53125 C 1.25 -1.765625 1.296875 -2.015625 1.3125 -2.078125 C 1.3125 -2.109375 1.328125 -2.140625 1.328125 -2.140625 C 1.328125 -2.234375 1.265625 -2.25 1.203125 -2.25 C 1.15625 -2.25 1.140625 -2.234375 1.109375 -2.203125 C 1.0625 -2.171875 0.515625 0.09375 0.515625 0.125 C 0.515625 0.171875 0.5625 0.21875 0.625 0.21875 C 0.671875 0.21875 0.6875 0.203125 0.796875 0.0625 L 1.28125 -0.5 C 1.71875 0.078125 2.390625 0.21875 2.96875 0.21875 C 4.3125 0.21875 5.484375 -1.09375 5.484375 -2.328125 Z M 5.484375 -2.328125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d1-glyph2-3">
+<path style="stroke:none;" d="M 5.828125 -0.59375 C 5.828125 -0.65625 5.78125 -0.6875 5.71875 -0.6875 C 5.640625 -0.6875 5.609375 -0.65625 5.59375 -0.59375 C 5.40625 -0.109375 5.03125 -0.109375 5.03125 -0.109375 C 4.71875 -0.109375 4.71875 -0.875 4.71875 -1.125 C 4.71875 -1.328125 4.71875 -1.34375 4.828125 -1.46875 C 5.75 -2.640625 5.96875 -3.796875 5.96875 -3.796875 C 5.96875 -3.796875 5.953125 -3.890625 5.84375 -3.890625 C 5.75 -3.890625 5.75 -3.859375 5.703125 -3.6875 C 5.515625 -3.0625 5.1875 -2.3125 4.71875 -1.71875 L 4.71875 -2.34375 C 4.71875 -3.890625 3.796875 -4.375 3.078125 -4.375 C 1.71875 -4.375 0.40625 -2.96875 0.40625 -1.5625 C 0.40625 -0.640625 1 0.109375 2.015625 0.109375 C 2.640625 0.109375 3.34375 -0.125 4.09375 -0.71875 C 4.234375 -0.203125 4.5625 0.109375 5 0.109375 C 5.53125 0.109375 5.828125 -0.4375 5.828125 -0.59375 Z M 4.0625 -0.984375 C 3.1875 -0.21875 2.421875 -0.109375 2.03125 -0.109375 C 1.4375 -0.109375 1.140625 -0.5625 1.140625 -1.1875 C 1.140625 -1.671875 1.390625 -2.75 1.71875 -3.25 C 2.171875 -3.96875 2.71875 -4.15625 3.0625 -4.15625 C 4.046875 -4.15625 4.046875 -2.859375 4.046875 -2.09375 C 4.046875 -1.71875 4.046875 -1.15625 4.0625 -0.984375 Z M 4.0625 -0.984375 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05a_d1-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -87.306291 -47.621348 L 86.512179 -47.621348 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548889 3.111004 C -2.08552 1.245746 -1.044902 0.362203 -0.000357788 0.000932275 C -1.044902 -0.364266 -2.08552 -1.243882 -2.548889 -3.10914 " transform="matrix(0.994752,0,0,-0.994752,179.410512,124.153271)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -87.306291 -23.812804 L 86.512179 -23.812804 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548889 3.112625 C -2.08552 1.24344 -1.044902 0.363824 -0.000357788 -0.00137387 C -1.044902 -0.362645 -2.08552 -1.246188 -2.548889 -3.111446 " transform="matrix(0.994752,0,0,-0.994752,179.410512,100.467383)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -87.306291 -0.000333162 L 86.512179 -0.000333162 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548889 3.109739 C -2.08552 1.244481 -1.044902 0.364865 -0.000357788 -0.000333162 C -1.044902 -0.361604 -2.08552 -1.245147 -2.548889 -3.110405 " transform="matrix(0.994752,0,0,-0.994752,179.410512,76.780919)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -87.306291 23.812138 L 86.512179 23.812138 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548889 3.11078 C -2.08552 1.245522 -1.044902 0.361979 -0.000357788 0.000707549 C -1.044902 -0.36449 -2.08552 -1.244107 -2.548889 -3.109364 " transform="matrix(0.994752,0,0,-0.994752,179.410512,53.094454)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -87.306291 47.620681 L 86.512179 47.620681 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548889 3.1124 C -2.08552 1.243216 -1.044902 0.363599 -0.000357788 -0.0015986 C -1.044902 -0.36287 -2.08552 -1.242486 -2.548889 -3.111671 " transform="matrix(0.994752,0,0,-0.994752,179.410512,29.408566)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-1" x="7.636608" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-2" x="10.389694" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-3" x="13.142779" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-4" x="18.64895" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-4" x="23.054086" y="14.094639"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-5" x="30.759355" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-2" x="36.265527" y="14.094639"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-6" x="42.318747" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-7" x="46.723882" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-8" x="51.67904" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-9" x="59.937305" y="14.094639"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-10" x="65.720965" y="14.094639"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-5" x="73.976257" y="14.094639"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-2" x="79.482429" y="14.094639"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph1-1" x="85.542591" y="14.094639"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(89.99939%,89.99939%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.258581 -20.486755 C 33.028365 -15.099105 22.987387 -1.563223 6.828364 9.753984 C -9.330659 21.067263 -25.485755 25.873738 -29.25554 20.486088 C -33.029251 15.098438 -22.988273 1.562557 -6.82925 -9.750723 C 9.329773 -21.06793 25.48487 -25.870478 29.258581 -20.486755 Z M 29.258581 -20.486755 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph2-1" x="46.857685" y="107.691838"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph2-2" x="52.016004" y="107.691838"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000442909 -0.000333162 L 32.32153 46.155963 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.028903 3.832524 C -2.476227 1.53014 -1.243302 0.447116 0.000155289 -0.000534803 C -1.240288 -0.447229 -2.474855 -1.532189 -3.026921 -3.831502 " transform="matrix(0.57055,-0.814841,-0.814841,-0.57055,125.448694,30.378728)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph1-2" x="84.478207" y="21.64978"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-11" x="94.152169" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-12" x="98.00629" y="21.64978"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-4" x="102.959466" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-13" x="107.364601" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-14" x="111.246471" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-10" x="115.156091" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-13" x="120.111248" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-4" x="123.993119" y="21.64978"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-3" x="131.698389" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-10" x="137.20456" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-13" x="142.159717" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-8" x="146.041588" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-7" x="154.299853" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-1" x="159.255011" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-4" x="162.008096" y="21.64978"/>
+  <use xlink:href="#fisica2_lez05a_d1-glyph0-15" x="166.413231" y="21.64978"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000442909 -0.000333162 L 56.349978 -0.000333162 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.030534 3.832281 C -2.476847 1.531142 -1.243813 0.447329 0.00100089 -0.000333162 C -1.243813 -0.447995 -2.476847 -1.531808 -3.030534 -3.82902 " transform="matrix(0.994752,0,0,-0.994752,149.604473,76.780919)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph1-1" x="155.673594" y="89.4461"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 24.605253 -0.000333162 C 24.605253 8.026166 20.686248 15.550027 14.438616 19.924548 " transform="matrix(0.994752,0,0,-0.994752,92.957472,76.780919)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.073863 2.390595 C -1.69245 0.955833 -0.850131 0.280038 -0.000465657 -0.00230772 C -0.850379 -0.281019 -1.694448 -0.958324 -2.071298 -2.3919 " transform="matrix(-0.814841,-0.57055,-0.57055,0.814841,107.15846,56.845365)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d1-glyph2-3" x="119.461641" y="62.455497"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 94.621094 76.78125 C 94.621094 75.863281 93.878906 75.117188 92.957031 75.117188 C 92.039062 75.117188 91.292969 75.863281 91.292969 76.78125 C 91.292969 77.699219 92.039062 78.445312 92.957031 78.445312 C 93.878906 78.445312 94.621094 77.699219 94.621094 76.78125 Z M 94.621094 76.78125 "/>
+</g>
+</svg></figure>
+        <p>Nella figura, l'elemento di superficie $dS$ è attraversato dal campo $\\vec{E}$: il versore normale $\\hat{n}$ e il campo $\\vec{E}$, <strong>valutati nello stesso punto</strong>, formano l'angolo $\\alpha$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Flusso infinitesimo",
+            content: `<p>Dato un campo vettoriale $\\vec{E}$ e una superficie infinitesima $dS$ con versore normale $\\hat{n}$, si definisce <strong>flusso infinitesimo</strong> $d\\Phi$ del campo $\\vec{E}$ attraverso la superficie $dS$ la quantità</p>
+            <p>$$d\\Phi(\\vec{E}) = \\vec{E} \\cdot \\hat{n} \\, dS$$</p>
+            <p>dove $\\cdot$ rappresenta il prodotto scalare. Possiamo anche scrivere questa relazione in forma vettoriale, definendo il <strong>vettore superficie</strong> $d\\vec{S} = \\hat{n} \\, dS$, dove $dS$ è il modulo (l'area) e $\\hat{n}$ è il versore che ne dà l'orientazione. La formula diventa</p>
+            <p>$$d\\Phi(\\vec{E}) = \\vec{E} \\cdot d\\vec{S}$$</p>
+            <p>Espandendo il prodotto scalare, otteniamo</p>
+            <p>$$d\\Phi(\\vec{E}) = |\\vec{E}| \\, dS \\, \\cos(\\alpha)$$</p>
+            <p>dove $\\alpha$ è l'angolo tra il campo $\\vec{E}$ e la normale $\\hat{n}$ alla superficie.</p>`
+          },
+          {
+            subtitle: "Il flusso dipende dall'orientazione scelta",
+            content: `<p>L'orientazione di una superficie, cioè la scelta di quale dei due versori normali ($\\hat{n}$ oppure $-\\hat{n}$) usare, è sempre una <strong>convenzione</strong>: cambiando la scelta il flusso cambia segno, perché</p>
+            <p>$$\\vec{E} \\cdot (-\\hat{n})\\, dS = -\\,\\vec{E} \\cdot \\hat{n}\\, dS .$$</p>
+            <p>Per una superficie <strong>aperta</strong> non esiste alcun criterio naturale per preferire una delle due possibilità: l'orientazione va semplicemente dichiarata, e solo dopo averla dichiarata il segno del flusso ha un significato.</p>
+            <p>Per una superficie <strong>chiusa</strong>, invece, esiste una scelta naturale, che fissiamo una volta per tutte come convenzione standard: si prende sempre la normale <strong>uscente</strong> dal volume racchiuso. Non si tratta quindi di una convenzione "meno arbitraria", ma di una convenzione <em>universalmente adottata</em>: è questa, e solo questa, a dare il segno nella forma consueta del teorema di Gauss.</p>`
+          },
+          {
+            subtitle: "Quando il flusso è nullo",
+            content: `<p>Quand'è che questo flusso è uguale a zero? Il flusso è nullo quando il prodotto scalare è zero, ovvero quando il versore normale $\\hat{n}$ è perpendicolare al campo vettoriale $\\vec{E}$ ($\\alpha = 90^\\circ$), cioè quando il campo è <strong>tangente</strong> alla superficie.</p>
+            <p>L'analogia è con un flusso d'acqua: se un dischetto è orientato con la sua superficie parallela al flusso (e quindi la sua normale perpendicolare al flusso), l'acqua non lo attraversa, ma gli scorre parallelamente. Il flusso attraverso la superficie è zero.</p>`
+          },
+          {
+            subtitle: "Flusso attraverso una superficie immersa nel campo di una carica puntiforme",
+            content: `<p>Adesso, partendo da questo, consideriamo una carica puntiforme, per esempio una carica positiva $+q$ (con $q \\gt 0$). Questa carica, come sappiamo, produce un campo elettrostatico radiale uscente. Immaginiamo di posizionare una superficie infinitesima $d\\vec{S}$ in un punto dello spazio. Questa superficie verrà "investita" dal campo vettoriale generato dalla carica. Il flusso infinitesimo attraverso di essa sarà sempre dato dalla relazione che abbiamo appena scritto.</p>
+            <figure class="figura" data-id="fisica2_lez05a_d2"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05a_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="175.519pt" height="171.896pt" viewBox="0 0 175.519 171.896" version="1.2"><style>#fisica2_lez05a_d2 [fill="rgb(69.999695%,0%,0%)"],#fisica2_lez05a_d2 [style*="fill:rgb(69.999695%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05a_d2 [fill="rgb(69.999695%,0%,0%)"],[data-mode="light"] #fisica2_lez05a_d2 [style*="fill:rgb(69.999695%,0%,0%)"]{fill:#b20000!important}#fisica2_lez05a_d2 [stroke="rgb(69.999695%,0%,0%)"],#fisica2_lez05a_d2 [style*="stroke:rgb(69.999695%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05a_d2 [stroke="rgb(69.999695%,0%,0%)"],[data-mode="light"] #fisica2_lez05a_d2 [style*="stroke:rgb(69.999695%,0%,0%)"]{stroke:#b20000!important}#fisica2_lez05a_d2 [fill="rgb(100%,100%,100%)"],#fisica2_lez05a_d2 [style*="fill:rgb(100%,100%,100%)"]{fill:var(--bg-primary)!important}#fisica2_lez05a_d2 [stroke="rgb(100%,100%,100%)"],#fisica2_lez05a_d2 [style*="stroke:rgb(100%,100%,100%)"]{stroke:var(--bg-primary)!important}#fisica2_lez05a_d2 [fill="rgb(84.999084%,84.999084%,100%)"],#fisica2_lez05a_d2 [style*="fill:rgb(84.999084%,84.999084%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05a_d2 [fill="rgb(84.999084%,84.999084%,100%)"],[data-mode="light"] #fisica2_lez05a_d2 [style*="fill:rgb(84.999084%,84.999084%,100%)"]{fill:#d9d9ff!important}#fisica2_lez05a_d2 [stroke="rgb(84.999084%,84.999084%,100%)"],#fisica2_lez05a_d2 [style*="stroke:rgb(84.999084%,84.999084%,100%)"]{stroke:#d9d9ff!important}[data-mode="light"] #fisica2_lez05a_d2 [stroke="rgb(84.999084%,84.999084%,100%)"],[data-mode="light"] #fisica2_lez05a_d2 [style*="stroke:rgb(84.999084%,84.999084%,100%)"]{stroke:#d9d9ff!important}#fisica2_lez05a_d2 [fill="rgb(0%,0%,59.999084%)"],#fisica2_lez05a_d2 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d2 [fill="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05a_d2 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#000099!important}#fisica2_lez05a_d2 [stroke="rgb(0%,0%,59.999084%)"],#fisica2_lez05a_d2 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d2 [stroke="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05a_d2 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#000099!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph0-1">
+<path style="stroke:none;" d="M 7.171875 -2.484375 C 7.171875 -2.6875 6.96875 -2.6875 6.84375 -2.6875 L 4.0625 -2.6875 L 4.0625 -5.46875 C 4.0625 -5.609375 4.0625 -5.796875 3.859375 -5.796875 C 3.671875 -5.796875 3.671875 -5.609375 3.671875 -5.46875 L 3.671875 -2.6875 L 0.890625 -2.6875 C 0.75 -2.6875 0.5625 -2.6875 0.5625 -2.484375 C 0.5625 -2.28125 0.75 -2.28125 0.890625 -2.28125 L 3.671875 -2.28125 L 3.671875 0.5 C 3.671875 0.640625 3.671875 0.828125 3.859375 0.828125 C 4.0625 0.828125 4.0625 0.640625 4.0625 0.5 L 4.0625 -2.28125 L 6.84375 -2.28125 C 6.96875 -2.28125 7.171875 -2.28125 7.171875 -2.484375 Z M 7.171875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph1-1">
+<path style="stroke:none;" d="M 3.8125 1.734375 C 3.8125 1.625 3.71875 1.625 3.5625 1.625 C 3.078125 1.625 3.078125 1.546875 3.078125 1.453125 C 3.078125 1.390625 3.09375 1.328125 3.125 1.25 L 4.484375 -4.28125 C 4.484375 -4.328125 4.46875 -4.375 4.390625 -4.375 C 4.28125 -4.375 3.890625 -3.984375 3.71875 -3.703125 C 3.5 -4.234375 3.109375 -4.390625 2.796875 -4.390625 C 1.625 -4.390625 0.390625 -2.921875 0.390625 -1.484375 C 0.390625 -0.5 0.984375 0.109375 1.703125 0.109375 C 2.140625 0.109375 2.53125 -0.125 2.875 -0.484375 L 2.4375 1.296875 C 2.359375 1.5625 2.28125 1.609375 1.71875 1.625 C 1.59375 1.625 1.484375 1.625 1.484375 1.8125 C 1.484375 1.8125 1.484375 1.921875 1.625 1.921875 C 1.9375 1.921875 2.28125 1.890625 2.609375 1.890625 C 2.953125 1.890625 3.3125 1.921875 3.640625 1.921875 C 3.6875 1.921875 3.8125 1.921875 3.8125 1.734375 Z M 3.578125 -3.296875 C 3.578125 -3.234375 3.03125 -1.0625 3 -1.03125 C 2.859375 -0.75 2.296875 -0.109375 1.734375 -0.109375 C 1.140625 -0.109375 1.109375 -0.875 1.109375 -1.046875 C 1.109375 -1.515625 1.390625 -2.609375 1.5625 -3.015625 C 1.875 -3.75 2.390625 -4.171875 2.796875 -4.171875 C 3.4375 -4.171875 3.578125 -3.375 3.578125 -3.296875 Z M 3.578125 -3.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph1-2">
+<path style="stroke:none;" d="M 4.953125 -1.421875 C 4.953125 -1.515625 4.859375 -1.515625 4.828125 -1.515625 C 4.734375 -1.515625 4.71875 -1.484375 4.6875 -1.34375 C 4.515625 -0.703125 4.34375 -0.109375 3.9375 -0.109375 C 3.671875 -0.109375 3.640625 -0.375 3.640625 -0.5625 C 3.640625 -0.8125 3.65625 -0.875 3.703125 -1.046875 L 5.125 -6.78125 C 5.125 -6.78125 5.125 -6.890625 5 -6.890625 C 4.84375 -6.890625 3.90625 -6.8125 3.734375 -6.78125 C 3.65625 -6.78125 3.59375 -6.734375 3.59375 -6.59375 C 3.59375 -6.484375 3.6875 -6.484375 3.828125 -6.484375 C 4.3125 -6.484375 4.328125 -6.40625 4.328125 -6.3125 L 4.296875 -6.109375 L 3.703125 -3.75 C 3.53125 -4.125 3.234375 -4.390625 2.796875 -4.390625 C 1.625 -4.390625 0.390625 -2.9375 0.390625 -1.484375 C 0.390625 -0.546875 0.9375 0.109375 1.71875 0.109375 C 1.921875 0.109375 2.421875 0.0625 3.015625 -0.640625 C 3.09375 -0.21875 3.4375 0.109375 3.921875 0.109375 C 4.265625 0.109375 4.484375 -0.125 4.65625 -0.4375 C 4.8125 -0.796875 4.953125 -1.421875 4.953125 -1.421875 Z M 3.5625 -3.125 L 3.0625 -1.1875 C 3.015625 -1 3.015625 -0.984375 2.859375 -0.8125 C 2.421875 -0.265625 2.015625 -0.109375 1.734375 -0.109375 C 1.25 -0.109375 1.109375 -0.65625 1.109375 -1.046875 C 1.109375 -1.546875 1.421875 -2.765625 1.65625 -3.21875 C 1.953125 -3.8125 2.40625 -4.171875 2.796875 -4.171875 C 3.453125 -4.171875 3.59375 -3.359375 3.59375 -3.296875 C 3.59375 -3.234375 3.5625 -3.1875 3.5625 -3.125 Z M 3.5625 -3.125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph2-1">
+<path style="stroke:none;" d="M 7.1875 -2.71875 L 6.71875 -2.71875 C 6.5 -1.34375 6.21875 -0.46875 4.375 -0.46875 L 2.875 -0.46875 L 2.875 -3.265625 L 3.421875 -3.265625 C 4.375 -3.265625 4.46875 -2.84375 4.46875 -2.109375 L 4.9375 -2.109375 L 4.9375 -4.90625 L 4.46875 -4.90625 C 4.46875 -4.15625 4.375 -3.734375 3.421875 -3.734375 L 2.875 -3.734375 L 2.875 -6.296875 L 4.375 -6.296875 C 5.984375 -6.296875 6.234375 -5.5625 6.40625 -4.359375 L 6.859375 -4.359375 L 6.5625 -6.75 L 0.390625 -6.75 L 0.390625 -6.296875 L 1.453125 -6.296875 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.734375 0 Z M 7.1875 -2.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d2-glyph2-2">
+<path style="stroke:none;" d="M 5.703125 -2.015625 C 5.703125 -3.125 4.90625 -3.921875 4 -4.109375 L 2.546875 -4.421875 C 2.15625 -4.515625 1.59375 -4.84375 1.59375 -5.453125 C 1.59375 -5.890625 1.875 -6.5 2.875 -6.5 C 3.671875 -6.5 4.671875 -6.15625 4.90625 -4.8125 C 4.9375 -4.578125 4.9375 -4.546875 5.140625 -4.546875 C 5.390625 -4.546875 5.390625 -4.59375 5.390625 -4.828125 L 5.390625 -6.640625 C 5.390625 -6.84375 5.390625 -6.921875 5.203125 -6.921875 C 5.125 -6.921875 5.125 -6.921875 5.015625 -6.8125 L 4.5625 -6.375 C 3.984375 -6.84375 3.34375 -6.921875 2.859375 -6.921875 C 1.34375 -6.921875 0.640625 -5.96875 0.640625 -4.921875 C 0.640625 -4.28125 0.96875 -3.828125 1.171875 -3.609375 C 1.65625 -3.125 2 -3.046875 3.078125 -2.8125 C 3.953125 -2.625 4.125 -2.59375 4.34375 -2.390625 C 4.484375 -2.234375 4.734375 -1.984375 4.734375 -1.515625 C 4.734375 -1.046875 4.484375 -0.359375 3.453125 -0.359375 C 2.6875 -0.359375 1.1875 -0.5625 1.109375 -2.03125 C 1.09375 -2.21875 1.09375 -2.265625 0.875 -2.265625 C 0.640625 -2.265625 0.640625 -2.203125 0.640625 -1.984375 L 0.640625 -0.171875 C 0.640625 0.015625 0.640625 0.109375 0.8125 0.109375 C 0.90625 0.109375 0.921875 0.09375 1 0.015625 L 1.453125 -0.4375 C 2.109375 0.046875 3.046875 0.109375 3.453125 0.109375 C 5.09375 0.109375 5.703125 -1.015625 5.703125 -2.015625 Z M 5.703125 -2.015625 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05a_d2-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 18.480872 4.953619 L 67.963762 18.208594 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.53557 -0.000212895 C 3.976349 0.137468 1.529558 0.918807 -0.00199184 1.77121 L 0.00106414 -1.773851 C 1.530877 -0.922605 3.975513 -0.138062 4.53557 -0.000212895 Z M 4.53557 -0.000212895 " transform="matrix(0.96327,-0.258113,-0.258113,-0.96327,145.873153,78.272046)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.529841 13.527833 L 49.749922 49.751832 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.533637 -0.00141949 C 3.976921 0.139837 1.528478 0.920901 -0.000414458 1.773979 L -0.000414458 -1.771278 C 1.531247 -0.92097 3.976921 -0.137136 4.533637 -0.00141949 Z M 4.533637 -0.00141949 " transform="matrix(0.705168,-0.705168,-0.705168,-0.705168,127.712182,46.817066)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.951709 18.482781 L 18.210602 67.961755 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.533137 0.00153779 C 3.977877 0.136617 1.529458 0.920147 -0.000355346 1.771392 L 0.000372211 -1.772654 C 1.528139 -0.921266 3.978713 -0.138912 4.533137 0.00153779 Z M 4.533137 0.00153779 " transform="matrix(0.258113,-0.96327,-0.96327,-0.258113,96.257203,28.656095)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -4.950352 18.482781 L -18.209245 67.961755 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.5338 0.000934957 C 3.978361 0.137602 1.527788 0.919955 0.0000209779 1.771344 L -0.000706579 -1.772703 C 1.529107 -0.921458 3.977526 -0.137928 4.5338 0.000934957 Z M 4.5338 0.000934957 " transform="matrix(-0.258113,-0.96327,-0.96327,0.258113,59.936757,28.656095)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -13.528484 13.527833 L -49.752482 49.751832 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.532677 0.000459925 C 3.978731 0.138947 1.530288 0.920011 0.00139571 1.773088 L 0.00139571 -1.772168 C 1.530288 -0.919091 3.978731 -0.138027 4.532677 0.000459925 Z M 4.532677 0.000459925 " transform="matrix(-0.705168,-0.705168,-0.705168,0.705168,28.481777,46.817066)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -18.483431 4.953619 L -67.962405 18.208594 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.53426 -0.000138338 C 3.977985 0.138724 1.529567 0.922254 -0.000246656 1.7735 L 0.000480901 -1.770547 C 1.528248 -0.919158 3.975038 -0.137819 4.53426 -0.000138338 Z M 4.53426 -0.000138338 " transform="matrix(-0.96327,-0.258113,-0.258113,0.96327,10.320806,78.272046)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -18.483431 -4.95236 L -67.962405 -18.211252 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.533934 -0.00107787 C 3.975726 0.140386 1.528935 0.921726 0.00116883 1.773114 L 0.000441274 -1.770932 C 1.530255 -0.919687 3.97766 -0.139941 4.533934 -0.00107787 Z M 4.533934 -0.00107787 " transform="matrix(-0.96327,0.258113,0.258113,0.96327,10.320806,114.592491)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -13.528484 -13.530491 L -49.752482 -49.750573 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534557 0.00141949 C 3.97784 0.137136 1.529397 0.918201 0.000505391 1.771278 L 0.000505391 -1.773979 C 1.529397 -0.920901 3.97784 -0.139837 4.534557 0.00141949 Z M 4.534557 0.00141949 " transform="matrix(-0.705168,0.705168,0.705168,0.705168,28.481777,146.047471)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 13.529841 -13.530491 L 49.749922 -49.750573 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.535516 -0.000459925 C 3.97603 0.138027 1.530357 0.921861 -0.00130478 1.772168 L -0.00130478 -1.773088 C 1.527587 -0.920011 3.97603 -0.138947 4.535516 -0.000459925 Z M 4.535516 -0.000459925 " transform="matrix(0.705168,0.705168,0.705168,-0.705168,127.712182,146.047471)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 18.480872 -4.95236 L 67.963762 -18.211252 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.535244 0.0014291 C 3.975187 0.139278 1.531565 0.920038 0.00175207 1.771284 L -0.00130391 -1.773777 C 1.530246 -0.921375 3.977036 -0.140035 4.535244 0.0014291 Z M 4.535244 0.0014291 " transform="matrix(0.96327,0.258113,0.258113,-0.96327,145.873153,114.592491)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(69.999695%,0%,0%);fill-opacity:1;" d="M 81.703125 96.433594 C 81.703125 94.441406 80.085938 92.828125 78.097656 92.828125 C 76.105469 92.828125 74.492188 94.441406 74.492188 96.433594 C 74.492188 98.421875 76.105469 100.035156 78.097656 100.035156 C 80.085938 100.035156 81.703125 98.421875 81.703125 96.433594 Z M 81.703125 96.433594 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 70.347656 116.664062 L 85.847656 116.664062 L 85.847656 105.960938 L 70.347656 105.960938 Z M 70.347656 116.664062 "/>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph0-1" x="71.837134" y="113.242202"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph1-1" x="79.564957" y="113.242202"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph2-1" x="53.272011" y="14.281398"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph2-1" x="9.511933" y="164.323217"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph2-1" x="160.246852" y="127.827232"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(84.999084%,84.999084%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 49.573659 11.929716 C 52.217604 13.457328 51.124773 20.296331 47.133396 27.213673 C 43.142019 34.127099 37.76404 38.494503 35.120096 36.970808 C 32.476151 35.443196 33.568982 28.600275 37.560359 21.68685 C 41.551736 14.769508 46.929715 10.402103 49.573659 11.929716 Z M 49.573659 11.929716 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.346877 24.448303 L 55.872123 32.254794 " transform="matrix(0.997267,0,0,-0.997267,78.09698,96.432268)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,59.999084%);fill-opacity:1;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.30757 0.000116379 C 4.655795 0.16383 1.789483 1.090458 0.000177126 2.096353 L -0.000473549 -2.096083 C 1.788545 -1.089082 4.655301 -0.166063 5.30757 0.000116379 Z M 5.30757 0.000116379 " transform="matrix(0.863643,-0.498614,-0.498614,-0.863643,133.814648,64.263715)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph1-2" x="146.973228" y="55.183309"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d2-glyph2-2" x="152.144058" y="55.183309"/>
+</g>
+</g>
+</svg></figure>`
+          }
+        ],
+        formulas: [
+          { label: "Flusso infinitesimo (forma vettoriale)", latex: "d\\Phi(\\vec{E}) = \\vec{E} \\cdot d\\vec{S} = \\vec{E}\\cdot\\hat{n}\\,dS" },
+          { label: "Flusso infinitesimo (forma scalare)", latex: "d\\Phi(\\vec{E}) = |\\vec{E}| \\, dS \\, \\cos\\alpha" },
+          { label: "Vettore superficie", latex: "d\\vec{S} = \\hat{n}\\,dS" }
+        ]
+      },
+
+      {
+        id: "s05-gauss",
+        type: "section",
+        title: "Il Teorema di Gauss",
+        icon: "📐",
+        content: `<p>Abbiamo visto che possiamo calcolare il flusso attraverso una piccola superficie. Cosa succede se integriamo questo flusso su un'intera superficie chiusa? Immaginiamo di avere una carica $q$ e di costruire una superficie chiusa che la racchiude. Per calcolare il flusso totale uscente da questa superficie, dovremmo sommare (integrare) tutti i contributi infinitesimi $d\\Phi$ su ogni pezzettino della superficie.</p>
+        <p>Dopo aver fatto i conti, che per ora omettiamo, si arriva a un risultato fondamentale della fisica, noto come <strong>Teorema di Gauss</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Teorema di Gauss",
+            content: `<p>Sia $\\Sigma$ una superficie <strong>chiusa</strong>, orientata con la normale uscente: si assume cioè</p>
+            <p>$$d\\vec{S} = \\hat{n}\\, dS, \\qquad \\hat{n} = \\text{versore normale uscente da } \\Sigma .$$</p>
+            <p>Allora il flusso totale del campo elettrostatico $\\vec{E}$ attraverso $\\Sigma$ è uguale alla somma algebrica di tutte le cariche contenute all'interno della superficie ($Q_{int}$), divisa per la costante dielettrica del vuoto $\\varepsilon_0$:</p>
+            <p>$$\\Phi_{\\Sigma}(\\vec{E}) = \\oint_{\\Sigma} \\vec{E} \\cdot d\\vec{S} = \\frac{\\sum_i q_{i, int}}{\\varepsilon_0} = \\frac{Q_{int}}{\\varepsilon_0}$$</p>
+            <p>Il simbolo $\\oint$ indica che l'integrale è esteso a una <strong>superficie chiusa</strong>.</p>`
+          },
+          {
+            subtitle: "Il segno dipende dall'orientazione",
+            content: `<p>La convenzione sulla normale uscente è <strong>parte dell'enunciato</strong>, non un dettaglio: se si scegliesse la normale <em>entrante</em> tutti i contributi cambierebbero segno e si otterrebbe $-Q_{int}/\\varepsilon_0$.</p>
+            <p>Fissata la normale uscente, dunque, il segno del flusso si legge come un <strong>bilancio netto</strong>: un flusso positivo indica che il campo è complessivamente uscente dalla superficie (carica interna netta positiva), un flusso negativo che è complessivamente entrante (carica interna netta negativa).</p>`
+          },
+          {
+            subtitle: "Esempio — flusso attraverso tre superfici chiuse diverse",
+            content: `<p>Consideriamo una singola carica $q \\gt 0$ e tre superfici chiuse, tutte orientate con la normale uscente.</p>
+            <ul>
+              <li>Se la racchiudo in una superficie chiusa $\\Sigma_1$ (ad esempio una sfera centrata sulla carica), il flusso uscente è $\\Phi_{\\Sigma_1}(\\vec{E}) = q/\\varepsilon_0$.</li>
+              <li>Se la racchiudo in un'altra superficie chiusa $\\Sigma_2$ di forma arbitraria (un "patatone" qualsiasi), il flusso uscente è sempre $\\Phi_{\\Sigma_2}(\\vec{E}) = q/\\varepsilon_0$. Il risultato <strong>non dipende dalla forma</strong> della superficie, purché sia chiusa e contenga la carica.</li>
+              <li>Se considero una superficie chiusa $\\Sigma_3$ che <strong>non</strong> contiene la carica, il flusso totale attraverso di essa è <strong>zero</strong>. Intuitivamente, tante linee di campo entrano quante ne escono: dove entrano $\\vec{E}\\cdot\\hat{n} \\lt 0$, dove escono $\\vec{E}\\cdot\\hat{n} \\gt 0$, e i due contributi si cancellano esattamente, quindi il flusso netto è nullo.</li>
+            </ul>`
+          },
+          {
+            subtitle: "Perché il teorema è così potente",
+            content: `<p>Il teorema di Gauss è estremamente potente proprio perché il flusso <strong>non</strong> dipende né dalla forma della superficie chiusa, né dalla posizione delle cariche al suo interno, né dalla presenza di cariche esterne (che contribuiscono al campo $\\vec{E}$ punto per punto, ma non al flusso totale). Questo teorema vale sempre, è una regola sacra.</p>
+            <p>Il teorema si può estendere facilmente a distribuzioni continue di carica (lineari, superficiali o volumetriche). In tal caso, la somma delle cariche interne diventa un integrale:</p>
+            <p>$$Q_{int} = \\int_{V_{int}} dq$$</p>
+            <p>dove l'integrale è esteso a tutto il volume (o superficie, o linea) interno alla superficie chiusa. La legge di Gauss diventa:</p>
+            <p>$$\\Phi_{\\Sigma}(\\vec{E}) = \\oint_{\\Sigma} \\vec{E} \\cdot d\\vec{S} = \\frac{1}{\\varepsilon_0} \\int_{V_{int}} dq$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Teorema di Gauss (normale uscente)", latex: "\\Phi_{\\Sigma}(\\vec{E}) = \\oint_{\\Sigma} \\vec{E} \\cdot d\\vec{S} = \\frac{Q_{int}}{\\varepsilon_0}" },
+          { label: "Distribuzioni continue", latex: "\\oint_{\\Sigma} \\vec{E} \\cdot d\\vec{S} = \\frac{1}{\\varepsilon_0}\\int_{V_{int}} dq" }
+        ]
+      },
+
+      {
+        id: "s05-alert-flusso-vs-campo",
+        type: "alert_box",
+        title: "Nota del Prof. — il teorema dà il flusso, non il campo",
+        icon: "⚠️",
+        content: `<p>Attenzione a un punto cruciale. Il teorema di Gauss ci dà immediatamente il valore del <strong>flusso totale</strong>: basta contare le cariche dentro e dividere per $\\varepsilon_0$. Facilissimo. Ma se volessi usare questa formula per calcolare il campo elettrico $\\vec{E}$? Cioè, se volessi risolvere l'integrale $\\oint_{\\Sigma} \\vec{E} \\cdot d\\vec{S}$ per trovare $\\vec{E}$?</p>
+        <blockquote>In generale, è un disastro. Per una superficie di forma arbitraria, il campo $\\vec{E}$ e il vettore superficie $d\\vec{S}$ cambiano continuamente direzione e modulo punto per punto. L'angolo tra di loro cambia, il modulo di $\\vec{E}$ cambia... io non ce la faccio a fare quest'integrale!</blockquote>
+        <p><strong>Da precisare, per non fraintendere il limite del metodo:</strong> il problema non è soltanto tecnico-integrativo. Il teorema fornisce un <strong>vincolo sul flusso totale</strong>, non direttamente sul campo in ogni punto: conoscere il flusso attraverso $\\Sigma$ non determina $\\vec{E}$ punto per punto, perché infiniti campi diversi possono avere lo stesso flusso. Nei problemi simmetrici è la <strong>simmetria</strong> a fare il lavoro in più: riduce il campo sulla superficie a una sola componente incognita, costante dove il flusso non è nullo, e solo allora l'uguaglianza di Gauss diventa un'equazione in quella singola incognita.</p>
+        <p>Come me ne salvo? La strategia è scegliere una <strong>superficie opportuna</strong>, detta <strong>superficie Gaussiana</strong>, che sfrutti la simmetria del problema per semplificare drasticamente questo integrale.</p>`,
+        quote: {
+          text: "Per una superficie di forma arbitraria, il campo $\\vec{E}$ e il vettore superficie $d\\vec{S}$ cambiano continuamente direzione e modulo punto per punto... io non ce la faccio a fare quest'integrale!",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s05-strategia",
+        type: "note_box",
+        title: "Strategia operativa in quattro passi",
+        icon: "🧭",
+        content: `<p>Tutti gli esercizi di questo tipo seguono lo stesso schema:</p>
+        <ol>
+          <li><strong>Simmetria:</strong> dedurre direzione del campo e da quali variabili dipende il suo modulo;</li>
+          <li><strong>Scelta della superficie Gaussiana:</strong> una superficie chiusa decomponibile in porzioni, su ciascuna delle quali $\\vec{E}$ sia parallelo oppure perpendicolare a $\\hat{n}$, e con $|\\vec{E}|$ costante dove il flusso non è nullo;</li>
+          <li><strong>Calcolo del flusso</strong> in funzione del modulo incognito $E$;</li>
+          <li><strong>Calcolo della carica interna</strong> e uguaglianza con $Q_{int}/\\varepsilon_0$.</li>
+        </ol>`
+      },
+
+      {
+        id: "s05-piano-simmetria",
+        type: "section",
+        title: "Campo di un piano infinito uniformemente carico — simmetria",
+        icon: "🟦",
+        content: `<p>Consideriamo un piano indefinito, uniformemente carico con una densità di carica superficiale $\\sigma$ (carica per unità di area). Vogliamo calcolare il campo elettrostatico $\\vec{E}$ in un punto qualsiasi dello spazio che non appartenga al piano stesso.</p>`,
+        subsections: [
+          {
+            subtitle: "Convenzioni e ipotesi della derivazione",
+            content: `<p>Per fissare le idee svolgiamo tutta la derivazione nell'ipotesi $\\sigma \\gt 0$ (piano carico positivamente): in questo modo il campo è uscente dal piano e possiamo identificare senza ambiguità la grandezza $E$ che compare negli integrali con il <strong>modulo</strong> del campo. Il caso $\\sigma \\lt 0$ sarà ottenuto alla fine per semplice inversione del verso, senza rifare i conti.</p>
+            <p>Scegliamo inoltre un sistema di riferimento in cui il piano carico coincide con il piano $z = 0$ e indichiamo con $\\hat{z}$ il versore dell'asse perpendicolare al piano. Useremo questa notazione in modo uniforme in tutta la sezione.</p>`
+          },
+          {
+            subtitle: "Sfruttare la simmetria: perché il flusso vale $2EA$",
+            content: `<p>Prima di scegliere la superficie Gaussiana conviene elencare esplicitamente ciò che la simmetria del problema ci garantisce, perché sono proprio queste proprietà che permetteranno di <strong>estrarre</strong> $E$ dagli integrali di flusso.</p>
+            <ul>
+              <li><strong>Invarianza per traslazioni parallele al piano</strong>: la distribuzione di carica è identica a sé stessa se la trasliamo lungo qualunque direzione contenuta nel piano. Essendo il piano infinito non ci sono "effetti di bordo" e tutti i suoi punti sono equivalenti. Quindi il campo non può dipendere dalle coordinate $x$ e $y$, ma solo da $z$: $\\vec{E} = \\vec{E}(z)$.</li>
+              <li><strong>Invarianza per rotazioni attorno all'asse $z$</strong>: una eventuale componente del campo tangenziale al piano dovrebbe puntare in una direzione privilegiata del piano, ma nessuna direzione del piano è privilegiata. Una rotazione di $180^\\circ$ attorno all'asse $z$ la trasformerebbe nella sua opposta, lasciando invariata la sorgente: dunque la componente tangenziale è nulla e il campo è perpendicolare al piano, $\\vec{E}(z) = E_z(z)\\,\\hat{z}$. Le linee di campo sono quindi perpendicolari al piano.</li>
+              <li><strong>Simmetria di riflessione rispetto al piano</strong>: la distribuzione è invariante per la riflessione $z \\to -z$, mentre un vettore perpendicolare al piano cambia segno. Ne segue
+              <p>$$E_z(-z) = -E_z(z),$$</p>
+              cioè in due punti speculari rispetto al piano il campo ha lo <strong>stesso modulo</strong> e <strong>versi opposti</strong>.</li>
+            </ul>`
+          },
+          {
+            subtitle: "Flusso su una porzione piana: da dove viene il fattore 2",
+            content: `<p>Le prime due proprietà dicono che su una porzione piana parallela al piano carico il campo è costante in modulo, direzione e verso. Questo permette di calcolare il flusso senza svolgere alcun integrale, <strong>purché si dichiari l'orientazione</strong>. Se $A$ è una porzione piana a quota $z$, parallela al piano carico, orientata con un versore normale costante $\\hat{n}$ (necessariamente $\\hat{n} = \\pm\\hat{z}$), allora</p>
+            <p>$$\\Phi_A = \\int_A \\vec{E}\\cdot d\\vec{S} = E_z(z)\\,(\\hat{z}\\cdot\\hat{n})\\,A .$$</p>
+            <p>In particolare:</p>
+            <p>$$\\hat{n} = +\\hat{z} \\ \\Longrightarrow \\ \\Phi_A = E_z(z)\\,A , \\qquad \\hat{n} = -\\hat{z} \\ \\Longrightarrow \\ \\Phi_A = -E_z(z)\\,A .$$</p>
+            <p>La scrittura abbreviata $\\int_A \\vec{E}\\cdot d\\vec{S} = E_z A$ vale dunque <strong>solo</strong> con la scelta $\\hat{n} = +\\hat{z}$. Sulla base inferiore del cilindro Gaussiano che useremo tra poco, la cui normale <em>uscente</em> è $\\hat{n} = -\\hat{z}$, il flusso vale invece $-E_z(-h)\\,A$; e poiché per la terza proprietà $E_z(-h) = -E_z(+h)$, questo numero coincide con $+E_z(+h)A$, cioè con il contributo della base superiore. È esattamente da qui che nasce il <strong>fattore 2</strong> nel risultato $2EA$.</p>
+            <figure class="figura" data-id="fisica2_lez05a_d3"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05a_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="259.679pt" height="206.627pt" viewBox="0 0 259.679 206.627" version="1.2"><style>#fisica2_lez05a_d3 [fill="rgb(0%,0%,69.999695%)"],#fisica2_lez05a_d3 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d3 [fill="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#0000b2!important}#fisica2_lez05a_d3 [stroke="rgb(0%,0%,69.999695%)"],#fisica2_lez05a_d3 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d3 [stroke="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#0000b2!important}#fisica2_lez05a_d3 [fill="rgb(84.999084%,84.999084%,100%)"],#fisica2_lez05a_d3 [style*="fill:rgb(84.999084%,84.999084%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05a_d3 [fill="rgb(84.999084%,84.999084%,100%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="fill:rgb(84.999084%,84.999084%,100%)"]{fill:#d9d9ff!important}#fisica2_lez05a_d3 [stroke="rgb(84.999084%,84.999084%,100%)"],#fisica2_lez05a_d3 [style*="stroke:rgb(84.999084%,84.999084%,100%)"]{stroke:#d9d9ff!important}[data-mode="light"] #fisica2_lez05a_d3 [stroke="rgb(84.999084%,84.999084%,100%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="stroke:rgb(84.999084%,84.999084%,100%)"]{stroke:#d9d9ff!important}#fisica2_lez05a_d3 [fill="rgb(0%,0%,50%)"],#fisica2_lez05a_d3 [style*="fill:rgb(0%,0%,50%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d3 [fill="rgb(0%,0%,50%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="fill:rgb(0%,0%,50%)"]{fill:#000080!important}#fisica2_lez05a_d3 [stroke="rgb(0%,0%,50%)"],#fisica2_lez05a_d3 [style*="stroke:rgb(0%,0%,50%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d3 [stroke="rgb(0%,0%,50%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="stroke:rgb(0%,0%,50%)"]{stroke:#000080!important}#fisica2_lez05a_d3 [fill="rgb(69.999695%,0%,0%)"],#fisica2_lez05a_d3 [style*="fill:rgb(69.999695%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05a_d3 [fill="rgb(69.999695%,0%,0%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="fill:rgb(69.999695%,0%,0%)"]{fill:#b20000!important}#fisica2_lez05a_d3 [stroke="rgb(69.999695%,0%,0%)"],#fisica2_lez05a_d3 [style*="stroke:rgb(69.999695%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05a_d3 [stroke="rgb(69.999695%,0%,0%)"],[data-mode="light"] #fisica2_lez05a_d3 [style*="stroke:rgb(69.999695%,0%,0%)"]{stroke:#b20000!important}#fisica2_lez05a_d3 [fill="rgb(0%,0%,0%)"],#fisica2_lez05a_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05a_d3 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05a_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph0-1">
+<path style="stroke:none;" d="M 6.09375 -1.984375 C 6.09375 -2.171875 5.921875 -2.171875 5.8125 -2.171875 L 3.46875 -2.171875 L 3.46875 -4.515625 C 3.46875 -4.625 3.46875 -4.796875 3.28125 -4.796875 C 3.109375 -4.796875 3.109375 -4.625 3.109375 -4.515625 L 3.109375 -2.171875 L 0.75 -2.171875 C 0.640625 -2.171875 0.46875 -2.171875 0.46875 -1.984375 C 0.46875 -1.8125 0.640625 -1.8125 0.75 -1.8125 L 3.109375 -1.8125 L 3.109375 0.546875 C 3.109375 0.65625 3.109375 0.828125 3.28125 0.828125 C 3.46875 0.828125 3.46875 0.65625 3.46875 0.546875 L 3.46875 -1.8125 L 5.8125 -1.8125 C 5.921875 -1.8125 6.09375 -1.8125 6.09375 -1.984375 Z M 6.09375 -1.984375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-1">
+<path style="stroke:none;" d="M 4.796875 -1.9375 C 4.796875 -3.0625 3.921875 -3.953125 2.859375 -3.953125 C 2.375 -3.953125 1.9375 -3.765625 1.59375 -3.390625 L 1.59375 -3.953125 L 0.265625 -3.859375 L 0.265625 -3.578125 C 0.90625 -3.578125 0.953125 -3.53125 0.953125 -3.140625 L 0.953125 1.046875 C 0.953125 1.453125 0.859375 1.453125 0.265625 1.453125 L 0.265625 1.734375 C 0.6875 1.71875 0.859375 1.703125 1.296875 1.703125 C 1.71875 1.703125 1.828125 1.71875 2.3125 1.734375 L 2.3125 1.453125 C 1.71875 1.453125 1.625 1.453125 1.625 1.046875 L 1.625 -0.4375 C 1.859375 -0.203125 2.15625 0.09375 2.75 0.09375 C 3.8125 0.09375 4.796875 -0.765625 4.796875 -1.9375 Z M 4.03125 -1.9375 C 4.03125 -0.90625 3.421875 -0.125 2.6875 -0.125 C 2.296875 -0.125 1.953125 -0.359375 1.734375 -0.671875 C 1.625 -0.84375 1.625 -0.875 1.625 -1.03125 L 1.625 -3.015625 C 1.921875 -3.53125 2.421875 -3.703125 2.796875 -3.703125 C 3.484375 -3.703125 4.03125 -2.90625 4.03125 -1.9375 Z M 4.03125 -1.9375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-2">
+<path style="stroke:none;" d="M 2.265625 0 L 2.265625 -0.28125 C 1.6875 -0.28125 1.640625 -0.328125 1.640625 -0.671875 L 1.640625 -3.953125 L 0.359375 -3.859375 L 0.359375 -3.578125 C 0.9375 -3.578125 1.015625 -3.53125 1.015625 -3.09375 L 1.015625 -0.6875 C 1.015625 -0.28125 0.90625 -0.28125 0.328125 -0.28125 L 0.328125 0 C 0.71875 -0.015625 0.90625 -0.03125 1.3125 -0.03125 C 1.453125 -0.03125 1.828125 -0.03125 2.265625 0 Z M 1.765625 -5.40625 C 1.765625 -5.671875 1.546875 -5.875 1.28125 -5.875 C 1.015625 -5.875 0.796875 -5.671875 0.796875 -5.40625 C 0.796875 -5.125 1.015625 -4.921875 1.28125 -4.921875 C 1.546875 -4.921875 1.765625 -5.125 1.765625 -5.40625 Z M 1.765625 -5.40625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-3">
+<path style="stroke:none;" d="M 4.453125 -0.796875 L 4.453125 -1.296875 L 4.203125 -1.296875 L 4.203125 -0.8125 C 4.203125 -0.703125 4.203125 -0.265625 3.875 -0.265625 C 3.546875 -0.265625 3.546875 -0.6875 3.546875 -0.828125 L 3.546875 -2.40625 C 3.546875 -2.90625 3.546875 -3.21875 3.15625 -3.578125 C 2.8125 -3.875 2.390625 -4.015625 1.9375 -4.015625 C 1.1875 -4.015625 0.5625 -3.640625 0.5625 -3.0625 C 0.5625 -2.78125 0.75 -2.625 0.984375 -2.625 C 1.234375 -2.625 1.390625 -2.8125 1.390625 -3.046875 C 1.390625 -3.421875 1 -3.46875 1 -3.46875 C 1.234375 -3.703125 1.671875 -3.78125 1.921875 -3.78125 C 2.375 -3.78125 2.890625 -3.453125 2.890625 -2.65625 L 2.890625 -2.359375 C 2.40625 -2.34375 1.734375 -2.296875 1.140625 -2.015625 C 0.5 -1.703125 0.296875 -1.234375 0.296875 -0.875 C 0.296875 -0.140625 1.15625 0.09375 1.765625 0.09375 C 2.5 0.09375 2.84375 -0.390625 2.96875 -0.640625 C 3.015625 -0.265625 3.28125 0.046875 3.65625 0.046875 C 3.890625 0.046875 4.453125 -0.078125 4.453125 -0.796875 Z M 2.890625 -1.265625 C 2.890625 -0.390625 2.21875 -0.125 1.828125 -0.125 C 1.40625 -0.125 1.015625 -0.4375 1.015625 -0.875 C 1.015625 -1.46875 1.515625 -2.09375 2.890625 -2.15625 Z M 2.890625 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-4">
+<path style="stroke:none;" d="M 4.890625 0 L 4.890625 -0.28125 C 4.4375 -0.28125 4.21875 -0.28125 4.203125 -0.5625 L 4.203125 -2.28125 C 4.203125 -3.015625 4.203125 -3.28125 3.953125 -3.59375 C 3.75 -3.84375 3.40625 -3.953125 2.96875 -3.953125 C 2.125 -3.953125 1.75 -3.34375 1.625 -3.09375 L 1.609375 -3.09375 L 1.609375 -3.953125 L 0.3125 -3.859375 L 0.3125 -3.578125 C 0.921875 -3.578125 1 -3.515625 1 -3.078125 L 1 -0.6875 C 1 -0.28125 0.90625 -0.28125 0.3125 -0.28125 L 0.3125 0 C 0.734375 -0.015625 0.90625 -0.03125 1.328125 -0.03125 C 1.765625 -0.03125 1.875 -0.015625 2.359375 0 L 2.359375 -0.28125 C 1.765625 -0.28125 1.671875 -0.28125 1.671875 -0.6875 L 1.671875 -2.3125 C 1.671875 -3.265625 2.34375 -3.734375 2.90625 -3.734375 C 3.421875 -3.734375 3.546875 -3.296875 3.546875 -2.75 L 3.546875 -0.6875 C 3.546875 -0.28125 3.453125 -0.28125 2.859375 -0.28125 L 2.859375 0 C 3.28125 -0.015625 3.453125 -0.03125 3.875 -0.03125 C 4.3125 -0.03125 4.421875 -0.015625 4.890625 0 Z M 4.890625 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-5">
+<path style="stroke:none;" d="M 4.328125 -1.90625 C 4.328125 -3.078125 3.40625 -4.015625 2.296875 -4.015625 C 1.15625 -4.015625 0.265625 -3.046875 0.265625 -1.90625 C 0.265625 -0.78125 1.1875 0.09375 2.296875 0.09375 C 3.421875 0.09375 4.328125 -0.8125 4.328125 -1.90625 Z M 3.5625 -1.984375 C 3.5625 -1.65625 3.5625 -1.140625 3.34375 -0.75 C 3.09375 -0.328125 2.671875 -0.15625 2.296875 -0.15625 C 1.859375 -0.15625 1.484375 -0.375 1.265625 -0.71875 C 1.03125 -1.09375 1.03125 -1.578125 1.03125 -1.984375 C 1.03125 -2.3125 1.03125 -2.828125 1.25 -3.203125 C 1.515625 -3.65625 1.96875 -3.78125 2.296875 -3.78125 C 2.796875 -3.78125 3.171875 -3.5 3.34375 -3.203125 C 3.546875 -2.8125 3.5625 -2.359375 3.5625 -1.984375 Z M 3.5625 -1.984375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-6">
+<path style="stroke:none;" d="M 1.859375 -0.015625 C 1.859375 -0.640625 1.625 -0.96875 1.265625 -0.96875 C 0.953125 -0.96875 0.78125 -0.71875 0.78125 -0.484375 C 0.78125 -0.234375 0.953125 0 1.265625 0 C 1.5 0 1.625 -0.140625 1.625 -0.140625 C 1.625 0.15625 1.625 0.890625 0.953125 1.53125 C 0.90625 1.578125 0.90625 1.625 0.90625 1.625 C 0.90625 1.671875 0.96875 1.734375 1.03125 1.734375 C 1.125 1.734375 1.859375 1.03125 1.859375 -0.015625 Z M 1.859375 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-7">
+<path style="stroke:none;" d="M 4.828125 0 L 4.828125 -0.28125 C 4.21875 -0.28125 4.140625 -0.34375 4.140625 -0.78125 L 4.140625 -6.21875 L 2.8125 -6.109375 L 2.8125 -5.84375 C 3.421875 -5.84375 3.515625 -5.78125 3.515625 -5.34375 L 3.515625 -3.421875 C 3.46875 -3.484375 3.0625 -3.953125 2.359375 -3.953125 C 1.265625 -3.953125 0.296875 -3.078125 0.296875 -1.921875 C 0.296875 -0.8125 1.203125 0.09375 2.265625 0.09375 C 2.921875 0.09375 3.328125 -0.28125 3.484375 -0.46875 L 3.484375 0.09375 Z M 3.484375 -1.078125 C 3.484375 -0.90625 3.484375 -0.890625 3.34375 -0.703125 C 3.078125 -0.296875 2.65625 -0.125 2.296875 -0.125 C 1.921875 -0.125 1.5625 -0.34375 1.328125 -0.71875 C 1.09375 -1.09375 1.078125 -1.625 1.078125 -1.921875 C 1.078125 -2.34375 1.125 -2.8125 1.359375 -3.171875 C 1.5625 -3.453125 1.921875 -3.734375 2.40625 -3.734375 C 2.78125 -3.734375 3.140625 -3.546875 3.375 -3.203125 C 3.484375 -3.0625 3.484375 -3.046875 3.484375 -2.890625 Z M 3.484375 -1.078125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-8">
+<path style="stroke:none;" d="M 3.828125 -1.0625 C 3.828125 -1.125 3.78125 -1.1875 3.703125 -1.1875 C 3.609375 -1.1875 3.578125 -1.125 3.578125 -1.078125 C 3.265625 -0.171875 2.46875 -0.15625 2.34375 -0.15625 C 1.90625 -0.15625 1.546875 -0.390625 1.328125 -0.703125 C 1.03125 -1.140625 1.03125 -1.671875 1.03125 -2.046875 L 3.578125 -2.046875 C 3.78125 -2.046875 3.828125 -2.046875 3.828125 -2.234375 C 3.828125 -3.15625 3.328125 -4.015625 2.171875 -4.015625 C 1.09375 -4.015625 0.265625 -3.078125 0.265625 -1.96875 C 0.265625 -0.796875 1.203125 0.09375 2.296875 0.09375 C 3.390625 0.09375 3.828125 -0.859375 3.828125 -1.0625 Z M 3.21875 -2.265625 L 1.03125 -2.265625 C 1.125 -3.640625 1.921875 -3.78125 2.171875 -3.78125 C 2.671875 -3.78125 3.203125 -3.40625 3.21875 -2.265625 Z M 3.21875 -2.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-9">
+<path style="stroke:none;" d="M 3.3125 -1.140625 C 3.3125 -1.546875 3.140625 -1.796875 2.9375 -2 C 2.625 -2.296875 2.3125 -2.359375 1.640625 -2.484375 C 1.421875 -2.53125 0.765625 -2.640625 0.765625 -3.15625 C 0.765625 -3.4375 0.96875 -3.8125 1.78125 -3.8125 C 2.75 -3.8125 2.8125 -3.078125 2.828125 -2.84375 C 2.84375 -2.734375 2.84375 -2.6875 2.953125 -2.6875 C 3.078125 -2.6875 3.078125 -2.75 3.078125 -2.921875 L 3.078125 -3.78125 C 3.078125 -3.9375 3.078125 -4.015625 2.96875 -4.015625 C 2.921875 -4.015625 2.90625 -4.015625 2.796875 -3.90625 C 2.78125 -3.890625 2.6875 -3.8125 2.640625 -3.765625 C 2.359375 -3.953125 2.09375 -4.015625 1.78125 -4.015625 C 0.59375 -4.015625 0.296875 -3.359375 0.296875 -2.90625 C 0.296875 -2.609375 0.4375 -2.375 0.640625 -2.1875 C 0.9375 -1.90625 1.28125 -1.84375 1.734375 -1.765625 C 2.1875 -1.671875 2.34375 -1.640625 2.546875 -1.5 C 2.625 -1.421875 2.859375 -1.25 2.859375 -0.90625 C 2.859375 -0.125 1.953125 -0.125 1.828125 -0.125 C 0.90625 -0.125 0.6875 -0.890625 0.578125 -1.375 C 0.546875 -1.453125 0.53125 -1.515625 0.4375 -1.515625 C 0.296875 -1.515625 0.296875 -1.4375 0.296875 -1.28125 L 0.296875 -0.140625 C 0.296875 0.015625 0.296875 0.09375 0.40625 0.09375 C 0.46875 0.09375 0.46875 0.09375 0.640625 -0.078125 C 0.671875 -0.140625 0.765625 -0.25 0.8125 -0.296875 C 1.1875 0.078125 1.609375 0.09375 1.828125 0.09375 C 2.921875 0.09375 3.3125 -0.546875 3.3125 -1.140625 Z M 3.3125 -1.140625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-10">
+<path style="stroke:none;" d="M 3.0625 -1.109375 L 3.0625 -1.625 L 2.8125 -1.625 L 2.8125 -1.140625 C 2.8125 -0.46875 2.53125 -0.15625 2.21875 -0.15625 C 1.609375 -0.15625 1.609375 -0.9375 1.609375 -1.09375 L 1.609375 -3.578125 L 2.90625 -3.578125 L 2.90625 -3.859375 L 1.609375 -3.859375 L 1.609375 -5.5 L 1.359375 -5.5 C 1.359375 -4.75 1.03125 -3.828125 0.171875 -3.8125 L 0.171875 -3.578125 L 0.953125 -3.578125 L 0.953125 -1.109375 C 0.953125 -0.109375 1.671875 0.09375 2.15625 0.09375 C 2.75 0.09375 3.0625 -0.46875 3.0625 -1.109375 Z M 3.0625 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-11">
+<path style="stroke:none;" d="M 4.453125 -0.796875 L 4.453125 -1.296875 L 4.203125 -1.296875 L 4.203125 -0.8125 C 4.203125 -0.703125 4.203125 -0.265625 3.875 -0.265625 C 3.546875 -0.265625 3.546875 -0.6875 3.546875 -0.828125 L 3.546875 -2.40625 C 3.546875 -2.90625 3.546875 -3.21875 3.15625 -3.578125 C 2.8125 -3.875 2.390625 -4.015625 1.9375 -4.015625 C 1.1875 -4.015625 0.5625 -3.640625 0.5625 -3.0625 C 0.5625 -2.78125 0.75 -2.625 0.984375 -2.625 C 1.234375 -2.625 1.390625 -2.8125 1.390625 -3.046875 C 1.390625 -3.421875 1 -3.46875 1 -3.46875 C 1.234375 -3.703125 1.671875 -3.78125 1.921875 -3.78125 C 2.375 -3.78125 2.890625 -3.453125 2.890625 -2.65625 L 2.890625 -2.359375 C 2.40625 -2.34375 1.734375 -2.296875 1.140625 -2.015625 C 0.5 -1.703125 0.296875 -1.234375 0.296875 -0.875 C 0.296875 -0.140625 1.15625 0.09375 1.765625 0.09375 C 2.5 0.09375 2.84375 -0.390625 2.96875 -0.640625 C 3.015625 -0.265625 3.28125 0.046875 3.65625 0.046875 C 3.890625 0.046875 4.453125 -0.078125 4.453125 -0.796875 Z M 2.890625 -1.265625 C 2.890625 -0.390625 2.21875 -0.125 1.828125 -0.125 C 1.40625 -0.125 1.015625 -0.4375 1.015625 -0.875 C 1.015625 -1.46875 1.515625 -2.09375 2.890625 -2.15625 Z M 2.875 -4.734375 L 1.78125 -6.09375 C 1.703125 -6.1875 1.65625 -6.25 1.5 -6.25 C 1.34375 -6.25 1.15625 -6.109375 1.15625 -5.90625 C 1.15625 -5.765625 1.234375 -5.6875 1.359375 -5.609375 L 2.703125 -4.546875 Z M 2.875 -4.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-12">
+<path style="stroke:none;" d="M 4.796875 -1.9375 C 4.796875 -3.046875 3.90625 -3.953125 2.84375 -3.953125 C 2.234375 -3.953125 1.8125 -3.640625 1.59375 -3.40625 L 1.59375 -6.21875 L 0.265625 -6.109375 L 0.265625 -5.84375 C 0.875 -5.84375 0.953125 -5.78125 0.953125 -5.34375 L 0.953125 0 L 1.203125 0 L 1.546875 -0.546875 C 1.8125 -0.15625 2.265625 0.09375 2.75 0.09375 C 3.8125 0.09375 4.796875 -0.765625 4.796875 -1.9375 Z M 4.03125 -1.9375 C 4.03125 -1.515625 3.96875 -1.046875 3.75 -0.6875 C 3.546875 -0.40625 3.171875 -0.125 2.703125 -0.125 C 2.296875 -0.125 1.953125 -0.34375 1.75 -0.671875 C 1.625 -0.859375 1.625 -0.875 1.625 -1.03125 L 1.625 -2.859375 C 1.625 -3.03125 1.625 -3.03125 1.71875 -3.171875 C 2.015625 -3.59375 2.46875 -3.734375 2.796875 -3.734375 C 3.1875 -3.734375 3.546875 -3.515625 3.78125 -3.140625 C 4.015625 -2.75 4.03125 -2.234375 4.03125 -1.9375 Z M 4.03125 -1.9375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-13">
+<path style="stroke:none;" d="M 4.890625 0 L 4.890625 -0.28125 C 4.28125 -0.28125 4.203125 -0.34375 4.203125 -0.78125 L 4.203125 -3.953125 L 2.859375 -3.859375 L 2.859375 -3.578125 C 3.46875 -3.578125 3.546875 -3.515625 3.546875 -3.078125 L 3.546875 -1.5 C 3.546875 -0.703125 3.09375 -0.125 2.453125 -0.125 C 1.703125 -0.125 1.671875 -0.515625 1.671875 -1 L 1.671875 -3.953125 L 0.3125 -3.859375 L 0.3125 -3.578125 C 1 -3.578125 1 -3.546875 1 -2.75 L 1 -1.421875 C 1 -0.828125 1 -0.453125 1.421875 -0.140625 C 1.671875 0.03125 2.046875 0.09375 2.40625 0.09375 C 2.859375 0.09375 3.296875 -0.109375 3.5625 -0.640625 L 3.578125 -0.640625 L 3.578125 0.09375 Z M 4.890625 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-14">
+<path style="stroke:none;" d="M 1.75 -0.484375 C 1.75 -0.75 1.546875 -0.96875 1.265625 -0.96875 C 1 -0.96875 0.78125 -0.75 0.78125 -0.484375 C 0.78125 -0.21875 1 0 1.265625 0 C 1.546875 0 1.75 -0.21875 1.75 -0.484375 Z M 1.75 -0.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-15">
+<path style="stroke:none;" d="M 2.34375 0 L 2.34375 -0.28125 C 1.75 -0.28125 1.640625 -0.28125 1.640625 -0.6875 L 1.640625 -6.21875 L 0.328125 -6.109375 L 0.328125 -5.84375 C 0.9375 -5.84375 1.015625 -5.78125 1.015625 -5.34375 L 1.015625 -0.6875 C 1.015625 -0.28125 0.90625 -0.28125 0.328125 -0.28125 L 0.328125 0 C 0.75 -0.015625 0.90625 -0.03125 1.328125 -0.03125 C 1.75 -0.03125 1.890625 -0.015625 2.34375 0 Z M 2.34375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph1-16">
+<path style="stroke:none;" d="M 3.34375 -3.40625 C 3.34375 -3.6875 3.078125 -3.953125 2.671875 -3.953125 C 2.125 -3.953125 1.75 -3.578125 1.546875 -3.03125 L 1.546875 -3.953125 L 0.265625 -3.859375 L 0.265625 -3.578125 C 0.875 -3.578125 0.953125 -3.515625 0.953125 -3.078125 L 0.953125 -0.6875 C 0.953125 -0.28125 0.859375 -0.28125 0.265625 -0.28125 L 0.265625 0 C 0.75 -0.015625 0.859375 -0.03125 1.3125 -0.03125 L 2.453125 0 L 2.453125 -0.28125 L 2.28125 -0.28125 C 1.625 -0.28125 1.59375 -0.375 1.59375 -0.703125 L 1.59375 -2.046875 C 1.59375 -2.421875 1.6875 -3.734375 2.71875 -3.734375 L 2.71875 -3.71875 C 2.6875 -3.71875 2.546875 -3.609375 2.546875 -3.390625 C 2.546875 -3.15625 2.734375 -3 2.953125 -3 C 3.140625 -3 3.34375 -3.140625 3.34375 -3.40625 Z M 3.34375 -3.40625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-1">
+<path style="stroke:none;" d="M 4.015625 -1.296875 C 4.015625 -1.375 3.953125 -1.390625 3.890625 -1.390625 C 3.8125 -1.390625 3.78125 -1.328125 3.765625 -1.296875 C 3.53125 -0.640625 2.890625 -0.53125 2.65625 -0.53125 C 2.484375 -0.53125 2.3125 -0.578125 2.046875 -0.671875 C 1.859375 -0.71875 1.640625 -0.78125 1.453125 -0.78125 C 1.375 -0.78125 1.28125 -0.765625 1.25 -0.765625 C 1.4375 -0.984375 1.921875 -1.4375 2.3125 -1.75 C 2.96875 -2.3125 3.171875 -2.515625 3.296875 -2.640625 C 4.03125 -3.34375 4.265625 -3.8125 4.265625 -3.859375 C 4.265625 -3.859375 4.265625 -3.953125 4.15625 -3.953125 C 4.078125 -3.953125 4.0625 -3.9375 4.015625 -3.859375 C 3.890625 -3.6875 3.65625 -3.296875 3.34375 -3.296875 C 3.171875 -3.296875 3.046875 -3.390625 2.84375 -3.625 C 2.625 -3.859375 2.46875 -3.953125 2.234375 -3.953125 C 1.546875 -3.953125 1.125 -3.140625 1.125 -2.90625 C 1.125 -2.890625 1.140625 -2.8125 1.234375 -2.8125 C 1.328125 -2.8125 1.359375 -2.859375 1.359375 -2.890625 C 1.53125 -3.328125 2.0625 -3.328125 2.125 -3.328125 C 2.34375 -3.328125 2.546875 -3.265625 2.75 -3.1875 C 3.109375 -3.078125 3.265625 -3.078125 3.390625 -3.078125 C 3.109375 -2.75 2.609375 -2.328125 2.046875 -1.84375 C 1.609375 -1.453125 1.328125 -1.1875 1.125 -1 C 0.796875 -0.640625 0.390625 -0.09375 0.390625 0 C 0.390625 0.0625 0.4375 0.09375 0.515625 0.09375 C 0.59375 0.09375 0.609375 0.0625 0.65625 0.015625 C 1 -0.53125 1.328125 -0.5625 1.4375 -0.5625 C 1.65625 -0.5625 1.78125 -0.4375 1.984375 -0.203125 C 2.1875 0.03125 2.375 0.09375 2.5625 0.09375 C 3.484375 0.09375 4.015625 -1.046875 4.015625 -1.296875 Z M 4.015625 -1.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-2">
+<path style="stroke:none;" d="M 5.203125 -3.625 C 5.203125 -3.859375 5.015625 -3.859375 4.84375 -3.859375 L 2.734375 -3.859375 C 1.390625 -3.859375 0.34375 -2.453125 0.34375 -1.328125 C 0.34375 -0.4375 0.984375 0.09375 1.75 0.09375 C 2.84375 0.09375 4.046875 -0.984375 4.046875 -2.34375 C 4.046875 -2.90625 3.8125 -3.265625 3.78125 -3.296875 L 4.765625 -3.296875 C 4.875 -3.296875 5.203125 -3.296875 5.203125 -3.625 Z M 3.4375 -2.4375 C 3.4375 -2.21875 3.328125 -1.40625 2.921875 -0.828125 C 2.625 -0.40625 2.171875 -0.125 1.75 -0.125 C 1.421875 -0.125 0.9375 -0.3125 0.9375 -1.09375 C 0.9375 -1.703125 1.296875 -3.296875 2.59375 -3.296875 C 3.03125 -3.296875 3.4375 -3.109375 3.4375 -2.4375 Z M 3.4375 -2.4375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-3">
+<path style="stroke:none;" d="M 6.375 -2.25 C 6.375 -2.359375 6.28125 -2.421875 6.203125 -2.453125 L 1.140625 -4.875 C 1.015625 -4.9375 0.953125 -4.9375 0.953125 -4.9375 C 0.84375 -4.9375 0.765625 -4.84375 0.765625 -4.75 C 0.765625 -4.640625 0.828125 -4.609375 0.953125 -4.546875 L 5.734375 -2.25 L 0.953125 0.046875 C 0.828125 0.109375 0.765625 0.15625 0.765625 0.265625 C 0.765625 0.328125 0.828125 0.453125 0.96875 0.453125 C 0.96875 0.453125 1.015625 0.453125 1.125 0.40625 L 6.203125 -2.03125 C 6.296875 -2.078125 6.375 -2.125 6.375 -2.25 Z M 6.375 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-4">
+<path style="stroke:none;" d="M 6.53125 -2.1875 C 6.53125 -2.265625 6.484375 -2.3125 6.40625 -2.3125 C 6.34375 -2.3125 6.328125 -2.296875 6.234375 -2.09375 C 5.671875 -0.84375 5.3125 -0.28125 3.828125 -0.28125 L 2.453125 -0.28125 C 2.328125 -0.28125 2.3125 -0.28125 2.28125 -0.28125 C 2.1875 -0.296875 2.15625 -0.296875 2.15625 -0.359375 C 2.15625 -0.390625 2.15625 -0.40625 2.203125 -0.578125 L 2.8125 -3.03125 L 3.71875 -3.03125 C 4.359375 -3.03125 4.5 -2.921875 4.5 -2.625 C 4.5 -2.546875 4.46875 -2.359375 4.4375 -2.21875 C 4.40625 -2.171875 4.40625 -2.125 4.40625 -2.09375 C 4.40625 -2.09375 4.40625 -1.984375 4.515625 -1.984375 C 4.625 -1.984375 4.640625 -2.046875 4.671875 -2.171875 L 5.140625 -4.0625 C 5.1875 -4.1875 5.1875 -4.203125 5.1875 -4.234375 C 5.1875 -4.3125 5.125 -4.34375 5.0625 -4.34375 C 4.953125 -4.34375 4.953125 -4.296875 4.90625 -4.125 C 4.734375 -3.421875 4.453125 -3.296875 3.734375 -3.296875 L 2.890625 -3.296875 C 3.015625 -3.859375 3.4375 -5.5625 3.484375 -5.671875 C 3.53125 -5.796875 3.59375 -5.8125 3.890625 -5.8125 L 5.203125 -5.8125 C 6.328125 -5.8125 6.578125 -5.546875 6.578125 -4.8125 C 6.578125 -4.546875 6.53125 -4.265625 6.53125 -4.203125 C 6.53125 -4.140625 6.578125 -4.078125 6.65625 -4.078125 C 6.765625 -4.078125 6.78125 -4.140625 6.796875 -4.296875 L 6.984375 -5.96875 C 6.984375 -6.09375 6.890625 -6.09375 6.71875 -6.09375 L 2.109375 -6.09375 C 1.9375 -6.09375 1.84375 -6.09375 1.84375 -5.921875 C 1.84375 -5.8125 1.9375 -5.8125 2.125 -5.8125 C 2.15625 -5.8125 2.3125 -5.8125 2.46875 -5.796875 C 2.65625 -5.765625 2.671875 -5.734375 2.671875 -5.65625 C 2.671875 -5.625 2.671875 -5.609375 2.625 -5.4375 L 1.4375 -0.6875 C 1.359375 -0.359375 1.328125 -0.28125 0.65625 -0.28125 C 0.5 -0.28125 0.390625 -0.28125 0.390625 -0.109375 C 0.390625 0 0.484375 0 0.640625 0 L 5.375 0 C 5.53125 0 5.546875 0 5.578125 -0.03125 C 5.609375 -0.046875 5.609375 -0.046875 5.671875 -0.171875 C 5.78125 -0.40625 6.53125 -2.109375 6.53125 -2.1875 Z M 6.53125 -2.1875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-5">
+<path style="stroke:none;" d="M 5.28125 -1.28125 C 5.28125 -1.328125 5.25 -1.390625 5.171875 -1.390625 C 5.0625 -1.390625 5.0625 -1.34375 5.015625 -1.234375 C 4.796875 -0.46875 4.421875 -0.125 4.09375 -0.125 C 4.03125 -0.125 3.875 -0.125 3.875 -0.40625 C 3.875 -0.640625 3.96875 -0.875 4.03125 -1.0625 C 4.21875 -1.515625 4.578125 -2.46875 4.578125 -2.96875 C 4.578125 -3.765625 3.984375 -3.953125 3.515625 -3.953125 C 2.671875 -3.953125 2.234375 -3.359375 2.09375 -3.171875 C 2.046875 -3.65625 1.671875 -3.953125 1.234375 -3.953125 C 0.84375 -3.953125 0.65625 -3.6875 0.53125 -3.4375 C 0.390625 -3.125 0.265625 -2.609375 0.265625 -2.578125 C 0.265625 -2.5 0.328125 -2.46875 0.390625 -2.46875 C 0.484375 -2.46875 0.5 -2.515625 0.546875 -2.6875 C 0.71875 -3.40625 0.90625 -3.734375 1.203125 -3.734375 C 1.484375 -3.734375 1.484375 -3.453125 1.484375 -3.3125 C 1.484375 -3.125 1.40625 -2.84375 1.359375 -2.609375 C 1.296875 -2.375 1.203125 -2 1.15625 -1.890625 L 0.8125 -0.421875 C 0.75 -0.203125 0.75 -0.1875 0.75 -0.15625 C 0.75 -0.046875 0.828125 0.09375 1.015625 0.09375 C 1.140625 0.09375 1.28125 0.015625 1.34375 -0.09375 C 1.375 -0.140625 1.4375 -0.4375 1.484375 -0.609375 L 1.6875 -1.40625 C 1.796875 -1.828125 1.953125 -2.484375 1.96875 -2.546875 C 1.984375 -2.609375 2.21875 -3.03125 2.53125 -3.34375 C 2.796875 -3.59375 3.140625 -3.734375 3.484375 -3.734375 C 3.96875 -3.734375 3.96875 -3.265625 3.96875 -3.109375 C 3.96875 -2.5625 3.546875 -1.46875 3.453125 -1.1875 C 3.34375 -0.90625 3.296875 -0.828125 3.296875 -0.65625 C 3.296875 -0.171875 3.671875 0.09375 4.078125 0.09375 C 4.9375 0.09375 5.28125 -1.1875 5.28125 -1.28125 Z M 5.28125 -1.28125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-6">
+<path style="stroke:none;" d="M 6.625 -0.15625 C 6.625 -0.28125 6.53125 -0.28125 6.421875 -0.28125 C 5.875 -0.28125 5.875 -0.34375 5.84375 -0.59375 L 5.21875 -6.171875 C 5.203125 -6.359375 5.1875 -6.40625 5.046875 -6.40625 C 4.921875 -6.40625 4.859375 -6.34375 4.796875 -6.234375 L 1.625 -1.046875 C 1.1875 -0.328125 0.796875 -0.296875 0.4375 -0.28125 C 0.375 -0.265625 0.328125 -0.203125 0.328125 -0.109375 C 0.328125 -0.0625 0.359375 0 0.453125 0 C 0.625 0 1.046875 -0.03125 1.21875 -0.03125 C 1.421875 -0.03125 1.890625 0 2.09375 0 C 2.15625 0 2.265625 0 2.265625 -0.15625 C 2.265625 -0.265625 2.15625 -0.28125 2.125 -0.28125 C 2.046875 -0.28125 1.703125 -0.296875 1.703125 -0.578125 C 1.703125 -0.703125 1.8125 -0.875 1.828125 -0.90625 L 2.546875 -2.0625 L 4.875 -2.0625 L 4.953125 -1.328125 C 5 -0.984375 5.046875 -0.59375 5.046875 -0.5625 C 5.046875 -0.4375 4.921875 -0.28125 4.40625 -0.28125 C 4.3125 -0.28125 4.203125 -0.28125 4.203125 -0.109375 C 4.203125 -0.015625 4.265625 0 4.328125 0 C 4.5 0 4.71875 -0.015625 4.890625 -0.015625 L 5.4375 -0.03125 L 5.96875 -0.015625 C 6.109375 -0.015625 6.3125 0 6.453125 0 C 6.515625 0 6.625 0 6.625 -0.15625 Z M 4.859375 -2.34375 L 2.71875 -2.34375 L 4.515625 -5.296875 Z M 4.859375 -2.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph2-7">
+<path style="stroke:none;" d="M 5.0625 -2.09375 C 5.0625 -3.203125 4.1875 -3.421875 3.90625 -3.484375 L 3.09375 -3.703125 C 2.796875 -3.765625 2.25 -3.90625 2.25 -4.59375 C 2.25 -5.265625 2.96875 -6.0625 3.859375 -6.0625 C 4.21875 -6.0625 4.5625 -5.96875 4.8125 -5.71875 C 5.15625 -5.375 5.171875 -4.890625 5.171875 -4.671875 C 5.171875 -4.375 5.125 -4.265625 5.125 -4.203125 C 5.125 -4.125 5.171875 -4.078125 5.25 -4.078125 C 5.359375 -4.078125 5.359375 -4.09375 5.40625 -4.265625 L 5.859375 -6.0625 C 5.875 -6.171875 5.875 -6.1875 5.875 -6.21875 C 5.875 -6.21875 5.875 -6.3125 5.78125 -6.3125 C 5.734375 -6.3125 5.71875 -6.296875 5.609375 -6.171875 C 5.484375 -6.046875 5.59375 -6.15625 5.1875 -5.671875 C 4.859375 -6.171875 4.328125 -6.3125 3.859375 -6.3125 C 2.703125 -6.3125 1.609375 -5.28125 1.609375 -4.203125 C 1.609375 -3.84375 1.734375 -3.53125 1.953125 -3.28125 C 2.21875 -3.015625 2.4375 -2.96875 3.09375 -2.796875 L 3.84375 -2.609375 C 4.125 -2.5 4.421875 -2.234375 4.421875 -1.71875 C 4.421875 -0.921875 3.65625 -0.078125 2.765625 -0.078125 C 2.234375 -0.078125 1.171875 -0.234375 1.171875 -1.390625 C 1.171875 -1.46875 1.171875 -1.609375 1.234375 -1.875 C 1.25 -1.90625 1.25 -1.9375 1.25 -1.9375 C 1.25 -1.96875 1.234375 -2.03125 1.125 -2.03125 C 1.015625 -2.03125 1 -1.984375 0.96875 -1.828125 L 0.5 0.09375 C 0.5 0.15625 0.53125 0.203125 0.59375 0.203125 C 0.640625 0.203125 0.65625 0.1875 0.765625 0.0625 C 0.828125 0 1.078125 -0.328125 1.1875 -0.4375 C 1.65625 0.15625 2.484375 0.203125 2.75 0.203125 C 3.984375 0.203125 5.0625 -0.953125 5.0625 -2.09375 Z M 5.0625 -2.09375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph3-1">
+<path style="stroke:none;" d="M 6.640625 -3.15625 C 6.640625 -3.34375 6.4375 -3.34375 6.296875 -3.34375 L 0.84375 -3.34375 C 0.703125 -3.34375 0.515625 -3.34375 0.515625 -3.15625 C 0.515625 -2.96875 0.6875 -2.96875 0.8125 -2.96875 L 6.34375 -2.96875 C 6.46875 -2.96875 6.640625 -2.96875 6.640625 -3.15625 Z M 6.640625 -1.328125 C 6.640625 -1.515625 6.46875 -1.515625 6.34375 -1.515625 L 0.8125 -1.515625 C 0.6875 -1.515625 0.515625 -1.515625 0.515625 -1.328125 C 0.515625 -1.140625 0.703125 -1.140625 0.84375 -1.140625 L 6.296875 -1.140625 C 6.4375 -1.140625 6.640625 -1.140625 6.640625 -1.328125 Z M 6.640625 -1.328125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph3-2">
+<path style="stroke:none;" d="M 4.234375 -2.859375 C 4.234375 -3.46875 4.203125 -4.234375 3.890625 -4.90625 C 3.5 -5.75 2.8125 -5.96875 2.296875 -5.96875 C 1.765625 -5.96875 1.078125 -5.75 0.6875 -4.890625 C 0.40625 -4.265625 0.359375 -3.546875 0.359375 -2.859375 C 0.359375 -2.28125 0.375 -1.421875 0.765625 -0.703125 C 1.1875 0.046875 1.875 0.203125 2.296875 0.203125 C 2.875 0.203125 3.53125 -0.046875 3.90625 -0.875 C 4.1875 -1.484375 4.234375 -2.15625 4.234375 -2.859375 Z M 3.46875 -2.96875 C 3.46875 -2.421875 3.46875 -1.671875 3.375 -1.140625 C 3.1875 -0.109375 2.53125 -0.03125 2.296875 -0.03125 C 2.03125 -0.03125 1.390625 -0.15625 1.21875 -1.15625 C 1.125 -1.6875 1.125 -2.46875 1.125 -2.96875 C 1.125 -3.578125 1.125 -4.28125 1.234375 -4.78125 C 1.421875 -5.578125 1.984375 -5.734375 2.296875 -5.734375 C 2.625 -5.734375 3.203125 -5.5625 3.359375 -4.734375 C 3.46875 -4.234375 3.46875 -3.53125 3.46875 -2.96875 Z M 3.46875 -2.96875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph4-1">
+<path style="stroke:none;" d="M 6.375 -2.234375 C 6.375 -2.4375 6.203125 -2.4375 6.0625 -2.4375 L 1.078125 -2.4375 C 0.953125 -2.4375 0.765625 -2.4375 0.765625 -2.25 C 0.765625 -2.046875 0.9375 -2.046875 1.078125 -2.046875 L 6.0625 -2.046875 C 6.1875 -2.046875 6.375 -2.046875 6.375 -2.234375 Z M 6.375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph4-2">
+<path style="stroke:none;" d="M 8.671875 -2.234375 C 8.671875 -2.28125 8.640625 -2.328125 8.59375 -2.34375 C 7.625 -2.65625 6.890625 -3.484375 6.703125 -4.5 C 6.703125 -4.546875 6.65625 -4.578125 6.59375 -4.578125 L 6.4375 -4.578125 C 6.390625 -4.578125 6.328125 -4.546875 6.328125 -4.453125 C 6.484375 -3.640625 6.953125 -2.90625 7.625 -2.421875 L 0.703125 -2.421875 C 0.578125 -2.421875 0.515625 -2.34375 0.515625 -2.234375 C 0.515625 -2.140625 0.578125 -2.046875 0.703125 -2.046875 L 7.625 -2.046875 C 6.953125 -1.5625 6.484375 -0.84375 6.328125 -0.015625 C 6.328125 0.0625 6.390625 0.109375 6.4375 0.109375 L 6.59375 0.109375 C 6.65625 0.109375 6.703125 0.078125 6.703125 0.015625 C 6.890625 -1 7.625 -1.8125 8.59375 -2.125 C 8.640625 -2.15625 8.671875 -2.1875 8.671875 -2.234375 Z M 8.671875 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph5-1">
+<path style="stroke:none;" d="M 4.40625 -0.03125 C 4.40625 -0.0625 4.40625 -0.078125 4.375 -0.125 L 2.609375 -3.546875 C 2.578125 -3.59375 2.53125 -3.59375 2.484375 -3.59375 C 2.40625 -3.59375 2.359375 -3.546875 2.328125 -3.484375 L 0.59375 -0.15625 C 0.5625 -0.09375 0.5625 -0.0625 0.5625 -0.03125 C 0.5625 0.0625 0.625 0.125 0.703125 0.125 C 0.796875 0.125 0.828125 0.078125 0.859375 0 L 2.484375 -3.109375 L 4.09375 0 C 4.140625 0.078125 4.171875 0.125 4.25 0.125 C 4.34375 0.125 4.40625 0.0625 4.40625 -0.03125 Z M 4.40625 -0.03125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph6-1">
+<path style="stroke:none;" d="M 3.015625 0 L 3.015625 -0.234375 L 2.75 -0.234375 C 2.140625 -0.234375 2.140625 -0.3125 2.140625 -0.5 L 2.140625 -3.796875 C 2.140625 -3.96875 2.125 -3.96875 1.9375 -3.96875 C 1.546875 -3.59375 0.9375 -3.59375 0.71875 -3.59375 L 0.71875 -3.359375 C 0.875 -3.359375 1.265625 -3.359375 1.625 -3.515625 L 1.625 -0.5 C 1.625 -0.3125 1.625 -0.234375 1.015625 -0.234375 L 0.765625 -0.234375 L 0.765625 0 C 1.09375 -0.03125 1.546875 -0.03125 1.890625 -0.03125 C 2.21875 -0.03125 2.6875 -0.03125 3.015625 0 Z M 3.015625 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph6-2">
+<path style="stroke:none;" d="M 3.21875 -1.109375 L 2.984375 -1.109375 C 2.984375 -1.03125 2.921875 -0.640625 2.828125 -0.578125 C 2.78125 -0.53125 2.296875 -0.53125 2.21875 -0.53125 L 1.109375 -0.53125 L 1.875 -1.15625 C 2.078125 -1.3125 2.609375 -1.703125 2.78125 -1.875 C 2.96875 -2.0625 3.21875 -2.359375 3.21875 -2.78125 C 3.21875 -3.53125 2.53125 -3.96875 1.734375 -3.96875 C 0.96875 -3.96875 0.4375 -3.46875 0.4375 -2.90625 C 0.4375 -2.59375 0.6875 -2.5625 0.75 -2.5625 C 0.90625 -2.5625 1.078125 -2.671875 1.078125 -2.890625 C 1.078125 -3.015625 1 -3.203125 0.734375 -3.203125 C 0.875 -3.515625 1.234375 -3.734375 1.640625 -3.734375 C 2.28125 -3.734375 2.609375 -3.265625 2.609375 -2.78125 C 2.609375 -2.359375 2.328125 -1.921875 1.90625 -1.546875 L 0.5 -0.25 C 0.4375 -0.1875 0.4375 -0.1875 0.4375 0 L 3.03125 0 Z M 3.21875 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph7-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d3-glyph7-1">
+<path style="stroke:none;" d="M 4.578125 -1.5 C 4.578125 -1.5625 4.53125 -1.59375 4.46875 -1.59375 C 4.390625 -1.59375 4.375 -1.546875 4.34375 -1.484375 C 4.078125 -0.8125 3.765625 -0.234375 2.703125 -0.234375 L 1.96875 -0.234375 C 1.84375 -0.234375 1.84375 -0.234375 1.765625 -0.25 L 2.59375 -3.59375 C 2.640625 -3.78125 2.65625 -3.84375 3.265625 -3.84375 C 3.40625 -3.84375 3.46875 -3.84375 3.46875 -3.984375 C 3.46875 -4 3.46875 -4.078125 3.375 -4.078125 C 3.234375 -4.078125 3.078125 -4.0625 2.9375 -4.0625 L 2.4375 -4.046875 L 2.015625 -4.0625 C 1.890625 -4.0625 1.734375 -4.078125 1.59375 -4.078125 C 1.5625 -4.078125 1.46875 -4.078125 1.46875 -3.921875 C 1.46875 -3.84375 1.546875 -3.84375 1.65625 -3.84375 C 1.765625 -3.84375 1.90625 -3.84375 2.03125 -3.796875 C 2.03125 -3.734375 2.03125 -3.703125 2.015625 -3.609375 L 1.234375 -0.5 C 1.171875 -0.28125 1.15625 -0.234375 0.71875 -0.234375 C 0.578125 -0.234375 0.5 -0.234375 0.5 -0.09375 C 0.5 0 0.578125 0 0.6875 0 L 3.84375 0 C 4 0 4.015625 0 4.046875 -0.125 C 4.109375 -0.265625 4.578125 -1.46875 4.578125 -1.5 Z M 4.578125 -1.5 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05a_d3-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -16.300131 -52.157555 C -16.300131 -57.557912 -6.082501 -61.936896 6.51833 -61.936896 C 19.123074 -61.936896 29.336791 -57.557912 29.336791 -52.157555 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M -16.300131 -52.157555 C -16.300131 -46.757199 -6.082501 -42.378215 6.51833 -42.378215 C 19.123074 -42.378215 29.336791 -46.757199 29.336791 -52.157555 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -16.300131 -52.157555 L -16.300131 -0.00107302 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.336791 -52.157555 L 29.336791 -0.00107302 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill-rule:nonzero;fill:rgb(84.999084%,84.999084%,100%);fill-opacity:0.8;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M -97.794635 -29.339094 L 65.198286 -29.339094 L 110.835208 29.336948 L -52.157713 29.336948 Z M -97.794635 -29.339094 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="17.115987" y="125.652175"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="30.783315" y="108.080894"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="44.449645" y="90.509613"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="36.639743" y="125.652175"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="50.307071" y="108.080894"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="63.973401" y="90.509613"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="56.163499" y="125.652175"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="69.829829" y="108.080894"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="83.497157" y="90.509613"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="137.51165" y="125.652175"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="151.178978" y="108.080894"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="164.845308" y="90.509613"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="157.035406" y="125.652175"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="170.702734" y="108.080894"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph0-1" x="184.369064" y="90.509613"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-1" x="145.615022" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-2" x="150.725611" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-3" x="153.280906" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-4" x="157.880435" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-5" x="162.991024" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-1" x="170.656817" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph3-1" x="177.876784" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph3-2" x="187.582427" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-6" x="192.185953" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-7" x="197.811181" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-8" x="202.92177" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-4" x="207.013821" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-9" x="212.12441" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-2" x="215.752838" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-10" x="218.308133" y="146.973685"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-11" x="221.885545" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-2" x="229.54651" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-3" x="237.679596" y="146.973685"/>
+</g>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph3-2" x="247.393294" y="146.973685"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -16.300131 -0.00107302 L -16.300131 52.159323 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.336791 -0.00107302 L 29.336791 52.159323 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.336791 52.159323 C 29.336791 57.559679 19.123074 61.938663 6.51833 61.938663 C -6.082501 61.938663 -16.300131 57.559679 -16.300131 52.159323 C -16.300131 46.755053 -6.082501 42.379982 6.51833 42.379982 C 19.123074 42.379982 29.336791 46.755053 29.336791 52.159323 Z M 29.336791 52.159323 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 29.336791 -0.00107302 C 29.336791 5.399283 19.123074 9.778267 6.51833 9.778267 C -6.082501 9.778267 -16.300131 5.399283 -16.300131 -0.00107302 C -16.300131 -5.401429 -6.082501 -9.780413 6.51833 -9.780413 C 19.123074 -9.780413 29.336791 -5.401429 29.336791 -0.00107302 Z M 29.336791 -0.00107302 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 19.55745 57.047036 L 19.55745 90.079214 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.029506 3.829119 C -2.473817 1.532011 -1.241127 0.448026 -0.000610558 0.0019097 C -1.241127 -0.44812 -2.473817 -1.532104 -3.029506 -3.829212 " transform="matrix(0,-0.998198,-0.998198,0,124.205031,12.612672)"/>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-1" x="128.11661" y="10.62482"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-2" x="128.12019" y="10.62482"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-4" x="129.075878" y="16.74078"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -6.520791 57.047036 L -6.520791 78.67194 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.02705 3.832293 C -2.475274 1.531272 -1.242584 0.447287 0.00184556 0.00117093 C -1.242584 -0.448859 -2.475274 -1.532843 -3.02705 -3.829951 " transform="matrix(0,-0.998198,-0.998198,0,98.173044,24.001842)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph5-1" x="84.8577" y="22.14203"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-5" x="84.569221" y="27.984483"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph6-1" x="90.118204" y="28.978688"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-12" x="45.225244" y="45.514837"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-3" x="50.335833" y="45.514837"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-9" x="54.935363" y="45.514837"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-8" x="58.563792" y="45.514837"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-6" x="65.722244" y="45.514837"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph6-1" x="72.619792" y="46.509043"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 19.55745 -57.049182 L 19.55745 -90.08136 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.02736 3.829212 C -2.475584 1.532104 -1.242894 0.44812 0.00153549 -0.0019097 C -1.242894 -0.448026 -2.475584 -1.532011 -3.02736 -3.829119 " transform="matrix(0,0.998198,0.998198,0,124.205031,193.642999)"/>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-1" x="128.11661" y="192.845877"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-2" x="128.12019" y="192.845877"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-4" x="129.075878" y="198.961837"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -6.520791 -57.049182 L -6.520791 -78.670173 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.028817 3.829951 C -2.477042 1.532843 -1.240438 0.448859 0.0000783022 -0.00117093 C -1.240438 -0.447287 -2.477042 -1.531272 -3.028817 -3.832293 " transform="matrix(0,0.998198,0.998198,0,98.173044,182.253828)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph5-1" x="84.8577" y="181.585205"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-5" x="84.569221" y="187.427658"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph6-2" x="90.118204" y="188.421864"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-12" x="45.225244" y="169.164627"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-3" x="50.335833" y="169.164627"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-9" x="54.935363" y="169.164627"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-8" x="58.563792" y="169.164627"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-6" x="65.722244" y="169.164627"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph6-2" x="72.619792" y="170.15983"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 135.453125 75.46875 C 135.453125 74.648438 134.789062 73.980469 133.964844 73.980469 C 133.144531 73.980469 132.480469 74.648438 132.480469 75.46875 C 132.480469 76.289062 133.144531 76.957031 133.964844 76.957031 C 134.789062 76.957031 135.453125 76.289062 135.453125 75.46875 Z M 135.453125 75.46875 "/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.336791 27.709015 L 65.632662 27.709015 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.027068 3.831107 C -2.475293 1.533999 -1.242603 0.446101 0.00182735 -0.0000150697 C -1.242603 -0.446131 -2.475293 -1.534029 -3.027068 -3.831137 " transform="matrix(0.998198,0,0,-0.998198,170.791145,75.468735)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph5-1" x="175.586917" y="74.205046"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-5" x="175.298438" y="80.047499"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph7-1" x="180.847421" y="81.041705"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 29.336791 27.709015 L 29.336791 46.074139 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -3.030105 3.828978 C -2.474416 1.53187 -1.241726 0.447886 -0.00120928 0.00176924 C -1.241726 -0.44826 -2.474416 -1.532245 -3.030105 -3.829353 " transform="matrix(0,-0.998198,-0.998198,0,133.96661,56.541762)"/>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-1" x="122.679425" y="47.740819"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-2" x="122.683005" y="47.740819"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-4" x="123.639692" y="53.856779"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-9" x="142.360897" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-13" x="145.989325" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-1" x="151.099914" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-14" x="156.210503" y="97.205526"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-15" x="162.856058" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-3" x="165.411353" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-10" x="170.010883" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-8" x="173.588295" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-16" x="177.680346" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-3" x="181.278344" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-15" x="185.877874" y="97.205526"/>
+  <use xlink:href="#fisica2_lez05a_d3-glyph1-8" x="188.433168" y="97.205526"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-7" x="195.58881" y="97.205526"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph7-1" x="201.207667" y="98.199731"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -79.867801 40.748136 L -79.867801 67.65991 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.551256 3.112296 C -2.085573 1.245651 -1.044635 0.361245 0.000216745 0.00122103 C -1.044635 -0.362716 -2.085573 -1.243209 -2.551256 -3.109854 " transform="matrix(0,-0.998198,-0.998198,0,24.95825,35.191623)"/>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-1" x="7.365588" y="46.418207"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-2" x="7.369168" y="46.418207"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-4" x="8.325855" y="52.534166"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -79.867801 -40.746368 L -79.867801 -67.662056 " transform="matrix(0.998198,0,0,-0.998198,104.680916,103.127835)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(69.999695%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.54911 3.109854 C -2.083427 1.243209 -1.046402 0.362716 -0.00155051 -0.00122103 C -1.046402 -0.361245 -2.083427 -1.245651 -2.54911 -3.112296 " transform="matrix(0,0.998198,0.998198,0,24.95825,171.064048)"/>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-1" x="7.365588" y="157.052491"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph4-2" x="7.369168" y="157.052491"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d3-glyph2-4" x="8.325855" y="163.168451"/>
+</g>
+</g>
+</svg></figure>
+            <p>Nella figura, il piano taglia il cilindro nella sua sezione centrale (ellisse tratteggiata). Il campo $\\vec{E}$ è parallelo all'asse del cilindro; le normali uscenti delle due basi, $\\hat{n}_1 = +\\hat{z}$ e $\\hat{n}_2 = -\\hat{z}$, sono lungo l'asse con versi opposti, mentre la normale laterale $\\hat{n}_L$ è perpendicolare all'asse.</p>
+            <figure class="figura" data-id="fisica2_lez05b_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05b_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="211.344pt" height="187.169pt" viewBox="0 0 211.344 187.169" version="1.2"><style>#fisica2_lez05b_d1 [fill="rgb(87.998962%,87.998962%,100%)"],#fisica2_lez05b_d1 [style*="fill:rgb(87.998962%,87.998962%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05b_d1 [fill="rgb(87.998962%,87.998962%,100%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="fill:rgb(87.998962%,87.998962%,100%)"]{fill:#e0e0ff!important}#fisica2_lez05b_d1 [stroke="rgb(87.998962%,87.998962%,100%)"],#fisica2_lez05b_d1 [style*="stroke:rgb(87.998962%,87.998962%,100%)"]{stroke:#e0e0ff!important}[data-mode="light"] #fisica2_lez05b_d1 [stroke="rgb(87.998962%,87.998962%,100%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="stroke:rgb(87.998962%,87.998962%,100%)"]{stroke:#e0e0ff!important}#fisica2_lez05b_d1 [fill="rgb(0%,0%,59.999084%)"],#fisica2_lez05b_d1 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d1 [fill="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#000099!important}#fisica2_lez05b_d1 [stroke="rgb(0%,0%,59.999084%)"],#fisica2_lez05b_d1 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d1 [stroke="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#000099!important}#fisica2_lez05b_d1 [fill="rgb(0%,0%,0%)"],#fisica2_lez05b_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05b_d1 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05b_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05b_d1 [fill="rgb(100%,0%,0%)"],#fisica2_lez05b_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05b_d1 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05b_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}#fisica2_lez05b_d1 [fill="rgb(0%,50%,0%)"],#fisica2_lez05b_d1 [style*="fill:rgb(0%,50%,0%)"]{fill:#5cff5c!important}[data-mode="light"] #fisica2_lez05b_d1 [fill="rgb(0%,50%,0%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="fill:rgb(0%,50%,0%)"]{fill:#008000!important}#fisica2_lez05b_d1 [stroke="rgb(0%,50%,0%)"],#fisica2_lez05b_d1 [style*="stroke:rgb(0%,50%,0%)"]{stroke:#5cff5c!important}[data-mode="light"] #fisica2_lez05b_d1 [stroke="rgb(0%,50%,0%)"],[data-mode="light"] #fisica2_lez05b_d1 [style*="stroke:rgb(0%,50%,0%)"]{stroke:#008000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph0-1">
+<path style="stroke:none;" d="M 4.609375 -1.234375 C 4.609375 -1.375 4.46875 -1.375 4.40625 -1.375 L 2.6875 -1.375 L 2.6875 -3.09375 C 2.6875 -3.171875 2.6875 -3.296875 2.546875 -3.296875 C 2.40625 -3.296875 2.40625 -3.171875 2.40625 -3.09375 L 2.40625 -1.375 L 0.671875 -1.375 C 0.609375 -1.375 0.484375 -1.375 0.484375 -1.234375 C 0.484375 -1.09375 0.609375 -1.09375 0.671875 -1.09375 L 2.40625 -1.09375 L 2.40625 0.625 C 2.40625 0.6875 2.40625 0.828125 2.546875 0.828125 C 2.6875 0.828125 2.6875 0.6875 2.6875 0.625 L 2.6875 -1.09375 L 4.40625 -1.09375 C 4.46875 -1.09375 4.609375 -1.09375 4.609375 -1.234375 Z M 4.609375 -1.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph1-1">
+<path style="stroke:none;" d="M 5.1875 -3.609375 C 5.1875 -3.84375 5 -3.84375 4.828125 -3.84375 L 2.734375 -3.84375 C 1.390625 -3.84375 0.34375 -2.4375 0.34375 -1.328125 C 0.34375 -0.421875 0.984375 0.09375 1.734375 0.09375 C 2.828125 0.09375 4.03125 -0.984375 4.03125 -2.34375 C 4.03125 -2.90625 3.796875 -3.25 3.765625 -3.296875 L 4.75 -3.296875 C 4.859375 -3.296875 5.1875 -3.296875 5.1875 -3.609375 Z M 3.421875 -2.4375 C 3.421875 -2.21875 3.3125 -1.40625 2.90625 -0.828125 C 2.609375 -0.40625 2.15625 -0.125 1.75 -0.125 C 1.421875 -0.125 0.9375 -0.3125 0.9375 -1.09375 C 0.9375 -1.703125 1.28125 -3.296875 2.578125 -3.296875 C 3.015625 -3.296875 3.421875 -3.09375 3.421875 -2.4375 Z M 3.421875 -2.4375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph1-2">
+<path style="stroke:none;" d="M 6.359375 -2.234375 C 6.359375 -2.359375 6.25 -2.40625 6.171875 -2.4375 L 1.140625 -4.859375 C 1.015625 -4.921875 0.953125 -4.921875 0.953125 -4.921875 C 0.84375 -4.921875 0.765625 -4.828125 0.765625 -4.734375 C 0.765625 -4.625 0.828125 -4.578125 0.953125 -4.515625 L 5.71875 -2.234375 L 0.953125 0.046875 C 0.828125 0.109375 0.765625 0.15625 0.765625 0.265625 C 0.765625 0.328125 0.828125 0.453125 0.96875 0.453125 C 0.96875 0.453125 1.015625 0.453125 1.125 0.40625 L 6.171875 -2.03125 C 6.265625 -2.0625 6.359375 -2.109375 6.359375 -2.234375 Z M 6.359375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph1-3">
+<path style="stroke:none;" d="M 4 -1.28125 C 4 -1.359375 3.9375 -1.390625 3.875 -1.390625 C 3.796875 -1.390625 3.78125 -1.328125 3.75 -1.296875 C 3.515625 -0.640625 2.875 -0.53125 2.65625 -0.53125 C 2.484375 -0.53125 2.296875 -0.578125 2.03125 -0.671875 C 1.859375 -0.71875 1.640625 -0.78125 1.453125 -0.78125 C 1.359375 -0.78125 1.28125 -0.765625 1.234375 -0.765625 C 1.421875 -0.984375 1.921875 -1.421875 2.296875 -1.75 C 2.96875 -2.3125 3.171875 -2.5 3.28125 -2.625 C 4.015625 -3.34375 4.25 -3.796875 4.25 -3.84375 C 4.25 -3.84375 4.25 -3.9375 4.140625 -3.9375 C 4.0625 -3.9375 4.046875 -3.921875 4 -3.84375 C 3.875 -3.671875 3.640625 -3.28125 3.34375 -3.28125 C 3.15625 -3.28125 3.046875 -3.375 2.84375 -3.609375 C 2.625 -3.84375 2.453125 -3.9375 2.21875 -3.9375 C 1.53125 -3.9375 1.109375 -3.125 1.109375 -2.90625 C 1.109375 -2.875 1.140625 -2.796875 1.234375 -2.796875 C 1.328125 -2.796875 1.34375 -2.859375 1.359375 -2.875 C 1.53125 -3.3125 2.046875 -3.3125 2.125 -3.3125 C 2.328125 -3.3125 2.546875 -3.25 2.734375 -3.171875 C 3.09375 -3.0625 3.25 -3.0625 3.375 -3.0625 C 3.109375 -2.75 2.609375 -2.3125 2.046875 -1.84375 C 1.59375 -1.453125 1.328125 -1.1875 1.125 -0.984375 C 0.796875 -0.640625 0.390625 -0.09375 0.390625 0 C 0.390625 0.0625 0.4375 0.09375 0.515625 0.09375 C 0.59375 0.09375 0.609375 0.0625 0.65625 0.015625 C 1 -0.53125 1.328125 -0.5625 1.421875 -0.5625 C 1.65625 -0.5625 1.78125 -0.421875 1.96875 -0.203125 C 2.171875 0.03125 2.375 0.09375 2.546875 0.09375 C 3.46875 0.09375 4 -1.046875 4 -1.28125 Z M 4 -1.28125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph1-4">
+<path style="stroke:none;" d="M 5.015625 -1.28125 C 5.015625 -1.328125 4.984375 -1.390625 4.890625 -1.390625 C 4.796875 -1.390625 4.796875 -1.34375 4.75 -1.21875 C 4.53125 -0.46875 4.15625 -0.125 3.84375 -0.125 C 3.78125 -0.125 3.609375 -0.125 3.609375 -0.40625 C 3.609375 -0.640625 3.703125 -0.859375 3.78125 -1.0625 C 3.953125 -1.515625 4.3125 -2.46875 4.3125 -2.96875 C 4.3125 -3.75 3.71875 -3.9375 3.25 -3.9375 C 2.71875 -3.9375 2.25 -3.6875 1.90625 -3.25 L 2.5625 -5.890625 C 2.59375 -6.015625 2.59375 -6.03125 2.59375 -6.0625 C 2.59375 -6.140625 2.546875 -6.1875 2.46875 -6.1875 C 2.34375 -6.1875 1.546875 -6.125 1.375 -6.109375 C 1.28125 -6.09375 1.1875 -6.078125 1.1875 -5.9375 C 1.1875 -5.8125 1.28125 -5.8125 1.421875 -5.8125 C 1.84375 -5.8125 1.84375 -5.75 1.84375 -5.671875 C 1.84375 -5.640625 1.84375 -5.625 1.796875 -5.453125 L 0.53125 -0.328125 C 0.484375 -0.203125 0.484375 -0.1875 0.484375 -0.15625 C 0.484375 -0.015625 0.609375 0.09375 0.765625 0.09375 C 0.921875 0.09375 1.046875 0.015625 1.109375 -0.109375 C 1.125 -0.15625 1.203125 -0.484375 1.25 -0.671875 L 1.453125 -1.46875 C 1.484375 -1.59375 1.5625 -1.9375 1.59375 -2.0625 L 1.703125 -2.46875 C 1.75 -2.671875 2.25 -3.71875 3.21875 -3.71875 C 3.703125 -3.71875 3.703125 -3.25 3.703125 -3.09375 C 3.703125 -2.546875 3.28125 -1.46875 3.1875 -1.1875 C 3.078125 -0.90625 3.046875 -0.828125 3.046875 -0.65625 C 3.046875 -0.171875 3.40625 0.09375 3.8125 0.09375 C 4.671875 0.09375 5.015625 -1.171875 5.015625 -1.28125 Z M 5.015625 -1.28125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph1-5">
+<path style="stroke:none;" d="M 6.609375 -0.15625 C 6.609375 -0.28125 6.5 -0.28125 6.390625 -0.28125 C 5.859375 -0.28125 5.859375 -0.34375 5.828125 -0.59375 L 5.203125 -6.140625 C 5.1875 -6.34375 5.171875 -6.390625 5.015625 -6.390625 C 4.890625 -6.390625 4.84375 -6.328125 4.765625 -6.203125 L 1.625 -1.046875 C 1.1875 -0.328125 0.796875 -0.296875 0.4375 -0.28125 C 0.375 -0.265625 0.328125 -0.203125 0.328125 -0.109375 C 0.328125 -0.0625 0.359375 0 0.453125 0 C 0.625 0 1.046875 -0.03125 1.21875 -0.03125 C 1.40625 -0.03125 1.890625 0 2.09375 0 C 2.140625 0 2.25 0 2.25 -0.15625 C 2.25 -0.265625 2.15625 -0.28125 2.125 -0.28125 C 2.046875 -0.28125 1.703125 -0.296875 1.703125 -0.578125 C 1.703125 -0.703125 1.796875 -0.859375 1.828125 -0.90625 L 2.53125 -2.0625 L 4.859375 -2.0625 L 4.9375 -1.328125 C 4.984375 -0.984375 5.03125 -0.59375 5.03125 -0.5625 C 5.03125 -0.421875 4.90625 -0.28125 4.390625 -0.28125 C 4.296875 -0.28125 4.1875 -0.28125 4.1875 -0.109375 C 4.1875 -0.015625 4.25 0 4.3125 0 C 4.484375 0 4.703125 -0.015625 4.875 -0.015625 L 5.421875 -0.03125 L 5.9375 -0.015625 C 6.078125 -0.015625 6.296875 0 6.4375 0 C 6.484375 0 6.609375 0 6.609375 -0.15625 Z M 4.828125 -2.34375 L 2.703125 -2.34375 L 4.5 -5.28125 Z M 4.828125 -2.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph2-1">
+<path style="stroke:none;" d="M 4.21875 -2.859375 C 4.21875 -3.453125 4.1875 -4.21875 3.875 -4.890625 C 3.484375 -5.734375 2.8125 -5.9375 2.296875 -5.9375 C 1.75 -5.9375 1.078125 -5.734375 0.6875 -4.875 C 0.40625 -4.25 0.359375 -3.53125 0.359375 -2.859375 C 0.359375 -2.28125 0.375 -1.40625 0.765625 -0.703125 C 1.171875 0.046875 1.875 0.203125 2.28125 0.203125 C 2.859375 0.203125 3.53125 -0.046875 3.90625 -0.875 C 4.171875 -1.46875 4.21875 -2.140625 4.21875 -2.859375 Z M 3.453125 -2.96875 C 3.453125 -2.40625 3.453125 -1.65625 3.359375 -1.140625 C 3.171875 -0.109375 2.515625 -0.03125 2.296875 -0.03125 C 2.03125 -0.03125 1.390625 -0.15625 1.21875 -1.15625 C 1.125 -1.6875 1.125 -2.453125 1.125 -2.96875 C 1.125 -3.5625 1.125 -4.28125 1.234375 -4.765625 C 1.40625 -5.5625 1.984375 -5.71875 2.28125 -5.71875 C 2.625 -5.71875 3.1875 -5.546875 3.359375 -4.703125 C 3.453125 -4.21875 3.453125 -3.53125 3.453125 -2.96875 Z M 3.453125 -2.96875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph2-2">
+<path style="stroke:none;" d="M 6.609375 -3.140625 C 6.609375 -3.34375 6.421875 -3.34375 6.28125 -3.34375 L 0.84375 -3.34375 C 0.703125 -3.34375 0.515625 -3.34375 0.515625 -3.140625 C 0.515625 -2.953125 0.6875 -2.953125 0.796875 -2.953125 L 6.3125 -2.953125 C 6.4375 -2.953125 6.609375 -2.953125 6.609375 -3.140625 Z M 6.609375 -1.328125 C 6.609375 -1.515625 6.4375 -1.515625 6.3125 -1.515625 L 0.796875 -1.515625 C 0.6875 -1.515625 0.515625 -1.515625 0.515625 -1.328125 C 0.515625 -1.140625 0.703125 -1.140625 0.84375 -1.140625 L 6.28125 -1.140625 C 6.421875 -1.140625 6.609375 -1.140625 6.609375 -1.328125 Z M 6.609375 -1.328125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph2-3">
+<path style="stroke:none;" d="M 6.609375 -2.234375 C 6.609375 -2.421875 6.4375 -2.421875 6.296875 -2.421875 L 3.75 -2.421875 L 3.75 -4.984375 C 3.75 -5.125 3.75 -5.296875 3.5625 -5.296875 C 3.375 -5.296875 3.375 -5.109375 3.375 -4.984375 L 3.375 -2.421875 L 0.828125 -2.421875 C 0.703125 -2.421875 0.515625 -2.421875 0.515625 -2.234375 C 0.515625 -2.046875 0.671875 -2.046875 0.828125 -2.046875 L 3.375 -2.046875 L 3.375 0.515625 C 3.375 0.65625 3.375 0.828125 3.5625 0.828125 C 3.75 0.828125 3.75 0.640625 3.75 0.515625 L 3.75 -2.046875 L 6.296875 -2.046875 C 6.421875 -2.046875 6.609375 -2.046875 6.609375 -2.234375 Z M 6.609375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph3-1">
+<path style="stroke:none;" d="M 4.4375 -0.796875 L 4.4375 -1.296875 L 4.1875 -1.296875 L 4.1875 -0.796875 C 4.1875 -0.703125 4.1875 -0.265625 3.859375 -0.265625 C 3.546875 -0.265625 3.546875 -0.6875 3.546875 -0.828125 L 3.546875 -2.390625 C 3.546875 -2.90625 3.546875 -3.203125 3.140625 -3.5625 C 2.8125 -3.859375 2.375 -4 1.9375 -4 C 1.1875 -4 0.5625 -3.625 0.5625 -3.046875 C 0.5625 -2.78125 0.75 -2.625 0.984375 -2.625 C 1.21875 -2.625 1.390625 -2.796875 1.390625 -3.03125 C 1.390625 -3.421875 0.984375 -3.46875 0.984375 -3.46875 C 1.234375 -3.6875 1.65625 -3.78125 1.921875 -3.78125 C 2.375 -3.78125 2.875 -3.4375 2.875 -2.65625 L 2.875 -2.359375 C 2.40625 -2.34375 1.734375 -2.296875 1.140625 -2 C 0.484375 -1.6875 0.296875 -1.234375 0.296875 -0.875 C 0.296875 -0.140625 1.15625 0.09375 1.75 0.09375 C 2.5 0.09375 2.84375 -0.390625 2.96875 -0.640625 C 3 -0.265625 3.265625 0.046875 3.65625 0.046875 C 3.875 0.046875 4.4375 -0.078125 4.4375 -0.796875 Z M 2.875 -1.265625 C 2.875 -0.390625 2.21875 -0.125 1.8125 -0.125 C 1.40625 -0.125 1.015625 -0.421875 1.015625 -0.875 C 1.015625 -1.46875 1.515625 -2.09375 2.875 -2.140625 Z M 2.875 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph3-2">
+<path style="stroke:none;" d="M 3.296875 -1.140625 C 3.296875 -1.546875 3.125 -1.78125 2.921875 -1.984375 C 2.625 -2.28125 2.296875 -2.34375 1.640625 -2.46875 C 1.40625 -2.515625 0.765625 -2.625 0.765625 -3.140625 C 0.765625 -3.421875 0.96875 -3.796875 1.78125 -3.796875 C 2.734375 -3.796875 2.796875 -3.0625 2.8125 -2.84375 C 2.828125 -2.734375 2.828125 -2.671875 2.9375 -2.671875 C 3.0625 -2.671875 3.0625 -2.734375 3.0625 -2.90625 L 3.0625 -3.765625 C 3.0625 -3.921875 3.0625 -4 2.96875 -4 C 2.921875 -4 2.90625 -4 2.78125 -3.890625 C 2.765625 -3.875 2.6875 -3.796875 2.625 -3.75 C 2.359375 -3.9375 2.078125 -4 1.78125 -4 C 0.59375 -4 0.296875 -3.34375 0.296875 -2.890625 C 0.296875 -2.609375 0.421875 -2.375 0.640625 -2.171875 C 0.9375 -1.90625 1.28125 -1.84375 1.734375 -1.75 C 2.1875 -1.671875 2.34375 -1.640625 2.53125 -1.484375 C 2.625 -1.421875 2.84375 -1.25 2.84375 -0.90625 C 2.84375 -0.125 1.9375 -0.125 1.8125 -0.125 C 0.90625 -0.125 0.671875 -0.890625 0.578125 -1.359375 C 0.546875 -1.453125 0.53125 -1.5 0.421875 -1.5 C 0.296875 -1.5 0.296875 -1.4375 0.296875 -1.28125 L 0.296875 -0.140625 C 0.296875 0.015625 0.296875 0.09375 0.40625 0.09375 C 0.46875 0.09375 0.46875 0.09375 0.640625 -0.078125 C 0.671875 -0.140625 0.765625 -0.25 0.8125 -0.296875 C 1.1875 0.078125 1.59375 0.09375 1.8125 0.09375 C 2.921875 0.09375 3.296875 -0.546875 3.296875 -1.140625 Z M 3.296875 -1.140625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph3-3">
+<path style="stroke:none;" d="M 3.8125 -1.0625 C 3.8125 -1.125 3.765625 -1.171875 3.6875 -1.171875 C 3.59375 -1.171875 3.5625 -1.109375 3.5625 -1.078125 C 3.25 -0.171875 2.46875 -0.15625 2.328125 -0.15625 C 1.90625 -0.15625 1.53125 -0.390625 1.328125 -0.703125 C 1.03125 -1.140625 1.03125 -1.671875 1.03125 -2.046875 L 3.5625 -2.046875 C 3.765625 -2.046875 3.8125 -2.046875 3.8125 -2.234375 C 3.8125 -3.15625 3.3125 -4 2.171875 -4 C 1.09375 -4 0.265625 -3.0625 0.265625 -1.96875 C 0.265625 -0.796875 1.203125 0.09375 2.28125 0.09375 C 3.375 0.09375 3.8125 -0.859375 3.8125 -1.0625 Z M 3.203125 -2.25 L 1.03125 -2.25 C 1.109375 -3.625 1.921875 -3.78125 2.171875 -3.78125 C 2.65625 -3.78125 3.1875 -3.40625 3.203125 -2.25 Z M 3.203125 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph4-1">
+<path style="stroke:none;" d="M 6.359375 -2.234375 C 6.359375 -2.421875 6.1875 -2.421875 6.046875 -2.421875 L 1.078125 -2.421875 C 0.953125 -2.421875 0.765625 -2.421875 0.765625 -2.234375 C 0.765625 -2.046875 0.9375 -2.046875 1.078125 -2.046875 L 6.046875 -2.046875 C 6.171875 -2.046875 6.359375 -2.046875 6.359375 -2.234375 Z M 6.359375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph5-1">
+<path style="stroke:none;" d="M 6.625 -2.46875 L 6.171875 -2.46875 C 5.984375 -1.328125 5.78125 -0.4375 4.046875 -0.4375 L 2.625 -0.4375 L 2.625 -2.921875 L 3.15625 -2.921875 C 4.03125 -2.921875 4.109375 -2.53125 4.109375 -1.875 L 4.5625 -1.875 L 4.5625 -4.40625 L 4.109375 -4.40625 C 4.109375 -3.75 4.03125 -3.359375 3.15625 -3.359375 L 2.625 -3.359375 L 2.625 -5.625 L 4.046875 -5.625 C 5.453125 -5.625 5.734375 -5.015625 5.875 -3.90625 L 6.328125 -3.90625 L 6.0625 -6.0625 L 0.375 -6.0625 L 0.375 -5.625 L 1.34375 -5.625 L 1.34375 -0.4375 L 0.375 -0.4375 L 0.375 0 L 6.203125 0 Z M 6.625 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d1-glyph5-2">
+<path style="stroke:none;" d="M 5.625 0 L 5.625 -0.4375 L 5.015625 -0.4375 L 5.015625 -2.71875 C 5.015625 -3.78125 4.375 -4.015625 3.59375 -4.015625 C 2.5 -4.015625 2.0625 -3.21875 2 -3.078125 L 1.984375 -3.078125 L 1.984375 -4.015625 L 0.453125 -3.9375 L 0.453125 -3.5 C 0.984375 -3.5 1.046875 -3.5 1.046875 -3.15625 L 1.046875 -0.4375 L 0.453125 -0.4375 L 0.453125 0 L 1.5625 -0.03125 L 2.703125 0 L 2.703125 -0.4375 L 2.09375 -0.4375 L 2.09375 -2.265625 C 2.09375 -3.265625 2.921875 -3.65625 3.453125 -3.65625 C 3.796875 -3.65625 3.96875 -3.46875 3.96875 -2.796875 L 3.96875 -0.4375 L 3.359375 -0.4375 L 3.359375 0 L 4.484375 -0.03125 Z M 5.625 0 "/>
+</symbol>
+</g>
+<clipPath id="fisica2_lez05b_d1-clip1">
+  <path d="M 0.140625 71 L 210.550781 71 L 210.550781 128 L 0.140625 128 Z M 0.140625 71 "/>
+</clipPath>
+</defs>
+<g id="fisica2_lez05b_d1-surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(87.998962%,87.998962%,100%);fill-opacity:1;" d="M 4.304688 122.136719 L 147.105469 122.136719 L 205.523438 76.699219 L 62.722656 76.699219 Z M 4.304688 122.136719 "/>
+<g clip-path="url(#fisica2_lez05b_d1-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -101.056367 -22.819986 L 42.378427 -22.819986 L 101.055762 22.819249 L -42.379032 22.819249 Z M -101.056367 -22.819986 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="20.646499" y="116.921886"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="41.676131" y="100.565505"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="62.706759" y="84.20813"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="49.206697" y="116.921886"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="70.236329" y="100.565505"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="91.266956" y="84.20813"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="81.336048" y="116.921886"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="102.36568" y="100.565505"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="123.396307" y="84.20813"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="113.465399" y="116.921886"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="134.49503" y="100.565505"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="155.525658" y="84.20813"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="142.025596" y="116.921886"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="163.055228" y="100.565505"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph0-1" x="184.085855" y="84.20813"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-1" x="9.3397" y="136.090779"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-2" x="17.451453" y="136.090779"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph2-1" x="27.139671" y="136.090779"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-3" x="181.803986" y="136.318767"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph2-2" x="189.005015" y="136.318767"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph2-1" x="198.685201" y="136.318767"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M -0.00030262 -83.125612 L -0.00030262 83.124875 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph3-1" x="111.929219" y="11.116644"/>
+  <use xlink:href="#fisica2_lez05b_d1-glyph3-2" x="116.516684" y="11.116644"/>
+  <use xlink:href="#fisica2_lez05b_d1-glyph3-2" x="120.135596" y="11.116644"/>
+  <use xlink:href="#fisica2_lez05b_d1-glyph3-3" x="123.754507" y="11.116644"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-3" x="130.894018" y="11.116644"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.596909 39.117855 C 32.596909 44.87769 18.005066 49.550689 -0.00030262 49.550689 C -18.005671 49.550689 -32.597514 44.87769 -32.597514 39.117855 C -32.597514 33.35802 -18.005671 28.685021 -0.00030262 28.685021 C 18.005066 28.685021 32.596909 33.35802 32.596909 39.117855 Z M 32.596909 39.117855 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -32.597514 39.117855 L -32.597514 -39.118592 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.596909 39.117855 L 32.596909 -39.118592 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -32.597514 -39.118592 C -32.597514 -44.878426 -18.005671 -49.551426 -0.00030262 -49.551426 C 18.005066 -49.551426 32.596909 -44.878426 32.596909 -39.118592 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 32.596909 -39.118592 C 32.596909 -33.358757 18.005066 -28.685758 -0.00030262 -28.685758 C -18.005671 -28.685758 -32.597514 -33.358757 -32.597514 -39.118592 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(50%,50%,50%);fill-opacity:1;" d="M 105.824219 60.472656 C 105.824219 59.96875 105.417969 59.5625 104.914062 59.5625 C 104.414062 59.5625 104.003906 59.96875 104.003906 60.472656 C 104.003906 60.972656 104.414062 61.382812 104.914062 61.382812 C 105.417969 61.382812 105.824219 60.972656 105.824219 60.472656 Z M 105.824219 60.472656 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(50%,50%,50%);fill-opacity:1;" d="M 105.824219 138.363281 C 105.824219 137.859375 105.417969 137.453125 104.914062 137.453125 C 104.414062 137.453125 104.003906 137.859375 104.003906 138.363281 C 104.003906 138.863281 104.414062 139.273438 104.914062 139.273438 C 105.417969 139.273438 105.824219 138.863281 105.824219 138.363281 Z M 105.824219 138.363281 "/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M -49.55136 39.769171 L -33.248831 39.117855 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-3" x="21.473826" y="62.512455"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph2-2" x="28.674855" y="62.512455"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph2-3" x="38.355041" y="62.512455"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-4" x="45.495175" y="62.512455"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M -49.55136 -39.769908 L -33.248831 -39.118592 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-3" x="21.473826" y="141.697884"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph2-2" x="28.674855" y="141.697884"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph4-1" x="38.359855" y="141.697884"/>
+</g>
+<g style="fill:rgb(50%,50%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-4" x="45.495175" y="141.697884"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M 35.206098 48.244133 L 23.470631 43.029677 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-5" x="144.767423" y="53.13708"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M 35.206098 -48.244869 L 23.470631 -44.984363 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph1-5" x="144.767423" y="151.798041"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -17.931123 48.899373 L -17.931123 65.425547 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 87.0625 29.640625 C 86.804688 31.015625 86.03125 33.25 85.128906 34.796875 L 89 34.796875 C 88.097656 33.25 87.320312 31.015625 87.0625 29.640625 "/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph5-1" x="73.057802" y="33.673495"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,50%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.930518 48.899373 L 17.930518 65.425547 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,50%,0%);fill-opacity:1;" d="M 122.765625 29.640625 C 122.507812 31.015625 121.734375 33.25 120.832031 34.796875 L 124.699219 34.796875 C 123.796875 33.25 123.023438 31.015625 122.765625 29.640625 "/>
+<g style="fill:rgb(0%,50%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph5-2" x="129.838704" y="32.54849"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -17.931123 -48.896186 L -17.931123 -65.426284 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 87.0625 169.195312 C 87.320312 167.820312 88.097656 165.585938 89 164.035156 L 85.128906 164.035156 C 86.03125 165.585938 86.804688 167.820312 87.0625 169.195312 "/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph5-1" x="73.057802" y="171.278551"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,50%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.930518 -48.896186 L 17.930518 -65.426284 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,50%,0%);fill-opacity:1;" d="M 122.765625 169.195312 C 123.023438 167.820312 123.796875 165.585938 124.699219 164.035156 L 120.832031 164.035156 C 121.734375 165.585938 122.507812 167.820312 122.765625 169.195312 "/>
+<g style="fill:rgb(0%,50%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph5-2" x="129.838704" y="170.153546"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,50%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.596909 17.930452 L 52.383589 17.930452 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,50%,0%);fill-opacity:1;" d="M 161.710938 81.566406 C 160.335938 81.308594 158.097656 80.535156 156.550781 79.632812 L 156.550781 83.5 C 158.097656 82.597656 160.335938 81.824219 161.710938 81.566406 "/>
+<g style="fill:rgb(0%,50%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph5-2" x="166.83644" y="83.501268"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 32.596909 4.888429 L 32.596909 27.935615 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 137.367188 66.964844 C 137.109375 68.339844 136.335938 70.574219 135.433594 72.121094 L 139.304688 72.121094 C 138.402344 70.574219 137.625 68.339844 137.367188 66.964844 "/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d1-glyph5-1" x="123.037898" y="70.671231"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M 37.163971 17.930452 L 37.163971 22.493591 L 32.596909 22.493591 " transform="matrix(0.99558,0,0,-0.99558,104.914364,99.417602)"/>
+</g>
+</svg></figure>
+            <p>Vista alternativa della stessa superficie Gaussiana: le basi (area $A$) si trovano in $z=+h$ e $z=-h$; in verde le normali <em>uscenti</em> $\\hat{n}$, in rosso il campo, verso l'alto nel semispazio $z \\gt 0$ e verso il basso nel semispazio $z \\lt 0$. Sulla superficie laterale $\\vec{E} \\perp \\hat{n}$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Campo perpendicolare al piano", latex: "\\vec{E}(z) = E_z(z)\\,\\hat{z}" },
+          { label: "Antisimmetria per riflessione", latex: "E_z(-z) = -E_z(z)" },
+          { label: "Flusso su porzione piana orientata", latex: "\\Phi_A = E_z(z)\\,(\\hat{z}\\cdot\\hat{n})\\,A" }
+        ]
+      },
+
+      {
+        id: "s05-es-piano",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Campo elettrostatico di un piano infinito uniformemente carico",
+        icon: "✎",
+        source: "docente",
+        content: `<p><strong>Dati:</strong> piano infinito $z=0$ con densità superficiale uniforme $\\sigma \\gt 0$.</p>
+        <p><strong>Richiesto:</strong> il campo $\\vec{E}$ in un generico punto dello spazio.</p>`,
+        steps: [
+          `<strong>Passo 1 — Considerazioni sulla simmetria.</strong> Per simmetria il campo elettrico $\\vec{E}$ deve essere in ogni punto perpendicolare al piano (cioè diretto lungo $\\pm\\hat{z}$): se fosse inclinato, non ci sarebbe una ragione per cui debba essere inclinato a destra piuttosto che a sinistra. Inoltre il modulo $E$ può dipendere solo dalla distanza $|z|$ dal piano, non dalle coordinate $x$ e $y$. Essendo $\\sigma \\gt 0$, il campo è uscente dal piano: diretto come $+\\hat{z}$ per $z \\gt 0$ e come $-\\hat{z}$ per $z \\lt 0$ (se fosse $\\sigma \\lt 0$ sarebbe entrante).`,
+          `<strong>Passo 2 — Scelta della superficie Gaussiana.</strong> Scegliamo una superficie Gaussiana a forma di <strong>cilindro</strong> (un "cilindretto") con l'asse perpendicolare al piano e le due basi circolari di area $A$ parallele al piano, poste a quota $z=+h$ e $z=-h$. Il cilindro attraversa il piano, che lo taglia nella sezione centrale.`,
+          `<strong>Passo 3 — Calcolo del flusso.</strong> Il flusso totale attraverso la superficie chiusa del cilindro (normali <em>uscenti</em>) è la somma dei flussi attraverso le due basi $A_1$, $A_2$ e la superficie laterale $S_L$: $$\\Phi(\\vec{E}) = \\oint \\vec{E} \\cdot d\\vec{S} = \\Phi_{A_1} + \\Phi_{A_2} + \\Phi_{S_L}$$`,
+          `<strong>Superficie laterale ($S_L$):</strong> in ogni punto della superficie laterale il campo $\\vec{E}$ è parallelo all'asse del cilindro, mentre il versore normale uscente $\\hat{n}_L$ è radiale, cioè perpendicolare all'asse. Quindi $\\vec{E} \\perp \\hat{n}_L$ ovunque su $S_L$: il prodotto scalare è zero e $\\Phi_{S_L} = 0$.`,
+          `<strong>Base superiore ($A_1$, in $z=+h$):</strong> la normale uscente è $\\hat{n}_1 = +\\hat{z}$ e il campo è $\\vec{E} = E_z(h)\\hat{z}$ con $E_z(h) = E \\gt 0$. Dunque $\\vec{E}\\cdot\\hat{n}_1 = +E$, costante su tutta la base per l'invarianza per traslazioni, e $$\\Phi_{A_1} = E_z(h)\\,(\\hat{z}\\cdot\\hat{n}_1)\\,A = +EA .$$`,
+          `<strong>Base inferiore ($A_2$, in $z=-h$):</strong> la normale uscente è $\\hat{n}_2 = -\\hat{z}$, mentre per la simmetria di riflessione $\\vec{E} = E_z(-h)\\hat{z} = -E\\hat{z}$. Allora $$\\Phi_{A_2} = E_z(-h)\\,(\\hat{z}\\cdot\\hat{n}_2)\\,A = (-E)(-1)A = +EA ,$$ cioè lo stesso contributo della base superiore: i due segni negativi si compensano. Il modulo $E$ è infatti lo stesso sulle due basi, perché esse sono equidistanti dal piano.`,
+          `<strong>Flusso totale.</strong> $$\\Phi(\\vec{E}) = \\int_{A_1} \\vec{E} \\cdot d\\vec{S} + \\int_{A_2} \\vec{E} \\cdot d\\vec{S} + 0 = \\int_{A_1} E \\, dS + \\int_{A_2} E \\, dS = E \\int_{A_1} dS + E \\int_{A_2} dS = E A + E A = 2EA$$ dove $A$ è l'area di una base del cilindro.`,
+          `<strong>Passo 4 — Calcolo della carica interna.</strong> La carica interna $Q_{int}$ alla nostra superficie Gaussiana è la carica contenuta nel cerchio in cui il cilindro interseca il piano, cioè nella sezione centrale di area $A$. Poiché la densità è uniforme: $$Q_{int} = \\sigma \\cdot A$$`,
+          `<strong>Passo 5 — Applicazione del Teorema di Gauss.</strong> $$\\Phi(\\vec{E}) = \\frac{Q_{int}}{\\varepsilon_0} \\quad \\Rightarrow \\quad 2EA = \\frac{\\sigma A}{\\varepsilon_0}$$ L'area $A$ si semplifica (il risultato non dipende dalla superficie Gaussiana scelta), e otteniamo il modulo del campo elettrico (con $\\sigma \\gt 0$): $$E = \\frac{\\sigma}{2\\varepsilon_0} \\qquad (\\sigma \\gt 0)$$`,
+          `<strong>Osservazione sul risultato.</strong> Il campo elettrico generato da un piano infinito è <strong>uniforme</strong>, cioè non dipende dalla distanza dal piano. Nell'espressione finale non compare $h$: l'altezza $2h$ del cilindro non entra mai nel calcolo, perché il flusso laterale è nullo e la carica racchiusa $\\sigma A$ non dipende da $h$.`,
+          `<strong>Passo 6 — Forma vettoriale.</strong> Il verso dipende dal semispazio in cui ci troviamo, perché attraversando il piano il campo si ribalta. Fissato il piano in $z=0$: $$\\vec{E}(z) = \\begin{cases} \\dfrac{\\sigma}{2\\varepsilon_0}\\,\\hat{z}, & z \\gt 0,\\\\[2mm] -\\dfrac{\\sigma}{2\\varepsilon_0}\\,\\hat{z}, & z \\lt 0. \\end{cases}$$ Equivalentemente, in forma compatta, $\\vec{E} = \\dfrac{\\sigma}{2\\varepsilon_0}\\,\\hat{u}$, dove $\\hat{u}$ è il versore perpendicolare al piano <em>diretto dal piano verso il punto di osservazione</em>: $\\hat{u} = +\\hat{z}$ nel semispazio $z \\gt 0$ e $\\hat{u} = -\\hat{z}$ nel semispazio $z \\lt 0$. Un unico versore fissato non andrebbe bene, perché non descriverebbe entrambi i lati.`
+        ]
+      },
+
+      {
+        id: "s05-nota-prof-cilindro",
+        type: "note_box",
+        title: "Nota del Prof. — perché il cilindro e non la sfera",
+        icon: "💡",
+        content: `<p>Questo è il punto chiave. Scegliendo una superficie Gaussiana opportuna, abbiamo reso il calcolo del flusso molto semplice. Se avessimo scelto una sfera, l'angolo tra $\\vec{E}$ e $\\hat{n}$ sarebbe variato su tutta la superficie e, soprattutto, i suoi punti si troverebbero a distanze diverse dal piano: l'integrale diventerebbe complicato.</p>
+        <p>Con il cilindro, il prodotto scalare è costante e facile da calcolare su ogni faccia: <strong>nullo sul mantello, pari a $E$ su entrambe le basi</strong>.</p>`
+      },
+
+      {
+        id: "s05-piano-vettoriale",
+        type: "section",
+        title: "Il risultato in forma vettoriale e il caso $\\sigma \\lt 0$",
+        icon: "↕️",
+        content: `<p>Attenzione a non confondere la costanza del modulo con l'uniformità del campo <strong>vettoriale</strong> in tutto lo spazio: attraversando il piano il verso si inverte. Il campo è dunque uniforme <em>separatamente</em> in ciascuno dei due semispazi $z \\gt 0$ e $z \\lt 0$, con versi opposti nei due semispazi; sul piano ideale $z=0$ il campo non è definito.</p>
+        <p>Introducendo la funzione segno</p>
+        <p>$$\\operatorname{sgn}(z) = \\begin{cases} +1 & \\text{se } z \\gt 0 \\\\ -1 & \\text{se } z \\lt 0 \\end{cases}$$</p>
+        <p>possiamo scrivere in un'unica formula, valida per ogni $z \\neq 0$ e per qualunque segno di $\\sigma$:</p>
+        <p>$$\\vec{E}(z) = \\frac{\\sigma}{2\\varepsilon_0}\\,\\operatorname{sgn}(z)\\,\\hat{z}$$</p>
+        <p>Da questa espressione si leggono separatamente <strong>modulo</strong> e <strong>verso</strong>:</p>
+        <p>$$|\\vec{E}| = \\frac{|\\sigma|}{2\\varepsilon_0}, \\qquad \\text{verso: } \\begin{cases} \\text{uscente dal piano} & \\text{se } \\sigma \\gt 0 \\\\ \\text{entrante verso il piano} & \\text{se } \\sigma \\lt 0 \\end{cases}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Generalizzazione al caso $\\sigma \\lt 0$",
+            content: `<p>Se la densità è negativa, il coefficiente $\\sigma/(2\\varepsilon_0)$ è negativo, quindi $\\vec{E}$ è antiparallelo a $\\hat{u} = \\operatorname{sgn}(z)\\hat{z}$, cioè <strong>entrante</strong> nel piano in entrambi i semispazi.</p>
+            <p>Il bilancio di Gauss resta coerente: sulle basi del cilindro campo e normale uscente sono discordi, i due flussi valgono $-|E|A$ ciascuno e si ottiene $-2|E|A = \\sigma A/\\varepsilon_0 \\lt 0$. Il <em>modulo</em> del campo, che è per definizione non negativo, è in generale</p>
+            <p>$$|\\vec{E}| = \\frac{|\\sigma|}{2\\varepsilon_0}.$$</p>
+            <p>La formula con $\\sigma$ "nudo" al numeratore va quindi letta come una <strong>componente con segno</strong> lungo $\\hat{u}$, non come un modulo.</p>`
+          },
+          {
+            subtitle: "Errore comune da evitare",
+            content: `<p>È <strong>scorretto</strong> scrivere $\\vec{E} = \\dfrac{|\\sigma|}{2\\varepsilon_0}\\,\\hat{n}$ con $\\hat{n}$ "sempre uscente dal piano": per $\\sigma \\lt 0$ il campo punta <em>verso</em> il piano, non in direzione uscente.</p>
+            <p>Inoltre un singolo versore normale fisso non può descrivere entrambi i semispazi, poiché il verso del campo si inverte attraversando il piano: serve il fattore $\\operatorname{sgn}(z)$ (equivalentemente, due versori normali uscenti opposti, uno per ciascun semispazio).</p>`
+          },
+          {
+            subtitle: "Proposizione — Campo di un piano indefinito uniformemente carico",
+            content: `<p>Sia dato un piano indefinito coincidente con $z=0$, con densità di carica superficiale uniforme $\\sigma$ (di segno qualsiasi). Allora, in ogni punto con $z \\neq 0$,</p>
+            <p>$$\\vec{E}(z) = \\frac{\\sigma}{2\\varepsilon_0}\\,\\operatorname{sgn}(z)\\,\\hat{z}, \\qquad |\\vec{E}| = \\frac{|\\sigma|}{2\\varepsilon_0} = \\text{costante}.$$</p>
+            <p>Il campo è perpendicolare al piano, il suo modulo è indipendente dalla distanza dal piano ed è uniforme separatamente in ciascuno dei due semispazi, con versi opposti: uscente dal piano se $\\sigma \\gt 0$, diretto verso il piano se $\\sigma \\lt 0$.</p>
+            <p>Il risultato vale per un piano <strong>indefinito</strong>; per un piano finito costituisce una buona approssimazione nei punti vicini al piano e lontani dai bordi.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo — valori numerici per il piano",
+            content: `<p>Assumiamo $\\varepsilon_0 = 8{,}85 \\times 10^{-12}\\ \\mathrm{C^2/(N\\,m^2)}$.</p>
+            <p><strong>(a) Densità positiva.</strong> Sia $\\sigma = 1{,}0 \\times 10^{-8}\\ \\mathrm{C/m^2}$. Allora</p>
+            <p>$$E = \\frac{\\sigma}{2\\varepsilon_0} = \\frac{1{,}0 \\times 10^{-8}}{2 \\cdot 8{,}85 \\times 10^{-12}} \\simeq 5{,}6 \\times 10^{2}\\ \\mathrm{N/C},$$</p>
+            <p>e questo valore è lo stesso a $1\\ \\mathrm{mm}$ o a $1\\ \\mathrm{m}$ dal piano: il campo è uniforme in ciascun semispazio ed è uscente dal piano da entrambi i lati.</p>
+            <p><strong>(b) Densità negativa.</strong> Sia ora $\\sigma = -1{,}77 \\times 10^{-8}\\ \\mathrm{C/m^2}$. Il modulo, uguale in tutti i punti con $z \\neq 0$, vale</p>
+            <p>$$|\\vec{E}| = \\frac{|\\sigma|}{2\\varepsilon_0} = \\frac{1{,}77 \\times 10^{-8}}{2 \\cdot 8{,}85 \\times 10^{-12}} = 1{,}0 \\times 10^{3}\\ \\mathrm{N/C} .$$</p>
+            <p>Essendo $\\sigma \\lt 0$, il campo punta <em>verso</em> il piano in entrambi i semispazi. Applicando la formula generale:</p>
+            <ul>
+              <li>nel punto $P_1 = (0,0,+2\\ \\mathrm{cm})$, cioè $z \\gt 0$, si ha $\\operatorname{sgn}(z)=+1$ e
+              <p>$$\\vec{E}(P_1) = \\frac{\\sigma}{2\\varepsilon_0}\\,\\hat{z} = -1{,}0 \\times 10^{3}\\, \\hat{z}\\ \\mathrm{N/C},$$</p>
+              cioè un campo di modulo $1{,}0 \\times 10^{3}\\ \\mathrm{N/C}$ diretto nel verso $-\\hat{z}$ (verso il piano);</li>
+              <li>nel punto $P_2 = (0,0,-5\\ \\mathrm{cm})$, cioè $z \\lt 0$, si ha $\\operatorname{sgn}(z)=-1$ e
+              <p>$$\\vec{E}(P_2) = -\\frac{\\sigma}{2\\varepsilon_0}\\,\\hat{z} = +1{,}0 \\times 10^{3}\\, \\hat{z}\\ \\mathrm{N/C},$$</p>
+              cioè lo stesso modulo ma verso $+\\hat{z}$, di nuovo verso il piano.</li>
+            </ul>
+            <p>Si osservi che il modulo è lo stesso a $2\\ \\mathrm{cm}$ e a $5\\ \\mathrm{cm}$ dal piano (indipendenza dalla distanza), ma i due vettori sono opposti: il campo è uniforme in <em>ciascun</em> semispazio, non in tutto lo spazio.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Piano indefinito (forma generale)", latex: "\\vec{E}(z) = \\frac{\\sigma}{2\\varepsilon_0}\\,\\operatorname{sgn}(z)\\,\\hat{z}" },
+          { label: "Modulo del campo del piano", latex: "|\\vec{E}| = \\frac{|\\sigma|}{2\\varepsilon_0}" }
+        ]
+      },
+
+      {
+        id: "s05-sfera-setup",
+        type: "section",
+        title: "Campo di una sfera uniformemente carica — impostazione",
+        icon: "🔵",
+        content: `<p>Consideriamo ora una distribuzione di carica sferica e volumetrica: una sfera di raggio $R$ che contiene la carica totale $Q$ distribuita <strong>uniformemente</strong> in tutto il suo volume, cioè con densità volumetrica $\\rho$ che ha lo stesso valore in tutti i suoi punti.</p>
+        <p>Come per il piano, svolgiamo la derivazione nell'ipotesi $Q \\gt 0$ (e quindi $\\rho \\gt 0$), così che il campo risulti radiale uscente e le espressioni ricavate rappresentino direttamente il modulo; alla fine discuteremo il caso $Q \\lt 0$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Densità di carica volumetrica",
+            content: `<p>La densità di carica volumetrica è una grandezza <strong>locale</strong>: in un punto $P$ si definisce come il rapporto tra la carica $dq$ contenuta in un volumetto infinitesimo $dV$ intorno a $P$ e il volume stesso,</p>
+            <p>$$\\rho(P) = \\frac{dq}{dV}, \\qquad \\text{ovvero} \\qquad dq = \\rho(P)\\, dV,$$</p>
+            <p>da cui la carica contenuta in un volume $V$ si ottiene come $Q = \\int_V \\rho\\, dV$. Si misura in Coulomb al metro cubo ($\\mathrm{C/m^3}$) e può essere positiva o negativa a seconda del segno della carica.</p>
+            <p>Da questa va distinta la densità <em>media</em>, che è il semplice rapporto tra la carica totale e il volume che la contiene:</p>
+            <p>$$\\rho_{\\text{media}} = \\frac{Q}{V}.$$</p>
+            <p>Le due coincidono <strong>se e solo se</strong> la distribuzione è uniforme: in tal caso $\\rho$ è costante e, per una sfera di raggio $R$,</p>
+            <p>$$\\rho = \\frac{Q}{\\dfrac{4}{3}\\pi R^3}.$$</p>
+            <p>Solo nel caso uniforme si può scrivere $Q_{int} = \\rho\\, V_{int}$ per un volume interno qualsiasi: la sola simmetria sferica non basta.</p>`
+          },
+          {
+            subtitle: "Definizione — Componente radiale del campo",
+            content: `<p>In presenza di simmetria sferica (distribuzione che dipende solo dalla distanza $r$ dal centro) oppure di simmetria cilindrica completa (distribuzione invariante per rotazioni attorno all'asse, per traslazioni lungo l'asse e per riflessione rispetto a un piano ortogonale all'asse, come nei modelli di filo e di cilindro infiniti) il campo elettrostatico è radiale e si può scrivere</p>
+            <p>$$\\vec{E} = E_r \\, \\hat{r} ,$$</p>
+            <p>dove $\\hat{r}$ è il versore radiale orientato <em>verso l'esterno</em> ed $E_r$ è la <strong>componente radiale con segno</strong>: $E_r \\gt 0$ indica un campo uscente, $E_r \\lt 0$ un campo entrante. Il modulo del campo è $E = |E_r|$.</p>
+            <p>Con questa convenzione, su una superficie su cui $E_r$ è costante e la normale uscente è radiale, il flusso si scrive semplicemente</p>
+            <p>$$\\Phi = E_r \\, A ,$$</p>
+            <p>dove $A$ è l'area della superficie attraversata. Il flusso risulta negativo quando $E_r \\lt 0$.</p>`
+          },
+          {
+            subtitle: "Cosa serve la simmetria e cosa serve l'uniformità",
+            content: `<p>La <strong>simmetria sferica</strong> (cioè $\\rho = \\rho(r)$, dipendente solo dalla distanza dal centro) garantisce che il campo sia radiale e che la sua componente radiale dipenda solo da $r$: questo è tutto ciò che serve per usare la superficie Gaussiana sferica.</p>
+            <p>Ma l'andamento <strong>lineare</strong> del campo interno che troveremo dipende in modo essenziale dall'ipotesi di densità <strong>uniforme</strong>: con un $\\rho(r)$ non costante il campo interno avrebbe un'altra forma.</p>
+            <p>Vogliamo calcolare il campo elettrico sia all'esterno ($r \\gt R$) che all'interno ($r \\lt R$) di questa sfera.</p>
+            <figure class="figura" data-id="fisica2_lez05a_d4"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05a_d4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="253.456pt" height="251.363pt" viewBox="0 0 253.456 251.363" version="1.2"><style>#fisica2_lez05a_d4 [fill="rgb(89.99939%,89.99939%,100%)"],#fisica2_lez05a_d4 [style*="fill:rgb(89.99939%,89.99939%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05a_d4 [fill="rgb(89.99939%,89.99939%,100%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="fill:rgb(89.99939%,89.99939%,100%)"]{fill:#e5e5ff!important}#fisica2_lez05a_d4 [stroke="rgb(89.99939%,89.99939%,100%)"],#fisica2_lez05a_d4 [style*="stroke:rgb(89.99939%,89.99939%,100%)"]{stroke:#e5e5ff!important}[data-mode="light"] #fisica2_lez05a_d4 [stroke="rgb(89.99939%,89.99939%,100%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="stroke:rgb(89.99939%,89.99939%,100%)"]{stroke:#e5e5ff!important}#fisica2_lez05a_d4 [fill="rgb(0%,0%,50%)"],#fisica2_lez05a_d4 [style*="fill:rgb(0%,0%,50%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d4 [fill="rgb(0%,0%,50%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="fill:rgb(0%,0%,50%)"]{fill:#000080!important}#fisica2_lez05a_d4 [stroke="rgb(0%,0%,50%)"],#fisica2_lez05a_d4 [style*="stroke:rgb(0%,0%,50%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d4 [stroke="rgb(0%,0%,50%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="stroke:rgb(0%,0%,50%)"]{stroke:#000080!important}#fisica2_lez05a_d4 [fill="rgb(0%,0%,0%)"],#fisica2_lez05a_d4 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05a_d4 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05a_d4 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05a_d4 [fill="rgb(29.998779%,29.998779%,29.998779%)"],#fisica2_lez05a_d4 [style*="fill:rgb(29.998779%,29.998779%,29.998779%)"]{fill:#adadad!important}[data-mode="light"] #fisica2_lez05a_d4 [fill="rgb(29.998779%,29.998779%,29.998779%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="fill:rgb(29.998779%,29.998779%,29.998779%)"]{fill:#4c4c4c!important}#fisica2_lez05a_d4 [stroke="rgb(29.998779%,29.998779%,29.998779%)"],#fisica2_lez05a_d4 [style*="stroke:rgb(29.998779%,29.998779%,29.998779%)"]{stroke:#adadad!important}[data-mode="light"] #fisica2_lez05a_d4 [stroke="rgb(29.998779%,29.998779%,29.998779%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="stroke:rgb(29.998779%,29.998779%,29.998779%)"]{stroke:#4c4c4c!important}#fisica2_lez05a_d4 [fill="rgb(0%,0%,59.999084%)"],#fisica2_lez05a_d4 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d4 [fill="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#000099!important}#fisica2_lez05a_d4 [stroke="rgb(0%,0%,59.999084%)"],#fisica2_lez05a_d4 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d4 [stroke="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05a_d4 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#000099!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph0-1">
+<path style="stroke:none;" d="M 3.546875 1.578125 C 3.546875 1.453125 3.453125 1.453125 3.3125 1.453125 C 2.890625 1.453125 2.890625 1.390625 2.890625 1.3125 C 2.890625 1.3125 2.890625 1.25 2.921875 1.125 L 4.125 -3.640625 C 4.15625 -3.765625 4.15625 -3.796875 4.15625 -3.828125 C 4.15625 -3.9375 4.046875 -3.953125 4.046875 -3.953125 C 3.953125 -3.953125 3.625 -3.640625 3.4375 -3.328125 C 3.296875 -3.65625 3.015625 -3.953125 2.5625 -3.953125 C 1.53125 -3.953125 0.375 -2.71875 0.375 -1.34375 C 0.375 -0.359375 1 0.09375 1.59375 0.09375 C 1.984375 0.09375 2.328125 -0.09375 2.65625 -0.40625 L 2.328125 0.96875 C 2.203125 1.421875 2.203125 1.453125 1.640625 1.453125 C 1.53125 1.453125 1.421875 1.453125 1.421875 1.625 C 1.421875 1.625 1.421875 1.734375 1.546875 1.734375 C 1.75 1.734375 2.25 1.703125 2.453125 1.703125 C 2.75 1.703125 2.765625 1.703125 2.90625 1.71875 C 3.015625 1.71875 3.265625 1.734375 3.375 1.734375 C 3.4375 1.734375 3.546875 1.734375 3.546875 1.578125 Z M 3.265625 -2.8125 L 2.828125 -1.09375 C 2.78125 -0.921875 2.78125 -0.90625 2.640625 -0.734375 C 2.328125 -0.359375 1.953125 -0.125 1.625 -0.125 C 1.1875 -0.125 1.03125 -0.578125 1.03125 -0.96875 C 1.03125 -1.40625 1.296875 -2.4375 1.515625 -2.859375 C 1.796875 -3.390625 2.203125 -3.734375 2.5625 -3.734375 C 3.15625 -3.734375 3.296875 -3.015625 3.296875 -2.953125 C 3.296875 -2.90625 3.28125 -2.84375 3.265625 -2.8125 Z M 3.265625 -2.8125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph0-2">
+<path style="stroke:none;" d="M 6.359375 -2.25 C 6.359375 -2.359375 6.265625 -2.40625 6.1875 -2.453125 L 1.140625 -4.875 C 1.015625 -4.9375 0.953125 -4.9375 0.953125 -4.9375 C 0.84375 -4.9375 0.765625 -4.828125 0.765625 -4.75 C 0.765625 -4.640625 0.828125 -4.59375 0.953125 -4.53125 L 5.734375 -2.25 L 0.953125 0.046875 C 0.828125 0.109375 0.765625 0.15625 0.765625 0.265625 C 0.765625 0.328125 0.828125 0.453125 0.96875 0.453125 C 0.96875 0.453125 1.015625 0.453125 1.125 0.40625 L 6.1875 -2.03125 C 6.28125 -2.078125 6.359375 -2.125 6.359375 -2.25 Z M 6.359375 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph0-3">
+<path style="stroke:none;" d="M 1.84375 -0.015625 C 1.84375 -0.578125 1.65625 -0.96875 1.265625 -0.96875 C 0.96875 -0.96875 0.78125 -0.734375 0.78125 -0.484375 C 0.78125 -0.234375 0.96875 0 1.265625 0 C 1.40625 0 1.53125 -0.046875 1.625 -0.140625 C 1.625 0.15625 1.625 0.890625 0.96875 1.515625 C 0.90625 1.578125 0.90625 1.578125 0.90625 1.625 C 0.90625 1.6875 0.96875 1.71875 1.03125 1.71875 C 1.125 1.71875 1.84375 1.03125 1.84375 -0.015625 Z M 1.84375 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph0-4">
+<path style="stroke:none;" d="M 4.609375 -2.46875 C 4.609375 -3.34375 4.078125 -3.953125 3.3125 -3.953125 C 2.4375 -3.953125 1.46875 -3.109375 1.1875 -1.96875 L 0.3125 1.46875 C 0.28125 1.59375 0.28125 1.625 0.28125 1.671875 C 0.28125 1.828125 0.390625 1.9375 0.546875 1.9375 C 0.703125 1.9375 0.828125 1.84375 0.890625 1.703125 C 0.90625 1.671875 1.21875 0.390625 1.265625 0.21875 C 1.359375 -0.140625 1.359375 -0.15625 1.453125 -0.46875 C 1.59375 -0.203125 1.875 0.09375 2.359375 0.09375 C 3.453125 0.09375 4.609375 -1.171875 4.609375 -2.46875 Z M 3.9375 -2.84375 C 3.9375 -2.5625 3.765625 -1.5 3.375 -0.859375 C 3.15625 -0.484375 2.75 -0.125 2.34375 -0.125 C 1.703125 -0.125 1.5625 -0.84375 1.5625 -0.90625 C 1.5625 -0.96875 1.78125 -1.8125 1.8125 -1.9375 C 2.25 -3.609375 3.09375 -3.734375 3.296875 -3.734375 C 3.703125 -3.734375 3.9375 -3.359375 3.9375 -2.84375 Z M 3.9375 -2.84375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph1-1">
+<path style="stroke:none;" d="M 4.234375 -2.859375 C 4.234375 -3.453125 4.203125 -4.234375 3.890625 -4.890625 C 3.5 -5.734375 2.8125 -5.953125 2.296875 -5.953125 C 1.765625 -5.953125 1.078125 -5.734375 0.6875 -4.875 C 0.40625 -4.265625 0.359375 -3.546875 0.359375 -2.859375 C 0.359375 -2.28125 0.375 -1.40625 0.765625 -0.703125 C 1.1875 0.046875 1.875 0.203125 2.28125 0.203125 C 2.875 0.203125 3.53125 -0.046875 3.90625 -0.875 C 4.171875 -1.46875 4.234375 -2.140625 4.234375 -2.859375 Z M 3.453125 -2.96875 C 3.453125 -2.40625 3.453125 -1.65625 3.375 -1.140625 C 3.1875 -0.109375 2.515625 -0.03125 2.296875 -0.03125 C 2.03125 -0.03125 1.390625 -0.15625 1.21875 -1.15625 C 1.125 -1.6875 1.125 -2.453125 1.125 -2.96875 C 1.125 -3.578125 1.125 -4.28125 1.234375 -4.765625 C 1.40625 -5.5625 1.984375 -5.734375 2.28125 -5.734375 C 2.625 -5.734375 3.1875 -5.546875 3.359375 -4.71875 C 3.453125 -4.234375 3.453125 -3.53125 3.453125 -2.96875 Z M 3.453125 -2.96875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph2-1">
+<path style="stroke:none;" d="M 6.421875 -5.5 C 6.421875 -5.15625 6.265625 -4.46875 5.875 -4.078125 C 5.609375 -3.828125 5.09375 -3.515625 4.1875 -3.515625 L 3.078125 -3.515625 L 3.734375 -6.109375 C 3.78125 -6.34375 3.8125 -6.4375 4 -6.46875 C 4.09375 -6.484375 4.40625 -6.484375 4.609375 -6.484375 C 5.3125 -6.484375 6.421875 -6.484375 6.421875 -5.5 Z M 7.5 -0.921875 C 7.5 -1.046875 7.390625 -1.046875 7.390625 -1.046875 C 7.296875 -1.046875 7.28125 -0.96875 7.25 -0.90625 C 7 -0.171875 6.578125 0 6.34375 0 C 6.015625 0 5.953125 -0.21875 5.953125 -0.609375 C 5.953125 -0.921875 6.015625 -1.421875 6.046875 -1.734375 C 6.078125 -1.875 6.09375 -2.0625 6.09375 -2.203125 C 6.09375 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.34375 -4.296875 7.34375 -5.296875 C 7.34375 -6.15625 6.453125 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.59375 C 2.03125 -6.484375 2.109375 -6.484375 2.3125 -6.484375 C 2.3125 -6.484375 2.515625 -6.484375 2.6875 -6.453125 C 2.859375 -6.4375 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.265625 2.9375 -6.234375 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.265625 0 3.265625 -0.203125 C 3.265625 -0.3125 3.171875 -0.3125 2.984375 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.359375 -0.59375 2.359375 -0.65625 L 3.015625 -3.296875 L 4.203125 -3.296875 C 5.109375 -3.296875 5.28125 -2.734375 5.28125 -2.390625 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.078125 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.1875 0.21875 6.3125 0.21875 C 7.15625 0.21875 7.5 -0.78125 7.5 -0.921875 Z M 7.5 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph2-2">
+<path style="stroke:none;" d="M 4.328125 -3.75 C 4.328125 -4.09375 4.015625 -4.390625 3.515625 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.078125 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.828125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.703125 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.71875 C 1.609375 -3.515625 1.578125 -3.40625 1.453125 -2.875 L 0.875 -0.59375 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.84375 -1.734375 L 2.15625 -3.03125 C 2.203125 -3.15625 2.46875 -3.625 2.71875 -3.84375 C 2.796875 -3.921875 3.078125 -4.171875 3.515625 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.515625 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.75 Z M 4.328125 -3.75 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph3-1">
+<path style="stroke:none;" d="M 6.609375 -2.34375 L 6.359375 -2.34375 C 6.1875 -0.6875 5.5 -0.421875 3.9375 -0.421875 L 1.203125 -0.421875 L 3.703125 -3.234375 C 3.78125 -3.34375 3.78125 -3.40625 3.78125 -3.40625 C 3.78125 -3.453125 3.75 -3.5 3.71875 -3.53125 L 1.671875 -6.484375 L 3.96875 -6.484375 C 5.65625 -6.484375 6.15625 -6.125 6.359375 -4.546875 L 6.609375 -4.546875 L 6.328125 -6.78125 L 0.8125 -6.78125 C 0.578125 -6.78125 0.5625 -6.78125 0.5625 -6.5625 L 3.03125 -2.96875 L 0.671875 -0.265625 C 0.5625 -0.15625 0.5625 -0.140625 0.5625 -0.109375 C 0.5625 0 0.671875 0 0.8125 0 L 6.328125 0 Z M 6.609375 -2.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph4-1">
+<path style="stroke:none;" d="M 7.1875 -2.71875 L 6.71875 -2.71875 C 6.5 -1.34375 6.21875 -0.46875 4.375 -0.46875 L 2.875 -0.46875 L 2.875 -3.265625 L 3.421875 -3.265625 C 4.375 -3.265625 4.46875 -2.84375 4.46875 -2.109375 L 4.9375 -2.109375 L 4.9375 -4.90625 L 4.46875 -4.90625 C 4.46875 -4.15625 4.375 -3.734375 3.421875 -3.734375 L 2.875 -3.734375 L 2.875 -6.296875 L 4.375 -6.296875 C 5.984375 -6.296875 6.234375 -5.5625 6.40625 -4.359375 L 6.859375 -4.359375 L 6.5625 -6.75 L 0.390625 -6.75 L 0.390625 -6.296875 L 1.453125 -6.296875 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.734375 0 Z M 7.1875 -2.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d4-glyph4-2">
+<path style="stroke:none;" d="M 6.109375 0 L 6.109375 -0.46875 L 5.421875 -0.46875 L 5.421875 -3.046875 C 5.421875 -4.078125 4.890625 -4.46875 3.890625 -4.46875 C 2.9375 -4.46875 2.421875 -3.90625 2.15625 -3.40625 L 2.15625 -4.46875 L 0.453125 -4.390625 L 0.453125 -3.921875 C 1.0625 -3.921875 1.140625 -3.921875 1.140625 -3.53125 L 1.140625 -0.46875 L 0.453125 -0.46875 L 0.453125 0 L 1.703125 -0.03125 L 2.953125 0 L 2.953125 -0.46875 L 2.265625 -0.46875 L 2.265625 -2.546875 C 2.265625 -3.625 3.125 -4.109375 3.75 -4.109375 C 4.078125 -4.109375 4.296875 -3.90625 4.296875 -3.15625 L 4.296875 -0.46875 L 3.609375 -0.46875 L 3.609375 0 L 4.859375 -0.03125 Z M 6.109375 0 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05a_d4-surface1">
+<path style="fill-rule:nonzero;fill:rgb(89.99939%,89.99939%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.521892 0.0000251747 C 42.521892 23.485172 23.485491 42.521573 0.000344565 42.521573 C -23.484802 42.521573 -42.521203 23.485172 -42.521203 0.0000251747 C -42.521203 -23.485121 -23.484802 -42.521522 0.000344565 -42.521522 C 23.485491 -42.521522 42.521892 -23.485121 42.521892 0.0000251747 Z M 42.521892 0.0000251747 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph0-1" x="109.874709" y="109.793762"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph0-2" x="116.852611" y="109.793762"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph1-1" x="126.55843" y="109.793762"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph0-3" x="131.154782" y="109.793762"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph0-4" x="138.305298" y="109.793762"/>
+</g>
+<path style="fill:none;stroke-width:0.59776;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000344565 0.0000251747 L -35.284159 -16.455634 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,50%);fill-opacity:1;stroke-width:0.59776;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.829682 -0.0000175314 L 0.963406 1.457112 L 2.241896 0.00107785 L 0.965959 -1.456453 Z M 4.829682 -0.0000175314 " transform="matrix(-0.904009,0.421532,0.421532,0.904009,93.15124,140.893839)"/>
+<g style="fill:rgb(0%,0%,50%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph2-1" x="101.503922" y="144.795063"/>
+</g>
+<path style="fill:none;stroke-width:0.59776;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000344565 0.0000251747 L 76.54148 -27.85946 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.59776;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.825982 -0.00115515 L 0.96546 1.456849 L 2.241652 0.000103848 L 0.963293 -1.457047 Z M 4.825982 -0.00115515 " transform="matrix(0.937305,0.341145,0.341145,-0.937305,200.844166,152.438493)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph2-2" x="187.845118" y="156.131335"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 127.648438 125.363281 C 127.648438 124.703125 127.117188 124.171875 126.457031 124.171875 C 125.796875 124.171875 125.265625 124.703125 125.265625 125.363281 C 125.265625 126.023438 125.796875 126.554688 126.457031 126.554688 C 127.117188 126.554688 127.648438 126.023438 127.648438 125.363281 Z M 127.648438 125.363281 "/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 85.039523 0.0000251747 C 85.039523 46.966402 46.966721 85.039204 0.000344565 85.039204 C -46.966032 85.039204 -85.038834 46.966402 -85.038834 0.0000251747 C -85.038834 -46.966352 -46.966032 -85.039154 0.000344565 -85.039154 C 46.966721 -85.039154 85.039523 -46.966352 85.039523 0.0000251747 Z M 85.039523 0.0000251747 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<g style="fill:rgb(29.998779%,29.998779%,29.998779%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph3-1" x="29.874445" y="94.939406"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 61.135349 61.13503 L 81.542402 81.542083 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,59.999084%);fill-opacity:1;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.666131 0.00254332 L 1.930864 1.79696 L 3.512056 -0.000225845 L 1.930864 -1.797412 Z M 6.666131 0.00254332 " transform="matrix(0.705313,-0.705313,-0.705313,-0.705313,205.52665,46.293344)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-1" x="215.671601" y="35.80227"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -61.13466 61.13503 L -81.541713 81.542083 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,59.999084%);fill-opacity:1;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.668413 -0.000261448 L 1.930377 1.796925 L 3.511568 -0.000261448 L 1.930377 -1.797448 Z M 6.668413 -0.000261448 " transform="matrix(-0.705313,-0.705313,-0.705313,0.705313,47.386725,46.293344)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-1" x="29.733801" y="35.80227"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M -61.13466 -61.134979 L -81.541713 -81.542033 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,59.999084%);fill-opacity:1;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.668378 0.000225845 L 1.930341 1.797412 L 3.511533 0.000225845 L 1.930341 -1.79696 Z M 6.668378 0.000225845 " transform="matrix(-0.705313,0.705313,0.705313,0.705313,47.386725,204.433269)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-1" x="29.733801" y="221.739072"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 61.135349 -61.134979 L 81.542402 -81.542033 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,59.999084%);fill-opacity:1;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.666096 -0.00250771 L 1.930829 1.797448 L 3.51202 0.000261448 L 1.930829 -1.796925 Z M 6.666096 -0.00250771 " transform="matrix(0.705313,0.705313,0.705313,-0.705313,205.52665,204.433269)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-1" x="215.671601" y="221.739072"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 86.457169 0.0000251747 L 102.188341 0.0000251747 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439514 0.0000251747 L 1.288396 1.570401 L 2.662964 0.0000251747 L 1.288396 -1.570351 Z M 5.439514 0.0000251747 " transform="matrix(0.997472,0,0,-0.997472,225.929705,125.363306)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-2" x="239.190001" y="127.513856"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000344565 86.45685 L 0.000344565 102.191937 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439195 -0.000344565 L 1.288076 1.570031 L 2.662645 -0.000344565 L 1.288076 -1.57072 Z M 5.439195 -0.000344565 " transform="matrix(0,-0.997472,-0.997472,0,126.456688,25.890289)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-2" x="123.262782" y="11.586637"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -86.45648 0.0000251747 L -102.191568 0.0000251747 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.438825 -0.0000251747 L 1.287707 1.570351 L 2.666191 -0.0000251747 L 1.287707 -1.570401 Z M 5.438825 -0.0000251747 " transform="matrix(-0.997472,0,0,0.997472,26.98367,125.363306)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-2" x="7.33656" y="127.513856"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000344565 -86.4568 L 0.000344565 -102.191887 " transform="matrix(0.997472,0,0,-0.997472,126.456688,125.363306)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439144 0.000344565 L 1.288026 1.57072 L 2.662594 0.000344565 L 1.288026 -1.570031 Z M 5.439144 0.000344565 " transform="matrix(0,0.997472,0.997472,0,126.456688,224.836323)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d4-glyph4-2" x="123.262782" y="243.440078"/>
+</g>
+</g>
+</svg></figure>
+            <p>Superficie Gaussiana sferica di raggio $r \\gt R$ per il calcolo del campo all'esterno, con $Q \\gt 0$: $\\vec{E}$ è radiale uscente e parallelo alla normale uscente $\\hat{n}$ in ogni punto.</p>
+            <figure class="figura" data-id="fisica2_lez05a_d5"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05a_d5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="133.491pt" height="172.223pt" viewBox="0 0 133.491 172.223" version="1.2"><style>#fisica2_lez05a_d5 [fill="rgb(89.99939%,89.99939%,89.99939%)"],#fisica2_lez05a_d5 [style*="fill:rgb(89.99939%,89.99939%,89.99939%)"]{fill:#333333!important}[data-mode="light"] #fisica2_lez05a_d5 [fill="rgb(89.99939%,89.99939%,89.99939%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="fill:rgb(89.99939%,89.99939%,89.99939%)"]{fill:#e5e5e5!important}#fisica2_lez05a_d5 [fill="rgb(34.999084%,34.999084%,34.999084%)"],#fisica2_lez05a_d5 [style*="fill:rgb(34.999084%,34.999084%,34.999084%)"]{fill:#adadad!important}[data-mode="light"] #fisica2_lez05a_d5 [fill="rgb(34.999084%,34.999084%,34.999084%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="fill:rgb(34.999084%,34.999084%,34.999084%)"]{fill:#595959!important}#fisica2_lez05a_d5 [stroke="rgb(34.999084%,34.999084%,34.999084%)"],#fisica2_lez05a_d5 [style*="stroke:rgb(34.999084%,34.999084%,34.999084%)"]{stroke:#adadad!important}[data-mode="light"] #fisica2_lez05a_d5 [stroke="rgb(34.999084%,34.999084%,34.999084%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="stroke:rgb(34.999084%,34.999084%,34.999084%)"]{stroke:#595959!important}#fisica2_lez05a_d5 [fill="rgb(0%,0%,69.999695%)"],#fisica2_lez05a_d5 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d5 [fill="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#0000b2!important}#fisica2_lez05a_d5 [stroke="rgb(0%,0%,69.999695%)"],#fisica2_lez05a_d5 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d5 [stroke="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#0000b2!important}#fisica2_lez05a_d5 [fill="rgb(19.999695%,19.999695%,19.999695%)"],#fisica2_lez05a_d5 [style*="fill:rgb(19.999695%,19.999695%,19.999695%)"]{fill:#adadad!important}[data-mode="light"] #fisica2_lez05a_d5 [fill="rgb(19.999695%,19.999695%,19.999695%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="fill:rgb(19.999695%,19.999695%,19.999695%)"]{fill:#333333!important}#fisica2_lez05a_d5 [stroke="rgb(19.999695%,19.999695%,19.999695%)"],#fisica2_lez05a_d5 [style*="stroke:rgb(19.999695%,19.999695%,19.999695%)"]{stroke:#adadad!important}[data-mode="light"] #fisica2_lez05a_d5 [stroke="rgb(19.999695%,19.999695%,19.999695%)"],[data-mode="light"] #fisica2_lez05a_d5 [style*="stroke:rgb(19.999695%,19.999695%,19.999695%)"]{stroke:#333333!important}#fisica2_lez05a_d5 [fill="rgb(0%,0%,0%)"],#fisica2_lez05a_d5 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05a_d5 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05a_d5 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph0-1">
+<path style="stroke:none;" d="M 6.59375 -2.34375 L 6.34375 -2.34375 C 6.171875 -0.6875 5.5 -0.421875 3.9375 -0.421875 L 1.203125 -0.421875 L 3.6875 -3.234375 C 3.78125 -3.328125 3.78125 -3.390625 3.78125 -3.390625 C 3.78125 -3.4375 3.734375 -3.5 3.703125 -3.53125 L 1.671875 -6.46875 L 3.96875 -6.46875 C 5.640625 -6.46875 6.140625 -6.109375 6.34375 -4.546875 L 6.59375 -4.546875 L 6.3125 -6.78125 L 0.8125 -6.78125 C 0.578125 -6.78125 0.5625 -6.78125 0.5625 -6.546875 L 3.03125 -2.953125 L 0.671875 -0.265625 C 0.5625 -0.15625 0.5625 -0.140625 0.5625 -0.109375 C 0.5625 0 0.671875 0 0.8125 0 L 6.3125 0 Z M 6.59375 -2.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph1-1">
+<path style="stroke:none;" d="M 2.078125 -3.5 C 2.078125 -3.71875 1.890625 -3.875 1.671875 -3.875 C 1.390625 -3.875 1.3125 -3.65625 1.296875 -3.5625 L 0.375 -0.5625 L 0.328125 -0.4375 C 0.328125 -0.359375 0.546875 -0.28125 0.609375 -0.28125 C 0.65625 -0.28125 0.6875 -0.3125 0.703125 -0.390625 L 2.015625 -3.28125 C 2.046875 -3.34375 2.078125 -3.40625 2.078125 -3.5 Z M 2.078125 -3.5 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph2-1">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph2-2">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph3-1">
+<path style="stroke:none;" d="M 7.171875 -2.71875 L 6.703125 -2.71875 C 6.484375 -1.34375 6.21875 -0.46875 4.375 -0.46875 L 2.875 -0.46875 L 2.875 -3.265625 L 3.40625 -3.265625 C 4.359375 -3.265625 4.46875 -2.84375 4.46875 -2.109375 L 4.9375 -2.109375 L 4.9375 -4.890625 L 4.46875 -4.890625 C 4.46875 -4.15625 4.375 -3.734375 3.40625 -3.734375 L 2.875 -3.734375 L 2.875 -6.28125 L 4.375 -6.28125 C 5.96875 -6.28125 6.234375 -5.5625 6.390625 -4.359375 L 6.859375 -4.359375 L 6.546875 -6.75 L 0.390625 -6.75 L 0.390625 -6.28125 L 1.453125 -6.28125 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.71875 0 Z M 7.171875 -2.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph4-1">
+<path style="stroke:none;" d="M 4.609375 -2.46875 C 4.609375 -3.34375 4.0625 -3.9375 3.296875 -3.9375 C 2.4375 -3.9375 1.46875 -3.109375 1.171875 -1.96875 L 0.3125 1.46875 C 0.28125 1.59375 0.28125 1.609375 0.28125 1.671875 C 0.28125 1.8125 0.390625 1.921875 0.546875 1.921875 C 0.703125 1.921875 0.828125 1.84375 0.890625 1.703125 C 0.90625 1.671875 1.21875 0.390625 1.265625 0.21875 C 1.359375 -0.140625 1.359375 -0.15625 1.453125 -0.46875 C 1.59375 -0.203125 1.875 0.09375 2.359375 0.09375 C 3.4375 0.09375 4.609375 -1.171875 4.609375 -2.46875 Z M 3.9375 -2.84375 C 3.9375 -2.546875 3.75 -1.5 3.375 -0.859375 C 3.15625 -0.484375 2.75 -0.125 2.34375 -0.125 C 1.703125 -0.125 1.546875 -0.84375 1.546875 -0.90625 C 1.546875 -0.96875 1.78125 -1.8125 1.8125 -1.9375 C 2.234375 -3.59375 3.09375 -3.71875 3.296875 -3.71875 C 3.703125 -3.71875 3.9375 -3.34375 3.9375 -2.84375 Z M 3.9375 -2.84375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph4-2">
+<path style="stroke:none;" d="M 3.546875 1.5625 C 3.546875 1.453125 3.453125 1.453125 3.296875 1.453125 C 2.875 1.453125 2.875 1.390625 2.875 1.3125 C 2.875 1.3125 2.875 1.25 2.921875 1.109375 L 4.109375 -3.640625 C 4.15625 -3.765625 4.15625 -3.78125 4.15625 -3.8125 C 4.15625 -3.921875 4.046875 -3.9375 4.046875 -3.9375 C 3.953125 -3.9375 3.609375 -3.640625 3.4375 -3.328125 C 3.296875 -3.65625 3.015625 -3.9375 2.5625 -3.9375 C 1.53125 -3.9375 0.375 -2.71875 0.375 -1.34375 C 0.375 -0.359375 1 0.09375 1.59375 0.09375 C 1.984375 0.09375 2.328125 -0.09375 2.65625 -0.40625 L 2.3125 0.96875 C 2.203125 1.421875 2.1875 1.453125 1.625 1.453125 C 1.53125 1.453125 1.421875 1.453125 1.421875 1.609375 C 1.421875 1.609375 1.421875 1.734375 1.546875 1.734375 C 1.734375 1.734375 2.25 1.703125 2.4375 1.703125 C 2.734375 1.703125 2.75 1.703125 2.90625 1.71875 C 3.015625 1.71875 3.265625 1.734375 3.375 1.734375 C 3.421875 1.734375 3.546875 1.734375 3.546875 1.5625 Z M 3.265625 -2.8125 L 2.828125 -1.09375 C 2.78125 -0.921875 2.78125 -0.90625 2.640625 -0.734375 C 2.3125 -0.359375 1.953125 -0.125 1.625 -0.125 C 1.1875 -0.125 1.03125 -0.578125 1.03125 -0.96875 C 1.03125 -1.40625 1.296875 -2.421875 1.5 -2.859375 C 1.796875 -3.390625 2.203125 -3.71875 2.5625 -3.71875 C 3.15625 -3.71875 3.296875 -3 3.296875 -2.9375 C 3.296875 -2.90625 3.28125 -2.84375 3.265625 -2.8125 Z M 3.265625 -2.8125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph4-3">
+<path style="stroke:none;" d="M 6.359375 -2.234375 C 6.359375 -2.359375 6.25 -2.40625 6.171875 -2.4375 L 1.140625 -4.859375 C 1.015625 -4.921875 0.953125 -4.921875 0.953125 -4.921875 C 0.84375 -4.921875 0.765625 -4.828125 0.765625 -4.734375 C 0.765625 -4.625 0.828125 -4.578125 0.953125 -4.515625 L 5.71875 -2.234375 L 0.953125 0.046875 C 0.828125 0.109375 0.765625 0.15625 0.765625 0.265625 C 0.765625 0.328125 0.828125 0.453125 0.96875 0.453125 C 0.96875 0.453125 1.015625 0.453125 1.125 0.40625 L 6.171875 -2.03125 C 6.265625 -2.0625 6.359375 -2.109375 6.359375 -2.234375 Z M 6.359375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-1">
+<path style="stroke:none;" d="M 4.875 0 L 4.875 -0.28125 C 4.28125 -0.28125 4.1875 -0.34375 4.1875 -0.78125 L 4.1875 -3.9375 L 2.84375 -3.84375 L 2.84375 -3.5625 C 3.453125 -3.5625 3.53125 -3.5 3.53125 -3.0625 L 3.53125 -1.484375 C 3.53125 -0.703125 3.09375 -0.125 2.4375 -0.125 C 1.703125 -0.125 1.65625 -0.515625 1.65625 -0.984375 L 1.65625 -3.9375 L 0.3125 -3.84375 L 0.3125 -3.5625 C 1 -3.5625 1 -3.546875 1 -2.75 L 1 -1.40625 C 1 -0.828125 1 -0.453125 1.40625 -0.140625 C 1.671875 0.03125 2.03125 0.09375 2.390625 0.09375 C 2.859375 0.09375 3.296875 -0.109375 3.546875 -0.640625 L 3.5625 -0.640625 L 3.5625 0.09375 Z M 4.875 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-2">
+<path style="stroke:none;" d="M 4.875 0 L 4.875 -0.28125 C 4.421875 -0.28125 4.203125 -0.28125 4.1875 -0.546875 L 4.1875 -2.265625 C 4.1875 -3 4.1875 -3.265625 3.9375 -3.578125 C 3.734375 -3.828125 3.40625 -3.9375 2.953125 -3.9375 C 2.125 -3.9375 1.734375 -3.328125 1.609375 -3.078125 L 1.609375 -3.9375 L 0.3125 -3.84375 L 0.3125 -3.5625 C 0.921875 -3.5625 1 -3.5 1 -3.0625 L 1 -0.6875 C 1 -0.28125 0.90625 -0.28125 0.3125 -0.28125 L 0.3125 0 C 0.734375 -0.015625 0.90625 -0.03125 1.328125 -0.03125 C 1.75 -0.03125 1.875 -0.015625 2.34375 0 L 2.34375 -0.28125 C 1.75 -0.28125 1.65625 -0.28125 1.65625 -0.6875 L 1.65625 -2.3125 C 1.65625 -3.25 2.328125 -3.71875 2.890625 -3.71875 C 3.421875 -3.71875 3.53125 -3.28125 3.53125 -2.75 L 3.53125 -0.6875 C 3.53125 -0.28125 3.4375 -0.28125 2.84375 -0.28125 L 2.84375 0 C 3.265625 -0.015625 3.4375 -0.03125 3.859375 -0.03125 C 4.296875 -0.03125 4.40625 -0.015625 4.875 0 Z M 4.875 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-3">
+<path style="stroke:none;" d="M 2.25 0 L 2.25 -0.28125 C 1.671875 -0.28125 1.640625 -0.328125 1.640625 -0.671875 L 1.640625 -3.9375 L 0.359375 -3.84375 L 0.359375 -3.5625 C 0.921875 -3.5625 1.015625 -3.515625 1.015625 -3.078125 L 1.015625 -0.6875 C 1.015625 -0.28125 0.90625 -0.28125 0.328125 -0.28125 L 0.328125 0 C 0.71875 -0.015625 0.90625 -0.03125 1.296875 -0.03125 C 1.453125 -0.03125 1.8125 -0.03125 2.25 0 Z M 1.75 -5.375 C 1.75 -5.640625 1.546875 -5.859375 1.28125 -5.859375 C 1.015625 -5.859375 0.796875 -5.640625 0.796875 -5.375 C 0.796875 -5.109375 1.015625 -4.890625 1.28125 -4.890625 C 1.546875 -4.890625 1.75 -5.109375 1.75 -5.375 Z M 1.75 -5.375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-4">
+<path style="stroke:none;" d="M 3.265625 -5.65625 C 3.265625 -6 2.921875 -6.296875 2.4375 -6.296875 C 1.734375 -6.296875 1.015625 -5.765625 1.015625 -4.875 L 1.015625 -3.84375 L 0.296875 -3.84375 L 0.296875 -3.5625 L 1.015625 -3.5625 L 1.015625 -0.6875 C 1.015625 -0.28125 0.90625 -0.28125 0.328125 -0.28125 L 0.328125 0 C 0.796875 -0.015625 0.90625 -0.03125 1.359375 -0.03125 L 2.5 0 L 2.5 -0.28125 L 2.3125 -0.28125 C 1.671875 -0.28125 1.640625 -0.375 1.640625 -0.703125 L 1.640625 -3.5625 L 2.671875 -3.5625 L 2.671875 -3.84375 L 1.609375 -3.84375 L 1.609375 -4.859375 C 1.609375 -5.671875 2.046875 -6.0625 2.4375 -6.0625 C 2.53125 -6.0625 2.609375 -6.046875 2.703125 -6.015625 C 2.609375 -5.984375 2.46875 -5.875 2.46875 -5.640625 C 2.46875 -5.421875 2.640625 -5.25 2.859375 -5.25 C 3.109375 -5.25 3.265625 -5.421875 3.265625 -5.65625 Z M 3.265625 -5.65625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-5">
+<path style="stroke:none;" d="M 4.3125 -1.90625 C 4.3125 -3.0625 3.390625 -4 2.296875 -4 C 1.15625 -4 0.265625 -3.046875 0.265625 -1.90625 C 0.265625 -0.78125 1.1875 0.09375 2.28125 0.09375 C 3.421875 0.09375 4.3125 -0.796875 4.3125 -1.90625 Z M 3.546875 -1.984375 C 3.546875 -1.65625 3.546875 -1.140625 3.328125 -0.734375 C 3.078125 -0.328125 2.671875 -0.15625 2.296875 -0.15625 C 1.84375 -0.15625 1.46875 -0.375 1.265625 -0.71875 C 1.03125 -1.09375 1.03125 -1.5625 1.03125 -1.984375 C 1.03125 -2.3125 1.03125 -2.8125 1.25 -3.1875 C 1.515625 -3.640625 1.96875 -3.78125 2.28125 -3.78125 C 2.796875 -3.78125 3.15625 -3.484375 3.34375 -3.1875 C 3.546875 -2.8125 3.546875 -2.359375 3.546875 -1.984375 Z M 3.546875 -1.984375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-6">
+<path style="stroke:none;" d="M 3.328125 -3.390625 C 3.328125 -3.671875 3.0625 -3.9375 2.65625 -3.9375 C 2.125 -3.9375 1.75 -3.5625 1.546875 -3.015625 L 1.53125 -3.015625 L 1.53125 -3.9375 L 0.265625 -3.84375 L 0.265625 -3.5625 C 0.875 -3.5625 0.953125 -3.5 0.953125 -3.0625 L 0.953125 -0.6875 C 0.953125 -0.28125 0.859375 -0.28125 0.265625 -0.28125 L 0.265625 0 C 0.734375 -0.015625 0.859375 -0.03125 1.3125 -0.03125 L 2.4375 0 L 2.4375 -0.28125 L 2.265625 -0.28125 C 1.609375 -0.28125 1.59375 -0.375 1.59375 -0.703125 L 1.59375 -2.046875 C 1.59375 -2.40625 1.6875 -3.71875 2.703125 -3.71875 C 2.6875 -3.703125 2.546875 -3.59375 2.546875 -3.375 C 2.546875 -3.140625 2.734375 -2.984375 2.9375 -2.984375 C 3.125 -2.984375 3.328125 -3.125 3.328125 -3.390625 Z M 3.328125 -3.390625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-7">
+<path style="stroke:none;" d="M 7.4375 0 L 7.4375 -0.28125 C 6.984375 -0.28125 6.75 -0.28125 6.75 -0.546875 L 6.75 -2.265625 C 6.75 -3.046875 6.75 -3.296875 6.453125 -3.625 C 6.265625 -3.84375 5.90625 -3.9375 5.5 -3.9375 C 4.859375 -3.9375 4.421875 -3.5625 4.171875 -3.09375 C 4.0625 -3.625 3.703125 -3.9375 2.953125 -3.9375 C 2.234375 -3.9375 1.796875 -3.484375 1.609375 -3.0625 L 1.609375 -3.9375 L 0.3125 -3.84375 L 0.3125 -3.5625 C 0.921875 -3.5625 1 -3.5 1 -3.0625 L 1 -0.6875 C 1 -0.28125 0.90625 -0.28125 0.3125 -0.28125 L 0.3125 0 C 0.734375 -0.015625 0.90625 -0.03125 1.328125 -0.03125 C 1.75 -0.03125 1.875 -0.015625 2.34375 0 L 2.34375 -0.28125 C 1.75 -0.28125 1.65625 -0.28125 1.65625 -0.6875 L 1.65625 -2.3125 C 1.65625 -3.28125 2.359375 -3.71875 2.890625 -3.71875 C 3.375 -3.71875 3.546875 -3.375 3.546875 -2.75 L 3.546875 -0.6875 C 3.546875 -0.28125 3.4375 -0.28125 2.859375 -0.28125 L 2.859375 0 C 3.28125 -0.015625 3.4375 -0.03125 3.875 -0.03125 C 4.296875 -0.03125 4.421875 -0.015625 4.890625 0 L 4.890625 -0.28125 C 4.296875 -0.28125 4.203125 -0.28125 4.203125 -0.6875 L 4.203125 -2.3125 C 4.203125 -3.28125 4.890625 -3.71875 5.4375 -3.71875 C 5.921875 -3.71875 6.078125 -3.375 6.078125 -2.75 L 6.078125 -0.6875 C 6.078125 -0.28125 5.984375 -0.28125 5.390625 -0.28125 L 5.390625 0 C 5.8125 -0.015625 5.984375 -0.03125 6.421875 -0.03125 C 6.84375 -0.03125 6.953125 -0.015625 7.4375 0 Z M 7.4375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-8">
+<path style="stroke:none;" d="M 3.8125 -1.0625 C 3.8125 -1.125 3.765625 -1.171875 3.6875 -1.171875 C 3.59375 -1.171875 3.5625 -1.109375 3.5625 -1.078125 C 3.25 -0.171875 2.46875 -0.15625 2.328125 -0.15625 C 1.90625 -0.15625 1.53125 -0.390625 1.328125 -0.703125 C 1.03125 -1.140625 1.03125 -1.671875 1.03125 -2.046875 L 3.5625 -2.046875 C 3.765625 -2.046875 3.8125 -2.046875 3.8125 -2.234375 C 3.8125 -3.15625 3.3125 -4 2.171875 -4 C 1.09375 -4 0.265625 -3.0625 0.265625 -1.96875 C 0.265625 -0.796875 1.203125 0.09375 2.28125 0.09375 C 3.375 0.09375 3.8125 -0.859375 3.8125 -1.0625 Z M 3.203125 -2.25 L 1.03125 -2.25 C 1.109375 -3.625 1.921875 -3.78125 2.171875 -3.78125 C 2.65625 -3.78125 3.1875 -3.40625 3.203125 -2.25 Z M 3.203125 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph5-9">
+<path style="stroke:none;" d="M 1.84375 -0.015625 C 1.84375 -0.640625 1.609375 -0.96875 1.265625 -0.96875 C 0.953125 -0.96875 0.78125 -0.71875 0.78125 -0.484375 C 0.78125 -0.234375 0.953125 0 1.265625 0 C 1.484375 0 1.625 -0.140625 1.625 -0.140625 C 1.625 0.15625 1.625 0.890625 0.953125 1.53125 C 0.90625 1.5625 0.90625 1.609375 0.90625 1.609375 C 0.90625 1.65625 0.96875 1.71875 1.03125 1.71875 C 1.125 1.71875 1.84375 1.03125 1.84375 -0.015625 Z M 1.84375 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d5-glyph6-1">
+<path style="stroke:none;" d="M 4.21875 -2.859375 C 4.21875 -3.453125 4.1875 -4.21875 3.875 -4.890625 C 3.484375 -5.734375 2.8125 -5.9375 2.296875 -5.9375 C 1.75 -5.9375 1.078125 -5.734375 0.6875 -4.875 C 0.40625 -4.25 0.359375 -3.53125 0.359375 -2.859375 C 0.359375 -2.28125 0.375 -1.40625 0.765625 -0.703125 C 1.171875 0.046875 1.875 0.203125 2.28125 0.203125 C 2.859375 0.203125 3.53125 -0.046875 3.90625 -0.875 C 4.171875 -1.46875 4.21875 -2.140625 4.21875 -2.859375 Z M 3.453125 -2.96875 C 3.453125 -2.40625 3.453125 -1.65625 3.359375 -1.140625 C 3.171875 -0.109375 2.515625 -0.03125 2.296875 -0.03125 C 2.03125 -0.03125 1.390625 -0.15625 1.21875 -1.15625 C 1.125 -1.6875 1.125 -2.453125 1.125 -2.96875 C 1.125 -3.5625 1.125 -4.28125 1.234375 -4.765625 C 1.40625 -5.5625 1.984375 -5.71875 2.28125 -5.71875 C 2.625 -5.71875 3.1875 -5.546875 3.359375 -4.703125 C 3.453125 -4.21875 3.453125 -3.53125 3.453125 -2.96875 Z M 3.453125 -2.96875 "/>
+</symbol>
+</g>
+<clipPath id="fisica2_lez05a_d5-clip1">
+  <path d="M 0.046875 68 L 27 68 L 27 95 L 0.046875 95 Z M 0.046875 68 "/>
+</clipPath>
+</defs>
+<g id="fisica2_lez05a_d5-surface1">
+<path style="fill-rule:nonzero;fill:rgb(89.99939%,89.99939%,89.99939%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(34.999084%,34.999084%,34.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 62.361665 0.00182409 C 62.361665 34.441661 34.443305 62.363944 -0.000455343 62.363944 C -34.444216 62.363944 -62.362575 34.441661 -62.362575 0.00182409 C -62.362575 -34.441937 -34.444216 -62.36422 -0.000455343 -62.36422 C 34.443305 -62.36422 62.361665 -34.441937 62.361665 0.00182409 Z M 62.361665 0.00182409 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 34.015603 0.00182409 C 34.015603 18.785406 18.787051 34.017883 -0.000455343 34.017883 C -18.787961 34.017883 -34.016514 18.785406 -34.016514 0.00182409 C -34.016514 -18.785682 -18.787961 -34.014234 -0.000455343 -34.014234 C 18.787051 -34.014234 34.015603 -18.785682 34.015603 0.00182409 Z M 34.015603 0.00182409 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph0-1" x="40.014101" y="72.532762"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph1-1" x="47.176786" y="68.933002"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(19.999695%,19.999695%,19.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000455343 -3.062721 L -0.000455343 -59.299675 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill-rule:nonzero;fill:rgb(19.999695%,19.999695%,19.999695%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(19.999695%,19.999695%,19.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.214952 0.000455343 L 0.644228 1.346344 L 1.817466 0.000455343 L 0.644228 -1.345433 Z M 4.214952 0.000455343 " transform="matrix(0,-0.995509,-0.995509,0,66.492641,85.981178)"/>
+<path style="fill-rule:nonzero;fill:rgb(19.999695%,19.999695%,19.999695%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(19.999695%,19.999695%,19.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.214478 -0.000455343 L 0.643753 1.345433 L 1.816992 -0.000455343 L 0.643753 -1.346344 Z M 4.214478 -0.000455343 " transform="matrix(0,0.995509,0.995509,0,66.492641,138.542732)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph2-1" x="54.389246" y="133.992481"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(19.999695%,19.999695%,19.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 2.652083 1.532135 L 26.803524 15.477581 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill-rule:nonzero;fill:rgb(19.999695%,19.999695%,19.999695%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(19.999695%,19.999695%,19.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.215535 -0.00123121 L 0.643206 1.345314 L 1.819454 0.000167207 L 0.643415 -1.346209 Z M 4.215535 -0.00123121 " transform="matrix(-0.86212,0.497734,0.497734,0.86212,70.615381,78.840344)"/>
+<path style="fill-rule:nonzero;fill:rgb(19.999695%,19.999695%,19.999695%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(19.999695%,19.999695%,19.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.213688 0.0020356 L 0.644757 1.346618 L 1.815645 0.0000357444 L 0.644966 -1.344904 Z M 4.213688 0.0020356 " transform="matrix(0.86212,-0.497734,-0.497734,-0.86212,91.696432,66.669365)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph2-2" x="74.091358" y="69.670674"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.009536 29.458342 L 26.29342 45.538375 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441995 -0.000565261 L 1.286766 1.569603 L 2.664324 -0.000252122 L 1.287089 -1.570179 Z M 5.441995 -0.000565261 " transform="matrix(0.497734,-0.86212,-0.86212,-0.497734,91.439282,38.011687)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -17.006523 29.458342 L -26.290407 45.538375 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.440489 -0.00204431 L 1.287544 1.570968 L 2.66478 0.00104082 L 1.287222 -1.568815 Z M 5.440489 -0.00204431 " transform="matrix(-0.497734,-0.86212,-0.86212,0.497734,41.546,38.011687)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -34.016514 0.00182409 L -52.584283 0.00182409 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;" d="M 11.183594 81.21875 L 15.316406 82.785156 L 13.945312 81.21875 L 15.316406 79.65625 Z M 11.183594 81.21875 "/>
+<g clip-path="url(#fisica2_lez05a_d5-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.440399 -0.00182409 L 1.288941 1.571649 L 2.66622 -0.00182409 L 1.288941 -1.571373 Z M 5.440399 -0.00182409 " transform="matrix(-0.995509,0,0,0.995509,16.599558,81.220566)"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -17.006523 -29.458617 L -26.290407 -45.538651 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.440728 0.00218215 L 1.28746 1.568952 L 2.665018 -0.000902978 L 1.287783 -1.57083 Z M 5.440728 0.00218215 " transform="matrix(-0.497734,0.86212,0.86212,0.497734,41.546,124.429445)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.009536 -29.458617 L 26.29342 -45.538651 " transform="matrix(0.995509,0,0,-0.995509,66.492641,81.220566)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.442234 0.000427418 L 1.287327 1.570042 L 2.664563 0.000114279 L 1.287005 -1.569741 Z M 5.442234 0.000427418 " transform="matrix(0.497734,0.86212,0.86212,-0.497734,91.439282,124.429445)"/>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph3-1" x="62.745546" y="14.073506"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 67.78125 81.21875 C 67.78125 80.507812 67.203125 79.929688 66.492188 79.929688 C 65.78125 79.929688 65.203125 80.507812 65.203125 81.21875 C 65.203125 81.933594 65.78125 82.511719 66.492188 82.511719 C 67.203125 82.511719 67.78125 81.933594 67.78125 81.21875 Z M 67.78125 81.21875 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph4-1" x="31.454718" y="162.441132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-1" x="39.2386" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-2" x="44.33542" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-3" x="49.432239" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-4" x="51.980649" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-5" x="54.783453" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-6" x="59.370591" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-7" x="62.958895" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-8" x="70.603232" y="162.441132"/>
+  <use xlink:href="#fisica2_lez05a_d5-glyph5-9" x="74.684258" y="162.441132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph4-2" x="80.291386" y="162.441132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph4-3" x="87.255552" y="162.441132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d5-glyph6-1" x="96.942265" y="162.441132"/>
+</g>
+</g>
+</svg></figure>
+            <p>Superficie Gaussiana sferica di raggio $r \\lt R$ per il calcolo del campo all'interno: concorre al flusso solo la carica contenuta nel volume di raggio $r$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Densità volumetrica locale", latex: "\\rho(P) = \\frac{dq}{dV}" },
+          { label: "Densità uniforme in una sfera", latex: "\\rho = \\frac{Q}{\\frac{4}{3}\\pi R^3}" },
+          { label: "Campo radiale", latex: "\\vec{E} = E_r\\,\\hat{r}, \\qquad E = |E_r|" }
+        ]
+      },
+
+      {
+        id: "s05-es-sfera",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Campo di una sfera uniformemente carica, dentro e fuori",
+        icon: "✎",
+        source: "docente",
+        content: `<p><strong>Dati:</strong> sfera di raggio $R$, carica totale $Q \\gt 0$ distribuita <em>uniformemente</em> nel volume, con densità $\\rho = \\dfrac{Q}{\\frac{4}{3}\\pi R^3}$.</p>
+        <p><strong>Richiesto:</strong> il campo elettrico a distanza $r$ dal centro, per $r \\gt R$ e per $r \\lt R$.</p>`,
+        steps: [
+          `<strong>Passo 1 — Simmetria (valida in entrambi i casi).</strong> Per simmetria sferica il campo $\\vec{E}$ è radiale e ha lo stesso modulo in tutti i punti di una sfera concentrica: scrivendo $\\vec{E} = E_r(r)\\,\\hat{r}$ con $\\hat{r}$ versore radiale uscente, si ha $E_r \\gt 0$ (campo uscente) perché $Q \\gt 0$, e dunque $E_r$ coincide con il modulo $E$. Su una superficie Gaussiana sferica centrata nel centro della distribuzione, $\\vec{E}$ è parallelo e concorde al versore normale uscente $\\hat{n} = \\hat{r}$ in ogni punto.`,
+          `<strong>Caso 1 — campo all'esterno ($r \\gt R$): flusso.</strong> Scegliamo come superficie Gaussiana una sfera concentrica di raggio $r$: $$\\Phi_{\\Sigma}(\\vec{E}) = \\oint_{\\Sigma} \\vec{E} \\cdot d\\vec{S} = \\oint_{\\Sigma} E \\, dS = E \\oint_{\\Sigma} dS = E \\cdot (4\\pi r^2)$$ (il modulo $E$ esce dall'integrale perché è costante su tutta la superficie).`,
+          `<strong>Caso 1 — carica interna e Gauss.</strong> La carica interna alla superficie Gaussiana è l'intera carica della sfera, $Q$. Quindi $$E \\cdot (4\\pi r^2) = \\frac{Q}{\\varepsilon_0} \\quad \\Rightarrow \\quad E(r) = \\frac{1}{4\\pi\\varepsilon_0} \\frac{Q}{r^2} \\quad (r \\gt R,\\ Q \\gt 0)$$ All'esterno, la sfera si comporta come una <strong>carica puntiforme $Q$ posta nel centro</strong>.`,
+          `<strong>Caso 2 — campo all'interno ($r \\lt R$): flusso.</strong> Scegliamo una superficie Gaussiana sferica di raggio $r \\lt R$. Il calcolo del flusso è identico al caso precedente, perché si basa solo sulla simmetria: $$\\Phi_{\\Sigma}(\\vec{E}) = E \\cdot (4\\pi r^2)$$`,
+          `<strong>Caso 2 — carica interna.</strong> La carica interna non è più $Q$, ma solo la carica contenuta nel volume racchiuso dalla superficie Gaussiana. Qui usiamo l'ipotesi di <em>uniformità</em>, che permette di scrivere $Q_{int} = \\rho\\, V_{Gauss}$: $$Q_{int} = \\rho \\cdot V_{Gauss} = \\left(\\frac{Q}{\\frac{4}{3}\\pi R^3}\\right) \\cdot \\left(\\frac{4}{3}\\pi r^3\\right) = Q \\frac{r^3}{R^3}$$`,
+          `<strong>Caso 2 — Teorema di Gauss.</strong> $$E \\cdot (4\\pi r^2) = \\frac{1}{\\varepsilon_0} \\left(Q \\frac{r^3}{R^3}\\right)$$ Semplificando $r^2$ e riordinando: $$E(r) = \\frac{Q}{4\\pi\\varepsilon_0 R^3} \\, r$$ Sostituendo $Q = \\rho \\cdot \\frac{4}{3}\\pi R^3$: $$E(r) = \\frac{\\rho \\frac{4}{3}\\pi R^3}{4\\pi\\varepsilon_0 R^3} r \\quad \\Rightarrow \\quad E(r) = \\frac{\\rho}{3\\varepsilon_0} r \\quad (r \\lt R,\\ Q \\gt 0)$$`,
+          `<strong>Lettura del risultato interno.</strong> All'interno della sfera, il campo elettrico cresce <strong>linearmente</strong> con la distanza dal centro, e in particolare si annulla al centro ($E(0)=0$), come richiede la simmetria: nel centro nessuna direzione radiale è privilegiata.`,
+          `<strong>Verifica di raccordo.</strong> Le due espressioni devono coincidere in $r=R$: $$\\left.\\frac{Q}{4\\pi\\varepsilon_0 R^3}r\\right|_{r=R} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{R^2} = \\left.\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{r^2}\\right|_{r=R}.$$ Il campo è dunque <strong>continuo</strong> sulla superficie della sfera, dove raggiunge il suo valore massimo.`
+        ]
+      },
+
+      {
+        id: "s05-sfera-analisi",
+        type: "section",
+        title: "Analisi del risultato: continuità, segno della carica, grafico",
+        icon: "📈",
+        content: `<figure class="figura" data-id="fisica2_lez05b_d2"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05b_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="206.988pt" height="190.184pt" viewBox="0 0 206.988 190.184" version="1.2"><style>#fisica2_lez05b_d2 [fill="rgb(100%,84.999084%,84.999084%)"],#fisica2_lez05b_d2 [style*="fill:rgb(100%,84.999084%,84.999084%)"]{fill:#521414!important}[data-mode="light"] #fisica2_lez05b_d2 [fill="rgb(100%,84.999084%,84.999084%)"],[data-mode="light"] #fisica2_lez05b_d2 [style*="fill:rgb(100%,84.999084%,84.999084%)"]{fill:#ffd9d9!important}#fisica2_lez05b_d2 [stroke="rgb(100%,84.999084%,84.999084%)"],#fisica2_lez05b_d2 [style*="stroke:rgb(100%,84.999084%,84.999084%)"]{stroke:#ffd9d9!important}[data-mode="light"] #fisica2_lez05b_d2 [stroke="rgb(100%,84.999084%,84.999084%)"],[data-mode="light"] #fisica2_lez05b_d2 [style*="stroke:rgb(100%,84.999084%,84.999084%)"]{stroke:#ffd9d9!important}#fisica2_lez05b_d2 [fill="rgb(0%,0%,0%)"],#fisica2_lez05b_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05b_d2 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05b_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05b_d2 [fill="rgb(0%,0%,100%)"],#fisica2_lez05b_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d2 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05b_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05b_d2 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05b_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d2 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05b_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#fisica2_lez05b_d2 [fill="rgb(100%,0%,0%)"],#fisica2_lez05b_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d2 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05b_d2 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05b_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d2 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph0-1">
+<path style="stroke:none;" d="M 6.4375 0 C 6.4375 -0.0625 6.375 -0.09375 6.328125 -0.09375 C 6.25 -0.09375 6.234375 -0.046875 6.21875 0.015625 C 5.96875 0.71875 5.390625 0.96875 5.046875 0.96875 C 4.59375 0.96875 4.4375 0.6875 4.34375 -0.0625 C 5.890625 -0.640625 7.34375 -2.40625 7.34375 -4.328125 C 7.34375 -5.921875 6.296875 -7 4.8125 -7 C 2.671875 -7 0.484375 -4.75 0.484375 -2.4375 C 0.484375 -0.78125 1.59375 0.21875 3.03125 0.21875 C 3.28125 0.21875 3.609375 0.171875 4 0.0625 C 3.953125 0.6875 3.953125 0.703125 3.953125 0.828125 C 3.953125 1.15625 3.953125 1.921875 4.78125 1.921875 C 5.96875 1.921875 6.4375 0.109375 6.4375 0 Z M 6.46875 -4.640625 C 6.46875 -3.65625 5.96875 -1.328125 4.296875 -0.390625 C 4.25 -0.75 4.140625 -1.46875 3.421875 -1.46875 C 2.890625 -1.46875 2.40625 -0.96875 2.40625 -0.453125 C 2.40625 -0.265625 2.46875 -0.140625 2.46875 -0.140625 C 1.703125 -0.453125 1.359375 -1.21875 1.359375 -2.109375 C 1.359375 -2.796875 1.625 -4.203125 2.375 -5.28125 C 3.09375 -6.296875 4.03125 -6.75 4.75 -6.75 C 5.75 -6.75 6.46875 -5.96875 6.46875 -4.640625 Z M 4.03125 -0.40625 C 4.03125 -0.265625 4.015625 -0.25 3.921875 -0.203125 C 3.65625 -0.09375 3.359375 -0.03125 3.078125 -0.03125 C 2.953125 -0.03125 2.625 -0.03125 2.625 -0.453125 C 2.625 -0.859375 3 -1.25 3.421875 -1.25 C 3.84375 -1.25 4.03125 -1.015625 4.03125 -0.40625 Z M 4.03125 -0.40625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph0-2">
+<path style="stroke:none;" d="M 6.890625 -2.484375 C 6.890625 -2.59375 6.8125 -2.65625 6.703125 -2.703125 L 1.203125 -5.28125 C 1.078125 -5.359375 1.046875 -5.359375 1.015625 -5.359375 C 0.90625 -5.359375 0.828125 -5.265625 0.828125 -5.15625 C 0.828125 -5.0625 0.875 -5.015625 1.015625 -4.9375 L 6.21875 -2.484375 L 1.015625 -0.015625 C 0.875 0.046875 0.828125 0.109375 0.828125 0.203125 C 0.828125 0.3125 0.90625 0.390625 1.015625 0.390625 C 1.046875 0.390625 1.078125 0.390625 1.203125 0.328125 L 6.703125 -2.265625 C 6.8125 -2.3125 6.890625 -2.359375 6.890625 -2.484375 Z M 6.890625 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph0-3">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph0-4">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph0-5">
+<path style="stroke:none;" d="M 4.9375 -1.421875 C 4.9375 -1.515625 4.859375 -1.515625 4.828125 -1.515625 C 4.71875 -1.515625 4.71875 -1.484375 4.6875 -1.34375 C 4.515625 -0.6875 4.328125 -0.109375 3.921875 -0.109375 C 3.65625 -0.109375 3.625 -0.359375 3.625 -0.5625 C 3.625 -0.796875 3.65625 -0.875 3.6875 -1.046875 L 5.125 -6.78125 C 5.125 -6.78125 5.125 -6.890625 4.984375 -6.890625 C 4.84375 -6.890625 3.90625 -6.796875 3.734375 -6.78125 C 3.65625 -6.765625 3.59375 -6.71875 3.59375 -6.59375 C 3.59375 -6.46875 3.6875 -6.46875 3.828125 -6.46875 C 4.3125 -6.46875 4.328125 -6.40625 4.328125 -6.296875 L 4.296875 -6.109375 L 3.703125 -3.75 C 3.515625 -4.125 3.234375 -4.390625 2.78125 -4.390625 C 1.625 -4.390625 0.390625 -2.921875 0.390625 -1.484375 C 0.390625 -0.546875 0.9375 0.109375 1.71875 0.109375 C 1.921875 0.109375 2.40625 0.0625 3 -0.640625 C 3.078125 -0.21875 3.4375 0.109375 3.90625 0.109375 C 4.25 0.109375 4.484375 -0.125 4.640625 -0.4375 C 4.8125 -0.796875 4.9375 -1.421875 4.9375 -1.421875 Z M 3.546875 -3.125 L 3.0625 -1.1875 C 3 -1 3 -0.984375 2.859375 -0.8125 C 2.421875 -0.265625 2.015625 -0.109375 1.734375 -0.109375 C 1.234375 -0.109375 1.09375 -0.65625 1.09375 -1.046875 C 1.09375 -1.53125 1.421875 -2.765625 1.640625 -3.21875 C 1.953125 -3.796875 2.40625 -4.171875 2.796875 -4.171875 C 3.4375 -4.171875 3.578125 -3.359375 3.578125 -3.296875 C 3.578125 -3.234375 3.5625 -3.171875 3.546875 -3.125 Z M 3.546875 -3.125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph1-1">
+<path style="stroke:none;" d="M 4.5625 -3.171875 C 4.5625 -3.96875 4.515625 -4.765625 4.171875 -5.5 C 3.703125 -6.453125 2.890625 -6.609375 2.484375 -6.609375 C 1.890625 -6.609375 1.15625 -6.34375 0.75 -5.421875 C 0.4375 -4.75 0.390625 -3.96875 0.390625 -3.171875 C 0.390625 -2.4375 0.421875 -1.53125 0.828125 -0.78125 C 1.265625 0.015625 1.984375 0.21875 2.46875 0.21875 C 3 0.21875 3.765625 0.015625 4.203125 -0.9375 C 4.515625 -1.625 4.5625 -2.390625 4.5625 -3.171875 Z M 3.734375 -3.296875 C 3.734375 -2.546875 3.734375 -1.875 3.625 -1.234375 C 3.484375 -0.296875 2.921875 0 2.46875 0 C 2.078125 0 1.5 -0.25 1.3125 -1.203125 C 1.203125 -1.796875 1.203125 -2.703125 1.203125 -3.296875 C 1.203125 -3.921875 1.203125 -4.578125 1.296875 -5.125 C 1.484375 -6.296875 2.21875 -6.390625 2.46875 -6.390625 C 2.796875 -6.390625 3.453125 -6.21875 3.640625 -5.234375 C 3.734375 -4.671875 3.734375 -3.921875 3.734375 -3.296875 Z M 3.734375 -3.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph1-2">
+<path style="stroke:none;" d="M 6.59375 -2.34375 L 6.34375 -2.34375 C 6.171875 -0.6875 5.5 -0.421875 3.9375 -0.421875 L 1.203125 -0.421875 L 3.6875 -3.234375 C 3.78125 -3.328125 3.78125 -3.390625 3.78125 -3.390625 C 3.78125 -3.4375 3.734375 -3.5 3.703125 -3.53125 L 1.671875 -6.46875 L 3.96875 -6.46875 C 5.640625 -6.46875 6.140625 -6.109375 6.34375 -4.546875 L 6.59375 -4.546875 L 6.3125 -6.78125 L 0.8125 -6.78125 C 0.578125 -6.78125 0.5625 -6.78125 0.5625 -6.546875 L 3.03125 -2.953125 L 0.671875 -0.265625 C 0.5625 -0.15625 0.5625 -0.140625 0.5625 -0.109375 C 0.5625 0 0.671875 0 0.8125 0 L 6.3125 0 Z M 6.59375 -2.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph2-1">
+<path style="stroke:none;" d="M 7.171875 -2.71875 L 6.703125 -2.71875 C 6.484375 -1.34375 6.21875 -0.46875 4.375 -0.46875 L 2.875 -0.46875 L 2.875 -3.265625 L 3.40625 -3.265625 C 4.359375 -3.265625 4.46875 -2.84375 4.46875 -2.109375 L 4.9375 -2.109375 L 4.9375 -4.890625 L 4.46875 -4.890625 C 4.46875 -4.15625 4.375 -3.734375 3.40625 -3.734375 L 2.875 -3.734375 L 2.875 -6.28125 L 4.375 -6.28125 C 5.96875 -6.28125 6.234375 -5.5625 6.390625 -4.359375 L 6.859375 -4.359375 L 6.546875 -6.75 L 0.390625 -6.75 L 0.390625 -6.28125 L 1.453125 -6.28125 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.71875 0 Z M 7.171875 -2.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d2-glyph2-2">
+<path style="stroke:none;" d="M 5.6875 -2.015625 C 5.6875 -3.109375 4.890625 -3.921875 3.984375 -4.109375 L 2.546875 -4.421875 C 2.15625 -4.5 1.59375 -4.84375 1.59375 -5.453125 C 1.59375 -5.875 1.875 -6.484375 2.875 -6.484375 C 3.65625 -6.484375 4.65625 -6.15625 4.890625 -4.796875 C 4.9375 -4.5625 4.9375 -4.546875 5.140625 -4.546875 C 5.375 -4.546875 5.375 -4.59375 5.375 -4.828125 L 5.375 -6.640625 C 5.375 -6.828125 5.375 -6.921875 5.203125 -6.921875 C 5.125 -6.921875 5.109375 -6.90625 5 -6.8125 L 4.546875 -6.375 C 3.984375 -6.828125 3.328125 -6.921875 2.859375 -6.921875 C 1.34375 -6.921875 0.640625 -5.96875 0.640625 -4.921875 C 0.640625 -4.28125 0.96875 -3.8125 1.171875 -3.609375 C 1.65625 -3.109375 2 -3.046875 3.078125 -2.8125 C 3.953125 -2.625 4.125 -2.59375 4.328125 -2.375 C 4.484375 -2.234375 4.734375 -1.96875 4.734375 -1.515625 C 4.734375 -1.046875 4.46875 -0.359375 3.4375 -0.359375 C 2.6875 -0.359375 1.1875 -0.5625 1.09375 -2.03125 C 1.09375 -2.21875 1.09375 -2.265625 0.875 -2.265625 C 0.640625 -2.265625 0.640625 -2.203125 0.640625 -1.96875 L 0.640625 -0.171875 C 0.640625 0.015625 0.640625 0.109375 0.8125 0.109375 C 0.90625 0.109375 0.921875 0.09375 1 0.015625 L 1.453125 -0.4375 C 2.109375 0.046875 3.03125 0.109375 3.4375 0.109375 C 5.078125 0.109375 5.6875 -1.015625 5.6875 -2.015625 Z M 5.6875 -2.015625 "/>
+</symbol>
+</g>
+<clipPath id="fisica2_lez05b_d2-clip1">
+  <path d="M 0.4375 81 L 22 81 L 22 108 L 0.4375 108 Z M 0.4375 81 "/>
+</clipPath>
+<clipPath id="fisica2_lez05b_d2-clip2">
+  <path d="M 82 168 L 108 168 L 108 189.371094 L 82 189.371094 Z M 82 168 "/>
+</clipPath>
+</defs>
+<g id="fisica2_lez05b_d2-surface1">
+<path style="fill-rule:nonzero;fill:rgb(100%,84.999084%,84.999084%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.520675 -0.00176446 C 42.520675 23.485297 23.482307 42.519742 -0.000830889 42.519742 C -23.483969 42.519742 -42.518414 23.485297 -42.518414 -0.00176446 C -42.518414 -23.484903 -23.483969 -42.519348 -0.000830889 -42.519348 C 23.482307 -42.519348 42.520675 -23.484903 42.520675 -0.00176446 Z M 42.520675 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-1" x="60.938587" y="114.045678"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-2" x="71.539139" y="114.045678"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph1-1" x="82.007191" y="114.045678"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000830889 -0.00176446 L 39.456805 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.213739 -0.00176446 L 0.6438 1.343828 L 1.81678 -0.00176446 L 0.6438 -1.347357 Z M 4.213739 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,132.698794,94.685743)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-3" x="112.486417" y="105.961364"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 96.3125 94.6875 C 96.3125 94.027344 95.78125 93.496094 95.121094 93.496094 C 94.464844 93.496094 93.929688 94.027344 93.929688 94.6875 C 93.929688 95.34375 94.464844 95.875 95.121094 95.875 C 95.78125 95.875 96.3125 95.34375 96.3125 94.6875 Z M 96.3125 94.6875 "/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 70.868346 -0.00176446 C 70.868346 39.138107 39.139041 70.867413 -0.000830889 70.867413 C -39.140703 70.867413 -70.866085 39.138107 -70.866085 -0.00176446 C -70.866085 -39.137713 -39.140703 -70.867019 -0.000830889 -70.867019 C 39.139041 -70.867019 70.868346 -39.137713 70.868346 -0.00176446 Z M 70.868346 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000830889 -0.00176446 L -33.903484 58.71785 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.213576 0.00204072 L 0.645431 1.346328 L 1.816061 0.0000413015 L 0.643678 -1.348 Z M 4.213576 0.00204072 " transform="matrix(-0.497844,-0.86231,-0.86231,0.497844,62.220557,37.6988)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-4" x="77.461694" y="56.050511"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-2" x="84.973146" y="56.050511"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-3" x="95.436801" y="56.050511"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph1-2" x="13.518049" y="134.484981"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 70.868346 -0.00176446 L 86.599617 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.438998 -0.00176446 L 1.288454 1.571363 L 2.66543 -0.00176446 L 1.288454 -1.570968 Z M 5.438998 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,178.896738,94.685743)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 50.1117 50.110766 L 61.233434 61.236423 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441498 -0.000660141 L 1.286025 1.569432 L 2.66471 0.00211387 L 1.286025 -1.570752 Z M 5.441498 -0.000660141 " transform="matrix(0.704079,-0.704079,-0.704079,-0.704079,154.359697,35.447968)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000830889 70.867413 L -0.000830889 86.598683 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441988 0.000830889 L 1.28752 1.570035 L 2.664497 0.000830889 L 1.28752 -1.572296 Z M 5.441988 0.000830889 " transform="matrix(0,-0.995728,-0.995728,0,95.121921,10.910926)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -50.109439 50.110766 L -61.235095 61.236423 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439899 -0.000938808 L 1.287201 1.571927 L 2.665885 -0.000938808 L 1.287201 -1.568257 Z M 5.439899 -0.000938808 " transform="matrix(-0.704079,-0.704079,-0.704079,0.704079,35.884146,35.447968)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -70.866085 -0.00176446 L -86.601279 -0.00176446 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 5.929688 94.6875 L 10.066406 96.25 L 8.695312 94.6875 L 10.066406 93.121094 Z M 5.929688 94.6875 "/>
+<g clip-path="url(#fisica2_lez05b_d2-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.44066 0.00176446 L 1.286192 1.570968 L 2.663169 0.00176446 L 1.286192 -1.571363 Z M 5.44066 0.00176446 " transform="matrix(-0.995728,0,0,0.995728,11.347104,94.685743)"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -50.109439 -50.110372 L -61.235095 -61.236029 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.43962 0.000660141 L 1.286922 1.567978 L 2.665607 0.000660141 L 1.286922 -1.572206 Z M 5.43962 0.000660141 " transform="matrix(-0.704079,0.704079,0.704079,0.704079,35.884146,153.923519)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000830889 -70.867019 L -0.000830889 -86.598289 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 95.121094 183.878906 L 96.6875 179.742188 L 95.121094 181.113281 L 93.558594 179.742188 Z M 95.121094 183.878906 "/>
+<g clip-path="url(#fisica2_lez05b_d2-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441594 -0.000830889 L 1.287126 1.572296 L 2.664103 -0.000830889 L 1.287126 -1.570035 Z M 5.441594 -0.000830889 " transform="matrix(0,0.995728,0.995728,0,95.121921,178.46056)"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 50.1117 -50.110372 L 61.233434 -61.236029 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441219 0.000938808 L 1.285747 1.571031 L 2.664432 -0.00183521 L 1.285747 -1.569153 Z M 5.441219 0.000938808 " transform="matrix(0.704079,0.704079,0.704079,-0.704079,154.359697,153.923519)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph2-1" x="191.770244" y="98.087149"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 65.470284 27.118004 L 80.005037 33.139825 " transform="matrix(0.995728,0,0,-0.995728,95.121921,94.685743)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439478 0.00152513 L 1.287399 1.572492 L 2.665729 -0.00050062 L 1.285687 -1.569148 Z M 5.439478 0.00152513 " transform="matrix(0.919893,-0.380975,-0.380975,-0.919893,172.516374,62.628398)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph0-5" x="184.578102" y="56.402003"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d2-glyph2-2" x="189.74095" y="56.402003"/>
+</g>
+</g>
+</svg></figure>
+        <p>Vista alternativa del caso esterno: la superficie Gaussiana $\\Sigma$ di raggio $r \\gt R$ racchiude l'intera carica $Q \\gt 0$ e il campo (in rosso) è radiale uscente, parallelo a $d\\vec{S}$ in ogni punto.</p>
+        <figure class="figura" data-id="fisica2_lez05b_d3"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05b_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150.499pt" height="150.499pt" viewBox="0 0 150.499 150.499" version="1.2"><style>#fisica2_lez05b_d3 [fill="rgb(100%,87.998962%,87.998962%)"],#fisica2_lez05b_d3 [style*="fill:rgb(100%,87.998962%,87.998962%)"]{fill:#521414!important}[data-mode="light"] #fisica2_lez05b_d3 [fill="rgb(100%,87.998962%,87.998962%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="fill:rgb(100%,87.998962%,87.998962%)"]{fill:#ffe0e0!important}#fisica2_lez05b_d3 [stroke="rgb(100%,87.998962%,87.998962%)"],#fisica2_lez05b_d3 [style*="stroke:rgb(100%,87.998962%,87.998962%)"]{stroke:#ffe0e0!important}[data-mode="light"] #fisica2_lez05b_d3 [stroke="rgb(100%,87.998962%,87.998962%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="stroke:rgb(100%,87.998962%,87.998962%)"]{stroke:#ffe0e0!important}#fisica2_lez05b_d3 [fill="rgb(0%,0%,0%)"],#fisica2_lez05b_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05b_d3 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05b_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05b_d3 [fill="rgb(69.999695%,0%,0%)"],#fisica2_lez05b_d3 [style*="fill:rgb(69.999695%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d3 [fill="rgb(69.999695%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="fill:rgb(69.999695%,0%,0%)"]{fill:#b20000!important}#fisica2_lez05b_d3 [stroke="rgb(69.999695%,0%,0%)"],#fisica2_lez05b_d3 [style*="stroke:rgb(69.999695%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d3 [stroke="rgb(69.999695%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="stroke:rgb(69.999695%,0%,0%)"]{stroke:#b20000!important}#fisica2_lez05b_d3 [fill="rgb(91.999817%,91.999817%,100%)"],#fisica2_lez05b_d3 [style*="fill:rgb(91.999817%,91.999817%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05b_d3 [fill="rgb(91.999817%,91.999817%,100%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="fill:rgb(91.999817%,91.999817%,100%)"]{fill:#ebebff!important}#fisica2_lez05b_d3 [fill="rgb(0%,0%,69.999695%)"],#fisica2_lez05b_d3 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d3 [fill="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#0000b2!important}#fisica2_lez05b_d3 [stroke="rgb(0%,0%,69.999695%)"],#fisica2_lez05b_d3 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d3 [stroke="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#0000b2!important}#fisica2_lez05b_d3 [fill="rgb(79.998779%,0%,0%)"],#fisica2_lez05b_d3 [style*="fill:rgb(79.998779%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d3 [fill="rgb(79.998779%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="fill:rgb(79.998779%,0%,0%)"]{fill:#cc0000!important}#fisica2_lez05b_d3 [stroke="rgb(79.998779%,0%,0%)"],#fisica2_lez05b_d3 [style*="stroke:rgb(79.998779%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d3 [stroke="rgb(79.998779%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d3 [style*="stroke:rgb(79.998779%,0%,0%)"]{stroke:#cc0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph0-1">
+<path style="stroke:none;" d="M 5.015625 -1.734375 C 5.015625 -1.875 4.875 -1.875 4.78125 -1.875 L 2.84375 -1.875 L 2.84375 -3.828125 C 2.84375 -3.921875 2.84375 -4.046875 2.703125 -4.046875 C 2.5625 -4.046875 2.5625 -3.921875 2.5625 -3.828125 L 2.5625 -1.875 L 0.625 -1.875 C 0.515625 -1.875 0.390625 -1.875 0.390625 -1.734375 C 0.390625 -1.59375 0.515625 -1.59375 0.625 -1.59375 L 2.5625 -1.59375 L 2.5625 0.34375 C 2.5625 0.4375 2.5625 0.578125 2.703125 0.578125 C 2.84375 0.578125 2.84375 0.4375 2.84375 0.34375 L 2.84375 -1.59375 L 4.78125 -1.59375 C 4.875 -1.59375 5.015625 -1.59375 5.015625 -1.734375 Z M 5.015625 -1.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph1-1">
+<path style="stroke:none;" d="M 6.59375 -2.34375 L 6.34375 -2.34375 C 6.171875 -0.6875 5.5 -0.421875 3.9375 -0.421875 L 1.203125 -0.421875 L 3.6875 -3.234375 C 3.78125 -3.328125 3.78125 -3.390625 3.78125 -3.390625 C 3.78125 -3.4375 3.734375 -3.5 3.703125 -3.53125 L 1.671875 -6.46875 L 3.96875 -6.46875 C 5.640625 -6.46875 6.140625 -6.109375 6.34375 -4.546875 L 6.59375 -4.546875 L 6.3125 -6.78125 L 0.8125 -6.78125 C 0.578125 -6.78125 0.5625 -6.78125 0.5625 -6.546875 L 3.03125 -2.953125 L 0.671875 -0.265625 C 0.5625 -0.15625 0.5625 -0.140625 0.5625 -0.109375 C 0.5625 0 0.671875 0 0.8125 0 L 6.3125 0 Z M 6.59375 -2.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph1-2">
+<path style="stroke:none;" d="M 4.5625 -3.171875 C 4.5625 -3.96875 4.515625 -4.765625 4.171875 -5.5 C 3.703125 -6.453125 2.890625 -6.609375 2.484375 -6.609375 C 1.890625 -6.609375 1.15625 -6.34375 0.75 -5.421875 C 0.4375 -4.75 0.390625 -3.96875 0.390625 -3.171875 C 0.390625 -2.4375 0.421875 -1.53125 0.828125 -0.78125 C 1.265625 0.015625 1.984375 0.21875 2.46875 0.21875 C 3 0.21875 3.765625 0.015625 4.203125 -0.9375 C 4.515625 -1.625 4.5625 -2.390625 4.5625 -3.171875 Z M 3.734375 -3.296875 C 3.734375 -2.546875 3.734375 -1.875 3.625 -1.234375 C 3.484375 -0.296875 2.921875 0 2.46875 0 C 2.078125 0 1.5 -0.25 1.3125 -1.203125 C 1.203125 -1.796875 1.203125 -2.703125 1.203125 -3.296875 C 1.203125 -3.921875 1.203125 -4.578125 1.296875 -5.125 C 1.484375 -6.296875 2.21875 -6.390625 2.46875 -6.390625 C 2.796875 -6.390625 3.453125 -6.21875 3.640625 -5.234375 C 3.734375 -4.671875 3.734375 -3.921875 3.734375 -3.296875 Z M 3.734375 -3.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph2-1">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph2-2">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph2-3">
+<path style="stroke:none;" d="M 6.4375 0 C 6.4375 -0.0625 6.375 -0.09375 6.328125 -0.09375 C 6.25 -0.09375 6.234375 -0.046875 6.21875 0.015625 C 5.96875 0.71875 5.390625 0.96875 5.046875 0.96875 C 4.59375 0.96875 4.4375 0.6875 4.34375 -0.0625 C 5.890625 -0.640625 7.34375 -2.40625 7.34375 -4.328125 C 7.34375 -5.921875 6.296875 -7 4.8125 -7 C 2.671875 -7 0.484375 -4.75 0.484375 -2.4375 C 0.484375 -0.78125 1.59375 0.21875 3.03125 0.21875 C 3.28125 0.21875 3.609375 0.171875 4 0.0625 C 3.953125 0.6875 3.953125 0.703125 3.953125 0.828125 C 3.953125 1.15625 3.953125 1.921875 4.78125 1.921875 C 5.96875 1.921875 6.4375 0.109375 6.4375 0 Z M 6.46875 -4.640625 C 6.46875 -3.65625 5.96875 -1.328125 4.296875 -0.390625 C 4.25 -0.75 4.140625 -1.46875 3.421875 -1.46875 C 2.890625 -1.46875 2.40625 -0.96875 2.40625 -0.453125 C 2.40625 -0.265625 2.46875 -0.140625 2.46875 -0.140625 C 1.703125 -0.453125 1.359375 -1.21875 1.359375 -2.109375 C 1.359375 -2.796875 1.625 -4.203125 2.375 -5.28125 C 3.09375 -6.296875 4.03125 -6.75 4.75 -6.75 C 5.75 -6.75 6.46875 -5.96875 6.46875 -4.640625 Z M 4.03125 -0.40625 C 4.03125 -0.265625 4.015625 -0.25 3.921875 -0.203125 C 3.65625 -0.09375 3.359375 -0.03125 3.078125 -0.03125 C 2.953125 -0.03125 2.625 -0.03125 2.625 -0.453125 C 2.625 -0.859375 3 -1.25 3.421875 -1.25 C 3.84375 -1.25 4.03125 -1.015625 4.03125 -0.40625 Z M 4.03125 -0.40625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph2-4">
+<path style="stroke:none;" d="M 6.890625 -2.484375 C 6.890625 -2.59375 6.8125 -2.65625 6.703125 -2.703125 L 1.203125 -5.28125 C 1.078125 -5.359375 1.046875 -5.359375 1.015625 -5.359375 C 0.90625 -5.359375 0.828125 -5.265625 0.828125 -5.15625 C 0.828125 -5.0625 0.875 -5.015625 1.015625 -4.9375 L 6.21875 -2.484375 L 1.015625 -0.015625 C 0.875 0.046875 0.828125 0.109375 0.828125 0.203125 C 0.828125 0.3125 0.90625 0.390625 1.015625 0.390625 C 1.046875 0.390625 1.078125 0.390625 1.203125 0.328125 L 6.703125 -2.265625 C 6.8125 -2.3125 6.890625 -2.359375 6.890625 -2.484375 Z M 6.890625 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d3-glyph3-1">
+<path style="stroke:none;" d="M 7.171875 -2.71875 L 6.703125 -2.71875 C 6.484375 -1.34375 6.21875 -0.46875 4.375 -0.46875 L 2.875 -0.46875 L 2.875 -3.265625 L 3.40625 -3.265625 C 4.359375 -3.265625 4.46875 -2.84375 4.46875 -2.109375 L 4.9375 -2.109375 L 4.9375 -4.890625 L 4.46875 -4.890625 C 4.46875 -4.15625 4.375 -3.734375 3.40625 -3.734375 L 2.875 -3.734375 L 2.875 -6.28125 L 4.375 -6.28125 C 5.96875 -6.28125 6.234375 -5.5625 6.390625 -4.359375 L 6.859375 -4.359375 L 6.546875 -6.75 L 0.390625 -6.75 L 0.390625 -6.28125 L 1.453125 -6.28125 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.71875 0 Z M 7.171875 -2.71875 "/>
+</symbol>
+</g>
+<clipPath id="fisica2_lez05b_d3-clip1">
+  <path d="M 0 0 L 150 0 L 150 150 L 0 150 Z M 0 0 "/>
+</clipPath>
+</defs>
+<g id="fisica2_lez05b_d3-surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,87.998962%,87.998962%);fill-opacity:1;" d="M 145.632812 75 C 145.632812 35.988281 114.007812 4.367188 75 4.367188 C 35.992188 4.367188 4.367188 35.988281 4.367188 75 C 4.367188 114.007812 35.992188 145.632812 75 145.632812 C 114.007812 145.632812 145.632812 114.007812 145.632812 75 Z M 145.632812 75 "/>
+<g clip-path="url(#fisica2_lez05b_d3-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 70.867613 -0.000669433 C 70.867613 39.140916 39.137336 70.867274 -0.000330567 70.867274 C -39.137997 70.867274 -70.868274 39.140916 -70.868274 -0.000669433 C -70.868274 -39.138336 -39.137997 -70.868613 -0.000330567 -70.868613 C 39.137336 -70.868613 70.867613 -39.138336 70.867613 -0.000669433 Z M 70.867613 -0.000669433 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="46.869973" y="124.766661"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="97.723685" y="124.766661"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="125.976633" y="90.863522"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="18.618022" y="90.863522"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="27.09281" y="48.484598"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="117.500848" y="48.484598"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph0-1" x="72.297328" y="92.275821"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(91.999817%,91.999817%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 42.519652 -0.000669433 C 42.519652 23.483498 23.483837 42.519313 -0.000330567 42.519313 C -23.484498 42.519313 -42.520313 23.483498 -42.520313 -0.000669433 C -42.520313 -23.484837 -23.484498 -42.520652 -0.000330567 -42.520652 C 23.483837 -42.520652 42.519652 -23.484837 42.519652 -0.000669433 Z M 42.519652 -0.000669433 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph1-1" x="65.951453" y="26.438987"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 76.191406 75 C 76.191406 74.339844 75.660156 73.808594 75 73.808594 C 74.34375 73.808594 73.808594 74.339844 73.808594 75 C 73.808594 75.65625 74.34375 76.191406 75 76.191406 C 75.660156 76.191406 76.191406 75.65625 76.191406 75 Z M 76.191406 75 "/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000330567 -0.000669433 L 36.342908 -0.000669433 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534205 -0.000669433 C 3.977671 0.136504 1.528137 0.920355 -0.000371783 1.770833 L -0.000371783 -1.772172 C 1.528137 -0.921694 3.977671 -0.137843 4.534205 -0.000669433 Z M 4.534205 -0.000669433 " transform="matrix(0.996682,0,0,-0.996682,111.223027,74.999333)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph2-1" x="94.658888" y="82.782423"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000330567 -0.000669433 L -52.992559 -37.104243 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.533863 0.00158116 C 3.978085 0.137152 1.529923 0.918353 0.0000718953 1.774245 L 0.000564564 -1.771485 C 1.530322 -0.91921 3.976122 -0.13898 4.533863 0.00158116 Z M 4.533863 0.00158116 " transform="matrix(-0.816422,0.571657,0.571657,0.816422,22.185018,111.981113)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph2-2" x="28.706438" y="109.707791"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 27.332544 32.572247 L 34.293139 40.869307 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<path style="fill-rule:nonzero;fill:rgb(79.998779%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534347 -0.00106585 C 3.976347 0.139568 1.529834 0.92118 0.00192163 1.772634 L -0.00217558 -1.77125 C 1.530028 -0.920508 3.977277 -0.135929 4.534347 -0.00106585 Z M 4.534347 -0.00106585 " transform="matrix(0.640627,-0.763498,-0.763498,-0.640627,109.180297,34.265971)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -27.333205 32.572247 L -34.2938 40.869307 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<path style="fill-rule:nonzero;fill:rgb(79.998779%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534772 0.00157232 C 3.977702 0.136435 1.530453 0.921015 -0.00175061 1.771757 L 0.00234659 -1.772127 C 1.530259 -0.920673 3.976772 -0.139062 4.534772 0.00157232 Z M 4.534772 0.00157232 " transform="matrix(-0.640627,-0.763498,-0.763498,0.640627,40.820362,34.265971)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -27.333205 -32.573586 L -34.2938 -40.870646 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<path style="fill-rule:nonzero;fill:rgb(79.998779%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.535797 -0.000711717 C 3.977798 0.139923 1.531285 0.921534 0.000369831 1.770469 L -0.000724941 -1.770896 C 1.531479 -0.920154 3.975725 -0.138094 4.535797 -0.000711717 Z M 4.535797 -0.000711717 " transform="matrix(-0.640627,0.763498,0.763498,0.640627,40.820362,115.732694)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 27.332544 -32.573586 L 34.293139 -40.870646 " transform="matrix(0.996682,0,0,-0.996682,75.000329,74.999333)"/>
+<path style="fill-rule:nonzero;fill:rgb(79.998779%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(79.998779%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.535373 0.000205241 C 3.975301 0.137588 1.531054 0.919648 -0.00114991 1.77039 L -0.0000551374 -1.770975 C 1.53086 -0.92204 3.977373 -0.140429 4.535373 0.000205241 Z M 4.535373 0.000205241 " transform="matrix(0.640627,0.763498,0.763498,-0.640627,109.180297,115.732694)"/>
+<g style="fill:rgb(79.998779%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph3-1" x="117.012474" y="23.865553"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph2-3" x="61.972697" y="19.509056"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph2-4" x="72.58341" y="19.509056"/>
+</g>
+<g style="fill:rgb(69.999695%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d3-glyph1-2" x="83.062491" y="19.509056"/>
+</g>
+</g>
+</svg></figure>
+        <p>Vista alternativa del caso interno: la superficie Gaussiana $\\Sigma$ di raggio $r \\lt R$ racchiude solo la frazione $Q\\,r^3/R^3$ della carica totale.</p>
+        <figure class="figura" data-id="fisica2_lez05c_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05c_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="221.192pt" height="178.846pt" viewBox="0 0 221.192 178.846" version="1.2"><style>#fisica2_lez05c_d1 [fill="rgb(91.999817%,91.999817%,100%)"],#fisica2_lez05c_d1 [style*="fill:rgb(91.999817%,91.999817%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05c_d1 [fill="rgb(91.999817%,91.999817%,100%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="fill:rgb(91.999817%,91.999817%,100%)"]{fill:#ebebff!important}#fisica2_lez05c_d1 [fill="rgb(0%,0%,59.999084%)"],#fisica2_lez05c_d1 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d1 [fill="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="fill:rgb(0%,0%,59.999084%)"]{fill:#000099!important}#fisica2_lez05c_d1 [stroke="rgb(0%,0%,59.999084%)"],#fisica2_lez05c_d1 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d1 [stroke="rgb(0%,0%,59.999084%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="stroke:rgb(0%,0%,59.999084%)"]{stroke:#000099!important}#fisica2_lez05c_d1 [fill="rgb(29.998779%,29.998779%,29.998779%)"],#fisica2_lez05c_d1 [style*="fill:rgb(29.998779%,29.998779%,29.998779%)"]{fill:#adadad!important}[data-mode="light"] #fisica2_lez05c_d1 [fill="rgb(29.998779%,29.998779%,29.998779%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="fill:rgb(29.998779%,29.998779%,29.998779%)"]{fill:#4c4c4c!important}#fisica2_lez05c_d1 [stroke="rgb(29.998779%,29.998779%,29.998779%)"],#fisica2_lez05c_d1 [style*="stroke:rgb(29.998779%,29.998779%,29.998779%)"]{stroke:#adadad!important}[data-mode="light"] #fisica2_lez05c_d1 [stroke="rgb(29.998779%,29.998779%,29.998779%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="stroke:rgb(29.998779%,29.998779%,29.998779%)"]{stroke:#4c4c4c!important}#fisica2_lez05c_d1 [fill="rgb(0%,0%,0%)"],#fisica2_lez05c_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05c_d1 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05c_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05c_d1 [fill="rgb(0%,0%,69.999695%)"],#fisica2_lez05c_d1 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d1 [fill="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="fill:rgb(0%,0%,69.999695%)"]{fill:#0000b2!important}#fisica2_lez05c_d1 [stroke="rgb(0%,0%,69.999695%)"],#fisica2_lez05c_d1 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d1 [stroke="rgb(0%,0%,69.999695%)"],[data-mode="light"] #fisica2_lez05c_d1 [style*="stroke:rgb(0%,0%,69.999695%)"]{stroke:#0000b2!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-1">
+<path style="stroke:none;" d="M 4.984375 -2.765625 C 4.984375 -3.8125 4.328125 -4.390625 3.609375 -4.390625 C 2.640625 -4.390625 1.59375 -3.390625 1.296875 -2.1875 L 0.328125 1.71875 C 0.296875 1.828125 0.296875 1.875 0.296875 1.875 C 0.296875 2.03125 0.40625 2.140625 0.578125 2.140625 C 0.78125 2.140625 0.90625 1.96875 0.921875 1.9375 C 0.96875 1.84375 1.296875 0.515625 1.5625 -0.5625 C 1.75 -0.15625 2.078125 0.109375 2.546875 0.109375 C 3.703125 0.109375 4.984375 -1.296875 4.984375 -2.765625 Z M 4.265625 -3.1875 C 4.265625 -2.65625 3.984375 -1.53125 3.703125 -1.046875 C 3.390625 -0.421875 2.90625 -0.109375 2.53125 -0.109375 C 1.828125 -0.109375 1.671875 -0.90625 1.671875 -0.984375 C 1.671875 -1.03125 1.71875 -1.234375 1.75 -1.359375 C 2.03125 -2.46875 2.140625 -2.828125 2.34375 -3.21875 C 2.78125 -3.953125 3.28125 -4.171875 3.578125 -4.171875 C 3.953125 -4.171875 4.265625 -3.875 4.265625 -3.1875 Z M 4.265625 -3.1875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-2">
+<path style="stroke:none;" d="M 6.890625 -2.484375 C 6.890625 -2.59375 6.8125 -2.65625 6.703125 -2.703125 L 1.203125 -5.28125 C 1.078125 -5.359375 1.046875 -5.359375 1.015625 -5.359375 C 0.90625 -5.359375 0.828125 -5.265625 0.828125 -5.15625 C 0.828125 -5.0625 0.875 -5.015625 1.015625 -4.9375 L 6.21875 -2.484375 L 1.015625 -0.015625 C 0.875 0.046875 0.828125 0.109375 0.828125 0.203125 C 0.828125 0.3125 0.90625 0.390625 1.015625 0.390625 C 1.046875 0.390625 1.078125 0.390625 1.203125 0.328125 L 6.703125 -2.265625 C 6.8125 -2.3125 6.890625 -2.359375 6.890625 -2.484375 Z M 6.890625 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-3">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-4">
+<path style="stroke:none;" d="M 5.484375 -2.328125 C 5.484375 -3.015625 5.15625 -3.359375 5 -3.5 C 4.765625 -3.71875 4.625 -3.765625 3.734375 -3.984375 L 3.078125 -4.171875 C 2.8125 -4.25 2.46875 -4.546875 2.46875 -5.0625 C 2.46875 -5.875 3.265625 -6.71875 4.203125 -6.71875 C 5.03125 -6.71875 5.640625 -6.296875 5.640625 -5.171875 C 5.640625 -4.859375 5.59375 -4.6875 5.59375 -4.625 C 5.59375 -4.625 5.59375 -4.53125 5.71875 -4.53125 C 5.8125 -4.53125 5.828125 -4.546875 5.859375 -4.71875 L 6.40625 -6.890625 C 6.40625 -6.921875 6.375 -7 6.296875 -7 C 6.234375 -7 6.234375 -6.984375 6.109375 -6.84375 L 5.640625 -6.28125 C 5.375 -6.75 4.859375 -7 4.21875 -7 C 2.953125 -7 1.765625 -5.859375 1.765625 -4.65625 C 1.765625 -3.84375 2.296875 -3.390625 2.796875 -3.25 L 3.859375 -2.96875 C 4.234375 -2.875 4.765625 -2.734375 4.765625 -1.921875 C 4.765625 -1.015625 3.953125 -0.09375 2.984375 -0.09375 C 2.34375 -0.09375 1.25 -0.3125 1.25 -1.53125 C 1.25 -1.78125 1.296875 -2.015625 1.3125 -2.078125 C 1.3125 -2.109375 1.328125 -2.140625 1.328125 -2.140625 C 1.328125 -2.25 1.265625 -2.25 1.203125 -2.25 C 1.15625 -2.25 1.140625 -2.25 1.109375 -2.21875 C 1.078125 -2.171875 0.515625 0.09375 0.515625 0.125 C 0.515625 0.171875 0.5625 0.21875 0.625 0.21875 C 0.671875 0.21875 0.6875 0.203125 0.796875 0.0625 L 1.296875 -0.5 C 1.71875 0.078125 2.390625 0.21875 2.96875 0.21875 C 4.3125 0.21875 5.484375 -1.09375 5.484375 -2.328125 Z M 5.484375 -2.328125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-5">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-6">
+<path style="stroke:none;" d="M 7.34375 -4.328125 C 7.34375 -5.921875 6.296875 -7 4.8125 -7 C 2.671875 -7 0.484375 -4.75 0.484375 -2.4375 C 0.484375 -0.78125 1.59375 0.21875 3.03125 0.21875 C 5.125 0.21875 7.34375 -1.953125 7.34375 -4.328125 Z M 6.453125 -4.71875 C 6.453125 -4 6.1875 -2.453125 5.203125 -1.234375 C 4.734375 -0.625 3.921875 -0.046875 3.078125 -0.046875 C 2.109375 -0.046875 1.40625 -0.84375 1.40625 -2.15625 C 1.40625 -2.59375 1.546875 -4.03125 2.3125 -5.203125 C 3 -6.234375 3.96875 -6.75 4.75 -6.75 C 5.5625 -6.75 6.453125 -6.1875 6.453125 -4.71875 Z M 6.453125 -4.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph0-7">
+<path style="stroke:none;" d="M 7.078125 -2.453125 C 7.078125 -2.453125 7.078125 -2.5625 6.953125 -2.5625 C 6.859375 -2.5625 6.84375 -2.5 6.828125 -2.4375 C 6.1875 -0.96875 5.8125 -0.3125 4.125 -0.3125 L 2.671875 -0.3125 C 2.53125 -0.3125 2.515625 -0.3125 2.453125 -0.3125 C 2.34375 -0.328125 2.328125 -0.34375 2.328125 -0.421875 C 2.328125 -0.453125 2.328125 -0.46875 2.375 -0.640625 L 3.046875 -3.359375 L 4.03125 -3.359375 C 4.875 -3.359375 4.875 -3.140625 4.875 -2.890625 C 4.875 -2.828125 4.875 -2.703125 4.796875 -2.40625 C 4.78125 -2.359375 4.765625 -2.328125 4.765625 -2.296875 C 4.765625 -2.25 4.8125 -2.1875 4.90625 -2.1875 C 4.984375 -2.1875 5.015625 -2.25 5.046875 -2.390625 L 5.609375 -4.71875 C 5.609375 -4.765625 5.5625 -4.828125 5.5 -4.828125 C 5.40625 -4.828125 5.390625 -4.765625 5.359375 -4.640625 C 5.15625 -3.890625 4.96875 -3.65625 4.0625 -3.65625 L 3.125 -3.65625 L 3.71875 -6.046875 C 3.8125 -6.40625 3.8125 -6.4375 4.25 -6.4375 L 5.65625 -6.4375 C 6.859375 -6.4375 7.15625 -6.15625 7.15625 -5.34375 C 7.15625 -5.09375 7.15625 -5.078125 7.125 -4.8125 C 7.125 -4.75 7.109375 -4.6875 7.109375 -4.640625 C 7.109375 -4.578125 7.140625 -4.515625 7.234375 -4.515625 C 7.34375 -4.515625 7.359375 -4.578125 7.375 -4.765625 L 7.578125 -6.484375 C 7.59375 -6.75 7.546875 -6.75 7.296875 -6.75 L 2.296875 -6.75 C 2.09375 -6.75 2 -6.75 2 -6.546875 C 2 -6.4375 2.078125 -6.4375 2.265625 -6.4375 C 2.640625 -6.4375 2.921875 -6.4375 2.921875 -6.265625 C 2.921875 -6.21875 2.921875 -6.203125 2.875 -6.015625 L 1.5625 -0.78125 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.484375 -0.3125 0.375 -0.3125 0.375 -0.125 C 0.375 0 0.46875 0 0.65625 0 L 5.796875 0 C 6.03125 0 6.046875 -0.015625 6.109375 -0.171875 L 7.03125 -2.3125 C 7.046875 -2.359375 7.078125 -2.453125 7.078125 -2.453125 Z M 7.078125 -2.453125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph1-1">
+<path style="stroke:none;" d="M 4.5625 -3.171875 C 4.5625 -3.96875 4.515625 -4.765625 4.171875 -5.5 C 3.703125 -6.453125 2.890625 -6.609375 2.484375 -6.609375 C 1.890625 -6.609375 1.15625 -6.34375 0.75 -5.421875 C 0.4375 -4.75 0.390625 -3.96875 0.390625 -3.171875 C 0.390625 -2.4375 0.421875 -1.53125 0.828125 -0.78125 C 1.265625 0.015625 1.984375 0.21875 2.46875 0.21875 C 3 0.21875 3.765625 0.015625 4.203125 -0.9375 C 4.515625 -1.625 4.5625 -2.390625 4.5625 -3.171875 Z M 3.734375 -3.296875 C 3.734375 -2.546875 3.734375 -1.875 3.625 -1.234375 C 3.484375 -0.296875 2.921875 0 2.46875 0 C 2.078125 0 1.5 -0.25 1.3125 -1.203125 C 1.203125 -1.796875 1.203125 -2.703125 1.203125 -3.296875 C 1.203125 -3.921875 1.203125 -4.578125 1.296875 -5.125 C 1.484375 -6.296875 2.21875 -6.390625 2.46875 -6.390625 C 2.796875 -6.390625 3.453125 -6.21875 3.640625 -5.234375 C 3.734375 -4.671875 3.734375 -3.921875 3.734375 -3.296875 Z M 3.734375 -3.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d1-glyph2-1">
+<path style="stroke:none;" d="M 3.5625 -2.5625 C 3.5625 -2.921875 3.171875 -3.0625 2.828125 -3.0625 C 2.46875 -3.0625 2.15625 -2.921875 1.84375 -2.578125 C 1.71875 -3 1.296875 -3.0625 1.125 -3.0625 C 0.875 -3.0625 0.703125 -2.90625 0.578125 -2.71875 C 0.421875 -2.4375 0.328125 -2.03125 0.328125 -2 C 0.328125 -1.90625 0.421875 -1.90625 0.4375 -1.90625 C 0.546875 -1.90625 0.546875 -1.9375 0.59375 -2.125 C 0.703125 -2.546875 0.828125 -2.875 1.109375 -2.875 C 1.28125 -2.875 1.328125 -2.71875 1.328125 -2.53125 C 1.328125 -2.40625 1.265625 -2.140625 1.21875 -1.953125 L 1.078125 -1.328125 L 0.84375 -0.4375 C 0.828125 -0.34375 0.78125 -0.171875 0.78125 -0.15625 C 0.78125 0 0.90625 0.0625 1.015625 0.0625 C 1.125 0.0625 1.265625 0 1.3125 -0.125 C 1.328125 -0.171875 1.40625 -0.484375 1.453125 -0.65625 L 1.640625 -1.40625 C 1.640625 -1.453125 1.796875 -2.078125 1.8125 -2.109375 C 1.828125 -2.15625 2.03125 -2.515625 2.25 -2.671875 C 2.328125 -2.734375 2.515625 -2.875 2.8125 -2.875 C 2.890625 -2.875 3.0625 -2.859375 3.203125 -2.78125 C 2.96875 -2.71875 2.890625 -2.515625 2.890625 -2.390625 C 2.890625 -2.234375 3.015625 -2.140625 3.171875 -2.140625 C 3.328125 -2.140625 3.5625 -2.265625 3.5625 -2.5625 Z M 3.5625 -2.5625 "/>
+</symbol>
+</g>
+<clipPath id="fisica2_lez05c_d1-clip1">
+  <path d="M 0 0.25 L 187 0.25 L 187 178.445312 L 0 178.445312 Z M 0 0.25 "/>
+</clipPath>
+<clipPath id="fisica2_lez05c_d1-clip2">
+  <path d="M 77 0.25 L 103 0.25 L 103 28 L 77 28 Z M 77 0.25 "/>
+</clipPath>
+</defs>
+<g id="fisica2_lez05c_d1-surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(91.999817%,91.999817%,100%);fill-opacity:1;" d="M 174.847656 89.347656 C 174.847656 42.550781 136.914062 4.617188 90.117188 4.617188 C 43.320312 4.617188 5.386719 42.550781 5.386719 89.347656 C 5.386719 136.140625 43.320312 174.078125 90.117188 174.078125 C 136.914062 174.078125 174.847656 136.140625 174.847656 89.347656 Z M 174.847656 89.347656 "/>
+<g clip-path="url(#fisica2_lez05c_d1-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 85.040363 -0.00138102 C 85.040363 46.96644 46.968201 85.038603 0.000379729 85.038603 C -46.967441 85.038603 -85.039604 46.96644 -85.039604 -0.00138102 C -85.039604 -46.965281 -46.967441 -85.041365 0.000379729 -85.041365 C 46.968201 -85.041365 85.040363 -46.965281 85.040363 -0.00138102 Z M 85.040363 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-1" x="7.279409" y="68.205506"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-2" x="15.170849" y="68.205506"/>
+</g>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph1-1" x="25.646316" y="68.205506"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,59.999084%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000379729 -0.00138102 L -35.93902 77.072107 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<g style="fill:rgb(0%,0%,59.999084%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-3" x="81.821113" y="62.736484"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 51.025938 -0.00138102 C 51.025938 28.179312 28.181072 51.024177 0.000379729 51.024177 C -28.180313 51.024177 -51.025179 28.179312 -51.025179 -0.00138102 C -51.025179 -28.182074 -28.180313 -51.023019 0.000379729 -51.023019 C 28.181072 -51.023019 51.025938 -28.182074 51.025938 -0.00138102 Z M 51.025938 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<g style="fill:rgb(29.998779%,29.998779%,29.998779%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-4" x="48.432081" y="76.850925"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.462198 -0.00138102 L 47.560199 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(29.998779%,29.998779%,29.998779%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.215773 0.00138102 L 0.644179 1.346119 L 1.816415 0.00138102 L 0.644179 -1.347278 Z M 4.215773 0.00138102 " transform="matrix(-0.99636,0,0,0.99636,95.278554,89.34628)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00107621 2.290964 L -0.00107621 -2.292123 " transform="matrix(-0.99636,0,0,0.99636,90.315334,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(29.998779%,29.998779%,29.998779%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.21407 -0.00138102 L 0.642477 1.347278 L 1.818633 -0.00138102 L 0.642477 -1.346119 Z M 4.21407 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,135.793455,89.34628)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(29.998779%,29.998779%,29.998779%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00113164 2.292123 L 0.00113164 -2.290964 " transform="matrix(0.99636,0,0,-0.99636,140.756685,89.34628)"/>
+<g style="fill:rgb(29.998779%,29.998779%,29.998779%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-5" x="113.158639" y="99.112605"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 92.050781 89.347656 C 92.050781 88.277344 91.1875 87.410156 90.117188 87.410156 C 89.046875 87.410156 88.179688 88.277344 88.179688 89.347656 C 88.179688 90.414062 89.046875 91.28125 90.117188 91.28125 C 91.1875 91.28125 92.050781 90.414062 92.050781 89.347656 Z M 92.050781 89.347656 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-6" x="80.166158" y="87.242964"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 51.025938 -0.00138102 L 74.552974 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441458 -0.00138102 L 1.285708 1.570747 L 2.665731 -0.00138102 L 1.285708 -1.569589 Z M 5.441458 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,161.941628,89.34628)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 36.080919 36.079158 L 52.715682 52.717842 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.440221 -0.00124505 L 1.284615 1.570622 L 2.665197 0.0015272 L 1.287387 -1.57034 Z M 5.440221 -0.00124505 " transform="matrix(0.704526,-0.704526,-0.704526,-0.704526,140.904625,38.558465)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000379729 51.024177 L 0.000379729 74.551214 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;" d="M 90.117188 12.101562 L 88.550781 16.238281 L 90.117188 14.867188 L 91.683594 16.238281 Z M 90.117188 12.101562 "/>
+<g clip-path="url(#fisica2_lez05c_d1-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439698 -0.000379729 L 1.287868 1.571749 L 2.66397 -0.000379729 L 1.287868 -1.572508 Z M 5.439698 -0.000379729 " transform="matrix(0,-0.99636,-0.99636,0,90.116809,17.521462)"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -36.080159 36.079158 L -52.714922 52.717842 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.439684 0.000708029 L 1.28685 1.569803 L 2.66466 -0.00206422 L 1.28685 -1.568387 Z M 5.439684 0.000708029 " transform="matrix(-0.704526,-0.704526,-0.704526,0.704526,39.328994,38.558465)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -51.025179 -0.00138102 L -74.552215 -0.00138102 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.440699 0.00138102 L 1.288869 1.569589 L 2.664971 0.00138102 L 1.288869 -1.570747 Z M 5.440699 0.00138102 " transform="matrix(-0.99636,0,0,0.99636,18.291991,89.34628)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M -36.080159 -36.077999 L -52.714922 -52.716683 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.441637 0.00124505 L 1.288803 1.57034 L 2.66384 0.00124505 L 1.286031 -1.570622 Z M 5.441637 0.00124505 " transform="matrix(-0.704526,0.704526,0.704526,0.704526,39.328994,140.134096)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000379729 -51.023019 L 0.000379729 -74.553976 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.438539 0.000379729 L 1.286709 1.572508 L 2.662812 0.000379729 L 1.286709 -1.571749 Z M 5.438539 0.000379729 " transform="matrix(0,0.99636,0.99636,0,90.116809,161.171099)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 36.080919 -36.077999 L 52.715682 -52.716683 " transform="matrix(0.99636,0,0,-0.99636,90.116809,89.34628)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,69.999695%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,69.999695%);stroke-opacity:1;stroke-miterlimit:10;" d="M 5.442174 -0.000708029 L 1.286568 1.571159 L 2.664377 -0.000708029 L 1.286568 -1.572575 Z M 5.442174 -0.000708029 " transform="matrix(0.704526,0.704526,0.704526,-0.704526,140.904625,140.134096)"/>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-7" x="183.18683" y="19.125791"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph2-1" x="190.514065" y="20.614354"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph0-2" x="197.666936" y="19.125791"/>
+</g>
+<g style="fill:rgb(0%,0%,69.999695%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d1-glyph1-1" x="208.144661" y="19.125791"/>
+</g>
+</g>
+</svg></figure>
+        <p>Schema con il centro $O$ evidenziato per il calcolo del campo all'interno. Le frecce uscenti rappresentano il caso $Q \\gt 0$ (equivalentemente $\\rho \\gt 0$), per il quale $E_r \\gt 0$; se $Q \\lt 0$ i vettori sarebbero entranti.</p>
+        <p>Il punto chiave è che, per il teorema di Gauss, <strong>solo la carica interna</strong> alla superficie scelta contribuisce al flusso totale. La carica che si trova nel guscio sferico tra $r$ e $R$ non ha effetto sul flusso attraverso la superficie Gaussiana di raggio $r$.</p>`,
+        subsections: [
+          {
+            subtitle: "Perché il campo interno cresce? (attenzione all'argomento rapido)",
+            content: `<p>Spesso si dice, in modo troppo rapido, che il campo interno cresce "perché inglobiamo sempre più carica". In realtà nel teorema di Gauss compaiono <strong>due</strong> quantità che crescono con $r$: la carica racchiusa e l'area attraversata dal flusso. Il comportamento del campo dipende dal <strong>confronto</strong> tra le due crescite:</p>
+            <p>$$Q_{int} = \\rho \\,\\frac{4}{3}\\pi r^3 \\propto r^3 , \\qquad A = 4\\pi r^2 \\propto r^2 \\qquad \\Longrightarrow \\qquad E_r = \\frac{Q_{int}}{\\varepsilon_0 A} \\propto \\frac{r^3}{r^2} = r .$$</p>
+            <p>La carica racchiusa cresce dunque <em>più rapidamente</em> dell'area: è questo squilibrio, e non la sola crescita di $Q_{int}$, a produrre l'andamento lineare $E \\propto r$. Se la carica racchiusa crescesse come $r^2$ (cioè come l'area), il campo risulterebbe <strong>costante</strong>.</p>`
+          },
+          {
+            subtitle: "Proposizione — Campo di una sfera uniformemente carica in volume",
+            content: `<p>Sia data una sfera di raggio $R$, carica totale $Q$ distribuita <em>uniformemente</em> nel volume, con densità $\\rho = \\dfrac{Q}{\\frac{4}{3}\\pi R^3}$, isolata nel vuoto. Per la simmetria sferica il campo è radiale, $\\vec{E} = E_r \\hat{r}$ con $\\hat{r}$ uscente, e la componente radiale vale</p>
+            <p>$$E_r(r) = \\begin{cases} \\dfrac{\\rho r}{3\\varepsilon_0} = \\dfrac{1}{4\\pi\\varepsilon_0} \\dfrac{Q r}{R^3} & \\text{se } r \\lt R \\\\[3mm] \\dfrac{1}{4\\pi\\varepsilon_0} \\dfrac{Q}{r^2} & \\text{se } r \\geq R \\end{cases}$$</p>
+            <p>Il <strong>modulo</strong> del campo è $E(r) = |E_r(r)|$, cioè si ottiene sostituendo $Q \\to |Q|$ e $\\rho \\to |\\rho|$:</p>
+            <p>$$|\\vec{E}(r)| = \\frac{1}{4\\pi\\varepsilon_0}\\frac{|Q|\\,r}{R^3} \\ \\ (r \\lt R), \\qquad |\\vec{E}(r)| = \\frac{1}{4\\pi\\varepsilon_0}\\frac{|Q|}{r^2} \\ \\ (r \\ge R).$$</p>
+            <p><strong>Convenzione sul segno:</strong> se $Q \\gt 0$ (ovvero $\\rho \\gt 0$) si ha $E_r \\gt 0$ e il campo è uscente; se $Q \\lt 0$ si ha $E_r \\lt 0$, il campo è radiale entrante (diretto verso il centro) e il flusso attraverso ogni superficie Gaussiana chiusa centrata nella sfera è negativo.</p>
+            <p><strong>Ipotesi e dominio di validità:</strong> distribuzione rigorosamente uniforme e a simmetria sferica, assenza di altre cariche o di mezzi dielettrici; le formule valgono per ogni $r \\geq 0$, e in particolare l'espressione interna valutata in $r=0$ dà $E_r(0)=0$, cioè il campo si annulla nel centro.</p>`
+          },
+          {
+            subtitle: "Continuità del campo in $r=R$",
+            content: `<p>È importante verificare cosa succede sulla superficie della sfera, cioè per $r=R$.</p>
+            <ul>
+              <li>Usando la formula per l'<strong>interno</strong> con $r=R$: <p>$$E_r(R) = \\frac{1}{4\\pi\\varepsilon_0} \\frac{Q R}{R^3} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{Q}{R^2}$$</p></li>
+              <li>Usando la formula per l'<strong>esterno</strong> con $r=R$: <p>$$E_r(R) = \\frac{1}{4\\pi\\varepsilon_0} \\frac{Q}{R^2}$$</p></li>
+            </ul>
+            <p>I due risultati coincidono. Questo significa che il campo elettrostatico è <strong>continuo</strong> sulla superficie della sfera: non ci sono salti bruschi nel valore del campo.</p>
+            <p>La continuità in $r=R$ non è un caso: a differenza del piano (dove la carica è concentrata su una superficie e il campo salta di $\\sigma/\\varepsilon_0$ attraversandolo), qui la carica è distribuita con densità volumetrica finita e non esistono strati superficiali di carica che producano discontinuità del campo.</p>
+            <figure class="figura" data-id="fisica2_lez05a_d6"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05a_d6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="250.733pt" height="144.315pt" viewBox="0 0 250.733 144.315" version="1.2"><style>#fisica2_lez05a_d6 [fill="rgb(0%,0%,0%)"],#fisica2_lez05a_d6 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05a_d6 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05a_d6 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05a_d6 [fill="rgb(100%,0%,0%)"],#fisica2_lez05a_d6 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05a_d6 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05a_d6 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05a_d6 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05a_d6 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05a_d6 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05a_d6 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}#fisica2_lez05a_d6 [fill="rgb(0%,0%,100%)"],#fisica2_lez05a_d6 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d6 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05a_d6 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05a_d6 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05a_d6 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05a_d6 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05a_d6 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-1">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-2">
+<path style="stroke:none;" d="M 7.078125 -2.453125 C 7.078125 -2.453125 7.078125 -2.5625 6.953125 -2.5625 C 6.859375 -2.5625 6.84375 -2.5 6.828125 -2.4375 C 6.1875 -0.96875 5.8125 -0.3125 4.125 -0.3125 L 2.671875 -0.3125 C 2.53125 -0.3125 2.515625 -0.3125 2.453125 -0.3125 C 2.34375 -0.328125 2.328125 -0.34375 2.328125 -0.421875 C 2.328125 -0.453125 2.328125 -0.46875 2.375 -0.640625 L 3.046875 -3.359375 L 4.03125 -3.359375 C 4.875 -3.359375 4.875 -3.140625 4.875 -2.890625 C 4.875 -2.828125 4.875 -2.703125 4.796875 -2.40625 C 4.78125 -2.359375 4.765625 -2.328125 4.765625 -2.296875 C 4.765625 -2.25 4.8125 -2.1875 4.90625 -2.1875 C 4.984375 -2.1875 5.015625 -2.25 5.046875 -2.390625 L 5.609375 -4.71875 C 5.609375 -4.765625 5.5625 -4.828125 5.5 -4.828125 C 5.40625 -4.828125 5.390625 -4.765625 5.359375 -4.640625 C 5.15625 -3.890625 4.96875 -3.65625 4.0625 -3.65625 L 3.125 -3.65625 L 3.71875 -6.046875 C 3.8125 -6.40625 3.8125 -6.4375 4.25 -6.4375 L 5.65625 -6.4375 C 6.859375 -6.4375 7.15625 -6.15625 7.15625 -5.34375 C 7.15625 -5.09375 7.15625 -5.078125 7.125 -4.8125 C 7.125 -4.75 7.109375 -4.6875 7.109375 -4.640625 C 7.109375 -4.578125 7.140625 -4.515625 7.234375 -4.515625 C 7.34375 -4.515625 7.359375 -4.578125 7.375 -4.765625 L 7.578125 -6.484375 C 7.59375 -6.75 7.546875 -6.75 7.296875 -6.75 L 2.296875 -6.75 C 2.09375 -6.75 2 -6.75 2 -6.546875 C 2 -6.4375 2.078125 -6.4375 2.265625 -6.4375 C 2.640625 -6.4375 2.921875 -6.4375 2.921875 -6.265625 C 2.921875 -6.21875 2.921875 -6.203125 2.875 -6.015625 L 1.5625 -0.78125 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.484375 -0.3125 0.375 -0.3125 0.375 -0.125 C 0.375 0 0.46875 0 0.65625 0 L 5.796875 0 C 6.03125 0 6.046875 -0.015625 6.109375 -0.171875 L 7.03125 -2.3125 C 7.046875 -2.359375 7.078125 -2.453125 7.078125 -2.453125 Z M 7.078125 -2.453125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-3">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-4">
+<path style="stroke:none;" d="M 5.625 -4.03125 C 5.625 -4.28125 5.421875 -4.28125 5.234375 -4.28125 L 1.90625 -4.28125 C 1.6875 -4.28125 1.3125 -4.28125 0.875 -3.8125 C 0.53125 -3.421875 0.265625 -2.96875 0.265625 -2.921875 C 0.265625 -2.921875 0.265625 -2.8125 0.390625 -2.8125 C 0.46875 -2.8125 0.484375 -2.859375 0.546875 -2.9375 C 1.03125 -3.703125 1.609375 -3.703125 1.8125 -3.703125 L 2.375 -3.703125 C 2.046875 -2.5 1.515625 -1.296875 1.09375 -0.390625 C 1.015625 -0.25 1.015625 -0.234375 1.015625 -0.15625 C 1.015625 0.03125 1.1875 0.109375 1.3125 0.109375 C 1.609375 0.109375 1.6875 -0.171875 1.8125 -0.53125 C 1.9375 -0.984375 1.9375 -1.015625 2.078125 -1.515625 L 2.625 -3.703125 L 3.75 -3.703125 C 3.421875 -2.234375 3.328125 -1.8125 3.328125 -1.140625 C 3.328125 -0.984375 3.328125 -0.71875 3.40625 -0.390625 C 3.515625 0.046875 3.625 0.109375 3.765625 0.109375 C 3.96875 0.109375 4.171875 -0.0625 4.171875 -0.265625 C 4.171875 -0.328125 4.171875 -0.34375 4.125 -0.484375 C 3.828125 -1.203125 3.828125 -1.84375 3.828125 -2.125 C 3.828125 -2.65625 3.90625 -3.1875 4.015625 -3.703125 L 5.140625 -3.703125 C 5.265625 -3.703125 5.625 -3.703125 5.625 -4.03125 Z M 5.625 -4.03125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-5">
+<path style="stroke:none;" d="M 3.734375 -0.796875 C 3.734375 -0.859375 3.6875 -0.90625 3.625 -0.90625 C 3.578125 -0.90625 3.546875 -0.859375 3.53125 -0.828125 C 3.390625 -0.609375 3.15625 -0.234375 1.96875 -0.234375 C 1.359375 -0.234375 0.515625 -0.390625 0.515625 -1.09375 C 0.515625 -1.421875 0.796875 -1.953125 1.40625 -2.25 C 1.71875 -2.109375 2.015625 -2.109375 2.25 -2.109375 C 2.515625 -2.109375 3.0625 -2.109375 3.0625 -2.421875 C 3.0625 -2.65625 2.703125 -2.6875 2.328125 -2.6875 C 2.125 -2.6875 1.78125 -2.671875 1.40625 -2.5 C 1.1875 -2.625 1.015625 -2.8125 1.015625 -3.078125 C 1.015625 -3.6875 1.984375 -4.03125 2.875 -4.03125 C 3.03125 -4.03125 3.390625 -4.03125 3.796875 -3.765625 C 3.90625 -3.6875 3.921875 -3.65625 3.984375 -3.65625 C 4.125 -3.65625 4.25 -3.796875 4.25 -3.921875 C 4.25 -4.125 3.65625 -4.5 2.96875 -4.5 C 1.828125 -4.5 0.765625 -3.828125 0.765625 -3.078125 C 0.765625 -2.65625 1.125 -2.40625 1.15625 -2.375 C 0.578125 -2.046875 0.265625 -1.484375 0.265625 -1.03125 C 0.265625 -0.390625 0.828125 0.21875 1.875 0.21875 C 3.1875 0.21875 3.734375 -0.65625 3.734375 -0.796875 Z M 2.796875 -2.40625 C 2.65625 -2.34375 2.625 -2.328125 2.25 -2.328125 C 2.03125 -2.328125 1.921875 -2.328125 1.71875 -2.375 C 1.953125 -2.453125 2.15625 -2.46875 2.328125 -2.46875 C 2.578125 -2.46875 2.625 -2.453125 2.796875 -2.40625 Z M 2.796875 -2.40625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph0-6">
+<path style="stroke:none;" d="M 3.8125 1.71875 C 3.8125 1.625 3.703125 1.625 3.546875 1.625 C 3.078125 1.625 3.078125 1.546875 3.078125 1.453125 C 3.078125 1.390625 3.09375 1.328125 3.109375 1.234375 L 4.484375 -4.28125 C 4.484375 -4.3125 4.453125 -4.375 4.390625 -4.375 C 4.28125 -4.375 3.875 -3.984375 3.703125 -3.6875 C 3.5 -4.234375 3.109375 -4.390625 2.78125 -4.390625 C 1.625 -4.390625 0.390625 -2.921875 0.390625 -1.484375 C 0.390625 -0.5 0.984375 0.109375 1.703125 0.109375 C 2.140625 0.109375 2.515625 -0.125 2.875 -0.484375 L 2.4375 1.296875 C 2.34375 1.5625 2.265625 1.609375 1.71875 1.625 C 1.59375 1.625 1.484375 1.625 1.484375 1.8125 C 1.484375 1.8125 1.484375 1.921875 1.625 1.921875 C 1.9375 1.921875 2.28125 1.890625 2.609375 1.890625 C 2.953125 1.890625 3.296875 1.921875 3.625 1.921875 C 3.6875 1.921875 3.8125 1.921875 3.8125 1.71875 Z M 3.578125 -3.296875 C 3.578125 -3.234375 3.03125 -1.0625 3 -1.015625 C 2.84375 -0.75 2.296875 -0.109375 1.734375 -0.109375 C 1.140625 -0.109375 1.09375 -0.875 1.09375 -1.046875 C 1.09375 -1.515625 1.390625 -2.59375 1.5625 -3.015625 C 1.859375 -3.75 2.375 -4.171875 2.78125 -4.171875 C 3.4375 -4.171875 3.578125 -3.359375 3.578125 -3.296875 Z M 3.578125 -3.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph1-1">
+<path style="stroke:none;" d="M 4.15625 0 L 4.15625 -0.3125 L 3.84375 -0.3125 C 2.953125 -0.3125 2.921875 -0.421875 2.921875 -0.78125 L 2.921875 -6.34375 C 2.921875 -6.59375 2.921875 -6.609375 2.6875 -6.609375 C 2.078125 -5.96875 1.203125 -5.96875 0.890625 -5.96875 L 0.890625 -5.671875 C 1.078125 -5.671875 1.671875 -5.671875 2.1875 -5.921875 L 2.1875 -0.78125 C 2.1875 -0.421875 2.15625 -0.3125 1.265625 -0.3125 L 0.9375 -0.3125 L 0.9375 0 C 1.296875 -0.03125 2.15625 -0.03125 2.546875 -0.03125 C 2.953125 -0.03125 3.8125 -0.03125 4.15625 0 Z M 4.15625 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph1-2">
+<path style="stroke:none;" d="M 4.671875 -1.640625 L 4.671875 -1.9375 L 3.6875 -1.9375 L 3.6875 -6.453125 C 3.6875 -6.65625 3.6875 -6.71875 3.515625 -6.71875 C 3.4375 -6.71875 3.40625 -6.71875 3.328125 -6.59375 L 0.28125 -1.9375 L 0.28125 -1.640625 L 2.921875 -1.640625 L 2.921875 -0.78125 C 2.921875 -0.421875 2.890625 -0.3125 2.15625 -0.3125 L 1.953125 -0.3125 L 1.953125 0 C 2.359375 -0.03125 2.875 -0.03125 3.296875 -0.03125 C 3.703125 -0.03125 4.234375 -0.03125 4.640625 0 L 4.640625 -0.3125 L 4.4375 -0.3125 C 3.703125 -0.3125 3.6875 -0.421875 3.6875 -0.78125 L 3.6875 -1.640625 Z M 2.96875 -1.9375 L 0.5625 -1.9375 L 2.96875 -5.640625 Z M 2.96875 -1.9375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph2-1">
+<path style="stroke:none;" d="M 3.578125 -2.21875 C 3.578125 -2.96875 3.484375 -3.53125 3.171875 -4.015625 C 2.953125 -4.328125 2.53125 -4.609375 1.96875 -4.609375 C 0.359375 -4.609375 0.359375 -2.71875 0.359375 -2.21875 C 0.359375 -1.71875 0.359375 0.140625 1.96875 0.140625 C 3.578125 0.140625 3.578125 -1.71875 3.578125 -2.21875 Z M 2.953125 -2.296875 C 2.953125 -1.796875 2.953125 -1.28125 2.859375 -0.84375 C 2.71875 -0.203125 2.25 -0.0625 1.96875 -0.0625 C 1.65625 -0.0625 1.234375 -0.25 1.09375 -0.8125 C 0.984375 -1.21875 0.984375 -1.796875 0.984375 -2.296875 C 0.984375 -2.8125 0.984375 -3.34375 1.09375 -3.71875 C 1.234375 -4.265625 1.6875 -4.40625 1.96875 -4.40625 C 2.34375 -4.40625 2.703125 -4.1875 2.828125 -3.78125 C 2.9375 -3.40625 2.953125 -2.90625 2.953125 -2.296875 Z M 2.953125 -2.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph2-2">
+<path style="stroke:none;" d="M 3.5 -1.265625 L 3.265625 -1.265625 C 3.25 -1.109375 3.171875 -0.703125 3.09375 -0.625 C 3.03125 -0.59375 2.5 -0.59375 2.40625 -0.59375 L 1.125 -0.59375 C 1.859375 -1.234375 2.09375 -1.421875 2.515625 -1.75 C 3.03125 -2.171875 3.5 -2.59375 3.5 -3.25 C 3.5 -4.09375 2.765625 -4.609375 1.875 -4.609375 C 1.015625 -4.609375 0.4375 -4 0.4375 -3.359375 C 0.4375 -3.015625 0.734375 -2.96875 0.8125 -2.96875 C 0.96875 -2.96875 1.171875 -3.09375 1.171875 -3.34375 C 1.171875 -3.46875 1.125 -3.71875 0.765625 -3.71875 C 0.984375 -4.203125 1.453125 -4.359375 1.78125 -4.359375 C 2.46875 -4.359375 2.828125 -3.8125 2.828125 -3.25 C 2.828125 -2.65625 2.40625 -2.171875 2.171875 -1.921875 L 0.5 -0.265625 C 0.4375 -0.203125 0.4375 -0.1875 0.4375 0 L 3.296875 0 Z M 3.5 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph3-1">
+<path style="stroke:none;" d="M 6.515625 -2.1875 C 6.515625 -2.25 6.453125 -2.296875 6.390625 -2.296875 C 6.3125 -2.296875 6.3125 -2.296875 6.203125 -2.09375 C 5.65625 -0.84375 5.296875 -0.28125 3.8125 -0.28125 L 2.4375 -0.28125 C 2.3125 -0.28125 2.296875 -0.28125 2.265625 -0.28125 C 2.171875 -0.296875 2.15625 -0.296875 2.15625 -0.359375 C 2.15625 -0.390625 2.15625 -0.40625 2.1875 -0.578125 L 2.796875 -3.015625 L 3.71875 -3.015625 C 4.34375 -3.015625 4.484375 -2.90625 4.484375 -2.609375 C 4.484375 -2.546875 4.453125 -2.359375 4.421875 -2.21875 C 4.40625 -2.15625 4.390625 -2.109375 4.390625 -2.09375 C 4.390625 -2.09375 4.390625 -1.96875 4.5 -1.96875 C 4.609375 -1.96875 4.625 -2.03125 4.65625 -2.171875 L 5.125 -4.046875 C 5.171875 -4.171875 5.171875 -4.1875 5.171875 -4.21875 C 5.171875 -4.296875 5.109375 -4.34375 5.046875 -4.34375 C 4.9375 -4.34375 4.9375 -4.28125 4.890625 -4.109375 C 4.703125 -3.40625 4.4375 -3.296875 3.71875 -3.296875 L 2.875 -3.296875 C 3 -3.84375 3.421875 -5.546875 3.46875 -5.640625 C 3.53125 -5.765625 3.59375 -5.796875 3.875 -5.796875 L 5.1875 -5.796875 C 6.3125 -5.796875 6.5625 -5.515625 6.5625 -4.796875 C 6.5625 -4.515625 6.515625 -4.25 6.515625 -4.1875 C 6.515625 -4.125 6.5625 -4.0625 6.640625 -4.0625 C 6.75 -4.0625 6.75 -4.125 6.765625 -4.28125 L 6.953125 -5.9375 C 6.953125 -6.0625 6.875 -6.0625 6.703125 -6.0625 L 2.109375 -6.0625 C 1.9375 -6.0625 1.84375 -6.0625 1.84375 -5.90625 C 1.84375 -5.796875 1.921875 -5.796875 2.109375 -5.796875 C 2.15625 -5.796875 2.3125 -5.796875 2.453125 -5.765625 C 2.65625 -5.75 2.65625 -5.703125 2.65625 -5.625 C 2.65625 -5.609375 2.65625 -5.578125 2.609375 -5.421875 L 1.421875 -0.671875 C 1.34375 -0.359375 1.328125 -0.28125 0.65625 -0.28125 C 0.484375 -0.28125 0.390625 -0.28125 0.390625 -0.109375 C 0.390625 0 0.484375 0 0.640625 0 L 5.359375 0 C 5.515625 0 5.53125 0 5.5625 -0.03125 C 5.578125 -0.046875 5.59375 -0.046875 5.640625 -0.171875 C 5.75 -0.40625 6.515625 -2.109375 6.515625 -2.1875 Z M 6.515625 -2.1875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph3-2">
+<path style="stroke:none;" d="M 4 -3.34375 C 4 -3.6875 3.671875 -3.9375 3.234375 -3.9375 C 2.5625 -3.9375 2.1875 -3.4375 2.0625 -3.28125 C 1.96875 -3.765625 1.5625 -3.9375 1.21875 -3.9375 C 0.90625 -3.9375 0.703125 -3.75 0.546875 -3.4375 C 0.375 -3.109375 0.265625 -2.609375 0.265625 -2.5625 C 0.265625 -2.484375 0.328125 -2.46875 0.390625 -2.46875 C 0.484375 -2.46875 0.5 -2.5 0.546875 -2.6875 C 0.71875 -3.390625 0.90625 -3.71875 1.203125 -3.71875 C 1.46875 -3.71875 1.46875 -3.4375 1.46875 -3.296875 C 1.46875 -3.109375 1.40625 -2.84375 1.34375 -2.609375 C 1.28125 -2.375 1.203125 -1.984375 1.15625 -1.875 L 0.796875 -0.421875 C 0.734375 -0.203125 0.734375 -0.1875 0.734375 -0.15625 C 0.734375 -0.046875 0.828125 0.09375 1.015625 0.09375 C 1.296875 0.09375 1.359375 -0.140625 1.421875 -0.40625 C 1.53125 -0.78125 1.53125 -0.796875 1.625 -1.171875 C 1.953125 -2.5 2 -2.71875 2.03125 -2.765625 C 2.078125 -2.875 2.484375 -3.71875 3.234375 -3.71875 C 3.4375 -3.71875 3.5625 -3.65625 3.609375 -3.609375 C 3.3125 -3.5625 3.15625 -3.3125 3.15625 -3.125 C 3.15625 -2.953125 3.28125 -2.796875 3.5 -2.796875 C 3.75 -2.796875 4 -3 4 -3.34375 Z M 4 -3.34375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph3-3">
+<path style="stroke:none;" d="M 4.0625 -6.5 C 4.0625 -6.609375 3.984375 -6.6875 3.875 -6.6875 C 3.75 -6.6875 3.71875 -6.625 3.71875 -6.609375 L 0.5625 1.875 C 0.515625 2 0.515625 2.03125 0.515625 2.03125 C 0.515625 2.15625 0.59375 2.234375 0.703125 2.234375 C 0.78125 2.234375 0.859375 2.1875 0.921875 2.015625 L 4.015625 -6.328125 C 4.0625 -6.453125 4.0625 -6.5 4.0625 -6.5 Z M 4.0625 -6.5 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph4-1">
+<path style="stroke:none;" d="M 6.609375 0.0625 L 6.609375 -0.328125 C 6.546875 -0.296875 6.421875 -0.296875 6.390625 -0.296875 C 5.65625 -0.296875 5.265625 -0.890625 4.453125 -2.09375 C 4.640625 -2.53125 5.28125 -3.65625 6.359375 -3.65625 C 6.359375 -3.65625 6.484375 -3.65625 6.609375 -3.625 C 6.609375 -3.734375 6.609375 -3.90625 6.578125 -3.90625 C 6.546875 -3.9375 6.40625 -3.9375 6.296875 -3.9375 C 5.453125 -3.9375 4.75 -3.375 4.234375 -2.4375 C 3.859375 -3 3.234375 -3.9375 2.109375 -3.9375 C 1.125 -3.9375 0.515625 -2.96875 0.515625 -1.921875 C 0.515625 -0.921875 1.078125 0.09375 2.09375 0.09375 C 2.9375 0.09375 3.65625 -0.46875 4.15625 -1.40625 C 4.546875 -0.84375 5.171875 0.09375 6.28125 0.09375 C 6.390625 0.09375 6.53125 0.078125 6.609375 0.0625 Z M 3.9375 -1.75 C 3.75 -1.328125 3.109375 -0.1875 2.03125 -0.1875 C 1.171875 -0.1875 0.734375 -1.109375 0.734375 -1.921875 C 0.734375 -2.734375 1.203125 -3.546875 2 -3.546875 C 2.734375 -3.546875 3.125 -2.953125 3.9375 -1.75 Z M 3.9375 -1.75 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph5-1">
+<path style="stroke:none;" d="M 3.859375 0 L 3.859375 -0.28125 L 3.5625 -0.28125 C 2.734375 -0.28125 2.71875 -0.390625 2.71875 -0.71875 L 2.71875 -5.703125 C 2.71875 -5.921875 2.703125 -5.9375 2.484375 -5.9375 C 1.921875 -5.375 1.109375 -5.375 0.828125 -5.375 L 0.828125 -5.09375 C 1 -5.09375 1.546875 -5.09375 2.03125 -5.328125 L 2.03125 -0.71875 C 2.03125 -0.390625 2 -0.28125 1.171875 -0.28125 L 0.890625 -0.28125 L 0.890625 0 C 1.203125 -0.03125 2 -0.03125 2.359375 -0.03125 C 2.734375 -0.03125 3.53125 -0.03125 3.859375 0 Z M 3.859375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05a_d6-glyph6-1">
+<path style="stroke:none;" d="M 3.203125 -1.109375 L 2.984375 -1.109375 C 2.96875 -1.03125 2.90625 -0.640625 2.828125 -0.578125 C 2.78125 -0.53125 2.296875 -0.53125 2.21875 -0.53125 L 1.09375 -0.53125 L 1.859375 -1.15625 C 2.0625 -1.3125 2.59375 -1.703125 2.78125 -1.875 C 2.953125 -2.046875 3.203125 -2.359375 3.203125 -2.78125 C 3.203125 -3.53125 2.53125 -3.953125 1.734375 -3.953125 C 0.96875 -3.953125 0.421875 -3.453125 0.421875 -2.890625 C 0.421875 -2.59375 0.6875 -2.546875 0.75 -2.546875 C 0.90625 -2.546875 1.078125 -2.65625 1.078125 -2.875 C 1.078125 -3 1 -3.203125 0.734375 -3.203125 C 0.875 -3.5 1.234375 -3.734375 1.640625 -3.734375 C 2.265625 -3.734375 2.59375 -3.265625 2.59375 -2.78125 C 2.59375 -2.359375 2.328125 -1.921875 1.90625 -1.546875 L 0.5 -0.25 C 0.4375 -0.1875 0.421875 -0.1875 0.421875 0 L 3.015625 0 Z M 3.203125 -1.109375 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05a_d6-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00162057 0.00151265 L 186.291837 0.00151265 " transform="matrix(0.995276,0,0,-0.995276,48.084325,126.083537)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548888 3.109947 C -2.085763 1.245671 -1.045693 0.362593 -0.00169858 0.00151265 C -1.045693 -0.363493 -2.085763 -1.242646 -2.548888 -3.110847 " transform="matrix(0.995276,0,0,-0.995276,233.892316,126.083537)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-1" x="237.987935" y="128.218403"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00162057 0.00151265 L 0.00162057 108.054941 " transform="matrix(0.995276,0,0,-0.995276,48.084325,126.083537)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.548695 3.110739 C -2.08557 1.242538 -1.0455 0.363385 -0.00150538 -0.00162057 C -1.0455 -0.362701 -2.08557 -1.245779 -2.548695 -3.110055 " transform="matrix(0,-0.995276,-0.995276,0,48.084325,18.143033)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-2" x="44.139051" y="14.046328"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00162057 0.00151265 L 68.033952 68.033844 " transform="matrix(0.995276,0,0,-0.995276,48.084325,126.083537)"/>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 68.033952 68.033844 L 76.53505 53.743679 L 85.040073 43.539222 L 93.545095 36.05857 L 102.050118 30.273428 L 110.551216 25.850188 L 119.056239 22.109862 L 127.561261 19.389981 L 136.066284 17.007633 L 144.567382 14.966742 L 153.072404 13.604839 L 161.577427 11.905405 L 170.078525 10.884959 " transform="matrix(0.995276,0,0,-0.995276,48.084325,126.083537)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 68.033952 0.00151265 L 68.033952 68.033844 " transform="matrix(0.995276,0,0,-0.995276,48.084325,126.083537)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 0.00162057 68.033844 L 68.033952 68.033844 " transform="matrix(0.995276,0,0,-0.995276,48.084325,126.083537)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 118.175781 58.371094 C 118.175781 57.058594 117.109375 55.992188 115.796875 55.992188 C 114.480469 55.992188 113.414062 57.058594 113.414062 58.371094 C 113.414062 59.6875 114.480469 60.753906 115.796875 60.753906 C 117.109375 60.753906 118.175781 59.6875 118.175781 58.371094 Z M 118.175781 58.371094 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-3" x="111.990988" y="136.361751"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph1-1" x="16.460429" y="53.996701"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00166344 0.0000615494 L 20.131918 0.0000615494 " transform="matrix(0.995276,0,0,-0.995276,8.920219,58.226624)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph1-2" x="8.920219" y="67.506576"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-4" x="13.877688" y="67.506576"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-5" x="19.886503" y="67.506576"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph2-1" x="24.510221" y="68.993518"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-6" x="34.973556" y="53.996701"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00188433 0.0000615494 L 12.110021 0.0000615494 " transform="matrix(0.995276,0,0,-0.995276,31.337813,58.226624)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph0-3" x="31.337813" y="67.506576"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph2-2" x="38.942716" y="64.642172"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph3-1" x="82.057071" y="108.819482"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph4-1" x="91.861533" y="108.819482"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph3-2" x="101.543577" y="108.819482"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph3-1" x="156.537545" y="88.187413"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph4-1" x="166.343003" y="88.187413"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph5-1" x="176.025046" y="88.187413"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph3-3" x="180.610282" y="88.187413"/>
+  <use xlink:href="#fisica2_lez05a_d6-glyph3-2" x="185.196347" y="88.187413"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05a_d6-glyph6-1" x="189.589661" y="84.396407"/>
+</g>
+</g>
+</svg></figure>
+            <p>Andamento del modulo del campo in funzione della distanza dal centro per $Q \\gt 0$: crescita lineare all'interno, decrescita come $1/r^2$ all'esterno, con raccordo continuo in $r=R$.</p>
+            <figure class="figura" data-id="fisica2_lez05b_d4"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05b_d4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="335.961pt" height="150.674pt" viewBox="0 0 335.961 150.674" version="1.2"><style>#fisica2_lez05b_d4 [fill="rgb(0%,0%,0%)"],#fisica2_lez05b_d4 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05b_d4 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05b_d4 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05b_d4 [fill="rgb(100%,0%,0%)"],#fisica2_lez05b_d4 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d4 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d4 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05b_d4 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05b_d4 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05b_d4 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05b_d4 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}#fisica2_lez05b_d4 [fill="rgb(0%,0%,100%)"],#fisica2_lez05b_d4 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d4 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05b_d4 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05b_d4 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05b_d4 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05b_d4 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05b_d4 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-1">
+<path style="stroke:none;" d="M 4.328125 -3.75 C 4.328125 -4.09375 4.015625 -4.390625 3.515625 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.078125 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.828125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.703125 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.71875 C 1.609375 -3.515625 1.578125 -3.40625 1.453125 -2.875 L 0.875 -0.59375 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.84375 -1.734375 L 2.15625 -3.03125 C 2.203125 -3.15625 2.46875 -3.625 2.71875 -3.84375 C 2.796875 -3.921875 3.078125 -4.171875 3.515625 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.515625 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.75 Z M 4.328125 -3.75 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-2">
+<path style="stroke:none;" d="M 7.078125 -2.453125 C 7.078125 -2.453125 7.078125 -2.5625 6.96875 -2.5625 C 6.875 -2.5625 6.859375 -2.5 6.84375 -2.4375 C 6.1875 -0.96875 5.828125 -0.3125 4.125 -0.3125 L 2.671875 -0.3125 C 2.53125 -0.3125 2.515625 -0.3125 2.453125 -0.3125 C 2.359375 -0.328125 2.328125 -0.34375 2.328125 -0.421875 C 2.328125 -0.453125 2.328125 -0.46875 2.375 -0.640625 L 3.046875 -3.359375 L 4.03125 -3.359375 C 4.875 -3.359375 4.875 -3.15625 4.875 -2.90625 C 4.875 -2.828125 4.875 -2.71875 4.8125 -2.421875 C 4.796875 -2.359375 4.78125 -2.328125 4.78125 -2.3125 C 4.78125 -2.25 4.8125 -2.203125 4.90625 -2.203125 C 4.984375 -2.203125 5.015625 -2.25 5.0625 -2.390625 L 5.625 -4.71875 C 5.625 -4.78125 5.578125 -4.828125 5.5 -4.828125 C 5.421875 -4.828125 5.390625 -4.765625 5.359375 -4.65625 C 5.15625 -3.890625 4.984375 -3.671875 4.0625 -3.671875 L 3.125 -3.671875 L 3.734375 -6.0625 C 3.8125 -6.40625 3.828125 -6.453125 4.265625 -6.453125 L 5.671875 -6.453125 C 6.875 -6.453125 7.171875 -6.15625 7.171875 -5.34375 C 7.171875 -5.109375 7.171875 -5.09375 7.140625 -4.8125 C 7.140625 -4.765625 7.125 -4.6875 7.125 -4.640625 C 7.125 -4.59375 7.15625 -4.515625 7.25 -4.515625 C 7.359375 -4.515625 7.359375 -4.578125 7.390625 -4.765625 L 7.578125 -6.484375 C 7.609375 -6.75 7.5625 -6.75 7.3125 -6.75 L 2.296875 -6.75 C 2.09375 -6.75 2 -6.75 2 -6.5625 C 2 -6.453125 2.09375 -6.453125 2.28125 -6.453125 C 2.640625 -6.453125 2.921875 -6.453125 2.921875 -6.265625 C 2.921875 -6.234375 2.921875 -6.21875 2.875 -6.03125 L 1.5625 -0.78125 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.484375 -0.3125 0.375 -0.3125 0.375 -0.125 C 0.375 0 0.46875 0 0.65625 0 L 5.8125 0 C 6.046875 0 6.046875 -0.015625 6.125 -0.171875 L 7.03125 -2.3125 C 7.0625 -2.359375 7.078125 -2.453125 7.078125 -2.453125 Z M 7.078125 -2.453125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-3">
+<path style="stroke:none;" d="M 6.421875 -5.5 C 6.421875 -5.15625 6.265625 -4.46875 5.875 -4.078125 C 5.609375 -3.828125 5.09375 -3.515625 4.1875 -3.515625 L 3.078125 -3.515625 L 3.734375 -6.109375 C 3.78125 -6.34375 3.8125 -6.4375 4 -6.46875 C 4.09375 -6.484375 4.40625 -6.484375 4.609375 -6.484375 C 5.3125 -6.484375 6.421875 -6.484375 6.421875 -5.5 Z M 7.5 -0.921875 C 7.5 -1.046875 7.390625 -1.046875 7.390625 -1.046875 C 7.296875 -1.046875 7.28125 -0.96875 7.25 -0.90625 C 7 -0.171875 6.578125 0 6.34375 0 C 6.015625 0 5.953125 -0.21875 5.953125 -0.609375 C 5.953125 -0.921875 6.015625 -1.421875 6.046875 -1.734375 C 6.078125 -1.875 6.09375 -2.0625 6.09375 -2.203125 C 6.09375 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.34375 -4.296875 7.34375 -5.296875 C 7.34375 -6.15625 6.453125 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.59375 C 2.03125 -6.484375 2.109375 -6.484375 2.3125 -6.484375 C 2.3125 -6.484375 2.515625 -6.484375 2.6875 -6.453125 C 2.859375 -6.4375 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.265625 2.9375 -6.234375 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.265625 0 3.265625 -0.203125 C 3.265625 -0.3125 3.171875 -0.3125 2.984375 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.359375 -0.59375 2.359375 -0.65625 L 3.015625 -3.296875 L 4.203125 -3.296875 C 5.109375 -3.296875 5.28125 -2.734375 5.28125 -2.390625 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.078125 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.1875 0.21875 6.3125 0.21875 C 7.15625 0.21875 7.5 -0.78125 7.5 -0.921875 Z M 7.5 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-4">
+<path style="stroke:none;" d="M 6.453125 0 C 6.453125 -0.0625 6.375 -0.09375 6.34375 -0.09375 C 6.265625 -0.09375 6.234375 -0.046875 6.21875 0.015625 C 5.984375 0.71875 5.40625 0.96875 5.0625 0.96875 C 4.59375 0.96875 4.453125 0.703125 4.359375 -0.0625 C 5.890625 -0.640625 7.359375 -2.421875 7.359375 -4.328125 C 7.359375 -5.9375 6.296875 -7 4.8125 -7 C 2.671875 -7 0.484375 -4.75 0.484375 -2.4375 C 0.484375 -0.78125 1.59375 0.21875 3.03125 0.21875 C 3.28125 0.21875 3.625 0.171875 4 0.0625 C 3.96875 0.6875 3.96875 0.703125 3.96875 0.828125 C 3.96875 1.15625 3.96875 1.921875 4.796875 1.921875 C 5.96875 1.921875 6.453125 0.109375 6.453125 0 Z M 6.484375 -4.65625 C 6.484375 -3.65625 5.96875 -1.328125 4.296875 -0.390625 C 4.25 -0.75 4.15625 -1.46875 3.421875 -1.46875 C 2.90625 -1.46875 2.421875 -0.96875 2.421875 -0.453125 C 2.421875 -0.265625 2.46875 -0.140625 2.46875 -0.140625 C 1.703125 -0.453125 1.359375 -1.21875 1.359375 -2.109375 C 1.359375 -2.796875 1.625 -4.21875 2.375 -5.28125 C 3.09375 -6.296875 4.03125 -6.75 4.765625 -6.75 C 5.75 -6.75 6.484375 -5.984375 6.484375 -4.65625 Z M 4.03125 -0.40625 C 4.03125 -0.265625 4.03125 -0.25 3.921875 -0.203125 C 3.671875 -0.09375 3.375 -0.03125 3.09375 -0.03125 C 2.953125 -0.03125 2.640625 -0.03125 2.640625 -0.453125 C 2.640625 -0.859375 3.015625 -1.25 3.421875 -1.25 C 3.84375 -1.25 4.03125 -1.015625 4.03125 -0.40625 Z M 4.03125 -0.40625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-5">
+<path style="stroke:none;" d="M 5.640625 -4.046875 C 5.640625 -4.28125 5.421875 -4.28125 5.234375 -4.28125 L 1.90625 -4.28125 C 1.6875 -4.28125 1.3125 -4.28125 0.875 -3.8125 C 0.53125 -3.421875 0.265625 -2.96875 0.265625 -2.921875 C 0.265625 -2.921875 0.265625 -2.828125 0.390625 -2.828125 C 0.46875 -2.828125 0.484375 -2.859375 0.546875 -2.9375 C 1.03125 -3.703125 1.609375 -3.703125 1.8125 -3.703125 L 2.375 -3.703125 C 2.0625 -2.5 1.515625 -1.296875 1.109375 -0.390625 C 1.03125 -0.25 1.03125 -0.234375 1.03125 -0.15625 C 1.03125 0.03125 1.1875 0.109375 1.3125 0.109375 C 1.609375 0.109375 1.6875 -0.171875 1.8125 -0.53125 C 1.953125 -1 1.953125 -1.015625 2.078125 -1.515625 L 2.640625 -3.703125 L 3.75 -3.703125 C 3.421875 -2.234375 3.34375 -1.8125 3.34375 -1.140625 C 3.34375 -1 3.34375 -0.71875 3.421875 -0.390625 C 3.515625 0.046875 3.625 0.109375 3.78125 0.109375 C 3.96875 0.109375 4.1875 -0.0625 4.1875 -0.265625 C 4.1875 -0.328125 4.1875 -0.34375 4.125 -0.484375 C 3.828125 -1.203125 3.828125 -1.84375 3.828125 -2.125 C 3.828125 -2.65625 3.90625 -3.1875 4.015625 -3.703125 L 5.140625 -3.703125 C 5.28125 -3.703125 5.640625 -3.703125 5.640625 -4.046875 Z M 5.640625 -4.046875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph0-6">
+<path style="stroke:none;" d="M 3.75 -0.8125 C 3.75 -0.859375 3.703125 -0.90625 3.640625 -0.90625 C 3.59375 -0.90625 3.5625 -0.859375 3.53125 -0.828125 C 3.40625 -0.609375 3.15625 -0.234375 1.96875 -0.234375 C 1.359375 -0.234375 0.515625 -0.390625 0.515625 -1.09375 C 0.515625 -1.4375 0.796875 -1.953125 1.40625 -2.25 C 1.734375 -2.109375 2.015625 -2.109375 2.25 -2.109375 C 2.515625 -2.109375 3.0625 -2.109375 3.0625 -2.421875 C 3.0625 -2.65625 2.71875 -2.6875 2.328125 -2.6875 C 2.125 -2.6875 1.78125 -2.671875 1.40625 -2.5 C 1.1875 -2.625 1.015625 -2.8125 1.015625 -3.078125 C 1.015625 -3.6875 1.984375 -4.046875 2.875 -4.046875 C 3.046875 -4.046875 3.40625 -4.046875 3.796875 -3.765625 C 3.90625 -3.6875 3.921875 -3.671875 4 -3.671875 C 4.125 -3.671875 4.265625 -3.796875 4.265625 -3.9375 C 4.265625 -4.125 3.65625 -4.5 2.984375 -4.5 C 1.84375 -4.5 0.765625 -3.828125 0.765625 -3.078125 C 0.765625 -2.65625 1.125 -2.40625 1.15625 -2.375 C 0.578125 -2.046875 0.265625 -1.484375 0.265625 -1.03125 C 0.265625 -0.390625 0.828125 0.21875 1.875 0.21875 C 3.1875 0.21875 3.75 -0.65625 3.75 -0.8125 Z M 2.796875 -2.421875 C 2.65625 -2.34375 2.640625 -2.328125 2.25 -2.328125 C 2.03125 -2.328125 1.921875 -2.328125 1.734375 -2.390625 C 1.953125 -2.46875 2.171875 -2.46875 2.328125 -2.46875 C 2.578125 -2.46875 2.625 -2.46875 2.796875 -2.421875 Z M 2.796875 -2.421875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph1-1">
+<path style="stroke:none;" d="M 3.296875 2.390625 C 3.296875 2.359375 3.296875 2.328125 3.125 2.171875 C 1.875 0.921875 1.5625 -0.96875 1.5625 -2.484375 C 1.5625 -4.21875 1.9375 -5.9375 3.15625 -7.1875 C 3.296875 -7.296875 3.296875 -7.328125 3.296875 -7.359375 C 3.296875 -7.421875 3.25 -7.453125 3.1875 -7.453125 C 3.09375 -7.453125 2.203125 -6.78125 1.609375 -5.515625 C 1.109375 -4.421875 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.84375 3.09375 2.484375 3.1875 2.484375 C 3.25 2.484375 3.296875 2.453125 3.296875 2.390625 Z M 3.296875 2.390625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph1-2">
+<path style="stroke:none;" d="M 2.875 -2.484375 C 2.875 -3.265625 2.765625 -4.46875 2.21875 -5.578125 C 1.625 -6.8125 0.765625 -7.453125 0.671875 -7.453125 C 0.609375 -7.453125 0.5625 -7.40625 0.5625 -7.359375 C 0.5625 -7.328125 0.5625 -7.296875 0.75 -7.125 C 1.734375 -6.140625 2.296875 -4.5625 2.296875 -2.484375 C 2.296875 -0.78125 1.921875 0.96875 0.703125 2.21875 C 0.5625 2.328125 0.5625 2.359375 0.5625 2.390625 C 0.5625 2.4375 0.609375 2.484375 0.671875 2.484375 C 0.765625 2.484375 1.65625 1.8125 2.25 0.546875 C 2.75 -0.546875 2.875 -1.65625 2.875 -2.484375 Z M 2.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph1-3">
+<path style="stroke:none;" d="M 4.6875 -1.640625 L 4.6875 -1.953125 L 3.6875 -1.953125 L 3.6875 -6.46875 C 3.6875 -6.671875 3.6875 -6.734375 3.53125 -6.734375 C 3.4375 -6.734375 3.40625 -6.734375 3.328125 -6.609375 L 0.28125 -1.953125 L 0.28125 -1.640625 L 2.921875 -1.640625 L 2.921875 -0.78125 C 2.921875 -0.421875 2.90625 -0.3125 2.171875 -0.3125 L 1.953125 -0.3125 L 1.953125 0 C 2.359375 -0.03125 2.875 -0.03125 3.296875 -0.03125 C 3.71875 -0.03125 4.25 -0.03125 4.65625 0 L 4.65625 -0.3125 L 4.4375 -0.3125 C 3.703125 -0.3125 3.6875 -0.421875 3.6875 -0.78125 L 3.6875 -1.640625 Z M 2.984375 -1.953125 L 0.5625 -1.953125 L 2.984375 -5.65625 Z M 2.984375 -1.953125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph2-1">
+<path style="stroke:none;" d="M 3.59375 -2.21875 C 3.59375 -2.984375 3.5 -3.53125 3.171875 -4.015625 C 2.96875 -4.34375 2.53125 -4.609375 1.96875 -4.609375 C 0.359375 -4.609375 0.359375 -2.71875 0.359375 -2.21875 C 0.359375 -1.71875 0.359375 0.140625 1.96875 0.140625 C 3.59375 0.140625 3.59375 -1.71875 3.59375 -2.21875 Z M 2.953125 -2.3125 C 2.953125 -1.796875 2.953125 -1.28125 2.859375 -0.84375 C 2.71875 -0.203125 2.25 -0.0625 1.96875 -0.0625 C 1.65625 -0.0625 1.234375 -0.25 1.09375 -0.8125 C 1 -1.21875 1 -1.796875 1 -2.3125 C 1 -2.8125 1 -3.34375 1.09375 -3.734375 C 1.25 -4.28125 1.6875 -4.421875 1.96875 -4.421875 C 2.34375 -4.421875 2.71875 -4.1875 2.84375 -3.796875 C 2.953125 -3.40625 2.953125 -2.90625 2.953125 -2.3125 Z M 2.953125 -2.3125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05b_d4-glyph2-2">
+<path style="stroke:none;" d="M 3.515625 -1.265625 L 3.28125 -1.265625 C 3.25 -1.109375 3.1875 -0.703125 3.09375 -0.625 C 3.03125 -0.59375 2.5 -0.59375 2.40625 -0.59375 L 1.125 -0.59375 C 1.859375 -1.234375 2.09375 -1.4375 2.515625 -1.765625 C 3.03125 -2.171875 3.515625 -2.59375 3.515625 -3.265625 C 3.515625 -4.109375 2.78125 -4.609375 1.890625 -4.609375 C 1.015625 -4.609375 0.4375 -4.015625 0.4375 -3.375 C 0.4375 -3.015625 0.734375 -2.984375 0.8125 -2.984375 C 0.96875 -2.984375 1.171875 -3.09375 1.171875 -3.34375 C 1.171875 -3.484375 1.125 -3.71875 0.765625 -3.71875 C 0.984375 -4.21875 1.453125 -4.359375 1.78125 -4.359375 C 2.46875 -4.359375 2.84375 -3.828125 2.84375 -3.265625 C 2.84375 -2.65625 2.40625 -2.171875 2.1875 -1.921875 L 0.5 -0.265625 C 0.4375 -0.203125 0.4375 -0.1875 0.4375 0 L 3.296875 0 Z M 3.515625 -1.265625 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05b_d4-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00112933 0.00176107 L 272.297685 0.00176107 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.070982 2.389729 C -1.695171 0.956948 -0.849595 0.279705 -0.000105135 0.00176107 C -0.849595 -0.280097 -1.695171 -0.957341 -2.070982 -2.390122 " transform="matrix(0.997841,0,0,-0.997841,319.820417,131.056445)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-1" x="323.527956" y="133.195816"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00112933 0.00176107 L -0.00112933 110.153635 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.071142 2.389097 C -1.695331 0.956317 -0.849756 0.279073 -0.000265318 0.00112933 C -0.849756 -0.280729 -1.695331 -0.957973 -2.071142 -2.390753 " transform="matrix(0,-0.997841,-0.997841,0,47.911283,20.941142)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-2" x="37.708358" y="14.746095"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph1-1" x="45.62024" y="14.746095"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-1" x="49.485876" y="14.746095"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph1-2" x="54.247574" y="14.746095"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00112933 0.00176107 L 110.553959 85.040824 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 110.553959 85.040824 C 110.553959 85.040824 112.358636 82.324021 113.051538 81.325772 C 113.744441 80.327523 114.856216 78.781216 115.549118 77.849517 C 116.24202 76.913904 117.353795 75.465464 118.046698 74.588571 C 118.7396 73.711678 119.851375 72.353276 120.544277 71.531189 C 121.237179 70.705187 122.348955 69.425079 123.041857 68.653883 C 123.734759 67.878772 124.846534 66.680874 125.539437 65.952739 C 126.232339 65.22069 127.344114 64.085426 128.037016 63.396439 C 128.729918 62.711366 129.841694 61.642653 130.534596 60.996727 C 131.227498 60.346886 132.339273 59.340808 133.032175 58.730115 C 133.725078 58.119421 134.836853 57.164234 135.529755 56.584858 C 136.222657 56.005482 137.334432 55.101186 138.027335 54.553128 C 138.720237 54.00507 139.832012 53.151665 140.524914 52.634924 C 141.217816 52.114269 142.329592 51.303926 143.022494 50.810673 C 143.715396 50.317421 144.827171 49.546225 145.520074 49.07646 C 146.212976 48.610611 147.324751 47.882476 148.017653 47.440115 C 148.710555 46.993839 149.822331 46.300937 150.515233 45.878149 C 151.208135 45.455361 152.31991 44.793777 153.012812 44.390563 C 153.705715 43.987348 154.81749 43.357081 155.510392 42.977355 C 156.203294 42.593715 157.315069 41.994765 158.007972 41.630698 C 158.704789 41.266631 159.812649 40.69117 160.509466 40.342761 C 161.202368 39.994353 162.314143 39.450209 163.007046 39.11746 C 163.699948 38.78471 164.811723 38.264055 165.504625 37.943049 C 166.197527 37.625958 167.309303 37.128791 168.002205 36.823444 C 168.695107 36.522012 169.806882 36.044419 170.499784 35.754731 C 171.192687 35.465043 172.304462 35.007023 172.997364 34.729079 C 173.690266 34.451135 174.802042 34.012689 175.494944 33.746489 C 176.187846 33.480289 177.299621 33.061416 177.992523 32.806961 C 178.685426 32.552505 179.797201 32.149291 180.490103 31.906579 C 181.183005 31.659953 182.29478 31.276312 182.987683 31.04143 C 183.680585 30.806548 184.79236 30.434651 185.485262 30.211513 C 186.178164 29.984461 187.28994 29.628223 187.982842 29.412914 C 188.675744 29.197606 189.787519 28.853112 190.480421 28.645633 C 191.173324 28.438154 192.285099 28.109319 192.978001 27.909669 C 193.670903 27.710019 194.782679 27.392928 195.475581 27.201108 C 196.168483 27.009287 197.280258 26.703941 197.97316 26.51995 C 198.666063 26.332044 199.777838 26.038441 200.47074 25.86228 C 201.163642 25.682204 202.275417 25.400345 202.96832 25.228098 C 203.661222 25.055851 204.772997 24.785737 205.465899 24.621319 C 206.158801 24.452987 207.270577 24.190702 207.963479 24.0302 C 208.656381 23.869697 209.768156 23.619156 210.461058 23.466483 C 211.153961 23.309894 212.265736 23.063268 212.958638 22.91451 C 213.65154 22.765751 214.763316 22.534784 215.456218 22.38994 C 216.14912 22.245096 217.260895 22.018043 217.953797 21.877114 C 218.6467 21.740099 219.758475 21.520876 220.455292 21.383861 C 221.148194 21.250761 222.256054 21.039368 222.952871 20.910182 C 223.645774 20.777083 224.757549 20.573518 225.450451 20.448248 C 226.143353 20.322977 227.255128 20.123327 227.948031 20.001972 C 228.640933 19.880616 229.752708 19.688795 230.44561 19.571354 C 231.138512 19.453913 232.250288 19.269922 232.94319 19.152481 C 233.636092 19.038955 234.747867 18.858879 235.440769 18.749267 C 236.133672 18.639655 237.245447 18.467409 237.938349 18.357797 C 238.631251 18.2521 239.743027 18.083768 240.435929 17.978071 C 241.128831 17.876289 242.240606 17.711871 242.933508 17.610089 C 243.626411 17.512221 244.738186 17.351719 245.431088 17.253851 C 246.12399 17.159898 247.235765 17.00331 247.928668 16.909357 C 248.62157 16.815404 249.733345 16.662731 250.426247 16.572693 C 251.119149 16.47874 252.230925 16.337811 252.923827 16.247773 C 253.616729 16.157735 254.728504 16.016805 255.421406 15.930682 C 256.114309 15.844558 257.918986 15.62142 257.918986 15.62142 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 110.553959 0.00176107 L 110.553959 85.040824 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M -0.00112933 85.040824 L 110.553959 85.040824 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 110.553959 0.00176107 L 110.553959 -1.701134 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-3" x="154.410859" y="143.058477"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00112933 85.040824 L -1.473057 85.040824 " transform="matrix(0.997841,0,0,-0.997841,47.911283,131.056445)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-4" x="20.983544" y="42.078957"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00163361 -0.00153166 L 32.243764 -0.00153166 " transform="matrix(0.997841,0,0,-0.997841,8.825849,46.318784)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph1-3" x="8.825849" y="55.623652"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-5" x="13.796095" y="55.623652"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-6" x="19.820397" y="55.623652"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph2-1" x="24.456031" y="57.114427"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph0-3" x="28.915383" y="55.623652"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05b_d4-glyph2-2" x="36.539886" y="52.751865"/>
+</g>
+</g>
+</svg></figure>
+            <p>Lo stesso andamento, con il valore massimo $Q/(4\\pi\\varepsilon_0 R^2)$ evidenziato sull'asse delle ordinate. Per $Q \\lt 0$ il grafico del modulo è identico sostituendo $Q$ con $|Q|$, mentre il verso del campo è entrante.</p>
+            <figure class="figura" data-id="fisica2_lez05c_d2"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05c_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="191.098pt" height="143.306pt" viewBox="0 0 191.098 143.306" version="1.2"><style>#fisica2_lez05c_d2 [fill="rgb(0%,0%,0%)"],#fisica2_lez05c_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05c_d2 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05c_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05c_d2 [fill="rgb(100%,0%,0%)"],#fisica2_lez05c_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05c_d2 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05c_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05c_d2 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05c_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05c_d2 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05c_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}#fisica2_lez05c_d2 [fill="rgb(0%,0%,100%)"],#fisica2_lez05c_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d2 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05c_d2 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05c_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d2 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph0-1">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph0-2">
+<path style="stroke:none;" d="M 7.078125 -2.453125 C 7.078125 -2.453125 7.078125 -2.5625 6.953125 -2.5625 C 6.859375 -2.5625 6.84375 -2.5 6.828125 -2.4375 C 6.1875 -0.96875 5.8125 -0.3125 4.125 -0.3125 L 2.671875 -0.3125 C 2.53125 -0.3125 2.515625 -0.3125 2.453125 -0.3125 C 2.34375 -0.328125 2.328125 -0.34375 2.328125 -0.421875 C 2.328125 -0.453125 2.328125 -0.46875 2.375 -0.640625 L 3.046875 -3.359375 L 4.03125 -3.359375 C 4.875 -3.359375 4.875 -3.140625 4.875 -2.890625 C 4.875 -2.828125 4.875 -2.703125 4.796875 -2.40625 C 4.78125 -2.359375 4.765625 -2.328125 4.765625 -2.296875 C 4.765625 -2.25 4.8125 -2.1875 4.90625 -2.1875 C 4.984375 -2.1875 5.015625 -2.25 5.046875 -2.390625 L 5.609375 -4.71875 C 5.609375 -4.765625 5.5625 -4.828125 5.5 -4.828125 C 5.40625 -4.828125 5.390625 -4.765625 5.359375 -4.640625 C 5.15625 -3.890625 4.96875 -3.65625 4.0625 -3.65625 L 3.125 -3.65625 L 3.71875 -6.046875 C 3.8125 -6.40625 3.8125 -6.4375 4.25 -6.4375 L 5.65625 -6.4375 C 6.859375 -6.4375 7.15625 -6.15625 7.15625 -5.34375 C 7.15625 -5.09375 7.15625 -5.078125 7.125 -4.8125 C 7.125 -4.75 7.109375 -4.6875 7.109375 -4.640625 C 7.109375 -4.578125 7.140625 -4.515625 7.234375 -4.515625 C 7.34375 -4.515625 7.359375 -4.578125 7.375 -4.765625 L 7.578125 -6.484375 C 7.59375 -6.75 7.546875 -6.75 7.296875 -6.75 L 2.296875 -6.75 C 2.09375 -6.75 2 -6.75 2 -6.546875 C 2 -6.4375 2.078125 -6.4375 2.265625 -6.4375 C 2.640625 -6.4375 2.921875 -6.4375 2.921875 -6.265625 C 2.921875 -6.21875 2.921875 -6.203125 2.875 -6.015625 L 1.5625 -0.78125 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.484375 -0.3125 0.375 -0.3125 0.375 -0.125 C 0.375 0 0.46875 0 0.65625 0 L 5.796875 0 C 6.03125 0 6.046875 -0.015625 6.109375 -0.171875 L 7.03125 -2.3125 C 7.046875 -2.359375 7.078125 -2.453125 7.078125 -2.453125 Z M 7.078125 -2.453125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph0-3">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph1-1">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.96875 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.9375 3.15625 -7.171875 C 3.28125 -7.296875 3.28125 -7.3125 3.28125 -7.34375 C 3.28125 -7.40625 3.25 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.765625 1.609375 -5.5 C 1.09375 -4.421875 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.25 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph1-2">
+<path style="stroke:none;" d="M 2.875 -2.484375 C 2.875 -3.25 2.765625 -4.453125 2.21875 -5.578125 C 1.625 -6.796875 0.765625 -7.4375 0.671875 -7.4375 C 0.609375 -7.4375 0.5625 -7.40625 0.5625 -7.34375 C 0.5625 -7.3125 0.5625 -7.296875 0.75 -7.109375 C 1.71875 -6.125 2.296875 -4.546875 2.296875 -2.484375 C 2.296875 -0.78125 1.921875 0.96875 0.6875 2.21875 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.671875 2.484375 C 0.765625 2.484375 1.65625 1.8125 2.25 0.546875 C 2.75 -0.546875 2.875 -1.640625 2.875 -2.484375 Z M 2.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph2-1">
+<path style="stroke:none;" d="M 1.921875 -7.25 C 1.921875 -7.25 1.828125 -7.3125 1.765625 -7.203125 C 1.703125 -7.125 1.75 -7.0625 1.796875 -7.015625 C 2.65625 -5.671875 2.984375 -4.984375 2.046875 -3.59375 L 1.234375 -2.390625 C 1.15625 -2.265625 1.140625 -2.25 1.109375 -2.203125 C 1.046875 -2.125 1.015625 -2.125 0.953125 -2.171875 C 0.921875 -2.1875 0.90625 -2.203125 0.796875 -2.328125 L -1.078125 -4.40625 L -0.53125 -5.21875 C -0.0625 -5.921875 0.109375 -5.796875 0.328125 -5.65625 C 0.375 -5.625 0.484375 -5.5625 0.6875 -5.328125 C 0.71875 -5.28125 0.734375 -5.25 0.765625 -5.234375 C 0.8125 -5.21875 0.875 -5.203125 0.9375 -5.28125 C 0.96875 -5.34375 0.9375 -5.421875 0.84375 -5.53125 L -0.765625 -7.296875 C -0.8125 -7.328125 -0.890625 -7.3125 -0.921875 -7.265625 C -0.984375 -7.1875 -0.9375 -7.140625 -0.84375 -7.03125 C -0.328125 -6.453125 -0.25 -6.171875 -0.765625 -5.421875 L -1.28125 -4.640625 L -2.9375 -6.453125 C -3.1875 -6.734375 -3.21875 -6.75 -2.96875 -7.109375 L -2.1875 -8.28125 C -1.515625 -9.28125 -1.109375 -9.375 -0.4375 -8.921875 C -0.21875 -8.78125 -0.203125 -8.78125 0 -8.59375 C 0.046875 -8.5625 0.078125 -8.515625 0.125 -8.484375 C 0.171875 -8.453125 0.25 -8.453125 0.296875 -8.53125 C 0.359375 -8.625 0.3125 -8.65625 0.171875 -8.78125 L -1.140625 -9.90625 C -1.34375 -10.078125 -1.375 -10.03125 -1.515625 -9.828125 L -4.3125 -5.6875 C -4.421875 -5.515625 -4.46875 -5.4375 -4.296875 -5.3125 C -4.21875 -5.25 -4.1875 -5.3125 -4.078125 -5.46875 C -3.859375 -5.78125 -3.703125 -6.015625 -3.546875 -5.921875 C -3.515625 -5.90625 -3.5 -5.890625 -3.375 -5.75 L 0.234375 -1.734375 C 0.484375 -1.421875 0.53125 -1.359375 0.09375 -0.71875 C 0 -0.578125 -0.0625 -0.484375 0.09375 -0.375 C 0.203125 -0.3125 0.265625 -0.390625 0.359375 -0.546875 L 3.234375 -4.8125 C 3.375 -5 3.359375 -5.03125 3.28125 -5.15625 L 2.015625 -7.125 C 1.984375 -7.15625 1.921875 -7.25 1.921875 -7.25 Z M 1.921875 -7.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph2-2">
+<path style="stroke:none;" d="M -0.671875 -5.6875 C -0.96875 -5.890625 -1.390625 -5.78125 -1.6875 -5.359375 C -2.046875 -4.828125 -1.875 -4.1875 -1.75 -3.890625 C -2.171875 -4.046875 -2.640625 -3.9375 -2.890625 -3.546875 C -3.15625 -3.171875 -2.921875 -2.796875 -2.828125 -2.625 C -2.65625 -2.296875 -2.234375 -1.84375 -2.21875 -1.828125 C -2.140625 -1.78125 -2.0625 -1.890625 -2.0625 -1.890625 C -2.015625 -1.96875 -2.015625 -1.96875 -2.140625 -2.15625 C -2.640625 -2.6875 -2.921875 -3.109375 -2.734375 -3.40625 C -2.625 -3.546875 -2.484375 -3.625 -2.15625 -3.40625 C -2 -3.28125 -1.9375 -3.203125 -1.578125 -2.8125 L 0 -1.046875 C 0.109375 -0.953125 0.265625 -0.75 0.3125 -0.734375 C 0.453125 -0.625 0.609375 -0.703125 0.703125 -0.828125 C 0.75 -0.921875 0.796875 -1.125 0.65625 -1.28125 C 0.640625 -1.3125 -0.296875 -2.359375 -0.421875 -2.484375 L -1.3125 -3.46875 C -1.390625 -3.578125 -1.625 -4.078125 -1.671875 -4.390625 C -1.671875 -4.5 -1.734375 -4.875 -1.5 -5.234375 C -1.34375 -5.453125 -1.171875 -5.515625 -1.171875 -5.515625 C -1.28125 -5.234375 -1.21875 -4.9375 -1 -4.78125 C -0.859375 -4.703125 -0.640625 -4.6875 -0.5 -4.90625 C -0.34375 -5.125 -0.390625 -5.484375 -0.671875 -5.6875 Z M -0.671875 -5.6875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph3-1">
+<path style="stroke:none;" d="M 4.046875 -5.90625 L 3.734375 -6.125 C 3.703125 -6.0625 3.65625 -5.96875 3.625 -5.921875 C 3.171875 -5.25 2.21875 -5.28125 1.515625 -5.28125 L 0.75 -5.28125 C 0.375 -5.90625 -0.15625 -7.09375 0.46875 -8.015625 C 0.484375 -8.046875 0.546875 -8.140625 0.625 -8.203125 C 0.40625 -8.359375 0.40625 -8.359375 0.390625 -8.359375 C 0.296875 -8.296875 0.1875 -8.140625 0.171875 -8.109375 C -0.453125 -7.171875 -0.0625 -6 0.34375 -5.3125 C -0.4375 -5.328125 -1.6875 -5.359375 -2.359375 -4.34375 C -2.96875 -3.453125 -2.40625 -2.296875 -1.46875 -1.671875 C -0.5625 -1.046875 0.734375 -0.890625 1.359375 -1.8125 C 1.984375 -2.75 1.59375 -3.921875 1.1875 -4.625 C 1.96875 -4.609375 3.21875 -4.578125 3.90625 -5.578125 C 4.015625 -5.734375 4.046875 -5.90625 4.046875 -5.90625 Z M 0.78125 -4.625 C 1.171875 -4.015625 1.703125 -2.828125 1.078125 -1.90625 C 0.546875 -1.109375 -0.5625 -1.3125 -1.34375 -1.84375 C -2.15625 -2.390625 -2.546875 -3.34375 -2.09375 -4.015625 C -1.640625 -4.6875 -0.671875 -4.671875 0 -4.640625 Z M 0.78125 -4.625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph4-1">
+<path style="stroke:none;" d="M 7.15625 0.0625 L 7.15625 -0.328125 C 7.109375 -0.3125 6.984375 -0.296875 6.9375 -0.296875 C 6.125 -0.296875 5.609375 -1.109375 5.234375 -1.6875 L 4.8125 -2.328125 C 5.109375 -3 5.78125 -4.09375 6.890625 -4.09375 C 6.9375 -4.09375 7.046875 -4.09375 7.15625 -4.0625 C 7.15625 -4.328125 7.15625 -4.328125 7.140625 -4.359375 C 7.046875 -4.390625 6.859375 -4.390625 6.828125 -4.390625 C 5.6875 -4.390625 4.9375 -3.40625 4.59375 -2.671875 C 4.171875 -3.34375 3.5 -4.390625 2.28125 -4.390625 C 1.203125 -4.390625 0.5625 -3.28125 0.5625 -2.140625 C 0.5625 -1.046875 1.140625 0.109375 2.265625 0.109375 C 3.390625 0.109375 4.140625 -0.859375 4.5 -1.59375 C 4.921875 -0.9375 5.59375 0.109375 6.8125 0.109375 C 7 0.109375 7.15625 0.0625 7.15625 0.0625 Z M 4.28125 -1.9375 C 3.984375 -1.28125 3.296875 -0.171875 2.1875 -0.171875 C 1.234375 -0.171875 0.78125 -1.203125 0.78125 -2.140625 C 0.78125 -3.125 1.34375 -3.984375 2.15625 -3.984375 C 2.953125 -3.984375 3.484375 -3.171875 3.84375 -2.59375 Z M 4.28125 -1.9375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph5-1">
+<path style="stroke:none;" d="M 3.28125 0 L 3.28125 -0.25 L 3.015625 -0.25 C 2.328125 -0.25 2.328125 -0.34375 2.328125 -0.5625 L 2.328125 -4.40625 C 2.328125 -4.59375 2.3125 -4.609375 2.109375 -4.609375 C 1.671875 -4.171875 1.046875 -4.15625 0.75 -4.15625 L 0.75 -3.90625 C 0.921875 -3.90625 1.375 -3.90625 1.765625 -4.109375 L 1.765625 -0.5625 C 1.765625 -0.34375 1.765625 -0.25 1.0625 -0.25 L 0.8125 -0.25 L 0.8125 0 L 2.046875 -0.03125 Z M 3.28125 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph5-2">
+<path style="stroke:none;" d="M 3.671875 -1.140625 L 3.671875 -1.390625 L 2.90625 -1.390625 L 2.90625 -4.484375 C 2.90625 -4.625 2.90625 -4.671875 2.75 -4.671875 C 2.65625 -4.671875 2.640625 -4.671875 2.5625 -4.578125 L 0.265625 -1.390625 L 0.265625 -1.140625 L 2.3125 -1.140625 L 2.3125 -0.5625 C 2.3125 -0.328125 2.3125 -0.25 1.75 -0.25 L 1.5625 -0.25 L 1.5625 0 L 2.609375 -0.03125 L 3.65625 0 L 3.65625 -0.25 L 3.46875 -0.25 C 2.90625 -0.25 2.90625 -0.328125 2.90625 -0.5625 L 2.90625 -1.140625 Z M 2.359375 -1.390625 L 0.53125 -1.390625 L 2.359375 -3.921875 Z M 2.359375 -1.390625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph6-1">
+<path style="stroke:none;" d="M 3.546875 -2.546875 C 3.546875 -2.90625 3.171875 -3.0625 2.8125 -3.0625 C 2.453125 -3.0625 2.140625 -2.90625 1.84375 -2.5625 C 1.71875 -2.984375 1.296875 -3.0625 1.125 -3.0625 C 0.875 -3.0625 0.6875 -2.90625 0.578125 -2.703125 C 0.421875 -2.4375 0.328125 -2.03125 0.328125 -2 C 0.328125 -1.90625 0.421875 -1.90625 0.4375 -1.90625 C 0.546875 -1.90625 0.546875 -1.921875 0.59375 -2.109375 C 0.703125 -2.546875 0.828125 -2.859375 1.109375 -2.859375 C 1.28125 -2.859375 1.328125 -2.71875 1.328125 -2.53125 C 1.328125 -2.390625 1.265625 -2.140625 1.21875 -1.953125 L 1.0625 -1.328125 L 0.84375 -0.4375 C 0.8125 -0.34375 0.78125 -0.171875 0.78125 -0.15625 C 0.78125 0 0.90625 0.0625 1.015625 0.0625 C 1.109375 0.0625 1.25 0 1.3125 -0.125 C 1.328125 -0.171875 1.40625 -0.484375 1.4375 -0.65625 L 1.625 -1.40625 C 1.640625 -1.4375 1.796875 -2.0625 1.8125 -2.109375 C 1.828125 -2.15625 2.03125 -2.5 2.25 -2.671875 C 2.328125 -2.71875 2.515625 -2.859375 2.8125 -2.859375 C 2.875 -2.859375 3.046875 -2.859375 3.1875 -2.765625 C 2.96875 -2.703125 2.890625 -2.515625 2.890625 -2.390625 C 2.890625 -2.234375 3 -2.125 3.15625 -2.125 C 3.328125 -2.125 3.546875 -2.265625 3.546875 -2.546875 Z M 3.546875 -2.546875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph6-2">
+<path style="stroke:none;" d="M 5.125 0 C 5.125 -0.046875 5.078125 -0.09375 5.03125 -0.09375 C 4.953125 -0.09375 4.9375 -0.03125 4.9375 0 C 4.765625 0.484375 4.3125 0.625 4.078125 0.625 C 3.796875 0.625 3.65625 0.5 3.53125 -0.0625 C 4.765625 -0.5 5.75 -1.71875 5.75 -2.953125 C 5.75 -4.03125 4.96875 -4.875 3.734375 -4.875 C 2.078125 -4.875 0.484375 -3.328125 0.484375 -1.765625 C 0.484375 -0.640625 1.296875 0.140625 2.5 0.140625 C 2.625 0.140625 2.859375 0.125 3.21875 0.046875 L 3.21875 0.421875 C 3.21875 0.875 3.3125 1.34375 3.890625 1.34375 C 4.71875 1.34375 5.125 0.15625 5.125 0 Z M 5.078125 -3.140625 C 5.078125 -2.4375 4.734375 -0.953125 3.46875 -0.3125 C 3.359375 -0.75 3.171875 -1.046875 2.765625 -1.046875 C 2.375 -1.046875 2 -0.71875 2 -0.359375 C 2 -0.234375 2 -0.21875 2.03125 -0.171875 C 1.671875 -0.296875 1.15625 -0.65625 1.15625 -1.59375 C 1.15625 -2.03125 1.296875 -2.953125 1.921875 -3.734375 C 2.359375 -4.28125 3.03125 -4.65625 3.6875 -4.65625 C 4.4375 -4.65625 5.078125 -4.15625 5.078125 -3.140625 Z M 3.21875 -0.203125 C 3.078125 -0.15625 2.8125 -0.078125 2.546875 -0.078125 C 2.4375 -0.078125 2.1875 -0.078125 2.1875 -0.359375 C 2.1875 -0.625 2.484375 -0.859375 2.765625 -0.859375 C 3.015625 -0.859375 3.203125 -0.75 3.21875 -0.203125 Z M 3.21875 -0.203125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph6-3">
+<path style="stroke:none;" d="M 4.46875 -2.78125 C 4.46875 -2.984375 4.28125 -2.984375 4.171875 -2.984375 L 1.546875 -2.984375 C 1.265625 -2.984375 1.078125 -2.921875 0.765625 -2.640625 C 0.578125 -2.484375 0.3125 -2.109375 0.3125 -2.046875 C 0.3125 -1.953125 0.40625 -1.953125 0.4375 -1.953125 C 0.5 -1.953125 0.515625 -1.96875 0.5625 -2.03125 C 0.90625 -2.515625 1.34375 -2.515625 1.484375 -2.515625 L 1.921875 -2.515625 C 1.703125 -1.75 1.328125 -0.9375 1.109375 -0.515625 C 1.078125 -0.4375 1 -0.28125 0.984375 -0.25 C 0.984375 -0.234375 0.96875 -0.203125 0.96875 -0.15625 C 0.96875 -0.046875 1.046875 0.0625 1.203125 0.0625 C 1.484375 0.0625 1.5625 -0.25 1.734375 -0.875 L 2.15625 -2.515625 L 2.984375 -2.515625 C 2.875 -2.109375 2.71875 -1.46875 2.71875 -0.921875 C 2.71875 -0.640625 2.765625 -0.453125 2.796875 -0.3125 C 2.90625 0.046875 3 0.0625 3.109375 0.0625 C 3.28125 0.0625 3.4375 -0.078125 3.4375 -0.25 C 3.4375 -0.296875 3.421875 -0.328125 3.390625 -0.390625 C 3.25 -0.65625 3.125 -1.046875 3.125 -1.609375 C 3.125 -1.75 3.125 -2.03125 3.21875 -2.515625 L 4.09375 -2.515625 C 4.21875 -2.515625 4.28125 -2.515625 4.34375 -2.578125 C 4.453125 -2.640625 4.46875 -2.75 4.46875 -2.78125 Z M 4.46875 -2.78125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph6-4">
+<path style="stroke:none;" d="M 3.03125 -0.59375 C 3.03125 -0.640625 2.984375 -0.6875 2.921875 -0.6875 C 2.890625 -0.6875 2.859375 -0.65625 2.84375 -0.625 C 2.671875 -0.359375 2.4375 -0.25 1.703125 -0.25 C 1.53125 -0.25 1.203125 -0.25 0.953125 -0.34375 C 0.6875 -0.4375 0.5625 -0.625 0.5625 -0.8125 C 0.5625 -0.96875 0.6875 -1.296875 1.15625 -1.546875 C 1.421875 -1.4375 1.625 -1.4375 1.828125 -1.4375 C 2.046875 -1.4375 2.453125 -1.4375 2.453125 -1.703125 C 2.453125 -1.890625 2.1875 -1.921875 1.890625 -1.921875 C 1.796875 -1.921875 1.5 -1.921875 1.15625 -1.78125 C 1 -1.859375 0.890625 -1.984375 0.890625 -2.140625 C 0.890625 -2.515625 1.5625 -2.75 2.265625 -2.75 C 2.375 -2.75 2.671875 -2.75 2.984375 -2.546875 C 3.03125 -2.53125 3.078125 -2.484375 3.125 -2.484375 C 3.21875 -2.484375 3.34375 -2.59375 3.34375 -2.71875 C 3.34375 -2.84375 3.125 -2.953125 2.984375 -3 C 2.6875 -3.125 2.453125 -3.125 2.34375 -3.125 C 1.5 -3.125 0.65625 -2.6875 0.65625 -2.125 C 0.65625 -1.84375 0.921875 -1.65625 0.921875 -1.65625 C 0.671875 -1.5 0.328125 -1.203125 0.328125 -0.765625 C 0.328125 -0.25 0.828125 0.140625 1.59375 0.140625 C 2.65625 0.140625 3.03125 -0.484375 3.03125 -0.59375 Z M 2.203125 -1.6875 C 2.109375 -1.640625 2.078125 -1.640625 1.828125 -1.640625 C 1.71875 -1.640625 1.578125 -1.640625 1.453125 -1.671875 C 1.53125 -1.6875 1.671875 -1.71875 1.875 -1.71875 C 2.03125 -1.71875 2.0625 -1.71875 2.203125 -1.6875 Z M 2.203125 -1.6875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph6-5">
+<path style="stroke:none;" d="M 4.96875 -3.78125 C 4.96875 -3.484375 4.828125 -3.046875 4.515625 -2.796875 C 4.21875 -2.578125 3.796875 -2.46875 3.3125 -2.46875 L 2.421875 -2.46875 L 2.859375 -4.25 C 2.90625 -4.453125 2.921875 -4.46875 3.078125 -4.484375 L 3.53125 -4.484375 C 4.171875 -4.484375 4.96875 -4.484375 4.96875 -3.78125 Z M 5.890625 -0.671875 C 5.890625 -0.6875 5.875 -0.765625 5.765625 -0.765625 C 5.6875 -0.765625 5.671875 -0.71875 5.640625 -0.640625 C 5.546875 -0.34375 5.296875 -0.0625 5 -0.0625 C 4.828125 -0.0625 4.6875 -0.125 4.6875 -0.5 C 4.6875 -0.6875 4.734375 -1.046875 4.765625 -1.234375 C 4.78125 -1.421875 4.78125 -1.484375 4.78125 -1.546875 C 4.78125 -1.640625 4.78125 -1.859375 4.59375 -2.0625 C 4.453125 -2.21875 4.28125 -2.296875 4.125 -2.359375 C 4.953125 -2.546875 5.6875 -3.046875 5.6875 -3.671875 C 5.6875 -4.265625 4.96875 -4.734375 3.96875 -4.734375 L 1.84375 -4.734375 C 1.703125 -4.734375 1.609375 -4.734375 1.609375 -4.578125 C 1.609375 -4.484375 1.703125 -4.484375 1.84375 -4.484375 C 1.84375 -4.484375 1.984375 -4.484375 2.109375 -4.46875 C 2.25 -4.453125 2.265625 -4.453125 2.265625 -4.375 C 2.265625 -4.375 2.265625 -4.328125 2.234375 -4.21875 L 1.3125 -0.546875 C 1.25 -0.3125 1.234375 -0.25 0.703125 -0.25 C 0.578125 -0.25 0.5 -0.25 0.5 -0.109375 C 0.5 -0.03125 0.546875 0 0.609375 0 C 0.734375 0 0.890625 -0.015625 1.03125 -0.015625 L 1.484375 -0.03125 L 1.9375 -0.015625 C 2.078125 -0.015625 2.25 0 2.40625 0 C 2.4375 0 2.546875 0 2.546875 -0.140625 C 2.546875 -0.25 2.484375 -0.25 2.3125 -0.25 C 2.203125 -0.25 2.171875 -0.25 2.046875 -0.265625 C 1.90625 -0.28125 1.90625 -0.296875 1.90625 -0.375 C 1.90625 -0.375 1.90625 -0.421875 1.921875 -0.515625 L 2.359375 -2.28125 L 3.3125 -2.28125 C 3.90625 -2.28125 4.15625 -1.984375 4.15625 -1.65625 C 4.15625 -1.5625 4.09375 -1.328125 4.0625 -1.171875 C 3.984375 -0.84375 3.953125 -0.75 3.953125 -0.625 C 3.953125 -0.078125 4.453125 0.140625 4.96875 0.140625 C 5.609375 0.140625 5.890625 -0.546875 5.890625 -0.671875 Z M 5.890625 -0.671875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph7-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph7-1">
+<path style="stroke:none;" d="M 2.921875 -0.953125 L 2.703125 -0.953125 C 2.6875 -0.859375 2.640625 -0.5625 2.5625 -0.5 C 2.53125 -0.46875 2.109375 -0.46875 2.03125 -0.46875 L 1.0625 -0.46875 C 1.390625 -0.71875 1.765625 -1 2.0625 -1.1875 C 2.5 -1.5 2.921875 -1.78125 2.921875 -2.3125 C 2.921875 -2.953125 2.3125 -3.296875 1.609375 -3.296875 C 0.9375 -3.296875 0.453125 -2.90625 0.453125 -2.421875 C 0.453125 -2.171875 0.671875 -2.125 0.734375 -2.125 C 0.875 -2.125 1.03125 -2.21875 1.03125 -2.421875 C 1.03125 -2.59375 0.90625 -2.6875 0.75 -2.703125 C 0.890625 -2.9375 1.171875 -3.078125 1.5 -3.078125 C 1.984375 -3.078125 2.390625 -2.796875 2.390625 -2.3125 C 2.390625 -1.890625 2.09375 -1.578125 1.71875 -1.25 L 0.515625 -0.234375 C 0.453125 -0.1875 0.453125 -0.1875 0.453125 -0.15625 L 0.453125 0 L 2.75 0 Z M 2.921875 -0.953125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d2-glyph7-2">
+<path style="stroke:none;" d="M 2.984375 -1.578125 C 2.984375 -1.9375 2.984375 -3.296875 1.6875 -3.296875 C 0.390625 -3.296875 0.390625 -1.9375 0.390625 -1.578125 C 0.390625 -1.21875 0.390625 0.109375 1.6875 0.109375 C 2.984375 0.109375 2.984375 -1.21875 2.984375 -1.578125 Z M 2.484375 -1.640625 C 2.484375 -1.3125 2.484375 -0.90625 2.40625 -0.609375 C 2.28125 -0.125 1.875 -0.046875 1.6875 -0.046875 C 1.5 -0.046875 1.078125 -0.125 0.953125 -0.625 C 0.890625 -0.890625 0.890625 -1.234375 0.890625 -1.640625 C 0.890625 -2.015625 0.890625 -2.359375 0.96875 -2.640625 C 1.09375 -3.046875 1.46875 -3.140625 1.6875 -3.140625 C 2.046875 -3.140625 2.3125 -2.953125 2.40625 -2.59375 C 2.484375 -2.34375 2.484375 -1.9375 2.484375 -1.640625 Z M 2.484375 -1.640625 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05c_d2-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000641634 0.000924162 L 141.334134 0.000924162 " transform="matrix(0.995181,0,0,-0.995181,39.495455,125.067326)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.07296 2.391351 C -1.692219 0.95474 -0.848308 0.279611 -0.000472177 0.000924162 C -0.848308 -0.277763 -1.692219 -0.956817 -2.07296 -2.389503 " transform="matrix(0.995181,0,0,-0.995181,180.348126,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph0-1" x="178.169885" y="132.838691"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000641634 0.000924162 L 0.000641634 112.98686 " transform="matrix(0.995181,0,0,-0.995181,39.495455,125.067326)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.073415 2.389785 C -1.692674 0.957099 -0.848763 0.278045 -0.000926624 -0.000641634 C -0.848763 -0.279328 -1.692674 -0.954457 -2.073415 -2.391068 " transform="matrix(0,-0.995181,-0.995181,0,39.495455,12.424859)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph0-2" x="15.641972" y="14.706778"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph1-1" x="23.532759" y="14.706778"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph0-1" x="27.388089" y="14.706778"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph1-2" x="32.13709" y="14.706778"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 56.69183 0.000924162 L 56.69183 85.03967 " transform="matrix(0.995181,0,0,-0.995181,39.495455,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph0-3" x="92.112642" y="135.344556"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000641634 0.000924162 L 56.69183 85.03967 " transform="matrix(0.995181,0,0,-0.995181,39.495455,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph2-1" x="57.57092" y="77.407134"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph3-1" x="63.52319" y="68.582458"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph2-2" x="69.375292" y="59.90629"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 56.69183 85.03967 L 58.140217 80.863292 L 59.584679 76.985227 L 61.033065 73.381924 L 62.477527 70.021981 L 63.921988 66.893622 L 65.370375 63.965448 L 66.814836 61.225681 L 68.263223 58.658622 L 69.707685 56.252494 L 71.152146 53.987673 L 72.600533 51.860232 L 74.044994 49.854472 L 75.489456 47.962541 L 76.937842 46.17659 L 78.382304 44.488768 L 79.830691 42.891225 L 81.275152 41.380036 L 82.719614 39.943425 L 84.168 38.585317 L 85.612462 37.290012 L 87.060848 36.061435 L 88.50531 34.89566 L 89.949771 33.780912 L 91.398158 32.721117 L 92.84262 31.708424 L 94.287081 30.746758 L 95.735468 29.824344 L 97.179929 28.941181 L 98.628316 28.101196 L 100.072777 27.292611 L 101.517239 26.523278 L 102.965626 25.781422 L 104.410087 25.070967 L 105.858474 24.391913 L 107.302935 23.740335 L 108.747397 23.112308 L 110.195783 22.507832 L 111.640245 21.930833 L 113.084707 21.373459 L 114.533093 20.835711 L 115.977555 20.321514 L 117.425941 19.823018 L 118.870403 19.344148 L 120.314864 18.880978 L 121.763251 18.437434 L 123.207713 18.005666 L 124.656099 17.589598 L 126.100561 17.189231 L 127.545022 16.800639 " transform="matrix(0.995181,0,0,-0.995181,39.495455,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph0-2" x="122.602983" y="89.935462"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph4-1" x="133.247435" y="89.935462"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph5-1" x="146.80876" y="86.031369"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000351332 -0.000566759 L 7.803584 -0.000566759 " transform="matrix(0.995181,0,0,-0.995181,144.901994,87.456467)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph6-1" x="144.901994" y="93.354902"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph7-1" x="148.797131" y="91.371508"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 56.69183 85.03967 L 0.000641634 85.03967 " transform="matrix(0.995181,0,0,-0.995181,39.495455,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph6-2" x="18.515059" y="38.392075"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000964328 0.000724268 L 26.456591 0.000724268 " transform="matrix(0.995181,0,0,-0.995181,8.471697,40.336658)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph5-2" x="8.471697" y="46.234098"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph6-3" x="12.423559" y="46.234098"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph6-4" x="17.309452" y="46.234098"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph7-2" x="21.05476" y="47.225298"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph6-5" x="24.925017" y="46.234098"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d2-glyph7-1" x="30.932922" y="44.251699"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 97.898438 40.4375 C 97.898438 39.339844 97.011719 38.453125 95.914062 38.453125 C 94.820312 38.453125 93.933594 39.339844 93.933594 40.4375 C 93.933594 41.53125 94.820312 42.417969 95.914062 42.417969 C 97.011719 42.417969 97.898438 41.53125 97.898438 40.4375 Z M 97.898438 40.4375 "/>
+</g>
+</svg></figure>
+            <p>Schema riassuntivo dei due regimi: $E \\propto r$ dentro la sfera, $E \\propto 1/r^2$ fuori, con il massimo sulla superficie.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo — valori numerici per la sfera",
+            content: `<p>Sia $Q = 1{,}0\\ \\mathrm{nC} = 1{,}0\\times 10^{-9}\\ \\mathrm{C}$ (positiva) distribuita uniformemente in una sfera di raggio $R = 5{,}0\\ \\mathrm{cm} = 0{,}050\\ \\mathrm{m}$, e sia $\\dfrac{1}{4\\pi\\varepsilon_0} \\simeq 9{,}0\\times 10^{9}\\ \\mathrm{N\\,m^2/C^2}$. Il campo è radiale uscente e il suo modulo vale:</p>
+            <ul>
+              <li>Sulla superficie ($r = R = 0{,}050\\ \\mathrm{m}$), con la formula esterna valutata in $r=R$:
+              <p>$$E = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{R^2} = 9{,}0\\times 10^{9}\\cdot\\frac{1{,}0\\times10^{-9}}{(0{,}050)^2} \\simeq 3{,}6\\times 10^{3}\\ \\mathrm{N/C}.$$</p></li>
+              <li>All'esterno, a $r = 0{,}10\\ \\mathrm{m} = 2R$:
+              <p>$$E = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{r^2} = 9{,}0\\times 10^{9}\\cdot\\frac{1{,}0\\times10^{-9}}{(0{,}10)^2} \\simeq 9{,}0\\times 10^{2}\\ \\mathrm{N/C},$$</p>
+              cioè un <strong>quarto</strong> del valore in superficie, come richiede l'andamento $1/r^2$.</li>
+              <li>All'interno, a $r = 0{,}025\\ \\mathrm{m} = R/2$:
+              <p>$$E = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q\\,r}{R^3} = 9{,}0\\times10^{9}\\cdot\\frac{1{,}0\\times10^{-9}\\cdot 0{,}025}{(0{,}050)^3} \\simeq 1{,}8\\times 10^{3}\\ \\mathrm{N/C},$$</p>
+              cioè <strong>metà</strong> del valore in superficie, come richiede l'andamento lineare.</li>
+            </ul>
+            <p>I tre valori sono esattamente i punti del grafico corrispondenti a $r=R/2$, $r=R$ e $r=2R$. Se la stessa carica fosse negativa, $Q = -1{,}0\\times 10^{-9}\\ \\mathrm{C}$, i moduli sarebbero identici (si usa $|Q|$) ma tutti i vettori punterebbero verso il centro della sfera.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Sfera uniforme — interno", latex: "E_r(r) = \\frac{\\rho r}{3\\varepsilon_0} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Qr}{R^3} \\quad (r \\lt R)" },
+          { label: "Sfera uniforme — esterno", latex: "E_r(r) = \\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{r^2} \\quad (r \\geq R)" },
+          { label: "Valore massimo (in $r=R$)", latex: "E_{max} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{|Q|}{R^2}" },
+          { label: "Carica interna (densità uniforme)", latex: "Q_{int} = Q\\frac{r^3}{R^3}" }
+        ],
+        extra_content: `<p><strong>Nota del Prof. sulla logistica del corso.</strong> Il professore discute con gli studenti la possibilità di modificare l'orario della lezione del martedì per recuperare un quarto d'ora. Le opzioni sono iniziare alle 9:00 (invece delle 9:15) o finire alle 11:15 (invece delle 11:00). La discussione prosegue con una preferenza generale per iniziare prima, tenendo conto degli studenti pendolari.</p>`
+      },
+
+      {
+        id: "s05-filo",
+        type: "section",
+        title: "Campo Elettrico di un Filo Infinito",
+        icon: "🧵",
+        content: `<p>Consideriamo ora una distribuzione di carica lineare, come un filo infinitamente lungo, con una densità di carica lineare uniforme $\\lambda$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Densità di carica lineare",
+            content: `<p>Per una distribuzione di carica su un filo, la <strong>densità di carica lineare</strong> $\\lambda$ rappresenta la carica per unità di lunghezza:</p>
+            <p>$$\\lambda = \\frac{Q}{L} ,$$</p>
+            <p>nel caso di distribuzione uniforme. Si misura in Coulomb al metro (C/m) ed è positiva o negativa a seconda del segno della carica distribuita.</p>`
+          },
+          {
+            subtitle: "Impostazione del problema e simmetria",
+            content: `<p>Vogliamo calcolare il campo elettrostatico in un punto $P$ a una distanza $R$ dal filo. Si noti che in questa sezione <strong>$R$ indica la distanza del punto dall'asse</strong> (il filo ideale non ha raggio) e non il raggio di una distribuzione, come nelle sezioni sulla sfera e sul cilindro, dove la stessa distanza è chiamata $r$.</p>
+            <p>Data la simmetria del problema (il filo è infinito), possiamo fare delle considerazioni importanti sulla direzione del campo $\\vec{E}$:</p>
+            <ul>
+              <li>Per ogni elemento di carica sul filo che genera una componente di campo lungo il filo, ne esiste un altro simmetrico che genera una componente uguale e contraria. Pertanto, le componenti del campo <strong>parallele al filo si annullano</strong>.</li>
+              <li>Il campo elettrostatico deve essere diretto radialmente verso l'esterno (se $\\lambda \\gt 0$) o verso l'interno (se $\\lambda \\lt 0$), in direzione perpendicolare al filo stesso.</li>
+            </ul>
+            <p>Scriviamo quindi $\\vec{E} = E_r \\hat{r}$, con $\\hat{r}$ versore radiale <em>uscente</em> dall'asse: il segno di $E_r$ coinciderà con il segno di $\\lambda$.</p>`
+          },
+          {
+            subtitle: "Applicazione del Teorema di Gauss",
+            content: `<p>Sfruttando questa simmetria, la superficie Gaussiana più adatta è un <strong>cilindro</strong> coassiale con il filo, di raggio $R$ e altezza $h$.</p>
+            <figure class="figura" data-id="fisica2_lez05c_d3"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05c_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="199.214pt" height="205.119pt" viewBox="0 0 199.214 205.119" version="1.2"><style>#fisica2_lez05c_d3 [fill="rgb(100%,0%,0%)"],#fisica2_lez05c_d3 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05c_d3 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05c_d3 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05c_d3 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05c_d3 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05c_d3 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05c_d3 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}#fisica2_lez05c_d3 [fill="rgb(0%,0%,100%)"],#fisica2_lez05c_d3 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d3 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d3 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05c_d3 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05c_d3 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d3 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d3 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#fisica2_lez05c_d3 [fill="rgb(0%,0%,0%)"],#fisica2_lez05c_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05c_d3 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05c_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph0-1">
+<path style="stroke:none;" d="M 5.234375 0 L 5.234375 -0.3125 C 4.5625 -0.3125 4.453125 -0.3125 4.453125 -0.75 L 4.453125 -4.390625 L 3.203125 -4.3125 C 3.046875 -4.296875 3.03125 -4.28125 3.03125 -4.28125 C 3 -4.28125 2.984375 -4.28125 2.84375 -4.28125 L 1.671875 -4.28125 L 1.671875 -5.390625 C 1.671875 -6.375 2.53125 -6.78125 3.140625 -6.78125 C 3.4375 -6.78125 3.796875 -6.671875 4 -6.453125 C 3.59375 -6.421875 3.53125 -6.15625 3.53125 -6 C 3.53125 -5.671875 3.796875 -5.53125 3.984375 -5.53125 C 4.203125 -5.53125 4.4375 -5.6875 4.4375 -6 C 4.4375 -6.578125 3.890625 -7 3.15625 -7 C 2.234375 -7 1.046875 -6.484375 1.046875 -5.40625 L 1.046875 -4.28125 L 0.265625 -4.28125 L 0.265625 -3.96875 L 1.046875 -3.96875 L 1.046875 -0.75 C 1.046875 -0.3125 0.9375 -0.3125 0.28125 -0.3125 L 0.28125 0 L 1.375 -0.03125 L 2.484375 0 L 2.484375 -0.3125 C 1.8125 -0.3125 1.703125 -0.3125 1.703125 -0.75 L 1.703125 -3.96875 L 3.28125 -3.96875 C 3.734375 -3.96875 3.796875 -3.84375 3.796875 -3.4375 L 3.796875 -0.75 C 3.796875 -0.3125 3.6875 -0.3125 3.03125 -0.3125 L 3.03125 0 L 4.125 -0.03125 Z M 5.234375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph0-2">
+<path style="stroke:none;" d="M 2.53125 0 L 2.53125 -0.3125 C 1.859375 -0.3125 1.75 -0.3125 1.75 -0.75 L 1.75 -6.890625 L 0.328125 -6.78125 L 0.328125 -6.46875 C 1.015625 -6.46875 1.09375 -6.40625 1.09375 -5.90625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 Z M 2.53125 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph0-3">
+<path style="stroke:none;" d="M 4.671875 -2.125 C 4.671875 -3.390625 3.6875 -4.4375 2.484375 -4.4375 C 1.234375 -4.4375 0.28125 -3.359375 0.28125 -2.125 C 0.28125 -0.84375 1.3125 0.109375 2.46875 0.109375 C 3.671875 0.109375 4.671875 -0.859375 4.671875 -2.125 Z M 3.84375 -2.203125 C 3.84375 -1.84375 3.84375 -1.3125 3.625 -0.875 C 3.40625 -0.421875 2.96875 -0.140625 2.484375 -0.140625 C 2.046875 -0.140625 1.625 -0.34375 1.34375 -0.796875 C 1.09375 -1.234375 1.09375 -1.84375 1.09375 -2.203125 C 1.09375 -2.59375 1.09375 -3.125 1.34375 -3.5625 C 1.609375 -4.015625 2.078125 -4.234375 2.46875 -4.234375 C 2.90625 -4.234375 3.328125 -4.015625 3.59375 -3.578125 C 3.84375 -3.15625 3.84375 -2.578125 3.84375 -2.203125 Z M 3.84375 -2.203125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph1-1">
+<path style="stroke:none;" d="M 5.4375 0.015625 C 5.4375 -0.015625 5.421875 -0.046875 5.390625 -0.078125 C 5.28125 -0.1875 5.234375 -0.34375 5.15625 -0.53125 L 3.140625 -6.1875 C 2.921875 -6.75 2.390625 -6.890625 1.921875 -6.890625 C 1.875 -6.890625 1.75 -6.890625 1.75 -6.78125 C 1.75 -6.703125 1.828125 -6.671875 1.828125 -6.671875 C 2.15625 -6.625 2.234375 -6.5625 2.484375 -5.890625 L 3.4375 -3.1875 L 0.703125 -0.46875 C 0.578125 -0.34375 0.53125 -0.28125 0.53125 -0.15625 C 0.53125 0.015625 0.671875 0.125 0.828125 0.125 C 0.984375 0.125 1.078125 0.015625 1.15625 -0.078125 L 3.546875 -2.890625 C 3.953125 -1.859375 4.421875 -0.34375 4.578125 -0.109375 C 4.75 0.109375 4.84375 0.109375 5.109375 0.109375 L 5.328125 0.109375 C 5.421875 0.09375 5.4375 0.046875 5.4375 0.015625 Z M 5.4375 0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph1-2">
+<path style="stroke:none;" d="M 6.890625 -2.484375 C 6.890625 -2.59375 6.8125 -2.65625 6.703125 -2.703125 L 1.203125 -5.28125 C 1.078125 -5.359375 1.046875 -5.359375 1.015625 -5.359375 C 0.90625 -5.359375 0.828125 -5.265625 0.828125 -5.15625 C 0.828125 -5.0625 0.875 -5.015625 1.015625 -4.9375 L 6.21875 -2.484375 L 1.015625 -0.015625 C 0.875 0.046875 0.828125 0.109375 0.828125 0.203125 C 0.828125 0.3125 0.90625 0.390625 1.015625 0.390625 C 1.046875 0.390625 1.078125 0.390625 1.203125 0.328125 L 6.703125 -2.265625 C 6.8125 -2.3125 6.890625 -2.359375 6.890625 -2.484375 Z M 6.890625 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph1-3">
+<path style="stroke:none;" d="M 4.9375 -1.421875 C 4.9375 -1.515625 4.859375 -1.515625 4.828125 -1.515625 C 4.71875 -1.515625 4.71875 -1.484375 4.6875 -1.34375 C 4.515625 -0.6875 4.328125 -0.109375 3.921875 -0.109375 C 3.65625 -0.109375 3.625 -0.359375 3.625 -0.5625 C 3.625 -0.796875 3.65625 -0.875 3.6875 -1.046875 L 5.125 -6.78125 C 5.125 -6.78125 5.125 -6.890625 4.984375 -6.890625 C 4.84375 -6.890625 3.90625 -6.796875 3.734375 -6.78125 C 3.65625 -6.765625 3.59375 -6.71875 3.59375 -6.59375 C 3.59375 -6.46875 3.6875 -6.46875 3.828125 -6.46875 C 4.3125 -6.46875 4.328125 -6.40625 4.328125 -6.296875 L 4.296875 -6.109375 L 3.703125 -3.75 C 3.515625 -4.125 3.234375 -4.390625 2.78125 -4.390625 C 1.625 -4.390625 0.390625 -2.921875 0.390625 -1.484375 C 0.390625 -0.546875 0.9375 0.109375 1.71875 0.109375 C 1.921875 0.109375 2.40625 0.0625 3 -0.640625 C 3.078125 -0.21875 3.4375 0.109375 3.90625 0.109375 C 4.25 0.109375 4.484375 -0.125 4.640625 -0.4375 C 4.8125 -0.796875 4.9375 -1.421875 4.9375 -1.421875 Z M 3.546875 -3.125 L 3.0625 -1.1875 C 3 -1 3 -0.984375 2.859375 -0.8125 C 2.421875 -0.265625 2.015625 -0.109375 1.734375 -0.109375 C 1.234375 -0.109375 1.09375 -0.65625 1.09375 -1.046875 C 1.09375 -1.53125 1.421875 -2.765625 1.640625 -3.21875 C 1.953125 -3.796875 2.40625 -4.171875 2.796875 -4.171875 C 3.4375 -4.171875 3.578125 -3.359375 3.578125 -3.296875 C 3.578125 -3.234375 3.5625 -3.171875 3.546875 -3.125 Z M 3.546875 -3.125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph1-4">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph1-5">
+<path style="stroke:none;" d="M 5.421875 -1.421875 C 5.421875 -1.515625 5.328125 -1.515625 5.296875 -1.515625 C 5.203125 -1.515625 5.203125 -1.484375 5.15625 -1.34375 C 5 -0.8125 4.6875 -0.109375 4.140625 -0.109375 C 3.96875 -0.109375 3.90625 -0.203125 3.90625 -0.4375 C 3.90625 -0.6875 3.984375 -0.921875 4.078125 -1.140625 C 4.234375 -1.5625 4.6875 -2.75 4.6875 -3.328125 C 4.6875 -3.96875 4.28125 -4.390625 3.546875 -4.390625 C 2.921875 -4.390625 2.4375 -4.078125 2.078125 -3.625 L 2.84375 -6.78125 C 2.84375 -6.78125 2.84375 -6.890625 2.71875 -6.890625 C 2.484375 -6.890625 1.765625 -6.8125 1.515625 -6.78125 C 1.421875 -6.78125 1.3125 -6.765625 1.3125 -6.59375 C 1.3125 -6.46875 1.40625 -6.46875 1.5625 -6.46875 C 2.03125 -6.46875 2.046875 -6.40625 2.046875 -6.296875 L 2.03125 -6.109375 L 0.578125 -0.390625 C 0.546875 -0.25 0.546875 -0.234375 0.546875 -0.171875 C 0.546875 0.0625 0.75 0.109375 0.828125 0.109375 C 0.984375 0.109375 1.15625 -0.015625 1.203125 -0.15625 L 1.390625 -0.90625 L 1.609375 -1.796875 C 1.671875 -2.015625 1.71875 -2.234375 1.78125 -2.453125 C 1.796875 -2.515625 1.875 -2.84375 1.890625 -2.90625 C 1.921875 -3 2.21875 -3.546875 2.5625 -3.8125 C 2.78125 -3.984375 3.078125 -4.171875 3.515625 -4.171875 C 3.9375 -4.171875 4.046875 -3.828125 4.046875 -3.46875 C 4.046875 -2.9375 3.671875 -1.859375 3.4375 -1.25 C 3.359375 -1.015625 3.296875 -0.90625 3.296875 -0.703125 C 3.296875 -0.234375 3.65625 0.109375 4.125 0.109375 C 5.046875 0.109375 5.421875 -1.34375 5.421875 -1.421875 Z M 5.421875 -1.421875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph2-1">
+<path style="stroke:none;" d="M 4.5625 -3.171875 C 4.5625 -3.96875 4.515625 -4.765625 4.171875 -5.5 C 3.703125 -6.453125 2.890625 -6.609375 2.484375 -6.609375 C 1.890625 -6.609375 1.15625 -6.34375 0.75 -5.421875 C 0.4375 -4.75 0.390625 -3.96875 0.390625 -3.171875 C 0.390625 -2.4375 0.421875 -1.53125 0.828125 -0.78125 C 1.265625 0.015625 1.984375 0.21875 2.46875 0.21875 C 3 0.21875 3.765625 0.015625 4.203125 -0.9375 C 4.515625 -1.625 4.5625 -2.390625 4.5625 -3.171875 Z M 3.734375 -3.296875 C 3.734375 -2.546875 3.734375 -1.875 3.625 -1.234375 C 3.484375 -0.296875 2.921875 0 2.46875 0 C 2.078125 0 1.5 -0.25 1.3125 -1.203125 C 1.203125 -1.796875 1.203125 -2.703125 1.203125 -3.296875 C 1.203125 -3.921875 1.203125 -4.578125 1.296875 -5.125 C 1.484375 -6.296875 2.21875 -6.390625 2.46875 -6.390625 C 2.796875 -6.390625 3.453125 -6.21875 3.640625 -5.234375 C 3.734375 -4.671875 3.734375 -3.921875 3.734375 -3.296875 Z M 3.734375 -3.296875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph3-1">
+<path style="stroke:none;" d="M 6.609375 -2.234375 C 6.609375 -2.421875 6.4375 -2.421875 6.296875 -2.421875 L 3.75 -2.421875 L 3.75 -4.984375 C 3.75 -5.125 3.75 -5.296875 3.5625 -5.296875 C 3.375 -5.296875 3.375 -5.109375 3.375 -4.984375 L 3.375 -2.421875 L 0.828125 -2.421875 C 0.703125 -2.421875 0.515625 -2.421875 0.515625 -2.234375 C 0.515625 -2.046875 0.671875 -2.046875 0.828125 -2.046875 L 3.375 -2.046875 L 3.375 0.515625 C 3.375 0.65625 3.375 0.828125 3.5625 0.828125 C 3.75 0.828125 3.75 0.640625 3.75 0.515625 L 3.75 -2.046875 L 6.296875 -2.046875 C 6.421875 -2.046875 6.609375 -2.046875 6.609375 -2.234375 Z M 6.609375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph4-1">
+<path style="stroke:none;" d="M 7.171875 -2.71875 L 6.703125 -2.71875 C 6.484375 -1.34375 6.21875 -0.46875 4.375 -0.46875 L 2.875 -0.46875 L 2.875 -3.265625 L 3.40625 -3.265625 C 4.359375 -3.265625 4.46875 -2.84375 4.46875 -2.109375 L 4.9375 -2.109375 L 4.9375 -4.890625 L 4.46875 -4.890625 C 4.46875 -4.15625 4.375 -3.734375 3.40625 -3.734375 L 2.875 -3.734375 L 2.875 -6.28125 L 4.375 -6.28125 C 5.96875 -6.28125 6.234375 -5.5625 6.390625 -4.359375 L 6.859375 -4.359375 L 6.546875 -6.75 L 0.390625 -6.75 L 0.390625 -6.28125 L 1.453125 -6.28125 L 1.453125 -0.46875 L 0.390625 -0.46875 L 0.390625 0 L 6.71875 0 Z M 7.171875 -2.71875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph4-2">
+<path style="stroke:none;" d="M 5.6875 -2.015625 C 5.6875 -3.109375 4.890625 -3.921875 3.984375 -4.109375 L 2.546875 -4.421875 C 2.15625 -4.5 1.59375 -4.84375 1.59375 -5.453125 C 1.59375 -5.875 1.875 -6.484375 2.875 -6.484375 C 3.65625 -6.484375 4.65625 -6.15625 4.890625 -4.796875 C 4.9375 -4.5625 4.9375 -4.546875 5.140625 -4.546875 C 5.375 -4.546875 5.375 -4.59375 5.375 -4.828125 L 5.375 -6.640625 C 5.375 -6.828125 5.375 -6.921875 5.203125 -6.921875 C 5.125 -6.921875 5.109375 -6.90625 5 -6.8125 L 4.546875 -6.375 C 3.984375 -6.828125 3.328125 -6.921875 2.859375 -6.921875 C 1.34375 -6.921875 0.640625 -5.96875 0.640625 -4.921875 C 0.640625 -4.28125 0.96875 -3.8125 1.171875 -3.609375 C 1.65625 -3.109375 2 -3.046875 3.078125 -2.8125 C 3.953125 -2.625 4.125 -2.59375 4.328125 -2.375 C 4.484375 -2.234375 4.734375 -1.96875 4.734375 -1.515625 C 4.734375 -1.046875 4.46875 -0.359375 3.4375 -0.359375 C 2.6875 -0.359375 1.1875 -0.5625 1.09375 -2.03125 C 1.09375 -2.21875 1.09375 -2.265625 0.875 -2.265625 C 0.640625 -2.265625 0.640625 -2.203125 0.640625 -1.96875 L 0.640625 -0.171875 C 0.640625 0.015625 0.640625 0.109375 0.8125 0.109375 C 0.90625 0.109375 0.921875 0.09375 1 0.015625 L 1.453125 -0.4375 C 2.109375 0.046875 3.03125 0.109375 3.4375 0.109375 C 5.078125 0.109375 5.6875 -1.015625 5.6875 -2.015625 Z M 5.6875 -2.015625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-1">
+<path style="stroke:none;" d="M 1.953125 0 L 1.953125 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.546875 L 1.421875 -4.8125 L 0.390625 -4.734375 L 0.390625 -4.484375 C 0.859375 -4.484375 0.90625 -4.4375 0.90625 -4.09375 L 0.90625 -0.546875 C 0.90625 -0.25 0.84375 -0.25 0.390625 -0.25 L 0.390625 0 C 0.390625 0 0.890625 -0.03125 1.171875 -0.03125 C 1.421875 -0.03125 1.6875 -0.015625 1.953125 0 Z M 1.953125 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-2">
+<path style="stroke:none;" d="M 3.78125 -0.625 L 3.78125 -1 L 3.53125 -1 L 3.53125 -0.625 C 3.53125 -0.5625 3.53125 -0.234375 3.28125 -0.234375 C 3.03125 -0.234375 3.03125 -0.5625 3.03125 -0.640625 L 3.03125 -1.859375 C 3.03125 -2.234375 3.03125 -2.484375 2.703125 -2.75 C 2.421875 -2.984375 2.09375 -3.09375 1.671875 -3.09375 C 1.015625 -3.09375 0.5625 -2.84375 0.5625 -2.421875 C 0.5625 -2.203125 0.703125 -2.078125 0.890625 -2.078125 C 1.078125 -2.078125 1.21875 -2.21875 1.21875 -2.40625 C 1.21875 -2.53125 1.15625 -2.671875 0.96875 -2.71875 C 1.21875 -2.90625 1.625 -2.90625 1.671875 -2.90625 C 2.046875 -2.90625 2.484375 -2.640625 2.484375 -2.0625 L 2.484375 -1.84375 C 2.09375 -1.828125 1.640625 -1.8125 1.125 -1.625 C 0.5 -1.390625 0.3125 -1.015625 0.3125 -0.703125 C 0.3125 -0.109375 1.03125 0.0625 1.53125 0.0625 C 2.078125 0.0625 2.40625 -0.25 2.546875 -0.515625 C 2.578125 -0.234375 2.765625 0.03125 3.09375 0.03125 C 3.09375 0.03125 3.78125 0.03125 3.78125 -0.625 Z M 2.484375 -0.984375 C 2.484375 -0.3125 1.890625 -0.125 1.578125 -0.125 C 1.234375 -0.125 0.890625 -0.359375 0.890625 -0.703125 C 0.890625 -1.078125 1.234375 -1.609375 2.484375 -1.671875 Z M 2.484375 -0.984375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-3">
+<path style="stroke:none;" d="M 2.609375 -0.875 L 2.609375 -1.25 L 2.359375 -1.25 L 2.359375 -0.875 C 2.359375 -0.40625 2.140625 -0.15625 1.875 -0.15625 C 1.390625 -0.15625 1.390625 -0.734375 1.390625 -0.859375 L 1.390625 -2.734375 L 2.484375 -2.734375 L 2.484375 -2.984375 L 1.390625 -2.984375 L 1.390625 -4.265625 L 1.15625 -4.265625 C 1.15625 -3.640625 0.875 -2.953125 0.203125 -2.9375 L 0.203125 -2.734375 L 0.84375 -2.734375 L 0.84375 -0.875 C 0.84375 -0.09375 1.421875 0.0625 1.8125 0.0625 C 2.28125 0.0625 2.609375 -0.328125 2.609375 -0.875 Z M 2.609375 -0.875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-4">
+<path style="stroke:none;" d="M 2.828125 -0.90625 C 2.828125 -1.171875 2.703125 -1.375 2.53125 -1.546875 C 2.265625 -1.796875 1.9375 -1.84375 1.703125 -1.890625 C 1.140625 -1.984375 0.6875 -2.0625 0.6875 -2.4375 C 0.6875 -2.65625 0.875 -2.921875 1.546875 -2.921875 C 2.34375 -2.921875 2.375 -2.359375 2.390625 -2.171875 C 2.40625 -2.09375 2.484375 -2.09375 2.515625 -2.09375 C 2.625 -2.09375 2.625 -2.140625 2.625 -2.265625 L 2.625 -2.90625 C 2.625 -3.03125 2.625 -3.09375 2.53125 -3.09375 C 2.5 -3.09375 2.484375 -3.09375 2.390625 -3.015625 C 2.375 -3 2.3125 -2.9375 2.265625 -2.90625 C 2.0625 -3.046875 1.796875 -3.09375 1.546875 -3.09375 C 0.546875 -3.09375 0.3125 -2.578125 0.3125 -2.234375 C 0.3125 -2 0.40625 -1.828125 0.578125 -1.6875 C 0.84375 -1.453125 1.109375 -1.40625 1.53125 -1.34375 C 1.875 -1.28125 2.4375 -1.171875 2.4375 -0.71875 C 2.4375 -0.4375 2.25 -0.125 1.59375 -0.125 C 0.921875 -0.125 0.6875 -0.5625 0.5625 -1.03125 C 0.53125 -1.125 0.53125 -1.15625 0.4375 -1.15625 C 0.3125 -1.15625 0.3125 -1.109375 0.3125 -0.96875 L 0.3125 -0.109375 C 0.3125 0 0.3125 0.0625 0.40625 0.0625 C 0.46875 0.0625 0.609375 -0.078125 0.75 -0.234375 C 1.046875 0.0625 1.421875 0.0625 1.59375 0.0625 C 2.484375 0.0625 2.828125 -0.421875 2.828125 -0.90625 Z M 2.828125 -0.90625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-5">
+<path style="stroke:none;" d="M 4.09375 0 L 4.09375 -0.25 C 3.625 -0.25 3.578125 -0.296875 3.578125 -0.640625 L 3.578125 -3.0625 L 2.5 -2.984375 L 2.5 -2.734375 C 2.96875 -2.734375 3.03125 -2.6875 3.03125 -2.34375 L 3.03125 -1.15625 C 3.03125 -0.546875 2.625 -0.125 2.109375 -0.125 C 1.46875 -0.125 1.4375 -0.421875 1.4375 -0.78125 L 1.4375 -3.0625 L 0.375 -2.984375 L 0.375 -2.734375 C 0.890625 -2.734375 0.890625 -2.71875 0.890625 -2.09375 L 0.890625 -1.046875 C 0.890625 -0.578125 0.890625 0.0625 2.046875 0.0625 C 2.203125 0.0625 2.71875 0.0625 3.046875 -0.515625 L 3.046875 0.0625 Z M 4.09375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-6">
+<path style="stroke:none;" d="M 4.046875 -1.5 C 4.046875 -2.359375 3.34375 -3.0625 2.46875 -3.0625 C 2.0625 -3.0625 1.671875 -2.90625 1.375 -2.640625 L 1.375 -3.0625 L 0.34375 -2.984375 L 0.34375 -2.734375 C 0.828125 -2.734375 0.859375 -2.703125 0.859375 -2.40625 L 0.859375 0.796875 C 0.859375 1.09375 0.796875 1.09375 0.34375 1.09375 L 0.34375 1.34375 C 0.34375 1.34375 0.84375 1.3125 1.125 1.3125 C 1.390625 1.3125 1.859375 1.34375 1.921875 1.34375 L 1.921875 1.09375 C 1.484375 1.09375 1.40625 1.09375 1.40625 0.796875 L 1.40625 -0.328125 C 1.4375 -0.296875 1.765625 0.0625 2.359375 0.0625 C 3.265625 0.0625 4.046875 -0.625 4.046875 -1.5 Z M 3.421875 -1.5 C 3.421875 -0.703125 2.90625 -0.125 2.3125 -0.125 C 1.703125 -0.125 1.421875 -0.65625 1.40625 -0.703125 L 1.40625 -2.3125 C 1.609375 -2.65625 2.015625 -2.84375 2.390625 -2.84375 C 2.96875 -2.84375 3.421875 -2.234375 3.421875 -1.5 Z M 3.421875 -1.5 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-7">
+<path style="stroke:none;" d="M 1.90625 0 L 1.90625 -0.25 C 1.5 -0.25 1.421875 -0.25 1.421875 -0.546875 L 1.421875 -3.0625 L 0.40625 -2.984375 L 0.40625 -2.734375 C 0.84375 -2.734375 0.90625 -2.6875 0.90625 -2.359375 L 0.90625 -0.546875 C 0.90625 -0.25 0.84375 -0.25 0.390625 -0.25 L 0.390625 0 C 0.390625 0 0.890625 -0.03125 1.171875 -0.03125 C 1.40625 -0.03125 1.65625 -0.015625 1.90625 0 Z M 1.515625 -4.171875 C 1.515625 -4.390625 1.34375 -4.578125 1.125 -4.578125 C 0.890625 -4.578125 0.734375 -4.390625 0.734375 -4.1875 C 0.734375 -3.96875 0.90625 -3.78125 1.125 -3.78125 C 1.359375 -3.78125 1.515625 -3.96875 1.515625 -4.171875 Z M 1.515625 -4.171875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-8">
+<path style="stroke:none;" d="M 4.09375 0 L 4.09375 -0.25 C 3.640625 -0.25 3.578125 -0.25 3.578125 -0.546875 L 3.578125 -2.109375 C 3.578125 -2.703125 3.28125 -3.0625 2.53125 -3.0625 C 1.96875 -3.0625 1.59375 -2.75 1.40625 -2.390625 L 1.390625 -2.390625 L 1.390625 -3.0625 L 0.375 -2.984375 L 0.375 -2.734375 C 0.84375 -2.734375 0.890625 -2.6875 0.890625 -2.34375 L 0.890625 -0.546875 C 0.890625 -0.25 0.828125 -0.25 0.375 -0.25 L 0.375 0 C 0.375 0 0.875 -0.03125 1.171875 -0.03125 C 1.421875 -0.03125 1.90625 0 1.96875 0 L 1.96875 -0.25 C 1.515625 -0.25 1.4375 -0.25 1.4375 -0.546875 L 1.4375 -1.796875 C 1.4375 -2.53125 2.015625 -2.859375 2.484375 -2.859375 C 2.96875 -2.859375 3.03125 -2.484375 3.03125 -2.125 L 3.03125 -0.546875 C 3.03125 -0.25 2.953125 -0.25 2.5 -0.25 L 2.5 0 C 2.5 0 3 -0.03125 3.296875 -0.03125 C 3.546875 -0.03125 4.03125 0 4.09375 0 Z M 4.09375 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d3-glyph5-9">
+<path style="stroke:none;" d="M 2.765625 -4.375 C 2.765625 -4.671875 2.46875 -4.890625 2.078125 -4.890625 C 1.53125 -4.890625 0.90625 -4.5 0.90625 -3.765625 L 0.90625 -2.984375 L 0.3125 -2.984375 L 0.3125 -2.734375 L 0.90625 -2.734375 L 0.90625 -0.546875 C 0.90625 -0.25 0.84375 -0.25 0.390625 -0.25 L 0.390625 0 C 0.421875 0 0.890625 -0.03125 1.171875 -0.03125 L 2.078125 0 L 2.078125 -0.25 L 1.9375 -0.25 C 1.421875 -0.25 1.421875 -0.328125 1.421875 -0.5625 L 1.421875 -2.734375 L 2.296875 -2.734375 L 2.296875 -2.984375 L 1.40625 -2.984375 L 1.40625 -3.765625 C 1.40625 -4.390625 1.78125 -4.6875 2.078125 -4.6875 C 2.140625 -4.6875 2.203125 -4.671875 2.28125 -4.65625 C 2.171875 -4.59375 2.125 -4.484375 2.125 -4.375 C 2.125 -4.1875 2.25 -4.0625 2.4375 -4.0625 C 2.625 -4.0625 2.765625 -4.1875 2.765625 -4.375 Z M 2.765625 -4.375 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05c_d3-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000687321 -94.96382 L 0.000687321 88.78687 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.532917 -0.000687321 C 3.975847 0.136619 1.527877 0.921224 0.00181969 1.772521 L 0.00181969 -1.773896 C 1.527877 -0.918676 3.975847 -0.137993 4.532917 -0.000687321 Z M 4.532917 -0.000687321 " transform="matrix(0,-0.995723,-0.995723,0,100.050097,14.052593)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph0-1" x="108.634227" y="15.554194"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph0-2" x="114.145776" y="15.554194"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph0-3" x="116.90155" y="15.554194"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-1" x="108.634227" y="196.029042"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-2" x="117.178317" y="196.029042"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph2-1" x="127.647564" y="196.029042"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="90.631731"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="77.930284"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="65.228838"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="52.527391"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="39.825945"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="27.124498"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="118.856503"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="131.55795"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="144.259396"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="156.960843"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="169.662289"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph3-1" x="103.25533" y="182.363735"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M -42.521009 -56.694686 L -42.521009 56.692581 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 42.518461 -56.694686 L 42.518461 56.692581 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 42.518461 56.692581 C 42.518461 64.522944 23.483931 70.86648 0.000687321 70.86648 C -23.482556 70.86648 -42.521009 64.522944 -42.521009 56.692581 C -42.521009 48.866141 -23.482556 42.518682 0.000687321 42.518682 C 23.483931 42.518682 42.518461 48.866141 42.518461 56.692581 Z M 42.518461 56.692581 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 42.518461 -56.694686 C 42.518461 -48.864323 23.483931 -42.520787 0.000687321 -42.520787 C -23.482556 -42.520787 -42.521009 -48.864323 -42.521009 -56.694686 C -42.521009 -64.521126 -23.482556 -70.868585 0.000687321 -70.868585 C 23.483931 -70.868585 42.518461 -64.521126 42.518461 -56.694686 Z M 42.518461 -56.694686 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.518461 28.348706 L 57.602502 28.348706 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.534142 0.00190636 C 3.977072 0.139212 1.529102 0.919895 -0.000878306 1.771192 L -0.000878306 -1.771302 C 1.529102 -0.920005 3.977072 -0.139323 4.534142 0.00190636 Z M 4.534142 0.00190636 " transform="matrix(0.995723,0,0,-0.995723,157.407125,74.232367)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph4-1" x="149.223892" y="70.530069"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -42.521009 28.348706 L -57.60505 28.348706 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.532767 -0.00190636 C 3.975697 0.139323 1.527728 0.920005 0.00167008 1.771302 L 0.00167008 -1.771192 C 1.527728 -0.919895 3.975697 -0.139212 4.532767 -0.00190636 Z M 4.532767 -0.00190636 " transform="matrix(-0.995723,0,0,0.995723,42.693069,74.232367)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph4-1" x="43.379501" y="70.530069"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -42.521009 -25.51054 L -61.853689 -25.51054 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.533489 -0.00139032 C 3.976419 0.139839 1.52845 0.920521 -0.00153102 1.771818 L -0.00153102 -1.770676 C 1.52845 -0.919379 3.976419 -0.138696 4.533489 -0.00139032 Z M 4.533489 -0.00139032 " transform="matrix(-0.995723,0,0,0.995723,38.459413,127.860759)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-3" x="7.309424" y="130.561231"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph4-2" x="12.47225" y="130.561231"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-1" x="18.810028" y="132.048841"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-2" x="21.05571" y="132.048841"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-3" x="25.009609" y="132.048841"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -17.00956 69.732725 L -17.00956 84.534308 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.532645 0.00132039 C 3.975575 0.138626 1.531529 0.919309 0.00154777 1.770606 L 0.00154777 -1.771888 C 1.531529 -0.920591 3.975575 -0.139909 4.532645 0.00132039 Z M 4.532645 0.00132039 " transform="matrix(0,-0.995723,-0.995723,0,83.114596,18.286697)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-3" x="55.508406" y="14.163168"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph4-2" x="60.672227" y="14.163168"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-4" x="67.010006" y="15.650779"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-5" x="70.152849" y="15.650779"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-6" x="74.534498" y="15.650779"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -17.00956 -69.73483 L -17.00956 -84.53249 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.53475 -0.00132039 C 3.97768 0.139909 1.529711 0.920591 -0.000269955 1.771888 L -0.000269955 -1.770606 C 1.529711 -0.919309 3.97768 -0.138626 4.53475 -0.00132039 Z M 4.53475 -0.00132039 " transform="matrix(0,0.995723,0.995723,0,83.114596,186.629175)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-3" x="57.830433" y="195.479403"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph4-2" x="62.993258" y="195.479403"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-7" x="69.331037" y="196.967013"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-8" x="71.576719" y="196.967013"/>
+  <use xlink:href="#fisica2_lez05c_d3-glyph5-9" x="75.958367" y="196.967013"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.582784 0.00090886 L 37.936364 0.00090886 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.76224 -0.00090886 C 3.299323 0.112859 1.267194 0.752312 0.0000564329 1.446688 L 0.0000564329 -1.444583 C 1.267194 -0.750207 3.299323 -0.110754 3.76224 -0.00090886 Z M 3.76224 -0.00090886 " transform="matrix(-0.995723,0,0,0.995723,104.613337,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.761198 0.00090886 C 3.298281 0.110754 1.270075 0.750207 -0.000985707 1.444583 L -0.000985707 -1.446688 C 1.270075 -0.752312 3.298281 -0.112859 3.761198 0.00090886 Z M 3.761198 0.00090886 " transform="matrix(0.995723,0,0,-0.995723,137.8252,102.457936)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-4" x="117.414516" y="112.741766"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 82.203808 -52.11259 L 82.203808 52.110485 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.76009 -0.00174217 C 3.301096 0.112026 1.268968 0.751479 0.00182989 1.445855 L 0.00182989 -1.445416 C 1.268968 -0.75104 3.301096 -0.111587 3.76009 -0.00174217 Z M 3.76009 -0.00174217 " transform="matrix(0,0.995723,0.995723,0,181.904078,154.345834)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 3.761908 0.00174217 C 3.298991 0.111587 1.270786 0.75104 -0.000275418 1.445416 L -0.000275418 -1.445855 C 1.270786 -0.751479 3.298991 -0.112026 3.761908 0.00174217 Z M 3.761908 0.00174217 " transform="matrix(0,-0.995723,-0.995723,0,181.904078,50.570038)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d3-glyph1-5" x="185.407481" y="105.903139"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M 42.518461 56.692581 L 82.203808 56.692581 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:0.3985,1.99255;stroke-miterlimit:10;" d="M 42.518461 -56.694686 L 82.203808 -56.694686 " transform="matrix(0.995723,0,0,-0.995723,100.050097,102.457936)"/>
+</g>
+</svg></figure>
+            <p>Nella figura, i segni $+$ e le frecce uscenti si riferiscono al caso $\\lambda \\gt 0$; i vettori $d\\vec{S}$ disegnati sono le normali <em>uscenti</em> del cilindro.</p>
+            <p>Il flusso totale attraverso il cilindro è la somma dei flussi attraverso le due basi (superiore e inferiore) e la superficie laterale:</p>
+            <p>$$\\Phi_{cil}(\\vec{E}) = \\Phi_{top} + \\Phi_{bottom} + \\Phi_{lat}$$</p>
+            <ul>
+              <li><strong>Flusso attraverso le basi</strong>: sulle basi il vettore normale uscente $d\\vec{S}$ è parallelo al filo (verticale), mentre il campo $\\vec{E}$ è perpendicolare al filo (orizzontale). L'angolo tra $\\vec{E}$ e $d\\vec{S}$ è di $90^\\circ$, quindi il prodotto scalare $\\vec{E} \\cdot d\\vec{S}$ è nullo:
+              <p>$$\\Phi_{top} = \\Phi_{bottom} = 0$$</p></li>
+              <li><strong>Flusso attraverso la superficie laterale</strong>: sulla superficie laterale $S_L$ il vettore normale uscente $d\\vec{S}$ è radiale, proprio come il campo $\\vec{E}$, e la componente radiale $E_r$ è costante a distanza $R$. Poiché il mantello è una superficie <em>aperta</em>, usiamo l'integrale semplice e riserviamo $\\oint$ alla superficie chiusa completa:
+              <p>$$\\Phi_{lat} = \\int_{S_L} \\vec{E} \\cdot d\\vec{S} = \\int_{S_L} E_r \\, dS = E_r \\cdot (\\text{Area}_{lat})$$</p>
+              L'area della superficie laterale di un cilindro di raggio $R$ e altezza $h$ è $2\\pi R h$, quindi
+              <p>$$\\Phi_{lat} = E_r (2\\pi R h)$$</p></li>
+            </ul>
+            <p>Il flusso totale è quindi $\\Phi_{cil}(\\vec{E}) = E_r (2\\pi R h)$. Si noti che se $\\lambda \\lt 0$ allora $E_r \\lt 0$ e il flusso risulta <strong>negativo</strong>, coerentemente con il fatto che la carica racchiusa è negativa.</p>
+            <p>Ora applichiamo il teorema di Gauss. La carica interna al cilindro è la carica contenuta nel tratto di filo di lunghezza $h$:</p>
+            <p>$$Q_{int} = \\lambda \\cdot h$$</p>
+            <p>Uguagliando flusso e carica interna:</p>
+            <p>$$E_r (2\\pi R h) = \\frac{\\lambda h}{\\varepsilon_0}$$</p>
+            <p>L'altezza $h$ del cilindro si semplifica. Questo è un risultato importante: il campo <strong>non dipende dall'altezza</strong> del cilindro Gaussiano scelto, come ci si aspetta per un filo infinito.</p>`
+          },
+          {
+            subtitle: "Proposizione — Campo di un filo rettilineo infinito",
+            content: `<p>Sia dato un filo rettilineo <strong>infinito</strong>, con densità di carica lineare uniforme $\\lambda$, isolato nel vuoto. Il campo è radiale rispetto all'asse del filo, $\\vec{E} = E_r \\hat{r}$ con $\\hat{r}$ uscente dall'asse, e</p>
+            <p>$$E_r = \\frac{\\lambda}{2\\pi\\varepsilon_0 R} \\qquad \\Longrightarrow \\qquad E = |E_r| = \\frac{|\\lambda|}{2\\pi\\varepsilon_0 R} .$$</p>
+            <p><strong>Convenzione sul segno:</strong> per $\\lambda \\gt 0$ si ha $E_r \\gt 0$ (campo uscente, flusso positivo); per $\\lambda \\lt 0$ si ha $E_r \\lt 0$ (campo entrante, flusso negativo).</p>
+            <p><strong>Ipotesi e dominio di validità:</strong> filo di lunghezza infinita (o, in pratica, molto maggiore della distanza $R$ e con il punto di osservazione lontano dalle estremità), densità uniforme, spazio vuoto circostante; la formula vale per $R \\gt 0$ e diverge per $R \\to 0$, dove il modello di filo ideale perde significato fisico.</p>
+            <p>Il campo elettrostatico generato da un filo infinito decresce con la distanza come $1/R$, <strong>più lentamente</strong> del campo di una carica puntiforme.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Densità lineare uniforme", latex: "\\lambda = \\frac{Q}{L}" },
+          { label: "Flusso laterale", latex: "\\Phi_{lat} = E_r\\,(2\\pi R h)" },
+          { label: "Filo infinito", latex: "E_r = \\frac{\\lambda}{2\\pi\\varepsilon_0 R}" }
+        ]
+      },
+
+      {
+        id: "s05-confronto",
+        type: "section",
+        title: "Quadro riassuntivo delle tre simmetrie",
+        icon: "🗂️",
+        content: `<p>I tre casi trattati condividono la stessa strategia, ma differiscono nella superficie Gaussiana e nell'andamento del campo esterno. La differenza nasce interamente dalla <strong>geometria dell'area Gaussiana</strong> che cresce con la distanza.</p>`,
+        table_compare: {
+          headers: ["Distribuzione", "Superficie Gaussiana", "Area con flusso non nullo", "Campo risultante"],
+          rows: [
+            ["Piano indefinito, $\\sigma$", "Cilindro con asse $\\perp$ al piano", "Due basi, $2A$ (costante)", "$|\\vec{E}| = \\dfrac{|\\sigma|}{2\\varepsilon_0}$, uniforme"],
+            ["Sfera uniforme, $\\rho$, raggio $R$ — interno", "Sfera di raggio $r \\lt R$", "$4\\pi r^2$", "$E = \\dfrac{\\rho r}{3\\varepsilon_0} \\propto r$"],
+            ["Sfera uniforme — esterno", "Sfera di raggio $r \\gt R$", "$4\\pi r^2$", "$E = \\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{Q}{r^2} \\propto 1/r^2$"],
+            ["Filo infinito, $\\lambda$", "Cilindro coassiale", "Mantello, $2\\pi R h$", "$E = \\dfrac{|\\lambda|}{2\\pi\\varepsilon_0 R} \\propto 1/R$"]
+          ]
+        },
+        extra_content: `<p><strong>Da ricordare:</strong> in tutti e tre i casi il flusso si calcola senza integrali solo perché la simmetria rende $\\vec{E}$ ovunque parallelo oppure perpendicolare a $\\hat{n}$, con modulo costante dove il flusso non è nullo.</p>`
+      },
+
+      {
+        id: "s05-cilindro-esercizio",
+        type: "section",
+        title: "Esercizio assegnato — Campo di un Cilindro Carico",
+        icon: "🥫",
+        content: `<p>Si consideri un cilindro di raggio $R$ e altezza $h$ molto grande ($h \\gg R$), uniformemente carico in tutto il suo volume con una densità di carica volumetrica $\\rho$:</p>
+        <p>$$\\rho = \\frac{Q}{V} = \\frac{Q}{\\pi R^2 h}$$</p>
+        <p>Calcolare il modulo del campo elettrostatico $E(r)$ in funzione della distanza $r$ dall'asse del cilindro, sia all'interno ($r \\lt R$) che all'esterno ($r \\gt R$). Trattare il cilindro come se fosse infinito per trascurare gli effetti di bordo. Infine, tracciare il grafico di $E(r)$.</p>
+        <figure class="figura" data-id="fisica2_lez05c_d4"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05c_d4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="93.806pt" height="150.3pt" viewBox="0 0 93.806 150.3" version="1.2"><style>#fisica2_lez05c_d4 [fill="rgb(79.998779%,79.998779%,100%)"],#fisica2_lez05c_d4 [style*="fill:rgb(79.998779%,79.998779%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez05c_d4 [fill="rgb(79.998779%,79.998779%,100%)"],[data-mode="light"] #fisica2_lez05c_d4 [style*="fill:rgb(79.998779%,79.998779%,100%)"]{fill:#ccccff!important}#fisica2_lez05c_d4 [stroke="rgb(79.998779%,79.998779%,100%)"],#fisica2_lez05c_d4 [style*="stroke:rgb(79.998779%,79.998779%,100%)"]{stroke:#ccccff!important}[data-mode="light"] #fisica2_lez05c_d4 [stroke="rgb(79.998779%,79.998779%,100%)"],[data-mode="light"] #fisica2_lez05c_d4 [style*="stroke:rgb(79.998779%,79.998779%,100%)"]{stroke:#ccccff!important}#fisica2_lez05c_d4 [fill="rgb(0%,0%,100%)"],#fisica2_lez05c_d4 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d4 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d4 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05c_d4 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05c_d4 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d4 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d4 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#fisica2_lez05c_d4 [fill="rgb(0%,0%,0%)"],#fisica2_lez05c_d4 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05c_d4 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05c_d4 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05c_d4-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d4-glyph0-1">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d4-glyph0-2">
+<path style="stroke:none;" d="M 4.984375 -2.765625 C 4.984375 -3.8125 4.328125 -4.390625 3.609375 -4.390625 C 2.640625 -4.390625 1.59375 -3.390625 1.296875 -2.1875 L 0.328125 1.71875 C 0.296875 1.828125 0.296875 1.875 0.296875 1.875 C 0.296875 2.03125 0.40625 2.140625 0.578125 2.140625 C 0.78125 2.140625 0.90625 1.96875 0.921875 1.9375 C 0.96875 1.84375 1.296875 0.515625 1.5625 -0.5625 C 1.75 -0.15625 2.078125 0.109375 2.546875 0.109375 C 3.703125 0.109375 4.984375 -1.296875 4.984375 -2.765625 Z M 4.265625 -3.1875 C 4.265625 -2.65625 3.984375 -1.53125 3.703125 -1.046875 C 3.390625 -0.421875 2.90625 -0.109375 2.53125 -0.109375 C 1.828125 -0.109375 1.671875 -0.90625 1.671875 -0.984375 C 1.671875 -1.03125 1.71875 -1.234375 1.75 -1.359375 C 2.03125 -2.46875 2.140625 -2.828125 2.34375 -3.21875 C 2.78125 -3.953125 3.28125 -4.171875 3.578125 -4.171875 C 3.953125 -4.171875 4.265625 -3.875 4.265625 -3.1875 Z M 4.265625 -3.1875 "/>
+</symbol>
+</g>
+<clipPath id="fisica2_lez05c_d4-clip1">
+  <path d="M 0.121094 0 L 93.492188 0 L 93.492188 44 L 0.121094 44 Z M 0.121094 0 "/>
+</clipPath>
+<clipPath id="fisica2_lez05c_d4-clip2">
+  <path d="M 0.121094 111 L 93.492188 111 L 93.492188 149.601562 L 0.121094 149.601562 Z M 0.121094 111 "/>
+</clipPath>
+</defs>
+<g id="fisica2_lez05c_d4-surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(79.998779%,79.998779%,100%);fill-opacity:0.7;" d="M 89.128906 131.332031 C 89.128906 123.539062 70.179688 117.222656 46.804688 117.222656 C 23.433594 117.222656 4.484375 123.539062 4.484375 131.332031 C 4.484375 139.121094 23.433594 145.4375 46.804688 145.4375 C 70.179688 145.4375 89.128906 139.121094 89.128906 131.332031 Z M 89.128906 131.332031 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(79.998779%,79.998779%,100%);fill-opacity:0.7;" d="M 4.484375 131.332031 L 4.484375 18.46875 L 89.128906 18.46875 L 89.128906 131.332031 Z M 4.484375 131.332031 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(79.998779%,79.998779%,100%);fill-opacity:0.7;" d="M 89.128906 18.46875 C 89.128906 10.675781 70.179688 4.359375 46.804688 4.359375 C 23.433594 4.359375 4.484375 10.675781 4.484375 18.46875 C 4.484375 26.261719 23.433594 32.578125 46.804688 32.578125 C 70.179688 32.578125 89.128906 26.261719 89.128906 18.46875 Z M 89.128906 18.46875 "/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.519567 -0.00169074 L 42.519567 113.387235 " transform="matrix(0.995364,0,0,-0.995364,46.80645,131.330348)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -42.519183 -0.00169074 L -42.519183 113.387235 " transform="matrix(0.995364,0,0,-0.995364,46.80645,131.330348)"/>
+<g clip-path="url(#fisica2_lez05c_d4-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.519567 113.387235 C 42.519567 121.216498 23.482095 127.562322 -0.00177038 127.562322 C -23.481712 127.562322 -42.519183 121.216498 -42.519183 113.387235 C -42.519183 105.557971 -23.481712 99.212147 -0.00177038 99.212147 C 23.482095 99.212147 42.519567 105.557971 42.519567 113.387235 Z M 42.519567 113.387235 " transform="matrix(0.995364,0,0,-0.995364,46.80645,131.330348)"/>
+</g>
+<g clip-path="url(#fisica2_lez05c_d4-clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 42.519567 -0.00169074 C 42.519567 7.827573 23.482095 14.173397 -0.00177038 14.173397 C -23.481712 14.173397 -42.519183 7.827573 -42.519183 -0.00169074 C -42.519183 -7.82703 -23.481712 -14.172854 -0.00177038 -14.172854 C 23.482095 -14.172854 42.519567 -7.82703 42.519567 -0.00169074 Z M 42.519567 -0.00169074 " transform="matrix(0.995364,0,0,-0.995364,46.80645,131.330348)"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.398523 56.694734 L 42.123198 56.694734 " transform="matrix(0.995364,0,0,-0.995364,46.80645,131.330348)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.071232 2.392796 C -1.694485 0.95645 -0.85073 0.277521 0.000873794 -0.00111412 C -0.85073 -0.27975 -1.694485 -0.954754 -2.071232 -2.3911 " transform="matrix(-0.995364,0,0,0.995364,47.004776,74.899546)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.073635 2.3911 C -1.692964 0.954754 -0.849209 0.27975 -0.00152942 0.00111412 C -0.849209 -0.277521 -1.692964 -0.95645 -2.073635 -2.392796 " transform="matrix(0.995364,0,0,-0.995364,88.93121,74.899546)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d4-glyph0-1" x="64.164607" y="85.180285"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d4-glyph0-2" x="44.243387" y="76.071707"/>
+</g>
+</g>
+</svg></figure>`,
+        subsections: [
+          {
+            subtitle: "Validità dell'approssimazione di cilindro infinito",
+            content: `<p>Quello che si risolve, in realtà, è il <strong>modello ideale</strong> del cilindro infinito: solo in questo caso la simmetria garantisce che $\\vec{E}$ sia esattamente radiale e che la sua componente radiale dipenda solo da $r$. La sola condizione $h \\gg R$ <strong>non basta</strong> per applicare il risultato a un cilindro finito. Perché l'approssimazione sia buona occorre:</p>
+            <ul>
+              <li>scegliere punti <strong>lontani dalle basi</strong>, cioè a distanza $d$ dalle estremità con $d$ grande rispetto a $r$ (vicino ai bordi il campo acquista una componente parallela all'asse);</li>
+              <li>considerare distanze radiali piccole rispetto alla distanza dalle estremità, $r \\ll d$. Per $r \\gtrsim h$ il cilindro finito è invece "visto" come una carica puntiforme e il campo torna a decrescere come $1/r^2$, non come $1/r$.</li>
+            </ul>`
+          },
+          {
+            subtitle: "Hint del Prof.",
+            content: `<p>Il procedimento è molto simile a quello della sfera.</p>
+            <ul>
+              <li>La superficie Gaussiana da scegliere è sempre un <strong>cilindro coassiale</strong> di raggio $r$ e altezza $h'$.</li>
+              <li>Per $r \\lt R$, la carica interna $Q_{int}$ dipenderà dal volume del cilindro Gaussiano ($V_{int} = \\pi r^2 h'$). Come vi aspettate che vari il campo? Aumenterà o diminuirà con $r$? Aumenterà: non però per il solo fatto di inglobare più carica, ma perché la carica racchiusa cresce come $r^2$ mentre l'area laterale attraversata dal flusso cresce soltanto come $r$; il rapporto $Q_{int}/A_{lat}$ è dunque proporzionale a $r$.</li>
+              <li>Per $r \\gt R$, la carica interna sarà tutta la carica contenuta nel cilindro di raggio $R$ e altezza $h'$ ($Q_{int} = \\rho \\cdot \\pi R^2 h'$): la carica racchiusa resta costante mentre l'area laterale cresce come $r$, quindi il campo diminuirà come $1/r$.</li>
+              <li>Trovate le espressioni esatte per $E(r)$ nei due casi e verificate che il campo sia continuo in $r=R$. Infine, disegnate il grafico.</li>
+            </ul>`
+          }
+        ]
+      },
+
+      {
+        id: "s05-cilindro-soluzione",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "🧩",
+        content: `<p><strong>Soluzione di controllo (integrazione didattica, non necessariamente svolta a lezione).</strong></p>
+        <p>Riportiamo lo svolgimento completo dell'esercizio assegnato, da usare solo per verificare il proprio risultato <em>dopo</em> aver provato in autonomia.</p>
+        <p><strong>Simmetria e superficie Gaussiana.</strong> Nel modello di cilindro infinito il campo è radiale rispetto all'asse, $\\vec{E} = E_r \\hat{r}$, ed $E_r$ dipende solo da $r$. Scegliamo come superficie Gaussiana un cilindro coassiale di raggio $r$ e altezza $h'$. Come per il filo, il flusso attraverso le due basi è nullo ($\\vec{E} \\perp d\\vec{S}$), mentre sulla superficie laterale</p>
+        <p>$$\\Phi_{lat} = E_r \\,(2\\pi r h') .$$</p>
+        <p><strong>Caso $r \\lt R$ (punto interno).</strong> La carica racchiusa è quella contenuta nel cilindro Gaussiano:</p>
+        <p>$$Q_{int} = \\rho \\,\\pi r^2 h' .$$</p>
+        <p>Il teorema di Gauss dà</p>
+        <p>$$E_r \\,(2\\pi r h') = \\frac{\\rho \\,\\pi r^2 h'}{\\varepsilon_0} \\qquad \\Longrightarrow \\qquad E_r = \\frac{\\rho \\, r}{2\\varepsilon_0} , \\qquad E = |E_r| = \\frac{|\\rho| \\, r}{2\\varepsilon_0} .$$</p>
+        <p><strong>Caso $r \\gt R$ (punto esterno).</strong> Ora la carica racchiusa è tutta quella del tratto di cilindro di altezza $h'$:</p>
+        <p>$$Q_{int} = \\rho \\,\\pi R^2 h' ,$$</p>
+        <p>e quindi</p>
+        <p>$$E_r \\,(2\\pi r h') = \\frac{\\rho \\,\\pi R^2 h'}{\\varepsilon_0} \\qquad \\Longrightarrow \\qquad E_r = \\frac{\\rho R^2}{2\\varepsilon_0 \\, r} , \\qquad E = |E_r| = \\frac{|\\rho| R^2}{2\\varepsilon_0 \\, r} .$$</p>
+        <p>Introducendo la densità lineare equivalente $\\lambda = \\rho \\,\\pi R^2$ si ritrova esattamente il risultato del filo infinito, $E_r = \\dfrac{\\lambda}{2\\pi\\varepsilon_0 r}$: da fuori, il cilindro carico "si vede" come un filo.</p>
+        <p><strong>Verifica della continuità in $r = R$.</strong></p>
+        <p>$$\\lim_{r \\to R^-} E = \\frac{|\\rho| R}{2\\varepsilon_0} , \\qquad \\lim_{r \\to R^+} E = \\frac{|\\rho| R^2}{2\\varepsilon_0 R} = \\frac{|\\rho| R}{2\\varepsilon_0} .$$</p>
+        <p>I due valori coincidono: il campo è continuo sulla superficie laterale del cilindro, dove raggiunge il suo valore massimo.</p>
+        <p><strong>Grafico.</strong> Il modulo cresce linearmente dentro il cilindro e decresce come $1/r$ fuori.</p>
+        <figure class="figura" data-id="fisica2_lez05c_d5"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez05c_d5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="182.698pt" height="143.306pt" viewBox="0 0 182.698 143.306" version="1.2"><style>#fisica2_lez05c_d5 [fill="rgb(0%,0%,0%)"],#fisica2_lez05c_d5 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez05c_d5 [stroke="rgb(0%,0%,0%)"],#fisica2_lez05c_d5 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez05c_d5 [fill="rgb(100%,0%,0%)"],#fisica2_lez05c_d5 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez05c_d5 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05c_d5 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez05c_d5 [stroke="rgb(100%,0%,0%)"],#fisica2_lez05c_d5 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez05c_d5 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez05c_d5 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}#fisica2_lez05c_d5 [fill="rgb(0%,0%,100%)"],#fisica2_lez05c_d5 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d5 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d5 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez05c_d5 [stroke="rgb(0%,0%,100%)"],#fisica2_lez05c_d5 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez05c_d5 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez05c_d5 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph0-1">
+<path style="stroke:none;" d="M 4.328125 -3.734375 C 4.328125 -4.09375 4.015625 -4.390625 3.5 -4.390625 C 2.859375 -4.390625 2.421875 -3.90625 2.234375 -3.625 C 2.15625 -4.0625 1.796875 -4.390625 1.328125 -4.390625 C 0.875 -4.390625 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.890625 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.171875 1.296875 -4.171875 C 1.46875 -4.171875 1.609375 -4.09375 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.078125 0.109375 C 1.1875 0.109375 1.375 0.03125 1.4375 -0.171875 C 1.453125 -0.203125 1.796875 -1.5625 1.828125 -1.734375 L 2.15625 -3.03125 C 2.1875 -3.15625 2.46875 -3.625 2.703125 -3.84375 C 2.78125 -3.90625 3.078125 -4.171875 3.5 -4.171875 C 3.765625 -4.171875 3.921875 -4.046875 3.921875 -4.046875 C 3.625 -4 3.40625 -3.765625 3.40625 -3.5 C 3.40625 -3.34375 3.515625 -3.15625 3.78125 -3.15625 C 4.046875 -3.15625 4.328125 -3.390625 4.328125 -3.734375 Z M 4.328125 -3.734375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph0-2">
+<path style="stroke:none;" d="M 7.078125 -2.453125 C 7.078125 -2.453125 7.078125 -2.5625 6.953125 -2.5625 C 6.859375 -2.5625 6.84375 -2.5 6.828125 -2.4375 C 6.1875 -0.96875 5.8125 -0.3125 4.125 -0.3125 L 2.671875 -0.3125 C 2.53125 -0.3125 2.515625 -0.3125 2.453125 -0.3125 C 2.34375 -0.328125 2.328125 -0.34375 2.328125 -0.421875 C 2.328125 -0.453125 2.328125 -0.46875 2.375 -0.640625 L 3.046875 -3.359375 L 4.03125 -3.359375 C 4.875 -3.359375 4.875 -3.140625 4.875 -2.890625 C 4.875 -2.828125 4.875 -2.703125 4.796875 -2.40625 C 4.78125 -2.359375 4.765625 -2.328125 4.765625 -2.296875 C 4.765625 -2.25 4.8125 -2.1875 4.90625 -2.1875 C 4.984375 -2.1875 5.015625 -2.25 5.046875 -2.390625 L 5.609375 -4.71875 C 5.609375 -4.765625 5.5625 -4.828125 5.5 -4.828125 C 5.40625 -4.828125 5.390625 -4.765625 5.359375 -4.640625 C 5.15625 -3.890625 4.96875 -3.65625 4.0625 -3.65625 L 3.125 -3.65625 L 3.71875 -6.046875 C 3.8125 -6.40625 3.8125 -6.4375 4.25 -6.4375 L 5.65625 -6.4375 C 6.859375 -6.4375 7.15625 -6.15625 7.15625 -5.34375 C 7.15625 -5.09375 7.15625 -5.078125 7.125 -4.8125 C 7.125 -4.75 7.109375 -4.6875 7.109375 -4.640625 C 7.109375 -4.578125 7.140625 -4.515625 7.234375 -4.515625 C 7.34375 -4.515625 7.359375 -4.578125 7.375 -4.765625 L 7.578125 -6.484375 C 7.59375 -6.75 7.546875 -6.75 7.296875 -6.75 L 2.296875 -6.75 C 2.09375 -6.75 2 -6.75 2 -6.546875 C 2 -6.4375 2.078125 -6.4375 2.265625 -6.4375 C 2.640625 -6.4375 2.921875 -6.4375 2.921875 -6.265625 C 2.921875 -6.21875 2.921875 -6.203125 2.875 -6.015625 L 1.5625 -0.78125 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.484375 -0.3125 0.375 -0.3125 0.375 -0.125 C 0.375 0 0.46875 0 0.65625 0 L 5.796875 0 C 6.03125 0 6.046875 -0.015625 6.109375 -0.171875 L 7.03125 -2.3125 C 7.046875 -2.359375 7.078125 -2.453125 7.078125 -2.453125 Z M 7.078125 -2.453125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph0-3">
+<path style="stroke:none;" d="M 6.40625 -5.484375 C 6.40625 -5.15625 6.25 -4.46875 5.859375 -4.078125 C 5.609375 -3.8125 5.078125 -3.5 4.1875 -3.5 L 3.078125 -3.5 L 3.71875 -6.09375 C 3.78125 -6.328125 3.8125 -6.421875 4 -6.453125 C 4.09375 -6.46875 4.40625 -6.46875 4.609375 -6.46875 C 5.3125 -6.46875 6.40625 -6.46875 6.40625 -5.484375 Z M 7.484375 -0.921875 C 7.484375 -1.046875 7.375 -1.046875 7.375 -1.046875 C 7.28125 -1.046875 7.265625 -0.96875 7.25 -0.90625 C 7 -0.171875 6.5625 0 6.34375 0 C 6.015625 0 5.9375 -0.21875 5.9375 -0.609375 C 5.9375 -0.90625 6 -1.421875 6.046875 -1.734375 C 6.0625 -1.875 6.078125 -2.0625 6.078125 -2.203125 C 6.078125 -2.96875 5.421875 -3.28125 5.15625 -3.375 C 6.15625 -3.59375 7.328125 -4.28125 7.328125 -5.28125 C 7.328125 -6.140625 6.4375 -6.78125 5.140625 -6.78125 L 2.3125 -6.78125 C 2.109375 -6.78125 2.03125 -6.78125 2.03125 -6.578125 C 2.03125 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.296875 -6.46875 2.515625 -6.46875 2.671875 -6.453125 C 2.859375 -6.421875 2.953125 -6.421875 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.796875 -0.03125 L 3.0625 0 C 3.140625 0 3.25 0 3.25 -0.203125 C 3.25 -0.3125 3.171875 -0.3125 2.96875 -0.3125 C 2.609375 -0.3125 2.328125 -0.3125 2.328125 -0.484375 C 2.328125 -0.546875 2.34375 -0.59375 2.359375 -0.65625 L 3.015625 -3.28125 L 4.203125 -3.28125 C 5.09375 -3.28125 5.28125 -2.734375 5.28125 -2.375 C 5.28125 -2.234375 5.203125 -1.921875 5.140625 -1.703125 C 5.0625 -1.421875 4.984375 -1.046875 4.984375 -0.859375 C 4.984375 0.21875 6.171875 0.21875 6.296875 0.21875 C 7.140625 0.21875 7.484375 -0.78125 7.484375 -0.921875 Z M 7.484375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph1-1">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.96875 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.9375 3.15625 -7.171875 C 3.28125 -7.296875 3.28125 -7.3125 3.28125 -7.34375 C 3.28125 -7.40625 3.25 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.765625 1.609375 -5.5 C 1.09375 -4.421875 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.25 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph1-2">
+<path style="stroke:none;" d="M 2.875 -2.484375 C 2.875 -3.25 2.765625 -4.453125 2.21875 -5.578125 C 1.625 -6.796875 0.765625 -7.4375 0.671875 -7.4375 C 0.609375 -7.4375 0.5625 -7.40625 0.5625 -7.34375 C 0.5625 -7.3125 0.5625 -7.296875 0.75 -7.109375 C 1.71875 -6.125 2.296875 -4.546875 2.296875 -2.484375 C 2.296875 -0.78125 1.921875 0.96875 0.6875 2.21875 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.671875 2.484375 C 0.765625 2.484375 1.65625 1.8125 2.25 0.546875 C 2.75 -0.546875 2.875 -1.640625 2.875 -2.484375 Z M 2.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph2-1">
+<path style="stroke:none;" d="M 1.921875 -7.25 C 1.921875 -7.25 1.828125 -7.3125 1.765625 -7.203125 C 1.703125 -7.125 1.75 -7.0625 1.796875 -7.015625 C 2.65625 -5.671875 2.984375 -4.984375 2.046875 -3.59375 L 1.234375 -2.390625 C 1.15625 -2.265625 1.140625 -2.25 1.109375 -2.203125 C 1.046875 -2.125 1.015625 -2.125 0.953125 -2.171875 C 0.921875 -2.1875 0.90625 -2.203125 0.796875 -2.328125 L -1.078125 -4.40625 L -0.53125 -5.21875 C -0.0625 -5.921875 0.109375 -5.796875 0.328125 -5.65625 C 0.375 -5.625 0.484375 -5.5625 0.6875 -5.328125 C 0.71875 -5.28125 0.734375 -5.25 0.765625 -5.234375 C 0.8125 -5.21875 0.875 -5.203125 0.9375 -5.28125 C 0.96875 -5.34375 0.9375 -5.421875 0.84375 -5.53125 L -0.765625 -7.296875 C -0.8125 -7.328125 -0.890625 -7.3125 -0.921875 -7.265625 C -0.984375 -7.1875 -0.9375 -7.140625 -0.84375 -7.03125 C -0.328125 -6.453125 -0.25 -6.171875 -0.765625 -5.421875 L -1.28125 -4.640625 L -2.9375 -6.453125 C -3.1875 -6.734375 -3.21875 -6.75 -2.96875 -7.109375 L -2.1875 -8.28125 C -1.515625 -9.28125 -1.109375 -9.375 -0.4375 -8.921875 C -0.21875 -8.78125 -0.203125 -8.78125 0 -8.59375 C 0.046875 -8.5625 0.078125 -8.515625 0.125 -8.484375 C 0.171875 -8.453125 0.25 -8.453125 0.296875 -8.53125 C 0.359375 -8.625 0.3125 -8.65625 0.171875 -8.78125 L -1.140625 -9.90625 C -1.34375 -10.078125 -1.375 -10.03125 -1.515625 -9.828125 L -4.3125 -5.6875 C -4.421875 -5.515625 -4.46875 -5.4375 -4.296875 -5.3125 C -4.21875 -5.25 -4.1875 -5.3125 -4.078125 -5.46875 C -3.859375 -5.78125 -3.703125 -6.015625 -3.546875 -5.921875 C -3.515625 -5.90625 -3.5 -5.890625 -3.375 -5.75 L 0.234375 -1.734375 C 0.484375 -1.421875 0.53125 -1.359375 0.09375 -0.71875 C 0 -0.578125 -0.0625 -0.484375 0.09375 -0.375 C 0.203125 -0.3125 0.265625 -0.390625 0.359375 -0.546875 L 3.234375 -4.8125 C 3.375 -5 3.359375 -5.03125 3.28125 -5.15625 L 2.015625 -7.125 C 1.984375 -7.15625 1.921875 -7.25 1.921875 -7.25 Z M 1.921875 -7.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph2-2">
+<path style="stroke:none;" d="M -0.671875 -5.6875 C -0.96875 -5.890625 -1.390625 -5.78125 -1.6875 -5.359375 C -2.046875 -4.828125 -1.875 -4.1875 -1.75 -3.890625 C -2.171875 -4.046875 -2.640625 -3.9375 -2.890625 -3.546875 C -3.15625 -3.171875 -2.921875 -2.796875 -2.828125 -2.625 C -2.65625 -2.296875 -2.234375 -1.84375 -2.21875 -1.828125 C -2.140625 -1.78125 -2.0625 -1.890625 -2.0625 -1.890625 C -2.015625 -1.96875 -2.015625 -1.96875 -2.140625 -2.15625 C -2.640625 -2.6875 -2.921875 -3.109375 -2.734375 -3.40625 C -2.625 -3.546875 -2.484375 -3.625 -2.15625 -3.40625 C -2 -3.28125 -1.9375 -3.203125 -1.578125 -2.8125 L 0 -1.046875 C 0.109375 -0.953125 0.265625 -0.75 0.3125 -0.734375 C 0.453125 -0.625 0.609375 -0.703125 0.703125 -0.828125 C 0.75 -0.921875 0.796875 -1.125 0.65625 -1.28125 C 0.640625 -1.3125 -0.296875 -2.359375 -0.421875 -2.484375 L -1.3125 -3.46875 C -1.390625 -3.578125 -1.625 -4.078125 -1.671875 -4.390625 C -1.671875 -4.5 -1.734375 -4.875 -1.5 -5.234375 C -1.34375 -5.453125 -1.171875 -5.515625 -1.171875 -5.515625 C -1.28125 -5.234375 -1.21875 -4.9375 -1 -4.78125 C -0.859375 -4.703125 -0.640625 -4.6875 -0.5 -4.90625 C -0.34375 -5.125 -0.390625 -5.484375 -0.671875 -5.6875 Z M -0.671875 -5.6875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph3-1">
+<path style="stroke:none;" d="M 4.046875 -5.90625 L 3.734375 -6.125 C 3.703125 -6.0625 3.65625 -5.96875 3.625 -5.921875 C 3.171875 -5.25 2.21875 -5.28125 1.515625 -5.28125 L 0.75 -5.28125 C 0.375 -5.90625 -0.15625 -7.09375 0.46875 -8.015625 C 0.484375 -8.046875 0.546875 -8.140625 0.625 -8.203125 C 0.40625 -8.359375 0.40625 -8.359375 0.390625 -8.359375 C 0.296875 -8.296875 0.1875 -8.140625 0.171875 -8.109375 C -0.453125 -7.171875 -0.0625 -6 0.34375 -5.3125 C -0.4375 -5.328125 -1.6875 -5.359375 -2.359375 -4.34375 C -2.96875 -3.453125 -2.40625 -2.296875 -1.46875 -1.671875 C -0.5625 -1.046875 0.734375 -0.890625 1.359375 -1.8125 C 1.984375 -2.75 1.59375 -3.921875 1.1875 -4.625 C 1.96875 -4.609375 3.21875 -4.578125 3.90625 -5.578125 C 4.015625 -5.734375 4.046875 -5.90625 4.046875 -5.90625 Z M 0.78125 -4.625 C 1.171875 -4.015625 1.703125 -2.828125 1.078125 -1.90625 C 0.546875 -1.109375 -0.5625 -1.3125 -1.34375 -1.84375 C -2.15625 -2.390625 -2.546875 -3.34375 -2.09375 -4.015625 C -1.640625 -4.6875 -0.671875 -4.671875 0 -4.640625 Z M 0.78125 -4.625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph4-1">
+<path style="stroke:none;" d="M 7.15625 0.0625 L 7.15625 -0.328125 C 7.109375 -0.3125 6.984375 -0.296875 6.9375 -0.296875 C 6.125 -0.296875 5.609375 -1.109375 5.234375 -1.6875 L 4.8125 -2.328125 C 5.109375 -3 5.78125 -4.09375 6.890625 -4.09375 C 6.9375 -4.09375 7.046875 -4.09375 7.15625 -4.0625 C 7.15625 -4.328125 7.15625 -4.328125 7.140625 -4.359375 C 7.046875 -4.390625 6.859375 -4.390625 6.828125 -4.390625 C 5.6875 -4.390625 4.9375 -3.40625 4.59375 -2.671875 C 4.171875 -3.34375 3.5 -4.390625 2.28125 -4.390625 C 1.203125 -4.390625 0.5625 -3.28125 0.5625 -2.140625 C 0.5625 -1.046875 1.140625 0.109375 2.265625 0.109375 C 3.390625 0.109375 4.140625 -0.859375 4.5 -1.59375 C 4.921875 -0.9375 5.59375 0.109375 6.8125 0.109375 C 7 0.109375 7.15625 0.0625 7.15625 0.0625 Z M 4.28125 -1.9375 C 3.984375 -1.28125 3.296875 -0.171875 2.1875 -0.171875 C 1.234375 -0.171875 0.78125 -1.203125 0.78125 -2.140625 C 0.78125 -3.125 1.34375 -3.984375 2.15625 -3.984375 C 2.953125 -3.984375 3.484375 -3.171875 3.84375 -2.59375 Z M 4.28125 -1.9375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph5-1">
+<path style="stroke:none;" d="M 3.28125 0 L 3.28125 -0.25 L 3.015625 -0.25 C 2.328125 -0.25 2.328125 -0.34375 2.328125 -0.5625 L 2.328125 -4.40625 C 2.328125 -4.59375 2.3125 -4.609375 2.109375 -4.609375 C 1.671875 -4.171875 1.046875 -4.15625 0.75 -4.15625 L 0.75 -3.90625 C 0.921875 -3.90625 1.375 -3.90625 1.765625 -4.109375 L 1.765625 -0.5625 C 1.765625 -0.34375 1.765625 -0.25 1.0625 -0.25 L 0.8125 -0.25 L 0.8125 0 L 2.046875 -0.03125 Z M 3.28125 0 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph5-2">
+<path style="stroke:none;" d="M 3.5 -1.265625 L 3.265625 -1.265625 C 3.25 -1.109375 3.171875 -0.703125 3.09375 -0.625 C 3.03125 -0.59375 2.5 -0.59375 2.40625 -0.59375 L 1.125 -0.59375 C 1.859375 -1.234375 2.09375 -1.421875 2.515625 -1.75 C 3.03125 -2.171875 3.5 -2.59375 3.5 -3.25 C 3.5 -4.09375 2.765625 -4.609375 1.875 -4.609375 C 1.015625 -4.609375 0.4375 -4 0.4375 -3.359375 C 0.4375 -3.015625 0.734375 -2.96875 0.8125 -2.96875 C 0.96875 -2.96875 1.171875 -3.09375 1.171875 -3.34375 C 1.171875 -3.46875 1.125 -3.71875 0.765625 -3.71875 C 0.984375 -4.203125 1.453125 -4.359375 1.78125 -4.359375 C 2.46875 -4.359375 2.828125 -3.8125 2.828125 -3.25 C 2.828125 -2.65625 2.40625 -2.171875 2.171875 -1.921875 L 0.5 -0.265625 C 0.4375 -0.203125 0.4375 -0.1875 0.4375 0 L 3.296875 0 Z M 3.5 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph6-1">
+<path style="stroke:none;" d="M 3.546875 -2.546875 C 3.546875 -2.90625 3.171875 -3.0625 2.8125 -3.0625 C 2.453125 -3.0625 2.140625 -2.90625 1.84375 -2.5625 C 1.71875 -2.984375 1.296875 -3.0625 1.125 -3.0625 C 0.875 -3.0625 0.6875 -2.90625 0.578125 -2.703125 C 0.421875 -2.4375 0.328125 -2.03125 0.328125 -2 C 0.328125 -1.90625 0.421875 -1.90625 0.4375 -1.90625 C 0.546875 -1.90625 0.546875 -1.921875 0.59375 -2.109375 C 0.703125 -2.546875 0.828125 -2.859375 1.109375 -2.859375 C 1.28125 -2.859375 1.328125 -2.71875 1.328125 -2.53125 C 1.328125 -2.390625 1.265625 -2.140625 1.21875 -1.953125 L 1.0625 -1.328125 L 0.84375 -0.4375 C 0.8125 -0.34375 0.78125 -0.171875 0.78125 -0.15625 C 0.78125 0 0.90625 0.0625 1.015625 0.0625 C 1.109375 0.0625 1.25 0 1.3125 -0.125 C 1.328125 -0.171875 1.40625 -0.484375 1.4375 -0.65625 L 1.625 -1.40625 C 1.640625 -1.4375 1.796875 -2.0625 1.8125 -2.109375 C 1.828125 -2.15625 2.03125 -2.5 2.25 -2.671875 C 2.328125 -2.71875 2.515625 -2.859375 2.8125 -2.859375 C 2.875 -2.859375 3.046875 -2.859375 3.1875 -2.765625 C 2.96875 -2.703125 2.890625 -2.515625 2.890625 -2.390625 C 2.890625 -2.234375 3 -2.125 3.15625 -2.125 C 3.328125 -2.125 3.546875 -2.265625 3.546875 -2.546875 Z M 3.546875 -2.546875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph6-2">
+<path style="stroke:none;" d="M 3.890625 -1.890625 C 3.890625 -2.625 3.40625 -3.0625 2.78125 -3.0625 C 2.109375 -3.0625 1.265625 -2.46875 1.03125 -1.484375 L 0.375 1.109375 C 0.34375 1.21875 0.34375 1.265625 0.34375 1.265625 C 0.34375 1.421875 0.46875 1.484375 0.578125 1.484375 C 0.828125 1.484375 0.890625 1.28125 0.9375 1.046875 L 1.296875 -0.359375 C 1.359375 -0.25 1.578125 0.0625 2.0625 0.0625 C 2.953125 0.0625 3.890625 -0.875 3.890625 -1.890625 Z M 3.328125 -2.171875 C 3.328125 -1.84375 3.15625 -1.078125 2.9375 -0.734375 C 2.609375 -0.234375 2.265625 -0.125 2.046875 -0.125 C 1.546875 -0.125 1.390625 -0.640625 1.390625 -0.734375 L 1.453125 -0.984375 C 1.65625 -1.828125 1.703125 -1.984375 1.90625 -2.296875 C 2.15625 -2.65625 2.5 -2.859375 2.78125 -2.859375 C 3.0625 -2.859375 3.328125 -2.65625 3.328125 -2.171875 Z M 3.328125 -2.171875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph6-3">
+<path style="stroke:none;" d="M 4.96875 -3.78125 C 4.96875 -3.484375 4.828125 -3.046875 4.515625 -2.796875 C 4.21875 -2.578125 3.796875 -2.46875 3.3125 -2.46875 L 2.421875 -2.46875 L 2.859375 -4.25 C 2.90625 -4.453125 2.921875 -4.46875 3.078125 -4.484375 L 3.53125 -4.484375 C 4.171875 -4.484375 4.96875 -4.484375 4.96875 -3.78125 Z M 5.890625 -0.671875 C 5.890625 -0.6875 5.875 -0.765625 5.765625 -0.765625 C 5.6875 -0.765625 5.671875 -0.71875 5.640625 -0.640625 C 5.546875 -0.34375 5.296875 -0.0625 5 -0.0625 C 4.828125 -0.0625 4.6875 -0.125 4.6875 -0.5 C 4.6875 -0.6875 4.734375 -1.046875 4.765625 -1.234375 C 4.78125 -1.421875 4.78125 -1.484375 4.78125 -1.546875 C 4.78125 -1.640625 4.78125 -1.859375 4.59375 -2.0625 C 4.453125 -2.21875 4.28125 -2.296875 4.125 -2.359375 C 4.953125 -2.546875 5.6875 -3.046875 5.6875 -3.671875 C 5.6875 -4.265625 4.96875 -4.734375 3.96875 -4.734375 L 1.84375 -4.734375 C 1.703125 -4.734375 1.609375 -4.734375 1.609375 -4.578125 C 1.609375 -4.484375 1.703125 -4.484375 1.84375 -4.484375 C 1.84375 -4.484375 1.984375 -4.484375 2.109375 -4.46875 C 2.25 -4.453125 2.265625 -4.453125 2.265625 -4.375 C 2.265625 -4.375 2.265625 -4.328125 2.234375 -4.21875 L 1.3125 -0.546875 C 1.25 -0.3125 1.234375 -0.25 0.703125 -0.25 C 0.578125 -0.25 0.5 -0.25 0.5 -0.109375 C 0.5 -0.03125 0.546875 0 0.609375 0 C 0.734375 0 0.890625 -0.015625 1.03125 -0.015625 L 1.484375 -0.03125 L 1.9375 -0.015625 C 2.078125 -0.015625 2.25 0 2.40625 0 C 2.4375 0 2.546875 0 2.546875 -0.140625 C 2.546875 -0.25 2.484375 -0.25 2.3125 -0.25 C 2.203125 -0.25 2.171875 -0.25 2.046875 -0.265625 C 1.90625 -0.28125 1.90625 -0.296875 1.90625 -0.375 C 1.90625 -0.375 1.90625 -0.421875 1.921875 -0.515625 L 2.359375 -2.28125 L 3.3125 -2.28125 C 3.90625 -2.28125 4.15625 -1.984375 4.15625 -1.65625 C 4.15625 -1.5625 4.09375 -1.328125 4.0625 -1.171875 C 3.984375 -0.84375 3.953125 -0.75 3.953125 -0.625 C 3.953125 -0.078125 4.453125 0.140625 4.96875 0.140625 C 5.609375 0.140625 5.890625 -0.546875 5.890625 -0.671875 Z M 5.890625 -0.671875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph6-4">
+<path style="stroke:none;" d="M 3.03125 -0.59375 C 3.03125 -0.640625 2.984375 -0.6875 2.921875 -0.6875 C 2.890625 -0.6875 2.859375 -0.65625 2.84375 -0.625 C 2.671875 -0.359375 2.4375 -0.25 1.703125 -0.25 C 1.53125 -0.25 1.203125 -0.25 0.953125 -0.34375 C 0.6875 -0.4375 0.5625 -0.625 0.5625 -0.8125 C 0.5625 -0.96875 0.6875 -1.296875 1.15625 -1.546875 C 1.421875 -1.4375 1.625 -1.4375 1.828125 -1.4375 C 2.046875 -1.4375 2.453125 -1.4375 2.453125 -1.703125 C 2.453125 -1.890625 2.1875 -1.921875 1.890625 -1.921875 C 1.796875 -1.921875 1.5 -1.921875 1.15625 -1.78125 C 1 -1.859375 0.890625 -1.984375 0.890625 -2.140625 C 0.890625 -2.515625 1.5625 -2.75 2.265625 -2.75 C 2.375 -2.75 2.671875 -2.75 2.984375 -2.546875 C 3.03125 -2.53125 3.078125 -2.484375 3.125 -2.484375 C 3.21875 -2.484375 3.34375 -2.59375 3.34375 -2.71875 C 3.34375 -2.84375 3.125 -2.953125 2.984375 -3 C 2.6875 -3.125 2.453125 -3.125 2.34375 -3.125 C 1.5 -3.125 0.65625 -2.6875 0.65625 -2.125 C 0.65625 -1.84375 0.921875 -1.65625 0.921875 -1.65625 C 0.671875 -1.5 0.328125 -1.203125 0.328125 -0.765625 C 0.328125 -0.25 0.828125 0.140625 1.59375 0.140625 C 2.65625 0.140625 3.03125 -0.484375 3.03125 -0.59375 Z M 2.203125 -1.6875 C 2.109375 -1.640625 2.078125 -1.640625 1.828125 -1.640625 C 1.71875 -1.640625 1.578125 -1.640625 1.453125 -1.671875 C 1.53125 -1.6875 1.671875 -1.71875 1.875 -1.71875 C 2.03125 -1.71875 2.0625 -1.71875 2.203125 -1.6875 Z M 2.203125 -1.6875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph7-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph7-1">
+<path style="stroke:none;" d="M 1.34375 1.484375 L 1.34375 -4.953125 C 1.34375 -5.03125 1.34375 -5.203125 1.171875 -5.203125 C 1 -5.203125 1 -5.046875 1 -4.953125 L 1 1.484375 C 1 1.5625 1 1.734375 1.171875 1.734375 C 1.34375 1.734375 1.34375 1.578125 1.34375 1.484375 Z M 1.34375 1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph8-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez05c_d5-glyph8-1">
+<path style="stroke:none;" d="M 2.984375 -1.578125 C 2.984375 -1.9375 2.984375 -3.296875 1.6875 -3.296875 C 0.390625 -3.296875 0.390625 -1.9375 0.390625 -1.578125 C 0.390625 -1.21875 0.390625 0.109375 1.6875 0.109375 C 2.984375 0.109375 2.984375 -1.21875 2.984375 -1.578125 Z M 2.484375 -1.640625 C 2.484375 -1.3125 2.484375 -0.90625 2.40625 -0.609375 C 2.28125 -0.125 1.875 -0.046875 1.6875 -0.046875 C 1.5 -0.046875 1.078125 -0.125 0.953125 -0.625 C 0.890625 -0.890625 0.890625 -1.234375 0.890625 -1.640625 C 0.890625 -2.015625 0.890625 -2.359375 0.96875 -2.640625 C 1.09375 -3.046875 1.46875 -3.140625 1.6875 -3.140625 C 2.046875 -3.140625 2.3125 -2.953125 2.40625 -2.59375 C 2.484375 -2.34375 2.484375 -1.9375 2.484375 -1.640625 Z M 2.484375 -1.640625 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez05c_d5-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000810545 0.000924162 L 141.334303 0.000924162 " transform="matrix(0.995181,0,0,-0.995181,31.413256,125.067326)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.072792 2.391351 C -1.69205 0.95474 -0.848139 0.279611 -0.000303265 0.000924162 C -0.848139 -0.277763 -1.69205 -0.956817 -2.072792 -2.389503 " transform="matrix(0.995181,0,0,-0.995181,172.265927,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph0-1" x="170.088681" y="132.838691"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000810545 0.000924162 L 0.000810545 112.98686 " transform="matrix(0.995181,0,0,-0.995181,31.413256,125.067326)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.073415 2.389616 C -1.692674 0.95693 -0.848763 0.277876 -0.000926624 -0.000810545 C -0.848763 -0.279497 -1.692674 -0.954626 -2.073415 -2.391237 " transform="matrix(0,-0.995181,-0.995181,0,31.413256,12.424859)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph0-2" x="7.560768" y="14.706778"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph1-1" x="15.45056" y="14.706778"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph0-1" x="19.306884" y="14.706778"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph1-2" x="24.054891" y="14.706778"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 56.691999 0.000924162 L 56.691999 85.03967 " transform="matrix(0.995181,0,0,-0.995181,31.413256,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph0-3" x="84.030442" y="135.344556"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000810545 0.000924162 L 56.691999 85.03967 " transform="matrix(0.995181,0,0,-0.995181,31.413256,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph2-1" x="49.489715" y="77.407134"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph3-1" x="55.441986" y="68.582458"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph2-2" x="61.294088" y="59.90629"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 56.691999 85.03967 L 57.8931 83.273345 L 59.094202 81.585523 L 60.295303 79.956578 L 61.496404 78.394362 L 62.697505 76.894948 L 63.898606 75.450487 L 65.099707 74.060977 L 66.300808 72.71857 L 67.50191 71.423265 L 68.699086 70.178987 L 69.900187 68.970036 L 71.101288 67.808186 L 72.302389 66.681663 L 73.50349 65.590467 L 74.704591 64.538522 L 75.905692 63.517979 L 77.106794 62.528836 L 78.307895 61.571096 L 79.508996 60.636906 L 80.706172 59.734117 L 81.907273 58.86273 L 83.108374 58.010969 L 84.309475 57.182759 L 85.510576 56.382025 L 86.711678 55.600916 L 87.912779 54.843359 L 89.11388 54.101503 L 90.314981 53.383197 L 91.516082 52.680592 L 92.717183 52.001538 L 93.914359 51.33426 L 95.11546 50.686607 L 96.316561 50.054655 L 97.517663 49.438404 L 98.718764 48.837854 L 99.919865 48.253004 L 101.120966 47.679929 L 102.322067 47.11863 L 103.523168 46.573032 L 104.724269 46.039209 L 105.921445 45.517162 L 107.122547 45.00689 L 108.323648 44.508394 L 109.524749 44.021673 L 110.72585 43.542803 L 111.926951 43.075708 L 113.128052 42.616464 L 114.329153 42.168995 L 115.530255 41.729376 L 116.731356 41.301533 L 117.932457 40.88154 L 119.129633 40.469397 L 120.330734 40.065105 L 121.531835 39.668663 L 122.732936 39.280072 L 123.934037 38.903256 L 125.135138 38.530365 L 126.33624 38.161399 L 127.537341 37.804209 " transform="matrix(0.995181,0,0,-0.995181,31.413256,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph0-2" x="119.248887" y="73.009431"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph4-1" x="129.893338" y="73.009431"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph5-1" x="141.547898" y="69.105338"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00102754 -0.000817607 L 3.971242 -0.000817607 " transform="matrix(0.995181,0,0,-0.995181,141.547898,70.530436)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph6-1" x="141.576758" y="76.428871"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 56.691999 85.03967 L 0.000810545 85.03967 " transform="matrix(0.995181,0,0,-0.995181,31.413256,125.067326)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph7-1" x="11.889804" y="38.430888"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph6-2" x="14.244401" y="38.430888"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph7-1" x="18.357482" y="38.430888"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph6-3" x="20.713075" y="38.430888"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000825255 -0.00111895 L 14.904685 -0.00111895 " transform="matrix(0.995181,0,0,-0.995181,11.889804,40.760605)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph5-2" x="13.5219" y="46.658045"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph6-4" x="17.473762" y="46.658045"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez05c_d5-glyph8-1" x="21.219621" y="47.65024"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 89.816406 40.4375 C 89.816406 39.339844 88.929688 38.453125 87.832031 38.453125 C 86.738281 38.453125 85.851562 39.339844 85.851562 40.4375 C 85.851562 41.53125 86.738281 42.417969 87.832031 42.417969 C 88.929688 42.417969 89.816406 41.53125 89.816406 40.4375 Z M 89.816406 40.4375 "/>
+</g>
+</svg></figure>
+        <p>Si noti il confronto con la sfera: in entrambi i casi il campo interno cresce linearmente, ma all'esterno la sfera decresce come $1/r^2$ mentre il cilindro infinito decresce come $1/r$, conseguenza della diversa geometria (area Gaussiana $\\propto r^2$ contro $\\propto r$).</p>`
+      },
+
+      {
+        id: "s05-esercizi-intro",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "📝",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s05-ex-teoria1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        icon: "🎓",
+        source: "integrazione",
+        content: `<p>Dare la definizione di flusso infinitesimo del campo elettrostatico attraverso un elemento di superficie $dS$ e stabilire in quali casi tale flusso è nullo. Spiegare poi perché per una superficie <strong>aperta</strong> il segno del flusso è convenzionale, mentre per una superficie <strong>chiusa</strong> non lo è.</p>`,
+        solution: `<p>Dato un elemento di superficie $dS$ con versore normale $\\hat{n}$ e il campo $\\vec{E}$ valutato nello stesso punto, si pone $d\\vec{S} = \\hat{n}\\,dS$ e si definisce</p>
+        <p>$$d\\Phi(\\vec{E}) = \\vec{E}\\cdot d\\vec{S} = \\vec{E}\\cdot\\hat{n}\\,dS = |\\vec{E}|\\,dS\\,\\cos\\alpha,$$</p>
+        <p>con $\\alpha$ angolo fra $\\vec{E}$ e $\\hat{n}$. Il flusso infinitesimo si annulla quando $\\cos\\alpha = 0$, cioè $\\alpha = 90^\\circ$: il campo è <strong>tangente</strong> alla superficie (oltre al caso banale $\\vec{E}=\\vec{0}$).</p>
+        <p>Per una superficie <strong>aperta</strong> i due versori normali possibili sono $\\hat{n}$ e $-\\hat{n}$ e, poiché $\\vec{E}\\cdot(-\\hat{n})\\,dS = -\\,\\vec{E}\\cdot\\hat{n}\\,dS$, il flusso cambia segno al cambiare della scelta: il segno ha significato solo <em>dopo</em> aver dichiarato l'orientazione.</p>
+        <p>Per una superficie <strong>chiusa</strong>, invece, la convenzione è fissata: si prende sempre la normale <em>uscente</em> dal volume racchiuso. Con questa scelta il segno del flusso ha significato fisico assoluto (positivo se il campo è complessivamente uscente) ed è quella che rende valido il teorema di Gauss nella forma $\\Phi_\\Sigma(\\vec{E}) = Q_{int}/\\varepsilon_0$; con la normale entrante si otterrebbe $-Q_{int}/\\varepsilon_0$.</p>`
+      },
+
+      {
+        id: "s05-ex-teoria2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        icon: "🎓",
+        source: "integrazione",
+        content: `<p>Elenca le proprietà di simmetria della distribuzione di carica di un piano indefinito con densità superficiale uniforme $\\sigma \\gt 0$ e spiega come esse permettano di concludere che il flusso del campo attraverso il cilindro gaussiano (basi di area $A$ in $z=\\pm h$, asse perpendicolare al piano) vale $2EA$, dove $E = |\\vec{E}|$. Scrivi anche la relazione generale valida per qualunque segno di $\\sigma$, cioè $\\Phi = 2E_z(h)A$. Perché una superficie gaussiana sferica non sarebbe conveniente?</p>`,
+        solution: `<p>Le proprietà di simmetria sono tre.</p>
+        <p><strong>(1) Invarianza per traslazioni parallele al piano:</strong> traslando la distribuzione lungo qualunque direzione contenuta nel piano essa resta identica a se stessa, dunque il campo non può dipendere da $x$ e $y$: $\\vec{E}=\\vec{E}(z)$.</p>
+        <p><strong>(2) Invarianza per rotazioni attorno all'asse $z$:</strong> una rotazione di $180^\\circ$ attorno all'asse $z$ lascia invariata la sorgente ma trasforma un'eventuale componente tangenziale nella sua opposta, quindi tale componente è nulla e $\\vec{E}(z)=E_z(z)\\,\\hat{z}$ (campo perpendicolare al piano).</p>
+        <p><strong>(3) Simmetria di riflessione $z\\to-z$:</strong> la sorgente è invariante, mentre un vettore perpendicolare al piano cambia segno, quindi $E_z(-z)=-E_z(z)$: in punti speculari il campo ha lo stesso modulo e versi opposti.</p>
+        <p><strong>Conseguenze sul flusso.</strong> Sulla base superiore $\\hat{n}=+\\hat{z}$ e per la (1) il prodotto scalare $\\vec{E}\\cdot\\hat{n}=E_z(h)$ è costante su tutta la base, quindi $\\Phi_{\\text{sup}}=E_z(h)A$; sulla base inferiore $\\hat{n}=-\\hat{z}$ e per la (3) $\\vec{E}=E_z(-h)\\hat{z}=-E_z(h)\\hat{z}$, dunque $\\vec{E}\\cdot\\hat{n}=(-E_z(h))(-1)=E_z(h)$ e $\\Phi_{\\text{inf}}=E_z(h)A$; sulla superficie laterale $\\hat{n}$ è radiale, contenuto in un piano parallelo al piano carico, quindi $\\vec{E}\\perp\\hat{n}$ e $\\Phi_{S_L}=0$.</p>
+        <p>In totale si ottiene la relazione generale, valida per qualunque segno di $\\sigma$:</p>
+        <p>$$\\Phi = 2E_z(h)\\,A .$$</p>
+        <p>Nel caso particolare $\\sigma \\gt 0$ si ha $E_z(h) = E = |\\vec{E}| \\gt 0$ e quindi $\\Phi = 2EA \\gt 0$; se invece $\\sigma \\lt 0$ allora $E_z(h) \\lt 0$ e $\\Phi = -2|\\vec{E}|A \\lt 0$, coerentemente con il fatto che la carica racchiusa $\\sigma A$ è negativa. <strong>Attenzione:</strong> l'uguaglianza $\\Phi = 2EA$ con $E$ inteso come modulo vale solo per $\\sigma \\gt 0$.</p>
+        <p><strong>Perché non la sfera.</strong> Su una sfera l'angolo fra $\\vec{E}$ (sempre diretto lungo $\\pm\\hat{z}$) e la normale $\\hat{n}$ (radiale) varia da punto a punto: il prodotto scalare $\\vec{E}\\cdot\\hat{n}=E\\cos\\theta$ non è costante e non si può portare $E$ fuori dall'integrale $\\oint\\vec{E}\\cdot d\\vec{S}$ in modo elementare. La simmetria del problema è <strong>piana</strong>, non sferica: la superficie gaussiana deve rispettarla.</p>`
+      },
+
+      {
+        id: "s05-ex-teoria3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        icon: "🎓",
+        source: "integrazione",
+        content: `<p>Enuncia il teorema di Gauss nella forma usata nella lezione e spiega, per una distribuzione a simmetria sferica, perché si può scrivere $\\vec{E}=E_r(r)\\,\\hat{r}$ e perché il flusso attraverso una sfera di raggio $r$ concentrica alla distribuzione vale $\\Phi=E_r(r)\\,4\\pi r^2$.</p>`,
+        solution: `<p><strong>Teorema di Gauss.</strong> Per ogni superficie chiusa $S$, orientata con la normale uscente,</p>
+        <p>$$\\oint_S \\vec{E}\\cdot d\\vec{S}=\\frac{Q_{int}}{\\varepsilon_0},$$</p>
+        <p>dove $Q_{int}$ è la somma algebrica delle sole cariche contenute in $S$ (le cariche esterne contribuiscono al campo ma non al flusso totale).</p>
+        <p><strong>Simmetria.</strong> Se la densità dipende solo da $r$, la distribuzione è invariante per tutte le rotazioni attorno al centro $O$ e per tutte le riflessioni nei piani per $O$. Il campo generato deve possedere le stesse simmetrie. Se in un punto $P$ ci fosse una componente tangenziale $E_t\\neq 0$, una riflessione nel piano contenente $OP$ e la direzione radiale lascerebbe invariata la sorgente ma rovescerebbe $E_t$: assurdo. Quindi $\\vec{E}$ è radiale; inoltre, essendo i punti alla stessa distanza $r$ equivalenti per rotazione, $E_r$ può dipendere solo da $r$. In conclusione $\\vec{E}=E_r(r)\\hat{r}$.</p>
+        <p><strong>Flusso.</strong> Su una sfera di raggio $r$ centrata in $O$ si ha $d\\vec{S}=\\hat{r}\\,dS$, dunque $\\vec{E}\\cdot d\\vec{S}=E_r(r)\\,dS$ con $E_r(r)$ costante sulla superficie; perciò</p>
+        <p>$$\\Phi=E_r(r)\\oint_S dS=E_r(r)\\,4\\pi r^2 .$$</p>
+        <p>Il segno di $\\Phi$ coincide con quello di $E_r$: positivo per campo uscente, negativo per campo entrante.</p>`
+      },
+
+      {
+        id: "s05-ex-teoria4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        icon: "🎓",
+        source: "integrazione",
+        content: `<p>Enunciare il teorema di Gauss precisando tutte le ipotesi. Spiegare perché una carica posta <strong>fuori</strong> dalla superficie chiusa non contribuisce al flusso, pur contribuendo al campo $\\vec{E}$ in ogni punto della superficie, e perché il flusso non dipende dalla forma di $\\Sigma$ né dalla posizione delle cariche interne.</p>`,
+        solution: `<p><strong>Enunciato.</strong> Sia $\\Sigma$ una superficie <em>chiusa</em>, orientata con la normale uscente $\\hat{n}$, e sia $\\vec{E}$ il campo elettrostatico <strong>totale</strong> (generato da tutte le cariche, interne ed esterne). Allora</p>
+        <p>$$\\Phi_\\Sigma(\\vec{E}) = \\oint_\\Sigma \\vec{E}\\cdot d\\vec{S} = \\frac{Q_{int}}{\\varepsilon_0},$$</p>
+        <p>dove $Q_{int} = \\sum_i q_{i,int}$ è la somma algebrica delle sole cariche contenute all'interno di $\\Sigma$ (per distribuzioni continue $Q_{int} = \\int_{V_{int}} dq$).</p>
+        <p><strong>Cariche esterne.</strong> Nel secondo membro compaiono solo le cariche interne. Una carica esterna contribuisce al valore di $\\vec{E}$ punto per punto su $\\Sigma$, ma il suo contributo al flusso <em>totale</em> è nullo, perché le sue linee di campo che entrano in $\\Sigma$ ne escono anche: dove entrano $\\vec{E}\\cdot\\hat{n} \\lt 0$, dove escono $\\vec{E}\\cdot\\hat{n} \\gt 0$, e i due contributi si cancellano esattamente.</p>
+        <p><strong>Indipendenza da forma e posizione.</strong> Per lo stesso motivo il flusso non dipende dalla forma di $\\Sigma$: spostando o deformando la superficie, purché resti chiusa e contenga le stesse cariche, il secondo membro $Q_{int}/\\varepsilon_0$ non cambia. E non dipende dalla posizione delle cariche all'interno, perché nell'enunciato entra solo la loro somma algebrica.</p>
+        <p><strong>Avvertenza.</strong> Non si confondano flusso e campo: il teorema determina il flusso sempre, ma permette di ricavare $|\\vec{E}|$ solo quando una simmetria consente di portare $E$ fuori dall'integrale.</p>`
+      },
+
+      {
+        id: "s05-ex-scritto1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        icon: "✏️",
+        source: "integrazione",
+        content: `<p>Una superficie chiusa $\\Sigma$ contiene le cariche $q_1 = +5{,}0\\ \\mathrm{nC}$ e $q_2 = -2{,}0\\ \\mathrm{nC}$; all'esterno di $\\Sigma$ si trova $q_3 = +10\\ \\mathrm{nC}$. Si assuma $\\varepsilon_0 = 8{,}85\\times 10^{-12}\\ \\mathrm{C^2/(N\\,m^2)}$.</p>
+        <p>(a) Calcolare il flusso del campo elettrico attraverso $\\Sigma$ (normale uscente).<br>
+        (b) Dire che cosa cambia nel flusso e che cosa cambia nel campo $\\vec{E}$ sulla superficie se si raddoppia $q_3$.<br>
+        (c) Se $\\Sigma$ è un cubo con un'unica carica $q = +6{,}0\\ \\mathrm{nC}$ nel suo centro, calcolare il flusso attraverso una singola faccia.</p>`,
+        solution: `<p><strong>(a) Flusso attraverso $\\Sigma$.</strong> Per il teorema di Gauss con normale uscente contano solo le cariche interne:</p>
+        <p>$$Q_{int} = q_1 + q_2 = (+5{,}0 - 2{,}0)\\times 10^{-9}\\ \\mathrm{C} = +3{,}0\\times 10^{-9}\\ \\mathrm{C} .$$</p>
+        <p>Quindi</p>
+        <p>$$\\Phi_\\Sigma(\\vec{E}) = \\frac{Q_{int}}{\\varepsilon_0} = \\frac{3{,}0\\times10^{-9}}{8{,}85\\times10^{-12}} \\simeq 3{,}4\\times 10^{2}\\ \\mathrm{N\\,m^2/C} ,$$</p>
+        <p>positivo: il campo è complessivamente uscente.</p>
+        <p><strong>(b) Effetto del raddoppio di $q_3$.</strong> Il flusso <strong>non cambia</strong>, perché $q_3$ è esterna e non entra in $Q_{int}$:</p>
+        <p>$$\\Phi_\\Sigma(\\vec{E}) \\simeq 3{,}4\\times 10^{2}\\ \\mathrm{N\\,m^2/C} \\qquad \\text{(invariato).}$$</p>
+        <p>Cambia invece il campo $\\vec{E}$ in ogni punto di $\\Sigma$, poiché $\\vec{E}$ è il campo totale e il contributo di $q_3$ raddoppia: i contributi locali al flusso si riorganizzano, ma la loro somma algebrica resta nulla.</p>
+        <p><strong>(c) Flusso attraverso una faccia del cubo.</strong> La carica è nel centro del cubo, quindi per simmetria le sei facce sono equivalenti e ciascuna riceve un sesto del flusso totale:</p>
+        <p>$$\\Phi_{\\text{faccia}} = \\frac{1}{6}\\,\\frac{q}{\\varepsilon_0} = \\frac{6{,}0\\times10^{-9}}{6\\cdot 8{,}85\\times10^{-12}} = \\frac{1{,}0\\times10^{-9}}{8{,}85\\times10^{-12}} \\simeq 1{,}1\\times 10^{2}\\ \\mathrm{N\\,m^2/C} .$$</p>`
+      },
+
+      {
+        id: "s05-ex-scritto2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        icon: "✏️",
+        source: "integrazione",
+        content: `<p>Un piano indefinito coincide con il piano $z=0$ e porta densità superficiale uniforme $\\sigma=3{,}54\\times10^{-8}\\ \\mathrm{C/m^2}$. Si assuma $\\varepsilon_0=8{,}85\\times10^{-12}\\ \\mathrm{C^2/(N\\,m^2)}$.</p>
+        <p>(a) Calcola il modulo del campo elettrico.<br>
+        (b) Scrivi il vettore $\\vec{E}$ nei punti $P_1=(0,0,+4\\ \\mathrm{cm})$ e $P_2=(0,0,-20\\ \\mathrm{cm})$.<br>
+        (c) Calcola il flusso di $\\vec{E}$ attraverso un cilindro con le basi di area $A=10\\ \\mathrm{cm^2}$ parallele al piano e disposte simmetricamente rispetto ad esso, verificando il risultato con l'espressione $2EA$.</p>`,
+        solution: `<p><strong>(a) Modulo del campo.</strong> Essendo $\\sigma \\gt 0$,</p>
+        <p>$$E=\\frac{\\sigma}{2\\varepsilon_0}=\\frac{3{,}54\\times10^{-8}}{2\\cdot 8{,}85\\times10^{-12}}=\\frac{3{,}54\\times10^{-8}}{1{,}77\\times10^{-11}}=2{,}0\\times10^{3}\\ \\mathrm{N/C}.$$</p>
+        <p>Il modulo è lo stesso in tutti i punti con $z\\neq0$.</p>
+        <p><strong>(b) Vettore campo nei due punti.</strong> Dalla formula generale $\\vec{E}(z)=\\dfrac{\\sigma}{2\\varepsilon_0}\\operatorname{sgn}(z)\\,\\hat{z}$:</p>
+        <p>$$\\vec{E}(P_1)=+2{,}0\\times10^{3}\\,\\hat{z}\\ \\mathrm{N/C} \\qquad (z \\gt 0,\\ \\operatorname{sgn}(z)=+1),$$</p>
+        <p>$$\\vec{E}(P_2)=-2{,}0\\times10^{3}\\,\\hat{z}\\ \\mathrm{N/C} \\qquad (z \\lt 0,\\ \\operatorname{sgn}(z)=-1).$$</p>
+        <p>Stesso modulo, versi opposti: il campo è uscente dal piano in entrambi i semispazi perché $\\sigma \\gt 0$, e non dipende dalle distanze $4\\ \\mathrm{cm}$ e $20\\ \\mathrm{cm}$.</p>
+        <p><strong>(c) Flusso attraverso il cilindro.</strong> Con $A=10\\ \\mathrm{cm^2}=1{,}0\\times10^{-3}\\ \\mathrm{m^2}$, la carica racchiusa è</p>
+        <p>$$Q_{int}=\\sigma A=3{,}54\\times10^{-8}\\cdot1{,}0\\times10^{-3}=3{,}54\\times10^{-11}\\ \\mathrm{C},$$</p>
+        <p>$$\\Phi=\\frac{Q_{int}}{\\varepsilon_0}=\\frac{3{,}54\\times10^{-11}}{8{,}85\\times10^{-12}}=4{,}0\\ \\mathrm{N\\,m^2/C}.$$</p>
+        <p>Verifica diretta con l'espressione del flusso:</p>
+        <p>$$2EA=2\\cdot2{,}0\\times10^{3}\\cdot1{,}0\\times10^{-3}=4{,}0\\ \\mathrm{N\\,m^2/C}.$$</p>
+        <p>I due risultati coincidono; il flusso non dipende dall'altezza del cilindro perché il contributo della superficie laterale è nullo.</p>`
+      },
+
+      {
+        id: "s05-ex-scritto3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        icon: "✏️",
+        source: "integrazione",
+        content: `<p>Una sfera isolante di raggio $R=10\\ \\mathrm{cm}$ porta la carica $Q=+2{,}0\\ \\mathrm{nC}$ distribuita uniformemente nel volume. Calcola:</p>
+        <p>(a) il modulo del campo a $r_1=5{,}0\\ \\mathrm{cm}$;<br>
+        (b) il modulo del campo a $r_2=20\\ \\mathrm{cm}$;<br>
+        (c) il valore massimo del campo e le distanze $r$ alle quali il modulo vale metà del massimo.</p>
+        <p>Usa $\\dfrac{1}{4\\pi\\varepsilon_0}=8{,}99\\cdot 10^{9}\\ \\mathrm{N\\,m^2/C^2}$.</p>`,
+        solution: `<p>La densità è</p>
+        <p>$$\\rho=\\frac{Q}{\\dfrac{4}{3}\\pi R^3}=\\frac{2{,}0\\cdot10^{-9}}{\\frac{4}{3}\\pi(0{,}10)^3} =\\frac{2{,}0\\cdot10^{-9}}{4{,}19\\cdot10^{-3}}\\simeq 4{,}8\\cdot10^{-7}\\ \\mathrm{C/m^3},$$</p>
+        <p>positiva, quindi $E_r \\gt 0$ (campo uscente) e $E=E_r$. (Nota sulle unità: tutti i campi sono espressi in N/C, e $1\\ \\mathrm{V/m}=1\\ \\mathrm{N/C}$.)</p>
+        <p><strong>(a) Punto interno, $r_1=0{,}050\\ \\mathrm{m} \\lt R$</strong> (formula interna):</p>
+        <p>$$E=\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q r_1}{R^3}=8{,}99\\cdot10^{9}\\cdot\\frac{2{,}0\\cdot10^{-9}\\cdot0{,}050}{(0{,}10)^3}\\simeq 9{,}0\\cdot10^{2}\\ \\mathrm{N/C}$$</p>
+        <p>(equivalentemente $E=\\rho r_1/(3\\varepsilon_0)$, che dà lo stesso valore).</p>
+        <p><strong>(b) Punto esterno, $r_2=0{,}20\\ \\mathrm{m} \\gt R$</strong> (formula esterna):</p>
+        <p>$$E=\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{r_2^{2}}=8{,}99\\cdot10^{9}\\cdot\\frac{2{,}0\\cdot10^{-9}}{0{,}040}\\simeq 4{,}5\\cdot10^{2}\\ \\mathrm{N/C}.$$</p>
+        <p><strong>(c) Massimo e punti a metà del massimo.</strong> Il campo cresce linearmente fino a $r=R$ e poi decresce come $1/r^2$, dunque il massimo è in $r=R$:</p>
+        <p>$$E_{max}=\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q}{R^{2}}=8{,}99\\cdot10^{9}\\cdot\\frac{2{,}0\\cdot10^{-9}}{0{,}010}\\simeq 1{,}8\\cdot10^{3}\\ \\mathrm{N/C}$$</p>
+        <p>(il valore è lo stesso con entrambe le espressioni: il campo è continuo in $r=R$).</p>
+        <p>Metà del massimo, all'interno:</p>
+        <p>$$\\frac{Qr}{4\\pi\\varepsilon_0R^3}=\\frac{1}{2}\\frac{Q}{4\\pi\\varepsilon_0R^2} \\quad\\Longrightarrow\\quad r=\\frac{R}{2}=5{,}0\\ \\mathrm{cm},$$</p>
+        <p>coerente con il punto (a), che dà proprio $E_{max}/2$. All'esterno:</p>
+        <p>$$\\frac{Q}{4\\pi\\varepsilon_0r^2}=\\frac{1}{2}\\frac{Q}{4\\pi\\varepsilon_0R^2} \\quad\\Longrightarrow\\quad r^2=2R^2 \\quad\\Longrightarrow\\quad r=\\sqrt{2}\\,R\\simeq 14\\ \\mathrm{cm}.$$</p>`
+      },
+
+      {
+        id: "s05-ex-scritto4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        icon: "✏️",
+        source: "integrazione",
+        content: `<p>Una carica $q = +4{,}0\\ \\mathrm{nC}$ è distribuita uniformemente nel volume di una sfera di raggio $R = 2{,}0\\ \\mathrm{cm}$. Si assuma $\\dfrac{1}{4\\pi\\varepsilon_0} \\simeq 9{,}0\\times10^{9}\\ \\mathrm{N\\,m^2/C^2}$.</p>
+        <p>(a) Calcolare la densità volumetrica $\\rho$.<br>
+        (b) Calcolare il modulo del campo elettrico a $r = 1{,}0\\ \\mathrm{cm}$, $r = 2{,}0\\ \\mathrm{cm}$ e $r = 6{,}0\\ \\mathrm{cm}$ dal centro, indicandone la direzione e il verso.<br>
+        (c) Dire dove il campo è massimo e verificare la continuità in $r = R$.</p>`,
+        solution: `<p><strong>(a)</strong> Essendo la distribuzione uniforme,</p>
+        <p>$$\\rho = \\frac{q}{\\frac{4}{3}\\pi R^3} = \\frac{3q}{4\\pi R^3} = \\frac{3\\cdot 4{,}0\\times10^{-9}}{4\\pi (0{,}020)^3} = \\frac{1{,}2\\times10^{-8}}{1{,}005\\times10^{-4}} \\simeq 1{,}2\\times10^{-4}\\ \\mathrm{C/m^3}.$$</p>
+        <p><strong>(b)</strong> Per simmetria sferica il campo è radiale, uscente perché $q \\gt 0$. Con superficie Gaussiana sferica di raggio $r$ si ha $E\\,4\\pi r^2 = q_{int}/\\varepsilon_0$.</p>
+        <p>Per $r \\lt R$: $q_{int} = q\\,r^3/R^3$ e quindi $E(r) = \\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{q\\,r}{R^3}$; per $r = 0{,}010\\ \\mathrm{m}$,</p>
+        <p>$$E = 9{,}0\\times10^{9}\\cdot\\frac{4{,}0\\times10^{-9}\\cdot 0{,}010}{(0{,}020)^3} = \\frac{0{,}36}{8{,}0\\times10^{-6}} = 4{,}5\\times10^{4}\\ \\mathrm{N/C}.$$</p>
+        <p>Per $r = R = 0{,}020\\ \\mathrm{m}$ (valore comune alle due espressioni):</p>
+        <p>$$E = 9{,}0\\times10^{9}\\cdot\\frac{4{,}0\\times10^{-9}}{(0{,}020)^2} = \\frac{36}{4{,}0\\times10^{-4}} = 9{,}0\\times10^{4}\\ \\mathrm{N/C}.$$</p>
+        <p>Per $r \\gt R$: $q_{int} = q$ e $E(r) = \\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{q}{r^2}$; per $r = 0{,}060\\ \\mathrm{m} = 3R$,</p>
+        <p>$$E = \\frac{36}{3{,}6\\times10^{-3}} = 1{,}0\\times10^{4}\\ \\mathrm{N/C},$$</p>
+        <p>cioè un nono del valore in superficie, come richiede l'andamento $1/r^2$.</p>
+        <p><strong>(c)</strong> Il campo cresce linearmente per $r \\lt R$ e decresce come $1/r^2$ per $r \\gt R$: il massimo è sulla superficie, $E_{max} = E(R) = 9{,}0\\times10^{4}\\ \\mathrm{N/C}$. Continuità:</p>
+        <p>$$\\left.\\frac{1}{4\\pi\\varepsilon_0}\\frac{q r}{R^3}\\right|_{r=R} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{R^2} = \\left.\\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}\\right|_{r=R},$$</p>
+        <p>come atteso.</p>`
+      },
+
+      {
+        id: "s05-oral",
+        type: "oral_box",
+        title: "Domande tipiche all'orale su questa lezione",
+        icon: "🎤",
+        content: `<ul>
+          <li>Definisci il flusso infinitesimo e spiega quando si annulla.</li>
+          <li>Perché per una superficie chiusa il segno del flusso ha significato fisico e per una aperta no?</li>
+          <li>Enuncia il teorema di Gauss precisando che $\\vec{E}$ è il campo <em>totale</em> e che $Q_{int}$ contiene solo le cariche interne.</li>
+          <li>Il teorema di Gauss permette sempre di calcolare $\\vec{E}$? Spiega il ruolo della simmetria.</li>
+          <li>Da dove viene il fattore 2 nel flusso $2EA$ del cilindro Gaussiano per il piano?</li>
+          <li>Perché il campo di una sfera uniformemente carica cresce linearmente all'interno? L'argomento "si ingloba più carica" è sufficiente?</li>
+          <li>Confronta l'andamento esterno di sfera ($1/r^2$) e cilindro/filo infinito ($1/r$): da cosa dipende la differenza?</li>
+        </ul>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Definisci il flusso infinitesimo del campo $\\vec{E}$ attraverso un elemento $dS$ e di' quando è nullo.",
+        back: "Con $d\\vec{S} = \\hat{n}\\,dS$ ($\\hat{n}$ versore normale, $\\vec{E}$ valutato nello stesso punto) si pone $d\\Phi(\\vec{E}) = \\vec{E}\\cdot d\\vec{S} = \\vec{E}\\cdot\\hat{n}\\,dS = |\\vec{E}|\\,dS\\,\\cos\\alpha$, con $\\alpha$ angolo fra $\\vec{E}$ e $\\hat{n}$. Il flusso è nullo quando $\\cos\\alpha = 0$, cioè $\\alpha = 90^\\circ$: il campo è <strong>tangente</strong> alla superficie (oltre al caso banale $\\vec{E}=\\vec{0}$). Analogia: un dischetto parallelo a un flusso d'acqua non viene attraversato, l'acqua gli scorre parallelamente."
+      },
+      {
+        type: "domanda",
+        front: "Perché il segno del flusso attraverso una superficie <em>aperta</em> è convenzionale, mentre per una superficie <em>chiusa</em> non lo è?",
+        back: "Poiché $\\vec{E}\\cdot(-\\hat{n})\\,dS = -\\vec{E}\\cdot\\hat{n}\\,dS$, cambiando il versore normale il flusso cambia segno. Per una superficie aperta non esiste criterio naturale per preferire $\\hat{n}$ o $-\\hat{n}$: l'orientazione va dichiarata, e solo dopo il segno ha significato. Per una superficie chiusa si adotta universalmente la normale <strong>uscente</strong> dal volume racchiuso: non è una convenzione 'meno arbitraria', ma quella universalmente adottata, ed è questa a dare il segno nella forma consueta $\\Phi = Q_{int}/\\varepsilon_0$. Con la normale entrante si otterrebbe $-Q_{int}/\\varepsilon_0$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia il teorema di Gauss con tutte le ipotesi.",
+        back: "Sia $\\Sigma$ una superficie <strong>chiusa</strong> orientata con la normale <strong>uscente</strong> ($d\\vec{S} = \\hat{n}\\,dS$) e sia $\\vec{E}$ il campo elettrostatico <strong>totale</strong> (di tutte le cariche, interne ed esterne). Allora $$\\Phi_\\Sigma(\\vec{E}) = \\oint_\\Sigma \\vec{E}\\cdot d\\vec{S} = \\frac{\\sum_i q_{i,int}}{\\varepsilon_0} = \\frac{Q_{int}}{\\varepsilon_0}$$ Per distribuzioni continue $Q_{int} = \\int_{V_{int}} dq$. Il flusso non dipende né dalla forma di $\\Sigma$, né dalla posizione delle cariche interne, né dalle cariche esterne."
+      },
+      {
+        type: "tranello",
+        front: "Il teorema di Gauss permette sempre di calcolare il campo $\\vec{E}$?",
+        back: "No. Il teorema fornisce un <strong>vincolo sul flusso totale</strong>, non direttamente sul campo punto per punto: molti campi diversi possono avere lo stesso flusso attraverso $\\Sigma$. Serve inoltre la <strong>simmetria</strong>, che riduce il campo sulla superficie a una sola componente incognita, costante dove il flusso non è nullo: solo allora l'uguaglianza di Gauss diventa un'equazione in quell'unica incognita. Per questo si scelgono superfici Gaussiane adattate alla simmetria. Come dice il prof., per una superficie arbitraria 'io non ce la faccio a fare quest'integrale!'"
+      },
+      {
+        type: "domanda",
+        front: "Una carica esterna a $\\Sigma$ contribuisce al flusso? E al campo sulla superficie?",
+        back: "Contribuisce al <strong>campo</strong> $\\vec{E}$ in ogni punto di $\\Sigma$ (il campo nel teorema è quello totale), ma il suo contributo al <strong>flusso totale</strong> è nullo: le sue linee di campo che entrano in $\\Sigma$ ne escono anche. Dove entrano $\\vec{E}\\cdot\\hat{n} \\lt 0$, dove escono $\\vec{E}\\cdot\\hat{n} \\gt 0$, e i due contributi si cancellano esattamente."
+      },
+      {
+        type: "dimostrazione",
+        front: "Ricava il campo di un piano indefinito con $\\sigma \\gt 0$ e spiega da dove viene il fattore 2 in $2EA$.",
+        back: "Simmetria: traslazioni parallele al piano $\\Rightarrow$ $\\vec{E}=\\vec{E}(z)$; rotazioni attorno a $\\hat{z}$ $\\Rightarrow$ nessuna componente tangenziale, $\\vec{E}=E_z(z)\\hat{z}$; riflessione $z\\to-z$ $\\Rightarrow$ $E_z(-z)=-E_z(z)$. Cilindro Gaussiano con basi $A$ in $z=\\pm h$: sul mantello $\\vec{E}\\perp\\hat{n}_L$, flusso nullo. Base superiore ($\\hat{n}=+\\hat{z}$): $\\Phi = +EA$. Base inferiore ($\\hat{n}=-\\hat{z}$, $\\vec{E}=-E\\hat{z}$): $\\Phi = (-E)(-1)A = +EA$. <strong>I due segni negativi si compensano: da qui il fattore 2.</strong> Quindi $2EA = \\sigma A/\\varepsilon_0$, da cui $E = \\dfrac{\\sigma}{2\\varepsilon_0}$, indipendente dalla distanza e dall'altezza $2h$ del cilindro."
+      },
+      {
+        type: "tranello",
+        front: "Il campo di un piano infinito è uniforme in tutto lo spazio?",
+        back: "No, attenzione. Il <strong>modulo</strong> $|\\vec{E}| = |\\sigma|/(2\\varepsilon_0)$ è costante, ma il <strong>verso si inverte</strong> attraversando il piano: il campo è uniforme <em>separatamente</em> in ciascuno dei due semispazi, con versi opposti. Sul piano ideale $z=0$ il campo non è definito. La formula corretta è $\\vec{E}(z) = \\dfrac{\\sigma}{2\\varepsilon_0}\\operatorname{sgn}(z)\\,\\hat{z}$. È scorretto scrivere $\\vec{E} = \\dfrac{|\\sigma|}{2\\varepsilon_0}\\hat{n}$ con un unico $\\hat{n}$ 'sempre uscente': per $\\sigma \\lt 0$ il campo punta <em>verso</em> il piano, e un solo versore fisso non descrive entrambi i semispazi."
+      },
+      {
+        type: "dimostrazione",
+        front: "Ricava il campo dentro e fuori una sfera di raggio $R$ con carica $Q \\gt 0$ uniformemente distribuita nel volume.",
+        back: "Simmetria sferica: $\\vec{E} = E_r(r)\\hat{r}$, con $E_r$ costante su ogni sfera concentrica. Flusso su sfera Gaussiana di raggio $r$: $\\Phi = E\\,(4\\pi r^2)$ in entrambi i casi. <br><strong>Esterno ($r \\gt R$):</strong> $Q_{int}=Q$, quindi $E(r) = \\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{Q}{r^2}$ — come una carica puntiforme nel centro. <br><strong>Interno ($r \\lt R$):</strong > usando l'<strong>uniformità</strong>, $Q_{int} = \\rho\\,\\frac{4}{3}\\pi r^3 = Q\\dfrac{r^3}{R^3}$, da cui $E(r) = \\dfrac{Q}{4\\pi\\varepsilon_0 R^3}r = \\dfrac{\\rho}{3\\varepsilon_0}r$. <br>In $r=R$ le due espressioni coincidono ($E = Q/(4\\pi\\varepsilon_0 R^2)$): il campo è continuo e massimo in superficie; $E(0)=0$."
+      },
+      {
+        type: "tranello",
+        front: "Perché il campo interno a una sfera uniformemente carica cresce? L'argomento «inglobiamo più carica» basta?",
+        back: "No, è troppo rapido. Nel teorema di Gauss crescono con $r$ <strong>due</strong> quantità: la carica racchiusa e l'area attraversata. $Q_{int}\\propto r^3$ mentre $A = 4\\pi r^2 \\propto r^2$, quindi $E_r = \\dfrac{Q_{int}}{\\varepsilon_0 A} \\propto \\dfrac{r^3}{r^2} = r$. È il <strong>confronto</strong> fra le due crescite a produrre l'andamento lineare: se $Q_{int}$ crescesse come $r^2$ (come l'area), il campo sarebbe costante."
+      },
+      {
+        type: "domanda",
+        front: "Cosa garantisce la simmetria sferica e cosa serve invece l'ipotesi di densità uniforme?",
+        back: "La <strong>simmetria sferica</strong> ($\\rho = \\rho(r)$) garantisce che il campo sia radiale e che $E_r$ dipenda solo da $r$: è tutto ciò che serve per usare la sfera Gaussiana e scrivere $\\Phi = E_r\\,4\\pi r^2$. L'<strong>uniformità</strong> ($\\rho$ costante) serve invece per scrivere $Q_{int} = \\rho\\,V_{int}$ e ottenere l'andamento <em>lineare</em> $E \\propto r$ all'interno. Con $\\rho(r)$ non costante il campo interno avrebbe un'altra forma. Analogamente, $\\rho$ locale e $\\rho_{media} = Q/V$ coincidono se e solo se la distribuzione è uniforme."
+      },
+      {
+        type: "dimostrazione",
+        front: "Ricava il campo di un filo rettilineo infinito con densità lineare uniforme $\\lambda$.",
+        back: "Simmetria: per ogni elemento di carica che darebbe una componente lungo il filo ne esiste uno simmetrico con componente opposta $\\Rightarrow$ le componenti parallele si annullano e $\\vec{E}=E_r\\hat{r}$, radiale e $\\perp$ al filo. Superficie Gaussiana: cilindro coassiale di raggio $R$ e altezza $h$. Sulle basi $\\vec{E}\\perp d\\vec{S}$ ($90^\\circ$) $\\Rightarrow$ flusso nullo. Sul mantello $\\int_{S_L}\\vec{E}\\cdot d\\vec{S} = E_r(2\\pi R h)$. Gauss: $E_r(2\\pi R h) = \\lambda h/\\varepsilon_0$, l'altezza $h$ si semplifica e $$E_r = \\frac{\\lambda}{2\\pi\\varepsilon_0 R}, \\qquad E = \\frac{|\\lambda|}{2\\pi\\varepsilon_0 R}.$$ Decresce come $1/R$, più lentamente di una carica puntiforme."
+      },
+      {
+        type: "domanda",
+        front: "Perché all'esterno la sfera dà $1/r^2$ e il cilindro infinito (o il filo) dà $1/r$?",
+        back: "Perché cambia la <strong>geometria dell'area Gaussiana</strong> attraversata dal flusso. Per la sfera $A = 4\\pi r^2 \\propto r^2$ con $Q_{int}$ costante, quindi $E \\propto 1/r^2$. Per il cilindro l'area con flusso non nullo è il solo mantello, $A = 2\\pi r h' \\propto r$, con $Q_{int} = \\rho\\pi R^2 h'$ costante, quindi $E \\propto 1/r$. All'interno entrambi crescono linearmente. Da fuori, il cilindro carico 'si vede' come un filo con $\\lambda = \\rho\\pi R^2$."
+      },
+      {
+        type: "domanda",
+        front: "Perché il campo è continuo in $r=R$ per la sfera, mentre attraversando un piano carico il campo salta?",
+        back: "Nella sfera la carica è distribuita con <strong>densità volumetrica finita</strong>: non ci sono strati superficiali di carica, quindi non ci sono discontinuità del campo, e infatti le espressioni interna ed esterna coincidono in $r=R$ dando $E = Q/(4\\pi\\varepsilon_0 R^2)$. Nel piano, invece, la carica è concentrata su una superficie e il campo salta di $\\sigma/\\varepsilon_0$ attraversandolo (da $+\\sigma/2\\varepsilon_0$ a $-\\sigma/2\\varepsilon_0$ lungo $\\hat{z}$)."
+      },
+      {
+        type: "tranello",
+        front: "La condizione $h \\gg R$ basta per applicare a un cilindro finito il risultato del cilindro infinito?",
+        back: "No. Si risolve il <strong>modello ideale</strong> di cilindro infinito: solo lì la simmetria garantisce $\\vec{E}$ esattamente radiale con $E_r = E_r(r)$. Perché l'approssimazione sia buona occorre anche: (i) stare <strong>lontani dalle basi</strong>, a distanza $d$ dalle estremità grande rispetto a $r$ (vicino ai bordi compare una componente parallela all'asse); (ii) avere $r \\ll d$. Per $r \\gtrsim h$ il cilindro finito è 'visto' come carica puntiforme e il campo torna a decrescere come $1/r^2$, non come $1/r$."
+      },
+      {
+        type: "formula",
+        front: "Qual è la strategia operativa in quattro passi per usare il teorema di Gauss?",
+        back: "1) <strong>Simmetria:</strong> dedurre la direzione del campo e da quali variabili dipende il suo modulo. 2) <strong>Scelta della superficie Gaussiana:</strong> una superficie chiusa decomponibile in porzioni su ciascuna delle quali $\\vec{E}$ sia parallelo oppure perpendicolare a $\\hat{n}$, con $|\\vec{E}|$ costante dove il flusso non è nullo. 3) <strong>Calcolo del flusso</strong> in funzione del modulo incognito $E$. 4) <strong>Calcolo della carica interna</strong> e uguaglianza con $Q_{int}/\\varepsilon_0$."
+      },
+      {
+        type: "domanda",
+        front: "Come si legge il segno del flusso attraverso una superficie chiusa, con la convenzione standard?",
+        back: "Con la normale <strong>uscente</strong>, il segno del flusso è un <strong>bilancio netto</strong>: $\\Phi \\gt 0$ significa che il campo è complessivamente uscente dalla superficie, cioè la carica interna netta è positiva; $\\Phi \\lt 0$ significa campo complessivamente entrante, carica interna netta negativa; $\\Phi = 0$ significa carica interna netta nulla (per esempio una superficie chiusa che non contiene cariche). Con la normale entrante tutti i segni si invertirebbero e si otterrebbe $-Q_{int}/\\varepsilon_0$."
+      }
+    ]
+};
+
