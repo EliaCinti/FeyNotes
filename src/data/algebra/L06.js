@@ -1,0 +1,1318 @@
+const LESSON = {
+    id: "L06", date: "Lezione 6 — 8 Ott 2026",
+    title: "Decomposizione di Funzioni, Ordinamenti e Operazioni Algebriche",
+    abstract: "Ogni funzione, anche se non è né iniettiva né suriettiva, si decompone in modo canonico come suriettiva ∘ biiettiva ∘ iniettiva. Vediamo la co-restrizione, il passaggio al quoziente, il Teorema Fondamentale di Decomposizione con nucleo e fibre, poi le relazioni d'ordine (larghe e strette) e infine le prime strutture algebriche: gruppoidi, semigruppi, monoidi e gruppi.",
+
+    sections: [
+      {
+        id: "s06-notazione",
+        type: "section",
+        title: "Notazione e problema della decomposizione",
+        icon: "🏹",
+        content: `<p>In questa lezione vedremo come ogni funzione, anche se non è né iniettiva né suriettiva, può essere decomposta in parti che hanno queste proprietà. Questo ci permetterà di <strong>isolare</strong> le sue componenti iniettive, suriettive e biettive.</p>
+          <p>Prima di iniziare, richiamiamo una notazione che useremo per distinguere i diversi tipi di funzioni.</p>`,
+        subsections: [
+          {
+            subtitle: "Notazione per le funzioni (frecce)",
+            content: `<p>Per le funzioni $f: A \\to B$ useremo (a volte) le seguenti frecce per indicarne le proprietà:</p>
+              <ul>
+                <li>$f: A \\hookrightarrow B$ se $f$ è <strong>iniettiva</strong>. La freccia ricorda un "uncino" che aggancia elementi distinti del dominio a elementi distinti del codominio: ogni elemento di $B$ è immagine di al più un elemento di $A$.</li>
+                <li>$f: A \\twoheadrightarrow B$ se $f$ è <strong>suriettiva</strong>. La doppia testa della freccia suggerisce che tutto il codominio viene "coperto".</li>
+                <li>$f: A \\overset{\\sim}{\\longrightarrow} B$ se $f$ è <strong>biiettiva</strong>. La tilde sopra la freccia indica un isomorfismo, una corrispondenza biunivoca.</li>
+              </ul>`
+          },
+          {
+            subtitle: "Convenzione sui numeri naturali",
+            content: `<p>Fin da subito fissiamo una convenzione che useremo in <em>tutto</em> il corso, perché la scelta influisce sui calcoli concreti (per esempio sull'immagine del valore assoluto e sull'esistenza dell'elemento neutro per la somma). Distinguiamo esplicitamente due insiemi:</p>
+              <p>$$\\mathbb{N}_0 = \\{0, 1, 2, 3, \\dots\\}, \\qquad \\mathbb{N}_{\\gt 0} = \\{1, 2, 3, \\dots\\}$$</p>
+              <p>cioè i naturali <em>non negativi</em> (zero incluso) e i naturali <em>positivi</em> (zero escluso). <strong>Non scriveremo mai il simbolo $\\mathbb{N}$ "nudo"</strong>: ogni volta indicheremo con un indice quale dei due insiemi intendiamo.</p>`
+          },
+          {
+            subtitle: "Il problema",
+            content: `<p>Il problema che vogliamo affrontare è il seguente: data una funzione qualsiasi $f: A \\to B$, vorremmo scomporla in una composizione di funzioni più semplici, in particolare una suriettiva e una iniettiva. In realtà, vedremo che la decomposizione può essere ancora più raffinata, <strong>isolando anche una componente biiettiva</strong>.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-corestrizione",
+        type: "section",
+        title: "Componente suriettiva: la co-restrizione",
+        icon: "🎯",
+        content: `<p>La prima decomposizione è abbastanza banale. Ogni funzione può essere resa suriettiva semplicemente "restringendo" il suo codominio alla sua immagine.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: co-restrizione e inclusione",
+            content: `<p><strong>Co-restrizione.</strong> Data una funzione $f: A \\to B$, la sua <strong>co-restrizione</strong> è la funzione $f': A \\to \\text{Im}(f)$ definita da $f'(a) = f(a)$ per ogni $a \\in A$.</p>
+              <p><strong>Inclusione.</strong> Sia $j_f: \\text{Im}(f) \\hookrightarrow B$ la funzione di <strong>inclusione</strong>, definita da $j_f(y) = y$ per ogni $y \\in \\text{Im}(f)$. Questa funzione è banalmente <strong>iniettiva</strong>.</p>`
+          },
+          {
+            subtitle: "Osservazione: $f'$ è sempre suriettiva",
+            content: `<p>Per costruzione, la funzione $f': A \\to \\text{Im}(f)$ è sempre <strong>suriettiva</strong>. Infatti, per ogni elemento $y \\in \\text{Im}(f)$, esiste per definizione un $a \\in A$ tale che $f(a) = y$, e quindi $f'(a) = y$.</p>`
+          },
+          {
+            subtitle: "La prima decomposizione",
+            content: `<p>A questo punto, la funzione originale $f$ può essere vista come la composizione di $f'$ e della funzione di inclusione dell'immagine nel codominio originale:</p>
+              <p>$$f = j_f \\circ f'$$</p>
+              <p>Questa decomposizione scompone $f$ in una funzione suriettiva seguita da una funzione iniettiva. La situazione è riassunta dal seguente diagramma commutativo.</p>
+              <figure class="figura" data-id="algebra_lez06a_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez06a_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="107.415pt" height="74.687pt" viewBox="0 0 107.415 74.687" version="1.2"><style>#algebra_lez06a_d1 [fill="rgb(0%,0%,0%)"],#algebra_lez06a_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez06a_d1 [stroke="rgb(0%,0%,0%)"],#algebra_lez06a_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph0-1">
+<path style="stroke:none;" d="M 7.140625 -0.203125 C 7.140625 -0.3125 7.046875 -0.3125 6.921875 -0.3125 C 6.296875 -0.3125 6.296875 -0.375 6.265625 -0.65625 L 5.671875 -6.859375 C 5.640625 -7.046875 5.640625 -7.09375 5.484375 -7.09375 C 5.3125 -7.09375 5.28125 -7.03125 5.21875 -6.921875 L 1.765625 -1.140625 C 1.375 -0.46875 0.984375 -0.34375 0.5625 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.46875 0 C 0.75 0 1.046875 -0.03125 1.328125 -0.03125 C 1.65625 -0.03125 2 0 2.3125 0 C 2.375 0 2.5 0 2.5 -0.1875 C 2.5 -0.296875 2.421875 -0.3125 2.34375 -0.3125 C 2.125 -0.328125 1.875 -0.40625 1.875 -0.65625 C 1.875 -0.765625 1.9375 -0.875 2.015625 -1.015625 C 2.09375 -1.140625 2.09375 -1.140625 2.78125 -2.28125 L 5.265625 -2.28125 C 5.28125 -2.078125 5.421875 -0.734375 5.421875 -0.640625 C 5.421875 -0.34375 4.90625 -0.3125 4.703125 -0.3125 C 4.5625 -0.3125 4.46875 -0.3125 4.46875 -0.109375 C 4.46875 0 4.609375 0 4.609375 0 C 5.015625 0 5.4375 -0.03125 5.84375 -0.03125 C 6.09375 -0.03125 6.71875 0 6.96875 0 C 7.03125 0 7.140625 0 7.140625 -0.203125 Z M 5.234375 -2.59375 L 2.96875 -2.59375 L 4.90625 -5.859375 Z M 5.234375 -2.59375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph0-2">
+<path style="stroke:none;" d="M 6.953125 -2.140625 C 6.953125 -2.859375 6.375 -3.421875 5.421875 -3.53125 C 6.453125 -3.71875 7.484375 -4.453125 7.484375 -5.40625 C 7.484375 -6.125 6.828125 -6.765625 5.640625 -6.765625 L 2.3125 -6.765625 C 2.125 -6.765625 2.03125 -6.765625 2.03125 -6.5625 C 2.03125 -6.453125 2.125 -6.453125 2.3125 -6.453125 C 2.3125 -6.453125 2.515625 -6.453125 2.6875 -6.4375 C 2.859375 -6.421875 2.953125 -6.40625 2.953125 -6.28125 C 2.953125 -6.234375 2.9375 -6.21875 2.90625 -6.09375 L 1.578125 -0.765625 C 1.484375 -0.390625 1.46875 -0.3125 0.6875 -0.3125 C 0.515625 -0.3125 0.421875 -0.3125 0.421875 -0.109375 C 0.421875 0 0.5 0 0.6875 0 L 4.21875 0 C 5.78125 0 6.953125 -1.171875 6.953125 -2.140625 Z M 6.59375 -5.4375 C 6.59375 -4.5625 5.734375 -3.625 4.53125 -3.625 L 3.078125 -3.625 L 3.6875 -6.078125 C 3.78125 -6.421875 3.796875 -6.453125 4.234375 -6.453125 L 5.515625 -6.453125 C 6.375 -6.453125 6.59375 -5.875 6.59375 -5.4375 Z M 6.03125 -2.25 C 6.03125 -1.265625 5.15625 -0.3125 3.984375 -0.3125 L 2.640625 -0.3125 C 2.5 -0.3125 2.484375 -0.3125 2.421875 -0.3125 C 2.3125 -0.328125 2.28125 -0.34375 2.28125 -0.421875 C 2.28125 -0.453125 2.28125 -0.46875 2.34375 -0.640625 L 3.015625 -3.40625 L 4.890625 -3.40625 C 5.84375 -3.40625 6.03125 -2.671875 6.03125 -2.25 Z M 6.03125 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph0-3">
+<path style="stroke:none;" d="M 5.46875 -6.296875 C 5.46875 -6.75 5.015625 -6.984375 4.609375 -6.984375 C 4.265625 -6.984375 3.640625 -6.8125 3.34375 -5.828125 C 3.28125 -5.609375 3.265625 -5.515625 3.015625 -4.265625 L 2.34375 -4.265625 C 2.15625 -4.265625 2.046875 -4.265625 2.046875 -4.078125 C 2.046875 -3.96875 2.125 -3.96875 2.3125 -3.96875 L 2.96875 -3.96875 L 2.234375 -0.046875 C 2.046875 0.90625 1.875 1.8125 1.359375 1.8125 C 1.328125 1.8125 1.078125 1.8125 0.890625 1.640625 C 1.34375 1.609375 1.4375 1.25 1.4375 1.09375 C 1.4375 0.875 1.265625 0.75 1.0625 0.75 C 0.8125 0.75 0.53125 0.96875 0.53125 1.34375 C 0.53125 1.796875 0.953125 2.03125 1.359375 2.03125 C 1.90625 2.03125 2.3125 1.453125 2.484375 1.0625 C 2.796875 0.453125 3.03125 -0.75 3.046875 -0.828125 L 3.640625 -3.96875 L 4.484375 -3.96875 C 4.6875 -3.96875 4.78125 -3.96875 4.78125 -4.15625 C 4.78125 -4.265625 4.6875 -4.265625 4.515625 -4.265625 L 3.6875 -4.265625 C 3.796875 -4.84375 3.796875 -4.828125 3.90625 -5.40625 C 3.9375 -5.609375 4.078125 -6.3125 4.140625 -6.421875 C 4.234375 -6.625 4.390625 -6.765625 4.609375 -6.765625 C 4.640625 -6.765625 4.90625 -6.765625 5.09375 -6.59375 C 4.65625 -6.546875 4.5625 -6.203125 4.5625 -6.046875 C 4.5625 -5.828125 4.734375 -5.703125 4.921875 -5.703125 C 5.1875 -5.703125 5.46875 -5.921875 5.46875 -6.296875 Z M 5.46875 -6.296875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph0-4">
+<path style="stroke:none;" d="M 3.9375 -6.1875 C 3.9375 -6.375 3.796875 -6.546875 3.5625 -6.546875 C 3.328125 -6.546875 3.03125 -6.3125 3.03125 -6.015625 C 3.03125 -5.828125 3.171875 -5.671875 3.390625 -5.671875 C 3.671875 -5.671875 3.9375 -5.921875 3.9375 -6.1875 Z M 3.515625 -3.09375 C 3.5625 -3.296875 3.5625 -3.4375 3.5625 -3.46875 C 3.5625 -4.03125 3.15625 -4.375 2.65625 -4.375 C 1.640625 -4.375 1.078125 -2.9375 1.078125 -2.859375 C 1.078125 -2.75 1.203125 -2.75 1.203125 -2.75 C 1.28125 -2.75 1.296875 -2.765625 1.375 -2.953125 C 1.625 -3.5625 2.078125 -4.15625 2.625 -4.15625 C 2.765625 -4.15625 2.9375 -4.125 2.9375 -3.703125 C 2.9375 -3.484375 2.90625 -3.375 2.875 -3.203125 L 1.9375 0.5 C 1.75 1.25 1.28125 1.8125 0.71875 1.8125 C 0.65625 1.8125 0.515625 1.8125 0.34375 1.71875 C 0.640625 1.65625 0.78125 1.390625 0.78125 1.203125 C 0.78125 1.046875 0.671875 0.859375 0.40625 0.859375 C 0.15625 0.859375 -0.125 1.0625 -0.125 1.421875 C -0.125 1.8125 0.265625 2.03125 0.75 2.03125 C 1.4375 2.03125 2.359375 1.5 2.609375 0.53125 Z M 3.515625 -3.09375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph1-1">
+<path style="stroke:none;" d="M 3.296875 0 L 3.296875 -0.3125 L 3.046875 -0.3125 C 2.265625 -0.3125 2.234375 -0.421875 2.234375 -0.765625 L 2.234375 -6 C 2.234375 -6.34375 2.265625 -6.453125 3.046875 -6.453125 L 3.296875 -6.453125 L 3.296875 -6.765625 C 2.953125 -6.734375 2.171875 -6.734375 1.796875 -6.734375 C 1.40625 -6.734375 0.625 -6.734375 0.28125 -6.765625 L 0.28125 -6.453125 L 0.53125 -6.453125 C 1.3125 -6.453125 1.34375 -6.34375 1.34375 -6 L 1.34375 -0.765625 C 1.34375 -0.421875 1.3125 -0.3125 0.53125 -0.3125 L 0.28125 -0.3125 L 0.28125 0 C 0.625 -0.03125 1.40625 -0.03125 1.78125 -0.03125 C 2.171875 -0.03125 2.953125 -0.03125 3.296875 0 Z M 3.296875 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph1-2">
+<path style="stroke:none;" d="M 8.046875 0 L 8.046875 -0.3125 C 7.53125 -0.3125 7.296875 -0.3125 7.28125 -0.609375 L 7.28125 -2.5 C 7.28125 -3.34375 7.28125 -3.65625 6.96875 -4.015625 C 6.828125 -4.1875 6.515625 -4.375 5.9375 -4.375 C 5.109375 -4.375 4.671875 -3.78125 4.5 -3.40625 C 4.359375 -4.265625 3.625 -4.375 3.1875 -4.375 C 2.453125 -4.375 1.984375 -3.953125 1.71875 -3.34375 L 1.71875 -4.375 L 0.3125 -4.265625 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.890625 1.09375 -3.40625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -2.578125 C 1.765625 -3.609375 2.484375 -4.15625 3.109375 -4.15625 C 3.734375 -4.15625 3.84375 -3.625 3.84375 -3.0625 L 3.84375 -0.75 C 3.84375 -0.3125 3.734375 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.1875 -0.03125 L 5.296875 0 L 5.296875 -0.3125 C 4.640625 -0.3125 4.53125 -0.3125 4.53125 -0.75 L 4.53125 -2.578125 C 4.53125 -3.609375 5.234375 -4.15625 5.859375 -4.15625 C 6.484375 -4.15625 6.59375 -3.625 6.59375 -3.0625 L 6.59375 -0.75 C 6.59375 -0.3125 6.484375 -0.3125 5.828125 -0.3125 L 5.828125 0 L 6.9375 -0.03125 Z M 8.046875 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph2-1">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.953125 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.921875 3.15625 -7.15625 C 3.28125 -7.28125 3.28125 -7.296875 3.28125 -7.328125 C 3.28125 -7.40625 3.234375 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.75 1.609375 -5.5 C 1.09375 -4.40625 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.234375 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph2-2">
+<path style="stroke:none;" d="M 2.859375 -2.484375 C 2.859375 -3.25 2.75 -4.453125 2.203125 -5.5625 C 1.609375 -6.78125 0.765625 -7.4375 0.65625 -7.4375 C 0.609375 -7.4375 0.5625 -7.390625 0.5625 -7.328125 C 0.5625 -7.296875 0.5625 -7.28125 0.75 -7.109375 C 1.71875 -6.125 2.28125 -4.546875 2.28125 -2.484375 C 2.28125 -0.78125 1.921875 0.953125 0.6875 2.203125 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.65625 2.484375 C 0.765625 2.484375 1.65625 1.796875 2.234375 0.546875 C 2.75 -0.546875 2.859375 -1.640625 2.859375 -2.484375 Z M 2.859375 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph3-1">
+<path style="stroke:none;" d="M 2.078125 -3.5 C 2.078125 -3.71875 1.890625 -3.875 1.671875 -3.875 C 1.390625 -3.875 1.3125 -3.65625 1.296875 -3.5625 L 0.375 -0.5625 L 0.328125 -0.4375 C 0.328125 -0.359375 0.546875 -0.28125 0.609375 -0.28125 C 0.65625 -0.28125 0.6875 -0.3125 0.703125 -0.390625 L 2.015625 -3.28125 C 2.046875 -3.34375 2.078125 -3.40625 2.078125 -3.5 Z M 2.078125 -3.5 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d1-glyph4-1">
+<path style="stroke:none;" d="M 4.1875 -4.390625 C 4.1875 -4.703125 3.84375 -4.890625 3.5 -4.890625 C 3.1875 -4.890625 2.84375 -4.703125 2.65625 -4.359375 C 2.53125 -4.109375 2.46875 -3.796875 2.328125 -2.984375 L 1.78125 -2.984375 C 1.640625 -2.984375 1.546875 -2.984375 1.546875 -2.84375 C 1.546875 -2.734375 1.640625 -2.734375 1.765625 -2.734375 L 2.28125 -2.734375 L 1.671875 0.546875 C 1.625 0.6875 1.515625 1.21875 1.171875 1.21875 C 1.171875 1.21875 1 1.21875 0.875 1.140625 C 1.15625 1.046875 1.171875 0.796875 1.171875 0.75 C 1.171875 0.609375 1.0625 0.5 0.90625 0.5 C 0.71875 0.5 0.5 0.65625 0.5 0.921875 C 0.5 1.234375 0.828125 1.421875 1.171875 1.421875 C 1.625 1.421875 1.921875 0.953125 2.015625 0.8125 C 2.265625 0.34375 2.421875 -0.515625 2.4375 -0.59375 L 2.828125 -2.734375 L 3.5 -2.734375 C 3.640625 -2.734375 3.734375 -2.734375 3.734375 -2.890625 C 3.734375 -2.984375 3.640625 -2.984375 3.515625 -2.984375 L 2.875 -2.984375 C 3.03125 -3.875 3.09375 -4.1875 3.140625 -4.390625 C 3.171875 -4.546875 3.328125 -4.6875 3.5 -4.6875 C 3.5 -4.6875 3.6875 -4.6875 3.828125 -4.609375 C 3.53125 -4.515625 3.515625 -4.265625 3.515625 -4.21875 C 3.515625 -4.078125 3.640625 -3.96875 3.796875 -3.96875 C 3.984375 -3.96875 4.1875 -4.125 4.1875 -4.390625 Z M 4.1875 -4.390625 "/>
+</symbol>
+</g>
+</defs>
+<g id="algebra_lez06a_d1-surface1">
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph0-1" x="7.266426" y="23.204503"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph0-2" x="91.55438" y="23.204503"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph1-1" x="40.541206" y="64.586132"/>
+  <use xlink:href="#algebra_lez06a_d1-glyph1-2" x="44.119214" y="64.586132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph2-1" x="52.375753" y="64.586132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph0-3" x="56.229763" y="64.586132"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph2-2" x="62.147534" y="64.586132"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.456638 42.518622 L 73.706115 42.518622 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.108625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 86.867188 19.820312 L 82.742188 17.757812 L 84.289062 19.820312 L 82.742188 21.878906 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph0-3" x="50.166783" y="14.193578"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.122799 35.398021 L 31.284927 11.235892 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.108625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 43.921875 52.753906 L 42.464844 48.382812 L 42.097656 50.933594 L 39.550781 51.296875 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph0-3" x="18.945818" y="51.327342"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph3-1" x="24.863589" y="47.731923"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 51.217112 8.698712 L 75.383168 32.86084 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.108625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 87.78125 27.605469 L 83.40625 29.0625 L 85.957031 29.425781 L 86.320312 31.976562 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph0-4" x="78.899301" y="50.41332"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d1-glyph4-1" x="82.980077" y="51.899227"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 28.347139 34.015532 C 38.73544 37.797738 46.307707 37.797738 53.322265 35.24092 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.108625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 66.4375 27.9375 L 63.269531 24.589844 L 64.015625 27.058594 L 61.859375 28.464844 "/>
+</g>
+</svg></figure>
+              <p>Il diagramma si dice <strong>commutativo</strong> perché "percorrere" le frecce da $A$ a $B$ direttamente tramite $f$ produce lo stesso risultato che "percorrere" il cammino alternativo passando per $\\text{Im}(f)$ tramite $f'$ e poi $j_f$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Co-restrizione", latex: "f': A \\twoheadrightarrow \\text{Im}(f), \\quad f'(a) = f(a)" },
+          { label: "Inclusione", latex: "j_f: \\text{Im}(f) \\hookrightarrow B, \\quad j_f(y) = y" },
+          { label: "Prima decomposizione", latex: "f = j_f \\circ f'" }
+        ]
+      },
+
+      {
+        id: "s06-quoziente",
+        type: "section",
+        title: "Componente iniettiva: passaggio al quoziente",
+        icon: "🧩",
+        content: `<p>L'idea per isolare la componente iniettiva è usare la nozione di insieme quoziente. Ricordiamo la definizione di iniettività: $f$ è iniettiva se e solo se da $f(x) = f(x')$ segue $x = x'$. L'idea è di <strong>forzare</strong> l'iniettività considerando "uguali" tutti gli elementi del dominio che hanno la stessa immagine. Questo ci porta a definire una relazione di equivalenza su $A$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: equivalenza indotta da una funzione",
+            content: `<p>Data una funzione $f: A \\to B$, la relazione $\\eta_f$ su $A$ è definita da:</p>
+              <p>$$x \\ \\eta_f \\ y \\iff f(x) = f(y)$$</p>
+              <p>Questa è la relazione di equivalenza introdotta nel Teorema 4.3.</p>`
+          },
+          {
+            subtitle: "Definizione: le tre mappe canoniche",
+            content: `<p>Raccogliamo in un unico posto le tre mappe che ci serviranno, così da ritrovarle facilmente nel ripasso. Data $f: A \\to B$:</p>
+              <ul>
+                <li><strong>Proiezione canonica</strong>: $p_{\\eta_f}: A \\to A/\\eta_f$, definita da $p_{\\eta_f}(a) = [a]_{\\eta_f}$. È sempre <strong>suriettiva</strong>.</li>
+                <li><strong>Funzione indotta sul quoziente</strong>: $f_*: A/\\eta_f \\to B$, definita da $f_*([a]_{\\eta_f}) = f(a)$.</li>
+                <li><strong>Inclusione dell'immagine</strong>: $j_f: \\text{Im}(f) \\hookrightarrow B$, definita da $j_f(y) = y$. È sempre <strong>iniettiva</strong>.</li>
+              </ul>
+              <p>La co-restrizione di $f_*$ all'immagine si denota $f'_*: A/\\eta_f \\to \\text{Im}(f)$, con $f'_*([a]_{\\eta_f}) = f(a)$.</p>`
+          },
+          {
+            subtitle: "Buona definizione di $f_*$",
+            content: `<p>Quando si definisce una funzione su un insieme quoziente usando un rappresentante della classe, è fondamentale verificare che la definizione sia <strong>ben posta</strong> (o "ben definita"), cioè che non dipenda dalla scelta del rappresentante.</p>
+              <p>Dobbiamo dimostrare che se $[a]_{\\eta_f} = [a']_{\\eta_f}$, allora $f(a) = f(a')$. Ma questo è vero per la definizione stessa della relazione $\\eta_f$:</p>
+              <p>$$[a]_{\\eta_f} = [a']_{\\eta_f} \\iff a \\ \\eta_f \\ a' \\iff f(a) = f(a')$$</p>
+              <p>Quindi la definizione di $f_*$ è coerente e non dipende dal rappresentante scelto.</p>`
+          },
+          {
+            subtitle: "La decomposizione tramite il quoziente",
+            content: `<p>La funzione $f$ può essere decomposta come:</p>
+              <p>$$f = f_* \\circ p_{\\eta_f}$$</p>
+              <p>Infatti, per ogni $a \\in A$:</p>
+              <p>$$(f_* \\circ p_{\\eta_f})(a) = f_*(p_{\\eta_f}(a)) = f_*([a]_{\\eta_f}) = f(a)$$</p>
+              <p>Questo è rappresentato dal seguente diagramma commutativo.</p>
+              <figure class="figura" data-id="algebra_lez06a_d2"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez06a_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="107.415pt" height="74.867pt" viewBox="0 0 107.415 74.867" version="1.2"><style>#algebra_lez06a_d2 [fill="rgb(0%,0%,0%)"],#algebra_lez06a_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez06a_d2 [stroke="rgb(0%,0%,0%)"],#algebra_lez06a_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-1">
+<path style="stroke:none;" d="M 7.140625 -0.203125 C 7.140625 -0.3125 7.046875 -0.3125 6.921875 -0.3125 C 6.296875 -0.3125 6.296875 -0.375 6.265625 -0.65625 L 5.671875 -6.859375 C 5.640625 -7.046875 5.640625 -7.09375 5.484375 -7.09375 C 5.3125 -7.09375 5.28125 -7.03125 5.21875 -6.921875 L 1.765625 -1.140625 C 1.375 -0.46875 0.984375 -0.34375 0.5625 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.46875 0 C 0.75 0 1.046875 -0.03125 1.328125 -0.03125 C 1.65625 -0.03125 2 0 2.3125 0 C 2.375 0 2.5 0 2.5 -0.1875 C 2.5 -0.296875 2.421875 -0.3125 2.34375 -0.3125 C 2.125 -0.328125 1.875 -0.40625 1.875 -0.65625 C 1.875 -0.765625 1.9375 -0.875 2.015625 -1.015625 C 2.09375 -1.140625 2.09375 -1.140625 2.78125 -2.28125 L 5.265625 -2.28125 C 5.28125 -2.078125 5.421875 -0.734375 5.421875 -0.640625 C 5.421875 -0.34375 4.90625 -0.3125 4.703125 -0.3125 C 4.5625 -0.3125 4.46875 -0.3125 4.46875 -0.109375 C 4.46875 0 4.609375 0 4.609375 0 C 5.015625 0 5.4375 -0.03125 5.84375 -0.03125 C 6.09375 -0.03125 6.71875 0 6.96875 0 C 7.03125 0 7.140625 0 7.140625 -0.203125 Z M 5.234375 -2.59375 L 2.96875 -2.59375 L 4.90625 -5.859375 Z M 5.234375 -2.59375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-2">
+<path style="stroke:none;" d="M 6.953125 -2.140625 C 6.953125 -2.859375 6.375 -3.421875 5.421875 -3.53125 C 6.453125 -3.71875 7.484375 -4.453125 7.484375 -5.40625 C 7.484375 -6.125 6.828125 -6.765625 5.640625 -6.765625 L 2.3125 -6.765625 C 2.125 -6.765625 2.03125 -6.765625 2.03125 -6.5625 C 2.03125 -6.453125 2.125 -6.453125 2.3125 -6.453125 C 2.3125 -6.453125 2.515625 -6.453125 2.6875 -6.4375 C 2.859375 -6.421875 2.953125 -6.40625 2.953125 -6.28125 C 2.953125 -6.234375 2.9375 -6.21875 2.90625 -6.09375 L 1.578125 -0.765625 C 1.484375 -0.390625 1.46875 -0.3125 0.6875 -0.3125 C 0.515625 -0.3125 0.421875 -0.3125 0.421875 -0.109375 C 0.421875 0 0.5 0 0.6875 0 L 4.21875 0 C 5.78125 0 6.953125 -1.171875 6.953125 -2.140625 Z M 6.59375 -5.4375 C 6.59375 -4.5625 5.734375 -3.625 4.53125 -3.625 L 3.078125 -3.625 L 3.6875 -6.078125 C 3.78125 -6.421875 3.796875 -6.453125 4.234375 -6.453125 L 5.515625 -6.453125 C 6.375 -6.453125 6.59375 -5.875 6.59375 -5.4375 Z M 6.03125 -2.25 C 6.03125 -1.265625 5.15625 -0.3125 3.984375 -0.3125 L 2.640625 -0.3125 C 2.5 -0.3125 2.484375 -0.3125 2.421875 -0.3125 C 2.3125 -0.328125 2.28125 -0.34375 2.28125 -0.421875 C 2.28125 -0.453125 2.28125 -0.46875 2.34375 -0.640625 L 3.015625 -3.40625 L 4.890625 -3.40625 C 5.84375 -3.40625 6.03125 -2.671875 6.03125 -2.25 Z M 6.03125 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-3">
+<path style="stroke:none;" d="M 4.390625 -7.234375 C 4.390625 -7.34375 4.3125 -7.4375 4.203125 -7.4375 C 4.125 -7.4375 4.0625 -7.40625 4.03125 -7.34375 L 0.59375 2.09375 C 0.546875 2.234375 0.546875 2.28125 0.546875 2.28125 C 0.546875 2.390625 0.640625 2.484375 0.75 2.484375 C 0.875 2.484375 0.90625 2.40625 0.953125 2.234375 L 4.34375 -7.046875 C 4.390625 -7.1875 4.390625 -7.234375 4.390625 -7.234375 Z M 4.390625 -7.234375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-4">
+<path style="stroke:none;" d="M 4.828125 -2.75 C 4.890625 -2.921875 4.90625 -3.046875 4.90625 -3.3125 C 4.90625 -3.96875 4.515625 -4.375 3.78125 -4.375 C 2.984375 -4.375 2.484375 -3.859375 2.234375 -3.515625 C 2.1875 -4.078125 1.765625 -4.375 1.328125 -4.375 C 0.875 -4.375 0.6875 -4 0.59375 -3.8125 C 0.421875 -3.484375 0.28125 -2.875 0.28125 -2.859375 C 0.28125 -2.75 0.40625 -2.75 0.40625 -2.75 C 0.5 -2.75 0.515625 -2.765625 0.578125 -2.984375 C 0.75 -3.6875 0.9375 -4.15625 1.296875 -4.15625 C 1.46875 -4.15625 1.609375 -4.078125 1.609375 -3.703125 C 1.609375 -3.5 1.578125 -3.390625 1.453125 -2.875 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.0625 0.109375 C 1.1875 0.109375 1.359375 0.03125 1.4375 -0.171875 C 1.453125 -0.1875 1.5625 -0.65625 1.625 -0.90625 L 1.84375 -1.796875 C 1.90625 -2.015625 1.96875 -2.234375 2.015625 -2.453125 C 2.03125 -2.515625 2.109375 -2.84375 2.125 -2.90625 C 2.15625 -2.984375 2.453125 -3.546875 2.796875 -3.8125 C 3.015625 -3.96875 3.3125 -4.15625 3.75 -4.15625 C 4.171875 -4.15625 4.28125 -3.828125 4.28125 -3.46875 C 4.28125 -3.421875 4.28125 -3.234375 4.1875 -2.84375 L 3.046875 1.71875 C 3.015625 1.828125 3.015625 1.875 3.015625 1.875 C 3.015625 2.015625 3.125 2.140625 3.296875 2.140625 C 3.609375 2.140625 3.671875 1.859375 3.703125 1.75 Z M 4.828125 -2.75 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-5">
+<path style="stroke:none;" d="M 5.46875 -6.296875 C 5.46875 -6.75 5.015625 -6.984375 4.609375 -6.984375 C 4.265625 -6.984375 3.640625 -6.8125 3.34375 -5.828125 C 3.28125 -5.609375 3.265625 -5.515625 3.015625 -4.265625 L 2.34375 -4.265625 C 2.15625 -4.265625 2.046875 -4.265625 2.046875 -4.078125 C 2.046875 -3.96875 2.125 -3.96875 2.3125 -3.96875 L 2.96875 -3.96875 L 2.234375 -0.046875 C 2.046875 0.90625 1.875 1.8125 1.359375 1.8125 C 1.328125 1.8125 1.078125 1.8125 0.890625 1.640625 C 1.34375 1.609375 1.4375 1.25 1.4375 1.09375 C 1.4375 0.875 1.265625 0.75 1.0625 0.75 C 0.8125 0.75 0.53125 0.96875 0.53125 1.34375 C 0.53125 1.796875 0.953125 2.03125 1.359375 2.03125 C 1.90625 2.03125 2.3125 1.453125 2.484375 1.0625 C 2.796875 0.453125 3.03125 -0.75 3.046875 -0.828125 L 3.640625 -3.96875 L 4.484375 -3.96875 C 4.6875 -3.96875 4.78125 -3.96875 4.78125 -4.15625 C 4.78125 -4.265625 4.6875 -4.265625 4.515625 -4.265625 L 3.6875 -4.265625 C 3.796875 -4.84375 3.796875 -4.828125 3.90625 -5.40625 C 3.9375 -5.609375 4.078125 -6.3125 4.140625 -6.421875 C 4.234375 -6.625 4.390625 -6.765625 4.609375 -6.765625 C 4.640625 -6.765625 4.90625 -6.765625 5.09375 -6.59375 C 4.65625 -6.546875 4.5625 -6.203125 4.5625 -6.046875 C 4.5625 -5.828125 4.734375 -5.703125 4.921875 -5.703125 C 5.1875 -5.703125 5.46875 -5.921875 5.46875 -6.296875 Z M 5.46875 -6.296875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph0-6">
+<path style="stroke:none;" d="M 4.859375 -2.796875 C 4.859375 -3.71875 4.296875 -4.375 3.53125 -4.375 C 3.046875 -4.375 2.5625 -4.015625 2.234375 -3.640625 C 2.140625 -4.171875 1.71875 -4.375 1.34375 -4.375 C 0.890625 -4.375 0.703125 -4 0.609375 -3.8125 C 0.4375 -3.484375 0.3125 -2.875 0.3125 -2.859375 C 0.3125 -2.75 0.421875 -2.75 0.421875 -2.75 C 0.53125 -2.75 0.53125 -2.765625 0.59375 -2.984375 C 0.765625 -3.6875 0.953125 -4.15625 1.3125 -4.15625 C 1.484375 -4.15625 1.625 -4.078125 1.625 -3.703125 C 1.625 -3.484375 1.59375 -3.375 1.5625 -3.203125 L 0.453125 1.203125 C 0.359375 1.546875 0.34375 1.609375 -0.09375 1.609375 C -0.203125 1.609375 -0.3125 1.609375 -0.3125 1.796875 C -0.3125 1.875 -0.265625 1.921875 -0.1875 1.921875 C 0.078125 1.921875 0.359375 1.890625 0.640625 1.890625 C 0.96875 1.890625 1.3125 1.921875 1.625 1.921875 C 1.671875 1.921875 1.796875 1.921875 1.796875 1.71875 C 1.796875 1.609375 1.703125 1.609375 1.5625 1.609375 C 1.0625 1.609375 1.0625 1.546875 1.0625 1.453125 C 1.0625 1.34375 1.484375 -0.28125 1.5625 -0.53125 C 1.6875 -0.234375 1.96875 0.109375 2.46875 0.109375 C 3.609375 0.109375 4.859375 -1.34375 4.859375 -2.796875 Z M 3.640625 -1.125 C 3.296875 -0.4375 2.828125 -0.109375 2.453125 -0.109375 C 1.796875 -0.109375 1.671875 -0.9375 1.671875 -0.984375 C 1.671875 -0.984375 1.671875 -1.03125 1.703125 -1.15625 L 2.1875 -3.09375 C 2.265625 -3.359375 2.53125 -3.640625 2.703125 -3.78125 C 3.046875 -4.09375 3.34375 -4.15625 3.5 -4.15625 C 3.90625 -4.15625 4.140625 -3.8125 4.140625 -3.234375 C 4.140625 -2.640625 3.8125 -1.5 3.640625 -1.125 Z M 3.640625 -1.125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph1-1">
+<path style="stroke:none;" d="M 4.1875 -4.390625 C 4.1875 -4.703125 3.84375 -4.890625 3.5 -4.890625 C 3.1875 -4.890625 2.84375 -4.703125 2.65625 -4.359375 C 2.53125 -4.109375 2.46875 -3.796875 2.328125 -2.984375 L 1.78125 -2.984375 C 1.640625 -2.984375 1.546875 -2.984375 1.546875 -2.84375 C 1.546875 -2.734375 1.640625 -2.734375 1.765625 -2.734375 L 2.28125 -2.734375 L 1.671875 0.546875 C 1.625 0.6875 1.515625 1.21875 1.171875 1.21875 C 1.171875 1.21875 1 1.21875 0.875 1.140625 C 1.15625 1.046875 1.171875 0.796875 1.171875 0.75 C 1.171875 0.609375 1.0625 0.5 0.90625 0.5 C 0.71875 0.5 0.5 0.65625 0.5 0.921875 C 0.5 1.234375 0.828125 1.421875 1.171875 1.421875 C 1.625 1.421875 1.921875 0.953125 2.015625 0.8125 C 2.265625 0.34375 2.421875 -0.515625 2.4375 -0.59375 L 2.828125 -2.734375 L 3.5 -2.734375 C 3.640625 -2.734375 3.734375 -2.734375 3.734375 -2.890625 C 3.734375 -2.984375 3.640625 -2.984375 3.515625 -2.984375 L 2.875 -2.984375 C 3.03125 -3.875 3.09375 -4.1875 3.140625 -4.390625 C 3.171875 -4.546875 3.328125 -4.6875 3.5 -4.6875 C 3.5 -4.6875 3.6875 -4.6875 3.828125 -4.609375 C 3.53125 -4.515625 3.515625 -4.265625 3.515625 -4.21875 C 3.515625 -4.078125 3.640625 -3.96875 3.796875 -3.96875 C 3.984375 -3.96875 4.1875 -4.125 4.1875 -4.390625 Z M 4.1875 -4.390625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph1-2">
+<path style="stroke:none;" d="M 3.125 1.15625 L 3.875 -1.890625 C 3.921875 -2.078125 3.9375 -2.109375 3.9375 -2.265625 C 3.9375 -2.375 3.9375 -2.671875 3.671875 -2.875 C 3.5625 -2.96875 3.359375 -3.0625 3.03125 -3.0625 C 2.734375 -3.0625 2.3125 -2.984375 1.859375 -2.4375 C 1.8125 -2.953125 1.34375 -3.0625 1.125 -3.0625 C 0.859375 -3.0625 0.6875 -2.875 0.578125 -2.6875 C 0.4375 -2.453125 0.328125 -2.046875 0.328125 -2 C 0.328125 -1.90625 0.421875 -1.90625 0.4375 -1.90625 C 0.546875 -1.90625 0.546875 -1.921875 0.59375 -2.109375 C 0.703125 -2.515625 0.828125 -2.859375 1.109375 -2.859375 C 1.28125 -2.859375 1.328125 -2.71875 1.328125 -2.53125 C 1.328125 -2.390625 1.265625 -2.140625 1.21875 -1.953125 L 1.0625 -1.328125 L 0.84375 -0.4375 C 0.8125 -0.34375 0.78125 -0.171875 0.78125 -0.15625 C 0.78125 0 0.90625 0.0625 1.015625 0.0625 C 1.140625 0.0625 1.25 -0.015625 1.28125 -0.078125 C 1.3125 -0.140625 1.375 -0.375 1.40625 -0.515625 L 1.5625 -1.140625 C 1.609375 -1.296875 1.640625 -1.4375 1.671875 -1.609375 C 1.75 -1.90625 1.75 -1.921875 1.890625 -2.125 C 2.109375 -2.46875 2.46875 -2.859375 3 -2.859375 C 3.390625 -2.859375 3.40625 -2.546875 3.40625 -2.375 C 3.40625 -2.1875 3.40625 -2.125 3.359375 -2 L 2.578125 1.109375 C 2.546875 1.21875 2.546875 1.265625 2.546875 1.265625 C 2.546875 1.421875 2.671875 1.484375 2.78125 1.484375 C 3.03125 1.484375 3.09375 1.25 3.125 1.15625 Z M 3.125 1.15625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph2-1">
+<path style="stroke:none;" d="M 3.421875 -3.109375 C 3.421875 -3.390625 3.09375 -3.484375 2.859375 -3.484375 C 2.234375 -3.484375 2.109375 -2.890625 2.0625 -2.671875 C 2.015625 -2.46875 2.046875 -2.59375 1.96875 -2.140625 L 1.515625 -2.140625 C 1.421875 -2.140625 1.34375 -2.140625 1.34375 -2 C 1.34375 -1.90625 1.421875 -1.90625 1.5 -1.90625 L 1.9375 -1.90625 C 1.84375 -1.421875 1.625 -0.046875 1.484375 0.46875 C 1.46875 0.59375 1.34375 0.84375 1.15625 0.84375 C 1.125 0.84375 1.015625 0.84375 0.921875 0.796875 C 1.0625 0.734375 1.125 0.609375 1.125 0.515625 C 1.125 0.390625 1.03125 0.3125 0.90625 0.3125 C 0.765625 0.3125 0.59375 0.421875 0.59375 0.640625 C 0.59375 0.9375 0.953125 1.015625 1.140625 1.015625 C 1.4375 1.015625 1.65625 0.78125 1.765625 0.640625 C 1.96875 0.359375 2.078125 -0.296875 2.078125 -0.3125 L 2.359375 -1.90625 L 2.90625 -1.90625 C 3.015625 -1.90625 3.015625 -1.921875 3.046875 -1.9375 C 3.078125 -1.953125 3.078125 -2.015625 3.078125 -2.046875 C 3.078125 -2.140625 3.015625 -2.140625 2.921875 -2.140625 L 2.390625 -2.140625 C 2.453125 -2.5 2.5625 -3.125 2.625 -3.203125 C 2.6875 -3.28125 2.78125 -3.328125 2.859375 -3.328125 C 2.890625 -3.328125 3 -3.328125 3.09375 -3.265625 C 2.90625 -3.1875 2.90625 -3 2.90625 -2.984375 C 2.90625 -2.859375 3 -2.78125 3.125 -2.78125 C 3.25 -2.78125 3.421875 -2.890625 3.421875 -3.109375 Z M 3.421875 -3.109375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d2-glyph3-1">
+<path style="stroke:none;" d="M 3.4375 -1.09375 C 3.4375 -1.21875 3.34375 -1.265625 3.296875 -1.28125 L 2.234375 -1.734375 L 3.265625 -2.171875 C 3.359375 -2.21875 3.4375 -2.25 3.4375 -2.375 C 3.4375 -2.46875 3.359375 -2.59375 3.21875 -2.59375 C 3.171875 -2.59375 3.15625 -2.578125 3.078125 -2.53125 L 2.125 -1.90625 L 2.234375 -2.9375 L 2.234375 -3.03125 C 2.234375 -3.109375 2.171875 -3.21875 2.03125 -3.21875 C 1.890625 -3.21875 1.8125 -3.125 1.8125 -3.03125 L 1.921875 -1.90625 L 0.984375 -2.53125 C 0.890625 -2.59375 0.859375 -2.59375 0.828125 -2.59375 C 0.6875 -2.59375 0.609375 -2.46875 0.609375 -2.375 C 0.609375 -2.25 0.6875 -2.21875 0.78125 -2.171875 L 1.8125 -1.734375 L 0.78125 -1.296875 C 0.6875 -1.25 0.609375 -1.21875 0.609375 -1.09375 C 0.609375 -0.984375 0.6875 -0.875 0.828125 -0.875 C 0.875 -0.875 0.90625 -0.875 0.96875 -0.921875 L 1.921875 -1.5625 L 1.8125 -0.4375 C 1.8125 -0.34375 1.890625 -0.234375 2.03125 -0.234375 C 2.171875 -0.234375 2.234375 -0.34375 2.234375 -0.4375 C 2.234375 -0.46875 2.125 -1.53125 2.125 -1.5625 L 2.96875 -0.984375 C 3.15625 -0.875 3.171875 -0.875 3.21875 -0.875 C 3.359375 -0.875 3.4375 -0.984375 3.4375 -1.09375 Z M 3.4375 -1.09375 "/>
+</symbol>
+</g>
+</defs>
+<g id="algebra_lez06a_d2-surface1">
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph0-1" x="7.266426" y="23.294503"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph0-2" x="91.55438" y="23.294503"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph0-1" x="42.049989" y="64.497107"/>
+  <use xlink:href="#algebra_lez06a_d2-glyph0-3" x="49.481466" y="64.497107"/>
+  <use xlink:href="#algebra_lez06a_d2-glyph0-4" x="54.435784" y="64.497107"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph1-1" x="59.355739" y="65.983015"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.456638 42.518779 L 73.706115 42.518779 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.198625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 86.867188 19.910156 L 82.742188 17.847656 L 84.289062 19.910156 L 82.742188 21.96875 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph0-5" x="50.166783" y="14.283578"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.118871 35.398178 L 31.108189 11.416716 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.198625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 43.742188 52.664062 L 42.285156 48.292969 L 41.921875 50.84375 L 39.371094 51.210938 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph0-6" x="13.52136" y="48.145162"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph1-2" x="18.506212" y="49.632065"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph2-1" x="22.588977" y="50.683339"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 51.397778 8.879535 L 75.383168 32.860997 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.198625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 87.78125 27.695312 L 83.40625 29.152344 L 85.957031 29.515625 L 86.320312 32.066406 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph0-5" x="78.988814" y="50.759922"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d2-glyph3-1" x="83.840391" y="52.246824"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 28.347139 34.015689 C 38.73544 37.797895 46.307707 37.797895 53.322265 35.241077 " transform="matrix(0.994583,0,0,-0.994583,10.982189,62.198625)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 66.4375 28.027344 L 63.269531 24.679688 L 64.015625 27.148438 L 61.859375 28.554688 "/>
+</g>
+</svg></figure>`
+          },
+          {
+            subtitle: "Proposizione: $f_*$ è iniettiva",
+            content: `<p>La funzione $f_*: A/\\eta_f \\to B$ definita sopra è <strong>iniettiva</strong>.</p>
+              <p><em>Dimostrazione.</em> Dobbiamo dimostrare che se $f_*(C) = f_*(C')$, con $C, C' \\in A/\\eta_f$, allora $C = C'$. Siano $C = [a]_{\\eta_f}$ e $C' = [a']_{\\eta_f}$ due classi di equivalenza. L'ipotesi $f_*(C) = f_*(C')$ si traduce in:</p>
+              <p>$$f_*([a]_{\\eta_f}) = f_*([a']_{\\eta_f})$$</p>
+              <p>Per definizione di $f_*$, questo significa:</p>
+              <p>$$f(a) = f(a')$$</p>
+              <p>Ma, per la definizione della relazione $\\eta_f$, questo è equivalente a dire che $a \\ \\eta_f \\ a'$. Se $a$ e $a'$ sono in relazione, allora appartengono alla stessa classe di equivalenza, cioè:</p>
+              <p>$$[a]_{\\eta_f} = [a']_{\\eta_f}$$</p>
+              <p>che è proprio $C = C'$. Abbiamo quindi dimostrato l'iniettività di $f_*$. $\\square$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Relazione indotta", latex: "x \\ \\eta_f \\ y \\iff f(x) = f(y)" },
+          { label: "Funzione indotta", latex: "f_*([a]_{\\eta_f}) = f(a)" },
+          { label: "Decomposizione in due pezzi", latex: "f = f_* \\circ p_{\\eta_f}" }
+        ]
+      },
+
+      {
+        id: "s06-convenzione-fstar",
+        type: "alert_box",
+        title: "Convenzione di notazione: $f_*$ e $f'_*$ (errore classico)",
+        icon: "⚠️",
+        content: `<p>Fissiamo subito una convenzione che useremo <em>senza eccezioni</em> in tutto il corso, perché le due funzioni hanno proprietà diverse e confonderle è un errore classico.</p>
+          <ul>
+            <li>$f_*: A/\\eta_f \\to B$ è la funzione indotta sul quoziente con codominio <em>tutto</em> $B$. Questa funzione è <strong>sempre iniettiva</strong>, ed è <strong>biiettiva se e solo se $f$ è suriettiva</strong> (cioè se e solo se $\\text{Im}(f) = B$).</li>
+            <li>$f'_*: A/\\eta_f \\to \\text{Im}(f)$ è la <em>co-restrizione</em> di $f_*$ all'immagine. Questa funzione è <strong>sempre biiettiva</strong>.</li>
+          </ul>
+          <p>In formule, $f_* = j_f \\circ f'_*$. Quindi: <strong>$f'_*$ è sempre biiettiva; $f_*$ è sempre iniettiva ed è biiettiva se e solo se $f$ è suriettiva</strong>. Quando nell'enunciato del teorema serve la freccia biiettiva, la freccia giusta è $f'_*$.</p>`,
+        formulas: [
+          { label: "Legame tra le due", latex: "f_* = j_f \\circ f'_*" }
+        ]
+      },
+
+      {
+        id: "s06-decomposizione-generale",
+        type: "section",
+        title: "La decomposizione canonica generale",
+        icon: "🔗",
+        content: `<p>Ora mettiamo insieme le due idee: la co-restrizione per ottenere la suriettività e il passaggio al quoziente per ottenere l'iniettività. Questo ci dà una decomposizione canonica di qualsiasi funzione in <strong>tre parti</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Teorema (Decomposizione Canonica di una Funzione)",
+            content: `<p>Ogni funzione $f: A \\to B$ può essere decomposta in modo canonico come composizione di una funzione suriettiva, una biiettiva e una iniettiva:</p>
+              <p>$$f = j_f \\circ f'_* \\circ p_{\\eta_f}$$</p>
+              <p>dove:</p>
+              <ol>
+                <li>$p_{\\eta_f}: A \\twoheadrightarrow A/\\eta_f$ è la proiezione canonica (<strong>suriettiva</strong>);</li>
+                <li>$f'_*: A/\\eta_f \\overset{\\sim}{\\longrightarrow} \\text{Im}(f)$ è una funzione <strong>biiettiva</strong>;</li>
+                <li>$j_f: \\text{Im}(f) \\hookrightarrow B$ è l'inclusione canonica (<strong>iniettiva</strong>).</li>
+              </ol>`
+          },
+          {
+            subtitle: "Schema della costruzione",
+            content: `<p>La funzione $f'_*$ è semplicemente la funzione $f_*$ che abbiamo costruito prima, ma con il codominio co-ristretto all'immagine $\\text{Im}(f)$:</p>
+              <p>$$f'_*([a]_{\\eta_f}) = f(a)$$</p>
+              <p>Abbiamo già dimostrato che $f_*$ è iniettiva, quindi anche $f'_*$ lo è. Inoltre, per costruzione, il codominio di $f'_*$ è $\\text{Im}(f)$, e ogni elemento di $\\text{Im}(f)$ è del tipo $f(a)$ per qualche $a \\in A$. Quindi, ogni elemento del codominio è l'immagine di $[a]_{\\eta_f}$. Ciò significa che $f'_*$ è anche suriettiva. Essendo sia iniettiva che suriettiva, $f'_*$ è <strong>biiettiva</strong>.</p>
+              <p>Il quadro generale è descritto dal seguente diagramma commutativo.</p>
+              <figure class="figura" data-id="algebra_lez06a_d3"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="algebra_lez06a_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="208.154pt" height="89.04pt" viewBox="0 0 208.154 89.04" version="1.2"><style>#algebra_lez06a_d3 [fill="rgb(0%,0%,0%)"],#algebra_lez06a_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#algebra_lez06a_d3 [stroke="rgb(0%,0%,0%)"],#algebra_lez06a_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-1">
+<path style="stroke:none;" d="M 7.109375 -0.203125 C 7.109375 -0.3125 7.015625 -0.3125 6.875 -0.3125 C 6.265625 -0.3125 6.265625 -0.375 6.234375 -0.65625 L 5.640625 -6.828125 C 5.625 -7.015625 5.625 -7.0625 5.453125 -7.0625 C 5.296875 -7.0625 5.25 -6.984375 5.203125 -6.890625 L 1.765625 -1.140625 C 1.375 -0.46875 0.984375 -0.328125 0.546875 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.46875 0 C 0.734375 0 1.046875 -0.03125 1.328125 -0.03125 C 1.640625 -0.03125 1.984375 0 2.3125 0 C 2.359375 0 2.5 0 2.5 -0.1875 C 2.5 -0.296875 2.40625 -0.3125 2.34375 -0.3125 C 2.109375 -0.328125 1.875 -0.40625 1.875 -0.65625 C 1.875 -0.765625 1.9375 -0.875 2.015625 -1.015625 C 2.078125 -1.140625 2.09375 -1.140625 2.765625 -2.28125 L 5.234375 -2.28125 C 5.25 -2.078125 5.390625 -0.734375 5.390625 -0.625 C 5.390625 -0.328125 4.875 -0.3125 4.6875 -0.3125 C 4.546875 -0.3125 4.453125 -0.3125 4.453125 -0.109375 C 4.453125 0 4.578125 0 4.578125 0 C 4.984375 0 5.40625 -0.03125 5.8125 -0.03125 C 6.0625 -0.03125 6.6875 0 6.9375 0 C 6.984375 0 7.109375 0 7.109375 -0.203125 Z M 5.203125 -2.578125 L 2.953125 -2.578125 L 4.890625 -5.84375 Z M 5.203125 -2.578125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-2">
+<path style="stroke:none;" d="M 6.921875 -2.125 C 6.921875 -2.84375 6.34375 -3.40625 5.390625 -3.515625 C 6.421875 -3.703125 7.453125 -4.4375 7.453125 -5.375 C 7.453125 -6.109375 6.796875 -6.734375 5.625 -6.734375 L 2.3125 -6.734375 C 2.125 -6.734375 2.015625 -6.734375 2.015625 -6.53125 C 2.015625 -6.421875 2.109375 -6.421875 2.296875 -6.421875 C 2.296875 -6.421875 2.5 -6.421875 2.671875 -6.40625 C 2.84375 -6.390625 2.9375 -6.375 2.9375 -6.25 C 2.9375 -6.21875 2.921875 -6.1875 2.90625 -6.0625 L 1.578125 -0.765625 C 1.484375 -0.390625 1.453125 -0.3125 0.6875 -0.3125 C 0.515625 -0.3125 0.421875 -0.3125 0.421875 -0.109375 C 0.421875 0 0.5 0 0.6875 0 L 4.203125 0 C 5.765625 0 6.921875 -1.15625 6.921875 -2.125 Z M 6.5625 -5.40625 C 6.5625 -4.546875 5.703125 -3.609375 4.5 -3.609375 L 3.0625 -3.609375 L 3.671875 -6.046875 C 3.765625 -6.40625 3.78125 -6.421875 4.203125 -6.421875 L 5.484375 -6.421875 C 6.34375 -6.421875 6.5625 -5.84375 6.5625 -5.40625 Z M 6 -2.234375 C 6 -1.265625 5.125 -0.3125 3.96875 -0.3125 L 2.625 -0.3125 C 2.484375 -0.3125 2.46875 -0.3125 2.40625 -0.3125 C 2.3125 -0.328125 2.28125 -0.328125 2.28125 -0.421875 C 2.28125 -0.4375 2.28125 -0.46875 2.328125 -0.640625 L 3 -3.390625 L 4.875 -3.390625 C 5.8125 -3.390625 6 -2.65625 6 -2.234375 Z M 6 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-3">
+<path style="stroke:none;" d="M 4.375 -7.203125 C 4.375 -7.3125 4.28125 -7.390625 4.1875 -7.390625 C 4.109375 -7.390625 4.046875 -7.359375 4.015625 -7.3125 L 0.59375 2.09375 C 0.546875 2.21875 0.546875 2.265625 0.546875 2.265625 C 0.546875 2.375 0.625 2.46875 0.734375 2.46875 C 0.875 2.46875 0.890625 2.390625 0.953125 2.234375 L 4.328125 -7.015625 C 4.375 -7.140625 4.375 -7.203125 4.375 -7.203125 Z M 4.375 -7.203125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-4">
+<path style="stroke:none;" d="M 4.8125 -2.734375 C 4.859375 -2.90625 4.890625 -3.03125 4.890625 -3.296875 C 4.890625 -3.9375 4.5 -4.359375 3.75 -4.359375 C 2.984375 -4.359375 2.46875 -3.84375 2.234375 -3.5 C 2.171875 -4.0625 1.765625 -4.359375 1.328125 -4.359375 C 0.875 -4.359375 0.6875 -3.96875 0.59375 -3.796875 C 0.421875 -3.453125 0.28125 -2.875 0.28125 -2.84375 C 0.28125 -2.734375 0.40625 -2.734375 0.40625 -2.734375 C 0.5 -2.734375 0.515625 -2.75 0.578125 -2.96875 C 0.734375 -3.671875 0.9375 -4.140625 1.296875 -4.140625 C 1.453125 -4.140625 1.59375 -4.0625 1.59375 -3.6875 C 1.59375 -3.484375 1.5625 -3.375 1.4375 -2.859375 L 0.875 -0.578125 C 0.84375 -0.4375 0.78125 -0.203125 0.78125 -0.15625 C 0.78125 0.015625 0.921875 0.109375 1.0625 0.109375 C 1.1875 0.109375 1.359375 0.03125 1.421875 -0.171875 C 1.4375 -0.1875 1.5625 -0.65625 1.609375 -0.890625 L 1.828125 -1.78125 C 1.890625 -2 1.953125 -2.21875 2 -2.4375 C 2.015625 -2.5 2.09375 -2.828125 2.109375 -2.890625 C 2.140625 -2.984375 2.4375 -3.53125 2.78125 -3.796875 C 3 -3.953125 3.296875 -4.140625 3.734375 -4.140625 C 4.15625 -4.140625 4.265625 -3.8125 4.265625 -3.453125 C 4.265625 -3.40625 4.265625 -3.21875 4.15625 -2.828125 L 3.03125 1.703125 C 3 1.828125 3 1.859375 3 1.859375 C 3 2.015625 3.109375 2.125 3.28125 2.125 C 3.59375 2.125 3.65625 1.84375 3.6875 1.734375 Z M 4.8125 -2.734375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-5">
+<path style="stroke:none;" d="M 5.4375 -6.265625 C 5.4375 -6.71875 4.984375 -6.953125 4.578125 -6.953125 C 4.25 -6.953125 3.625 -6.765625 3.328125 -5.796875 C 3.265625 -5.59375 3.25 -5.484375 3 -4.25 L 2.328125 -4.25 C 2.140625 -4.25 2.03125 -4.25 2.03125 -4.0625 C 2.03125 -3.9375 2.125 -3.9375 2.3125 -3.9375 L 2.953125 -3.9375 L 2.21875 -0.046875 C 2.046875 0.90625 1.875 1.796875 1.359375 1.796875 C 1.328125 1.796875 1.078125 1.796875 0.890625 1.625 C 1.34375 1.59375 1.421875 1.25 1.421875 1.09375 C 1.421875 0.875 1.25 0.75 1.0625 0.75 C 0.8125 0.75 0.515625 0.96875 0.515625 1.34375 C 0.515625 1.78125 0.953125 2.015625 1.359375 2.015625 C 1.90625 2.015625 2.296875 1.4375 2.46875 1.0625 C 2.796875 0.4375 3.015625 -0.75 3.03125 -0.8125 L 3.625 -3.9375 L 4.46875 -3.9375 C 4.65625 -3.9375 4.765625 -3.9375 4.765625 -4.140625 C 4.765625 -4.25 4.65625 -4.25 4.5 -4.25 L 3.671875 -4.25 C 3.78125 -4.828125 3.78125 -4.796875 3.890625 -5.375 C 3.921875 -5.578125 4.0625 -6.28125 4.125 -6.40625 C 4.203125 -6.59375 4.375 -6.734375 4.578125 -6.734375 C 4.625 -6.734375 4.875 -6.734375 5.0625 -6.5625 C 4.640625 -6.515625 4.53125 -6.171875 4.53125 -6.03125 C 4.53125 -5.796875 4.71875 -5.671875 4.90625 -5.671875 C 5.15625 -5.671875 5.4375 -5.890625 5.4375 -6.265625 Z M 5.4375 -6.265625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-6">
+<path style="stroke:none;" d="M 4.828125 -2.78125 C 4.828125 -3.703125 4.265625 -4.359375 3.515625 -4.359375 C 3.03125 -4.359375 2.546875 -4 2.234375 -3.625 C 2.125 -4.15625 1.703125 -4.359375 1.34375 -4.359375 C 0.890625 -4.359375 0.703125 -3.96875 0.609375 -3.796875 C 0.4375 -3.453125 0.3125 -2.875 0.3125 -2.84375 C 0.3125 -2.734375 0.421875 -2.734375 0.421875 -2.734375 C 0.515625 -2.734375 0.53125 -2.75 0.59375 -2.96875 C 0.765625 -3.671875 0.953125 -4.140625 1.3125 -4.140625 C 1.484375 -4.140625 1.609375 -4.0625 1.609375 -3.6875 C 1.609375 -3.453125 1.59375 -3.359375 1.546875 -3.1875 L 0.4375 1.203125 C 0.359375 1.53125 0.34375 1.609375 -0.09375 1.609375 C -0.203125 1.609375 -0.3125 1.609375 -0.3125 1.796875 C -0.3125 1.875 -0.265625 1.90625 -0.1875 1.90625 C 0.078125 1.90625 0.359375 1.890625 0.640625 1.890625 C 0.96875 1.890625 1.296875 1.90625 1.609375 1.90625 C 1.671875 1.90625 1.796875 1.90625 1.796875 1.71875 C 1.796875 1.609375 1.703125 1.609375 1.5625 1.609375 C 1.0625 1.609375 1.0625 1.53125 1.0625 1.453125 C 1.0625 1.328125 1.484375 -0.28125 1.546875 -0.515625 C 1.671875 -0.234375 1.953125 0.109375 2.453125 0.109375 C 3.59375 0.109375 4.828125 -1.328125 4.828125 -2.78125 Z M 3.625 -1.125 C 3.28125 -0.4375 2.8125 -0.109375 2.4375 -0.109375 C 1.796875 -0.109375 1.671875 -0.921875 1.671875 -0.984375 C 1.671875 -0.984375 1.671875 -1.03125 1.703125 -1.140625 L 2.171875 -3.078125 C 2.25 -3.34375 2.515625 -3.625 2.6875 -3.765625 C 3.03125 -4.078125 3.328125 -4.140625 3.484375 -4.140625 C 3.890625 -4.140625 4.125 -3.796875 4.125 -3.21875 C 4.125 -2.625 3.796875 -1.5 3.625 -1.125 Z M 3.625 -1.125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph0-7">
+<path style="stroke:none;" d="M 3.921875 -6.15625 C 3.921875 -6.34375 3.78125 -6.515625 3.546875 -6.515625 C 3.3125 -6.515625 3.015625 -6.296875 3.015625 -6 C 3.015625 -5.796875 3.15625 -5.640625 3.375 -5.640625 C 3.640625 -5.640625 3.921875 -5.890625 3.921875 -6.15625 Z M 3.5 -3.09375 C 3.546875 -3.28125 3.546875 -3.421875 3.546875 -3.453125 C 3.546875 -4.015625 3.140625 -4.359375 2.640625 -4.359375 C 1.640625 -4.359375 1.078125 -2.921875 1.078125 -2.84375 C 1.078125 -2.734375 1.1875 -2.734375 1.1875 -2.734375 C 1.28125 -2.734375 1.296875 -2.75 1.375 -2.9375 C 1.609375 -3.546875 2.078125 -4.140625 2.609375 -4.140625 C 2.75 -4.140625 2.921875 -4.09375 2.921875 -3.6875 C 2.921875 -3.453125 2.90625 -3.359375 2.859375 -3.1875 L 1.9375 0.5 C 1.75 1.25 1.265625 1.796875 0.71875 1.796875 C 0.65625 1.796875 0.515625 1.796875 0.328125 1.71875 C 0.625 1.640625 0.78125 1.390625 0.78125 1.1875 C 0.78125 1.03125 0.671875 0.84375 0.40625 0.84375 C 0.15625 0.84375 -0.125 1.0625 -0.125 1.40625 C -0.125 1.796875 0.265625 2.015625 0.734375 2.015625 C 1.421875 2.015625 2.34375 1.5 2.59375 0.515625 Z M 3.5 -3.09375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph1-1">
+<path style="stroke:none;" d="M 4.171875 -4.375 C 4.171875 -4.6875 3.828125 -4.859375 3.484375 -4.859375 C 3.171875 -4.859375 2.84375 -4.6875 2.65625 -4.34375 C 2.515625 -4.09375 2.453125 -3.78125 2.3125 -2.984375 L 1.765625 -2.984375 C 1.625 -2.984375 1.546875 -2.984375 1.546875 -2.828125 C 1.546875 -2.734375 1.625 -2.734375 1.75 -2.734375 L 2.265625 -2.734375 L 1.65625 0.53125 C 1.625 0.6875 1.5 1.21875 1.171875 1.21875 C 1.171875 1.21875 1 1.21875 0.875 1.125 C 1.15625 1.046875 1.171875 0.796875 1.171875 0.75 C 1.171875 0.59375 1.0625 0.5 0.890625 0.5 C 0.71875 0.5 0.5 0.65625 0.5 0.921875 C 0.5 1.234375 0.828125 1.40625 1.171875 1.40625 C 1.609375 1.40625 1.921875 0.953125 2 0.796875 C 2.25 0.34375 2.40625 -0.515625 2.421875 -0.59375 L 2.8125 -2.734375 L 3.484375 -2.734375 C 3.625 -2.734375 3.71875 -2.734375 3.71875 -2.875 C 3.71875 -2.984375 3.625 -2.984375 3.5 -2.984375 L 2.859375 -2.984375 C 3.015625 -3.859375 3.078125 -4.171875 3.125 -4.375 C 3.15625 -4.53125 3.3125 -4.671875 3.484375 -4.671875 C 3.484375 -4.671875 3.671875 -4.671875 3.8125 -4.578125 C 3.515625 -4.5 3.5 -4.25 3.5 -4.203125 C 3.5 -4.046875 3.625 -3.953125 3.78125 -3.953125 C 3.96875 -3.953125 4.171875 -4.109375 4.171875 -4.375 Z M 4.171875 -4.375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph1-2">
+<path style="stroke:none;" d="M 3.109375 1.140625 L 3.859375 -1.875 C 3.90625 -2.078125 3.921875 -2.09375 3.921875 -2.265625 C 3.921875 -2.375 3.921875 -2.65625 3.65625 -2.859375 C 3.546875 -2.953125 3.34375 -3.046875 3.015625 -3.046875 C 2.734375 -3.046875 2.296875 -2.96875 1.84375 -2.421875 C 1.796875 -2.9375 1.328125 -3.046875 1.125 -3.046875 C 0.84375 -3.046875 0.6875 -2.859375 0.578125 -2.671875 C 0.4375 -2.4375 0.328125 -2.03125 0.328125 -1.984375 C 0.328125 -1.90625 0.421875 -1.90625 0.4375 -1.90625 C 0.53125 -1.90625 0.546875 -1.921875 0.59375 -2.109375 C 0.703125 -2.5 0.828125 -2.859375 1.09375 -2.859375 C 1.28125 -2.859375 1.328125 -2.703125 1.328125 -2.515625 C 1.328125 -2.375 1.265625 -2.125 1.21875 -1.9375 L 0.84375 -0.4375 C 0.8125 -0.34375 0.78125 -0.171875 0.78125 -0.15625 C 0.78125 0 0.890625 0.0625 1.015625 0.0625 C 1.125 0.0625 1.25 -0.015625 1.28125 -0.078125 C 1.3125 -0.140625 1.375 -0.359375 1.40625 -0.515625 L 1.546875 -1.125 C 1.59375 -1.28125 1.640625 -1.4375 1.671875 -1.59375 C 1.75 -1.890625 1.75 -1.90625 1.890625 -2.125 C 2.109375 -2.453125 2.453125 -2.859375 2.984375 -2.859375 C 3.375 -2.859375 3.390625 -2.53125 3.390625 -2.375 C 3.390625 -2.1875 3.390625 -2.125 3.34375 -1.984375 L 2.5625 1.109375 C 2.546875 1.21875 2.546875 1.25 2.546875 1.25 C 2.546875 1.40625 2.671875 1.484375 2.78125 1.484375 C 3.03125 1.484375 3.09375 1.25 3.109375 1.140625 Z M 3.109375 1.140625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-1">
+<path style="stroke:none;" d="M 3.28125 0 L 3.28125 -0.3125 L 3.03125 -0.3125 C 2.25 -0.3125 2.21875 -0.421875 2.21875 -0.765625 L 2.21875 -5.96875 C 2.21875 -6.3125 2.25 -6.421875 3.03125 -6.421875 L 3.28125 -6.421875 L 3.28125 -6.734375 C 2.9375 -6.703125 2.15625 -6.703125 1.78125 -6.703125 C 1.40625 -6.703125 0.625 -6.703125 0.28125 -6.734375 L 0.28125 -6.421875 L 0.53125 -6.421875 C 1.3125 -6.421875 1.34375 -6.3125 1.34375 -5.96875 L 1.34375 -0.765625 C 1.34375 -0.421875 1.3125 -0.3125 0.53125 -0.3125 L 0.28125 -0.3125 L 0.28125 0 C 0.625 -0.03125 1.40625 -0.03125 1.78125 -0.03125 C 2.15625 -0.03125 2.9375 -0.03125 3.28125 0 Z M 3.28125 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-2">
+<path style="stroke:none;" d="M 8.015625 0 L 8.015625 -0.3125 C 7.5 -0.3125 7.25 -0.3125 7.25 -0.59375 L 7.25 -2.484375 C 7.25 -3.328125 7.25 -3.640625 6.9375 -4 C 6.796875 -4.15625 6.484375 -4.359375 5.90625 -4.359375 C 5.078125 -4.359375 4.640625 -3.765625 4.46875 -3.390625 C 4.34375 -4.25 3.609375 -4.359375 3.171875 -4.359375 C 2.4375 -4.359375 1.984375 -3.9375 1.703125 -3.328125 L 1.703125 -4.359375 L 0.3125 -4.25 L 0.3125 -3.9375 C 1 -3.9375 1.078125 -3.875 1.078125 -3.390625 L 1.078125 -0.75 C 1.078125 -0.3125 0.96875 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.421875 -0.03125 L 2.53125 0 L 2.53125 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -2.5625 C 1.765625 -3.59375 2.46875 -4.140625 3.09375 -4.140625 C 3.71875 -4.140625 3.828125 -3.609375 3.828125 -3.046875 L 3.828125 -0.75 C 3.828125 -0.3125 3.71875 -0.3125 3.0625 -0.3125 L 3.0625 0 L 4.171875 -0.03125 L 5.28125 0 L 5.28125 -0.3125 C 4.609375 -0.3125 4.5 -0.3125 4.5 -0.75 L 4.5 -2.5625 C 4.5 -3.59375 5.203125 -4.140625 5.84375 -4.140625 C 6.453125 -4.140625 6.5625 -3.609375 6.5625 -3.046875 L 6.5625 -0.75 C 6.5625 -0.3125 6.453125 -0.3125 5.796875 -0.3125 L 5.796875 0 L 6.90625 -0.03125 Z M 8.015625 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-3">
+<path style="stroke:none;" d="M 3.265625 2.359375 C 3.265625 2.34375 3.265625 2.3125 3.09375 2.15625 C 1.859375 0.90625 1.546875 -0.953125 1.546875 -2.46875 C 1.546875 -4.1875 1.921875 -5.890625 3.140625 -7.125 C 3.265625 -7.25 3.265625 -7.265625 3.265625 -7.296875 C 3.265625 -7.359375 3.21875 -7.390625 3.171875 -7.390625 C 3.0625 -7.390625 2.171875 -6.71875 1.59375 -5.46875 C 1.09375 -4.390625 0.96875 -3.296875 0.96875 -2.46875 C 0.96875 -1.703125 1.078125 -0.5 1.625 0.609375 C 2.21875 1.828125 3.0625 2.46875 3.171875 2.46875 C 3.21875 2.46875 3.265625 2.4375 3.265625 2.359375 Z M 3.265625 2.359375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-4">
+<path style="stroke:none;" d="M 3.546875 -1.265625 C 3.546875 -1.78125 3.25 -2.078125 3.140625 -2.203125 C 2.8125 -2.515625 2.421875 -2.59375 2.015625 -2.671875 C 1.453125 -2.78125 0.796875 -2.90625 0.796875 -3.484375 C 0.796875 -3.828125 1.0625 -4.234375 1.90625 -4.234375 C 2.984375 -4.234375 3.03125 -3.34375 3.0625 -3.03125 C 3.0625 -2.953125 3.171875 -2.953125 3.171875 -2.953125 C 3.296875 -2.953125 3.296875 -3 3.296875 -3.1875 L 3.296875 -4.1875 C 3.296875 -4.34375 3.296875 -4.421875 3.1875 -4.421875 C 3.140625 -4.421875 3.125 -4.421875 3 -4.296875 C 2.96875 -4.265625 2.875 -4.171875 2.828125 -4.140625 C 2.453125 -4.421875 2.046875 -4.421875 1.90625 -4.421875 C 0.703125 -4.421875 0.328125 -3.75 0.328125 -3.203125 C 0.328125 -2.859375 0.484375 -2.578125 0.75 -2.359375 C 1.0625 -2.109375 1.34375 -2.046875 2.046875 -1.90625 C 2.265625 -1.875 3.078125 -1.71875 3.078125 -1 C 3.078125 -0.5 2.734375 -0.109375 1.96875 -0.109375 C 1.140625 -0.109375 0.78125 -0.671875 0.59375 -1.515625 C 0.5625 -1.640625 0.546875 -1.671875 0.453125 -1.671875 C 0.328125 -1.671875 0.328125 -1.609375 0.328125 -1.421875 L 0.328125 -0.125 C 0.328125 0.046875 0.328125 0.109375 0.4375 0.109375 C 0.484375 0.109375 0.5 0.09375 0.6875 -0.09375 C 0.703125 -0.109375 0.703125 -0.125 0.875 -0.3125 C 1.3125 0.09375 1.75 0.109375 1.96875 0.109375 C 3.09375 0.109375 3.546875 -0.546875 3.546875 -1.265625 Z M 3.546875 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-5">
+<path style="stroke:none;" d="M 5.28125 0 L 5.28125 -0.3125 C 4.578125 -0.3125 4.5 -0.375 4.5 -0.859375 L 4.5 -4.359375 L 3.0625 -4.25 L 3.0625 -3.9375 C 3.75 -3.9375 3.828125 -3.875 3.828125 -3.390625 L 3.828125 -1.640625 C 3.828125 -0.78125 3.359375 -0.109375 2.625 -0.109375 C 1.796875 -0.109375 1.765625 -0.578125 1.765625 -1.078125 L 1.765625 -4.359375 L 0.3125 -4.25 L 0.3125 -3.9375 C 1.078125 -3.9375 1.078125 -3.921875 1.078125 -3.03125 L 1.078125 -1.5625 C 1.078125 -0.78125 1.078125 0.109375 2.578125 0.109375 C 3.140625 0.109375 3.5625 -0.171875 3.859375 -0.78125 L 3.859375 0.109375 Z M 5.28125 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-6">
+<path style="stroke:none;" d="M 3.59375 -3.75 C 3.59375 -4.078125 3.28125 -4.359375 2.859375 -4.359375 C 2.140625 -4.359375 1.78125 -3.703125 1.640625 -3.265625 L 1.640625 -4.359375 L 0.28125 -4.25 L 0.28125 -3.9375 C 0.96875 -3.9375 1.046875 -3.875 1.046875 -3.390625 L 1.046875 -0.75 C 1.046875 -0.3125 0.9375 -0.3125 0.28125 -0.3125 L 0.28125 0 L 1.40625 -0.03125 C 1.796875 -0.03125 2.25 -0.03125 2.65625 0 L 2.65625 -0.3125 L 2.4375 -0.3125 C 1.71875 -0.3125 1.703125 -0.421875 1.703125 -0.765625 L 1.703125 -2.28125 C 1.703125 -3.265625 2.109375 -4.140625 2.859375 -4.140625 C 2.921875 -4.140625 2.953125 -4.140625 2.96875 -4.125 C 2.9375 -4.125 2.734375 -4 2.734375 -3.75 C 2.734375 -3.46875 2.953125 -3.328125 3.171875 -3.328125 C 3.34375 -3.328125 3.59375 -3.4375 3.59375 -3.75 Z M 3.59375 -3.75 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-7">
+<path style="stroke:none;" d="M 1.890625 -0.515625 C 1.890625 -0.8125 1.65625 -1.046875 1.375 -1.046875 C 1.078125 -1.046875 0.84375 -0.8125 0.84375 -0.515625 C 0.84375 -0.234375 1.078125 0 1.375 0 C 1.65625 0 1.890625 -0.234375 1.890625 -0.515625 Z M 1.890625 -0.515625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-8">
+<path style="stroke:none;" d="M 2.84375 -2.46875 C 2.84375 -3.234375 2.734375 -4.421875 2.203125 -5.546875 C 1.609375 -6.75 0.765625 -7.390625 0.65625 -7.390625 C 0.59375 -7.390625 0.5625 -7.359375 0.5625 -7.296875 C 0.5625 -7.265625 0.5625 -7.25 0.75 -7.0625 C 1.71875 -6.09375 2.28125 -4.53125 2.28125 -2.46875 C 2.28125 -0.78125 1.90625 0.953125 0.6875 2.203125 C 0.5625 2.3125 0.5625 2.34375 0.5625 2.359375 C 0.5625 2.421875 0.59375 2.46875 0.65625 2.46875 C 0.765625 2.46875 1.640625 1.796875 2.234375 0.546875 C 2.734375 -0.546875 2.84375 -1.640625 2.84375 -2.46875 Z M 2.84375 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-9">
+<path style="stroke:none;" d="M 2.4375 0 L 2.4375 -0.3125 C 1.78125 -0.3125 1.75 -0.359375 1.75 -0.734375 L 1.75 -4.359375 L 0.359375 -4.25 L 0.359375 -3.9375 C 1 -3.9375 1.09375 -3.890625 1.09375 -3.40625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.40625 -0.03125 C 1.75 -0.03125 2.09375 -0.015625 2.4375 0 Z M 1.890625 -5.953125 C 1.890625 -6.21875 1.671875 -6.484375 1.375 -6.484375 C 1.03125 -6.484375 0.84375 -6.203125 0.84375 -5.953125 C 0.84375 -5.6875 1.0625 -5.4375 1.359375 -5.4375 C 1.703125 -5.4375 1.890625 -5.703125 1.890625 -5.953125 Z M 1.890625 -5.953125 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-10">
+<path style="stroke:none;" d="M 5.28125 0 L 5.28125 -0.3125 C 4.765625 -0.3125 4.515625 -0.3125 4.5 -0.59375 L 4.5 -2.484375 C 4.5 -3.328125 4.5 -3.640625 4.203125 -4 C 4.0625 -4.15625 3.734375 -4.359375 3.171875 -4.359375 C 2.4375 -4.359375 1.984375 -3.9375 1.703125 -3.328125 L 1.703125 -4.359375 L 0.3125 -4.25 L 0.3125 -3.9375 C 1 -3.9375 1.078125 -3.875 1.078125 -3.390625 L 1.078125 -0.75 C 1.078125 -0.3125 0.96875 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.421875 -0.03125 L 2.53125 0 L 2.53125 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -2.5625 C 1.765625 -3.59375 2.46875 -4.140625 3.09375 -4.140625 C 3.71875 -4.140625 3.828125 -3.609375 3.828125 -3.046875 L 3.828125 -0.75 C 3.828125 -0.3125 3.71875 -0.3125 3.0625 -0.3125 L 3.0625 0 L 4.171875 -0.03125 Z M 5.28125 0 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph2-11">
+<path style="stroke:none;" d="M 5.140625 -2.125 C 5.140625 -3.375 4.171875 -4.359375 3.046875 -4.359375 C 2.28125 -4.359375 1.859375 -3.890625 1.703125 -3.71875 L 1.703125 -6.84375 L 0.28125 -6.734375 L 0.28125 -6.421875 C 0.96875 -6.421875 1.046875 -6.359375 1.046875 -5.875 L 1.046875 0 L 1.296875 0 L 1.640625 -0.609375 C 1.796875 -0.390625 2.203125 0.109375 2.9375 0.109375 C 4.109375 0.109375 5.140625 -0.859375 5.140625 -2.125 Z M 4.3125 -2.140625 C 4.3125 -1.78125 4.296875 -1.1875 4.015625 -0.734375 C 3.8125 -0.4375 3.4375 -0.109375 2.90625 -0.109375 C 2.453125 -0.109375 2.09375 -0.34375 1.859375 -0.703125 C 1.71875 -0.921875 1.71875 -0.953125 1.71875 -1.125 L 1.71875 -3.15625 C 1.71875 -3.34375 1.71875 -3.359375 1.828125 -3.515625 C 2.21875 -4.0625 2.765625 -4.140625 3 -4.140625 C 3.4375 -4.140625 3.796875 -3.890625 4.03125 -3.515625 C 4.28125 -3.109375 4.3125 -2.546875 4.3125 -2.140625 Z M 4.3125 -2.140625 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph3-1">
+<path style="stroke:none;" d="M 3.265625 2.359375 C 3.265625 2.34375 3.265625 2.3125 3.09375 2.15625 C 1.859375 0.90625 1.546875 -0.953125 1.546875 -2.46875 C 1.546875 -4.1875 1.921875 -5.890625 3.140625 -7.125 C 3.265625 -7.25 3.265625 -7.265625 3.265625 -7.296875 C 3.265625 -7.359375 3.21875 -7.390625 3.171875 -7.390625 C 3.0625 -7.390625 2.171875 -6.71875 1.59375 -5.46875 C 1.09375 -4.390625 0.96875 -3.296875 0.96875 -2.46875 C 0.96875 -1.703125 1.078125 -0.5 1.625 0.609375 C 2.21875 1.828125 3.0625 2.46875 3.171875 2.46875 C 3.21875 2.46875 3.265625 2.4375 3.265625 2.359375 Z M 3.265625 2.359375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph3-2">
+<path style="stroke:none;" d="M 2.84375 -2.46875 C 2.84375 -3.234375 2.734375 -4.421875 2.203125 -5.546875 C 1.609375 -6.75 0.765625 -7.390625 0.65625 -7.390625 C 0.59375 -7.390625 0.5625 -7.359375 0.5625 -7.296875 C 0.5625 -7.265625 0.5625 -7.25 0.75 -7.0625 C 1.71875 -6.09375 2.28125 -4.53125 2.28125 -2.46875 C 2.28125 -0.78125 1.90625 0.953125 0.6875 2.203125 C 0.5625 2.3125 0.5625 2.34375 0.5625 2.359375 C 0.5625 2.421875 0.59375 2.46875 0.65625 2.46875 C 0.765625 2.46875 1.640625 1.796875 2.234375 0.546875 C 2.734375 -0.546875 2.84375 -1.640625 2.84375 -2.46875 Z M 2.84375 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph4-1">
+<path style="stroke:none;" d="M 3.40625 -3.09375 C 3.40625 -3.375 3.078125 -3.46875 2.84375 -3.46875 C 2.21875 -3.46875 2.09375 -2.875 2.046875 -2.65625 C 2.015625 -2.453125 2.03125 -2.578125 1.953125 -2.125 L 1.5 -2.125 C 1.40625 -2.125 1.328125 -2.125 1.328125 -1.984375 C 1.328125 -1.90625 1.40625 -1.90625 1.484375 -1.90625 L 1.921875 -1.90625 C 1.828125 -1.421875 1.625 -0.046875 1.484375 0.46875 C 1.453125 0.59375 1.328125 0.84375 1.140625 0.84375 C 1.109375 0.84375 1 0.84375 0.921875 0.796875 C 1.046875 0.734375 1.109375 0.609375 1.109375 0.5 C 1.109375 0.390625 1.015625 0.3125 0.890625 0.3125 C 0.765625 0.3125 0.59375 0.40625 0.59375 0.625 C 0.59375 0.9375 0.9375 1.015625 1.140625 1.015625 C 1.421875 1.015625 1.640625 0.78125 1.75 0.625 C 1.953125 0.359375 2.0625 -0.296875 2.0625 -0.3125 L 2.34375 -1.90625 L 2.890625 -1.90625 C 3 -1.90625 3 -1.90625 3.03125 -1.921875 C 3.046875 -1.9375 3.0625 -2.015625 3.0625 -2.03125 C 3.0625 -2.125 3 -2.125 2.90625 -2.125 L 2.375 -2.125 C 2.4375 -2.484375 2.546875 -3.109375 2.609375 -3.1875 C 2.671875 -3.265625 2.75 -3.296875 2.84375 -3.296875 C 2.875 -3.296875 2.984375 -3.296875 3.078125 -3.25 C 2.890625 -3.171875 2.890625 -2.984375 2.890625 -2.96875 C 2.890625 -2.84375 2.984375 -2.765625 3.09375 -2.765625 C 3.234375 -2.765625 3.40625 -2.875 3.40625 -3.09375 Z M 3.40625 -3.09375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph5-1">
+<path style="stroke:none;" d="M 2.0625 -3.484375 C 2.0625 -3.6875 1.875 -3.859375 1.65625 -3.859375 C 1.375 -3.859375 1.3125 -3.625 1.28125 -3.546875 L 0.359375 -0.546875 L 0.328125 -0.4375 C 0.328125 -0.359375 0.546875 -0.28125 0.59375 -0.28125 C 0.65625 -0.28125 0.671875 -0.3125 0.703125 -0.390625 L 2.015625 -3.265625 C 2.03125 -3.328125 2.0625 -3.390625 2.0625 -3.484375 Z M 2.0625 -3.484375 "/>
+</symbol>
+<symbol overflow="visible" id="algebra_lez06a_d3-glyph5-2">
+<path style="stroke:none;" d="M 3.421875 -1.078125 C 3.421875 -1.21875 3.328125 -1.25 3.28125 -1.28125 L 2.234375 -1.71875 L 3.25 -2.15625 C 3.34375 -2.203125 3.421875 -2.234375 3.421875 -2.359375 C 3.421875 -2.453125 3.34375 -2.578125 3.21875 -2.578125 C 3.15625 -2.578125 3.140625 -2.5625 3.0625 -2.515625 L 2.109375 -1.890625 L 2.21875 -2.921875 L 2.234375 -3.015625 C 2.234375 -3.09375 2.15625 -3.21875 2.015625 -3.21875 C 1.875 -3.21875 1.796875 -3.109375 1.796875 -3.015625 L 1.921875 -1.890625 L 0.96875 -2.515625 C 0.890625 -2.578125 0.84375 -2.578125 0.828125 -2.578125 C 0.6875 -2.578125 0.609375 -2.453125 0.609375 -2.359375 C 0.609375 -2.234375 0.6875 -2.203125 0.78125 -2.15625 L 1.796875 -1.734375 L 0.78125 -1.28125 C 0.6875 -1.25 0.609375 -1.203125 0.609375 -1.078125 C 0.609375 -0.984375 0.6875 -0.859375 0.828125 -0.859375 C 0.875 -0.859375 0.890625 -0.875 0.96875 -0.921875 L 1.90625 -1.546875 L 1.796875 -0.421875 C 1.796875 -0.34375 1.875 -0.234375 2.015625 -0.234375 C 2.15625 -0.234375 2.234375 -0.34375 2.234375 -0.421875 C 2.234375 -0.46875 2.109375 -1.53125 2.109375 -1.546875 L 2.96875 -0.984375 C 3.15625 -0.859375 3.15625 -0.859375 3.21875 -0.859375 C 3.34375 -0.859375 3.421875 -0.984375 3.421875 -1.078125 Z M 3.421875 -1.078125 "/>
+</symbol>
+</g>
+</defs>
+<g id="algebra_lez06a_d3-surface1">
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-1" x="48.774256" y="23.035637"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-2" x="160.66192" y="23.035637"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-1" x="41.308747" y="78.042571"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph0-3" x="48.700996" y="78.042571"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph0-4" x="53.629162" y="78.042571"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph1-1" x="58.523147" y="79.520635"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph2-1" x="151.984477" y="78.220651"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-2" x="155.543599" y="78.220651"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph3-1" x="163.756555" y="78.220651"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-5" x="167.590221" y="78.220651"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph3-2" x="173.476755" y="78.220651"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 7.45679 56.692978 L 102.05174 56.692978 " transform="matrix(0.989333,0,0,-0.989333,52.470405,75.756221)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 155.996094 19.667969 L 151.898438 17.617188 L 153.433594 19.667969 L 151.898438 21.71875 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-5" x="105.470971" y="14.072277"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.00167318 49.570126 L -0.00167318 12.467331 " transform="matrix(0.989333,0,0,-0.989333,52.470405,75.756221)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 52.46875 65.984375 L 54.519531 61.886719 L 52.46875 63.421875 L 50.421875 61.886719 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-6" x="7.919736" y="48.797877"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph1-2" x="12.878275" y="50.275941"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph4-1" x="16.939488" y="51.322656"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph2-3" x="25.162827" y="48.797877"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-4" x="28.995954" y="48.797877"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-5" x="32.884277" y="48.797877"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-6" x="38.360456" y="48.797877"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-7" x="42.221181" y="48.797877"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-8" x="44.95927" y="48.797877"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 113.387499 8.70059 L 113.387499 45.985009 " transform="matrix(0.989333,0,0,-0.989333,52.470405,75.756221)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 164.648438 27.699219 L 162.597656 31.800781 L 164.648438 30.261719 L 166.699219 31.800781 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-7" x="168.326285" y="49.218344"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph1-1" x="172.38552" y="50.696408"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph2-3" x="180.780013" y="49.218344"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-9" x="184.613141" y="49.218344"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-10" x="187.35123" y="49.218344"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-7" x="192.827408" y="49.218344"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-8" x="195.565497" y="49.218344"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 15.002117 -0.00160832 L 93.28242 -0.00160832 " transform="matrix(0.989333,0,0,-0.989333,52.470405,75.756221)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 147.320312 75.757812 L 143.21875 73.707031 L 144.757812 75.757812 L 143.21875 77.804688 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph0-5" x="90.81004" y="69.613451"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph5-1" x="96.696573" y="66.036021"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph5-2" x="95.635019" y="72.049189"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#algebra_lez06a_d3-glyph2-3" x="103.451741" y="69.613451"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-11" x="107.284869" y="69.613451"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-9" x="112.761047" y="69.613451"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-9" x="115.499136" y="69.613451"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-7" x="118.237225" y="69.613451"/>
+  <use xlink:href="#algebra_lez06a_d3-glyph2-8" x="120.975314" y="69.613451"/>
+</g>
+</g>
+</svg></figure>
+              <p>La composizione delle tre funzioni lungo il percorso inferiore ricostruisce esattamente la funzione $f$ originale.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Decomposizione canonica", latex: "f = j_f \\circ f'_* \\circ p_{\\eta_f}" }
+        ]
+      },
+
+      {
+        id: "s06-esempio-valore-assoluto",
+        type: "section",
+        title: "Esempio di decomposizione: il valore assoluto",
+        icon: "📐",
+        content: `<p>Vediamo come funziona questa decomposizione con un esempio concreto. Ricordiamo la convenzione fissata all'inizio: $\\mathbb{N}_0$ denota i naturali con lo zero, $\\mathbb{N}_{\\gt 0}$ quelli senza. Qui la distinzione è essenziale, perché il valore assoluto assume effettivamente il valore $0$ e dunque la sua immagine è $\\mathbb{N}_0$.</p>
+          <p>Sia $v: \\mathbb{Z} \\to \\mathbb{Q}$ la funzione valore assoluto, definita da $v(z) = |z|$. Questa funzione <strong>non è né iniettiva</strong> (es. $v(2) = v(-2) = 2$) <strong>né suriettiva</strong> (l'immagine è $\\mathbb{N}_0$, che è un sottoinsieme proprio di $\\mathbb{Q}$).</p>`,
+        subsections: [
+          {
+            subtitle: "1. Relazione di equivalenza e quoziente",
+            content: `<p>La relazione $\\eta_v$ è $z \\ \\eta_v \\ z' \\iff |z| = |z'|$. Questo significa $z = \\pm z'$. Le classi di equivalenza sono:</p>
+              <ul>
+                <li>$[0]_{\\eta_v} = \\{0\\}$;</li>
+                <li>$[n]_{\\eta_v} = \\{n, -n\\}$ per ogni $n \\in \\mathbb{N}_{\\gt 0}$.</li>
+              </ul>
+              <p>L'insieme quoziente $\\mathbb{Z}/\\eta_v$ è l'insieme di queste classi:</p>
+              <p>$$\\mathbb{Z}/\\eta_v = \\{ [0]_{\\eta_v}, [1]_{\\eta_v}, [2]_{\\eta_v}, \\dots \\}$$</p>
+              <p>Questo insieme è in corrispondenza biunivoca con $\\mathbb{N}_0$ (lo zero compreso, perché la classe $[0]_{\\eta_v}$ esiste ed è non vuota).</p>`
+          },
+          {
+            subtitle: "2. Le tre componenti",
+            content: `<ul>
+                <li><strong>Funzione suriettiva</strong>: la proiezione canonica $p_{\\eta_v}: \\mathbb{Z} \\to \\mathbb{Z}/\\eta_v$ manda ogni intero $z$ nella sua classe $\\{z, -z\\}$:
+                  <p>$$p_{\\eta_v}(z) = [z]_{\\eta_v}$$</p></li>
+                <li><strong>Funzione biiettiva</strong>: l'immagine della funzione è $\\text{Im}(v) = \\mathbb{N}_0$. La funzione $v'_*: \\mathbb{Z}/\\eta_v \\to \\mathbb{N}_0$ è definita da
+                  <p>$$v'_*([z]_{\\eta_v}) = v(z) = |z|$$</p>
+                  Questa funzione mappa la classe $\\{n, -n\\}$ al numero naturale $n$. È una biezione tra l'insieme quoziente e $\\mathbb{N}_0$.</li>
+                <li><strong>Funzione iniettiva</strong>: l'inclusione $j_v: \\mathbb{N}_0 \\hookrightarrow \\mathbb{Q}$ è la semplice inclusione dei naturali (zero compreso) nell'insieme dei numeri razionali.</li>
+              </ul>
+              <p>La decomposizione di $v$ è quindi $v = j_v \\circ v'_* \\circ p_{\\eta_v}$.</p>`
+          },
+          {
+            subtitle: "Perché il codominio della biezione è $\\mathbb{N}_0$ e non $\\mathbb{N}_{\\gt 0}$",
+            content: `<p>Si noti che il codominio della biezione deve essere $\\mathbb{N}_0$: la classe $\\{0\\}$ viene infatti mandata in $0$, che è un valore effettivamente assunto da $v$. La composizione delle tre funzioni ricostruisce la funzione originale $v$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Decomposizione del valore assoluto", latex: "v = j_v \\circ v'_* \\circ p_{\\eta_v}" },
+          { label: "Classi di $\\eta_v$", latex: "[0]_{\\eta_v} = \\{0\\}, \\quad [n]_{\\eta_v} = \\{n, -n\\}" }
+        ]
+      },
+
+      {
+        id: "s06-richiamo-convenzioni",
+        type: "note_box",
+        title: "Richiamo delle convenzioni (da tenere sempre a mente)",
+        icon: "📌",
+        content: `<p><strong>(a) Naturali.</strong> Scriviamo</p>
+          <p>$$\\mathbb{N}_0 = \\{0, 1, 2, 3, \\dots\\}, \\qquad \\mathbb{N}_{\\gt 0} = \\{1, 2, 3, \\dots\\}$$</p>
+          <p>La distinzione non è pedanteria: l'immagine della funzione valore assoluto contiene lo $0$, e dunque il codominio corretto è $\\mathbb{N}_0$; invece nell'esempio sulla divisibilità lavoreremo su $\\mathbb{N}_{\\gt 0}$, perché così il moltiplicatore può essere scelto positivo e la verifica dell'antisimmetria è immediata. Lo zero non rovinerebbe l'antisimmetria (la divisibilità è un ordine parziale anche su $\\mathbb{N}_0$, con minimo $1$ e massimo $0$), ma obbligherebbe ad ammettere il moltiplicatore nullo. Non useremo mai il simbolo $\\mathbb{N}$ senza indice.</p>
+          <p><strong>(b) Funzioni indotte sul quoziente.</strong> Data $f: A \\to B$, scriviamo sempre</p>
+          <p>$$f_*: A/\\eta_f \\to B \\quad (\\text{sempre iniettiva}), \\qquad f'_*: A/\\eta_f \\to \\text{Im}(f) \\quad (\\text{sempre biiettiva})$$</p>
+          <p>cosicché $f_* = j_f \\circ f'_*$. La biiettività è una proprietà garantita di $f'_*$; $f_*$ è biiettiva se e solo se $f$ è suriettiva.</p>`
+      },
+
+      {
+        id: "s06-teorema-fondamentale",
+        type: "section",
+        title: "Il Teorema Fondamentale di Decomposizione (dimostrazione dettagliata)",
+        icon: "🏛️",
+        content: `<p><strong>Attenzione: questo è lo stesso risultato enunciato sopra</strong>, non un teorema nuovo. Lo riprendiamo qui come richiamo e approfondimento: il procedimento seguito nell'esempio del valore assoluto si generalizza a qualsiasi funzione, e la dimostrazione viene ora svolta in tutti i dettagli (buona definizione, iniettività, suriettività, commutatività del diagramma). Il risultato è così importante da meritare il nome di <strong>teorema fondamentale</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Richiamo: la relazione $\\eta_f$ e la proiezione canonica",
+            content: `<p>Prima di enunciare il teorema, richiamiamo gli oggetti che vi compaiono, così che l'enunciato sia leggibile in modo autonomo.</p>
+              <p>Data una funzione $f: A \\to B$, si definisce su $A$ la relazione $\\eta_f$ ponendo, per $a, b \\in A$:</p>
+              <p>$$a \\ \\eta_f \\ b \\iff f(a) = f(b)$$</p>
+              <p>cioè due elementi sono in relazione quando $f$ li manda nello stesso punto. Questa è una relazione di equivalenza, perché l'uguaglianza in $B$ è riflessiva, simmetrica e transitiva:</p>
+              <ul>
+                <li><strong>Riflessiva</strong>: $f(a) = f(a)$, dunque $a \\ \\eta_f \\ a$.</li>
+                <li><strong>Simmetrica</strong>: se $f(a) = f(b)$, allora $f(b) = f(a)$.</li>
+                <li><strong>Transitiva</strong>: se $f(a) = f(b)$ e $f(b) = f(c)$, allora $f(a) = f(c)$.</li>
+              </ul>
+              <p>Possiamo quindi considerare l'insieme quoziente $A/\\eta_f$, i cui elementi sono le classi di equivalenza $[a]_{\\eta_f}$, e la <strong>proiezione canonica</strong></p>
+              <p>$$p_{\\eta_f}: A \\to A/\\eta_f, \\qquad p_{\\eta_f}(a) = [a]_{\\eta_f}$$</p>
+              <p>che manda ogni elemento nella propria classe.</p>`
+          },
+          {
+            subtitle: "Enunciato",
+            content: `<p>Ogni funzione $f: A \\to B$ può essere decomposta in modo canonico come la composizione di una funzione suriettiva, una biiettiva e una iniettiva:</p>
+              <p>$$f = j_f \\circ f'_* \\circ p_{\\eta_f}$$</p>
+              <p>dove:</p>
+              <ol>
+                <li>$p_{\\eta_f}: A \\to A/\\eta_f$, $p_{\\eta_f}(a) = [a]_{\\eta_f}$, è la proiezione canonica sull'insieme quoziente rispetto alla relazione $\\eta_f$ (definita da $a \\ \\eta_f \\ b \\iff f(a) = f(b)$), ed è <strong>suriettiva</strong>;</li>
+                <li>$f'_*: A/\\eta_f \\to \\text{Im}(f)$ è una funzione <strong>biiettiva</strong>;</li>
+                <li>$j_f: \\text{Im}(f) \\hookrightarrow B$ è l'inclusione dell'immagine nel codominio, ed è <strong>iniettiva</strong>.</li>
+              </ol>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 1: definizione di $f'_*$ e buona definizione",
+            content: `<p>Dobbiamo definire la funzione $f'_*$, dimostrare che è ben definita e biiettiva, e infine verificare che la composizione delle tre frecce restituisce davvero $f$. Le proprietà di $p_{\\eta_f}$ e $j_f$ derivano dalla loro costruzione.</p>
+              <p>Definiamo $f'_*: A/\\eta_f \\to \\text{Im}(f)$ nel modo più naturale possibile. Un elemento del dominio $A/\\eta_f$ è una classe di equivalenza $C = [a]_{\\eta_f}$ per qualche $a \\in A$. Poniamo:</p>
+              <p>$$f'_*(C) = f'_*([a]_{\\eta_f}) := f(a)$$</p>
+              <p>Dobbiamo però assicurarci che questa definizione sia <strong>indipendente dal rappresentante</strong> scelto per la classe $C$. Sia $a'$ un altro rappresentante di $C$, cioè $C = [a']_{\\eta_f}$. Dobbiamo verificare che $f(a) = f(a')$. Per definizione di insieme quoziente, se $a$ e $a'$ sono nella stessa classe, significa che sono in relazione:</p>
+              <p>$$[a]_{\\eta_f} = [a']_{\\eta_f} \\iff a \\ \\eta_f \\ a'$$</p>
+              <p>E per definizione della relazione $\\eta_f$, questo è vero se e solo se:</p>
+              <p>$$f(a) = f(a')$$</p>
+              <p>Quindi la definizione di $f'_*$ è coerente e non dipende dal rappresentante scelto: la funzione è ben definita. Osserviamo inoltre che il valore $f(a)$ appartiene effettivamente a $\\text{Im}(f)$, quindi il codominio dichiarato è corretto.</p>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 2: proprietà delle componenti esterne",
+            content: `<ul>
+                <li>$p_{\\eta_f}: A \\to A/\\eta_f$ è <strong>suriettiva</strong> per costruzione: ogni classe in $A/\\eta_f$ ha almeno un rappresentante in $A$, dunque è immagine di quel rappresentante.</li>
+                <li>$j_f: \\text{Im}(f) \\to B$ è l'inclusione, cioè $j_f(y) = y$ per ogni $y \\in \\text{Im}(f)$: è <strong>iniettiva</strong> per definizione.</li>
+                <li>Resta da dimostrare che $f'_*: A/\\eta_f \\to \\text{Im}(f)$ è biiettiva.</li>
+              </ul>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 3: biiettività di $f'_*$",
+            content: `<p><strong>Suriettività.</strong> Prendiamo un elemento generico $b$ del codominio, $b \\in \\text{Im}(f)$. Per definizione di immagine, esiste almeno un elemento $a \\in A$ tale che $f(a) = b$. Consideriamo la classe di equivalenza $C = [a]_{\\eta_f} \\in A/\\eta_f$. Applicando $f'_*$ a questa classe otteniamo:</p>
+              <p>$$f'_*(C) = f'_*([a]_{\\eta_f}) = f(a) = b$$</p>
+              <p>Quindi per ogni $b \\in \\text{Im}(f)$ abbiamo trovato un elemento $C \\in A/\\eta_f$ la cui immagine è $b$: dunque $f'_*$ è suriettiva. Si noti che qui è <strong>essenziale aver co-ristretto il codominio</strong>: la funzione $f_*: A/\\eta_f \\to B$ non è suriettiva, a meno che $f$ stessa non lo sia.</p>
+              <p><strong>Iniettività.</strong> Prendiamo due classi $C, C' \\in A/\\eta_f$ e supponiamo che abbiano la stessa immagine:</p>
+              <p>$$f'_*(C) = f'_*(C')$$</p>
+              <p>Siano $a$ un rappresentante di $C$ e $a'$ un rappresentante di $C'$. L'uguaglianza sopra diventa:</p>
+              <p>$$f(a) = f(a')$$</p>
+              <p>Ma, per definizione della relazione $\\eta_f$, questa è la condizione perché $a$ e $a'$ siano in relazione: $a \\ \\eta_f \\ a'$. Se sono in relazione, appartengono alla stessa classe di equivalenza:</p>
+              <p>$$[a]_{\\eta_f} = [a']_{\\eta_f} \\Rightarrow C = C'$$</p>
+              <p>Dunque $f'_*$ è iniettiva. Essendo sia suriettiva che iniettiva, $f'_*$ è <strong>biiettiva</strong>.</p>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 4: commutatività del diagramma",
+            content: `<p>Resta da verificare l'uguaglianza fra funzioni enunciata nel teorema, che è la conclusione centrale. Due funzioni con lo stesso dominio e lo stesso codominio sono uguali se assumono lo stesso valore su ogni elemento del dominio: fissiamo quindi un arbitrario $a \\in A$ e calcoliamo, applicando una freccia alla volta.</p>
+              <p>$$(j_f \\circ f'_* \\circ p_{\\eta_f})(a) = j_f\\bigl(f'_*(p_{\\eta_f}(a))\\bigr) = j_f\\bigl(f'_*([a]_{\\eta_f})\\bigr) = j_f\\bigl(f(a)\\bigr) = f(a)$$</p>
+              <p>dove abbiamo usato, nell'ordine: la definizione di composizione; la definizione della proiezione canonica $p_{\\eta_f}(a) = [a]_{\\eta_f}$; la definizione $f'_*([a]_{\\eta_f}) = f(a)$ data al passo 1; e infine il fatto che $j_f$ è l'inclusione, quindi lascia invariato il suo argomento. Poiché $a \\in A$ era arbitrario, le due funzioni coincidono:</p>
+              <p>$$f = j_f \\circ f'_* \\circ p_{\\eta_f}$$</p>
+              <p>Questo completa la dimostrazione. $\\square$</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-nucleo-fibre",
+        type: "section",
+        title: "Nucleo e fibre di una funzione",
+        icon: "🪢",
+        content: `<p>Il teorema di decomposizione si basa sulla relazione di equivalenza $\\eta_f$. Questa relazione è così importante che le viene dato un nome speciale.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: nucleo (kernel)",
+            content: `<p>Data una funzione $f: A \\to B$, il <strong>nucleo</strong> (kernel) di $f$, denotato con $\\ker(f)$, è l'insieme delle coppie di elementi di $A$ che hanno la stessa immagine tramite $f$:</p>
+              <p>$$\\ker(f) = \\{ (x, y) \\in A \\times A \\mid f(x) = f(y) \\}$$</p>
+              <p>Confrontando le definizioni, si vede immediatamente che il nucleo di $f$ è <strong>esattamente la relazione di equivalenza $\\eta_f$</strong> indotta da $f$:</p>
+              <p>$$\\ker(f) = \\eta_f$$</p>
+              <p>In altri contesti, come l'algebra lineare o la teoria dei gruppi, il nucleo è definito come l'insieme degli elementi che vengono mappati nell'elemento neutro. La nostra definizione è più generale e si applica a insiemi qualsiasi.</p>`
+          },
+          {
+            subtitle: "Definizione: fibra o preimmagine",
+            content: `<p>Data una funzione $f: A \\to B$ e un elemento $y \\in B$, la <strong>preimmagine</strong> di $y$ (o <strong>fibra</strong> di $f$ sopra $y$) è l'insieme di tutti gli elementi di $A$ che vengono mappati in $y$:</p>
+              <p>$$f^{-1}(\\{y\\}) = \\{ x \\in A \\mid f(x) = y \\}$$</p>`
+          },
+          {
+            subtitle: "Le classi di equivalenza sono le fibre",
+            content: `<p>C'è un legame diretto tra le classi di equivalenza di $\\eta_f$ e le fibre di $f$:</p>
+              <ul>
+                <li>Se $y \\in \\text{Im}(f)$, allora la sua fibra $f^{-1}(\\{y\\})$ non è vuota. Tutti gli elementi $x$ in questa fibra hanno la stessa immagine (cioè $y$), quindi sono in relazione tra loro secondo $\\eta_f$. La fibra $f^{-1}(\\{y\\})$ è esattamente una classe di equivalenza di $\\eta_f$.</li>
+                <li>Se $y \\notin \\text{Im}(f)$, la sua fibra $f^{-1}(\\{y\\})$ è l'insieme vuoto.</li>
+              </ul>
+              <p>Di conseguenza, l'insieme quoziente $A/\\eta_f$ può essere visto come <strong>l'insieme di tutte le fibre non vuote</strong> della funzione $f$.</p>`
+          },
+          {
+            subtitle: "Esempio: le fibre del valore assoluto",
+            content: `<p>Torniamo alla funzione $v: \\mathbb{Z} \\to \\mathbb{Q}$ con $v(z) = |z|$. Le fibre non vuote sono:</p>
+              <ul>
+                <li>Per $n \\in \\mathbb{N}_{\\gt 0}$: $v^{-1}(\\{n\\}) = \\{z \\in \\mathbb{Z} \\mid |z| = n\\} = \\{n, -n\\}$;</li>
+                <li>Per $n = 0$: $v^{-1}(\\{0\\}) = \\{z \\in \\mathbb{Z} \\mid |z| = 0\\} = \\{0\\}$.</li>
+              </ul>
+              <p>L'insieme di queste fibre, $\\{ \\{0\\}, \\{1, -1\\}, \\{2, -2\\}, \\dots \\}$, è esattamente l'insieme quoziente $\\mathbb{Z}/\\eta_v$. Notiamo che le fibre sono indicizzate dagli elementi di $\\mathbb{N}_0 = \\text{Im}(v)$: lo $0$ corrisponde alla fibra singoletto $\\{0\\}$, ogni $n \\gt 0$ a una fibra con due elementi. Questo è esattamente il motivo per cui la biezione $v'_*$ ha codominio $\\mathbb{N}_0$ e non $\\mathbb{N}_{\\gt 0}$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Nucleo", latex: "\\ker(f) = \\{ (x,y) \\in A \\times A \\mid f(x) = f(y) \\} = \\eta_f" },
+          { label: "Fibra", latex: "f^{-1}(\\{y\\}) = \\{ x \\in A \\mid f(x) = y \\}" },
+          { label: "Quoziente come insieme di fibre", latex: "A/\\eta_f = \\{\\, f^{-1}(\\{y\\}) \\mid y \\in \\text{Im}(f) \\,\\}" }
+        ]
+      },
+
+      {
+        id: "s06-ordini",
+        type: "section",
+        title: "Relazioni d'ordine",
+        icon: "⬆️",
+        content: `<p>Passiamo ora a un altro tipo fondamentale di relazione: le relazioni d'ordine.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: ordinamento parziale",
+            content: `<p>Una relazione $\\rho$ su un insieme $A$ è una <strong>relazione d'ordine</strong> (o <strong>ordinamento parziale</strong>) se è:</p>
+              <ol>
+                <li><strong>Riflessiva</strong>: $\\forall a \\in A, \\ a \\rho a$.</li>
+                <li><strong>Antisimmetrica</strong>: $\\forall a, b \\in A, \\ (a \\rho b \\land b \\rho a) \\Rightarrow a = b$.</li>
+                <li><strong>Transitiva</strong>: $\\forall a, b, c \\in A, \\ (a \\rho b \\land b \\rho c) \\Rightarrow a \\rho c$.</li>
+              </ol>
+              <p>Un insieme dotato di una relazione d'ordine si dice <strong>insieme parzialmente ordinato</strong> o <em>poset</em> (partially ordered set).</p>`
+          },
+          {
+            subtitle: "Esempio: $\\le$ sui reali",
+            content: `<p>La relazione "minore o uguale" ($\\le$) sull'insieme dei numeri reali $\\mathbb{R}$ è una relazione d'ordine:</p>
+              <ul>
+                <li><strong>Riflessiva</strong>: $x \\le x$ per ogni $x \\in \\mathbb{R}$.</li>
+                <li><strong>Antisimmetrica</strong>: se $x \\le y$ e $y \\le x$, allora necessariamente $x = y$.</li>
+                <li><strong>Transitiva</strong>: se $x \\le y$ e $y \\le z$, allora $x \\le z$.</li>
+              </ul>`
+          },
+          {
+            subtitle: "Definizione: ordinamento totale",
+            content: `<p>Una relazione d'ordine $\\rho$ su $A$ si dice <strong>ordine totale</strong> (o lineare) se per ogni coppia di elementi $a, b \\in A$ vale $a \\rho b$ oppure $b \\rho a$. In un ordine totale, tutti gli elementi sono <strong>confrontabili</strong>.</p>
+              <p>La relazione $\\le$ su $\\mathbb{R}$ è un ordine totale, perché dati due numeri reali qualsiasi, uno è sempre minore o uguale all'altro.</p>`
+          },
+          {
+            subtitle: "Esempio: inclusione tra insiemi (ordine non totale)",
+            content: `<p>Sia $A$ un insieme e $P(A)$ il suo insieme delle parti. La relazione di inclusione ($\\subseteq$) su $P(A)$ è un ordinamento parziale:</p>
+              <ul>
+                <li><strong>Riflessiva</strong>: $X \\subseteq X$ per ogni $X \\in P(A)$.</li>
+                <li><strong>Antisimmetrica</strong>: se $X \\subseteq Y$ e $Y \\subseteq X$, allora $X = Y$.</li>
+                <li><strong>Transitiva</strong>: se $X \\subseteq Y$ e $Y \\subseteq Z$, allora $X \\subseteq Z$.</li>
+              </ul>
+              <p>Tuttavia, questo <strong>non è un ordine totale</strong> (a meno che $A$ non abbia meno di due elementi). Per esempio, se $A = \\{1, 2\\}$, i sottoinsiemi $X = \\{1\\}$ e $Y = \\{2\\}$ non sono confrontabili: né $X \\subseteq Y$ né $Y \\subseteq X$ sono vere.</p>`
+          },
+          {
+            subtitle: "Esempio: divisibilità su $\\mathbb{N}_{\\gt 0}$",
+            content: `<p>La relazione di divisibilità ($\\mid$) sull'insieme dei numeri naturali positivi $\\mathbb{N}_{\\gt 0} = \\{1, 2, 3, \\dots\\}$ è un ordinamento parziale. Ricordiamo che, lavorando in $\\mathbb{N}_{\\gt 0}$, la scrittura $a \\mid b$ significa "$a$ divide $b$", cioè esiste $k \\in \\mathbb{N}_{\\gt 0}$ tale che $b = k \\cdot a$.</p>
+              <ul>
+                <li><strong>Riflessiva</strong>: $a \\mid a$ (poiché $a = 1 \\cdot a$).</li>
+                <li><strong>Antisimmetrica</strong>: se $a \\mid b$ e $b \\mid a$, allora $b = k_1 a$ e $a = k_2 b$. Sostituendo, $a = k_2 (k_1 a)$, da cui $k_1 k_2 = 1$. Poiché $k_1, k_2 \\in \\mathbb{N}_{\\gt 0}$, deve essere $k_1 = k_2 = 1$, e quindi $a = b$.</li>
+                <li><strong>Transitiva</strong>: se $a \\mid b$ e $b \\mid c$, allora $b = k_1 a$ e $c = k_2 b$. Sostituendo, $c = k_2(k_1 a) = (k_1 k_2) a$, quindi $a \\mid c$.</li>
+              </ul>
+              <p>Questo ordine <strong>non è totale</strong>. Per esempio, i numeri $2$ e $3$ non sono confrontabili: $2$ non divide $3$ e $3$ non divide $2$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-divisibilita-z",
+        type: "alert_box",
+        title: "Trappola: la divisibilità su $\\mathbb{Z}$ NON è un ordine",
+        icon: "🚨",
+        content: `<p>Se vogliamo parlare di divisibilità sull'insieme dei numeri interi $\\mathbb{Z}$, dobbiamo prima di tutto <em>aggiornare la definizione</em>: su $\\mathbb{Z}$ si pone</p>
+          <p>$$a \\mid b \\iff \\exists k \\in \\mathbb{Z} \\ : \\ b = k \\cdot a$$</p>
+          <p>cioè il moltiplicatore $k$ viene preso in tutto $\\mathbb{Z}$ e non più soltanto in $\\mathbb{N}_{\\gt 0}$. Con questa definizione <strong>la proprietà antisimmetrica non vale più</strong>. Infatti:</p>
+          <p>$$-2 = (-1) \\cdot 2 \\quad \\text{mostra che } 2 \\mid -2, \\qquad 2 = (-1) \\cdot (-2) \\quad \\text{mostra che } -2 \\mid 2$$</p>
+          <p>e in entrambi i casi il moltiplicatore è $k = -1$, lecito in $\\mathbb{Z}$ ma escluso in $\\mathbb{N}_{\\gt 0}$. Dunque $2 \\mid -2$ e $-2 \\mid 2$ pur essendo $2 \\neq -2$: <strong>la divisibilità su $\\mathbb{Z}$ non è una relazione d'ordine</strong>.</p>`
+      },
+
+      {
+        id: "s06-ordine-stretto",
+        type: "section",
+        title: "Ordine stretto e corrispondenza con gli ordini larghi",
+        icon: "✂️",
+        content: `<p>Accanto agli ordini "larghi" (come $\\le$), esistono gli ordini "stretti" (come $\\lt$).</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: ordine stretto",
+            content: `<p>Una relazione $\\sigma$ su un insieme $A$ è una relazione d'<strong>ordine stretto</strong> se è:</p>
+              <ol>
+                <li><strong>Irreflessiva</strong>: $\\forall a \\in A, \\ \\neg(a \\sigma a)$.</li>
+                <li><strong>Transitiva</strong>: $\\forall a, b, c \\in A, \\ (a \\sigma b \\land b \\sigma c) \\Rightarrow a \\sigma c$.</li>
+              </ol>
+              <p>Una relazione di ordine stretto è <strong>automaticamente antisimmetrica</strong>. Infatti, se avessimo $a \\sigma b$ e $b \\sigma a$, per la transitività seguirebbe $a \\sigma a$, il che contraddice l'irriflessività. Dunque non è possibile avere contemporaneamente $a \\sigma b$ e $b \\sigma a$.</p>
+              <p>La relazione "minore stretto" ($\\lt$) su $\\mathbb{R}$ è un ordine stretto: è irreflessiva ($x \\lt x$ è falso) e transitiva.</p>`
+          },
+          {
+            subtitle: "Proposizione: corrispondenza tra ordini larghi e stretti",
+            content: `<p>Esiste una corrispondenza biunivoca tra ordini larghi e ordini stretti su un insieme $A$.</p>
+              <ul>
+                <li>Dato un ordine largo $\\rho$ (es. $\\le$), si può definire un ordine stretto $\\sigma$ come
+                  <p>$$a \\ \\sigma \\ b \\iff (a \\ \\rho \\ b \\ \\land \\ a \\neq b)$$</p></li>
+                <li>Dato un ordine stretto $\\sigma$ (es. $\\lt$), si può definire un ordine largo $\\rho$ come
+                  <p>$$a \\ \\rho \\ b \\iff (a \\ \\sigma \\ b \\ \\lor \\ a = b)$$</p></li>
+              </ul>
+              <p>In termini insiemistici le due operazioni sono molto semplici: passare da $\\rho$ a $\\sigma$ significa <em>togliere</em> dalla relazione tutte le coppie diagonali $(a,a)$, mentre passare da $\\sigma$ a $\\rho$ significa <em>rimetterle tutte</em>. È proprio per questo che le due costruzioni sono inverse l'una dell'altra.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo: inclusione larga e inclusione propria",
+            content: `<p>Vediamo concretamente le due trasformazioni sull'ordine di inclusione. Sia $A = \\{1,2\\}$, così che</p>
+              <p>$$P(A) = \\{\\ \\emptyset, \\ \\{1\\}, \\ \\{2\\}, \\ \\{1,2\\}\\ \\}$$</p>
+              <p>e consideriamo su $P(A)$ l'ordine largo $\\subseteq$.</p>
+              <p><strong>Dal largo allo stretto.</strong> Applicando la prima costruzione, poniamo $X \\sigma Y \\iff (X \\subseteq Y \\land X \\neq Y)$: eliminiamo cioè i quattro confronti diagonali $\\emptyset \\subseteq \\emptyset$, $\\{1\\} \\subseteq \\{1\\}$, $\\{2\\} \\subseteq \\{2\\}$, $\\{1,2\\} \\subseteq \\{1,2\\}$. Quello che resta è esattamente l'<strong>inclusione propria</strong> $\\subsetneq$, le cui coppie sono:</p>
+              <p>$$\\emptyset \\subsetneq \\{1\\}, \\quad \\emptyset \\subsetneq \\{2\\}, \\quad \\emptyset \\subsetneq \\{1,2\\}, \\quad \\{1\\} \\subsetneq \\{1,2\\}, \\quad \\{2\\} \\subsetneq \\{1,2\\}$$</p>
+              <p>Questa relazione è irreflessiva (nessun insieme è contenuto propriamente in sé) e transitiva, dunque è un ordine stretto, come previsto dalla proposizione.</p>
+              <p><strong>Dallo stretto al largo.</strong> Applichiamo ora la seconda costruzione a $\\subsetneq$, ponendo $X \\rho Y \\iff (X \\subsetneq Y \\lor X = Y)$: alle cinque coppie elencate sopra riaggiungiamo le quattro coppie diagonali. Otteniamo nuovamente tutti e nove i confronti veri di $\\subseteq$, cioè $\\rho = \\subseteq$: si recupera esattamente l'ordine largo di partenza.</p>
+              <p>Le due trasformazioni, applicate una dopo l'altra, riportano quindi al punto iniziale: è in questo senso che la corrispondenza della proposizione è biunivoca.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Largo → stretto", latex: "a \\ \\sigma \\ b \\iff (a \\ \\rho \\ b \\land a \\neq b)" },
+          { label: "Stretto → largo", latex: "a \\ \\rho \\ b \\iff (a \\ \\sigma \\ b \\lor a = b)" }
+        ]
+      },
+
+      {
+        id: "s06-operazioni",
+        type: "section",
+        title: "Operazioni n-arie e gruppoidi",
+        icon: "⚙️",
+        content: `<p>In questa parte introduciamo il concetto di operazione algebrica su un insieme e definiamo una gerarchia di strutture algebriche fondamentali (gruppoidi, semigruppi, monoidi, gruppi) che si ottengono arricchendo un insieme con operazioni che soddisfano determinate proprietà. Iniziamo con il concetto più generale di operazione.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione: operazione n-aria",
+            content: `<p>Fissato $n \\in \\mathbb{N}_0$ (quindi $n$ può essere anche $0$), un'<strong>operazione n-aria</strong> in un insieme $S$ è un'applicazione</p>
+              <p>$$S^n := \\underbrace{S \\times \\dots \\times S}_{n \\text{ volte}} \\ \\longrightarrow \\ S$$</p>
+              <p>Un'operazione n-aria prende $n$ elementi di $S$ e restituisce un unico elemento di $S$.</p>
+              <p>Il termine "n-upla" si riferisce a elementi del prodotto cartesiano $S^n$. Ad esempio, i vettori in $\\mathbb{R}^n$ sono n-uple di numeri reali.</p>`
+          },
+          {
+            subtitle: "Definizione: operazione binaria e gruppoide",
+            content: `<p>Se $n = 2$, si parla di <strong>operazione binaria</strong>. La indicheremo con un simbolo come $*$, e scriveremo:</p>
+              <p>$$* : S \\times S \\to S, \\quad (s, t) \\mapsto *(s,t) =: s * t$$</p>
+              <p>Un insieme $(S, *)$ munito di un'operazione binaria si dice <strong>gruppoide</strong>.</p>
+              <p>La notazione $s * t$ (notazione infissa) è una convenzione. Formalmente si dovrebbe scrivere $*(s,t)$, ma per operazioni comuni come la somma o il prodotto, non scriviamo $+(5,3)$ bensì $5+3$. Adotteremo quasi sempre la notazione infissa.</p>`
+          },
+          {
+            subtitle: "Definizione: operazione nullaria (il caso $n=0$)",
+            content: `<p>Se $n = 0$, si parla di <strong>operazione nullaria</strong>. Per convenzione, il prodotto cartesiano "zero volte" di un insieme $S$ è un insieme con un solo elemento, che possiamo chiamare "punto" $\\{pt\\}$. Quindi, un'operazione nullaria è una funzione:</p>
+              <p>$$\\zeta : S^0 \\to S \\quad \\text{ovvero} \\quad \\zeta : \\{pt\\} \\to S$$</p>
+              <p>Un'operazione di questo tipo equivale alla <strong>scelta di un elemento particolare in $S$</strong>, ovvero l'immagine del punto, $\\zeta(pt)$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-cayley",
+        type: "section",
+        title: "Tavole di Cayley",
+        icon: "🗂️",
+        content: `<p>Quando un insieme $S$ è finito, possiamo descrivere completamente un'operazione binaria $*$ elencando tutti i possibili risultati in una tabella, chiamata <strong>tavola di Cayley</strong>.</p>
+          <p>Detti $s_1, s_2, \\dots, s_n$ gli elementi di $S$, la tavola si costruisce così:</p>
+          <ul>
+            <li>In alto a sinistra si scrive il simbolo dell'operazione.</li>
+            <li>Nella prima riga e nella prima colonna si elencano gli elementi di $S$.</li>
+            <li>All'incrocio della riga dell'elemento $s_i$ e della colonna dell'elemento $s_j$, si scrive il risultato dell'operazione $s_i * s_j$.</li>
+          </ul>`,
+        subsections: [
+          {
+            subtitle: "Esempio (da leggere con attenzione): la somma su $S = \\{1,2,3\\}$",
+            content: `<p>Consideriamo l'insieme $S = \\{1, 2, 3\\}$ con l'operazione di somma $+$. La tavola di Cayley sarebbe:</p>
+              <p>$$\\begin{array}{c|ccc} + & 1 & 2 & 3 \\\\ \\hline 1 & 2 & 3 & 4 \\\\ 2 & 3 & 4 & 5 \\\\ 3 & 4 & 5 & 6 \\end{array}$$</p>`
+          }
+        ],
+        extra_content: `<p><strong>Nota del Prof.</strong> Questo esempio serve a illustrare la struttura della tavola, ma c'è un punto cruciale da notare. I risultati come $4, 5, 6$ <strong>non appartengono</strong> all'insieme di partenza $S = \\{1,2,3\\}$.</p>
+          <p>Una vera operazione binaria su $S$ deve avere come codominio $S$ stesso, cioè deve essere <strong>"chiusa"</strong> rispetto all'insieme. In questo caso, la somma usuale non è un'operazione binaria su $S = \\{1,2,3\\}$. Se volessimo definirne una, dovremmo specificare un risultato all'interno di $S$ per ogni coppia.</p>`
+      },
+
+      {
+        id: "s06-cayley-max",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p>Per vedere una tavola di Cayley di una <em>vera</em> operazione su $S = \\{1,2,3\\}$, consideriamo l'operazione $\\max$, cioè $s * t := \\max(s,t)$:</p>
+          <p>$$\\begin{array}{c|ccc} \\max & 1 & 2 & 3 \\\\ \\hline 1 & 1 & 2 & 3 \\\\ 2 & 2 & 2 & 3 \\\\ 3 & 3 & 3 & 3 \\end{array}$$</p>
+          <p>Due osservazioni utili per leggere qualsiasi tavola:</p>
+          <ul>
+            <li><strong>Chiusura</strong>: tutte le caselle contengono elementi di $S = \\{1,2,3\\}$, quindi $\\max$ è davvero un'operazione binaria su $S$ e $(S, \\max)$ è un gruppoide.</li>
+            <li><strong>Elemento neutro</strong>: si riconosce guardando se esiste una riga che riproduce esattamente l'intestazione di colonna e la corrispondente colonna che riproduce l'intestazione di riga. Qui la riga e la colonna dell'elemento $1$ sono $1,2,3$: dunque $e = 1$ è l'elemento neutro, perché $\\max(1,t) = t = \\max(t,1)$ per ogni $t \\in S$.</li>
+          </ul>`
+      },
+
+      {
+        id: "s06-proprieta-operazioni",
+        type: "section",
+        title: "Proprietà delle operazioni binarie",
+        icon: "🧮",
+        content: `<p>Un'operazione binaria può godere di alcune proprietà fondamentali che determinano la struttura algebrica dell'insieme. Sia $(S, *)$ un gruppoide.</p>`,
+        subsections: [
+          {
+            subtitle: "Le quattro proprietà fondamentali",
+            content: `<ol>
+                <li>L'operazione $*$ è <strong>associativa</strong> se
+                  <p>$$(r * s) * t = r * (s * t), \\quad \\forall r, s, t \\in S$$</p>
+                  In pratica, non importa dove mettiamo le parentesi in una sequenza di operazioni.</li>
+                <li>L'operazione $*$ è <strong>commutativa</strong> se
+                  <p>$$s * t = t * s, \\quad \\forall s, t \\in S$$</p>
+                  L'ordine degli operandi non influenza il risultato.</li>
+                <li>Un elemento $e \\in S$ è <strong>elemento neutro</strong> per $(S, *)$ se
+                  <p>$$s * e = s = e * s, \\quad \\forall s \\in S$$</p>
+                  Comporre un elemento con l'elemento neutro lo lascia invariato.</li>
+                <li>Se $(S, *)$ ha un elemento neutro $e$, si dice <strong>inverso</strong> di un elemento $s \\in S$ un elemento $s' \\in S$ tale che
+                  <p>$$s' * s = e = s * s'$$</p>
+                  In tal caso, $s$ si dice <strong>invertibile</strong>.</li>
+              </ol>`
+          },
+          {
+            subtitle: "Esempi su $\\mathbb{Z}$",
+            content: `<ul>
+                <li>Per la somma $(+)$ sui numeri interi $\\mathbb{Z}$, l'elemento neutro è $0$. L'inverso di $5$ è $-5$, poiché $5 + (-5) = 0$.</li>
+                <li>Per il prodotto $(\\cdot)$ sui numeri interi $\\mathbb{Z}$, l'elemento neutro è $1$. L'inverso di $5$ sarebbe $1/5$, ma $1/5 \\notin \\mathbb{Z}$, quindi $5$ non è invertibile in $\\mathbb{Z}$ rispetto al prodotto.</li>
+              </ul>`
+          },
+          {
+            subtitle: "Proposizione: unicità dell'elemento neutro e dell'inverso",
+            content: `<p>Sia $(S, *)$ un gruppoide.</p>
+              <ol>
+                <li>Se un elemento neutro esiste, allora è <strong>unico</strong>.</li>
+                <li>Se l'operazione $*$ è <strong>associativa</strong> e un elemento $s \\in S$ ammette un inverso, allora tale inverso è <strong>unico</strong>.</li>
+              </ol>
+              <p><em>Dimostrazione del punto 1.</em> Supponiamo per assurdo che esistano due elementi neutri distinti, $e$ ed $e'$. Poiché $e'$ è un elemento neutro, per definizione vale:</p>
+              <p>$$s * e' = s, \\quad \\forall s \\in S$$</p>
+              <p>In particolare, vale per $s = e$. Quindi:</p>
+              <p>$$e * e' = e$$</p>
+              <p>D'altra parte, poiché $e$ è un elemento neutro, vale:</p>
+              <p>$$e * s = s, \\quad \\forall s \\in S$$</p>
+              <p>In particolare, vale per $s = e'$. Quindi:</p>
+              <p>$$e * e' = e'$$</p>
+              <p>Confrontando le due espressioni, otteniamo $e = e'$, contraddicendo l'ipotesi che fossero distinti. Dunque l'elemento neutro, se esiste, è unico. $\\square$</p>
+              <p>La dimostrazione dell'unicità dell'inverso (sotto l'ipotesi di associatività) è <strong>lasciata come esercizio</strong>. L'idea è simile: si suppone che un elemento $s$ abbia due inversi $s'$ e $s''$ e si usa l'associatività per dimostrare che devono coincidere. La dimostrazione completa verrà presentata nelle lezioni successive, insieme alle prime proprietà dei gruppi.</p>`
+          }
+        ],
+        quote: {
+          text: "La commutatività è una proprietà molto forte e non sempre scontata. Ad esempio, la divisione non è commutativa: $5 \\div 4 \\neq 4 \\div 5$. Anche il prodotto tra matrici, che vedrete, in generale non è commutativo. C'è una riflessione più profonda da fare. La differenza fondamentale tra la fisica classica, macroscopica, e la fisica quantistica, microscopica, risiede proprio nella commutatività. La fisica classica è un mondo commutativo. La fisica quantistica è descritta da un mondo non commutativo. Questo cambia tutto.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s06-gerarchia",
+        type: "section",
+        title: "Gerarchia delle strutture algebriche",
+        icon: "🏗️",
+        content: `<p>Aggiungendo progressivamente le proprietà viste, costruiamo una gerarchia di strutture algebriche.</p>
+          <ul>
+            <li><strong>Gruppoide unitario</strong>: un gruppoide munito di un elemento neutro.</li>
+            <li><strong>Semigruppo</strong>: un gruppoide in cui l'operazione è associativa.</li>
+            <li><strong>Monoide</strong>: un semigruppo con elemento neutro (ossia, un gruppoide associativo e unitario).</li>
+            <li><strong>Gruppo</strong>: un monoide in cui ogni elemento è invertibile.</li>
+          </ul>`,
+        table_compare: {
+          headers: ["Struttura", "Chiusura (op. binaria)", "Associatività", "Elemento neutro", "Ogni elemento invertibile"],
+          rows: [
+            ["Gruppoide", "sì", "—", "—", "—"],
+            ["Gruppoide unitario", "sì", "—", "sì", "—"],
+            ["Semigruppo", "sì", "sì", "—", "—"],
+            ["Monoide", "sì", "sì", "sì", "—"],
+            ["Gruppo", "sì", "sì", "sì", "sì"]
+          ]
+        },
+        subsections: [
+          {
+            subtitle: "Requisiti per un gruppo",
+            content: `<p>Perché $(S, *)$ sia un <strong>gruppo</strong>, devono valere le seguenti quattro proprietà:</p>
+              <ol>
+                <li><strong>Chiusura</strong>: l'operazione $*$ è binaria, cioè $\\forall s, t \\in S, \\ s*t \\in S$.</li>
+                <li><strong>Associatività</strong>: $\\forall r, s, t \\in S, \\ (r*s)*t = r*(s*t)$.</li>
+                <li><strong>Esistenza dell'elemento neutro</strong>: $\\exists e \\in S$ tale che $\\forall s \\in S, \\ s*e = e*s = s$.</li>
+                <li><strong>Esistenza dell'inverso</strong>: $\\forall s \\in S, \\ \\exists s' \\in S$ tale che $s*s' = s'*s = e$.</li>
+              </ol>`
+          },
+          {
+            subtitle: "Ricollegamento alle operazioni n-arie",
+            content: `<ul>
+                <li>L'esistenza dell'elemento neutro $e$ in un monoide $(S, *, e)$ equivale all'esistenza di un'operazione <strong>nullaria</strong> $\\zeta: \\{pt\\} \\to S$ che seleziona l'elemento neutro, $pt \\mapsto e$.</li>
+                <li>Se $S$ è un gruppo, l'esistenza dell'inverso per ogni elemento $s \\in S$ equivale a un'operazione <strong>unaria</strong> (cioè una funzione da $S$ in $S$) che mappa ogni elemento nel suo inverso: $i: S \\to S$, $s \\mapsto s' =: s^{-1}$.</li>
+              </ul>`
+          },
+          {
+            subtitle: "Proposizione: il gruppo degli elementi invertibili $U(M)$",
+            content: `<p>Sia $(M, *, e)$ un monoide. Sia $U(M) := \\{m \\in M \\mid \\exists\\, m^{-1} \\in M\\}$ l'insieme degli elementi invertibili di $M$. Allora:</p>
+              <ol>
+                <li>L'operazione $*$ si restringe a un'operazione binaria in $U(M)$.</li>
+                <li>$(U(M), *)$ è un <strong>gruppo</strong>, con elemento neutro $e$.</li>
+              </ol>
+              <p><em>Idea della dimostrazione.</em> Il punto chiave è dimostrare che il prodotto di due elementi invertibili è ancora un elemento invertibile. Se $a, b \\in U(M)$, con inversi $a^{-1}, b^{-1}$, allora l'inverso di $(a*b)$ è $(b^{-1}*a^{-1})$. Verificare questo e le altre proprietà di gruppo è <strong>lasciato come esercizio</strong>.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Inverso di un prodotto", latex: "(a*b)^{-1} = b^{-1} * a^{-1}" },
+          { label: "Elementi invertibili", latex: "U(M) := \\{ m \\in M \\mid \\exists\\, m^{-1} \\in M \\}" }
+        ]
+      },
+
+      {
+        id: "s06-esempi-strutture",
+        type: "section",
+        title: "Esempi di strutture algebriche",
+        icon: "🔢",
+        content: `<p>Analizziamo ora alcuni insiemi numerici dotati di operazioni standard per classificarli secondo la gerarchia appena vista. Nel seguito, per un insieme $X$, denotiamo $X^+ := \\{x \\in X \\mid x \\gt 0\\}$ e $X^* := X \\setminus \\{0\\}$; per i naturali continuiamo a usare la convenzione $\\mathbb{N}_0$ (con lo zero) e $\\mathbb{N}_{\\gt 0}$ (senza lo zero).</p>`,
+        subsections: [
+          {
+            subtitle: "I naturali (qui lo zero cambia tutto)",
+            content: `<ul>
+                <li>$(\\mathbb{N}_0, +)$ è un <strong>monoide commutativo</strong>: l'operazione è associativa e commutativa, l'elemento neutro è $e = 0$ che appartiene a $\\mathbb{N}_0$. Non è un gruppo perché nessun elemento (tranne $0$) ha un inverso in $\\mathbb{N}_0$: ad esempio l'inverso di $3$ sarebbe $-3 \\notin \\mathbb{N}_0$.</li>
+                <li>$(\\mathbb{N}_{\\gt 0}, +)$ è un <strong>semigruppo commutativo</strong>: l'operazione è associativa e commutativa, ma non è un monoide perché l'unico candidato elemento neutro, lo $0$, non appartiene a $\\mathbb{N}_{\\gt 0}$.</li>
+                <li>$(\\mathbb{N}_0, \\cdot)$ è un <strong>monoide commutativo</strong>: associativa, commutativa, elemento neutro $e = 1$. Non è un gruppo: l'unico elemento invertibile è $1$, cioè $U(\\mathbb{N}_0) = \\{1\\}$.</li>
+              </ul>`
+          },
+          {
+            subtitle: "Gli interi",
+            content: `<ul>
+                <li>$(\\mathbb{Z}, +)$ è un <strong>gruppo commutativo</strong> (detto anche gruppo abeliano): è un monoide con $e = 0$ e ogni elemento $z \\in \\mathbb{Z}$ ha un inverso, $-z \\in \\mathbb{Z}$.</li>
+                <li>$(\\mathbb{Z}, \\cdot)$ è un <strong>monoide commutativo</strong>: è un monoide con $e = 1$, ma non è un gruppo. Gli unici elementi invertibili sono $1$ e $-1$: $U(\\mathbb{Z}) = \\{1, -1\\}$.</li>
+              </ul>`
+          },
+          {
+            subtitle: "I razionali",
+            content: `<ul>
+                <li>$(\\mathbb{Q}, +)$ è un <strong>gruppo commutativo</strong>: analogamente a $(\\mathbb{Z}, +)$, ogni elemento $q$ ha un inverso $-q$, ed $e = 0$.</li>
+                <li>$(\\mathbb{Q}, \\cdot)$ è un <strong>monoide commutativo</strong>: è un monoide con $e = 1$, ma non è un gruppo perché l'elemento $0$ non ha un inverso.</li>
+                <li>$(\\mathbb{Q}^*, \\cdot)$ è un <strong>gruppo commutativo</strong>: questo è l'insieme degli elementi invertibili del monoide $(\\mathbb{Q}, \\cdot)$ e, per la proposizione precedente, forma un gruppo. Ogni elemento $p/q \\in \\mathbb{Q}^*$ ha come inverso $q/p$.</li>
+              </ul>`
+          }
+        ]
+      },
+
+      {
+        id: "s06-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "📝",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s06-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1 — Co-restrizione e inclusione",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $f: A \\to B$ una funzione. Definisci la co-restrizione $f'$ e l'inclusione $j_f$, e dimostra che $f'$ è suriettiva, che $j_f$ è iniettiva e che $f = j_f \\circ f'$.</p>`,
+        solution: `<p><strong>Passo 1 — Definizioni.</strong> Si pone</p>
+          <p>$$\\mathrm{Im}(f) = \\{\\, b \\in B \\;:\\; \\exists\\, a \\in A,\\ f(a) = b \\,\\}$$</p>
+          <p>La co-restrizione è la funzione $f': A \\to \\mathrm{Im}(f)$ definita da $f'(a) = f(a)$: la definizione è lecita perché $f(a) \\in \\mathrm{Im}(f)$ per ogni $a \\in A$. L'inclusione è $j_f: \\mathrm{Im}(f) \\to B$ definita da $j_f(y) = y$ per ogni $y \\in \\mathrm{Im}(f)$; è lecita perché $\\mathrm{Im}(f) \\subseteq B$.</p>
+          <p><strong>Passo 2 — $f'$ è suriettiva.</strong> Sia $y \\in \\mathrm{Im}(f)$; per definizione di immagine esiste $a \\in A$ con $f(a) = y$, dunque</p>
+          <p>$$f'(a) = f(a) = y$$</p>
+          <p><strong>Passo 3 — $j_f$ è iniettiva.</strong> Se $j_f(y) = j_f(y')$ allora, per definizione di $j_f$, si ha immediatamente $y = y'$.</p>
+          <p><strong>Passo 4 — Verifica della composizione.</strong> $j_f \\circ f'$ ha dominio $A$ e codominio $B$, gli stessi di $f$, e per ogni $a \\in A$ vale</p>
+          <p>$$(j_f \\circ f')(a) = j_f(f'(a)) = f'(a) = f(a)$$</p>
+          <p>Poiché due funzioni con lo stesso dominio e lo stesso codominio che coincidono punto per punto sono uguali, $f = j_f \\circ f'$.</p>
+          <p><strong>Osservazione finale.</strong> $j_f$ è suriettiva se e solo se $\\mathrm{Im}(f) = B$, cioè se e solo se $f$ è suriettiva.</p>`
+      },
+
+      {
+        id: "s06-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2 — Teorema Fondamentale e buona definizione di $f'_*$",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia il Teorema Fondamentale di Decomposizione per una funzione $f: A \\to B$, precisando dominio, codominio e proprietà di ciascuna delle tre frecce, e dimostra che la funzione $f'_*$ è ben definita (cioè indipendente dal rappresentante della classe).</p>`,
+        solution: `<p><strong>Passo 1 — Enunciato.</strong> Data $f: A \\to B$, posto $a \\ \\eta_f \\ b \\iff f(a) = f(b)$, si ha</p>
+          <p>$$f = j_f \\circ f'_* \\circ p_{\\eta_f}$$</p>
+          <p>dove:</p>
+          <ul>
+            <li>$p_{\\eta_f}: A \\to A/\\eta_f$, $p_{\\eta_f}(a) = [a]_{\\eta_f}$, è <strong>suriettiva</strong>;</li>
+            <li>$f'_*: A/\\eta_f \\to \\mathrm{Im}(f)$, $f'_*([a]_{\\eta_f}) = f(a)$, è <strong>biiettiva</strong>;</li>
+            <li>$j_f: \\mathrm{Im}(f) \\hookrightarrow B$, $j_f(y) = y$, è <strong>iniettiva</strong>.</li>
+          </ul>
+          <p><strong>Passo 2 — Convenzione da citare.</strong> La freccia sempre biiettiva è $f'_*$ (codominio $\\mathrm{Im}(f)$), mentre $f_* = j_f \\circ f'_*: A/\\eta_f \\to B$ è sempre iniettiva ed è biiettiva se e solo se $f$ è suriettiva.</p>
+          <p><strong>Passo 3 — Buona definizione di $f'_*$.</strong> Un elemento di $A/\\eta_f$ è una classe $C$, che può essere scritta come $C = [a]_{\\eta_f}$ per diversi rappresentanti. Se $[a]_{\\eta_f} = [a']_{\\eta_f}$, allora</p>
+          <p>$$a \\ \\eta_f \\ a' \\iff f(a) = f(a')$$</p>
+          <p>per la definizione stessa di $\\eta_f$: il valore assegnato a $C$ non dipende dunque dal rappresentante scelto. Inoltre $f(a) \\in \\mathrm{Im}(f)$, quindi il codominio dichiarato è corretto e $f'_*$ è una funzione $A/\\eta_f \\to \\mathrm{Im}(f)$.</p>
+          <p><strong>Passo 4 — Biiettività (per completezza).</strong> La stessa catena di implicazioni, letta da destra a sinistra,</p>
+          <p>$$f(a) = f(a') \\Rightarrow a \\ \\eta_f \\ a' \\Rightarrow [a]_{\\eta_f} = [a']_{\\eta_f}$$</p>
+          <p>fornisce l'iniettività di $f'_*$, mentre la suriettività segue dalla definizione di $\\mathrm{Im}(f)$: se $b \\in \\mathrm{Im}(f)$ esiste $a \\in A$ con $f(a) = b$ e allora $f'_*([a]_{\\eta_f}) = b$.</p>`
+      },
+
+      {
+        id: "s06-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3 — La relazione $\\eta_f$ e l'iniettività di $f_*$",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Data $f: A \\to B$, enuncia la definizione della relazione $\\eta_f$ su $A$, verifica che è una relazione di equivalenza e dimostra che la posizione $f_*([a]_{\\eta_f}) = f(a)$ definisce una funzione $f_*: A/\\eta_f \\to B$ ben posta e iniettiva.</p>`,
+        solution: `<p><strong>Passo 1 — Definizione.</strong> Per $x, y \\in A$ si pone</p>
+          <p>$$x \\,\\eta_f\\, y \\iff f(x) = f(y)$$</p>
+          <p><strong>Passo 2 — $\\eta_f$ è di equivalenza.</strong> Sono tutte proprietà dell'uguaglianza in $B$:</p>
+          <ul>
+            <li><strong>riflessiva</strong>: $f(x) = f(x)$ per ogni $x$;</li>
+            <li><strong>simmetrica</strong>: $f(x) = f(y)$ implica $f(y) = f(x)$;</li>
+            <li><strong>transitiva</strong>: da $f(x) = f(y)$ e $f(y) = f(z)$ segue $f(x) = f(z)$.</li>
+          </ul>
+          <p><strong>Passo 3 — Buona posizione.</strong> Se $[a]_{\\eta_f} = [a']_{\\eta_f}$, allora $a \\,\\eta_f\\, a'$, cioè</p>
+          <p>$$f(a) = f(a')$$</p>
+          <p>dunque il valore $f(a)$ non dipende dal rappresentante scelto nella classe e $f_*$ è una funzione ben definita su $A/\\eta_f$.</p>
+          <p><strong>Passo 4 — Iniettività.</strong> Siano $C = [a]_{\\eta_f}$ e $C' = [a']_{\\eta_f}$ con $f_*(C) = f_*(C')$. Allora</p>
+          <p>$$f(a) = f(a') \\iff a \\,\\eta_f\\, a' \\iff [a]_{\\eta_f} = [a']_{\\eta_f}$$</p>
+          <p>ossia $C = C'$.</p>
+          <p><strong>Passo 5 — Attenzione alla convenzione.</strong> $f_*$ ha codominio $B$ ed è sempre iniettiva; è la sua co-restrizione $f'_*: A/\\eta_f \\to \\mathrm{Im}(f)$ a essere sempre biiettiva ($f_*$ è biiettiva esattamente quando $f$ è suriettiva).</p>
+          <p><strong>Passo 6 — Fattorizzazione.</strong> Detta $p_{\\eta_f}(a) = [a]_{\\eta_f}$ la proiezione canonica, per ogni $a \\in A$ si ha</p>
+          <p>$$(f_* \\circ p_{\\eta_f})(a) = f_*([a]_{\\eta_f}) = f(a)$$</p>
+          <p>cioè $f = f_* \\circ p_{\\eta_f}$.</p>`
+      },
+
+      {
+        id: "s06-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4 — Da ordine largo a ordine stretto e ritorno",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $\\rho$ un ordine parziale su un insieme $A$ e sia $\\sigma$ definita da $a \\ \\sigma \\ b \\iff (a \\ \\rho \\ b \\land a \\neq b)$. Dimostra che $\\sigma$ è un ordine stretto, indicando in quale punto si usa l'antisimmetria di $\\rho$, e verifica che la costruzione inversa $a \\ \\rho' \\ b \\iff (a \\ \\sigma \\ b \\lor a = b)$ restituisce esattamente $\\rho$.</p>`,
+        solution: `<p><strong>Passo 1 — Irriflessività di $\\sigma$.</strong> Per ogni $a \\in A$ la condizione $a \\neq a$ è falsa, dunque $\\neg(a \\ \\sigma \\ a)$.</p>
+          <p><strong>Passo 2 — Transitività di $\\sigma$.</strong> Siano $a \\ \\sigma \\ b$ e $b \\ \\sigma \\ c$, cioè $a \\ \\rho \\ b$, $a \\neq b$, $b \\ \\rho \\ c$, $b \\neq c$. Per transitività di $\\rho$ si ha $a \\ \\rho \\ c$; resta da escludere $a = c$. Se fosse $a = c$, da $a \\ \\rho \\ b$ e $b \\ \\rho \\ c = a$ l'<strong>antisimmetria di $\\rho$</strong> darebbe $a = b$, contro $a \\neq b$. Dunque $a \\neq c$ e $a \\ \\sigma \\ c$: è proprio qui che si usa l'antisimmetria.</p>
+          <p><strong>Passo 3 — Costruzione inversa.</strong> In termini di insiemi di coppie, posto $\\Delta = \\{(a,a) : a \\in A\\}$,</p>
+          <p>$$\\sigma = \\rho \\setminus \\Delta, \\qquad \\rho' = \\sigma \\cup \\Delta = (\\rho \\setminus \\Delta) \\cup \\Delta$$</p>
+          <p>Poiché $\\rho$ è riflessiva, $\\Delta \\subseteq \\rho$, quindi $(\\rho \\setminus \\Delta) \\cup \\Delta = \\rho$, cioè $\\rho' = \\rho$.</p>
+          <p><strong>Passo 4 — Verso opposto.</strong> Partendo da un ordine stretto $\\sigma$ si ha</p>
+          <p>$$(\\sigma \\cup \\Delta) \\setminus \\Delta = \\sigma$$</p>
+          <p>perché $\\sigma \\cap \\Delta = \\emptyset$ per irriflessività: le due costruzioni sono inverse l'una dell'altra.</p>`
+      },
+
+      {
+        id: "s06-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1 — Decomposizione di una funzione tra insiemi finiti",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $A = \\{1,2,3,4,5\\}$, $B = \\{a,b,c,d\\}$ e sia $f: A \\to B$ definita da $f(1) = a$, $f(2) = c$, $f(3) = a$, $f(4) = c$, $f(5) = a$. Determina $\\mathrm{Im}(f)$, le classi di equivalenza di $\\eta_f$, l'insieme quoziente $A/\\eta_f$ e scrivi esplicitamente le tre componenti della decomposizione canonica $f = j_f \\circ f'_* \\circ p_{\\eta_f}$.</p>`,
+        solution: `<p><strong>Immagine.</strong> $\\mathrm{Im}(f) = \\{f(1), f(2), f(3), f(4), f(5)\\} = \\{a, c\\}$. In particolare $f$ non è suriettiva, perché $b, d \\notin \\mathrm{Im}(f)$, e non è iniettiva, perché $f(1) = f(3) = a$ con $1 \\neq 3$.</p>
+          <p><strong>Classi di $\\eta_f$.</strong> Due elementi sono equivalenti se hanno la stessa immagine:</p>
+          <p>$$[1]_{\\eta_f} = [3]_{\\eta_f} = [5]_{\\eta_f} = \\{1,3,5\\} \\quad (\\text{controimmagine di } a)$$</p>
+          <p>$$[2]_{\\eta_f} = [4]_{\\eta_f} = \\{2,4\\} \\quad (\\text{controimmagine di } c)$$</p>
+          <p>Quindi $A/\\eta_f = \\{\\, \\{1,3,5\\},\\ \\{2,4\\} \\,\\}$ ha $2$ elementi, tanti quanti $\\mathrm{Im}(f)$, come dev'essere.</p>
+          <p><strong>Componente suriettiva.</strong> $p_{\\eta_f}: A \\to A/\\eta_f$ con</p>
+          <p>$$p_{\\eta_f}(1) = p_{\\eta_f}(3) = p_{\\eta_f}(5) = \\{1,3,5\\}, \\qquad p_{\\eta_f}(2) = p_{\\eta_f}(4) = \\{2,4\\}$$</p>
+          <p>È suriettiva perché ogni classe è immagine di un suo elemento.</p>
+          <p><strong>Componente biiettiva.</strong> $f'_*: A/\\eta_f \\to \\mathrm{Im}(f) = \\{a,c\\}$ con</p>
+          <p>$$f'_*(\\{1,3,5\\}) = f(1) = a, \\qquad f'_*(\\{2,4\\}) = f(2) = c$$</p>
+          <p>È iniettiva ($a \\neq c$) e suriettiva, dunque biiettiva.</p>
+          <p><strong>Componente iniettiva.</strong> $j_f: \\{a,c\\} \\to B$ con $j_f(a) = a$, $j_f(c) = c$.</p>
+          <p><strong>Verifica.</strong></p>
+          <p>$$(j_f \\circ f'_* \\circ p_{\\eta_f})(1) = j_f(f'_*(\\{1,3,5\\})) = j_f(a) = a = f(1)$$</p>
+          <p>e analogamente per $2,3,4,5$, dunque $f = j_f \\circ f'_* \\circ p_{\\eta_f}$.</p>`
+      },
+
+      {
+        id: "s06-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2 — Fibre, nucleo e decomposizione",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Siano $A = \\{1,2,3,4,5\\}$, $B = \\{a,b,c,d\\}$ e $f: A \\to B$ definita da $f(1) = a$, $f(2) = c$, $f(3) = a$, $f(4) = c$, $f(5) = a$. Determina $\\mathrm{Im}(f)$, tutte le fibre di $f$, l'insieme quoziente $A/\\eta_f$, il numero di coppie di $\\ker(f)$, e scrivi esplicitamente la decomposizione $f = j_f \\circ f'_* \\circ p_{\\eta_f}$, verificandola sull'elemento $4$.</p>`,
+        solution: `<p><strong>Immagine e fibre.</strong> $\\mathrm{Im}(f) = \\{a, c\\}$ e</p>
+          <p>$$f^{-1}(\\{a\\}) = \\{1,3,5\\}, \\quad f^{-1}(\\{c\\}) = \\{2,4\\}, \\quad f^{-1}(\\{b\\}) = \\emptyset, \\quad f^{-1}(\\{d\\}) = \\emptyset$$</p>
+          <p>Le fibre non vuote sono le classi di $\\eta_f$, dunque $A/\\eta_f = \\{\\, \\{1,3,5\\}, \\{2,4\\} \\,\\}$.</p>
+          <p><strong>Nucleo.</strong></p>
+          <p>$$\\ker(f) = \\eta_f = (\\{1,3,5\\} \\times \\{1,3,5\\}) \\cup (\\{2,4\\} \\times \\{2,4\\})$$</p>
+          <p>quindi $|\\ker(f)| = 3^2 + 2^2 = 13$ coppie.</p>
+          <p><strong>Decomposizione.</strong> $p_{\\eta_f}: A \\to A/\\eta_f$ manda $1, 3, 5 \\mapsto \\{1,3,5\\}$ e $2, 4 \\mapsto \\{2,4\\}$, ed è suriettiva; $f'_*: A/\\eta_f \\to \\{a,c\\} = \\mathrm{Im}(f)$ è data da $f'_*(\\{1,3,5\\}) = a$ e $f'_*(\\{2,4\\}) = c$, ed è biiettiva (due classi, due elementi dell'immagine, corrispondenza uno a uno); $j_f: \\{a,c\\} \\hookrightarrow B$ è l'inclusione $j_f(y) = y$, iniettiva.</p>
+          <p><strong>Verifica su $4$.</strong></p>
+          <p>$$p_{\\eta_f}(4) = \\{2,4\\}, \\qquad f'_*(\\{2,4\\}) = c, \\qquad j_f(c) = c = f(4)$$</p>`
+      },
+
+      {
+        id: "s06-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3 — Il resto modulo 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $r: \\mathbb{Z} \\to \\mathbb{Z}$ la funzione che associa a ogni $n$ il resto della divisione euclidea di $n$ per $4$. Stabilisci se $r$ è iniettiva e/o suriettiva, determina $\\mathrm{Im}(r)$, descrivi la relazione $\\eta_r$ e l'insieme quoziente $\\mathbb{Z}/\\eta_r$, e scrivi le tre componenti della decomposizione canonica di $r$.</p>`,
+        solution: `<p><strong>Immagine, iniettività, suriettività.</strong> Per il teorema della divisione euclidea, per ogni $n \\in \\mathbb{Z}$ esistono unici $q, s$ con $n = 4q + s$ e $0 \\le s \\lt 4$; si pone $r(n) = s$. Dunque</p>
+          <p>$$\\mathrm{Im}(r) = \\{0,1,2,3\\}$$</p>
+          <p>(ogni $s \\in \\{0,1,2,3\\}$ è il resto di se stesso: $r(s) = s$). Quindi $r$ non è suriettiva su $\\mathbb{Z}$, perché ad esempio $5 \\notin \\mathrm{Im}(r)$, e non è iniettiva, perché $r(0) = r(4) = 0$ con $0 \\neq 4$.</p>
+          <p><strong>Relazione indotta.</strong> $n \\,\\eta_r\\, m \\iff r(n) = r(m)$. Scrivendo $n = 4q + s$ e $m = 4q' + s'$ con $0 \\le s, s' \\lt 4$:</p>
+          <p>$$r(n) = r(m) \\iff s = s' \\iff n - m = 4(q - q') \\iff 4 \\mid n - m$$</p>
+          <p>Dunque $\\eta_r$ è la congruenza modulo $4$: $n \\,\\eta_r\\, m \\iff n \\equiv m \\pmod 4$.</p>
+          <p><strong>Quoziente.</strong></p>
+          <p>$$\\mathbb{Z}/\\eta_r = \\{[0]_{\\eta_r}, [1]_{\\eta_r}, [2]_{\\eta_r}, [3]_{\\eta_r}\\}, \\qquad [s]_{\\eta_r} = \\{4k + s : k \\in \\mathbb{Z}\\}$$</p>
+          <p>Sono $4$ classi, distinte perché resti distinti, e ogni intero sta in una di esse.</p>
+          <p><strong>Componente suriettiva.</strong> $p_{\\eta_r}: \\mathbb{Z} \\to \\mathbb{Z}/\\eta_r$, $p_{\\eta_r}(n) = [n]_{\\eta_r}$.</p>
+          <p><strong>Componente biiettiva.</strong> $r'_*: \\mathbb{Z}/\\eta_r \\to \\{0,1,2,3\\}$, $r'_*([n]_{\\eta_r}) = r(n)$, cioè $[s]_{\\eta_r} \\mapsto s$ per $s = 0,1,2,3$: è ben definita (classi uguali hanno lo stesso resto), iniettiva (resti uguali implicano classi uguali) e suriettiva, dunque biiettiva.</p>
+          <p><strong>Componente iniettiva.</strong> $j_r: \\{0,1,2,3\\} \\to \\mathbb{Z}$, $j_r(s) = s$.</p>
+          <p><strong>Verifica.</strong> Per ogni $n$:</p>
+          <p>$$(j_r \\circ r'_* \\circ p_{\\eta_r})(n) = j_r(r'_*([n]_{\\eta_r})) = j_r(r(n)) = r(n)$$</p>
+          <p>quindi $r = j_r \\circ r'_* \\circ p_{\\eta_r}$.</p>`
+      },
+
+      {
+        id: "s06-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4 — La parabola $f(n) = n^2 - 2n$ su $\\mathbb{Z}$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $f: \\mathbb{Z} \\to \\mathbb{Z}$ definita da $f(n) = n^2 - 2n$. Descrivi la relazione $\\eta_f$ e le sue classi di equivalenza (indicando quali sono singoletti), determina $\\mathrm{Im}(f)$ e scrivi la decomposizione canonica $f = j_f \\circ f_* \\circ p_{\\eta_f}$. La funzione $f$ è iniettiva? È suriettiva?</p>`,
+        solution: `<p><strong>Relazione $\\eta_f$.</strong> Per $n, m \\in \\mathbb{Z}$, $f(n) = f(m)$ equivale a $n^2 - 2n = m^2 - 2m$, cioè $n^2 - m^2 - 2(n - m) = 0$, cioè</p>
+          <p>$$(n - m)(n + m - 2) = 0$$</p>
+          <p>Dunque $n \\ \\eta_f \\ m \\iff (m = n \\ \\lor \\ m = 2 - n)$.</p>
+          <p><strong>Classi.</strong> $[n]_{\\eta_f} = \\{n, 2 - n\\}$. Una classe è un singoletto quando $n = 2 - n$, cioè $n = 1$: l'unica classe con un solo elemento è $[1] = \\{1\\}$, tutte le altre hanno esattamente due elementi (per esempio $[0] = \\{0, 2\\}$, $[-1] = \\{-1, 3\\}$). Ogni classe ha uno e un solo rappresentante $n \\ge 1$, quindi</p>
+          <p>$$\\mathbb{Z}/\\eta_f = \\{\\, \\{n, 2-n\\} : n \\ge 1 \\,\\}$$</p>
+          <p><strong>Immagine.</strong> Completando il quadrato, $f(n) = (n-1)^2 - 1$; al variare di $n \\in \\mathbb{Z}$ il numero $n - 1$ percorre tutto $\\mathbb{Z}$, quindi $(n-1)^2$ percorre tutti i quadrati perfetti e</p>
+          <p>$$\\mathrm{Im}(f) = \\{k^2 - 1 : k \\in \\mathbb{N}_0\\} = \\{-1, 0, 3, 8, 15, 24, \\dots\\}$$</p>
+          <p><strong>Decomposizione.</strong> $p_{\\eta_f}: \\mathbb{Z} \\to \\mathbb{Z}/\\eta_f$, $p_{\\eta_f}(n) = \\{n, 2-n\\}$, suriettiva; $f_*: \\mathbb{Z}/\\eta_f \\to \\mathrm{Im}(f)$,</p>
+          <p>$$f_*(\\{n, 2-n\\}) = n^2 - 2n = (n-1)^2 - 1$$</p>
+          <p>ben definita (i due rappresentanti danno lo stesso valore, perché $(2-n)^2 - 2(2-n) = n^2 - 2n$) e biiettiva; $j_f: \\mathrm{Im}(f) \\hookrightarrow \\mathbb{Z}$ inclusione, iniettiva.</p>
+          <p><strong>Iniettività e suriettività.</strong> $f$ non è iniettiva, perché per esempio $f(0) = f(2) = 0$ con $0 \\neq 2$ (equivalentemente, esistono classi non singoletto). $f$ non è suriettiva, perché $\\mathrm{Im}(f) \\neq \\mathbb{Z}$: per esempio $1 \\notin \\mathrm{Im}(f)$, dato che $1 = k^2 - 1$ non ha soluzioni intere.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "formula",
+        front: "Enuncia il Teorema Fondamentale di Decomposizione di una funzione.",
+        back: "Ogni $f: A \\to B$ si scrive in modo canonico come $$f = j_f \\circ f'_* \\circ p_{\\eta_f}$$ dove $p_{\\eta_f}: A \\twoheadrightarrow A/\\eta_f$, $p_{\\eta_f}(a) = [a]_{\\eta_f}$, è suriettiva; $f'_*: A/\\eta_f \\overset{\\sim}{\\longrightarrow} \\mathrm{Im}(f)$, $f'_*([a]_{\\eta_f}) = f(a)$, è biiettiva; $j_f: \\mathrm{Im}(f) \\hookrightarrow B$, $j_f(y) = y$, è iniettiva."
+      },
+      {
+        type: "tranello",
+        front: "È vero che $f_*: A/\\eta_f \\to B$ è biiettiva?",
+        back: "No in generale. La convenzione del corso è: $f'_*: A/\\eta_f \\to \\mathrm{Im}(f)$ è <strong>sempre biiettiva</strong>; $f_*: A/\\eta_f \\to B$ è <strong>sempre iniettiva</strong> ed è biiettiva <strong>se e solo se $f$ è suriettiva</strong> (cioè $\\mathrm{Im}(f) = B$). Vale $f_* = j_f \\circ f'_*$. Confondere le due è l'errore classico."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la relazione $\\eta_f$ indotta da una funzione $f: A \\to B$ e dimostra che è di equivalenza.",
+        back: "$x \\ \\eta_f \\ y \\iff f(x) = f(y)$. È riflessiva perché $f(x) = f(x)$; simmetrica perché $f(x) = f(y) \\Rightarrow f(y) = f(x)$; transitiva perché $f(x)=f(y)$ e $f(y)=f(z)$ danno $f(x)=f(z)$. Sono tutte proprietà dell'uguaglianza in $B$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Perché la posizione $f'_*([a]_{\\eta_f}) = f(a)$ è ben definita?",
+        back: "Perché non dipende dal rappresentante: se $[a]_{\\eta_f} = [a']_{\\eta_f}$ allora $a \\ \\eta_f \\ a'$, che per definizione di $\\eta_f$ significa esattamente $f(a) = f(a')$. Inoltre $f(a) \\in \\mathrm{Im}(f)$, quindi il codominio dichiarato è corretto."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è il nucleo $\\ker(f)$ di una funzione tra insiemi, e che legame ha con $\\eta_f$?",
+        back: "$\\ker(f) = \\{ (x,y) \\in A \\times A \\mid f(x) = f(y) \\}$. Coincide esattamente con la relazione di equivalenza indotta: $\\ker(f) = \\eta_f$. Nota: in algebra lineare e teoria dei gruppi il nucleo si definisce come controimmagine dell'elemento neutro; questa definizione è più generale e vale per insiemi qualsiasi."
+      },
+      {
+        type: "domanda",
+        front: "In che senso $A/\\eta_f$ è l'insieme delle fibre di $f$?",
+        back: "Se $y \\in \\mathrm{Im}(f)$, la fibra $f^{-1}(\\{y\\}) = \\{x \\in A \\mid f(x) = y\\}$ è non vuota ed è esattamente una classe di equivalenza di $\\eta_f$; se $y \\notin \\mathrm{Im}(f)$ la fibra è vuota. Quindi $A/\\eta_f$ è l'insieme di tutte le <strong>fibre non vuote</strong> di $f$."
+      },
+      {
+        type: "domanda",
+        front: "Decomponi la funzione valore assoluto $v: \\mathbb{Z} \\to \\mathbb{Q}$, $v(z) = |z|$.",
+        back: "Classi: $[0]_{\\eta_v} = \\{0\\}$ e $[n]_{\\eta_v} = \\{n,-n\\}$ per $n \\in \\mathbb{N}_{\\gt 0}$. Allora $p_{\\eta_v}(z) = [z]_{\\eta_v}$ (suriettiva), $v'_*([z]_{\\eta_v}) = |z|$ con codominio $\\mathrm{Im}(v) = \\mathbb{N}_0$ (biiettiva), $j_v: \\mathbb{N}_0 \\hookrightarrow \\mathbb{Q}$ (iniettiva). Il codominio della biezione deve essere $\\mathbb{N}_0$ e non $\\mathbb{N}_{\\gt 0}$, perché la classe $\\{0\\}$ va in $0$."
+      },
+      {
+        type: "definizione",
+        front: "Quali proprietà definiscono un ordinamento parziale? E un ordine totale?",
+        back: "Un ordine parziale $\\rho$ su $A$ è riflessivo ($a \\rho a$), antisimmetrico ($a \\rho b \\land b \\rho a \\Rightarrow a = b$) e transitivo. $(A,\\rho)$ si dice poset. È un <strong>ordine totale</strong> se inoltre per ogni $a,b$ vale $a \\rho b$ oppure $b \\rho a$, cioè tutti gli elementi sono confrontabili."
+      },
+      {
+        type: "tranello",
+        front: "La divisibilità è una relazione d'ordine su $\\mathbb{Z}$?",
+        back: "No. Su $\\mathbb{Z}$ si definisce $a \\mid b \\iff \\exists k \\in \\mathbb{Z} : b = k a$, e con questa definizione cade l'antisimmetria: $2 \\mid -2$ (con $k=-1$) e $-2 \\mid 2$ (con $k=-1$), ma $2 \\neq -2$. Su $\\mathbb{N}_{\\gt 0}$ invece il moltiplicatore è positivo, da $k_1 k_2 = 1$ segue $k_1 = k_2 = 1$ e l'antisimmetria vale: su $\\mathbb{N}_{\\gt 0}$ la divisibilità è un ordine parziale (non totale: $2$ e $3$ non si confrontano)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dato un ordine largo $\\rho$, perché $a \\sigma b \\iff (a \\rho b \\land a \\neq b)$ è un ordine stretto?",
+        back: "Irriflessività: $a \\neq a$ è falso, quindi $\\neg(a \\sigma a)$. Transitività: da $a \\rho b$, $a \\neq b$, $b \\rho c$, $b \\neq c$ segue $a \\rho c$; se fosse $a = c$, da $a \\rho b$ e $b \\rho a$ l'<strong>antisimmetria di $\\rho$</strong> darebbe $a = b$, assurdo. Insiemisticamente $\\sigma = \\rho \\setminus \\Delta$ e, essendo $\\Delta \\subseteq \\rho$, riaggiungendo la diagonale si ritrova $\\rho$."
+      },
+      {
+        type: "domanda",
+        front: "Un ordine stretto è antisimmetrico?",
+        back: "Sì, automaticamente. Se valessero $a \\sigma b$ e $b \\sigma a$, per transitività si avrebbe $a \\sigma a$, contro l'irriflessività. Quindi non possono valere contemporaneamente, e l'antisimmetria è vacuamente verificata."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è un'operazione n-aria? E il caso $n = 0$?",
+        back: "Fissato $n \\in \\mathbb{N}_0$, un'operazione n-aria su $S$ è un'applicazione $S^n \\to S$. Per $n=2$ si parla di operazione binaria e $(S,*)$ si dice <strong>gruppoide</strong>. Per $n=0$ si pone $S^0 = \\{pt\\}$ (insieme con un solo elemento) e un'operazione nullaria $\\zeta: \\{pt\\} \\to S$ equivale alla scelta di un elemento particolare di $S$ (tipicamente l'elemento neutro)."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la gerarchia: gruppoide, gruppoide unitario, semigruppo, monoide, gruppo.",
+        back: "Gruppoide: insieme con un'operazione binaria (chiusa). Gruppoide unitario: gruppoide con elemento neutro. Semigruppo: gruppoide associativo. Monoide: semigruppo con elemento neutro. Gruppo: monoide in cui ogni elemento è invertibile. I quattro requisiti di gruppo: chiusura, associatività, esistenza di $e$, esistenza dell'inverso per ogni elemento."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra l'unicità dell'elemento neutro in un gruppoide $(S,*)$.",
+        back: "Siano $e, e'$ due elementi neutri. Poiché $e'$ è neutro, $s * e' = s$ per ogni $s$, e con $s = e$ si ha $e*e' = e$. Poiché $e$ è neutro, $e*s = s$ per ogni $s$, e con $s = e'$ si ha $e*e' = e'$. Confrontando: $e = e'$. (L'unicità dell'inverso richiede invece l'associatività e in aula è stata lasciata come esercizio.)"
+      },
+      {
+        type: "domanda",
+        front: "Che cos'è $U(M)$ per un monoide $(M,*,e)$ e perché è un gruppo?",
+        back: "$U(M) = \\{m \\in M \\mid \\exists\\, m^{-1} \\in M\\}$ è l'insieme degli elementi invertibili. L'operazione si restringe a $U(M)$ perché il prodotto di invertibili è invertibile: l'inverso di $a*b$ è $b^{-1}*a^{-1}$. Con elemento neutro $e$, $(U(M),*)$ è un gruppo. Esempi: $U(\\mathbb{Z}) = \\{1,-1\\}$, $U(\\mathbb{N}_0,\\cdot) = \\{1\\}$, e $(\\mathbb{Q}^*,\\cdot) = U(\\mathbb{Q},\\cdot)$ è un gruppo commutativo."
+      },
+      {
+        type: "tranello",
+        front: "La tavola di Cayley della somma su $S = \\{1,2,3\\}$ definisce un'operazione binaria su $S$?",
+        back: "No. Nelle caselle compaiono $4,5,6$, che non appartengono a $S$: manca la <strong>chiusura</strong>. Una vera operazione binaria su $S$ deve avere codominio $S$. L'esempio serve solo a illustrare come si costruisce la tavola."
+      },
+      {
+        type: "domanda",
+        front: "Classifica $(\\mathbb{N}_0,+)$, $(\\mathbb{N}_{\\gt 0},+)$, $(\\mathbb{Z},+)$ e $(\\mathbb{Z},\\cdot)$.",
+        back: "$(\\mathbb{N}_0,+)$: monoide commutativo con $e=0$ (non gruppo, manca l'inverso). $(\\mathbb{N}_{\\gt 0},+)$: solo semigruppo commutativo, perché $0 \\notin \\mathbb{N}_{\\gt 0}$. $(\\mathbb{Z},+)$: gruppo commutativo (abeliano), $e=0$, inverso $-z$. $(\\mathbb{Z},\\cdot)$: monoide commutativo con $e=1$, non gruppo, $U(\\mathbb{Z}) = \\{1,-1\\}$."
+      }
+    ]
+};
+
