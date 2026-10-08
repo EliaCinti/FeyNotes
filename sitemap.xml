@@ -571,6 +571,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://feynotes.eliacinti.dev/analisi1/lezioni/L10/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://feynotes.eliacinti.dev/fisica2/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
