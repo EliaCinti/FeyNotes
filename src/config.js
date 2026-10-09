@@ -203,6 +203,7 @@ const COURSES = {
       { label: 'Lezioni', href: '/analisi1/', active: true },
     ],
     categories: [
+      { id: 'induzione e coefficiente binomiale', label: 'induzione e coefficiente binomiale', gridId: 'induzione e coefficiente binomiale-grid' },
       { id: 'numeri-reali', label: 'numeri reali, insiemi e completezza', gridId: 'numeri-reali-grid' },
       { id: 'funzioni e successioni', label: 'funzioni e successioni', gridId: 'funzioni e successioni-grid' },
       { id: 'limiti-e-continuita', label: 'limiti e continuità', gridId: 'limiti-e-continuita-grid' },
