@@ -77,7 +77,12 @@
   </div>
 
   <div class="fn-section fn-fade fn-d3">
-    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> induzione e coefficiente binomiale · limiti e continuità · derivate e studio di funzione · integrali · numeri complessi · equazioni differenziali</div>
+    <div class="fn-section-label">// induzione e coefficiente binomiale</div>
+    <div class="fn-grid" id="induzione e coefficiente binomiale-grid"></div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> limiti e continuità · derivate e studio di funzione · integrali · numeri complessi · equazioni differenziali</div>
   </div>
 
 
@@ -187,6 +192,15 @@ const LESSON_INDEX = [
     "abstract": "Richiami su esponenziale e logaritmo naturale, costruzione delle funzioni iperboliche $\\cosh$, $\\sinh$, $\\tanh$ e delle loro inverse (settore seno, coseno e tangente iperbolica), con il calcolo esplicito di $\\text{settsenh}$. Nella seconda parte: valore assoluto, parte positiva e negativa, traslazioni, dilatazioni e compressioni dei grafici.",
     "category": "funzioni e successioni",
     "file": "/analisi1/lezioni/L10/"
+  },
+  {
+    "id": "L11",
+    "num": "Lezione 11",
+    "date": "9 Ott 2026",
+    "title": "Funzioni Iperboliche, Principio di Induzione e Calcolo Combinatorio",
+    "abstract": "Chiudiamo il capitolo sulle funzioni iperboliche con l'identità fondamentale $\\cosh^2 x - \\sinh^2 x = 1$ e la sua lettura geometrica sul ramo destro dell'iperbole. Introduciamo poi il principio di induzione (con l'immagine del domino), la notazione di sommatoria, due applicazioni classiche (somma geometrica e disuguaglianza di Bernoulli) e le basi del calcolo combinatorio: permutazioni, disposizioni semplici, combinazioni e coefficiente binomiale con le sue proprietà, fino alla formula di Stifel e al triangolo di Tartaglia.",
+    "category": "induzione e coefficiente binomiale",
+    "file": "/analisi1/lezioni/L11/"
   }
 ];
 
@@ -213,6 +227,7 @@ function populateGrid(gridId, category) {
 
 populateGrid('numeri-reali-grid', 'numeri-reali');
 populateGrid('funzioni e successioni-grid', 'funzioni e successioni');
+populateGrid('induzione e coefficiente binomiale-grid', 'induzione e coefficiente binomiale');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;
