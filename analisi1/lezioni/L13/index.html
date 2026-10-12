@@ -1,0 +1,3567 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="anno1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 13 — Analisi Matematica 1 — FeyNotes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1330'/%3E%3Cg fill='none' stroke='%237c9cff' stroke-width='1.5'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(120 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ffcf5c'/%3E%3C/svg%3E">
+  <meta name="description" content="Analisi Matematica 1, Lezione 13: Funzioni Elementari e Primi Limiti di Successioni. Parte intera e parte frazionaria, definizione di limite di successione (finito e infinito), verifica con la definizione, limiti elementari e algebra dei limiti. Nella seconda parte, esercizi svolti sul dominio di funzioni composte con logaritmi, radici e valori assoluti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 13: Funzioni Elementari e Primi Limiti di Successioni — Analisi Matematica 1">
+  <meta property="og:description" content="Parte intera e parte frazionaria, definizione di limite di successione (finito e infinito), verifica con la definizione, limiti elementari e algebra dei limiti. Nella seconda parte, esercizi svolti sul dominio di funzioni composte con logaritmi, radici e valori assoluti.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://feynotes.eliacinti.dev/analisi1/lezioni/L13/">
+  <link rel="canonical" href="https://feynotes.eliacinti.dev/analisi1/lezioni/L13/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=21">
+  <link rel="stylesheet" href="/css/style.css?v=21">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 13 — Funzioni Elementari e Primi Limiti di Successioni",
+  "description": "Parte intera e parte frazionaria, definizione di limite di successione (finito e infinito), verifica con la definizione, limiti elementari e algebra dei limiti. Nella seconda parte, esercizi svolti sul dominio di funzioni composte con logaritmi, radici e valori assoluti.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://feynotes.eliacinti.dev/analisi1/lezioni/L13/",
+  "datePublished": "2026-10-12",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Analisi Matematica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/analisi1/" class="header-logo">
+    
+    Analisi Matematica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 13</span>
+  <nav class="header-nav">
+    <a href="/analisi1/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/analisi1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/analisi1/lezioni/L12/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L13", date: "Lezione 13 — 12 Ott 2026",
+    title: "Funzioni Elementari e Primi Limiti di Successioni",
+    abstract: "Parte intera e parte frazionaria, definizione di limite di successione (finito e infinito), verifica con la definizione, limiti elementari e algebra dei limiti. Nella seconda parte, esercizi svolti sul dominio di funzioni composte con logaritmi, radici e valori assoluti.",
+
+    sections: [
+      {
+        id: "s13-parte-intera",
+        type: "section",
+        title: "La funzione parte intera (o funzione pavimento)",
+        icon: "🪜",
+        content: `<p>Iniziamo con la definizione della funzione parte intera.</p>
+<p><strong>Definizione (Parte Intera).</strong> Dato un numero reale $x \\in \\mathbb{R}$, la sua <strong>parte intera</strong>, indicata con $[x]$, è il più grande intero minore o uguale a $x$. Formalmente:</p>
+<p>$$[x] = \\max \\{ n \\in \\mathbb{Z} \\mid n \\le x \\}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Esempi",
+            content: `<ul>
+<li>Se consideriamo il numero $2.14$, la sua parte intera è $2$. Infatti, gli interi minori o uguali a $2.14$ sono $2, 1, 0, -1, \\dots$ e il più grande tra questi è $2$. Quindi $[2.14] = 2$.</li>
+<li>La parte intera di $\\pi \\approx 3.14159$ è $[\\pi] = 3$.</li>
+<li>La parte intera di $e \\approx 2.718$ è $[e] = 2$.</li>
+</ul>`
+          },
+          {
+            subtitle: "Attenzione: parte intera di numeri negativi",
+            content: `<p>Attenzione a come si calcola la parte intera per i numeri negativi. La definizione richiede il più grande intero <em>minore o uguale</em> al numero.</p>
+<p>Ad esempio, per calcolare $[-0.5]$, dobbiamo cercare il più grande intero che sta "sotto" (a sinistra sulla retta reale) di $-0.5$. Gli interi minori o uguali a $-0.5$ sono $-1, -2, -3, \\dots$. Il più grande di questi è $-1$.</p>
+<p>Quindi:</p>
+<p>$$[-0.5] = -1$$</p>
+<p>Analogamente:</p>
+<p>$$[-1.5] = -2$$</p>
+<p>L'<strong>errore comune</strong> è pensare che la parte intera sia semplicemente il numero senza le cifre decimali. Questo è vero per i numeri positivi, ma <strong>non</strong> per quelli negativi.</p>`
+          },
+          {
+            subtitle: "Il grafico: una funzione a gradini",
+            content: `<p>Il grafico della funzione parte intera è una funzione a gradini (o a scala).</p>
+<ul>
+<li>Per tutti i numeri $x$ nell'intervallo $[0, 1)$, la parte intera è $0$.</li>
+<li>Per tutti i numeri $x$ nell'intervallo $[1, 2)$, la parte intera è $1$.</li>
+<li>Per tutti i numeri $x$ nell'intervallo $[2, 3)$, la parte intera è $2$.</li>
+<li>Per i negativi, per $x \\in [-1, 0)$, la parte intera è $-1$.</li>
+</ul>
+<figure class="figura" data-id="analisi1_lez13a_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez13a_g1-figure_1">
+  <g id="analisi1_lez13a_g1-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez13a_g1-axes_1">
+   <g id="analisi1_lez13a_g1-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez13a_g1-matplotlib.axis_1">
+    <g id="analisi1_lez13a_g1-xtick_1">
+     <g id="analisi1_lez13a_g1-line2d_1">
+      <path d="M 53.987097 364 
+L 53.987097 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_2">
+      <defs>
+       <path id="analisi1_lez13a_g1-m78f898aebb" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="53.987097" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_1">
+      <!-- -3 -->
+      <g style="fill: currentColor" transform="translate(48.503425 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g1-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez13a_g1-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-16" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-xtick_2">
+     <g id="analisi1_lez13a_g1-line2d_3">
+      <path d="M 145.858065 364 
+L 145.858065 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="145.858065" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_2">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(140.374393 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g1-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-xtick_3">
+     <g id="analisi1_lez13a_g1-line2d_5">
+      <path d="M 237.729032 364 
+L 237.729032 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="237.729032" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_3">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(232.24536 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g1-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-xtick_4">
+     <g id="analisi1_lez13a_g1-line2d_7">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_4">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(326.100625 208.857422) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g1-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-xtick_5">
+     <g id="analisi1_lez13a_g1-line2d_9">
+      <path d="M 421.470968 364 
+L 421.470968 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="421.470968" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_5">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(417.971593 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-xtick_6">
+     <g id="analisi1_lez13a_g1-line2d_11">
+      <path d="M 513.341935 364 
+L 513.341935 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="513.341935" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_6">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(509.84256 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-xtick_7">
+     <g id="analisi1_lez13a_g1-line2d_13">
+      <path d="M 605.212903 364 
+L 605.212903 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m78f898aebb" x="605.212903" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_7">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(601.713528 208.857422) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g1-matplotlib.axis_2">
+    <g id="analisi1_lez13a_g1-ytick_1">
+     <g id="analisi1_lez13a_g1-line2d_15">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_16">
+      <defs>
+       <path id="analisi1_lez13a_g1-m0244923091" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m0244923091" x="329.6" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_8">
+      <!-- -4 -->
+      <g style="fill: currentColor" transform="translate(312.132656 368.178711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g1-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-17" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-ytick_2">
+     <g id="analisi1_lez13a_g1-line2d_17">
+      <path d="M 44.8 279 
+L 614.4 279 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m0244923091" x="329.6" y="279" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_9">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(312.132656 283.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-ytick_3">
+     <g id="analisi1_lez13a_g1-line2d_19">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m0244923091" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_10">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(316.10125 198.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-ytick_4">
+     <g id="analisi1_lez13a_g1-line2d_21">
+      <path d="M 44.8 109 
+L 614.4 109 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m0244923091" x="329.6" y="109" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_11">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(316.10125 113.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g1-ytick_5">
+     <g id="analisi1_lez13a_g1-line2d_23">
+      <path d="M 44.8 24 
+L 614.4 24 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g1-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g1-m0244923091" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g1-text_12">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(316.10125 28.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g1-line2d_25">
+    <defs>
+     <path id="analisi1_lez13a_g1-m63db96e22c" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g1-m63db96e22c" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g1-line2d_26">
+    <defs>
+     <path id="analisi1_lez13a_g1-m4c5be3a2c5" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g1-m4c5be3a2c5" x="329.6" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g1-line2d_27">
+    <path d="M 44.8 364 
+L 53.826188 364 
+L 54.301251 321.5 
+L 145.513261 321.5 
+L 145.988324 279 
+L 237.675396 279 
+L 238.150459 236.5 
+L 329.362469 236.5 
+L 329.837531 194 
+L 421.049541 194 
+L 421.524604 151.5 
+L 513.211676 151.5 
+L 513.686739 109 
+L 604.898749 109 
+L 605.373812 66.5 
+L 614.4 66.5 
+L 614.4 66.5 
+" clip-path="url(#analisi1_lez13a_g1-pab84314ce3)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g1-patch_3">
+    <path d="M 329.6 364 
+L 329.6 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g1-patch_4">
+    <path d="M 44.8 194 
+L 614.4 194 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g1-legend_1">
+    <g id="analisi1_lez13a_g1-line2d_28">
+     <path d="M 538.5 38.41 
+L 549.5 38.41 
+L 560.5 38.41 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez13a_g1-text_13">
+     <g style="fill: currentColor" transform="translate(569.3 42.26) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez13a_g1-DejaVuSans-Oblique-5c" d="M 1588 -325 
+Q 1188 -997 936 -1164 
+Q 684 -1331 294 -1331 
+L -159 -1331 
+L -63 -850 
+L 269 -850 
+Q 509 -850 678 -719 
+Q 847 -588 1056 -206 
+L 1234 128 
+L 459 3500 
+L 1069 3500 
+L 1650 819 
+L 3256 3500 
+L 3859 3500 
+L 1588 -325 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g1-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g1-DejaVuSans-3e" d="M 550 4863 
+L 1875 4863 
+L 1875 4416 
+L 1125 4416 
+L 1125 -397 
+L 1875 -397 
+L 1875 -844 
+L 550 -844 
+L 550 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g1-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g1-DejaVuSans-40" d="M 1947 4863 
+L 1947 -844 
+L 622 -844 
+L 622 -397 
+L 1369 -397 
+L 1369 4416 
+L 622 4416 
+L 622 4863 
+L 1947 4863 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-Oblique-5c" transform="translate(0 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-20" transform="translate(78.662109 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-3e" transform="translate(181.933594 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-Oblique-5b" transform="translate(220.947266 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g1-DejaVuSans-40" transform="translate(280.126953 0.015625)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez13a_g1-pab84314ce3">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>La funzione è costante a tratti e presenta delle discontinuità a salto in ogni punto intero.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Parte intera", latex: "[x] = \\max \\{ n \\in \\mathbb{Z} \\mid n \\le x \\}" }
+        ]
+      },
+      {
+        id: "s13-parte-frazionaria",
+        type: "section",
+        title: "La funzione parte frazionaria (o mantissa)",
+        icon: "🦷",
+        content: `<p>Strettamente legata alla parte intera è la funzione parte frazionaria.</p>
+<p><strong>Definizione (Parte Frazionaria).</strong> Dato un numero reale $x \\in \\mathbb{R}$, la sua <strong>parte frazionaria</strong> (o <strong>mantissa</strong>), indicata con $\\{x\\}$, è la differenza tra il numero stesso e la sua parte intera:</p>
+<p>$$\\{x\\} = x - [x]$$</p>`,
+        subsections: [
+          {
+            subtitle: "Esempi",
+            content: `<ul>
+<li>$\\{2.14\\} = 2.14 - [2.14] = 2.14 - 2 = 0.14$</li>
+<li>$\\{\\pi\\} = \\pi - [\\pi] = \\pi - 3 \\approx 0.14159$</li>
+<li>Per i numeri negativi: $\\{-0.5\\} = -0.5 - [-0.5] = -0.5 - (-1) = 0.5$</li>
+</ul>
+<p><strong>Osservazione.</strong> La parte frazionaria di un numero è sempre un numero nell'intervallo $[0, 1)$.</p>`
+          },
+          {
+            subtitle: "Il grafico: onda a dente di sega",
+            content: `<p>Il grafico della funzione parte frazionaria è una "onda a dente di sega".</p>
+<ul>
+<li>Per $x \\in [0, 1)$, $\\{x\\} = x - 0 = x$.</li>
+<li>Per $x \\in [1, 2)$, $\\{x\\} = x - 1$.</li>
+<li>Per $x \\in [2, 3)$, $\\{x\\} = x - 2$.</li>
+</ul>
+<figure class="figura" data-id="analisi1_lez13a_g2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez13a_g2-figure_1">
+  <g id="analisi1_lez13a_g2-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez13a_g2-axes_1">
+   <g id="analisi1_lez13a_g2-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez13a_g2-matplotlib.axis_1">
+    <g id="analisi1_lez13a_g2-xtick_1">
+     <g id="analisi1_lez13a_g2-line2d_1">
+      <path d="M 70.690909 364 
+L 70.690909 24 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_2">
+      <defs>
+       <path id="analisi1_lez13a_g2-md49ce45615" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-md49ce45615" x="70.690909" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_1">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(65.207237 317.03924) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g2-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez13a_g2-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-14" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g2-xtick_2">
+     <g id="analisi1_lez13a_g2-line2d_3">
+      <path d="M 200.145455 364 
+L 200.145455 24 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-md49ce45615" x="200.145455" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_2">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(196.64608 317.03924) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g2-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g2-xtick_3">
+     <g id="analisi1_lez13a_g2-line2d_5">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-md49ce45615" x="329.6" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_3">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(326.100625 317.03924) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g2-xtick_4">
+     <g id="analisi1_lez13a_g2-line2d_7">
+      <path d="M 459.054545 364 
+L 459.054545 24 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-md49ce45615" x="459.054545" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_4">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(455.55517 317.03924) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g2-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g2-xtick_5">
+     <g id="analisi1_lez13a_g2-line2d_9">
+      <path d="M 588.509091 364 
+L 588.509091 24 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-md49ce45615" x="588.509091" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_5">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(585.009716 317.03924) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g2-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-matplotlib.axis_2">
+    <g id="analisi1_lez13a_g2-ytick_1">
+     <g id="analisi1_lez13a_g2-line2d_11">
+      <path d="M 44.8 302.181818 
+L 614.4 302.181818 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_12">
+      <defs>
+       <path id="analisi1_lez13a_g2-m6d2a0fa378" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-m6d2a0fa378" x="200.145455" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_6">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(186.646705 306.360529) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g2-ytick_2">
+     <g id="analisi1_lez13a_g2-line2d_13">
+      <path d="M 44.8 96.121212 
+L 614.4 96.121212 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g2-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g2-m6d2a0fa378" x="200.145455" y="96.121212" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g2-text_7">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(186.646705 100.299923) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_15">
+    <defs>
+     <path id="analisi1_lez13a_g2-me701d77502" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g2-me701d77502" x="614.4" y="302.181818" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_16">
+    <defs>
+     <path id="analisi1_lez13a_g2-mb9d573aeb2" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g2-mb9d573aeb2" x="200.145455" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_17">
+    <path d="M 44.8 343.393939 
+L 261.160428 -1 
+L 261.160428 -1 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_18">
+    <path d="M 138.064385 401 
+L 390.614973 -1 
+L 390.614973 -1 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #2f9e8f; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_19">
+    <path d="M 267.51893 401 
+L 520.069519 -1 
+L 520.069519 -1 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #d97706; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_20">
+    <path d="M 396.973476 401 
+L 614.4 54.909091 
+L 614.4 54.909091 
+" clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)" style="fill: none; stroke: #c2185b; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g2-patch_3">
+    <path d="M 200.145455 364 
+L 200.145455 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g2-patch_4">
+    <path d="M 44.8 302.181818 
+L 614.4 302.181818 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_21">
+    <defs>
+     <path id="analisi1_lez13a_g2-mbda7db7bd9" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)">
+     <use xlink:href="#analisi1_lez13a_g2-mbda7db7bd9" x="70.690909" y="302.181818" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_22">
+    <g clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)">
+     <use xlink:href="#analisi1_lez13a_g2-mbda7db7bd9" x="200.145455" y="302.181818" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_23">
+    <g clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)">
+     <use xlink:href="#analisi1_lez13a_g2-mbda7db7bd9" x="329.6" y="302.181818" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_24">
+    <g clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)">
+     <use xlink:href="#analisi1_lez13a_g2-mbda7db7bd9" x="459.054545" y="302.181818" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-line2d_25">
+    <g clip-path="url(#analisi1_lez13a_g2-pd1a21934f4)">
+     <use xlink:href="#analisi1_lez13a_g2-mbda7db7bd9" x="588.509091" y="302.181818" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g2-legend_1">
+    <g id="analisi1_lez13a_g2-line2d_26">
+     <path d="M 533.11 38.41 
+L 544.11 38.41 
+L 555.11 38.41 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez13a_g2-text_8">
+     <g style="fill: currentColor" transform="translate(563.91 42.26) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez13a_g2-DejaVuSans-Oblique-5c" d="M 1588 -325 
+Q 1188 -997 936 -1164 
+Q 684 -1331 294 -1331 
+L -159 -1331 
+L -63 -850 
+L 269 -850 
+Q 509 -850 678 -719 
+Q 847 -588 1056 -206 
+L 1234 128 
+L 459 3500 
+L 1069 3500 
+L 1650 819 
+L 3256 3500 
+L 3859 3500 
+L 1588 -325 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g2-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g2-DejaVuSans-5e" d="M 3272 -594 
+L 3272 -1044 
+L 3078 -1044 
+Q 2300 -1044 2036 -812 
+Q 1772 -581 1772 109 
+L 1772 856 
+Q 1772 1328 1603 1509 
+Q 1434 1691 991 1691 
+L 800 1691 
+L 800 2138 
+L 991 2138 
+Q 1438 2138 1605 2317 
+Q 1772 2497 1772 2963 
+L 1772 3713 
+Q 1772 4403 2036 4633 
+Q 2300 4863 3078 4863 
+L 3272 4863 
+L 3272 4416 
+L 3059 4416 
+Q 2619 4416 2484 4278 
+Q 2350 4141 2350 3700 
+L 2350 2925 
+Q 2350 2434 2208 2212 
+Q 2066 1991 1722 1913 
+Q 2069 1828 2209 1606 
+Q 2350 1384 2350 897 
+L 2350 122 
+Q 2350 -319 2484 -456 
+Q 2619 -594 3059 -594 
+L 3272 -594 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g2-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g2-DejaVuSans-60" d="M 800 -594 
+L 1019 -594 
+Q 1456 -594 1589 -459 
+Q 1722 -325 1722 122 
+L 1722 897 
+Q 1722 1384 1862 1606 
+Q 2003 1828 2350 1913 
+Q 2003 1991 1862 2212 
+Q 1722 2434 1722 2925 
+L 1722 3700 
+Q 1722 4144 1589 4280 
+Q 1456 4416 1019 4416 
+L 800 4416 
+L 800 4863 
+L 997 4863 
+Q 1775 4863 2036 4633 
+Q 2297 4403 2297 3713 
+L 2297 2963 
+Q 2297 2497 2465 2317 
+Q 2634 2138 3078 2138 
+L 3272 2138 
+L 3272 1691 
+L 3078 1691 
+Q 2634 1691 2465 1509 
+Q 2297 1328 2297 856 
+L 2297 109 
+Q 2297 -581 2036 -812 
+Q 1775 -1044 997 -1044 
+L 800 -1044 
+L 800 -594 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-Oblique-5c" transform="translate(0 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-20" transform="translate(78.662109 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-5e" transform="translate(181.933594 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-Oblique-5b" transform="translate(245.556641 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g2-DejaVuSans-60" transform="translate(304.736328 0.015625)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez13a_g2-pd1a21934f4">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>Ogni ramo è il segmento $y = x - k$ sull'intervallo semiaperto $[k, k+1)$: <strong>chiuso a quota $0$</strong> in $x = k$ e <strong>aperto a quota $1$</strong> in $x = k+1$. I rami non sono collegati da tratti verticali. La funzione è periodica di periodo $1$ e il suo codominio è $[0, 1)$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Parte frazionaria", latex: "\\{x\\} = x - [x]" },
+          { label: "Codominio", latex: "\\{x\\} \\in [0, 1) \\quad \\forall x \\in \\mathbb{R}" }
+        ]
+      },
+      {
+        id: "s13-def-limite",
+        type: "section",
+        title: "Limiti di successioni: la definizione",
+        icon: "🎯",
+        content: `<p>Ricordiamo la definizione formale di limite di una successione.</p>
+<p><strong>Definizione (Limite di una successione).</strong> Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione a valori reali e sia $l \\in \\mathbb{R}$. Si dice che la successione $a_n$ converge al limite $l$ per $n$ che tende a infinito, e si scrive</p>
+<p>$$\\lim_{n \\to +\\infty} a_n = l$$</p>
+<p>se, per ogni $\\epsilon \\gt 0$, la disuguaglianza $|a_n - l| \\lt \\epsilon$ è soddisfatta <strong>definitivamente</strong>.</p>
+<p>"Definitivamente" significa che esiste un indice $n_0 \\in \\mathbb{N}$ tale che la proprietà vale per ogni $n \\gt n_0$. In simboli:</p>
+<p>$$\\forall \\epsilon \\gt 0, \\ \\exists n_0 \\in \\mathbb{N} \\text{ tale che } \\quad n \\gt n_0 \\Rightarrow |a_n - l| \\lt \\epsilon$$</p>
+<p>La quantità $|a_n - l|$ rappresenta la <strong>distanza</strong> tra il termine $a_n$ della successione e il limite $l$.</p>`,
+        subsections: [
+          {
+            subtitle: "Limiti infiniti: successioni divergenti",
+            content: `<p>La definizione appena data riguarda soltanto il caso di un limite $l$ <em>reale</em>: in tal caso si parla di successione <strong>convergente</strong>. Molte successioni, però, crescono (o decrescono) oltre ogni soglia: per queste serve una definizione distinta, che non fa uso della distanza $|a_n - l|$ (non esiste infatti alcun numero reale $l$ a cui confrontarsi).</p>
+<p><strong>Definizione.</strong> Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione a valori reali.</p>
+<p>Si dice che $a_n$ <strong>diverge a $+\\infty$</strong>, e si scrive $\\lim_{n \\to +\\infty} a_n = +\\infty$, se per ogni $M \\gt 0$ la disuguaglianza $a_n \\gt M$ è soddisfatta definitivamente:</p>
+<p>$$\\forall M \\gt 0, \\ \\exists n_0 \\in \\mathbb{N} \\text{ tale che } \\quad n \\gt n_0 \\Rightarrow a_n \\gt M$$</p>
+<p>Si dice che $a_n$ <strong>diverge a $-\\infty$</strong>, e si scrive $\\lim_{n \\to +\\infty} a_n = -\\infty$, se per ogni $M \\gt 0$ la disuguaglianza $a_n \\lt -M$ è soddisfatta definitivamente:</p>
+<p>$$\\forall M \\gt 0, \\ \\exists n_0 \\in \\mathbb{N} \\text{ tale che } \\quad n \\gt n_0 \\Rightarrow a_n \\lt -M$$</p>`
+          },
+          {
+            subtitle: "Divergere non è convergere",
+            content: `<p>I simboli $+\\infty$ e $-\\infty$ <strong>non</strong> sono numeri reali: una successione che diverge <strong>non</strong> è convergente, perché non si avvicina ad alcun numero reale. Quando diciamo "la successione ammette limite" intendiamo che si verifica uno dei tre casi: limite finito $l \\in \\mathbb{R}$ (convergenza), limite $+\\infty$ oppure limite $-\\infty$ (divergenza).</p>
+<p>La parola chiave "definitivamente" ha invece sempre lo stesso significato nei tre casi: la proprietà vale da un certo indice $n_0$ in poi.</p>
+<p>Operativamente, il ruolo che $\\epsilon$ ha nel caso finito ("distanza piccola a piacere") è giocato nel caso infinito da $M$ ("soglia grande a piacere"): per verificare che $a_n \\to +\\infty$ si fissa $M \\gt 0$ e si cerca $n_0$ tale che $a_n \\gt M$ per ogni $n \\gt n_0$.</p>`
+          },
+          {
+            subtitle: "Convenzione sugli indici",
+            content: `<p>Alcune delle successioni che incontreremo non sono definite per $n = 0$: è il caso di $1/n$, di $\\log_a(n)$ e di $n^\\alpha$ con $\\alpha \\lt 0$. Per queste successioni intendiamo sempre $n \\ge 1$.</p>
+<p>Poiché il concetto di limite dipende solo dal comportamento <em>definitivo</em> della successione, escludere un numero finito di indici iniziali non altera in alcun modo il limite.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limite finito", latex: "\\forall \\epsilon \\gt 0 \\ \\exists n_0 : \\ n \\gt n_0 \\Rightarrow |a_n - l| \\lt \\epsilon" },
+          { label: "Divergenza a +∞", latex: "\\forall M \\gt 0 \\ \\exists n_0 : \\ n \\gt n_0 \\Rightarrow a_n \\gt M" },
+          { label: "Divergenza a −∞", latex: "\\forall M \\gt 0 \\ \\exists n_0 : \\ n \\gt n_0 \\Rightarrow a_n \\lt -M" }
+        ]
+      },
+      {
+        id: "s13-verifica-definizione",
+        type: "section",
+        title: "Verifica del limite con la definizione",
+        icon: "🔍",
+        content: `<p>Vediamo come applicare la definizione per verificare un limite.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio: $\\lim_{n \\to +\\infty} 1/n = 0$",
+            content: `<p>Verifichiamo che $\\displaystyle \\lim_{n \\to +\\infty} \\frac{1}{n} = 0$ (successione considerata, come detto, per $n \\ge 1$).</p>
+<p>In questo caso $a_n = 1/n$ e il limite presunto è $l = 0$. Dobbiamo mostrare che la definizione è soddisfatta.</p>
+<p><strong>1. Fissiamo un $\\epsilon \\gt 0$ arbitrario.</strong> Dobbiamo trovare un indice $n_0$ che dipenderà da questo $\\epsilon$.</p>
+<p><strong>2. Impostiamo la disuguaglianza.</strong> Vogliamo che $|a_n - l| \\lt \\epsilon$, cioè:</p>
+<p>$$\\left| \\frac{1}{n} - 0 \\right| \\lt \\epsilon$$</p>
+<p>Poiché stiamo considerando indici $n \\ge 1$, si ha $n \\gt 0$ e quindi $|1/n| = 1/n$. La disuguaglianza diventa:</p>
+<p>$$\\frac{1}{n} \\lt \\epsilon$$</p>
+<p><strong>3. Risolviamo rispetto a $n$.</strong></p>
+<p>$$n \\gt \\frac{1}{\\epsilon}$$</p>
+<p><strong>4. Troviamo $n_0$.</strong> Abbiamo trovato che la condizione $|1/n - 0| \\lt \\epsilon$ è vera per tutti gli $n$ maggiori di $1/\\epsilon$. Possiamo quindi scegliere come $n_0$ un qualsiasi numero naturale che soddisfi questa condizione. Una scelta sicura è prendere la parte intera di $1/\\epsilon$ e aggiungere $1$:</p>
+<p>$$n_0 = \\left[ \\frac{1}{\\epsilon} \\right] + 1$$</p>
+<p>Con questa scelta, per ogni $n \\gt n_0$, sarà sicuramente vero che $n \\gt 1/\\epsilon$, e quindi la disuguaglianza di partenza sarà soddisfatta.</p>
+<p>Poiché siamo riusciti a trovare un $n_0$ per ogni $\\epsilon \\gt 0$, abbiamo verificato secondo la definizione che il limite è corretto.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo: verifica di un limite infinito",
+            content: `<p>Verifichiamo con la definizione che $\\displaystyle \\lim_{n \\to +\\infty} n = +\\infty$.</p>
+<p>Fissiamo $M \\gt 0$ arbitrario. Vogliamo che valga $a_n = n \\gt M$. Basta scegliere</p>
+<p>$$n_0 = [M] + 1,$$</p>
+<p>perché per ogni $n \\gt n_0$ si ha $n \\gt [M] + 1 \\gt M$. Poiché per ogni $M \\gt 0$ abbiamo trovato un tale $n_0$, la definizione di divergenza a $+\\infty$ è soddisfatta.</p>
+<p>Si noti la <strong>differenza strutturale</strong> rispetto all'esempio precedente: qui non compare alcun valore assoluto $|a_n - l|$, ma solo il confronto con la soglia $M$.</p>`
+          }
+        ],
+        quote: {
+          text: "Come vedete, verificare un limite con la definizione è un processo laborioso. Non possiamo fare così per ogni limite. Abbiamo bisogno di sviluppare un linguaggio, un'algebra dei limiti, che ci permetta di calcolarli in modo più agevole.",
+          src: "Nota del Prof."
+        }
+      },
+      {
+        id: "s13-unicita",
+        type: "section",
+        title: "Unicità del limite",
+        icon: "☝️",
+        content: `<p>Un risultato fondamentale è che se una successione ammette un limite, questo limite deve essere unico.</p>
+<p><strong>Teorema (Unicità del Limite).</strong> Se una successione $(a_n)_{n \\in \\mathbb{N}}$ ammette limite (finito o infinito, nel senso delle due definizioni precedenti), allora tale limite è unico.</p>
+<p><strong>Osservazione.</strong> La dimostrazione è stata rimandata dal professore e verrà presentata nelle lezioni successive. L'idea intuitiva è che una successione non può essere "definitivamente vicina" a due numeri diversi contemporaneamente, né può stare definitivamente sopra ogni soglia e contemporaneamente avvicinarsi a un numero reale.</p>`
+      },
+      {
+        id: "s13-limiti-elementari",
+        type: "section",
+        title: "Limiti di successioni elementari",
+        icon: "🧱",
+        content: `<p>Presentiamo ora i limiti di alcune successioni fondamentali, che useremo come <strong>mattoni</strong> per costruire limiti più complessi. Conviene raccoglierli in un unico enunciato, perché sono le regole di base a cui ricondurremo quasi tutti gli esercizi.</p>`,
+        subsections: [
+          {
+            subtitle: "1. Successione geometrica $b^n$",
+            content: `<p>Con $b \\in \\mathbb{R}$. Consideriamo la successione per $n \\ge 1$ (per $b = 0$ la restrizione è necessaria, altrimenti il termine iniziale sarebbe $0^0$; i limiti indicati restano comunque invariati):</p>
+<p>$$\\lim_{n \\to +\\infty} b^n = \\begin{cases} +\\infty & \\text{se } b \\gt 1 \\\\ 1 & \\text{se } b = 1 \\\\ 0 & \\text{se } -1 \\lt b \\lt 1 \\\\ \\text{non esiste} & \\text{se } b \\le -1 \\end{cases}$$</p>
+<p><strong>Nota sul caso $b \\le -1$.</strong> La successione geometrica non ammette limite. Ad esempio, se $b = -1$ la successione $(-1)^n$ oscilla tra $1$ e $-1$ e non si avvicina definitivamente ad alcun valore. Se $b = -2$, la successione $(-2)^n$ oscilla tra valori di modulo crescente: elencando i termini a partire da $n = 1$ si ottiene $-2, 4, -8, 16, \\dots$ (se si parte dall'indice $n = 0$ il primo termine è $(-2)^0 = 1$).</p>`
+          },
+          {
+            subtitle: "2. Successione potenza $n^\\alpha$",
+            content: `<p>Con $\\alpha \\in \\mathbb{R}$ e $n \\ge 1$ (la restrizione $n \\ge 1$ è necessaria quando $\\alpha \\le 0$, perché $0^\\alpha$ non è definito):</p>
+<p>$$\\lim_{n \\to +\\infty} n^\\alpha = \\begin{cases} +\\infty & \\text{se } \\alpha \\gt 0 \\\\ 1 & \\text{se } \\alpha = 0 \\\\ 0 & \\text{se } \\alpha \\lt 0 \\end{cases}$$</p>`
+          },
+          {
+            subtitle: "3. Successione logaritmica $\\log_a(n)$",
+            content: `<p>Con base $a \\gt 0$, $a \\ne 1$, e $n \\ge 1$ (il logaritmo richiede argomento strettamente positivo):</p>
+<p>$$\\lim_{n \\to +\\infty} \\log_a(n) = \\begin{cases} +\\infty & \\text{se } a \\gt 1 \\\\ -\\infty & \\text{se } 0 \\lt a \\lt 1 \\end{cases}$$</p>
+<p>Il comportamento si legge direttamente dai grafici. Con base $a \\gt 1$ la funzione è crescente e tende a $+\\infty$:</p>
+<figure class="figura" data-id="analisi1_lez13a_g3"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez13a_g3-figure_1">
+  <g id="analisi1_lez13a_g3-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez13a_g3-axes_1">
+   <g id="analisi1_lez13a_g3-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez13a_g3-matplotlib.axis_1">
+    <g id="analisi1_lez13a_g3-xtick_1">
+     <g id="analisi1_lez13a_g3-line2d_1">
+      <path d="M 115.37622 364 
+L 115.37622 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_2">
+      <defs>
+       <path id="analisi1_lez13a_g3-m06de88763d" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="115.37622" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_1">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(111.876845 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_2">
+     <g id="analisi1_lez13a_g3-line2d_3">
+      <path d="M 186.665332 364 
+L 186.665332 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="186.665332" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(183.165957 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_3">
+     <g id="analisi1_lez13a_g3-line2d_5">
+      <path d="M 257.954443 364 
+L 257.954443 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="257.954443" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_3">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(254.455068 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_4">
+     <g id="analisi1_lez13a_g3-line2d_7">
+      <path d="M 329.243554 364 
+L 329.243554 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="329.243554" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_4">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(325.744179 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_5">
+     <g id="analisi1_lez13a_g3-line2d_9">
+      <path d="M 400.532666 364 
+L 400.532666 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="400.532666" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_5">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(397.033291 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_6">
+     <g id="analisi1_lez13a_g3-line2d_11">
+      <path d="M 471.821777 364 
+L 471.821777 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="471.821777" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_6">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(468.322402 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_7">
+     <g id="analisi1_lez13a_g3-line2d_13">
+      <path d="M 543.110889 364 
+L 543.110889 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="543.110889" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_7">
+      <!-- 7 -->
+      <g style="fill: currentColor" transform="translate(539.611514 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-1a" d="M 525 4666 
+L 3525 4666 
+L 3525 4397 
+L 1831 0 
+L 1172 0 
+L 2766 4134 
+L 525 4134 
+L 525 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-1a"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-xtick_8">
+     <g id="analisi1_lez13a_g3-line2d_15">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m06de88763d" x="614.4" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_8">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(610.900625 189.968533) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-1b" d="M 2034 2216 
+Q 1584 2216 1326 1975 
+Q 1069 1734 1069 1313 
+Q 1069 891 1326 650 
+Q 1584 409 2034 409 
+Q 2484 409 2743 651 
+Q 3003 894 3003 1313 
+Q 3003 1734 2745 1975 
+Q 2488 2216 2034 2216 
+z
+M 1403 2484 
+Q 997 2584 770 2862 
+Q 544 3141 544 3541 
+Q 544 4100 942 4425 
+Q 1341 4750 2034 4750 
+Q 2731 4750 3128 4425 
+Q 3525 4100 3525 3541 
+Q 3525 3141 3298 2862 
+Q 3072 2584 2669 2484 
+Q 3125 2378 3379 2068 
+Q 3634 1759 3634 1313 
+Q 3634 634 3220 271 
+Q 2806 -91 2034 -91 
+Q 1263 -91 848 271 
+Q 434 634 434 1313 
+Q 434 1759 690 2068 
+Q 947 2378 1403 2484 
+z
+M 1172 3481 
+Q 1172 3119 1398 2916 
+Q 1625 2713 2034 2713 
+Q 2441 2713 2670 2916 
+Q 2900 3119 2900 3481 
+Q 2900 3844 2670 4047 
+Q 2441 4250 2034 4250 
+Q 1625 4250 1398 4047 
+Q 1172 3844 1172 3481 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-1b"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g3-matplotlib.axis_2">
+    <g id="analisi1_lez13a_g3-ytick_1">
+     <g id="analisi1_lez13a_g3-line2d_17">
+      <path d="M 44.8 326.222222 
+L 614.4 326.222222 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_18">
+      <defs>
+       <path id="analisi1_lez13a_g3-m8d0ce09fa8" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m8d0ce09fa8" x="44.8" y="326.222222" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_9">
+      <!-- -4 -->
+      <g style="fill: currentColor" transform="translate(27.332656 330.400933) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-17" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-ytick_2">
+     <g id="analisi1_lez13a_g3-line2d_19">
+      <path d="M 44.8 250.666667 
+L 614.4 250.666667 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m8d0ce09fa8" x="44.8" y="250.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_10">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(27.332656 254.845378) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-ytick_3">
+     <g id="analisi1_lez13a_g3-line2d_21">
+      <path d="M 44.8 175.111111 
+L 614.4 175.111111 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m8d0ce09fa8" x="44.8" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_11">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(31.30125 179.289822) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g3-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-ytick_4">
+     <g id="analisi1_lez13a_g3-line2d_23">
+      <path d="M 44.8 99.555556 
+L 614.4 99.555556 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m8d0ce09fa8" x="44.8" y="99.555556" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_12">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(31.30125 103.734266) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g3-ytick_5">
+     <g id="analisi1_lez13a_g3-line2d_25">
+      <path d="M 44.8 24 
+L 614.4 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g3-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g3-m8d0ce09fa8" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g3-text_13">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(31.30125 28.178711) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g3-line2d_27">
+    <defs>
+     <path id="analisi1_lez13a_g3-m02f09198c4" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g3-m02f09198c4" x="614.4" y="175.111111" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g3-line2d_28">
+    <defs>
+     <path id="analisi1_lez13a_g3-m1c7297ccc8" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g3-m1c7297ccc8" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g3-line2d_29">
+    <path d="M 45.228454 401 
+L 45.275063 398.269403 
+L 45.750125 379.934954 
+L 46.70025 355.304488 
+L 47.650375 338.402136 
+L 48.6005 325.519476 
+L 49.550626 315.107244 
+L 50.975813 302.474249 
+L 52.401001 292.225465 
+L 53.826188 283.602255 
+L 55.251376 276.158853 
+L 57.151626 267.592165 
+L 59.051877 260.190892 
+L 60.952127 253.675587 
+L 62.852377 247.856636 
+L 65.22769 241.360743 
+L 67.603003 235.557278 
+L 69.978315 230.312739 
+L 72.828691 224.620486 
+L 75.679066 219.466923 
+L 78.529441 214.758847 
+L 81.854879 209.735432 
+L 85.180317 205.1362 
+L 88.505755 200.895061 
+L 92.306255 196.420635 
+L 96.106756 192.285838 
+L 100.382319 187.980851 
+L 104.657882 183.991153 
+L 109.408507 179.875874 
+L 114.159133 176.049631 
+L 119.384821 172.129527 
+L 125.085571 168.151961 
+L 130.786322 164.445041 
+L 136.962135 160.694772 
+L 143.613011 156.925255 
+L 150.738949 153.156359 
+L 158.33995 149.404225 
+L 166.416013 145.681781 
+L 174.967139 141.999216 
+L 183.993328 138.364423 
+L 193.494579 134.783385 
+L 203.470892 131.26051 
+L 214.397331 127.646681 
+L 225.798832 124.11497 
+L 238.150459 120.530759 
+L 250.977148 117.042491 
+L 264.753962 113.52894 
+L 279.480901 110.007812 
+L 295.157965 106.493787 
+L 311.785154 102.998888 
+L 329.362469 99.532832 
+L 348.364971 96.018206 
+L 368.317598 92.556613 
+L 389.695413 89.076595 
+L 412.498415 85.59426 
+L 436.726606 82.122937 
+L 462.379983 78.673519 
+L 489.933611 75.196692 
+L 518.912427 71.764589 
+L 549.791493 68.330687 
+L 583.045872 64.859642 
+L 614.4 61.777778 
+L 614.4 61.777778 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g3-line2d_30">
+    <path d="M 44.087109 364 
+L 44.087109 24 
+" clip-path="url(#analisi1_lez13a_g3-pede4747df7)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #8b95a5"/>
+   </g>
+   <g id="analisi1_lez13a_g3-patch_3">
+    <path d="M 44.8 364 
+L 44.8 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g3-patch_4">
+    <path d="M 44.8 175.111111 
+L 614.4 175.111111 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g3-text_14">
+    <!-- (1,0) -->
+    <g style="fill: currentColor" transform="translate(121.37622 169.111111) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez13a_g3-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez13a_g3-DejaVuSans-f" d="M 750 794 
+L 1409 794 
+L 1409 256 
+L 897 -744 
+L 494 -744 
+L 750 256 
+L 750 794 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez13a_g3-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-b"/>
+     <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-14" transform="translate(39.015625 0)"/>
+     <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-f" transform="translate(102.640625 0)"/>
+     <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-13" transform="translate(134.421875 0)"/>
+     <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-c" transform="translate(198.046875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g3-line2d_31">
+    <defs>
+     <path id="analisi1_lez13a_g3-m57552c1b37" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez13a_g3-pede4747df7)">
+     <use xlink:href="#analisi1_lez13a_g3-m57552c1b37" x="115.37622" y="175.111111" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g3-legend_1">
+    <g id="analisi1_lez13a_g3-line2d_32">
+     <path d="M 516.61 38.41 
+L 527.61 38.41 
+L 538.61 38.41 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez13a_g3-text_15">
+     <g style="fill: currentColor" transform="translate(547.41 42.26) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez13a_g3-DejaVuSans-Oblique-5c" d="M 1588 -325 
+Q 1188 -997 936 -1164 
+Q 684 -1331 294 -1331 
+L -159 -1331 
+L -63 -850 
+L 269 -850 
+Q 509 -850 678 -719 
+Q 847 -588 1056 -206 
+L 1234 128 
+L 459 3500 
+L 1069 3500 
+L 1650 819 
+L 3256 3500 
+L 3859 3500 
+L 1588 -325 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g3-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g3-DejaVuSans-Oblique-4f" d="M 1172 4863 
+L 1747 4863 
+L 800 0 
+L 225 0 
+L 1172 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g3-DejaVuSans-Oblique-52" d="M 1625 -91 
+Q 1009 -91 651 289 
+Q 294 669 294 1325 
+Q 294 1706 417 2101 
+Q 541 2497 738 2766 
+Q 1047 3184 1428 3384 
+Q 1809 3584 2291 3584 
+Q 2888 3584 3255 3212 
+Q 3622 2841 3622 2241 
+Q 3622 1825 3500 1412 
+Q 3378 1000 3181 728 
+Q 2875 309 2494 109 
+Q 2113 -91 1625 -91 
+z
+M 891 1344 
+Q 891 869 1089 633 
+Q 1288 397 1691 397 
+Q 2269 397 2648 901 
+Q 3028 1406 3028 2181 
+Q 3028 2634 2825 2865 
+Q 2622 3097 2228 3097 
+Q 1903 3097 1650 2945 
+Q 1397 2794 1197 2484 
+Q 1050 2253 970 1956 
+Q 891 1659 891 1344 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g3-DejaVuSans-Oblique-4a" d="M 3816 3500 
+L 3219 434 
+Q 3047 -456 2561 -893 
+Q 2075 -1331 1253 -1331 
+Q 950 -1331 690 -1286 
+Q 431 -1241 206 -1147 
+L 313 -588 
+Q 525 -725 762 -790 
+Q 1000 -856 1269 -856 
+Q 1816 -856 2167 -557 
+Q 2519 -259 2631 300 
+L 2681 563 
+Q 2441 288 2122 144 
+Q 1803 0 1434 0 
+Q 903 0 598 351 
+Q 294 703 294 1319 
+Q 294 1803 478 2267 
+Q 663 2731 997 3091 
+Q 1219 3328 1514 3456 
+Q 1809 3584 2131 3584 
+Q 2484 3584 2746 3420 
+Q 3009 3256 3138 2956 
+L 3238 3500 
+L 3816 3500 
+z
+M 2950 2216 
+Q 2950 2641 2750 2872 
+Q 2550 3103 2181 3103 
+Q 1953 3103 1747 3012 
+Q 1541 2922 1394 2759 
+Q 1156 2491 1023 2127 
+Q 891 1763 891 1375 
+Q 891 944 1092 712 
+Q 1294 481 1672 481 
+Q 2219 481 2584 976 
+Q 2950 1472 2950 2216 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g3-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-Oblique-5c" transform="translate(0 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-20" transform="translate(78.662109 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-Oblique-4f" transform="translate(181.933594 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-Oblique-52" transform="translate(209.716797 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-Oblique-4a" transform="translate(270.898438 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-15" transform="translate(334.375 -14.984326) scale(0.7)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-b" transform="translate(381.645508 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-Oblique-5b" transform="translate(420.65918 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g3-DejaVuSans-c" transform="translate(479.838867 0.015625)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez13a_g3-pede4747df7">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>Con base $0 \\lt a \\lt 1$ la funzione è decrescente e tende a $-\\infty$:</p>
+<figure class="figura" data-id="analisi1_lez13a_g4"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez13a_g4-figure_1">
+  <g id="analisi1_lez13a_g4-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez13a_g4-axes_1">
+   <g id="analisi1_lez13a_g4-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez13a_g4-matplotlib.axis_1">
+    <g id="analisi1_lez13a_g4-xtick_1">
+     <g id="analisi1_lez13a_g4-line2d_1">
+      <path d="M 115.37622 364 
+L 115.37622 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_2">
+      <defs>
+       <path id="analisi1_lez13a_g4-m9cea9dfd97" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="115.37622" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_1">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(111.876845 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-14"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_2">
+     <g id="analisi1_lez13a_g4-line2d_3">
+      <path d="M 186.665332 364 
+L 186.665332 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="186.665332" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(183.165957 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_3">
+     <g id="analisi1_lez13a_g4-line2d_5">
+      <path d="M 257.954443 364 
+L 257.954443 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="257.954443" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_3">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(254.455068 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-16"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_4">
+     <g id="analisi1_lez13a_g4-line2d_7">
+      <path d="M 329.243554 364 
+L 329.243554 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="329.243554" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_4">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(325.744179 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_5">
+     <g id="analisi1_lez13a_g4-line2d_9">
+      <path d="M 400.532666 364 
+L 400.532666 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="400.532666" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_5">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(397.033291 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_6">
+     <g id="analisi1_lez13a_g4-line2d_11">
+      <path d="M 471.821777 364 
+L 471.821777 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="471.821777" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_6">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(468.322402 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_7">
+     <g id="analisi1_lez13a_g4-line2d_13">
+      <path d="M 543.110889 364 
+L 543.110889 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="543.110889" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_7">
+      <!-- 7 -->
+      <g style="fill: currentColor" transform="translate(539.611514 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-1a" d="M 525 4666 
+L 3525 4666 
+L 3525 4397 
+L 1831 0 
+L 1172 0 
+L 2766 4134 
+L 525 4134 
+L 525 4666 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-1a"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-xtick_8">
+     <g id="analisi1_lez13a_g4-line2d_15">
+      <path d="M 614.4 364 
+L 614.4 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m9cea9dfd97" x="614.4" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_8">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(610.900625 227.746311) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-1b" d="M 2034 2216 
+Q 1584 2216 1326 1975 
+Q 1069 1734 1069 1313 
+Q 1069 891 1326 650 
+Q 1584 409 2034 409 
+Q 2484 409 2743 651 
+Q 3003 894 3003 1313 
+Q 3003 1734 2745 1975 
+Q 2488 2216 2034 2216 
+z
+M 1403 2484 
+Q 997 2584 770 2862 
+Q 544 3141 544 3541 
+Q 544 4100 942 4425 
+Q 1341 4750 2034 4750 
+Q 2731 4750 3128 4425 
+Q 3525 4100 3525 3541 
+Q 3525 3141 3298 2862 
+Q 3072 2584 2669 2484 
+Q 3125 2378 3379 2068 
+Q 3634 1759 3634 1313 
+Q 3634 634 3220 271 
+Q 2806 -91 2034 -91 
+Q 1263 -91 848 271 
+Q 434 634 434 1313 
+Q 434 1759 690 2068 
+Q 947 2378 1403 2484 
+z
+M 1172 3481 
+Q 1172 3119 1398 2916 
+Q 1625 2713 2034 2713 
+Q 2441 2713 2670 2916 
+Q 2900 3119 2900 3481 
+Q 2900 3844 2670 4047 
+Q 2441 4250 2034 4250 
+Q 1625 4250 1398 4047 
+Q 1172 3844 1172 3481 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-1b"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g4-matplotlib.axis_2">
+    <g id="analisi1_lez13a_g4-ytick_1">
+     <g id="analisi1_lez13a_g4-line2d_17">
+      <path d="M 44.8 364 
+L 614.4 364 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_18">
+      <defs>
+       <path id="analisi1_lez13a_g4-m66a6743ac5" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m66a6743ac5" x="44.8" y="364" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_9">
+      <!-- -4 -->
+      <g style="fill: currentColor" transform="translate(27.332656 368.178711) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-10" d="M 313 2009 
+L 1997 2009 
+L 1997 1497 
+L 313 1497 
+L 313 2009 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-17" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-ytick_2">
+     <g id="analisi1_lez13a_g4-line2d_19">
+      <path d="M 44.8 288.444444 
+L 614.4 288.444444 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m66a6743ac5" x="44.8" y="288.444444" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_10">
+      <!-- -2 -->
+      <g style="fill: currentColor" transform="translate(27.332656 292.623155) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-10"/>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-15" transform="translate(36.078125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-ytick_3">
+     <g id="analisi1_lez13a_g4-line2d_21">
+      <path d="M 44.8 212.888889 
+L 614.4 212.888889 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m66a6743ac5" x="44.8" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_11">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(31.30125 217.0676) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez13a_g4-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-13"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-ytick_4">
+     <g id="analisi1_lez13a_g4-line2d_23">
+      <path d="M 44.8 137.333333 
+L 614.4 137.333333 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m66a6743ac5" x="44.8" y="137.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_12">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(31.30125 141.512044) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-15"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez13a_g4-ytick_5">
+     <g id="analisi1_lez13a_g4-line2d_25">
+      <path d="M 44.8 61.777778 
+L 614.4 61.777778 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez13a_g4-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez13a_g4-m66a6743ac5" x="44.8" y="61.777778" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez13a_g4-text_13">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(31.30125 65.956489) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-17"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g4-line2d_27">
+    <defs>
+     <path id="analisi1_lez13a_g4-mb9f4a6e297" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g4-mb9f4a6e297" x="614.4" y="212.888889" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g4-line2d_28">
+    <defs>
+     <path id="analisi1_lez13a_g4-m8ece57943d" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez13a_g4-m8ece57943d" x="44.8" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g4-line2d_29">
+    <path d="M 45.515241 -1 
+L 45.750125 8.065046 
+L 46.70025 32.695512 
+L 47.650375 49.597864 
+L 48.6005 62.480524 
+L 49.550626 72.892756 
+L 50.975813 85.525751 
+L 52.401001 95.774535 
+L 53.826188 104.397745 
+L 55.251376 111.841147 
+L 57.151626 120.407835 
+L 59.051877 127.809108 
+L 60.952127 134.324413 
+L 62.852377 140.143364 
+L 65.22769 146.639257 
+L 67.603003 152.442722 
+L 69.978315 157.687261 
+L 72.828691 163.379514 
+L 75.679066 168.533077 
+L 78.529441 173.241153 
+L 81.854879 178.264568 
+L 85.180317 182.8638 
+L 88.505755 187.104939 
+L 92.306255 191.579365 
+L 96.106756 195.714162 
+L 100.382319 200.019149 
+L 104.657882 204.008847 
+L 109.408507 208.124126 
+L 114.159133 211.950369 
+L 119.384821 215.870473 
+L 125.085571 219.848039 
+L 130.786322 223.554959 
+L 136.962135 227.305228 
+L 143.613011 231.074745 
+L 150.738949 234.843641 
+L 158.33995 238.595775 
+L 166.416013 242.318219 
+L 174.967139 246.000784 
+L 183.993328 249.635577 
+L 193.494579 253.216615 
+L 203.470892 256.73949 
+L 214.397331 260.353319 
+L 225.798832 263.88503 
+L 238.150459 267.469241 
+L 250.977148 270.957509 
+L 264.753962 274.47106 
+L 279.480901 277.992188 
+L 295.157965 281.506213 
+L 311.785154 285.001112 
+L 329.362469 288.467168 
+L 348.364971 291.981794 
+L 368.317598 295.443387 
+L 389.695413 298.923405 
+L 412.498415 302.40574 
+L 436.726606 305.877063 
+L 462.379983 309.326481 
+L 489.933611 312.803308 
+L 518.912427 316.235411 
+L 549.791493 319.669313 
+L 583.045872 323.140358 
+L 614.4 326.222222 
+L 614.4 326.222222 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g4-line2d_30">
+    <path d="M 44.087109 364 
+L 44.087109 24 
+" clip-path="url(#analisi1_lez13a_g4-pf267f10948)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #8b95a5"/>
+   </g>
+   <g id="analisi1_lez13a_g4-patch_3">
+    <path d="M 44.8 364 
+L 44.8 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g4-patch_4">
+    <path d="M 44.8 212.888889 
+L 614.4 212.888889 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez13a_g4-text_14">
+    <!-- (1,0) -->
+    <g style="fill: currentColor" transform="translate(121.37622 206.888889) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez13a_g4-DejaVuSans-b" d="M 1984 4856 
+Q 1566 4138 1362 3434 
+Q 1159 2731 1159 2009 
+Q 1159 1288 1364 580 
+Q 1569 -128 1984 -844 
+L 1484 -844 
+Q 1016 -109 783 600 
+Q 550 1309 550 2009 
+Q 550 2706 781 3412 
+Q 1013 4119 1484 4856 
+L 1984 4856 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez13a_g4-DejaVuSans-f" d="M 750 794 
+L 1409 794 
+L 1409 256 
+L 897 -744 
+L 494 -744 
+L 750 256 
+L 750 794 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez13a_g4-DejaVuSans-c" d="M 513 4856 
+L 1013 4856 
+Q 1481 4119 1714 3412 
+Q 1947 2706 1947 2009 
+Q 1947 1309 1714 600 
+Q 1481 -109 1013 -844 
+L 513 -844 
+Q 928 -128 1133 580 
+Q 1338 1288 1338 2009 
+Q 1338 2731 1133 3434 
+Q 928 4138 513 4856 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-b"/>
+     <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-14" transform="translate(39.015625 0)"/>
+     <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-f" transform="translate(102.640625 0)"/>
+     <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-13" transform="translate(134.421875 0)"/>
+     <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-c" transform="translate(198.046875 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g4-line2d_31">
+    <defs>
+     <path id="analisi1_lez13a_g4-m41581d41b5" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez13a_g4-pf267f10948)">
+     <use xlink:href="#analisi1_lez13a_g4-m41581d41b5" x="115.37622" y="212.888889" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez13a_g4-legend_1">
+    <g id="analisi1_lez13a_g4-line2d_32">
+     <path d="M 509.13 38.41 
+L 520.13 38.41 
+L 531.13 38.41 
+" style="fill: none; stroke: #7c4dff; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="analisi1_lez13a_g4-text_15">
+     <g style="fill: currentColor" transform="translate(539.93 42.26) scale(0.11 -0.11)">
+      <defs>
+       <path id="analisi1_lez13a_g4-DejaVuSans-Oblique-5c" d="M 1588 -325 
+Q 1188 -997 936 -1164 
+Q 684 -1331 294 -1331 
+L -159 -1331 
+L -63 -850 
+L 269 -850 
+Q 509 -850 678 -719 
+Q 847 -588 1056 -206 
+L 1234 128 
+L 459 3500 
+L 1069 3500 
+L 1650 819 
+L 3256 3500 
+L 3859 3500 
+L 1588 -325 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g4-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g4-DejaVuSans-Oblique-4f" d="M 1172 4863 
+L 1747 4863 
+L 800 0 
+L 225 0 
+L 1172 4863 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g4-DejaVuSans-Oblique-52" d="M 1625 -91 
+Q 1009 -91 651 289 
+Q 294 669 294 1325 
+Q 294 1706 417 2101 
+Q 541 2497 738 2766 
+Q 1047 3184 1428 3384 
+Q 1809 3584 2291 3584 
+Q 2888 3584 3255 3212 
+Q 3622 2841 3622 2241 
+Q 3622 1825 3500 1412 
+Q 3378 1000 3181 728 
+Q 2875 309 2494 109 
+Q 2113 -91 1625 -91 
+z
+M 891 1344 
+Q 891 869 1089 633 
+Q 1288 397 1691 397 
+Q 2269 397 2648 901 
+Q 3028 1406 3028 2181 
+Q 3028 2634 2825 2865 
+Q 2622 3097 2228 3097 
+Q 1903 3097 1650 2945 
+Q 1397 2794 1197 2484 
+Q 1050 2253 970 1956 
+Q 891 1659 891 1344 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g4-DejaVuSans-Oblique-4a" d="M 3816 3500 
+L 3219 434 
+Q 3047 -456 2561 -893 
+Q 2075 -1331 1253 -1331 
+Q 950 -1331 690 -1286 
+Q 431 -1241 206 -1147 
+L 313 -588 
+Q 525 -725 762 -790 
+Q 1000 -856 1269 -856 
+Q 1816 -856 2167 -557 
+Q 2519 -259 2631 300 
+L 2681 563 
+Q 2441 288 2122 144 
+Q 1803 0 1434 0 
+Q 903 0 598 351 
+Q 294 703 294 1319 
+Q 294 1803 478 2267 
+Q 663 2731 997 3091 
+Q 1219 3328 1514 3456 
+Q 1809 3584 2131 3584 
+Q 2484 3584 2746 3420 
+Q 3009 3256 3138 2956 
+L 3238 3500 
+L 3816 3500 
+z
+M 2950 2216 
+Q 2950 2641 2750 2872 
+Q 2550 3103 2181 3103 
+Q 1953 3103 1747 3012 
+Q 1541 2922 1394 2759 
+Q 1156 2491 1023 2127 
+Q 891 1763 891 1375 
+Q 891 944 1092 712 
+Q 1294 481 1672 481 
+Q 2219 481 2584 976 
+Q 2950 1472 2950 2216 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g4-DejaVuSans-12" d="M 1625 4666 
+L 2156 4666 
+L 531 -594 
+L 0 -594 
+L 1625 4666 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez13a_g4-DejaVuSans-Oblique-5b" d="M 3841 3500 
+L 2234 1784 
+L 3219 0 
+L 2559 0 
+L 1819 1388 
+L 531 0 
+L -166 0 
+L 1556 1844 
+L 641 3500 
+L 1300 3500 
+L 1972 2234 
+L 3144 3500 
+L 3841 3500 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-Oblique-5c" transform="translate(0 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-20" transform="translate(78.662109 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-Oblique-4f" transform="translate(181.933594 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-Oblique-52" transform="translate(209.716797 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-Oblique-4a" transform="translate(270.898438 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-14" transform="translate(334.375 -14.984326) scale(0.7)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-12" transform="translate(378.911133 -14.984326) scale(0.7)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-15" transform="translate(402.495117 -14.984326) scale(0.7)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-b" transform="translate(449.765625 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-Oblique-5b" transform="translate(488.779297 0.015625)"/>
+      <use xlink:href="#analisi1_lez13a_g4-DejaVuSans-c" transform="translate(547.958984 0.015625)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez13a_g4-pf267f10948">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg></figure>
+<p>In entrambi i casi la retta $x = 0$ è asintoto verticale e il grafico passa per il punto $(1, 0)$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Geometrica, b > 1", latex: "\\lim_{n \\to +\\infty} b^n = +\\infty" },
+          { label: "Geometrica, |b| < 1", latex: "\\lim_{n \\to +\\infty} b^n = 0 \\quad (-1 \\lt b \\lt 1)" },
+          { label: "Potenza, α > 0", latex: "\\lim_{n \\to +\\infty} n^\\alpha = +\\infty" },
+          { label: "Potenza, α < 0", latex: "\\lim_{n \\to +\\infty} n^\\alpha = 0" },
+          { label: "Logaritmo, a > 1", latex: "\\lim_{n \\to +\\infty} \\log_a(n) = +\\infty" }
+        ]
+      },
+      {
+        id: "s13-estensione-composizione",
+        type: "section",
+        title: "Estensione dei limiti elementari (composizione)",
+        icon: "🔗",
+        content: `<p>Possiamo estendere questi risultati: se al posto di $n$ compare una successione $a_n$ che tende a $+\\infty$, i limiti precedenti continuano a valere. <strong>Non si tratta tuttavia di una sostituzione puramente meccanica</strong>: va prima garantito che le espressioni coinvolte siano ben definite.</p>
+<p>Poiché $a_n \\to +\\infty$, per definizione si ha $a_n \\gt 1 \\gt 0$ definitivamente; quindi $\\log_a(a_n)$ e le potenze reali $(a_n)^\\alpha$ hanno senso <em>da quell'indice in poi</em>, ed è solo quel comportamento definitivo che conta per il limite. Analogamente, nella scrittura $b^{a_n}$ si richiede $b \\gt 0$: i valori $a_n$ sono numeri reali qualsiasi, non necessariamente interi, e una potenza con base negativa ed esponente reale non intero non è definita.</p>`,
+        subsections: [
+          {
+            subtitle: "Enunciato",
+            content: `<p>Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione tale che $\\displaystyle \\lim_{n \\to +\\infty} a_n = +\\infty$ (dunque $a_n \\gt 0$ definitivamente, e le espressioni seguenti si intendono definite da tale indice in poi). Allora valgono i seguenti limiti.</p>
+<p>Per $\\alpha \\in \\mathbb{R}$:</p>
+<p>$$\\lim_{n \\to +\\infty} (a_n)^\\alpha = \\begin{cases} +\\infty & \\text{se } \\alpha \\gt 0 \\\\ 1 & \\text{se } \\alpha = 0 \\\\ 0 & \\text{se } \\alpha \\lt 0 \\end{cases}$$</p>
+<p>Per $b \\gt 0$:</p>
+<p>$$\\lim_{n \\to +\\infty} b^{a_n} = \\begin{cases} +\\infty & \\text{se } b \\gt 1 \\\\ 1 & \\text{se } b = 1 \\\\ 0 & \\text{se } 0 \\lt b \\lt 1 \\end{cases}$$</p>
+<p>Per $a \\gt 0$, $a \\ne 1$:</p>
+<p>$$\\lim_{n \\to +\\infty} \\log_a(a_n) = \\begin{cases} +\\infty & \\text{se } a \\gt 1 \\\\ -\\infty & \\text{se } 0 \\lt a \\lt 1 \\end{cases}$$</p>`
+          },
+          {
+            subtitle: "Perché le ipotesi sulle basi contano",
+            content: `<p>Le ipotesi sulle basi <strong>non sono un dettaglio formale</strong>. Se ad esempio volessimo scrivere $(-2)^{a_n}$ con $a_n = \\sqrt{n}$, l'espressione sarebbe priva di significato per quasi tutti gli $n$ (non esiste $(-2)^{\\sqrt{2}}$ nei reali).</p>
+<p>Per questo nell'enunciato le basi esponenziali sono limitate al caso $b \\gt 0$, mentre nel caso della successione geometrica $b^n$ gli esponenti sono interi e si può ammettere anche $b \\lt 0$ (ottenendo però, come visto, una successione oscillante).</p>`
+          },
+          {
+            subtitle: "Esempio di applicazione",
+            content: `<p>Consideriamo il limite</p>
+<p>$$\\lim_{n \\to +\\infty} 2^{n^2}$$</p>
+<p>La successione all'esponente, $a_n = n^2$, tende a $+\\infty$. Poiché la base è $2 \\gt 1$ (in particolare $b \\gt 0$, quindi la potenza è ben definita), il limite complessivo è $+\\infty$.</p>`
+          }
+        ]
+      },
+      {
+        id: "s13-algebra-limiti",
+        type: "section",
+        title: "Algebra dei limiti",
+        icon: "➕",
+        content: `<p>I seguenti teoremi ci permettono di calcolare limiti di successioni ottenute tramite operazioni algebriche.</p>
+<p><strong>Teorema (Algebra dei Limiti Finiti).</strong> Siano $(a_n)$ e $(b_n)$ due successioni convergenti a limiti finiti:</p>
+<p>$$\\lim_{n \\to +\\infty} a_n = l \\in \\mathbb{R} \\quad \\text{e} \\quad \\lim_{n \\to +\\infty} b_n = m \\in \\mathbb{R}$$</p>
+<p>Allora:</p>
+<p><strong>1. Limite della somma:</strong> $\\displaystyle \\lim_{n \\to +\\infty} (a_n + b_n) = l + m$</p>
+<p><strong>2. Limite del prodotto:</strong> $\\displaystyle \\lim_{n \\to +\\infty} (a_n \\cdot b_n) = l \\cdot m$</p>
+<p><strong>3. Limite del quoziente:</strong> se $m \\ne 0$ e $b_n \\ne 0$ definitivamente, allora $\\displaystyle \\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = \\frac{l}{m}$</p>
+<p><strong>4. Prodotto per una costante:</strong> se $c \\in \\mathbb{R}$, allora $\\displaystyle \\lim_{n \\to +\\infty} (c \\cdot a_n) = c \\cdot l$</p>`,
+        subsections: [
+          {
+            subtitle: "Attenzione all'ipotesi di finitezza",
+            content: `<p>Il teorema precedente richiede <strong>entrambi</strong> i limiti finiti: non può essere invocato quando uno dei due fattori diverge. Per i casi con un fattore divergente serve un enunciato separato, che useremo negli esercizi.</p>`
+          },
+          {
+            subtitle: "Prodotto divergente × limite positivo",
+            content: `<p><strong>Proposizione.</strong> Siano $(c_n)$ e $(r_n)$ successioni tali che</p>
+<p>$$\\lim_{n \\to +\\infty} c_n = +\\infty \\quad \\text{e} \\quad \\lim_{n \\to +\\infty} r_n = L \\quad \\text{con } L \\gt 0 \\ \\ (\\text{anche } L = +\\infty).$$</p>
+<p>Allora</p>
+<p>$$\\lim_{n \\to +\\infty} (c_n \\cdot r_n) = +\\infty.$$</p>
+<p><strong>Dimostrazione.</strong> Supponiamo $L \\in \\mathbb{R}$, $L \\gt 0$ (il caso $L = +\\infty$ è analogo e più semplice). Applicando la definizione di limite con $\\epsilon = L/2 \\gt 0$, si ha definitivamente $|r_n - L| \\lt L/2$, dunque</p>
+<p>$$r_n \\gt L - \\frac{L}{2} = \\frac{L}{2} \\gt 0 \\qquad \\text{per ogni } n \\gt n_1.$$</p>
+<p>Sia ora $M \\gt 0$ fissato. Poiché $c_n \\to +\\infty$, esiste $n_2$ tale che $c_n \\gt \\dfrac{2M}{L}$ per ogni $n \\gt n_2$. Allora, per ogni $n \\gt \\max\\{n_1, n_2\\}$, essendo $c_n \\gt 0$ e $r_n \\gt L/2$,</p>
+<p>$$c_n \\, r_n \\gt \\frac{2M}{L} \\cdot \\frac{L}{2} = M.$$</p>
+<p>Poiché $M \\gt 0$ era arbitrario, per definizione $c_n r_n \\to +\\infty$. $\\blacksquare$</p>`
+          }
+        ]
+      },
+      {
+        id: "s13-esempi-calcolo",
+        type: "section",
+        title: "Esempi di calcolo di limiti",
+        icon: "🧮",
+        content: `<p>Applichiamo i teoremi appena visti a tre casi di crescente difficoltà.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio 1: $\\lim 1/(2n)$",
+            content: `<p>$$\\lim_{n \\to +\\infty} \\frac{1}{2n} = \\lim_{n \\to +\\infty} \\left( \\frac{1}{2} \\cdot \\frac{1}{n} \\right) = \\frac{1}{2} \\cdot \\lim_{n \\to +\\infty} \\frac{1}{n} = \\frac{1}{2} \\cdot 0 = 0$$</p>`
+          },
+          {
+            subtitle: "Esempio 2: $\\lim (n+1)/n$",
+            content: `<p>Possiamo procedere in due modi.</p>
+<p><strong>Metodo 1: divisione termine a termine.</strong></p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{n+1}{n} = \\lim_{n \\to +\\infty} \\left( \\frac{n}{n} + \\frac{1}{n} \\right) = \\lim_{n \\to +\\infty} \\left( 1 + \\frac{1}{n} \\right)$$</p>
+<p>Usando il teorema sulla somma dei limiti (entrambi i limiti sono finiti, quindi il teorema è applicabile):</p>
+<p>$$\\lim_{n \\to +\\infty} 1 + \\lim_{n \\to +\\infty} \\frac{1}{n} = 1 + 0 = 1$$</p>
+<p><strong>Metodo 2: raccogliere il termine dominante.</strong></p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{n+1}{n} = \\lim_{n \\to +\\infty} \\frac{n\\left(1 + \\frac{1}{n}\\right)}{n} = \\lim_{n \\to +\\infty} \\left( 1 + \\frac{1}{n} \\right) = 1$$</p>`
+          },
+          {
+            subtitle: "Esempio 3: una forma indeterminata",
+            content: `<p>Calcoliamo $\\displaystyle \\lim_{n \\to +\\infty} \\frac{n^2+n+1}{n+2}$.</p>
+<p>Qui sia il numeratore che il denominatore tendono a infinito. Questa è una delle cosiddette <strong>forme indeterminate</strong>. La strategia consiste nel raccogliere il termine di grado massimo (il termine che "cresce più velocemente").</p>
+<p>Al numeratore il termine dominante è $n^2$; al denominatore è $n$.</p>
+<p><strong>Impostazione e trasformazione.</strong></p>
+<p>$$\\frac{n^2+n+1}{n+2} = \\frac{n^2\\left(1 + \\frac{n}{n^2} + \\frac{1}{n^2}\\right)}{n\\left(1 + \\frac{2}{n}\\right)}$$</p>
+<p>$$= \\frac{n^2\\left(1 + \\frac{1}{n} + \\frac{1}{n^2}\\right)}{n\\left(1 + \\frac{2}{n}\\right)} = n \\cdot \\frac{1 + \\frac{1}{n} + \\frac{1}{n^2}}{1 + \\frac{2}{n}}$$</p>
+<p>Conviene dare un nome al fattore frazionario: poniamo</p>
+<p>$$r_n = \\frac{1 + \\frac{1}{n} + \\frac{1}{n^2}}{1 + \\frac{2}{n}},$$</p>
+<p>così che l'espressione da studiare è $n \\cdot r_n$.</p>
+<p><strong>Analisi dei due fattori.</strong> Per il primo:</p>
+<p>$$\\lim_{n \\to +\\infty} n = +\\infty.$$</p>
+<p>Per il secondo, numeratore e denominatore di $r_n$ hanno limite finito, perché</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{1}{n} = 0, \\qquad \\lim_{n \\to +\\infty} \\frac{1}{n^2} = 0, \\qquad \\lim_{n \\to +\\infty} \\frac{2}{n} = 0,$$</p>
+<p>e il limite del denominatore è $1 \\ne 0$: possiamo dunque applicare l'algebra dei limiti <em>finiti</em> (somma e quoziente) e ottenere</p>
+<p>$$\\lim_{n \\to +\\infty} r_n = \\frac{1 + 0 + 0}{1 + 0} = 1.$$</p>
+<p><strong>Conclusione.</strong> A questo punto <strong>non</strong> possiamo invocare il teorema sull'algebra dei limiti finiti per il prodotto $n \\cdot r_n$: il primo fattore diverge, quindi quel teorema non si applica. Usiamo invece la proposizione sul prodotto fra una successione divergente a $+\\infty$ e una convergente a un limite positivo: poiché $n \\to +\\infty$ e $r_n \\to 1 \\gt 0$,</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{n^2+n+1}{n+2} = \\lim_{n \\to +\\infty} n \\cdot r_n = +\\infty.$$</p>`
+          },
+          {
+            subtitle: "La stessa conclusione \"a mano\", con la definizione",
+            content: `<p>È istruttivo rifare il ragionamento senza citare la proposizione, così si vede da dove viene la stima.</p>
+<p>Poiché $r_n \\to 1$, applicando la definizione con $\\epsilon = 1/2$ otteniamo che definitivamente $|r_n - 1| \\lt 1/2$, dunque esiste $n_1$ tale che</p>
+<p>$$r_n \\gt \\frac{1}{2} \\qquad \\text{per ogni } n \\gt n_1.$$</p>
+<p>Di conseguenza, per $n \\gt n_1$,</p>
+<p>$$n \\, r_n \\gt \\frac{n}{2}.$$</p>
+<p>Fissiamo ora $M \\gt 0$ arbitrario: se scegliamo anche $n \\gt 2M$, cioè $n \\gt \\max\\{n_1, 2M\\}$, otteniamo</p>
+<p>$$n \\, r_n \\gt \\frac{n}{2} \\gt \\frac{2M}{2} = M.$$</p>
+<p>Poiché per ogni $M \\gt 0$ la disuguaglianza $n r_n \\gt M$ vale definitivamente, per definizione di limite infinito si conclude che $n r_n \\to +\\infty$.</p>`
+          }
+        ]
+      },
+      {
+        id: "s13-alert-sostituire",
+        type: "alert_box",
+        title: "Perché non basta \"sostituire il limite\"",
+        icon: "⚠️",
+        content: `<p>Scrivere direttamente $\\lim n \\cdot 1 = +\\infty$ sarebbe una <strong>scorciatoia pericolosa</strong>: nasconderemmo il fatto che il fattore variabile $r_n$ è stato rimpiazzato dal suo limite in presenza di un fattore divergente.</p>
+<p>Che questo passaggio richieda una giustificazione si capisce osservando che con un fattore che tende a $0$ anziché a $1$ il risultato può cambiare completamente:</p>
+<p>$$n \\cdot \\frac{1}{n} \\to 1, \\qquad n \\cdot \\frac{1}{n^2} \\to 0, \\qquad n \\cdot \\frac{1}{\\sqrt{n}} \\to +\\infty.$$</p>
+<p>Il prodotto "$+\\infty \\cdot 0$" è infatti una <strong>forma indeterminata</strong>; ciò che rende lecita la conclusione nell'esempio è proprio il fatto che il limite di $r_n$ sia un numero <em>strettamente positivo</em>.</p>`
+      },
+      {
+        id: "s13-esercizio-1",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Dominio con logaritmi, radici e valori assoluti annidati",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Vediamo ora alcuni esercizi, in particolare sul calcolo del dominio di funzioni composte, che spesso presentano delle difficoltà.</p>
+<p>Determinare il dominio della funzione</p>
+<p>$$f(x) = \\log_3 \\left( \\log_3 \\left( \\sqrt{\\frac{|x+4|}{|x-4|}} \\right) \\right)$$</p>
+<p>Questo esercizio può sembrare complicato, ma è fatto apposta per forzare un'analisi attenta di tutte le condizioni di esistenza. Procediamo <strong>dall'esterno verso l'interno</strong>.</p>`,
+        steps: [
+          `<strong>Logaritmo più esterno.</strong> L'argomento del primo $\\log_3$ deve essere strettamente positivo:
+<p>$$\\log_3 \\left( \\sqrt{\\frac{|x+4|}{|x-4|}} \\right) \\gt 0$$</p>`,
+          `<strong>Logaritmo interno.</strong> L'argomento del secondo $\\log_3$ deve essere strettamente positivo:
+<p>$$\\sqrt{\\frac{|x+4|}{|x-4|}} \\gt 0$$</p>`,
+          `<strong>Radice quadrata.</strong> L'argomento della radice deve essere non negativo:
+<p>$$\\frac{|x+4|}{|x-4|} \\ge 0$$</p>`,
+          `<strong>Denominatore.</strong> Il denominatore della frazione non può essere nullo:
+<p>$$|x-4| \\neq 0 \\Rightarrow x-4 \\neq 0 \\Rightarrow x \\neq 4$$</p>`,
+          `<strong>Il sistema completo.</strong>
+<p>$$\\begin{cases} \\log_3 \\left( \\sqrt{\\frac{|x+4|}{|x-4|}} \\right) \\gt 0 & (1) \\\\ \\sqrt{\\frac{|x+4|}{|x-4|}} \\gt 0 & (2) \\\\ \\frac{|x+4|}{|x-4|} \\ge 0 & (3) \\\\ x \\neq 4 & (4) \\end{cases}$$</p>`,
+          `<strong>Semplificazione delle condizioni facili.</strong> La condizione (3) è sempre verificata, poiché è un rapporto di valori assoluti, che sono quantità non negative. L'unico caso in cui potrebbe non essere strettamente positiva è se il numeratore fosse zero, cioè $|x+4| = 0 \\Rightarrow x = -4$.
+<p>La condizione (2) richiede che l'argomento della radice sia strettamente positivo, e questo esclude il caso $x = -4$. Quindi da (2) e (3) otteniamo $|x+4| \\gt 0$, ovvero $x \\neq -4$.</p>
+<p>Le condizioni (2), (3) e (4) si riassumono dunque in $x \\neq 4$ e $x \\neq -4$. La condizione (1) è quella più stringente e ingloba le altre.</p>`,
+          `<strong>Risolviamo la condizione (1).</strong> Poiché $0 = \\log_3(1)$ e la base del logaritmo è $3 \\gt 1$ (funzione crescente), possiamo confrontare gli argomenti mantenendo il verso della disuguaglianza:
+<p>$$\\sqrt{\\frac{|x+4|}{|x-4|}} \\gt 1$$</p>
+<p>Elevando al quadrato entrambi i membri (che sono positivi):</p>
+<p>$$\\frac{|x+4|}{|x-4|} \\gt 1$$</p>
+<p>Poiché $|x-4|$ è una quantità positiva (abbiamo già imposto $x \\neq 4$), possiamo moltiplicare entrambi i membri per $|x-4|$ senza cambiare il verso:</p>
+<p>$$|x+4| \\gt |x-4|$$</p>`,
+          `<strong>Caso 1: $x \\gt 4$.</strong> In questo intervallo sia $x+4$ che $x-4$ sono positivi. La disequazione diventa
+<p>$$x+4 \\gt x-4 \\Rightarrow 4 \\gt -4$$</p>
+<p>sempre vera. Quindi tutto l'intervallo $(4, +\\infty)$ è soluzione.</p>`,
+          `<strong>Caso 2: $-4 \\le x \\lt 4$.</strong> Qui $x+4 \\ge 0$ e $x-4 \\lt 0$, quindi
+<p>$$x+4 \\gt -(x-4) \\Rightarrow x+4 \\gt -x+4 \\Rightarrow 2x \\gt 0 \\Rightarrow x \\gt 0$$</p>
+<p>Intersecando con l'intervallo di validità del caso, otteniamo la soluzione parziale $(0, 4)$.</p>`,
+          `<strong>Caso 3: $x \\lt -4$.</strong> Qui sia $x+4$ che $x-4$ sono negativi:
+<p>$$-(x+4) \\gt -(x-4) \\Rightarrow -x-4 \\gt -x+4 \\Rightarrow -4 \\gt 4$$</p>
+<p>sempre falsa. Nessuna soluzione in questo intervallo.</p>`,
+          `<strong>Conclusione.</strong> Unendo i casi, la disequazione $|x+4| \\gt |x-4|$ è verificata per $x \\gt 0$ (si noti che è vera anche per $x = 4$, dove dà $8 \\gt 0$). Intersecando con la condizione di esistenza $x \\neq 4$ (e osservando che $x \\neq -4$ è automaticamente soddisfatta), otteniamo il dominio:
+<p>$$\\text{Dom}(f) = \\{ x \\in \\mathbb{R} \\mid x \\gt 0, \\ x \\neq 4 \\} = (0, 4) \\cup (4, +\\infty)$$</p>`
+        ]
+      },
+      {
+        id: "s13-esercizio-2",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Dominio con valore assoluto",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Determinare il dominio della funzione</p>
+<p>$$f(x) = \\log(x^2 + 2|x| - 3)$$</p>`,
+        steps: [
+          `<strong>Condizione di esistenza.</strong> Per il logaritmo naturale l'argomento deve essere strettamente positivo:
+<p>$$x^2 + 2|x| - 3 \\gt 0$$</p>`,
+          `<strong>Trucco chiave: $x^2 = |x|^2$.</strong> Possiamo riscrivere la disequazione in termini di $|x|$:
+<p>$$|x|^2 + 2|x| - 3 \\gt 0$$</p>`,
+          `<strong>Sostituzione ausiliaria.</strong> Poniamo $t = |x|$. Poiché $t$ è un valore assoluto, deve essere $t \\ge 0$. La disequazione diventa di secondo grado in $t$:
+<p>$$t^2 + 2t - 3 \\gt 0$$</p>`,
+          `<strong>Risolviamo l'equazione associata</strong> $t^2 + 2t - 3 = 0$:
+<p>$$t = \\frac{-2 \\pm \\sqrt{4 - 4(1)(-3)}}{2} = \\frac{-2 \\pm \\sqrt{16}}{2} = \\frac{-2 \\pm 4}{2}$$</p>
+<p>Le soluzioni sono $t_1 = \\frac{2}{2} = 1$ e $t_2 = \\frac{-6}{2} = -3$.</p>`,
+          `<strong>Segno della parabola.</strong> La parabola $y = t^2 + 2t - 3$ è rivolta verso l'alto, quindi la disequazione è soddisfatta per valori esterni alle radici:
+<p>$$t \\lt -3 \\quad \\lor \\quad t \\gt 1$$</p>`,
+          `<strong>Torniamo a $x$.</strong> Sostituendo $t = |x|$:
+<p>$$|x| \\lt -3 \\quad \\lor \\quad |x| \\gt 1$$</p>
+<p>La prima condizione, $|x| \\lt -3$, è <strong>impossibile</strong>, poiché un valore assoluto non può essere negativo. La seconda, $|x| \\gt 1$, è soddisfatta per $x \\lt -1 \\ \\lor \\ x \\gt 1$.</p>`,
+          `<strong>Dominio.</strong>
+<p>$$\\text{Dom}(f) = (-\\infty, -1) \\cup (1, +\\infty)$$</p>`
+        ]
+      },
+      {
+        id: "s13-esercizio-3",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Dominio con esponenziali e radici",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Determinare il dominio della funzione</p>
+<p>$$f(x) = \\frac{\\log(4 - e^{2x})}{\\sqrt{x}}$$</p>`,
+        steps: [
+          `<strong>Tre condizioni da imporre contemporaneamente.</strong>
+<p>(1) Argomento del logaritmo strettamente positivo: $4 - e^{2x} \\gt 0$.</p>
+<p>(2) Argomento della radice quadrata non negativo: $x \\ge 0$.</p>
+<p>(3) Denominatore non nullo: $\\sqrt{x} \\neq 0 \\Rightarrow x \\neq 0$.</p>`,
+          `<strong>Le condizioni (2) e (3)</strong> insieme equivalgono a richiedere
+<p>$$x \\gt 0$$</p>`,
+          `<strong>Risolviamo la condizione (1).</strong>
+<p>$$4 - e^{2x} \\gt 0 \\Rightarrow 4 \\gt e^{2x} \\Rightarrow e^{2x} \\lt 4$$</p>
+<p>Applichiamo il logaritmo naturale (funzione crescente) a entrambi i membri:</p>
+<p>$$\\log(e^{2x}) \\lt \\log(4) \\Rightarrow 2x \\lt \\log(4)$$</p>
+<p>Ricordando che $\\log(4) = \\log(2^2) = 2\\log(2)$:</p>
+<p>$$2x \\lt 2\\log(2) \\Rightarrow x \\lt \\log(2)$$</p>`,
+          `<strong>Sistema finale.</strong>
+<p>$$\\begin{cases} x \\lt \\log(2) \\\\ x \\gt 0 \\end{cases}$$</p>`,
+          `<strong>Dominio.</strong>
+<p>$$\\text{Dom}(f) = (0, \\log(2))$$</p>`
+        ]
+      },
+      {
+        id: "s13-nota-prof-assoluti",
+        type: "note_box",
+        title: "Nota del Prof. — elevare al quadrato le disequazioni con valori assoluti",
+        icon: "💡",
+        content: `<p>Uno studente ha chiesto se, per risolvere la disequazione $|x+4| \\gt |x-4|$, si potesse elevare tutto al quadrato. La risposta è <strong>sì</strong>, in questo caso è un metodo valido e veloce. Poiché entrambi i membri sono non negativi, elevare al quadrato preserva la disuguaglianza:</p>
+<p>$$(x+4)^2 \\gt (x-4)^2$$</p>
+<p>$$x^2 + 8x + 16 \\gt x^2 - 8x + 16$$</p>
+<p>$$8x \\gt -8x \\Rightarrow 16x \\gt 0 \\Rightarrow x \\gt 0$$</p>
+<p>Questo risultato deve essere intersecato con le condizioni di esistenza iniziali, in particolare $x \\neq 4$. Il dominio finale è quindi $(0,4) \\cup (4, +\\infty)$, lo stesso che abbiamo trovato con lo studio dei casi.</p>
+<p><strong>Attenzione però:</strong> questo metodo funziona bene quando si ha $|A(x)| \\gt |B(x)|$. Se avessimo avuto, per esempio, $|A(x)| \\gt C$ con $C$ costante, o $|A(x)| \\gt B(x)$ senza valore assoluto, elevare al quadrato richiede più cautela. Lo studio dei casi, sebbene più lungo, è un metodo più generale e sicuro, perché costringe a considerare esplicitamente i segni delle espressioni.</p>`
+      },
+      {
+        id: "s13-integrazione-box",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+      {
+        id: "s13-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia le definizioni di parte intera $[x]$ e di parte frazionaria $\\{x\\}$ di un numero reale $x$. Calcola $[-2.7]$ e $\\{-2.7\\}$ e dimostra che per ogni $x \\in \\mathbb{R}$ si ha $0 \\le \\{x\\} \\lt 1$.</p>`,
+        solution: `<p><strong>Definizioni.</strong> Per definizione</p>
+<p>$$[x] = \\max \\{ n \\in \\mathbb{Z} \\mid n \\le x \\},$$</p>
+<p>cioè il più grande intero minore o uguale a $x$, mentre $\\{x\\} = x - [x]$.</p>
+<p><strong>Calcolo per $x = -2.7$.</strong> Gli interi minori o uguali a $-2.7$ sono $-3, -4, -5, \\dots$ e il più grande è $-3$, quindi</p>
+<p>$$[-2.7] = -3$$</p>
+<p>(non $-2$: per i numeri negativi la parte intera non si ottiene cancellando le cifre decimali). Di conseguenza</p>
+<p>$$\\{-2.7\\} = -2.7 - (-3) = 0.3$$</p>
+<p><strong>Dimostrazione della disuguaglianza.</strong> Posto $m = [x]$, per definizione $m \\le x$, dunque</p>
+<p>$$\\{x\\} = x - m \\ge 0.$$</p>
+<p>Inoltre $m+1$ è un intero strettamente maggiore di $m$; poiché $m$ è il massimo degli interi $\\le x$, non può valere $m+1 \\le x$, quindi $x \\lt m+1$ e perciò</p>
+<p>$$\\{x\\} = x - m \\lt 1.$$</p>
+<p>In conclusione $\\{x\\} \\in [0,1)$ per ogni $x \\in \\mathbb{R}$, come affermato nell'osservazione della lezione.</p>`
+      },
+      {
+        id: "s13-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Sia $h = f \\circ g$, cioè $h(x) = f(g(x))$. Enuncia la regola generale per determinare $\\mathrm{Dom}(h)$ e applicala per elencare le condizioni di esistenza di una funzione del tipo $x \\mapsto \\log_3\\big(\\log_3(u(x))\\big)$.</p>`,
+        solution: `<p><strong>Regola generale.</strong> Per definizione</p>
+<p>$$\\mathrm{Dom}(f \\circ g) = \\{ x \\in \\mathrm{Dom}(g) \\ : \\ g(x) \\in \\mathrm{Dom}(f) \\}$$</p>
+<p>Non basta che $g$ sia definita in $x$: serve anche che il valore $g(x)$ sia accettabile per $f$.</p>
+<p><strong>Applicazione.</strong> Nel caso $h(x) = \\log_3(\\log_3(u(x)))$ si impone, procedendo dall'esterno verso l'interno:</p>
+<p>(i) $x \\in \\mathrm{Dom}(u)$;</p>
+<p>(ii) $u(x) \\gt 0$, perché $u(x)$ è argomento del logaritmo interno;</p>
+<p>(iii) $\\log_3(u(x)) \\gt 0$, perché è argomento del logaritmo esterno.</p>
+<p><strong>Semplificazione.</strong> Poiché la base è $3 \\gt 1$, la condizione (iii) equivale a $u(x) \\gt 1$, che implica già (ii). Quindi il sistema si riduce a</p>
+<p>$$x \\in \\mathrm{Dom}(u) \\quad \\text{e} \\quad u(x) \\gt 1.$$</p>
+<p>La condizione più esterna è la più stringente e ingloba quelle interne, ma va verificato caso per caso: se la base fosse in $(0,1)$ la (iii) diventerebbe $0 \\lt u(x) \\lt 1$.</p>`
+      },
+      {
+        id: "s13-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia la definizione di successione convergente a $l \\in \\mathbb{R}$ e la definizione di successione divergente a $+\\infty$. Spiega il significato di "definitivamente" e dimostra che una successione divergente a $+\\infty$ non può convergere ad alcun $l \\in \\mathbb{R}$.</p>`,
+        solution: `<p><strong>Convergenza.</strong> Si dice che $a_n \\to l \\in \\mathbb{R}$ se per ogni $\\epsilon \\gt 0$ esiste $n_0 \\in \\mathbb{N}$ tale che</p>
+<p>$$n \\gt n_0 \\Rightarrow |a_n - l| \\lt \\epsilon$$</p>
+<p>la distanza $|a_n - l|$ è piccola a piacere da un certo indice in poi.</p>
+<p><strong>Divergenza a $+\\infty$.</strong> Si dice che $a_n \\to +\\infty$ se per ogni $M \\gt 0$ esiste $n_0 \\in \\mathbb{N}$ tale che</p>
+<p>$$n \\gt n_0 \\Rightarrow a_n \\gt M$$</p>
+<p>In questa definizione non compare alcun valore assoluto $|a_n - l|$, perché $+\\infty$ non è un numero reale e non c'è nessuna distanza da misurare; il ruolo di $\\epsilon$ (distanza piccola a piacere) è giocato da $M$ (soglia grande a piacere).</p>
+<p><strong>"Definitivamente".</strong> Significa: esiste un indice $n_0$ tale che la proprietà vale per ogni $n \\gt n_0$. Poiché il limite dipende solo dal comportamento definitivo, escludere o modificare un numero finito di termini iniziali non lo altera.</p>
+<p><strong>Dimostrazione.</strong> Sia $a_n \\to +\\infty$ e supponiamo per assurdo $a_n \\to l$ con $l \\in \\mathbb{R}$. Scegliendo $M = |l| + 1 \\gt 0$, esiste $n_1$ con $a_n \\gt |l| + 1$ per ogni $n \\gt n_1$, dunque</p>
+<p>$$a_n - l \\gt |l| + 1 - l \\ge 1$$</p>
+<p>e perciò $|a_n - l| \\gt 1$ per ogni $n \\gt n_1$. Ma la convergenza con $\\epsilon = 1$ richiederebbe $|a_n - l| \\lt 1$ definitivamente: <strong>contraddizione</strong>.</p>
+<p>Quindi la successione diverge e non converge, coerentemente con il teorema di unicità del limite.</p>`
+      },
+      {
+        id: "s13-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Spiega perché, per $a \\gt 1$, la disequazione $\\log_a(u) \\gt 0$ è equivalente a $u \\gt 1$, e di' come cambia la conclusione se $0 \\lt a \\lt 1$. Usa quanto detto per determinare per quali $u$ vale $\\log_{1/2}(u) \\ge 0$.</p>`,
+        solution: `<p><strong>Impostazione.</strong> Si parte dall'osservazione $0 = \\log_a(1)$, valida per ogni base ammissibile $a \\gt 0$, $a \\neq 1$. Allora $\\log_a(u) \\gt 0$ si riscrive</p>
+<p>$$\\log_a(u) \\gt \\log_a(1)$$</p>
+<p><strong>Caso $a \\gt 1$.</strong> La funzione $t \\mapsto \\log_a t$ è strettamente crescente su $(0,+\\infty)$, quindi conserva il verso della disuguaglianza fra gli argomenti:</p>
+<p>$$\\log_a(u) \\gt \\log_a(1) \\iff u \\gt 1$$</p>
+<p>(la positività di $u$ è automatica).</p>
+<p><strong>Caso $0 \\lt a \\lt 1$.</strong> La funzione è strettamente decrescente, quindi il verso si inverte:</p>
+<p>$$\\log_a(u) \\gt 0 \\iff 0 \\lt u \\lt 1$$</p>
+<p><strong>Applicazione.</strong> Di conseguenza</p>
+<p>$$\\log_{1/2}(u) \\ge 0 \\iff \\log_{1/2}(u) \\ge \\log_{1/2}(1) \\iff 0 \\lt u \\le 1$$</p>
+<p>Va tenuta esplicitamente la condizione $u \\gt 0$, mentre l'uguaglianza si ha solo per $u = 1$.</p>`
+      },
+      {
+        id: "s13-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Verifica, usando la definizione di limite, che</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{2n+1}{n} = 2,$$</p>
+<p>esplicitando un indice $n_0 = n_0(\\epsilon)$ e calcolandolo per $\\epsilon = 0.03$.</p>`,
+        solution: `<p><strong>Impostazione.</strong> La successione $a_n = \\frac{2n+1}{n}$ è definita per $n \\ge 1$ e si riscrive come</p>
+<p>$$a_n = 2 + \\frac{1}{n}$$</p>
+<p>Dunque</p>
+<p>$$|a_n - 2| = \\left| \\frac{1}{n} \\right| = \\frac{1}{n},$$</p>
+<p>perché $n \\gt 0$.</p>
+<p><strong>Trasformazione della condizione.</strong> Fissiamo $\\epsilon \\gt 0$ arbitrario: la condizione $|a_n - 2| \\lt \\epsilon$ equivale a</p>
+<p>$$\\frac{1}{n} \\lt \\epsilon,$$</p>
+<p>cioè (moltiplicando per $n \\gt 0$ e dividendo per $\\epsilon \\gt 0$, operazioni che non cambiano il verso) a</p>
+<p>$$n \\gt \\frac{1}{\\epsilon}$$</p>
+<p><strong>Scelta di $n_0$.</strong> Scegliamo</p>
+<p>$$n_0 = \\left[ \\frac{1}{\\epsilon} \\right] + 1$$</p>
+<p>Per ogni $n \\gt n_0$ si ha $n \\gt \\left[ \\frac{1}{\\epsilon} \\right] + 1 \\gt \\frac{1}{\\epsilon}$, poiché $\\left[ \\frac{1}{\\epsilon} \\right] \\le \\frac{1}{\\epsilon} \\lt \\left[ \\frac{1}{\\epsilon} \\right] + 1$, e quindi $|a_n - 2| = \\frac{1}{n} \\lt \\epsilon$.</p>
+<p><strong>Conclusione.</strong> Poiché per ogni $\\epsilon \\gt 0$ abbiamo esibito un tale $n_0$, la definizione è soddisfatta e il limite vale $2$.</p>
+<p>Per $\\epsilon = 0.03$ si ha $\\frac{1}{\\epsilon} = 33.33\\dots$, quindi</p>
+<p>$$n_0 = [33.33\\dots] + 1 = 33 + 1 = 34$$</p>
+<p>da $n = 35$ in poi la distanza da $2$ è minore di $0.03$.</p>`
+      },
+      {
+        id: "s13-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Risolvere la disequazione $|x-1| \\ge |2x+3|$.</p>`,
+        solution: `<p><strong>Impostazione.</strong> Entrambi i membri sono non negativi, quindi elevare al quadrato è un'operazione equivalente:</p>
+<p>$$|x-1| \\ge |2x+3| \\iff (x-1)^2 \\ge (2x+3)^2$$</p>
+<p><strong>Trasformazione algebrica.</strong> Sviluppando:</p>
+<p>$$x^2 - 2x + 1 \\ge 4x^2 + 12x + 9$$</p>
+<p>$$0 \\ge 3x^2 + 14x + 8$$</p>
+<p>$$3x^2 + 14x + 8 \\le 0$$</p>
+<p><strong>Radici.</strong></p>
+<p>$$x = \\frac{-14 \\pm \\sqrt{196-96}}{6} = \\frac{-14 \\pm 10}{6}$$</p>
+<p>cioè $x_1 = -4$ e $x_2 = -\\frac{2}{3}$.</p>
+<p><strong>Conclusione.</strong> Poiché il coefficiente di $x^2$ è positivo, la parabola è $\\le 0$ fra le radici (estremi inclusi):</p>
+<p>$$S = \\left[-4, -\\frac{2}{3}\\right]$$</p>
+<p><strong>Verifica.</strong> Per $x = -4$ si ha $|-5| = 5 = |-5|$ (uguaglianza); per $x = 0$ si ha $1 \\ge 3$, falso.</p>`
+      },
+      {
+        id: "s13-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcola</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{3n^2 + 2n - 1}{n^2 + 5},$$</p>
+<p>specificando quali teoremi usi e perché sono applicabili.</p>`,
+        solution: `<p><strong>Impostazione.</strong> Numeratore e denominatore tendono entrambi a $+\\infty$, quindi il teorema sul limite del quoziente <strong>non</strong> è applicabile direttamente (forma indeterminata).</p>
+<p><strong>Trasformazione.</strong> Raccogliamo il termine dominante, che è $n^2$ sia sopra sia sotto: per ogni $n \\ge 1$ si ha $n^2 \\ne 0$ e dunque</p>
+<p>$$\\frac{3n^2+2n-1}{n^2+5} = \\frac{n^2 \\left( 3 + \\frac{2}{n} - \\frac{1}{n^2} \\right)}{n^2 \\left( 1 + \\frac{5}{n^2} \\right)}$$</p>
+<p>$$= \\frac{3 + \\frac{2}{n} - \\frac{1}{n^2}}{1 + \\frac{5}{n^2}}$$</p>
+<p><strong>Limiti dei pezzi.</strong> Per i limiti delle successioni elementari, $n^{\\alpha} \\to 0$ se $\\alpha \\lt 0$, quindi</p>
+<p>$$\\frac{1}{n} \\to 0, \\qquad \\frac{1}{n^2} \\to 0.$$</p>
+<p>Per l'algebra dei limiti finiti (somma e prodotto per costante) il numeratore tende a $3 + 0 - 0 = 3$ e il denominatore a $1 + 0 = 1$.</p>
+<p><strong>Conclusione.</strong> Poiché il limite del denominatore è $1 \\ne 0$ (e $1 + \\frac{5}{n^2} \\ne 0$ per ogni $n \\ge 1$), si può applicare il teorema sul limite del quoziente fra successioni convergenti:</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{3n^2+2n-1}{n^2+5} = \\frac{3}{1} = 3$$</p>`
+      },
+      {
+        id: "s13-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Determinare il dominio della funzione</p>
+<p>$$f(x) = \\log\\!\\left(x^2 - 3|x| + 2\\right)$$</p>`,
+        solution: `<p><strong>Impostazione.</strong> La sola condizione è la positività dell'argomento del logaritmo:</p>
+<p>$$x^2 - 3|x| + 2 \\gt 0$$</p>
+<p><strong>Trasformazione.</strong> Poiché $x^2 = |x|^2$, la disequazione si riscrive $|x|^2 - 3|x| + 2 \\gt 0$; posto $t = |x|$ (con il vincolo $t \\ge 0$) diventa</p>
+<p>$$t^2 - 3t + 2 \\gt 0$$</p>
+<p><strong>Radici e segno.</strong> Le radici di $t^2 - 3t + 2 = 0$ sono</p>
+<p>$$t = \\frac{3 \\pm \\sqrt{9-8}}{2} = \\frac{3 \\pm 1}{2},$$</p>
+<p>cioè $t_1 = 1$ e $t_2 = 2$. La parabola è rivolta verso l'alto, quindi la disequazione vale per valori esterni:</p>
+<p>$$t \\lt 1 \\ \\lor \\ t \\gt 2$$</p>
+<p><strong>Ritorno a $x$.</strong> Tenendo conto che $t \\ge 0$ è automatico:</p>
+<p>$$|x| \\lt 1 \\iff -1 \\lt x \\lt 1, \\qquad |x| \\gt 2 \\iff x \\lt -2 \\ \\lor \\ x \\gt 2$$</p>
+<p><strong>Conclusione.</strong> Unendo le due famiglie di soluzioni:</p>
+<p>$$\\mathrm{Dom}(f) = (-\\infty,-2) \\cup (-1,1) \\cup (2,+\\infty)$$</p>
+<p><strong>Controllo.</strong> In $x = 0$ l'argomento vale $2 \\gt 0$ (incluso); in $x = \\pm\\frac{3}{2}$ vale $\\frac{9}{4} - \\frac{9}{2} + 2 = -\\frac{1}{4} \\lt 0$ (escluso).</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Definisci la parte intera $[x]$ di un numero reale.",
+        back: "$[x] = \\max \\{ n \\in \\mathbb{Z} \\mid n \\le x \\}$, cioè il <b>più grande intero minore o uguale</b> a $x$. Esempi: $[2.14] = 2$, $[\\pi] = 3$."
+      },
+      {
+        type: "tranello",
+        front: "Quanto vale $[-0.5]$? E $[-1.5]$?",
+        back: "$[-0.5] = -1$ e $[-1.5] = -2$. L'errore comune è pensare che la parte intera sia il numero \"senza le cifre decimali\": questo vale solo per i positivi. Per i negativi bisogna cercare il più grande intero che sta a sinistra sulla retta reale."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la parte frazionaria (mantissa) e indica il suo codominio.",
+        back: "$\\{x\\} = x - [x]$. Il suo codominio è sempre $[0, 1)$. Il grafico è un'onda a dente di sega: su ogni $[k, k+1)$ vale $y = x - k$, chiuso a quota $0$ in $x = k$ e aperto a quota $1$ in $x = k+1$. La funzione è periodica di periodo $1$."
+      },
+      {
+        type: "definizione",
+        front: "Enuncia la definizione di limite finito di una successione.",
+        back: "$\\lim_{n \\to +\\infty} a_n = l \\in \\mathbb{R}$ se per ogni $\\epsilon \\gt 0$ esiste $n_0 \\in \\mathbb{N}$ tale che $n \\gt n_0 \\Rightarrow |a_n - l| \\lt \\epsilon$. La quantità $|a_n - l|$ è la <b>distanza</b> fra il termine e il limite; \"definitivamente\" significa \"da un certo indice $n_0$ in poi\"."
+      },
+      {
+        type: "definizione",
+        front: "Enuncia la definizione di successione divergente a $+\\infty$ e spiega perché non usa il valore assoluto.",
+        back: "$a_n \\to +\\infty$ se per ogni $M \\gt 0$ esiste $n_0$ tale che $n \\gt n_0 \\Rightarrow a_n \\gt M$. Non compare $|a_n - l|$ perché $+\\infty$ <b>non è un numero reale</b>: non c'è nessuna distanza da misurare. Il ruolo di $\\epsilon$ (\"distanza piccola a piacere\") è giocato da $M$ (\"soglia grande a piacere\")."
+      },
+      {
+        type: "tranello",
+        front: "Una successione divergente è anche convergente?",
+        back: "<b>No.</b> I simboli $\\pm\\infty$ non sono numeri reali, quindi una successione divergente non si avvicina ad alcun numero reale: non è convergente. Dire \"la successione ammette limite\" copre tre casi: limite finito $l \\in \\mathbb{R}$ (convergenza), $+\\infty$ oppure $-\\infty$ (divergenza)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Verifica con la definizione che $\\lim_{n \\to +\\infty} 1/n = 0$.",
+        back: "Fissiamo $\\epsilon \\gt 0$. Poiché $n \\ge 1$, si ha $|1/n - 0| = 1/n$, e la condizione $1/n \\lt \\epsilon$ equivale a $n \\gt 1/\\epsilon$. Basta scegliere $n_0 = \\left[\\frac{1}{\\epsilon}\\right] + 1$: per ogni $n \\gt n_0$ vale $n \\gt 1/\\epsilon$, dunque la disuguaglianza è soddisfatta. Poiché $\\epsilon$ era arbitrario, il limite è $0$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Verifica con la definizione che $\\lim_{n \\to +\\infty} n = +\\infty$.",
+        back: "Fissiamo $M \\gt 0$ e scegliamo $n_0 = [M] + 1$: per ogni $n \\gt n_0$ si ha $n \\gt [M] + 1 \\gt M$. Poiché $M$ era arbitrario, la definizione di divergenza a $+\\infty$ è soddisfatta. Si noti che qui non c'è alcun valore assoluto, solo il confronto con la soglia $M$."
+      },
+      {
+        type: "formula",
+        front: "Qual è il limite della successione geometrica $b^n$ al variare di $b$?",
+        back: "$+\\infty$ se $b \\gt 1$; $1$ se $b = 1$; $0$ se $-1 \\lt b \\lt 1$; <b>non esiste</b> se $b \\le -1$. Esempio: $(-1)^n$ oscilla tra $1$ e $-1$; $(-2)^n$ dà $-2, 4, -8, 16, \\dots$ (da $n=1$), oscillando con modulo crescente."
+      },
+      {
+        type: "formula",
+        front: "Qual è il limite di $n^\\alpha$ e di $\\log_a(n)$?",
+        back: "$\\lim n^\\alpha = +\\infty$ se $\\alpha \\gt 0$, $= 1$ se $\\alpha = 0$, $= 0$ se $\\alpha \\lt 0$ (con $n \\ge 1$, perché $0^\\alpha$ non è definito per $\\alpha \\le 0$). $\\lim \\log_a(n) = +\\infty$ se $a \\gt 1$, $= -\\infty$ se $0 \\lt a \\lt 1$."
+      },
+      {
+        type: "domanda",
+        front: "Nell'estensione $b^{a_n}$ con $a_n \\to +\\infty$, perché si richiede $b \\gt 0$?",
+        back: "Perché i valori $a_n$ sono numeri reali qualsiasi, non necessariamente interi, e una potenza con base negativa ed esponente reale non intero non è definita nei reali: ad esempio $(-2)^{\\sqrt{2}}$ non esiste. Nella successione geometrica $b^n$ invece gli esponenti sono interi, quindi si può ammettere $b \\lt 0$ (ottenendo però una successione oscillante)."
+      },
+      {
+        type: "tranello",
+        front: "Nel calcolo di $\\lim \\frac{n^2+n+1}{n+2}$ si arriva a $n \\cdot r_n$ con $r_n \\to 1$. Perché non si può usare il teorema sull'algebra dei limiti finiti?",
+        back: "Perché quel teorema richiede che <b>entrambi</b> i limiti siano finiti, e qui $n \\to +\\infty$. Si usa invece la proposizione sul prodotto fra una successione divergente a $+\\infty$ e una con limite $L \\gt 0$, che dà $+\\infty$. È essenziale che il limite di $r_n$ sia <b>strettamente positivo</b>: con un fattore che tende a $0$ il risultato può cambiare ($n \\cdot \\frac{1}{n} \\to 1$, $n \\cdot \\frac{1}{n^2} \\to 0$, $n \\cdot \\frac{1}{\\sqrt{n}} \\to +\\infty$), perché \"$+\\infty \\cdot 0$\" è una forma indeterminata."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che se $c_n \\to +\\infty$ e $r_n \\to L$ con $L \\gt 0$ finito, allora $c_n r_n \\to +\\infty$.",
+        back: "Con $\\epsilon = L/2 \\gt 0$ nella definizione di limite si ha definitivamente $|r_n - L| \\lt L/2$, dunque $r_n \\gt L/2 \\gt 0$ per $n \\gt n_1$. Fissato $M \\gt 0$, poiché $c_n \\to +\\infty$ esiste $n_2$ con $c_n \\gt \\frac{2M}{L}$ per $n \\gt n_2$. Allora per $n \\gt \\max\\{n_1, n_2\\}$: $c_n r_n \\gt \\frac{2M}{L} \\cdot \\frac{L}{2} = M$. Poiché $M$ era arbitrario, $c_n r_n \\to +\\infty$."
+      },
+      {
+        type: "domanda",
+        front: "Come si imposta il dominio di $\\log_3(\\log_3(\\sqrt{A(x)}))$?",
+        back: "Si procede <b>dall'esterno verso l'interno</b>, imponendo tutte le condizioni insieme: argomento del log esterno $\\gt 0$, argomento del log interno $\\gt 0$, argomento della radice $\\ge 0$, denominatori $\\ne 0$. Poiché la base è $3 \\gt 1$ (log crescente), da $\\log_3(\\sqrt{A}) \\gt 0 = \\log_3 1$ segue $\\sqrt{A} \\gt 1$: la condizione più esterna è la più stringente e <b>ingloba</b> le interne."
+      },
+      {
+        type: "domanda",
+        front: "Come si risolve una disequazione come $x^2 + 2|x| - 3 \\gt 0$?",
+        back: "Si usa $x^2 = |x|^2$ per riscriverla come $|x|^2 + 2|x| - 3 \\gt 0$, poi si pone $t = |x|$ con il vincolo $t \\ge 0$. Si ottiene $t^2 + 2t - 3 \\gt 0$, con radici $t = 1$ e $t = -3$; valori esterni: $t \\lt -3 \\lor t \\gt 1$. Tornando a $x$: $|x| \\lt -3$ è impossibile, mentre $|x| \\gt 1$ dà $x \\lt -1 \\lor x \\gt 1$."
+      },
+      {
+        type: "tranello",
+        front: "Si può elevare al quadrato per risolvere $|x+4| \\gt |x-4|$?",
+        back: "Sì: entrambi i membri sono non negativi, quindi elevare al quadrato preserva la disuguaglianza e si ottiene $16x \\gt 0$, cioè $x \\gt 0$. <b>Attenzione:</b> il metodo è sicuro nella forma $|A| \\gt |B|$; con $|A| \\gt C$ costante o $|A| \\gt B$ senza valore assoluto serve più cautela. Lo studio dei casi è più lungo ma più generale, perché costringe a considerare esplicitamente i segni. E il risultato va sempre intersecato con le condizioni di esistenza (qui $x \\ne 4$)."
+      }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=21"></script>
+<script src="/js/graphs.js?v=21"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
