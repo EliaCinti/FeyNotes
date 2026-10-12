@@ -1,0 +1,702 @@
+const LESSON = {
+    id: "L12", date: "Lezione 12 — 12 Ott 2026",
+    title: "Formula del Binomio di Newton e Limiti di Successioni",
+    abstract: "Richiami sul principio di induzione, manipolazione degli indici di sommatoria, dimostrazione completa della formula del binomio di Newton e sua interpretazione combinatoria. Nella seconda parte: definizione rigorosa di limite di successione (finito e infinito) e classificazione delle successioni.",
+
+    sections: [
+      {
+        id: "s12-induzione",
+        type: "section",
+        title: "Richiami sul Principio di Induzione",
+        icon: "🪜",
+        content: `<p>Iniziamo con un breve ripasso di quanto visto nella lezione precedente sul principio di induzione. Per dimostrare una proprietà o una formula che dipende da un intero $n$, il principio di induzione si articola in <strong>due passaggi fondamentali</strong>, che conviene fissare in modo operativo perché li useremo subito nella dimostrazione della formula del binomio.</p>`,
+        subsections: [
+          {
+            subtitle: "Il principio di induzione in pratica",
+            content: `<p>Sia $P(n)$ una proposizione che dipende dall'intero $n$. Per dimostrare che $P(n)$ è vera per ogni $n$ a partire da un certo $n_0$ si procede in due passi:</p>
+            <ol>
+              <li><strong>Passo base:</strong> si dimostra che la proposizione è vera per il primo valore di $n$ considerato, cioè che $P(n_0)$ è vera (ad esempio $n_0 = 0$ oppure $n_0 = 1$).</li>
+              <li><strong>Passo induttivo:</strong> si assume che la proposizione sia vera per un generico $n \\ge n_0$ (questa è l'<em>ipotesi induttiva</em>) e, a partire da questa assunzione, si dimostra che la proposizione è vera anche per $n+1$, cioè si prova l'implicazione $P(n) \\Rightarrow P(n+1)$.</li>
+            </ol>
+            <p>Se entrambi i passaggi sono verificati, la proposizione è vera per tutti gli interi $n \\ge n_0$. L'idea è che se la proprietà vale per il primo caso e il fatto che valga per $n$ implica che valga per $n+1$, allora varrà per il primo, quindi per il secondo, quindi per il terzo, e così via per tutti i successivi.</p>`
+          }
+        ],
+        extra_content: `<p>Nelle dimostrazioni che seguono i due passi verranno sempre indicati esplicitamente con le etichette <em>passo base</em> e <em>passo induttivo</em>, così da rendere riconoscibile la struttura dell'argomento.</p>`
+      },
+
+      {
+        id: "s12-indici",
+        type: "section",
+        title: "Manipolazione degli Indici di Sommatoria",
+        icon: "🔁",
+        content: `<p>Un'operazione comune quando si lavora con le sommatorie è il <strong>cambio di indice</strong>. Vediamo come funziona con un esempio, che svolgiamo per intero perché la stessa tecnica sarà il passaggio chiave della dimostrazione del binomio di Newton.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio: slittamento dell'indice di una sommatoria",
+            content: `<p>Consideriamo la seguente sommatoria:</p>
+            <p>$$\\sum_{i=1}^{n} a_i$$</p>
+            <p>Supponiamo di voler far partire l'indice da $0$ invece che da $1$. Per fare ciò, introduciamo un nuovo indice, che chiamiamo $j$, legato al vecchio indice $i$ da una relazione. Poniamo:</p>
+            <p>$$j = i - 1 \\qquad \\Longrightarrow \\qquad i = j + 1$$</p>
+            <p>Ora dobbiamo trasformare gli estremi della sommatoria:</p>
+            <ul>
+              <li>Quando l'indice $i$ assume il suo valore iniziale, $i = 1$, il nuovo indice $j$ vale $j = 1 - 1 = 0$.</li>
+              <li>Quando l'indice $i$ assume il suo valore finale, $i = n$, il nuovo indice $j$ vale $j = n - 1$.</li>
+            </ul>
+            <p>Sostituendo l'espressione di $i$ e i nuovi estremi nella sommatoria originale, otteniamo:</p>
+            <p>$$\\sum_{i=1}^{n} a_i = \\sum_{j=0}^{n-1} a_{j+1}$$</p>
+            <p>Le due sommatorie sono identiche. Verifichiamolo:</p>
+            <ul>
+              <li>Per $j = 0$, il termine è $a_{0+1} = a_1$, che è il primo termine della somma originale.</li>
+              <li>Per $j = 1$, il termine è $a_{1+1} = a_2$, il secondo termine.</li>
+              <li>Per l'ultimo valore, $j = n-1$, il termine è $a_{(n-1)+1} = a_n$, che è l'ultimo termine della somma originale.</li>
+            </ul>
+            <p>Osserviamo che <strong>il numero di addendi non cambia</strong>: in entrambi i casi sono $n$ termini, perché abbiamo traslato contemporaneamente l'indice e i due estremi.</p>`
+          }
+        ],
+        extra_content: `<p>Questa tecnica, chiamata <strong>traslazione</strong> o <strong>slittamento dell'indice</strong>, è molto utile nelle dimostrazioni, come vedremo a breve.</p>`
+      },
+
+      {
+        id: "s12-binomiali",
+        type: "section",
+        title: "Coefficienti Binomiali",
+        icon: "🔢",
+        content: `<p>Prima di enunciare il teorema, richiamiamo la definizione dei coefficienti che vi compaiono, così da poterli calcolare esplicitamente negli esempi.</p>
+        <p><strong>Definizione.</strong> Siano $n, k \\in \\mathbb{N}$ con $0 \\le k \\le n$. Si chiama <strong>coefficiente binomiale</strong> "$n$ su $k$" il numero</p>
+        <p>$$\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!},$$</p>
+        <p>dove $n! = 1 \\cdot 2 \\cdots n$ è il fattoriale di $n$, con la convenzione $0! = 1$.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio: calcolo di un coefficiente binomiale",
+            content: `<p>Calcoliamo $\\binom{2}{1}$ applicando direttamente la definizione:</p>
+            <p>$$\\binom{2}{1} = \\frac{2!}{1!\\,(2-1)!} = \\frac{2!}{1!\\,1!} = \\frac{2}{1 \\cdot 1} = 2.$$</p>
+            <p>Con lo stesso conto, usando $0! = 1$, si ottengono i valori che useremo spesso:</p>
+            <p>$$\\binom{n}{0} = \\frac{n!}{0!\\,n!} = 1, \\qquad \\binom{n}{n} = \\frac{n!}{n!\\,0!} = 1, \\qquad \\binom{0}{0} = \\frac{0!}{0!\\,0!} = 1.$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Coefficiente binomiale", latex: "\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}" },
+          { label: "Casi notevoli", latex: "\\binom{n}{0} = \\binom{n}{n} = 1" }
+        ]
+      },
+
+      {
+        id: "s12-binomio",
+        type: "section",
+        title: "La Formula del Binomio di Newton",
+        icon: "🧮",
+        content: `<p>Enunciamo ora un risultato fondamentale noto come <strong>formula del binomio di Newton</strong>, che fornisce lo sviluppo della potenza $n$-esima di un binomio.</p>
+        <p><strong>Teorema.</strong> Siano $a, b \\in \\mathbb{R}$ e $n \\in \\mathbb{N}$. Allora vale la seguente formula:</p>
+        <p>$$(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Perché si chiamano coefficienti binomiali",
+            content: `<p>I numeri $\\binom{n}{k}$ sono chiamati <strong>coefficienti binomiali</strong> proprio perché compaiono nello sviluppo della potenza di un binomio; il loro valore si calcola con la formula $\\binom{n}{k} = \\frac{n!}{k!(n-k)!}$ data sopra.</p>`
+          },
+          {
+            subtitle: "Convenzione sulle potenze con esponente zero",
+            content: `<p>L'enunciato ammette <strong>tutti</strong> gli $a, b \\in \\mathbb{R}$, compresi i casi in cui $a$, $b$ oppure $a+b$ si annullano. Nella formula del binomio l'identità va letta come un'<em>identità tra polinomi</em>: una potenza con esponente nullo, come $a^0$, $b^0$ o $(a+b)^0$, rappresenta il <em>fattore costante</em> $1$, anche quando la base si annulla.</p>
+            <p>Con questa convenzione, ad esempio, il termine con $k=0$ dello sviluppo è sempre $\\binom{n}{0} b^{n}$ e il termine con $k=n$ è sempre $\\binom{n}{n} a^{n}$, senza dover distinguere casi particolari.</p>`
+          },
+          {
+            subtitle: "Verifica per piccoli valori di n",
+            content: `<p>Prima di dimostrare la formula in generale, verifichiamo che sia corretta per alcuni valori piccoli di $n$.</p>
+            <p><strong>Caso $n=0$.</strong> Sappiamo che $(a+b)^0 = 1$ (nel senso della convenzione appena enunciata). La formula del binomio ci dà:</p>
+            <p>$$\\sum_{k=0}^{0} \\binom{0}{k} a^k b^{0-k} = \\binom{0}{0} a^0 b^0 = 1 \\cdot 1 \\cdot 1 = 1$$</p>
+            <p>dove $\\binom{0}{0} = 1$ per la definizione di coefficiente binomiale e $a^0 = b^0 = 1$ per la convenzione sulle potenze a esponente nullo. La formula è corretta.</p>
+            <p><strong>Caso $n=1$.</strong> Sappiamo che $(a+b)^1 = a+b$. La formula del binomio ci dà:</p>
+            <p>$$\\begin{aligned}\\sum_{k=0}^{1} \\binom{1}{k} a^k b^{1-k} &= \\binom{1}{0} a^0 b^{1-0} + \\binom{1}{1} a^1 b^{1-1} \\\\ &= 1 \\cdot 1 \\cdot b^1 + 1 \\cdot a^1 \\cdot b^0 \\\\ &= b + a\\end{aligned}$$</p>
+            <p>La formula è corretta.</p>
+            <p><strong>Caso $n=2$.</strong> Sappiamo che $(a+b)^2 = a^2 + 2ab + b^2$. La formula del binomio ci dà, usando $\\binom{2}{0} = 1$, $\\binom{2}{1} = 2$ e $\\binom{2}{2} = 1$:</p>
+            <p>$$\\begin{aligned}\\sum_{k=0}^{2} \\binom{2}{k} a^k b^{2-k} &= \\binom{2}{0} a^0 b^{2-0} + \\binom{2}{1} a^1 b^{2-1} + \\binom{2}{2} a^2 b^{2-2} \\\\ &= 1 \\cdot 1 \\cdot b^2 + 2 \\cdot a \\cdot b + 1 \\cdot a^2 \\cdot 1 \\\\ &= b^2 + 2ab + a^2\\end{aligned}$$</p>
+            <p>La formula è corretta.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Binomio di Newton", latex: "(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}" }
+        ]
+      },
+
+      {
+        id: "s12-pascal",
+        type: "section",
+        title: "Identità di Pascal (formula di Stifel)",
+        icon: "🔺",
+        content: `<p>Nel corso della dimostrazione del binomio ci servirà la proprietà fondamentale dei coefficienti binomiali, che enunciamo a parte per poterla richiamare in modo chiaro.</p>
+        <p><strong>Teorema (identità di Pascal, o formula di Stifel).</strong> Per ogni $n \\in \\mathbb{N}$ e per ogni indice $k$ con $1 \\le k \\le n$ vale</p>
+        <p>$$\\binom{n}{k-1} + \\binom{n}{k} = \\binom{n+1}{k}.$$</p>`,
+        subsections: [
+          {
+            subtitle: "Perché la restrizione 1 ≤ k ≤ n",
+            content: `<p>La restrizione $1 \\le k \\le n$ è esattamente l'intervallo in cui l'identità verrà usata: sono i valori dell'indice per i quali <em>entrambi</em> i coefficienti binomiali a sinistra hanno senso come numeri di sottoinsiemi di un insieme di $n$ elementi. Non è un caso che, nel calcolo della dimostrazione per induzione, le due sommatorie da unire abbiano proprio gli estremi da $1$ a $n$.</p>
+            <p>La dimostrazione dettagliata di questa identità non viene ripetuta qui: è tra le proprietà dei coefficienti binomiali già richiamate ed è un utile <strong>esercizio di verifica diretta</strong> a partire dalla definizione (si trova svolta negli esercizi proposti in fondo).</p>`
+          }
+        ],
+        formulas: [
+          { label: "Identità di Pascal", latex: "\\binom{n}{k-1} + \\binom{n}{k} = \\binom{n+1}{k}, \\qquad 1 \\le k \\le n" }
+        ]
+      },
+
+      {
+        id: "s12-dimostrazione",
+        type: "section",
+        title: "Dimostrazione per Induzione del Binomio di Newton",
+        icon: "✅",
+        content: `<p>Dimostriamo ora la formula per induzione su $n$, seguendo lo schema in due passi richiamato all'inizio della lezione. Questa è la dimostrazione completa: passo base e passo induttivo svolto per intero, con l'analisi separata dei due termini $A$ e $B$ che nascono dallo sviluppo di $(a+b)^{n+1} = (a+b)^n (a+b)$.</p>
+        <p>Sia $P(n)$ la proposizione:</p>
+        <p>$$P(n): \\qquad (a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}.$$</p>
+        <p>Si noti che in $P(n)$ l'indice $k$ conta <strong>le potenze di $a$</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Passo base",
+            content: `<p>Per $n = 0$ abbiamo già verificato sopra che la formula è vera: $(a+b)^0 = 1$ e la sommatoria vale $1$. Quindi $P(0)$ è vera.</p>`
+          },
+          {
+            subtitle: "Passo induttivo: impostazione",
+            content: `<p>Assumiamo che $P(n)$ sia vera per un generico $n \\in \\mathbb{N}$ (<em>ipotesi induttiva</em>) e dimostriamo che $P(n+1)$ è vera, cioè che</p>
+            <p>$$(a+b)^{n+1} = \\sum_{j=0}^{n+1} \\binom{n+1}{j} a^j b^{n+1-j}.$$</p>
+            <p>L'ipotesi induttiva è precisamente ciò che ci autorizza, nel calcolo che segue, a sostituire il fattore $(a+b)^n$ con la sommatoria $\\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$: senza di essa la scomposizione nei due termini $A$ e $B$ non avrebbe alcun fondamento.</p>
+            <p>Partiamo dal primo membro:</p>
+            <p>$$\\begin{aligned} (a+b)^{n+1} &= (a+b)^n (a+b) \\\\ &= \\left( \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k} \\right) (a+b) \\\\ &= a \\left( \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k} \\right) + b \\left( \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k} \\right) \\\\ &= \\underbrace{\\sum_{k=0}^{n} \\binom{n}{k} a^{k+1} b^{n-k}}_{A} + \\underbrace{\\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n+1-k}}_{B} \\end{aligned}$$</p>
+            <p>Nei passaggi abbiamo usato l'ipotesi induttiva per $(a+b)^n$, distribuito il prodotto e infine portato i fattori $a$ e $b$ all'interno delle sommatorie. Ora dobbiamo manipolare le due sommatorie $A$ e $B$ per ricondurle alla forma della tesi.</p>`
+          },
+          {
+            subtitle: "Analisi della sommatoria A",
+            content: `<p>$$A = \\sum_{k=0}^{n} \\binom{n}{k} a^{k+1} b^{n-k}$$</p>
+            <p>Per farla assomigliare alla tesi vogliamo un termine $a^p$. Facciamo un cambio di indice ponendo $p = k+1$, esattamente come nell'esempio di slittamento visto sopra; di conseguenza $k = p-1$. Vediamo come cambiano gli estremi:</p>
+            <ul>
+              <li>Se $k = 0$, allora $p = 1$.</li>
+              <li>Se $k = n$, allora $p = n+1$.</li>
+            </ul>
+            <p>La sommatoria $A$ diventa:</p>
+            <p>$$A = \\sum_{p=1}^{n+1} \\binom{n}{p-1} a^p b^{n-(p-1)} = \\sum_{p=1}^{n+1} \\binom{n}{p-1} a^p b^{n+1-p}$$</p>
+            <p>Per poterla sommare con l'altra, che avrà indice fino a $n$, separiamo l'ultimo termine (quello per $p = n+1$):</p>
+            <p>$$\\binom{n}{(n+1)-1} a^{n+1} b^{n+1-(n+1)} = \\binom{n}{n} a^{n+1} b^0 = 1 \\cdot a^{n+1} \\cdot 1 = a^{n+1}$$</p>
+            <p>Quindi</p>
+            <p>$$A = a^{n+1} + \\sum_{p=1}^{n} \\binom{n}{p-1} a^p b^{n+1-p}.$$</p>
+            <p>Questo risultato è coerente con quanto ci si attende: nello sviluppo di $(a+b)^{n+1}$ il termine con la potenza più alta di $a$ è proprio $a^{n+1}$, e lo abbiamo correttamente isolato.</p>`
+          },
+          {
+            subtitle: "Analisi della sommatoria B",
+            content: `<p>$$B = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k+1} = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n+1-k}$$</p>
+            <p>Questa sommatoria ha già la forma desiderata per gli esponenti. Questa volta, per ottenere una sommatoria che vada da $1$ a $n$, isoliamo il <strong>primo</strong> termine (quello per $k=0$):</p>
+            <p>$$\\binom{n}{0} a^0 b^{n+1-0} = 1 \\cdot 1 \\cdot b^{n+1} = b^{n+1}$$</p>
+            <p>Quindi</p>
+            <p>$$B = b^{n+1} + \\sum_{k=1}^{n} \\binom{n}{k} a^k b^{n+1-k}.$$</p>`
+          },
+          {
+            subtitle: "Somma di A e B e conclusione",
+            content: `<p>Ora possiamo sommare $A$ e $B$:</p>
+            <p>$$(a+b)^{n+1} = A + B = \\left( a^{n+1} + \\sum_{p=1}^{n} \\binom{n}{p-1} a^p b^{n+1-p} \\right) + \\left( b^{n+1} + \\sum_{k=1}^{n} \\binom{n}{k} a^k b^{n+1-k} \\right)$$</p>
+            <p>Raggruppiamo i termini:</p>
+            <p>$$(a+b)^{n+1} = a^{n+1} + b^{n+1} + \\sum_{p=1}^{n} \\binom{n}{p-1} a^p b^{n+1-p} + \\sum_{k=1}^{n} \\binom{n}{k} a^k b^{n+1-k}$$</p>
+            <p>Le due sommatorie hanno gli stessi estremi e la stessa struttura. L'indice di sommatoria è una <strong>variabile muta</strong>, quindi possiamo usare lo stesso nome, ad esempio $j$, per entrambe e unirle:</p>
+            <p>$$(a+b)^{n+1} = a^{n+1} + b^{n+1} + \\sum_{j=1}^{n} \\left[ \\binom{n}{j-1} + \\binom{n}{j} \\right] a^j b^{n+1-j}$$</p>
+            <p>A questo punto applichiamo l'identità di Pascal, lecita perché l'indice $j$ varia proprio nell'intervallo $1 \\le j \\le n$:</p>
+            <p>$$\\binom{n}{j-1} + \\binom{n}{j} = \\binom{n+1}{j},$$</p>
+            <p>e otteniamo</p>
+            <p>$$(a+b)^{n+1} = a^{n+1} + b^{n+1} + \\sum_{j=1}^{n} \\binom{n+1}{j} a^j b^{n+1-j}.$$</p>
+            <p>Ora osserviamo che i termini isolati $a^{n+1}$ e $b^{n+1}$ possono essere <strong>riassorbiti</strong> nella sommatoria:</p>
+            <ul>
+              <li>Per $j = n+1$ il termine della somma è $\\binom{n+1}{n+1} a^{n+1} b^{n+1-(n+1)} = 1 \\cdot a^{n+1} \\cdot b^0 = a^{n+1}$.</li>
+              <li>Per $j = 0$ il termine della somma è $\\binom{n+1}{0} a^0 b^{n+1-0} = 1 \\cdot 1 \\cdot b^{n+1} = b^{n+1}$.</li>
+            </ul>
+            <p>Possiamo quindi estendere gli estremi della sommatoria da $j=0$ a $j=n+1$, includendo così anche i due termini che avevamo isolato:</p>
+            <p>$$(a+b)^{n+1} = \\sum_{j=0}^{n+1} \\binom{n+1}{j} a^j b^{n+1-j}$$</p>
+            <p>Questa è esattamente la tesi $P(n+1)$ (a meno del nome dell'indice, che è una variabile muta). Avendo dimostrato il passo base e il passo induttivo, per il principio di induzione la formula del binomio di Newton è vera per ogni $n \\in \\mathbb{N}$. $\\quad\\blacksquare$</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s12-somme-vuote",
+        type: "note_box",
+        title: "Convenzione sulle somme vuote",
+        icon: "📝",
+        content: `<p>Il passo induttivo parte da $n = 0$, quindi il procedimento appena seguito viene applicato anche in quel caso: ma per $n = 0$ l'intervallo di indici "da $1$ a $n$" è <strong>vuoto</strong>.</p>
+        <p>Si adotta allora la convenzione che una sommatoria i cui estremi siano incompatibili (estremo inferiore maggiore dell'estremo superiore) non contenga alcun addendo e valga $0$. Con questa lettura, per $n=0$ nella formula finale rimangono soltanto i due termini isolati, cioè $a$ e $b$: si ritrova così correttamente $(a+b)^1 = a+b$, in accordo con il caso $n=1$ verificato direttamente sopra.</p>`
+      },
+
+      {
+        id: "s12-nota-prof-esame",
+        type: "oral_box",
+        title: "Nota del Prof. — questa dimostrazione all'esame",
+        icon: "🎓",
+        content: `<blockquote><p>Questo tipo di dimostrazione, che richiede una certa manualità con gli indici di sommatoria e le proprietà dei coefficienti binomiali, è un esempio di quesito che potrebbe essere richiesto per ottenere un <strong>voto alto in un esame scritto</strong>. È un esercizio tecnico ma molto formativo, perché la pratica con la manipolazione degli indici di sommatoria sarà fondamentale più avanti nel corso.</p></blockquote>`,
+        quote: {
+          text: "È un esercizio tecnico ma molto formativo, perché la pratica con la manipolazione degli indici di sommatoria sarà fondamentale più avanti nel corso.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s12-combinatoria",
+        type: "section",
+        title: "Interpretazione Combinatoria dei Coefficienti Binomiali",
+        icon: "🎲",
+        content: `<p><strong>Idea di base.</strong> Diamo un'altra interpretazione della formula del binomio, più intuitiva e basata sulla combinatoria. Lo sviluppo di $(a+b)^n$ è il prodotto di $n$ binomi identici:</p>
+        <p>$$(a+b)^n = \\underbrace{(a+b) \\cdot (a+b) \\cdot \\ldots \\cdot (a+b)}_{n \\text{ volte}}$$</p>
+        <p>Quando eseguiamo questo prodotto, ogni termine dello sviluppo si ottiene <strong>scegliendo da ciascuna delle $n$ parentesi</strong> o il termine $a$ o il termine $b$, e moltiplicando le scelte tra loro. Contare quante scelte diverse producono lo stesso monomio significa esattamente calcolarne il coefficiente.</p>`,
+        subsections: [
+          {
+            subtitle: "Primi casi, in forma simbolica",
+            content: `<p>Vediamo come il conteggio delle scelte riproduce i coefficienti binomiali.</p>
+            <ul>
+              <li>Per ottenere il termine $a^n$ dobbiamo scegliere la $a$ da tutte le $n$ parentesi. C'è un <strong>solo</strong> modo per farlo, e infatti il coefficiente è $\\binom{n}{0} = 1$ (modi di scegliere zero parentesi da cui prendere la $b$).</li>
+              <li>Per ottenere il termine $a^{n-1}b$ dobbiamo scegliere la $b$ da una sola parentesi e la $a$ da tutte le altre $n-1$. I modi sono tanti quante sono le parentesi da cui possiamo scegliere la $b$, cioè $n$ modi: il coefficiente è $\\binom{n}{1} = n$.</li>
+              <li>Per ottenere il termine $a^{n-2}b^2$ dobbiamo scegliere la $b$ da due parentesi distinte e la $a$ dalle rimanenti $n-2$. Il numero di modi per scegliere $2$ parentesi su $n$ è esattamente $\\binom{n}{2}$.</li>
+            </ul>
+            <p>In generale, per ottenere il termine $a^{n-k}b^k$ dobbiamo scegliere la $b$ da $k$ parentesi e la $a$ dalle restanti $n-k$. Il numero di modi in cui possiamo scegliere queste $k$ parentesi (da cui prelevare la $b$) su un totale di $n$ parentesi è dato dal coefficiente binomiale $\\binom{n}{k}$. Dunque il coefficiente di $a^{n-k}b^k$ nello sviluppo di $(a+b)^n$ è proprio $\\binom{n}{k}$ e, sommando tutti i possibili termini, si ottiene</p>
+            <p>$$(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^{n-k} b^k.$$</p>`
+          },
+          {
+            subtitle: "Il caso n=3: conteggio esplicito",
+            content: `<p>Verifichiamo concretamente il conteggio delle scelte per</p>
+            <p>$$(a+b)^3 = (a+b)\\cdot(a+b)\\cdot(a+b),$$</p>
+            <p>indicando con una terna la scelta fatta rispettivamente nella prima, seconda e terza parentesi.</p>
+            <ul>
+              <li><strong>Monomio $a^3$:</strong> l'unica scelta possibile è $(a,a,a)$. Un solo modo, e $\\binom{3}{0} = 1$.</li>
+              <li><strong>Monomio $a^2 b$:</strong> occorre prendere $b$ da una sola parentesi. Le scelte sono tre: $(b,a,a)$, $(a,b,a)$, $(a,a,b)$. Tre modi, e infatti $\\binom{3}{1} = 3$.</li>
+              <li><strong>Monomio $a b^2$:</strong> occorre prendere $b$ da due parentesi. Le scelte sono ancora tre: $(a,b,b)$, $(b,a,b)$, $(b,b,a)$. Tre modi, e infatti $\\binom{3}{2} = 3$.</li>
+              <li><strong>Monomio $b^3$:</strong> l'unica scelta possibile è $(b,b,b)$. Un solo modo, e $\\binom{3}{3} = 1$.</li>
+            </ul>
+            <p>Sommando i quattro monomi con i coefficienti appena contati otteniamo</p>
+            <p>$$(a+b)^3 = a^3 + 3a^2 b + 3ab^2 + b^3,$$</p>
+            <p>che è esattamente quanto fornisce la formula del binomio con $n = 3$:</p>
+            <p>$$\\sum_{k=0}^{3} \\binom{3}{k} a^{3-k} b^k = \\binom{3}{0}a^3 + \\binom{3}{1}a^2 b + \\binom{3}{2}a b^2 + \\binom{3}{3}b^3.$$</p>
+            <p>Si noti anche che il numero totale di scelte è $1+3+3+1 = 8 = 2^3$: una conferma del fatto che in ciascuna delle tre parentesi la scelta è <strong>binaria</strong>.</p>`
+          }
+        ],
+        extra_content: `<p>Questa interpretazione fornisce un <strong>significato combinatorio diretto</strong> ai coefficienti che appaiono nello sviluppo del binomio: essi non sono numeri che compaiono per caso dal calcolo algebrico, ma contano in quanti modi si può ottenere ciascun monomio.</p>
+        <p><em>La dimostrazione formale per induzione e questa interpretazione combinatoria sono state caricate come nota integrativa sulla pagina del corso.</em></p>`
+      },
+
+      {
+        id: "s12-indice-k",
+        type: "alert_box",
+        title: "Attenzione al ruolo dell'indice k",
+        icon: "⚠️",
+        content: `<p>Conviene fermarsi un attimo su un cambio di convenzione, perché può far pensare a un'<strong>inversione errata degli esponenti</strong>.</p>
+        <p>Nell'argomento combinatorio appena visto l'indice $k$ conta le <em>scelte di $b$</em>, e la formula compare nella forma</p>
+        <p>$$(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^{n-k} b^k;$$</p>
+        <p>nella dimostrazione per induzione, invece, $k$ contava le <em>potenze di $a$</em>, e la formula compariva come</p>
+        <p>$$(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^{k} b^{n-k}.$$</p>
+        <p>Le due scritture sono <strong>la stessa formula</strong>. Basta porre $h = n-k$ (così $h$ conta le scelte di $a$). Attenzione all'ordine degli estremi: a $k=0$ corrisponde $h=n$ e a $k=n$ corrisponde $h=0$, quindi <strong>$h$ percorre gli interi da $n$ a $0$</strong>, cioè in ordine decrescente. Poiché la somma è <strong>finita</strong>, possiamo riordinare liberamente gli addendi e riscriverla con $h$ crescente da $0$ a $n$:</p>
+        <p>$$\\sum_{k=0}^{n} \\binom{n}{k} a^{n-k} b^k = \\sum_{h=0}^{n} \\binom{n}{n-h} a^{h} b^{n-h} = \\sum_{h=0}^{n} \\binom{n}{h} a^{h} b^{n-h},$$</p>
+        <p>dove nell'ultimo passaggio si è usata la <strong>simmetria</strong> dei coefficienti binomiali $\\binom{n}{n-h} = \\binom{n}{h}$. La scelta di quale indice usare è quindi solo una questione di comodità di scrittura.</p>`,
+        formulas: [
+          { label: "Simmetria dei coefficienti binomiali", latex: "\\binom{n}{n-h} = \\binom{n}{h}" }
+        ]
+      },
+
+      {
+        id: "s12-successioni",
+        type: "section",
+        title: "Limiti di Successioni: Introduzione",
+        icon: "📉",
+        content: `<p>Dopo aver esplorato la formula del binomio di Newton, iniziamo un nuovo capitolo fondamentale dell'analisi matematica: lo studio dei <strong>limiti</strong>. Cominciamo con il caso delle successioni. Ricordiamo innanzitutto cos'è una successione.</p>
+        <p><strong>Definizione (successione).</strong> Una <strong>successione</strong> di numeri reali è una funzione $a: \\mathbb{N} \\to \\mathbb{R}$. Per ogni $n \\in \\mathbb{N}$, il valore $a(n)$ si chiama termine $n$-esimo della successione e si denota comunemente con $a_n$. La successione nel suo insieme si indica con $\\{a_n\\}_{n \\in \\mathbb{N}}$ o semplicemente $(a_n)$.</p>`,
+        subsections: [
+          {
+            subtitle: "L'esempio guida",
+            content: `<p>Un esempio classico è la successione $a_n = \\frac{1}{n}$, definita per $n \\ge 1$. I suoi termini sono:</p>
+            <p>$$a_1 = 1, \\quad a_2 = \\frac{1}{2}, \\quad a_3 = \\frac{1}{3}, \\quad \\dots$$</p>
+            <p>Intuitivamente, man mano che $n$ diventa sempre più grande, i termini $a_n$ diventano sempre più "piccoli" e si "avvicinano" a zero.</p>
+            <p>L'idea di "avvicinarsi" è il cuore del concetto di limite. Quando diciamo che il limite della successione $a_n = 1/n$ è $0$, intendiamo che i valori $a_n$ si avvicinano a $0$ al crescere di $n$. Ma cosa significa <em>esattamente</em> "avvicinarsi"?</p>`
+          }
+        ],
+        quote: {
+          text: "La parola «vicino» è ambigua. Se dico che un oggetto è «vicino», cosa intendo? A un metro di distanza? A un millimetro? Il linguaggio matematico richiede precisione. L'intuizione chiave è questa: la successione non solo si avvicina al limite, ma ci si avvicina «arbitrariamente», cioè più vicino di qualsiasi distanza prefissata, a patto di andare abbastanza avanti nella successione.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s12-definitivamente",
+        type: "section",
+        title: "La Proprietà \"Definitivamente\"",
+        icon: "⏭️",
+        content: `<p>Per formalizzare l'idea di "andare abbastanza avanti", introduciamo un concetto cruciale.</p>
+        <p><strong>Definizione (proprietà definitiva).</strong> Una proprietà $P(n)$, che dipende da un indice $n \\in \\mathbb{N}$, si dice valere <strong>definitivamente</strong> se esiste un indice $n_0 \\in \\mathbb{N}$ tale che $P(n)$ è vera per ogni $n \\gt n_0$.</p>
+        <p>In altre parole, una proprietà vale definitivamente se è vera per tutti i numeri naturali <strong>da un certo punto in poi</strong>. I primi $n_0$ termini possono non soddisfarla, ma tutti i termini successivi devono.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio",
+            content: `<p>La proprietà "$1/n \\lt 1/100$" è vera definitivamente. Infatti, essa vale per ogni $n \\gt 100$. Qui $n_0 = 100$.</p>`
+          },
+          {
+            subtitle: "Attenzione: una sola tolleranza non basta",
+            content: `<p>L'esempio precedente verifica la proprietà per <em>una sola</em> tolleranza, quella fissata a $1/100$. La definizione di limite, che vedremo tra poco, richiederà invece che una verifica di questo tipo sia possibile per <em>ogni</em> tolleranza, per quanto piccola: l'indice $n_0$ non è un numero fissato una volta per tutte, ma <strong>cambia al variare della tolleranza richiesta</strong>.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Definitivamente", latex: "\\exists\\, n_0 \\in \\mathbb{N} : \\ P(n) \\text{ vera } \\forall\\, n \\gt n_0" }
+        ]
+      },
+
+      {
+        id: "s12-limite-finito",
+        type: "section",
+        title: "Definizione Formale di Limite Finito (Convergenza)",
+        icon: "🎯",
+        content: `<p>Armati del concetto di "definitivamente", possiamo ora dare una definizione rigorosa di limite.</p>
+        <p><strong>Definizione (limite finito di una successione).</strong> Sia $\\{a_n\\}_{n \\in \\mathbb{N}}$ una successione a valori reali e sia $L \\in \\mathbb{R}$. Si dice che la successione $a_n$ <strong>converge</strong> al limite $L$, e si scrive</p>
+        <p>$$\\lim_{n \\to +\\infty} a_n = L \\quad \\text{oppure} \\quad a_n \\to L \\text{ per } n \\to +\\infty,$$</p>
+        <p>se per ogni $\\varepsilon \\gt 0$ la proprietà $|a_n - L| \\lt \\varepsilon$ vale <strong>definitivamente</strong>.</p>
+        <p>Esplicitando la definizione di "definitivamente", otteniamo la formulazione classica:</p>
+        <p style="text-align:center;"><em>Per ogni $\\varepsilon \\gt 0$ esiste un $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\gt n_0$ si ha $|a_n - L| \\lt \\varepsilon$.</em></p>`,
+        subsections: [
+          {
+            subtitle: "Esempio illustrativo: verifica che 1/n → 0",
+            content: `<p>Dimostriamo con la definizione che</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{1}{n} = 0.$$</p>
+            <p>Qui $a_n = 1/n$ e $L = 0$. La verifica si articola in tre passi.</p>
+            <p><strong>1) Si fissa $\\varepsilon$ generico.</strong> Sia $\\varepsilon \\gt 0$ un numero arbitrario: non scegliamo un valore particolare come $1/100$, perché la condizione deve valere per <em>tutte</em> le tolleranze.</p>
+            <p><strong>2) Si scrive la disuguaglianza da soddisfare.</strong> Poiché $1/n \\gt 0$,</p>
+            <p>$$\\left| \\frac{1}{n} - 0 \\right| = \\frac{1}{n},$$</p>
+            <p>quindi la condizione $|a_n - L| \\lt \\varepsilon$ diventa</p>
+            <p>$$\\frac{1}{n} \\lt \\varepsilon \\quad \\Longleftrightarrow \\quad n \\gt \\frac{1}{\\varepsilon}.$$</p>
+            <p><strong>3) Si costruisce l'indice $n_0$.</strong> Scegliamo come $n_0$ un qualunque numero naturale con $n_0 \\gt 1/\\varepsilon$ (esiste sempre, per la <strong>proprietà archimedea</strong> di $\\mathbb{R}$); per esempio</p>
+            <p>$$n_0 = \\left\\lfloor \\frac{1}{\\varepsilon} \\right\\rfloor + 1,$$</p>
+            <p>dove $\\lfloor x \\rfloor$ denota la <strong>parte intera</strong> di $x$, cioè il massimo intero minore o uguale a $x$ (ad esempio $\\lfloor 3{,}7 \\rfloor = 3$ e $\\lfloor 10 \\rfloor = 10$; quindi con $\\varepsilon = 1/100$ si ottiene $n_0 = 100 + 1 = 101$, che va bene perché $n \\gt 101 \\Rightarrow n \\gt 100$).</p>
+            <p>Allora, per ogni $n \\gt n_0$ si ha $n \\gt 1/\\varepsilon$ e dunque</p>
+            <p>$$\\left| \\frac{1}{n} - 0 \\right| = \\frac{1}{n} \\lt \\varepsilon.$$</p>
+            <p>Poiché $\\varepsilon \\gt 0$ era arbitrario, la proprietà $|1/n - 0| \\lt \\varepsilon$ vale definitivamente per ogni $\\varepsilon$, cioè $1/n \\to 0$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Convergenza", latex: "\\forall \\varepsilon \\gt 0 \\ \\ \\exists n_0 \\in \\mathbb{N} : \\ \\forall n \\gt n_0 \\ \\ |a_n - L| \\lt \\varepsilon" }
+        ]
+      },
+
+      {
+        id: "s12-eps-n0",
+        type: "alert_box",
+        title: "Due punti da ricordare nelle verifiche con ε",
+        icon: "🚨",
+        content: `<p>Dall'esempio precedente emergono i due aspetti su cui si gioca ogni dimostrazione di convergenza.</p>
+        <ul>
+          <li><strong>$n_0$ dipende da $\\varepsilon$:</strong> non è un indice universale. La soglia <em>può</em> dipendere da $\\varepsilon$ e, restringendo la tolleranza, può essere necessario aumentarla — ma non è automatico che debba crescere (per una successione costantemente uguale al limite va sempre bene la stessa soglia). Nell'esempio $1/n$ possiamo scegliere $n_0 = \\lfloor 1/\\varepsilon \\rfloor + 1$: con $\\varepsilon = 1/100$ basta una soglia dell'ordine di $100$, con $\\varepsilon = 1/10^6$ serve una soglia dell'ordine di $10^6$. Per questo si scrive spesso $n_0 = n_0(\\varepsilon)$.</li>
+          <li><strong>La condizione deve valere per <em>tutti</em> gli indici successivi:</strong> non è sufficiente che $|a_n - L| \\lt \\varepsilon$ per qualche $n$ grande, deve valere per ogni $n \\gt n_0$. Una successione che, per qualche $\\varepsilon \\gt 0$, esce dall'intorno $(L-\\varepsilon, L+\\varepsilon)$ in corrispondenza di <strong>infiniti</strong> indici non converge a $L$; uscite relative a un numero <strong>finito</strong> di indici sono invece compatibili con la convergenza.</li>
+        </ul>`
+      },
+
+      {
+        id: "s12-geometrica",
+        type: "section",
+        title: "Interpretazione Geometrica del Limite",
+        icon: "📐",
+        content: `<p>La quantità $|a_n - L|$ rappresenta la <strong>distanza</strong> tra il termine $a_n$ e il valore $L$ sulla retta reale. La condizione $|a_n - L| \\lt \\varepsilon$ significa che $a_n$ si trova nell'intorno di $L$ di raggio $\\varepsilon$, cioè $a_n \\in (L-\\varepsilon, L+\\varepsilon)$.</p>
+        <p>La definizione di limite afferma quindi che, per quanto piccolo scegliamo un intorno di $L$ (cioè per ogni $\\varepsilon \\gt 0$), <strong>tutti</strong> i termini della successione, da un certo punto in poi, cadranno all'interno di quell'intorno.</p>
+        <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+          <p><strong>📊 Diagramma 1 — Definizione di limite sulla retta reale</strong></p>
+          <p><em>Retta reale orientata con il punto $L$ al centro e l'intorno $(L-\\varepsilon, L+\\varepsilon)$ evidenziato come segmento con doppia freccia. Fuori dall'intorno si collocano i primi termini $a_1$, $a_2$ e il gruppo $a_3, \\dots, a_{n_0}$ (etichettati sotto l'asse); dentro l'intorno si collocano $a_{n_0+1}$, $a_{n_0+2}$, $a_{n_0+3}$ (etichettati sopra l'asse). Didascalia: i primi termini possono stare fuori dall'intorno, ma tutti i termini di indice $n \\gt n_0$ cadono definitivamente in $(L-\\varepsilon, L+\\varepsilon)$.</em></p>
+          <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+        </div>`
+      },
+
+      {
+        id: "s12-divergenza",
+        type: "section",
+        title: "Limiti Infiniti (Divergenza)",
+        icon: "♾️",
+        content: `<p>Cosa significa che una successione "va a più infinito"? Non possiamo parlare di "distanza da infinito". L'idea corretta è che la successione <strong>superi qualsiasi valore</strong>, per quanto grande, e non torni più indietro.</p>
+        <p><strong>Definizione (divergenza a $+\\infty$).</strong> Si dice che la successione $a_n$ <strong>diverge a $+\\infty$</strong>, e si scrive $\\lim_{n \\to +\\infty} a_n = +\\infty$, se per ogni $M \\gt 0$ la proprietà $a_n \\gt M$ vale definitivamente. Cioè: per ogni $M \\gt 0$ (arbitrariamente grande) esiste un $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\gt n_0$ si ha $a_n \\gt M$.</p>
+        <p>In questo caso, per ogni "soglia" $M$ che fissiamo sull'asse reale, tutti i termini della successione da un certo indice in poi si troveranno <strong>al di sopra</strong> di essa.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio illustrativo: verifica che n → +∞",
+            content: `<p>Consideriamo la successione $a_n = n$ e mostriamo con la definizione che $\\lim_{n \\to +\\infty} n = +\\infty$.</p>
+            <p><strong>1) Si fissa $M$ generico.</strong> Sia $M \\gt 0$ arbitrario (non un valore particolare come $1000$).</p>
+            <p><strong>2) Si scrive la disuguaglianza da soddisfare.</strong> La condizione $a_n \\gt M$ diventa semplicemente $n \\gt M$.</p>
+            <p><strong>3) Si costruisce l'indice $n_0$.</strong> Scegliamo un numero naturale $n_0 \\gt M$ (per esempio $n_0 = \\lfloor M \\rfloor + 1$). Allora per ogni $n \\gt n_0$ si ha</p>
+            <p>$$a_n = n \\gt n_0 \\gt M,$$</p>
+            <p>cioè $a_n \\gt M$. Poiché $M \\gt 0$ era arbitrario, la proprietà $a_n \\gt M$ vale definitivamente per ogni $M$ e dunque $n \\to +\\infty$.</p>
+            <p>Anche qui l'indice dipende dalla soglia: con $M = 1000$ basta una soglia dell'ordine di $1000$, con $M = 10^9$ serve una soglia dell'ordine di $10^9$.</p>`
+          },
+          {
+            subtitle: "Divergenza a −∞",
+            content: `<p><strong>Definizione.</strong> Si dice che la successione $a_n$ <strong>diverge a $-\\infty$</strong>, e si scrive $\\lim_{n \\to +\\infty} a_n = -\\infty$, se per ogni $M \\gt 0$ la proprietà $a_n \\lt -M$ vale definitivamente. Cioè: per ogni $M \\gt 0$ esiste un $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\gt n_0$ si ha $a_n \\lt -M$.</p>
+            <p>Notare che si usa $M \\gt 0$ e la condizione $a_n \\lt -M$. Questo serve a fissare una soglia negativa arbitrariamente "bassa" (grande in valore assoluto). Ad esempio, per $M = 1000$ la condizione diventa $a_n \\lt -1000$.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo: verifica che −n → −∞",
+            content: `<p>Consideriamo la successione $a_n = -n$ e mostriamo che $\\lim_{n \\to +\\infty} (-n) = -\\infty$.</p>
+            <p><strong>1) Si fissa $M$ generico.</strong> Sia $M \\gt 0$ arbitrario.</p>
+            <p><strong>2) Si scrive la disuguaglianza da soddisfare.</strong> La condizione $a_n \\lt -M$ diventa</p>
+            <p>$$-n \\lt -M \\quad \\Longleftrightarrow \\quad n \\gt M.$$</p>
+            <p><strong>3) Si costruisce l'indice $n_0$.</strong> Scegliamo, come nel caso precedente, un naturale $n_0 \\gt M$. Allora per ogni $n \\gt n_0$ si ha $n \\gt M$ e, moltiplicando per $-1$ (che inverte il verso della disuguaglianza),</p>
+            <p>$$a_n = -n \\lt -M.$$</p>
+            <p>Poiché $M \\gt 0$ era arbitrario, la proprietà $a_n \\lt -M$ vale definitivamente per ogni $M$, cioè $-n \\to -\\infty$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Divergenza a +∞", latex: "\\forall M \\gt 0 \\ \\ \\exists n_0 : \\ \\forall n \\gt n_0 \\ \\ a_n \\gt M" },
+          { label: "Divergenza a −∞", latex: "\\forall M \\gt 0 \\ \\ \\exists n_0 : \\ \\forall n \\gt n_0 \\ \\ a_n \\lt -M" }
+        ]
+      },
+
+      {
+        id: "s12-schema",
+        type: "note_box",
+        title: "Schema comune alle tre definizioni",
+        icon: "🧭",
+        content: `<p>Le verifiche appena svolte hanno tutte la stessa struttura in tre passi:</p>
+        <ol>
+          <li>fissare il parametro di tolleranza o di soglia ($\\varepsilon \\gt 0$ nel caso finito, $M \\gt 0$ nel caso infinito) in modo <em>generico</em>;</li>
+          <li>tradurre la condizione richiesta ($|a_n - L| \\lt \\varepsilon$, oppure $a_n \\gt M$, oppure $a_n \\lt -M$) in una <strong>disuguaglianza sull'indice $n$</strong>;</li>
+          <li>esibire un $n_0$ che dipende dal parametro fissato e verificare che la disuguaglianza valga per <em>tutti</em> gli $n \\gt n_0$.</li>
+        </ol>
+        <p>È questo schema, e <strong>non</strong> la verifica per un singolo valore numerico, ciò che costituisce una dimostrazione di convergenza o di divergenza.</p>`
+      },
+
+      {
+        id: "s12-classificazione",
+        type: "section",
+        title: "Classificazione delle Successioni",
+        icon: "🗂️",
+        content: `<p>In base al comportamento del loro limite, le successioni possono essere classificate in tre categorie.</p>
+        <p><strong>Definizione.</strong> Data una successione $\\{a_n\\}_{n \\in \\mathbb{N}}$, essa si dice:</p>
+        <ul>
+          <li><strong>Convergente</strong>, se esiste finito il suo limite, cioè $\\lim_{n \\to +\\infty} a_n = L \\in \\mathbb{R}$.</li>
+          <li><strong>Divergente</strong>, se il suo limite è infinito, cioè $\\lim_{n \\to +\\infty} a_n = +\\infty$ oppure $\\lim_{n \\to +\\infty} a_n = -\\infty$.</li>
+          <li><strong>Irregolare</strong> o <strong>indeterminata</strong>, se il limite non esiste.</li>
+        </ul>
+        <p>Gli esempi svolti sopra forniscono un rappresentante per le prime due classi: $a_n = 1/n$ è convergente (con limite $0$), mentre $a_n = n$ e $a_n = -n$ sono divergenti, rispettivamente a $+\\infty$ e a $-\\infty$.</p>`,
+        table_compare: {
+          headers: ["Classe", "Comportamento del limite", "Esempio"],
+          rows: [
+            ["Convergente", "$\\lim a_n = L \\in \\mathbb{R}$", "$a_n = 1/n \\to 0$"],
+            ["Divergente", "$\\lim a_n = +\\infty$ oppure $-\\infty$", "$a_n = n$, $a_n = -n$"],
+            ["Irregolare / indeterminata", "il limite non esiste", "$a_n = (-1)^n$"]
+          ]
+        },
+        quote: {
+          text: "Una successione può non avere limite. Questo accade quando i suoi termini non si «stabilizzano» né attorno a un valore finito, né tendendo all'infinito. Vedremo in seguito esempi di successioni irregolari, come $a_n = (-1)^n$, che oscilla perpetuamente tra $-1$ e $1$.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s12-esercizi-box",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s12-es-t1",
+        type: "esercizio",
+        title: "Teoria 1 — Binomiale e sviluppo di $(a+b)^3$",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dai la definizione di coefficiente binomiale $\\binom{n}{k}$ per $0 \\le k \\le n$, enuncia la formula del binomio di Newton e usala per scrivere lo sviluppo di $(a+b)^3$, calcolando prima i coefficienti $\\binom{3}{k}$.</p>`,
+        solution: `<p>Per $n, k \\in \\mathbb{N}$ con $0 \\le k \\le n$ si pone</p>
+        <p>$$\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!},$$</p>
+        <p>dove $n! = 1 \\cdot 2 \\cdots n$ e si adotta la convenzione $0! = 1$.</p>
+        <p>La formula del binomio di Newton afferma che per ogni $a, b \\in \\mathbb{R}$ e ogni $n \\in \\mathbb{N}$ vale</p>
+        <p>$$(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k},$$</p>
+        <p>con la convenzione che una potenza a esponente nullo rappresenta il fattore costante $1$ (così la formula vale anche quando $a$, $b$ o $a+b$ si annullano).</p>
+        <p>Per $n = 3$ i coefficienti sono:</p>
+        <p>$$\\begin{aligned} \\binom{3}{0} &= \\frac{3!}{0!\\,3!} = 1, \\\\ \\binom{3}{1} &= \\frac{3!}{1!\\,2!} = \\frac{6}{2} = 3, \\\\ \\binom{3}{2} &= \\frac{3!}{2!\\,1!} = \\frac{6}{2} = 3, \\\\ \\binom{3}{3} &= \\frac{3!}{3!\\,0!} = 1. \\end{aligned}$$</p>
+        <p>Quindi</p>
+        <p>$$\\begin{aligned} (a+b)^3 &= \\binom{3}{0}a^0b^3 + \\binom{3}{1}a^1b^2 + \\binom{3}{2}a^2b^1 + \\binom{3}{3}a^3b^0 \\\\ &= b^3 + 3ab^2 + 3a^2b + a^3. \\end{aligned}$$</p>`
+      },
+
+      {
+        id: "s12-es-t2",
+        type: "esercizio",
+        title: "Teoria 2 — Identità di Pascal per verifica diretta",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare l'identità di Pascal (formula di Stifel) e dimostrarla per verifica diretta a partire dalla definizione $\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}$, precisando per quali valori dell'indice $k$ l'enunciato ha senso.</p>`,
+        solution: `<p>L'identità afferma che per ogni $n \\in \\mathbb{N}$ e per ogni $k$ con $1 \\le k \\le n$ si ha</p>
+        <p>$$\\binom{n}{k-1} + \\binom{n}{k} = \\binom{n+1}{k}.$$</p>
+        <p>La restrizione $1 \\le k \\le n$ serve perché solo per tali $k$ entrambi gli indici $k-1$ e $k$ sono compresi fra $0$ e $n$, cioè entrambi i coefficienti a sinistra sono definiti.</p>
+        <p><strong>Impostazione.</strong> Scriviamo i due coefficienti con la definizione:</p>
+        <p>$$\\binom{n}{k-1} + \\binom{n}{k} = \\frac{n!}{(k-1)!\\,(n-k+1)!} + \\frac{n!}{k!\\,(n-k)!}.$$</p>
+        <p><strong>Denominatore comune.</strong> Portiamo tutto sul denominatore comune $k!\\,(n-k+1)!$: nel primo addendo moltiplichiamo numeratore e denominatore per $k$ (usando $k! = k\\,(k-1)!$), nel secondo per $n-k+1$ (usando $(n-k+1)! = (n-k+1)(n-k)!$):</p>
+        <p>$$\\begin{aligned} \\binom{n}{k-1} + \\binom{n}{k} &= \\frac{k\\,n!}{k!\\,(n-k+1)!} + \\frac{(n-k+1)\\,n!}{k!\\,(n-k+1)!} \\\\ &= \\frac{n!\\,\\big(k + n - k + 1\\big)}{k!\\,(n-k+1)!} \\\\ &= \\frac{n!\\,(n+1)}{k!\\,(n+1-k)!} \\\\ &= \\frac{(n+1)!}{k!\\,(n+1-k)!} \\\\ &= \\binom{n+1}{k}, \\end{aligned}$$</p>
+        <p>che è la tesi.</p>`
+      },
+
+      {
+        id: "s12-es-t3",
+        type: "esercizio",
+        title: "Teoria 3 — \"Definitivamente\" e verifica di $1/n \\to 0$",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dai la definizione di proprietà $P(n)$ vera <em>definitivamente</em> e spiega perché la verifica della disuguaglianza $\\frac{1}{n} \\lt \\frac{1}{100}$ per ogni $n \\gt 100$ non costituisce una dimostrazione del fatto che $\\frac{1}{n} \\to 0$.</p>`,
+        solution: `<p>Una proprietà $P(n)$, dipendente da $n \\in \\mathbb{N}$, vale <em>definitivamente</em> se esiste $n_0 \\in \\mathbb{N}$ tale che $P(n)$ è vera per ogni $n \\gt n_0$: i primi indici possono non soddisfarla, ma tutti quelli successivi sì.</p>
+        <p>La verifica proposta mostra soltanto che la proprietà $P(n): \\ \\frac{1}{n} \\lt \\frac{1}{100}$ vale definitivamente, con $n_0 = 100$: cioè che i termini della successione entrano definitivamente nell'intorno $\\left(-\\frac{1}{100}, \\frac{1}{100}\\right)$ di $0$.</p>
+        <p>La definizione di limite richiede invece che la proprietà $\\left|\\frac{1}{n} - 0\\right| \\lt \\varepsilon$ valga definitivamente <em>per ogni</em> $\\varepsilon \\gt 0$, non per una sola tolleranza fissata: l'indice $n_0$ non è un numero universale ma una funzione $n_0 = n_0(\\varepsilon)$. Con la sola verifica per $\\varepsilon = \\frac{1}{100}$ non si esclude, in generale, che per una tolleranza più piccola, per esempio $\\varepsilon = \\frac{1}{10^6}$, la condizione non valga mai definitivamente.</p>
+        <p>La dimostrazione corretta fissa $\\varepsilon \\gt 0$ generico, risolve</p>
+        <p>$$\\frac{1}{n} \\lt \\varepsilon \\quad \\Longleftrightarrow \\quad n \\gt \\frac{1}{\\varepsilon}$$</p>
+        <p>e sceglie $n_0 = \\left\\lfloor \\frac{1}{\\varepsilon} \\right\\rfloor + 1$, dove $\\lfloor x \\rfloor$ è il massimo intero minore o uguale a $x$.</p>`
+      },
+
+      {
+        id: "s12-es-t4",
+        type: "esercizio",
+        title: "Teoria 4 — I due passi dell'induzione sono entrambi necessari",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Descrivi i due passi del principio di induzione e spiega perché nessuno dei due può essere omesso: esibisci una proposizione $P(n)$ per cui vale l'implicazione $P(n) \\Rightarrow P(n+1)$ per ogni $n$ ma che risulta falsa per ogni $n$.</p>`,
+        solution: `<p>Sia $P(n)$ una proposizione dipendente dall'intero $n$ e sia $n_0$ il primo valore considerato. Il principio di induzione richiede:</p>
+        <ol>
+          <li><em>passo base</em>, cioè la verifica che $P(n_0)$ sia vera;</li>
+          <li><em>passo induttivo</em>, cioè la dimostrazione che per ogni $n \\ge n_0$ l'ipotesi induttiva $P(n)$ implica $P(n+1)$.</li>
+        </ol>
+        <p>Se valgono (i) e (ii), allora $P(n)$ è vera per ogni $n \\ge n_0$: da $P(n_0)$ si ottiene $P(n_0+1)$, da questa $P(n_0+2)$, e così via.</p>
+        <p><strong>Il passo induttivo da solo non basta.</strong> Consideriamo</p>
+        <p>$$P(n): \\qquad \\sum_{i=1}^{n} i = \\frac{n(n+1)}{2} + 5, \\qquad n_0 = 1.$$</p>
+        <p>Il passo induttivo vale: se $\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2} + 5$, allora</p>
+        <p>$$\\begin{aligned} \\sum_{i=1}^{n+1} i &= \\frac{n(n+1)}{2} + 5 + (n+1) \\\\ &= \\frac{n(n+1) + 2(n+1)}{2} + 5 \\\\ &= \\frac{(n+1)(n+2)}{2} + 5, \\end{aligned}$$</p>
+        <p>che è esattamente $P(n+1)$. Tuttavia $P(1)$ è falsa, perché $\\sum_{i=1}^{1} i = 1 \\ne \\frac{1 \\cdot 2}{2} + 5 = 6$, e di fatto $P(n)$ è falsa per ogni $n$.</p>
+        <p>Un esempio ancora più estremo è $P(n): \\ n = n+1$, dove da $n = n+1$ segue $n+1 = n+2$, ma nessun caso è vero.</p>
+        <p>Simmetricamente, <strong>il solo passo base non basta</strong>: la verifica di $P(n_0)$ (o di un numero finito di casi) non dice nulla sui casi successivi.</p>`
+      },
+
+      {
+        id: "s12-es-s1",
+        type: "esercizio",
+        title: "Scritto 1 — Sviluppo di $(x+2)^4$ e verifica in $x=1$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Usando la formula del binomio di Newton, sviluppa $(x+2)^4$ e verifica il risultato calcolandone il valore in $x = 1$.</p>`,
+        solution: `<p><strong>Impostazione.</strong> Applichiamo $(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$ con $a = x$, $b = 2$, $n = 4$:</p>
+        <p>$$(x+2)^4 = \\sum_{k=0}^{4} \\binom{4}{k} x^k 2^{4-k}.$$</p>
+        <p><strong>Coefficienti binomiali.</strong></p>
+        <p>$$\\begin{aligned} \\binom{4}{0} &= 1, & \\binom{4}{1} &= \\frac{4!}{1!\\,3!} = 4, & \\binom{4}{2} &= \\frac{4!}{2!\\,2!} = 6, \\\\ \\binom{4}{3} &= \\frac{4!}{3!\\,1!} = 4, & \\binom{4}{4} &= 1. \\end{aligned}$$</p>
+        <p><strong>Termine per termine.</strong></p>
+        <p>$$\\begin{aligned} k=0: &\\quad 1 \\cdot x^0 \\cdot 2^4 = 16, \\\\ k=1: &\\quad 4 \\cdot x \\cdot 2^3 = 32x, \\\\ k=2: &\\quad 6 \\cdot x^2 \\cdot 2^2 = 24x^2, \\\\ k=3: &\\quad 4 \\cdot x^3 \\cdot 2 = 8x^3, \\\\ k=4: &\\quad 1 \\cdot x^4 \\cdot 2^0 = x^4. \\end{aligned}$$</p>
+        <p><strong>Risultato.</strong></p>
+        <p>$$(x+2)^4 = x^4 + 8x^3 + 24x^2 + 32x + 16.$$</p>
+        <p><strong>Verifica in $x=1$.</strong> Il primo membro vale $(1+2)^4 = 81$, il secondo $1 + 8 + 24 + 32 + 16 = 81$.</p>`
+      },
+
+      {
+        id: "s12-es-s2",
+        type: "esercizio",
+        title: "Scritto 2 — Coefficiente di $x^2$ in $(x+2)^4$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Usando la formula del binomio di Newton, sviluppare $(x+2)^4$ e scrivere esplicitamente il coefficiente di $x^2$.</p>`,
+        solution: `<p><strong>Impostazione.</strong> Con $a = x$, $b = 2$, $n = 4$:</p>
+        <p>$$(x+2)^4 = \\sum_{k=0}^{4} \\binom{4}{k} x^{k} 2^{4-k}.$$</p>
+        <p><strong>Termine per termine.</strong></p>
+        <p>$$\\begin{aligned} k=0: &\\quad \\binom{4}{0} 2^4 = 16, \\\\ k=1: &\\quad \\binom{4}{1} 2^3 x = 4 \\cdot 8\\, x = 32x, \\\\ k=2: &\\quad \\binom{4}{2} 2^2 x^2 = 6 \\cdot 4\\, x^2 = 24x^2, \\\\ k=3: &\\quad \\binom{4}{3} 2\\, x^3 = 4 \\cdot 2\\, x^3 = 8x^3, \\\\ k=4: &\\quad \\binom{4}{4} x^4 = x^4. \\end{aligned}$$</p>
+        <p><strong>Risultato.</strong></p>
+        <p>$$(x+2)^4 = 16 + 32x + 24x^2 + 8x^3 + x^4,$$</p>
+        <p>e il coefficiente di $x^2$ è $\\binom{4}{2} 2^2 = 24$.</p>
+        <p><strong>Verifica rapida.</strong> Ponendo $x = 1$ si ottiene $16 + 32 + 24 + 8 + 1 = 81 = 3^4 = (1+2)^4$.</p>`
+      },
+
+      {
+        id: "s12-es-s3",
+        type: "esercizio",
+        title: "Scritto 3 — Verifica con la definizione che $1/n^2 \\to 0$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Verifica con la definizione che $\\lim_{n \\to +\\infty} \\frac{1}{n^2} = 0$, esibendo $n_0 = n_0(\\varepsilon)$, e determina il più piccolo indice $n_0 \\in \\mathbb{N}$ che va bene per $\\varepsilon = 10^{-2}$.</p>`,
+        solution: `<p><strong>1) Si fissa $\\varepsilon$ generico.</strong> Sia $\\varepsilon \\gt 0$ arbitrario.</p>
+        <p><strong>2) Disuguaglianza da soddisfare.</strong> Poiché $\\frac{1}{n^2} \\gt 0$ per ogni $n \\ge 1$, si ha $\\left|\\frac{1}{n^2} - 0\\right| = \\frac{1}{n^2}$, quindi</p>
+        <p>$$\\frac{1}{n^2} \\lt \\varepsilon \\iff n^2 \\gt \\frac{1}{\\varepsilon} \\iff n \\gt \\frac{1}{\\sqrt{\\varepsilon}}$$</p>
+        <p>(l'ultimo passaggio è lecito perché $n \\gt 0$).</p>
+        <p><strong>3) Costruzione di $n_0$.</strong> Scegliamo</p>
+        <p>$$n_0 = \\left\\lfloor \\frac{1}{\\sqrt{\\varepsilon}} \\right\\rfloor + 1,$$</p>
+        <p>che è un naturale con $n_0 \\gt \\frac{1}{\\sqrt{\\varepsilon}}$. Per ogni $n \\gt n_0$ si ha $n \\gt \\frac{1}{\\sqrt{\\varepsilon}}$ e dunque $\\left|\\frac{1}{n^2} - 0\\right| = \\frac{1}{n^2} \\lt \\varepsilon$. Poiché $\\varepsilon \\gt 0$ era arbitrario, la proprietà vale definitivamente per ogni $\\varepsilon$, cioè $\\frac{1}{n^2} \\to 0$.</p>
+        <p><strong>Caso $\\varepsilon = 10^{-2}$.</strong> Si ha $\\frac{1}{\\sqrt{\\varepsilon}} = 10$, quindi la disuguaglianza $\\frac{1}{n^2} \\lt \\frac{1}{100}$ vale esattamente per $n \\gt 10$. Il minimo indice che va bene è dunque $n_0 = 10$: infatti per ogni $n \\gt 10$ si ha $n^2 \\ge 121 \\gt 100$; mentre $n_0 = 9$ non va bene, perché per $n = 10 \\gt 9$ si otterrebbe $\\frac{1}{100} \\lt \\frac{1}{100}$, che è falsa.</p>`
+      },
+
+      {
+        id: "s12-es-s4",
+        type: "esercizio",
+        title: "Scritto 4 — Sviluppo di $(2x-3)^5$",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Determina il coefficiente di $x^3$ e il termine noto dello sviluppo di $(2x-3)^5$, scrivendo poi lo sviluppo completo e verificandolo in $x = 1$.</p>`,
+        solution: `<p><strong>Impostazione.</strong> Scriviamo $(2x-3)^5$ nella forma $(a+b)^5$ con $a = 2x$ e $b = -3$:</p>
+        <p>$$(2x-3)^5 = \\sum_{k=0}^{5} \\binom{5}{k} (2x)^k (-3)^{5-k}.$$</p>
+        <p><strong>Termine in $x^3$ (cioè $k=3$).</strong></p>
+        <p>$$\\binom{5}{3} = \\frac{5!}{3!\\,2!} = 10, \\qquad (2x)^3 = 8x^3, \\qquad (-3)^{5-3} = (-3)^2 = 9,$$</p>
+        <p>quindi il termine è $10 \\cdot 8 \\cdot 9\\, x^3 = 720x^3$ e il coefficiente cercato è $720$.</p>
+        <p><strong>Termine noto (cioè $k=0$).</strong></p>
+        <p>$$\\binom{5}{0} (2x)^0 (-3)^5 = 1 \\cdot 1 \\cdot (-243) = -243.$$</p>
+        <p><strong>Gli altri termini.</strong></p>
+        <p>$$\\begin{aligned} k=1: &\\quad \\binom{5}{1} (2x)(-3)^4 = 5 \\cdot 2x \\cdot 81 = 810x, \\\\ k=2: &\\quad \\binom{5}{2} (2x)^2(-3)^3 = 10 \\cdot 4x^2 \\cdot (-27) = -1080x^2, \\\\ k=4: &\\quad \\binom{5}{4} (2x)^4(-3) = 5 \\cdot 16x^4 \\cdot (-3) = -240x^4, \\\\ k=5: &\\quad \\binom{5}{5} (2x)^5 = 32x^5. \\end{aligned}$$</p>
+        <p><strong>Risultato.</strong></p>
+        <p>$$(2x-3)^5 = 32x^5 - 240x^4 + 720x^3 - 1080x^2 + 810x - 243.$$</p>
+        <p><strong>Verifica in $x=1$.</strong> Il primo membro vale $(2-3)^5 = -1$, il secondo $32 - 240 + 720 - 1080 + 810 - 243 = -1$.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Quali sono i due passi del principio di induzione?",
+        back: "Sia $P(n)$ una proposizione dipendente dall'intero $n$, da dimostrare per $n \\ge n_0$. <strong>Passo base:</strong> si verifica che $P(n_0)$ è vera. <strong>Passo induttivo:</strong> si assume vera $P(n)$ per un generico $n \\ge n_0$ (ipotesi induttiva) e si dimostra l'implicazione $P(n) \\Rightarrow P(n+1)$. Se entrambi valgono, $P(n)$ è vera per ogni $n \\ge n_0$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia la formula del binomio di Newton e la definizione di coefficiente binomiale.",
+        back: "Per $a, b \\in \\mathbb{R}$ e $n \\in \\mathbb{N}$: $$(a+b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$$ dove, per $0 \\le k \\le n$, $\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}$ con la convenzione $0! = 1$. Una potenza a esponente nullo va letta come il fattore costante $1$, quindi la formula vale anche se $a$, $b$ o $a+b$ si annullano."
+      },
+      {
+        type: "dimostrazione",
+        front: "Nel passo induttivo del binomio di Newton, come si trattano le due sommatorie A e B?",
+        back: "Da $(a+b)^{n+1} = (a+b)^n(a+b)$ e dall'ipotesi induttiva si ottiene $A = \\sum_{k=0}^{n}\\binom{n}{k}a^{k+1}b^{n-k}$ e $B = \\sum_{k=0}^{n}\\binom{n}{k}a^{k}b^{n+1-k}$. In $A$ si fa il cambio di indice $p = k+1$, ottenendo $\\sum_{p=1}^{n+1}\\binom{n}{p-1}a^p b^{n+1-p}$, e si isola il termine $p=n+1$, che vale $a^{n+1}$. In $B$ si isola il termine $k=0$, che vale $b^{n+1}$. Restano due sommatorie da $1$ a $n$ che si uniscono: $\\sum_{j=1}^{n}\\left[\\binom{n}{j-1}+\\binom{n}{j}\\right]a^j b^{n+1-j}$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia l'identità di Pascal (formula di Stifel) e dove si usa nella dimostrazione del binomio.",
+        back: "Per ogni $n \\in \\mathbb{N}$ e ogni $k$ con $1 \\le k \\le n$: $$\\binom{n}{k-1} + \\binom{n}{k} = \\binom{n+1}{k}.$$ Si usa esattamente sulla sommatoria da $1$ a $n$ ottenuta unendo $A$ e $B$: l'intervallo $1 \\le k \\le n$ è precisamente quello in cui entrambi i coefficienti a sinistra sono definiti."
+      },
+      {
+        type: "tranello",
+        front: "Perché nel cambio di indice $h = n-k$ la formula $\\sum_k \\binom{n}{k}a^{n-k}b^k$ e $\\sum_k \\binom{n}{k}a^{k}b^{n-k}$ sono la stessa cosa?",
+        back: "Con $h = n-k$ gli estremi si percorrono in <strong>ordine opposto</strong>: a $k=0$ corrisponde $h=n$ e a $k=n$ corrisponde $h=0$, quindi $h$ va da $n$ a $0$. Ma la somma è <strong>finita</strong>, quindi gli addendi si possono riordinare e riscrivere con $h$ crescente da $0$ a $n$. Si ottiene $\\sum_{h=0}^{n}\\binom{n}{n-h}a^h b^{n-h} = \\sum_{h=0}^{n}\\binom{n}{h}a^h b^{n-h}$ usando la simmetria $\\binom{n}{n-h} = \\binom{n}{h}$."
+      },
+      {
+        type: "domanda",
+        front: "Qual è l'interpretazione combinatoria del coefficiente $\\binom{n}{k}$ nello sviluppo di $(a+b)^n$?",
+        back: "$(a+b)^n$ è il prodotto di $n$ binomi identici: ogni termine dello sviluppo nasce scegliendo da ciascuna parentesi o $a$ o $b$. Per ottenere il monomio $a^{n-k}b^k$ si deve prendere la $b$ da $k$ parentesi e la $a$ dalle restanti $n-k$: il numero di modi di scegliere quelle $k$ parentesi su $n$ è $\\binom{n}{k}$. Per $n=3$: $1+3+3+1 = 8 = 2^3$, coerente col fatto che in ogni parentesi la scelta è binaria."
+      },
+      {
+        type: "definizione",
+        front: "Cosa significa che una proprietà $P(n)$ vale \"definitivamente\"?",
+        back: "Significa che esiste un indice $n_0 \\in \\mathbb{N}$ tale che $P(n)$ è vera per ogni $n \\gt n_0$: i primi $n_0$ termini possono non soddisfarla, ma tutti i successivi sì. Esempio: $1/n \\lt 1/100$ vale definitivamente, con $n_0 = 100$."
+      },
+      {
+        type: "definizione",
+        front: "Dai la definizione rigorosa di $\\lim_{n \\to +\\infty} a_n = L$ con $L \\in \\mathbb{R}$.",
+        back: "La successione $a_n$ converge a $L$ se per ogni $\\varepsilon \\gt 0$ la proprietà $|a_n - L| \\lt \\varepsilon$ vale definitivamente. In forma esplicita: per ogni $\\varepsilon \\gt 0$ esiste $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\gt n_0$ si ha $|a_n - L| \\lt \\varepsilon$. Geometricamente: per ogni intorno $(L-\\varepsilon, L+\\varepsilon)$, tutti i termini da un certo indice in poi cadono dentro quell'intorno."
+      },
+      {
+        type: "dimostrazione",
+        front: "Verifica con la definizione che $1/n \\to 0$.",
+        back: "Sia $\\varepsilon \\gt 0$ generico. Poiché $1/n \\gt 0$, $\\left|\\frac{1}{n}-0\\right| = \\frac{1}{n}$, quindi la condizione è $\\frac{1}{n} \\lt \\varepsilon \\iff n \\gt \\frac{1}{\\varepsilon}$. Per la proprietà archimedea esiste un naturale $n_0 \\gt 1/\\varepsilon$: per esempio $n_0 = \\lfloor 1/\\varepsilon \\rfloor + 1$, dove $\\lfloor x \\rfloor$ è il massimo intero $\\le x$. Allora per ogni $n \\gt n_0$ vale $\\frac{1}{n} \\lt \\varepsilon$. Essendo $\\varepsilon$ arbitrario, $1/n \\to 0$."
+      },
+      {
+        type: "tranello",
+        front: "Verificare che $1/n \\lt 1/100$ per ogni $n \\gt 100$ dimostra che $1/n \\to 0$?",
+        back: "<strong>No.</strong> Mostra solo che la proprietà vale definitivamente per <em>una sola</em> tolleranza, $\\varepsilon = 1/100$. La definizione richiede che $|a_n - L| \\lt \\varepsilon$ valga definitivamente <em>per ogni</em> $\\varepsilon \\gt 0$: la soglia è una funzione $n_0 = n_0(\\varepsilon)$, non un numero universale. Occorre fissare $\\varepsilon$ generico, tradurre la condizione in una disuguaglianza su $n$ ed esibire $n_0(\\varepsilon)$."
+      },
+      {
+        type: "definizione",
+        front: "Come si definiscono $\\lim_{n\\to+\\infty} a_n = +\\infty$ e $= -\\infty$?",
+        back: "$a_n \\to +\\infty$ se per ogni $M \\gt 0$ la proprietà $a_n \\gt M$ vale definitivamente, cioè esiste $n_0$ tale che $a_n \\gt M$ per ogni $n \\gt n_0$. $a_n \\to -\\infty$ se per ogni $M \\gt 0$ la proprietà $a_n \\lt -M$ vale definitivamente. Si usa $M \\gt 0$ con la condizione $a_n \\lt -M$ per fissare una soglia negativa arbitrariamente grande in valore assoluto."
+      },
+      {
+        type: "domanda",
+        front: "Come si classificano le successioni in base al limite? Dai un esempio per ciascuna classe.",
+        back: "<strong>Convergente:</strong> il limite esiste finito, $\\lim a_n = L \\in \\mathbb{R}$ — esempio $a_n = 1/n \\to 0$. <strong>Divergente:</strong> il limite è $+\\infty$ o $-\\infty$ — esempi $a_n = n$ e $a_n = -n$. <strong>Irregolare</strong> (o indeterminata): il limite non esiste — esempio $a_n = (-1)^n$, che oscilla perpetuamente tra $-1$ e $1$."
+      },
+      {
+        type: "domanda",
+        front: "Qual è lo schema in tre passi comune a tutte le verifiche di limite?",
+        back: "1) Fissare in modo <strong>generico</strong> il parametro: $\\varepsilon \\gt 0$ nel caso finito, $M \\gt 0$ nel caso infinito. 2) Tradurre la condizione richiesta ($|a_n - L| \\lt \\varepsilon$, oppure $a_n \\gt M$, oppure $a_n \\lt -M$) in una disuguaglianza sull'indice $n$. 3) Esibire un $n_0$ dipendente dal parametro e verificare che la disuguaglianza valga per <strong>tutti</strong> gli $n \\gt n_0$. È lo schema, non la verifica per un singolo valore numerico, a costituire la dimostrazione."
+      }
+    ]
+};
+
