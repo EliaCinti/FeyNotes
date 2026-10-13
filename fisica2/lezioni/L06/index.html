@@ -90,7 +90,7 @@
 const LESSON = {
     id: "L06", date: "Lezione 6 — 9 Ott 2026",
     title: "Teorema di Gauss in Forma Locale e Potenziale Elettrostatico",
-    abstract: "Dalla forma integrale del teorema di Gauss alla sua forma locale (prima equazione di Maxwell), passando per il teorema della divergenza e per il calcolo diretto del flusso attraverso un cubetto infinitesimo. Nella seconda parte: conservatività del campo elettrostatico, energia potenziale, potenziale, relazione $\\vec{E} = -\\nabla V$ e superfici equipotenziali.",
+    abstract: "Dalla forma integrale del teorema di Gauss alla sua forma locale (prima equazione di Maxwell), passando per il teorema della divergenza e per il calcolo diretto del flusso attraverso un cubetto infinitesimo. Nella seconda parte: conservatività del campo elettrostatico, energia potenziale, potenziale, relazione differenziale $dV = -\\vec{E}\\cdot d\\vec{s}$ e superfici equipotenziali. In un'integrazione, il gradiente e la relazione $\\vec{E} = -\\nabla V$, non ancora introdotti a lezione.",
 
     sections: [
       {
@@ -4477,50 +4477,48 @@ const LESSON = {
       },
 
       {
-        id: "s06-gradiente",
+        id: "s06-forma-differenziale",
         type: "section",
-        title: "Relazione tra Campo e Potenziale: il Gradiente",
+        title: "Relazione tra Campo e Potenziale in Forma Differenziale",
         icon: "📉",
         content: `<p>La relazione integrale $V(A)-V(B) = \\int_A^B \\vec{E}\\cdot d\\vec{s}$ può essere tradotta in forma locale (o differenziale). Applichiamola a uno spostamento <em>infinitesimo</em> $d\\vec{s}$, da un punto $P$ al punto $P + d\\vec{s}$:</p>
         <p>$$V(P) - V(P + d\\vec{s}) = \\vec{E}\\cdot d\\vec{s} \\qquad \\Longrightarrow \\qquad dV \\equiv V(P+d\\vec{s}) - V(P) = -\\,\\vec{E}\\cdot d\\vec{s}.$$</p>
-        <p>È da qui che nasce il segno meno: <em>il potenziale diminuisce quando ci si muove nel verso del campo</em>.</p>`,
-        subsections: [
-          {
-            subtitle: "Passaggio alle coordinate cartesiane",
-            content: `<p>Da un lato, il differenziale di una funzione di tre variabili è</p>
-            <p>$$dV = \\frac{\\partial V}{\\partial x}\\,dx + \\frac{\\partial V}{\\partial y}\\,dy + \\frac{\\partial V}{\\partial z}\\,dz;$$</p>
-            <p>dall'altro, con $d\\vec{s} = dx\\,\\hat{i} + dy\\,\\hat{j} + dz\\,\\hat{k}$,</p>
-            <p>$$-\\,\\vec{E}\\cdot d\\vec{s} = -E_x\\,dx - E_y\\,dy - E_z\\,dz.$$</p>
-            <p>Le due espressioni devono coincidere per <em>ogni</em> scelta indipendente di $dx, dy, dz$: ciò è possibile solo se i coefficienti corrispondenti sono uguali uno per uno,</p>
-            <p>$$E_x = -\\frac{\\partial V}{\\partial x}, \\qquad E_y = -\\frac{\\partial V}{\\partial y}, \\qquad E_z = -\\frac{\\partial V}{\\partial z}.$$</p>`
-          },
-          {
-            subtitle: "Definizione — gradiente",
-            content: `<p>Data una funzione scalare $V(x,y,z)$, si chiama <strong>gradiente</strong> di $V$ il campo vettoriale</p>
-            <p>$$\\nabla V = \\frac{\\partial V}{\\partial x}\\hat{i} + \\frac{\\partial V}{\\partial y}\\hat{j} + \\frac{\\partial V}{\\partial z}\\hat{k},$$</p>
-            <p>che punta nella direzione di massima crescita di $V$ ed è perpendicolare alle superfici di livello $V = \\text{costante}$.</p>`
-          },
-          {
-            subtitle: "Proposizione — relazione locale tra campo e potenziale",
-            content: `<p>Il campo elettrostatico è il gradiente del potenziale, cambiato di segno:</p>
-            <p>$$\\vec{E} = -\\nabla V = - \\left( \\frac{\\partial V}{\\partial x}\\hat{i} + \\frac{\\partial V}{\\partial y}\\hat{j} + \\frac{\\partial V}{\\partial z}\\hat{k} \\right),$$</p>
-            <p>equivalentemente $dV = -\\vec{E}\\cdot d\\vec{s}$. In particolare, se si conosce il potenziale $V(x,y,z)$ in una regione di spazio, le componenti del campo elettrico si ottengono semplicemente derivando.</p>`
-          },
-          {
-            subtitle: "Verifica con la carica puntiforme",
-            content: `<p>Per una carica puntiforme $V(r) = \\dfrac{Q}{4\\pi\\epsilon_0 r}$ dipende solo da $r$, quindi il gradiente ha solo componente radiale, $\\nabla V = \\dfrac{dV}{dr}\\hat{u}_r$. Poiché</p>
-            <p>$$\\frac{dV}{dr} = \\frac{Q}{4\\pi\\epsilon_0}\\frac{d}{dr}\\left(\\frac{1}{r}\\right) = -\\frac{Q}{4\\pi\\epsilon_0 r^2},$$</p>
-            <p>si ottiene</p>
-            <p>$$\\vec{E} = -\\nabla V = +\\frac{Q}{4\\pi\\epsilon_0 r^2}\\,\\hat{u}_r,$$</p>
-            <p>che è esattamente il campo coulombiano di partenza. La relazione è dunque coerente, segno compreso: per $Q \\gt 0$ il potenziale <em>decresce</em> allontanandosi e il campo punta verso l'esterno.</p>
-            <p>Questa relazione è anche il modo più diretto di controllare che un campo assegnato sia conservativo, e quindi ammissibile come campo elettrostatico: è esattamente la verifica fatta in precedenza per il campo $\\vec{E} = a\\,y\\,\\hat{i} + a\\,x\\,\\hat{j}$ con $V = -a\\,x\\,y$.</p>`
-          }
-        ],
+        <p>È da qui che nasce il segno meno: <em>il potenziale diminuisce quando ci si muove nel verso del campo</em>.</p>
+        <p>Questa relazione permette di passare dal campo al potenziale. Per fare il passaggio inverso, cioè ricavare il campo $\\vec{E}$ conoscendo il potenziale $V$, serve uno strumento matematico, il <strong>gradiente</strong>, che a lezione non è ancora stato introdotto: lo presentiamo nell'integrazione qui sotto.</p>`,
         formulas: [
-          { label: "Campo da potenziale", latex: "\\vec{E} = -\\nabla V" },
-          { label: "Forma differenziale", latex: "dV = -\\vec{E}\\cdot d\\vec{s}" },
-          { label: "Componenti", latex: "E_x = -\\frac{\\partial V}{\\partial x}, \\quad E_y = -\\frac{\\partial V}{\\partial y}, \\quad E_z = -\\frac{\\partial V}{\\partial z}" }
+          { label: "Forma differenziale", latex: "dV = -\\vec{E}\\cdot d\\vec{s}" }
         ]
+      },
+
+      {
+        id: "s06-int-gradiente",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente: il gradiente",
+        icon: "➕",
+        content: `<p><strong>Perché serve.</strong> La relazione $dV = -\\vec{E}\\cdot d\\vec{s}$ permette di calcolare il potenziale a partire dal campo. Spesso però serve il contrario: si conosce $V(x,y,z)$, che è una funzione <em>scalare</em> (un numero in ogni punto) e di solito è più facile da calcolare, e si vuole il campo $\\vec{E}$, che è un <em>vettore</em>. Lo strumento che fa questo passaggio è il <strong>gradiente</strong>.</p>
+        <p><strong>1. Derivate parziali.</strong> $V$ dipende da tre variabili. La <em>derivata parziale</em> $\\dfrac{\\partial V}{\\partial x}$ è la derivata ordinaria di $V$ rispetto a $x$, calcolata tenendo $y$ e $z$ fissi come se fossero costanti: misura quanto cambia $V$ se ci si sposta di poco <em>solo</em> lungo l'asse $x$. Allo stesso modo si definiscono $\\dfrac{\\partial V}{\\partial y}$ e $\\dfrac{\\partial V}{\\partial z}$. Ad esempio, per $V = x^2 y + 3z$:</p>
+        <p>$$\\frac{\\partial V}{\\partial x} = 2xy, \\qquad \\frac{\\partial V}{\\partial y} = x^2, \\qquad \\frac{\\partial V}{\\partial z} = 3.$$</p>
+        <p><strong>2. Variazione di $V$ per uno spostamento piccolo.</strong> Spostandosi da $(x,y,z)$ a $(x+dx,\\,y+dy,\\,z+dz)$, la variazione di $V$ è la somma dei contributi lungo i tre assi (il <em>differenziale</em> di $V$):</p>
+        <p>$$dV = \\frac{\\partial V}{\\partial x}\\,dx + \\frac{\\partial V}{\\partial y}\\,dy + \\frac{\\partial V}{\\partial z}\\,dz.$$</p>
+        <p><strong>3. Definizione di gradiente.</strong> Si chiama <strong>gradiente</strong> di $V$ il vettore che ha per componenti le tre derivate parziali:</p>
+        <p>$$\\nabla V = \\frac{\\partial V}{\\partial x}\\,\\hat{i} + \\frac{\\partial V}{\\partial y}\\,\\hat{j} + \\frac{\\partial V}{\\partial z}\\,\\hat{k}.$$</p>
+        <p>Il simbolo $\\nabla$ (“nabla”) è lo stesso della divergenza $\\nabla\\cdot\\vec{E}$ vista nella prima parte della lezione: lì agisce su un campo vettoriale tramite il prodotto scalare e dà uno scalare, qui agisce su una funzione scalare e dà un vettore. In entrambi i casi $\\nabla$ va pensato come il “vettore delle derivate” $\\left(\\dfrac{\\partial}{\\partial x}, \\dfrac{\\partial}{\\partial y}, \\dfrac{\\partial}{\\partial z}\\right)$.</p>
+        <p>Con $d\\vec{s} = dx\\,\\hat{i} + dy\\,\\hat{j} + dz\\,\\hat{k}$, il differenziale del punto 2 si scrive in modo compatto come un prodotto scalare:</p>
+        <p>$$dV = \\nabla V \\cdot d\\vec{s}.$$</p>
+        <p><strong>4. Significato geometrico.</strong> Scrivendo il prodotto scalare come $dV = |\\nabla V|\\,|d\\vec{s}|\\cos\\theta$, con $\\theta$ angolo fra $\\nabla V$ e lo spostamento, per spostamenti della stessa lunghezza si vede che:</p>
+        <ul>
+          <li>$dV$ è massimo per $\\theta = 0$: il gradiente punta nella <strong>direzione in cui $V$ cresce più rapidamente</strong>, e il suo modulo $|\\nabla V|$ è proprio la rapidità di questa crescita (variazione di $V$ per unità di lunghezza);</li>
+          <li>$dV = 0$ per $\\theta = 90^\\circ$: muovendosi perpendicolarmente al gradiente $V$ non cambia, cioè si resta sulla superficie $V = \\text{costante}$. Il gradiente è quindi <strong>perpendicolare alle superfici di livello</strong> di $V$.</li>
+        </ul>
+        <p>Un'immagine utile è la cartina topografica di una montagna: se $h(x,y)$ è l'altitudine, in ogni punto il gradiente di $h$ indica la direzione di salita più ripida ed è perpendicolare alle curve di livello disegnate sulla cartina.</p>
+        <p><strong>Esempio.</strong> Per $f(x,y) = x^2 + y^2$ si ha $\\nabla f = 2x\\,\\hat{i} + 2y\\,\\hat{j} = 2\\vec{r}$, con $\\vec{r} = x\\,\\hat{i} + y\\,\\hat{j}$: il gradiente è radiale, punta verso l'esterno (dove $f$ cresce) e ha modulo $2r$. Le curve di livello $x^2 + y^2 = \\text{cost}$ sono circonferenze centrate nell'origine, e il gradiente radiale è in effetti perpendicolare a ciascuna di esse.</p>
+        <p><strong>5. Il campo come gradiente del potenziale.</strong> Ora abbiamo due espressioni per la variazione del potenziale: quella vista a lezione, $dV = -\\vec{E}\\cdot d\\vec{s}$, e quella appena trovata, $dV = \\nabla V\\cdot d\\vec{s}$. Valgono entrambe per ogni spostamento, quindi $(\\vec{E} + \\nabla V)\\cdot d\\vec{s} = 0$ in ogni direzione, e l'unico vettore perpendicolare a tutte le direzioni è il vettore nullo:</p>
+        <p>$$\\vec{E} = -\\nabla V, \\qquad \\text{cioè} \\qquad E_x = -\\frac{\\partial V}{\\partial x}, \\quad E_y = -\\frac{\\partial V}{\\partial y}, \\quad E_z = -\\frac{\\partial V}{\\partial z}.$$</p>
+        <p>Il campo elettrico punta dunque nel verso in cui il potenziale <em>diminuisce</em> più rapidamente ed è perpendicolare alle superfici equipotenziali (sezione seguente). Conoscendo $V(x,y,z)$, le componenti del campo si ottengono semplicemente derivando.</p>
+        <p><strong>Verifica con la carica puntiforme.</strong> Se $V$ dipende solo dalla distanza $r$ dall'origine, le sue superfici di livello sono sfere centrate nell'origine e il gradiente, perpendicolare a esse, è radiale: $\\nabla V = \\dfrac{dV}{dr}\\,\\hat{u}_r$. Per $V(r) = \\dfrac{Q}{4\\pi\\epsilon_0 r}$:</p>
+        <p>$$\\frac{dV}{dr} = \\frac{Q}{4\\pi\\epsilon_0}\\frac{d}{dr}\\left(\\frac{1}{r}\\right) = -\\frac{Q}{4\\pi\\epsilon_0 r^2} \\qquad \\Longrightarrow \\qquad \\vec{E} = -\\nabla V = +\\frac{Q}{4\\pi\\epsilon_0 r^2}\\,\\hat{u}_r,$$</p>
+        <p>che è esattamente il campo coulombiano. La relazione è coerente, segno compreso: per $Q \\gt 0$ il potenziale <em>decresce</em> allontanandosi e il campo punta verso l'esterno.</p>
+        <p>Allo stesso modo, per il campo $\\vec{E} = a\\,y\\,\\hat{i} + a\\,x\\,\\hat{j}$ visto in precedenza, con $V = -a\\,x\\,y$, si ha $\\nabla V = -a\\,y\\,\\hat{i} - a\\,x\\,\\hat{j}$ e quindi $-\\nabla V = \\vec{E}$: trovare una funzione $V$ con $\\vec{E} = -\\nabla V$ è il modo più diretto di verificare che un campo assegnato sia conservativo.</p>`
       },
 
       {
@@ -4530,7 +4528,8 @@ const LESSON = {
         icon: "🗺️",
         content: `<p><strong>Definizione.</strong> Una <strong>superficie equipotenziale</strong> è il luogo dei punti dello spazio che si trovano tutti allo stesso potenziale. L'equazione di una tale superficie è $V(x,y,z) = \\text{costante}$.</p>
         <p><strong>Proposizione.</strong> Le linee del campo elettrico sono sempre perpendicolari alle superfici equipotenziali.</p>
-        <p><em>Dimostrazione.</em> Spostandosi di $d\\vec{s}$ <em>lungo</em> una superficie equipotenziale si ha $dV = 0$; ma $dV = -\\vec{E}\\cdot d\\vec{s}$, dunque $\\vec{E}\\cdot d\\vec{s} = 0$ per ogni spostamento tangente alla superficie. Il campo è quindi ortogonale alla superficie. Equivalentemente: il gradiente $\\nabla V$ è sempre perpendicolare alle superfici di livello di $V$, e poiché $\\vec{E} = -\\nabla V$, anche $\\vec{E}$ lo è. $\\blacksquare$</p>
+        <p><em>Dimostrazione.</em> Spostandosi di $d\\vec{s}$ <em>lungo</em> una superficie equipotenziale si ha $dV = 0$; ma $dV = -\\vec{E}\\cdot d\\vec{s}$, dunque $\\vec{E}\\cdot d\\vec{s} = 0$ per ogni spostamento tangente alla superficie. Il campo è quindi ortogonale alla superficie. $\\blacksquare$</p>
+        <p><em>Con il gradiente (integrazione sopra, non fatto a lezione):</em> $\\nabla V$ è perpendicolare alle superfici di livello di $V$ e $\\vec{E} = -\\nabla V$, quindi si ritrova che $\\vec{E}$ è perpendicolare alle superfici equipotenziali.</p>
         <figure class="figura" data-id="fisica2_lez06b_d2"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="fisica2_lez06b_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="313.653pt" height="168.642pt" viewBox="0 0 313.653 168.642" version="1.2"><style>#fisica2_lez06b_d2 [fill="rgb(0%,0%,0%)"],#fisica2_lez06b_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez06b_d2 [stroke="rgb(0%,0%,0%)"],#fisica2_lez06b_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez06b_d2 [fill="rgb(100%,100%,100%)"],#fisica2_lez06b_d2 [style*="fill:rgb(100%,100%,100%)"]{fill:var(--bg-primary)!important}#fisica2_lez06b_d2 [stroke="rgb(100%,100%,100%)"],#fisica2_lez06b_d2 [style*="stroke:rgb(100%,100%,100%)"]{stroke:var(--bg-primary)!important}</style>
 <defs>
@@ -4828,7 +4827,7 @@ const LESSON = {
           },
           {
             subtitle: "Esempio — condensatore a facce piane e parallele",
-            content: `<p>All'interno di un condensatore ideale, il campo $\\vec{E}$ è uniforme e diretto dalla placca positiva a quella negativa. Le superfici equipotenziali sono <strong>piani paralleli</strong> alle armature: infatti, se il campo è $\\vec{E} = -E_0\\hat{k}$ con $E_0 \\gt 0$ costante, da $\\vec{E} = -\\nabla V$ segue $V(z) = E_0 z + \\text{cost.}$, e $V$ è costante su ogni piano $z = \\text{cost.}$</p>
+            content: `<p>All'interno di un condensatore ideale, il campo $\\vec{E}$ è uniforme e diretto dalla placca positiva a quella negativa. Le superfici equipotenziali sono <strong>piani paralleli</strong> alle armature: infatti, se il campo è $\\vec{E} = -E_0\\hat{k}$ con $E_0 \\gt 0$ costante, da $dV = -\\vec{E}\\cdot d\\vec{s} = E_0\\,dz$ segue $V(z) = E_0 z + \\text{cost.}$: spostarsi lungo $x$ o $y$ non cambia $V$, che è quindi costante su ogni piano $z = \\text{cost.}$</p>
             <figure class="figura" data-id="fisica2_lez06b_d3"><?xml version="1.0" encoding="UTF-8"?>
 <svg id="fisica2_lez06b_d3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="187.992pt" height="128.628pt" viewBox="0 0 187.992 128.628" version="1.2"><style>#fisica2_lez06b_d3 [fill="rgb(0%,0%,0%)"],#fisica2_lez06b_d3 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez06b_d3 [stroke="rgb(0%,0%,0%)"],#fisica2_lez06b_d3 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}</style>
 <defs>
@@ -5331,13 +5330,13 @@ const LESSON = {
       },
       {
         type: "formula",
-        front: "Come si ricava $\\vec{E} = -\\nabla V$ e da dove viene il segno meno?",
+        front: "Come si ricava $\\vec{E} = -\\nabla V$ e da dove viene il segno meno? (integrazione: il gradiente non è ancora stato fatto a lezione)",
         back: "Applicando $V(A)-V(B) = \\int_A^B \\vec{E}\\cdot d\\vec{s}$ a uno spostamento infinitesimo: $dV = V(P+d\\vec{s}) - V(P) = -\\vec{E}\\cdot d\\vec{s}$ — il segno meno dice che il potenziale <strong>diminuisce</strong> nel verso del campo. Confrontando $dV = \\partial_x V dx + \\partial_y V dy + \\partial_z V dz$ con $-E_x dx - E_y dy - E_z dz$ per ogni $dx,dy,dz$ indipendenti, si ottiene $E_x = -\\partial V/\\partial x$ ecc., cioè $\\vec{E} = -\\nabla V$."
       },
       {
         type: "dimostrazione",
         front: "Dimostra che le linee di campo sono ortogonali alle superfici equipotenziali.",
-        back: "Se $d\\vec{s}$ è tangente a una superficie $V = \\text{cost}$, allora $dV = 0$ per definizione. Ma $dV = -\\vec{E}\\cdot d\\vec{s}$, quindi $\\vec{E}\\cdot d\\vec{s} = 0$ per ogni spostamento tangente: $\\vec{E}$ è ortogonale alla superficie. Equivalentemente, $\\nabla V$ è perpendicolare alle superfici di livello di $V$ e punta nella direzione di massima crescita; poiché $\\vec{E} = -\\nabla V$, il campo è ortogonale alle equipotenziali e orientato nel verso in cui $V$ decresce."
+        back: "Se $d\\vec{s}$ è tangente a una superficie $V = \\text{cost}$, allora $dV = 0$ per definizione. Ma $dV = -\\vec{E}\\cdot d\\vec{s}$, quindi $\\vec{E}\\cdot d\\vec{s} = 0$ per ogni spostamento tangente: $\\vec{E}$ è ortogonale alla superficie. Con il gradiente (integrazione, non fatto a lezione): $\\nabla V$ è perpendicolare alle superfici di livello di $V$ e punta nella direzione di massima crescita; poiché $\\vec{E} = -\\nabla V$, il campo è ortogonale alle equipotenziali e orientato nel verso in cui $V$ decresce."
       },
       {
         type: "domanda",
