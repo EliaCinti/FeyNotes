@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="anno1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 14 — Analisi Matematica 1 — FeyNotes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1330'/%3E%3Cg fill='none' stroke='%237c9cff' stroke-width='1.5'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(120 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ffcf5c'/%3E%3C/svg%3E">
+  <meta name="description" content="Analisi Matematica 1, Lezione 14: La Retta Reale Estesa, Limiti di Successioni e Teorema del Confronto. Introduciamo la retta reale estesa $\mathbb{R}^*$ e la nozione unificata di intorno, che permette di dare una sola definizione di limite valida per limiti finiti e infiniti. Da qui dimostriamo con un unico ragionamento l'unicità del limite, il teorema della permanenza del segno nelle due forme e il teorema del confronto (dei due carabinieri), con l'applicazione classica alla successione limitata divisa per una divergente.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 14: La Retta Reale Estesa, Limiti di Successioni e Teorema del Confronto — Analisi Matematica 1">
+  <meta property="og:description" content="Introduciamo la retta reale estesa $\mathbb{R}^*$ e la nozione unificata di intorno, che permette di dare una sola definizione di limite valida per limiti finiti e infiniti. Da qui dimostriamo con un unico ragionamento l'unicità del limite, il teorema della permanenza del segno nelle due forme e il teorema del confronto (dei due carabinieri), con l'applicazione classica alla successione limitata divisa per una divergente.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://feynotes.eliacinti.dev/analisi1/lezioni/L14/">
+  <link rel="canonical" href="https://feynotes.eliacinti.dev/analisi1/lezioni/L14/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=21">
+  <link rel="stylesheet" href="/css/style.css?v=21">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 14 — La Retta Reale Estesa, Limiti di Successioni e Teorema del Confronto",
+  "description": "Introduciamo la retta reale estesa $\\mathbb{R}^*$ e la nozione unificata di intorno, che permette di dare una sola definizione di limite valida per limiti finiti e infiniti. Da qui dimostriamo con un unico ragionamento l'unicità del limite, il teorema della permanenza del segno nelle due forme e il teorema del confronto (dei due carabinieri), con l'applicazione classica alla successione limitata divisa per una divergente.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://feynotes.eliacinti.dev/analisi1/lezioni/L14/",
+  "datePublished": "2026-10-14",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Analisi Matematica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/analisi1/" class="header-logo">
+    
+    Analisi Matematica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 14</span>
+  <nav class="header-nav">
+    <a href="/analisi1/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/analisi1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/analisi1/lezioni/L13/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L14", date: "Lezione 14 — 14 Ott 2026",
+    title: "La Retta Reale Estesa, Limiti di Successioni e Teorema del Confronto",
+    abstract: "Introduciamo la retta reale estesa $\\mathbb{R}^*$ e la nozione unificata di intorno, che permette di dare una sola definizione di limite valida per limiti finiti e infiniti. Da qui dimostriamo con un unico ragionamento l'unicità del limite, il teorema della permanenza del segno nelle due forme e il teorema del confronto (dei due carabinieri), con l'applicazione classica alla successione limitata divisa per una divergente.",
+
+    sections: [
+      {
+        id: "s14-retta-estesa",
+        type: "section",
+        title: "La retta reale estesa",
+        icon: "➕",
+        content: `<p>Nelle lezioni precedenti abbiamo introdotto il concetto di intorno di un punto $x_0 \\in \\mathbb{R}$, definendolo come un intervallo aperto e simmetrico del tipo $(x_0 - R, x_0 + R)$. Ci siamo anche chiesti come definire un intorno di infinito. Un intervallo del tipo $(a, +\\infty)$ sembra un buon candidato per essere un intorno di $+\\infty$, così come $(-\\infty, b)$ per $-\\infty$.</p>
+        <p>Per formalizzare questa idea, introduciamo un nuovo insieme, la <strong>retta reale estesa</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Retta reale estesa",
+            content: `<p>Si definisce <strong>retta reale estesa</strong>, e si indica con $\\mathbb{R}^*$, l'insieme ottenuto unendo all'insieme dei numeri reali $\\mathbb{R}$ due nuovi simboli, $+\\infty$ (più infinito) e $-\\infty$ (meno infinito).</p>
+            <p>$$\\mathbb{R}^* = \\mathbb{R} \\cup \\{+\\infty\\} \\cup \\{-\\infty\\}$$</p>`
+          },
+          {
+            subtitle: "Osservazione — $\\mathbb{R}^*$ non è un campo",
+            content: `<p>L'insieme $\\mathbb{R}^*$ <strong>non</strong> è un campo numerico. Non possiamo, in generale, definire le operazioni di somma e prodotto che coinvolgano i simboli $+\\infty$ e $-\\infty$ mantenendo le proprietà algebriche di $\\mathbb{R}$. Per esempio, espressioni come $+\\infty - \\infty$ sono indeterminate.</p>`
+          },
+          {
+            subtitle: "Proposizione — Ordinamento su $\\mathbb{R}^*$",
+            content: `<p>Tuttavia, possiamo estendere la relazione d'ordine di $\\mathbb{R}$ a $\\mathbb{R}^*$: l'insieme $\\mathbb{R}^*$ è un <strong>insieme totalmente ordinato</strong> estendendo l'ordinamento di $\\mathbb{R}$ con le seguenti relazioni:</p>
+            <ul>
+              <li>$\\forall x \\in \\mathbb{R}, \\quad -\\infty \\lt x$</li>
+              <li>$\\forall x \\in \\mathbb{R}, \\quad x \\lt +\\infty$</li>
+              <li>$-\\infty \\lt +\\infty$</li>
+            </ul>
+            <p>In sostanza, $-\\infty$ è l'elemento minimo di $\\mathbb{R}^*$ e $+\\infty$ è l'elemento massimo.</p>`
+          }
+        ],
+        extra_content: `<p>Graficamente, possiamo rappresentare la retta reale estesa come la retta reale a cui aggiungiamo due "punti" agli estremi. La figura seguente mostra questa rappresentazione, insieme a due esempi di intorno: in blu un intorno simmetrico del punto finito $x_0$, in rosso un intorno di $+\\infty$; i pallini vuoti indicano gli estremi <em>esclusi</em>.</p>
+        <figure class="figura" data-id="analisi1_lez14a_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="analisi1_lez14a_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="372.48pt" height="62.35pt" viewBox="0 0 372.48 62.35" version="1.2"><style>#analisi1_lez14a_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez14a_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez14a_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez14a_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez14a_d1 [fill="rgb(0%,0%,100%)"],#analisi1_lez14a_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez14a_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez14a_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez14a_d1 [stroke="rgb(0%,0%,100%)"],#analisi1_lez14a_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez14a_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez14a_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez14a_d1 [fill="rgb(100%,100%,100%)"],#analisi1_lez14a_d1 [style*="fill:rgb(100%,100%,100%)"]{fill:var(--bg-primary)!important}#analisi1_lez14a_d1 [stroke="rgb(100%,100%,100%)"],#analisi1_lez14a_d1 [style*="stroke:rgb(100%,100%,100%)"]{stroke:var(--bg-primary)!important}#analisi1_lez14a_d1 [fill="rgb(100%,0%,0%)"],#analisi1_lez14a_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez14a_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez14a_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez14a_d1 [stroke="rgb(100%,0%,0%)"],#analisi1_lez14a_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez14a_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez14a_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph0-1">
+<path style="stroke:none;" d="M 6.84375 -2.46875 C 6.84375 -2.65625 6.65625 -2.65625 6.515625 -2.65625 L 1.140625 -2.65625 C 1 -2.65625 0.8125 -2.65625 0.8125 -2.46875 C 0.8125 -2.265625 1 -2.265625 1.140625 -2.265625 L 6.515625 -2.265625 C 6.65625 -2.265625 6.84375 -2.265625 6.84375 -2.46875 Z M 6.84375 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph0-2">
+<path style="stroke:none;" d="M 9.296875 -2.125 C 9.296875 -3.21875 8.609375 -4.359375 7.4375 -4.359375 C 6.015625 -4.359375 5.140625 -2.90625 5.015625 -2.6875 C 4.34375 -3.484375 4.34375 -3.484375 4.125 -3.671875 C 3.8125 -3.9375 3.21875 -4.359375 2.4375 -4.359375 C 1.296875 -4.359375 0.546875 -3.28125 0.546875 -2.125 C 0.546875 -1.03125 1.25 0.109375 2.421875 0.109375 C 3.828125 0.109375 4.71875 -1.34375 4.84375 -1.5625 C 5.5 -0.765625 5.515625 -0.765625 5.734375 -0.578125 C 6.046875 -0.3125 6.625 0.109375 7.40625 0.109375 C 8.546875 0.109375 9.296875 -0.96875 9.296875 -2.125 Z M 9.078125 -2.125 C 9.078125 -1.140625 8.390625 -0.359375 7.5625 -0.359375 C 7.109375 -0.359375 6.703125 -0.59375 6.265625 -1.078125 C 5.984375 -1.375 5.546875 -2 5.265625 -2.34375 C 5.640625 -3 6.390625 -4.046875 7.5 -4.046875 C 8.546875 -4.046875 9.078125 -3.015625 9.078125 -2.125 Z M 4.578125 -1.90625 C 4.203125 -1.25 3.453125 -0.203125 2.34375 -0.203125 C 1.296875 -0.203125 0.765625 -1.234375 0.765625 -2.125 C 0.765625 -3.109375 1.453125 -3.890625 2.28125 -3.890625 C 2.734375 -3.890625 3.140625 -3.65625 3.59375 -3.171875 C 3.859375 -2.875 4.3125 -2.25 4.578125 -1.90625 Z M 4.578125 -1.90625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph1-1">
+<path style="stroke:none;" d="M 7.109375 -2.46875 C 7.109375 -2.65625 6.921875 -2.65625 6.78125 -2.65625 L 4.03125 -2.65625 L 4.03125 -5.421875 C 4.03125 -5.5625 4.03125 -5.75 3.828125 -5.75 C 3.640625 -5.75 3.640625 -5.5625 3.640625 -5.421875 L 3.640625 -2.65625 L 0.875 -2.65625 C 0.734375 -2.65625 0.546875 -2.65625 0.546875 -2.46875 C 0.546875 -2.265625 0.734375 -2.265625 0.875 -2.265625 L 3.640625 -2.265625 L 3.640625 0.5 C 3.640625 0.625 3.640625 0.8125 3.828125 0.8125 C 4.03125 0.8125 4.03125 0.625 4.03125 0.5 L 4.03125 -2.265625 L 6.78125 -2.265625 C 6.921875 -2.265625 7.109375 -2.265625 7.109375 -2.46875 Z M 7.109375 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph1-2">
+<path style="stroke:none;" d="M 3.265625 2.359375 C 3.265625 2.34375 3.265625 2.3125 3.09375 2.15625 C 1.859375 0.90625 1.546875 -0.953125 1.546875 -2.46875 C 1.546875 -4.1875 1.921875 -5.890625 3.140625 -7.125 C 3.265625 -7.25 3.265625 -7.265625 3.265625 -7.296875 C 3.265625 -7.359375 3.21875 -7.390625 3.171875 -7.390625 C 3.0625 -7.390625 2.171875 -6.71875 1.59375 -5.46875 C 1.09375 -4.390625 0.96875 -3.296875 0.96875 -2.46875 C 0.96875 -1.703125 1.078125 -0.5 1.625 0.609375 C 2.21875 1.828125 3.0625 2.46875 3.171875 2.46875 C 3.21875 2.46875 3.265625 2.4375 3.265625 2.359375 Z M 3.265625 2.359375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph1-3">
+<path style="stroke:none;" d="M 2.84375 -2.46875 C 2.84375 -3.234375 2.734375 -4.421875 2.203125 -5.546875 C 1.609375 -6.75 0.765625 -7.390625 0.65625 -7.390625 C 0.59375 -7.390625 0.5625 -7.359375 0.5625 -7.296875 C 0.5625 -7.265625 0.5625 -7.25 0.75 -7.0625 C 1.71875 -6.09375 2.28125 -4.53125 2.28125 -2.46875 C 2.28125 -0.78125 1.90625 0.953125 0.6875 2.203125 C 0.5625 2.3125 0.5625 2.34375 0.5625 2.359375 C 0.5625 2.421875 0.59375 2.46875 0.65625 2.46875 C 0.765625 2.46875 1.640625 1.796875 2.234375 0.546875 C 2.734375 -0.546875 2.84375 -1.640625 2.84375 -2.46875 Z M 2.84375 -2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph1-4">
+<path style="stroke:none;" d="M 1.5625 2.46875 L 1.5625 -7.390625 L 0.21875 -7.390625 L 0.21875 -7 L 1.171875 -7 L 1.171875 2.078125 L 0.21875 2.078125 L 0.21875 2.46875 Z M 1.5625 2.46875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph2-1">
+<path style="stroke:none;" d="M 4.890625 -1.40625 C 4.890625 -1.515625 4.796875 -1.515625 4.765625 -1.515625 C 4.6875 -1.515625 4.65625 -1.46875 4.640625 -1.40625 C 4.3125 -0.34375 3.640625 -0.109375 3.328125 -0.109375 C 2.953125 -0.109375 2.796875 -0.421875 2.796875 -0.765625 C 2.796875 -0.96875 2.84375 -1.1875 2.953125 -1.625 L 3.296875 -2.984375 C 3.359375 -3.234375 3.578125 -4.140625 4.265625 -4.140625 C 4.3125 -4.140625 4.5625 -4.140625 4.765625 -4.015625 C 4.484375 -3.96875 4.28125 -3.71875 4.28125 -3.484375 C 4.28125 -3.328125 4.390625 -3.140625 4.65625 -3.140625 C 4.875 -3.140625 5.203125 -3.3125 5.203125 -3.703125 C 5.203125 -4.21875 4.609375 -4.359375 4.28125 -4.359375 C 3.703125 -4.359375 3.359375 -3.828125 3.25 -3.609375 C 3 -4.265625 2.46875 -4.359375 2.171875 -4.359375 C 1.15625 -4.359375 0.59375 -3.09375 0.59375 -2.84375 C 0.59375 -2.734375 0.703125 -2.734375 0.703125 -2.734375 C 0.78125 -2.734375 0.8125 -2.765625 0.84375 -2.84375 C 1.171875 -3.890625 1.828125 -4.140625 2.15625 -4.140625 C 2.34375 -4.140625 2.6875 -4.046875 2.6875 -3.484375 C 2.6875 -3.171875 2.53125 -2.515625 2.15625 -1.140625 C 2 -0.515625 1.65625 -0.109375 1.21875 -0.109375 C 1.15625 -0.109375 0.9375 -0.109375 0.734375 -0.234375 C 0.96875 -0.28125 1.1875 -0.5 1.1875 -0.765625 C 1.1875 -1.03125 0.96875 -1.109375 0.828125 -1.109375 C 0.53125 -1.109375 0.28125 -0.859375 0.28125 -0.546875 C 0.28125 -0.09375 0.78125 0.109375 1.21875 0.109375 C 1.859375 0.109375 2.21875 -0.578125 2.25 -0.640625 C 2.359375 -0.28125 2.71875 0.109375 3.3125 0.109375 C 4.328125 0.109375 4.890625 -1.15625 4.890625 -1.40625 Z M 4.890625 -1.40625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph2-2">
+<path style="stroke:none;" d="M 6.375 -5.453125 C 6.375 -5.109375 6.21875 -4.4375 5.828125 -4.046875 C 5.578125 -3.796875 5.046875 -3.484375 4.15625 -3.484375 L 3.0625 -3.484375 L 3.703125 -6.046875 C 3.75 -6.296875 3.78125 -6.390625 3.96875 -6.421875 C 4.0625 -6.421875 4.375 -6.421875 4.578125 -6.421875 C 5.28125 -6.421875 6.375 -6.421875 6.375 -5.453125 Z M 7.4375 -0.921875 C 7.4375 -1.03125 7.328125 -1.03125 7.328125 -1.03125 C 7.234375 -1.03125 7.21875 -0.96875 7.203125 -0.890625 C 6.953125 -0.171875 6.53125 0 6.296875 0 C 5.96875 0 5.90625 -0.21875 5.90625 -0.59375 C 5.90625 -0.90625 5.96875 -1.40625 6 -1.71875 C 6.03125 -1.859375 6.046875 -2.046875 6.046875 -2.1875 C 6.046875 -2.953125 5.390625 -3.25 5.109375 -3.359375 C 6.109375 -3.5625 7.28125 -4.265625 7.28125 -5.25 C 7.28125 -6.109375 6.40625 -6.734375 5.109375 -6.734375 L 2.296875 -6.734375 C 2.09375 -6.734375 2.015625 -6.734375 2.015625 -6.53125 C 2.015625 -6.421875 2.09375 -6.421875 2.28125 -6.421875 C 2.28125 -6.421875 2.5 -6.421875 2.65625 -6.40625 C 2.84375 -6.390625 2.921875 -6.375 2.921875 -6.25 C 2.921875 -6.21875 2.921875 -6.1875 2.890625 -6.0625 L 1.5625 -0.765625 C 1.46875 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.40625 -0.3125 0.40625 -0.109375 C 0.40625 0 0.546875 0 0.546875 0 L 1.78125 -0.03125 L 3.03125 0 C 3.109375 0 3.234375 0 3.234375 -0.203125 C 3.234375 -0.3125 3.140625 -0.3125 2.953125 -0.3125 C 2.59375 -0.3125 2.3125 -0.3125 2.3125 -0.484375 C 2.3125 -0.546875 2.34375 -0.59375 2.34375 -0.65625 L 3 -3.265625 L 4.171875 -3.265625 C 5.0625 -3.265625 5.25 -2.71875 5.25 -2.359375 C 5.25 -2.21875 5.171875 -1.90625 5.109375 -1.6875 C 5.03125 -1.40625 4.953125 -1.046875 4.953125 -0.84375 C 4.953125 0.21875 6.125 0.21875 6.265625 0.21875 C 7.09375 0.21875 7.4375 -0.78125 7.4375 -0.921875 Z M 7.4375 -0.921875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph2-3">
+<path style="stroke:none;" d="M 2 -0.015625 C 2 -0.65625 1.75 -1.046875 1.375 -1.046875 C 1.046875 -1.046875 0.84375 -0.796875 0.84375 -0.515625 C 0.84375 -0.25 1.046875 0 1.375 0 C 1.484375 0 1.609375 -0.046875 1.71875 -0.125 C 1.75 -0.140625 1.765625 -0.15625 1.765625 -0.15625 C 1.765625 -0.15625 1.78125 -0.140625 1.78125 -0.015625 C 1.78125 0.71875 1.4375 1.3125 1.109375 1.640625 C 1 1.75 1 1.765625 1 1.796875 C 1 1.859375 1.0625 1.90625 1.109375 1.90625 C 1.21875 1.90625 2 1.140625 2 -0.015625 Z M 2 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph2-4">
+<path style="stroke:none;" d="M 4.90625 -1.40625 C 4.90625 -1.515625 4.828125 -1.515625 4.796875 -1.515625 C 4.6875 -1.515625 4.6875 -1.46875 4.65625 -1.328125 C 4.484375 -0.6875 4.3125 -0.109375 3.90625 -0.109375 C 3.640625 -0.109375 3.609375 -0.359375 3.609375 -0.5625 C 3.609375 -0.78125 3.625 -0.859375 3.734375 -1.296875 L 3.953125 -2.171875 L 4.3125 -3.5625 C 4.375 -3.828125 4.375 -3.859375 4.375 -3.890625 C 4.375 -4.0625 4.265625 -4.15625 4.09375 -4.15625 C 3.859375 -4.15625 3.703125 -3.9375 3.671875 -3.734375 C 3.5 -4.09375 3.21875 -4.359375 2.765625 -4.359375 C 1.609375 -4.359375 0.390625 -2.90625 0.390625 -1.46875 C 0.390625 -0.546875 0.9375 0.109375 1.703125 0.109375 C 1.90625 0.109375 2.390625 0.0625 2.984375 -0.625 C 3.0625 -0.21875 3.40625 0.109375 3.890625 0.109375 C 4.234375 0.109375 4.453125 -0.125 4.609375 -0.4375 C 4.78125 -0.78125 4.90625 -1.40625 4.90625 -1.40625 Z M 3.53125 -3.109375 L 3.03125 -1.171875 C 2.984375 -1 2.984375 -0.96875 2.84375 -0.8125 C 2.40625 -0.265625 2 -0.109375 1.71875 -0.109375 C 1.234375 -0.109375 1.09375 -0.65625 1.09375 -1.03125 C 1.09375 -1.53125 1.40625 -2.734375 1.640625 -3.1875 C 1.9375 -3.78125 2.390625 -4.140625 2.78125 -4.140625 C 3.421875 -4.140625 3.5625 -3.328125 3.5625 -3.265625 C 3.5625 -3.21875 3.546875 -3.15625 3.53125 -3.109375 Z M 3.53125 -3.109375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d1-glyph3-1">
+<path style="stroke:none;" d="M 3.5625 -2.203125 C 3.5625 -2.96875 3.46875 -3.515625 3.15625 -3.984375 C 2.9375 -4.3125 2.515625 -4.578125 1.96875 -4.578125 C 0.359375 -4.578125 0.359375 -2.703125 0.359375 -2.203125 C 0.359375 -1.703125 0.359375 0.140625 1.96875 0.140625 C 3.5625 0.140625 3.5625 -1.703125 3.5625 -2.203125 Z M 2.9375 -2.296875 C 2.9375 -1.78125 2.9375 -1.265625 2.84375 -0.828125 C 2.703125 -0.203125 2.234375 -0.0625 1.96875 -0.0625 C 1.640625 -0.0625 1.21875 -0.234375 1.078125 -0.8125 C 0.984375 -1.21875 0.984375 -1.78125 0.984375 -2.296875 C 0.984375 -2.796875 0.984375 -3.328125 1.09375 -3.703125 C 1.234375 -4.25 1.671875 -4.390625 1.96875 -4.390625 C 2.328125 -4.390625 2.6875 -4.171875 2.8125 -3.765625 C 2.921875 -3.390625 2.9375 -2.890625 2.9375 -2.296875 Z M 2.9375 -2.296875 "/>
+</symbol>
+</g>
+</defs>
+<g id="analisi1_lez14a_d1-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -170.081239 -0.000247694 L 170.080712 -0.000247694 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -170.081239 -7.085064 L -170.081239 7.088515 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 170.080712 -7.085064 L 170.080712 7.088515 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph0-1" x="8.894827" y="53.654649"/>
+  <use xlink:href="#analisi1_lez14a_d1-glyph0-2" x="16.563788" y="53.654649"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-1" x="345.542271" y="53.65168"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph0-2" x="353.211321" y="53.65168"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 131.453125 36.003906 C 131.453125 35.132812 130.746094 34.425781 129.875 34.425781 C 129.003906 34.425781 128.296875 35.132812 128.296875 36.003906 C 128.296875 36.875 129.003906 37.582031 129.875 37.582031 C 130.746094 37.582031 131.453125 36.875 131.453125 36.003906 Z M 131.453125 36.003906 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-1" x="124.846033" y="47.940222"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph3-1" x="130.480296" y="49.418808"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -90.711564 11.339405 L -22.677595 11.339405 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -88.718343 11.339405 C -88.718343 12.44061 -89.610359 13.332626 -90.711564 13.332626 C -91.808823 13.332626 -92.700839 12.44061 -92.700839 11.339405 C -92.700839 10.2382 -91.808823 9.346184 -90.711564 9.346184 C -89.610359 9.346184 -88.718343 10.2382 -88.718343 11.339405 Z M -88.718343 11.339405 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -20.684374 11.339405 C -20.684374 12.44061 -21.57639 13.332626 -22.677595 13.332626 C -23.778801 13.332626 -24.670816 12.44061 -24.670816 11.339405 C -24.670816 10.2382 -23.778801 9.346184 -22.677595 9.346184 C -21.57639 9.346184 -20.684374 10.2382 -20.684374 11.339405 Z M -20.684374 11.339405 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-2" x="92.533888" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-1" x="96.368908" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph3-1" x="102.003171" y="16.104114"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph0-1" x="108.618209" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-2" x="118.477426" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-3" x="126.042859" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-1" x="133.711821" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph3-1" x="139.343893" y="16.104114"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-1" x="145.957941" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-2" x="155.818148" y="14.625529"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-3" x="163.381302" y="14.625529"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 243.667969 36.003906 C 243.667969 35.132812 242.960938 34.425781 242.089844 34.425781 C 241.21875 34.425781 240.515625 35.132812 240.515625 36.003906 C 240.515625 36.875 241.21875 37.582031 242.089844 37.582031 C 242.960938 37.582031 243.667969 36.875 243.667969 36.003906 Z M 243.667969 36.003906 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-4" x="239.484921" y="47.940222"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 56.692079 11.339405 L 170.080712 11.339405 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 58.685301 11.339405 C 58.685301 12.44061 57.793285 13.332626 56.692079 13.332626 C 55.594821 13.332626 54.702805 12.44061 54.702805 11.339405 C 54.702805 10.2382 55.594821 9.346184 56.692079 9.346184 C 57.793285 9.346184 58.685301 10.2382 58.685301 11.339405 Z M 58.685301 11.339405 " transform="matrix(0.989683,0,0,-0.989683,185.982683,36.003661)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-2" x="281.350471" y="14.625529"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-4" x="285.185491" y="14.625529"/>
+  <use xlink:href="#analisi1_lez14a_d1-glyph2-3" x="290.397388" y="14.625529"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-1" x="294.778484" y="14.625529"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph0-2" x="302.447534" y="14.625529"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d1-glyph1-4" x="312.307741" y="14.625529"/>
+</g>
+</g>
+</svg></figure>
+        <p>I simboli $-\\infty$ e $+\\infty$ sono <strong>estremi simbolici</strong>: non sono numeri reali e non si trovano a distanza finita da alcun punto della retta.</p>`
+      },
+
+      {
+        id: "s14-intorni-rstar",
+        type: "section",
+        title: "Intorni nella retta estesa",
+        icon: "🎯",
+        content: `<p>Con la retta estesa, possiamo ora dare una definizione unificata di intorno per qualsiasi punto di $\\mathbb{R}^*$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Intorno di un punto in $\\mathbb{R}^*$",
+            content: `<p><strong>1. Intorno di un punto finito.</strong> Sia $x_0 \\in \\mathbb{R}$. Un <strong>intorno</strong> di $x_0$ è un qualsiasi intervallo aperto che contiene $x_0$. Un caso particolare importante è l'intorno simmetrico:</p>
+            <p>$$I_R(x_0) = \\{x \\in \\mathbb{R} : |x - x_0| \\lt R\\} = (x_0 - R, x_0 + R)$$</p>
+            <p>per un qualche raggio $R \\gt 0$.</p>
+            <p><strong>2. Intorno di $+\\infty$.</strong> Un <strong>intorno</strong> di $+\\infty$ è un qualsiasi insieme del tipo $(a, +\\infty]$ per un qualche $a \\in \\mathbb{R}$:</p>
+            <p>$$I(+\\infty) = \\{x \\in \\mathbb{R}^* : x \\gt a\\} = (a, +\\infty]$$</p>
+            <p><strong>3. Intorno di $-\\infty$.</strong> Un <strong>intorno</strong> di $-\\infty$ è un qualsiasi insieme del tipo $[-\\infty, b)$ per un qualche $b \\in \\mathbb{R}$:</p>
+            <p>$$I(-\\infty) = \\{x \\in \\mathbb{R}^* : x \\lt b\\} = [-\\infty, b)$$</p>`
+          },
+          {
+            subtitle: "Osservazione — gli intorni di infinito contengono il simbolo",
+            content: `<p>Notiamo che gli intorni di $+\\infty$ e $-\\infty$ sono definiti in $\\mathbb{R}^*$, includendo i simboli stessi. Per esempio, $(a, +\\infty] = (a, +\\infty) \\cup \\{+\\infty\\}$.</p>`
+          },
+          {
+            subtitle: "Nota — cosa significa «definitivamente»",
+            content: `<p>Prima di procedere conviene fissare un linguaggio che useremo continuamente. Data una successione $(a_n)$ di numeri reali, dire che una proprietà $P(n)$ vale <strong>definitivamente</strong> significa che esiste un indice soglia $n_0 \\in \\mathbb{N}$ tale che $P(n)$ è vera per ogni $n \\gt n_0$.</p>
+            <p>L'indice $n_0$ è dunque il punto da cui in poi la proprietà non viene più violata: i termini $a_0, a_1, \\dots, a_{n_0}$ possono comportarsi come vogliono, ciò che conta è la <em>coda</em> della successione.</p>`
+          },
+          {
+            subtitle: "Proposizione — Riduzione agli intorni simmetrici",
+            content: `<p>Nel caso di un punto finito abbiamo ammesso come intorni <em>tutti</em> gli intervalli aperti che contengono $x_0$, non soltanto quelli simmetrici. La proposizione seguente chiarisce che, ai fini della teoria dei limiti, i due punti di vista sono equivalenti: basta sempre controllare gli intorni simmetrici.</p>
+            <p>Sia $L \\in \\mathbb{R}$ e sia $U$ un intervallo aperto con $L \\in U$. Allora esiste $\\varepsilon \\gt 0$ tale che</p>
+            <p>$$(L - \\varepsilon,\\ L + \\varepsilon) \\subseteq U .$$</p>
+            <p>Viceversa, ogni intorno simmetrico $(L-\\varepsilon, L+\\varepsilon)$ è esso stesso un intorno di $L$.</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Supponiamo prima $U = (a,b)$ con $a \\lt L \\lt b$ (il caso di intervalli illimitati si tratta in modo analogo: se $U = (a,+\\infty)$ si prende $\\varepsilon = L-a$, se $U = (-\\infty,b)$ si prende $\\varepsilon = b-L$, mentre se $U = \\mathbb{R}$ va bene qualunque $\\varepsilon \\gt 0$). Poniamo</p>
+            <p>$$\\varepsilon = \\min\\{L - a,\\ b - L\\} .$$</p>
+            <p>Poiché $a \\lt L$ e $L \\lt b$, entrambe le quantità $L-a$ e $b-L$ sono strettamente positive, dunque $\\varepsilon \\gt 0$. Se ora $x$ soddisfa $|x - L| \\lt \\varepsilon$, allora</p>
+            <p>$$x \\gt L - \\varepsilon \\geq L - (L-a) = a, \\qquad x \\lt L + \\varepsilon \\leq L + (b - L) = b,$$</p>
+            <p>cioè $a \\lt x \\lt b$ e quindi $x \\in U$. Questo prova $(L-\\varepsilon, L+\\varepsilon) \\subseteq U$.</p>
+            <p>L'implicazione inversa è immediata: un intorno simmetrico $(L-\\varepsilon, L+\\varepsilon)$ è un intervallo aperto che contiene $L$, dunque è un intorno di $L$ secondo la definizione data. $\\blacksquare$</p>`
+          },
+          {
+            subtitle: "Osservazione — perché si lavora solo con $|a_n - L| \\lt \\varepsilon$",
+            content: `<p>La proposizione precedente è il motivo per cui, nella pratica, si lavora solo con la disuguaglianza $|a_n - L| \\lt \\varepsilon$. Il punto da enunciare con precisione è il seguente, e riguarda specificamente la proprietà di <em>appartenenza definitiva</em>, non una proprietà arbitraria: se la successione $(a_n)$ appartiene definitivamente a ogni intorno simmetrico di $L$, allora appartiene definitivamente a ogni intorno $U$ di $L$.</p>
+            <p>Infatti, scelto per la Proposizione precedente un intorno simmetrico $(L-\\varepsilon, L+\\varepsilon) \\subseteq U$, l'appartenenza definitiva al primo implica l'appartenenza definitiva a $U$: <strong>lo stesso indice soglia $n_0$ funziona</strong>, perché da $a_n \\in (L-\\varepsilon, L+\\varepsilon)$ segue $a_n \\in U$.</p>
+            <p>Il viceversa è banale, dato che gli intorni simmetrici sono casi particolari di intorni. Si noti che il passaggio funziona solo perché l'appartenenza a un insieme si conserva passando a un insieme più grande: in generale l'inclusione fra intorni <strong>non</strong> permette di trasferire una proprietà qualsiasi dagli intorni simmetrici a tutti gli intorni.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s14-proprieta-intorni",
+        type: "section",
+        title: "Proprietà degli intorni",
+        icon: "🧩",
+        content: `<p>Gli intorni, come li abbiamo definiti, godono di alcune proprietà fondamentali che saranno cruciali per la teoria dei limiti.</p>`,
+        subsections: [
+          {
+            subtitle: "Proposizione — Proprietà fondamentali degli intorni",
+            content: `<p>Sia $x \\in \\mathbb{R}^*$. Valgono le seguenti proprietà.</p>
+            <ol>
+              <li><strong>Appartenenza:</strong> se $U$ è un intorno di $x$, allora $x \\in U$.</li>
+              <li><strong>Intersezione:</strong> se $U$ e $V$ sono due intorni di $x$, allora anche la loro intersezione $U \\cap V$ è un intorno di $x$.</li>
+              <li><strong>Apertura:</strong> se $U$ è un intorno di $x$ e $y \\in U$ con $y \\neq x$, allora esiste un intorno $V$ di $y$ tale che $V \\subseteq U$.</li>
+              <li><strong>Proprietà di separazione (di Hausdorff):</strong> se $x, y \\in \\mathbb{R}^*$ e $x \\neq y$, allora esistono due intorni, $U$ di $x$ e $V$ di $y$, tali che $U \\cap V = \\emptyset$.</li>
+            </ol>
+            <p>La proprietà di appartenenza segue direttamente dalla definizione, in tutti e tre i casi (punto finito, $+\\infty$, $-\\infty$).</p>`
+          },
+          {
+            subtitle: "Esempio — proprietà di intersezione",
+            content: `<p>Se $x_0 \\in \\mathbb{R}$, $U = (x_0-R_1, x_0+R_1)$ e $V = (x_0-R_2, x_0+R_2)$, allora</p>
+            <p>$$U \\cap V = (x_0-R, x_0+R), \\qquad R = \\min(R_1, R_2),$$</p>
+            <p>che è ancora un intorno di $x_0$.</p>
+            <p>Se $x = +\\infty$, $U = (a, +\\infty]$ e $V = (b, +\\infty]$, allora $U \\cap V = (\\max(a,b), +\\infty]$, che è ancora un intorno di $+\\infty$.</p>`
+          },
+          {
+            subtitle: "Osservazione — sul significato dell'apertura",
+            content: `<p>La proprietà di apertura esprime il fatto che gli intorni sono "aperti": ogni punto al loro interno è a sua volta "circondato" da altri punti dell'intorno. Per esempio, se $U = (0,1)$ e $y = 1/2$, basta scegliere $V = (1/4, 3/4) \\subseteq U$.</p>`
+          },
+          {
+            subtitle: "Osservazione — sulla proprietà di separazione",
+            content: `<p>Questa proprietà è fondamentale. Ci dice che possiamo sempre "separare" due punti distinti con due intorni disgiunti. Questo sarà il cardine della dimostrazione dell'unicità del limite.</p>
+            <p>Concretamente: se $x, y \\in \\mathbb{R}$ con $x \\lt y$, posto $d = y - x \\gt 0$ e $\\varepsilon = d/2$, gli intorni $U = (x-\\varepsilon, x+\\varepsilon)$ e $V = (y-\\varepsilon, y+\\varepsilon)$ sono disgiunti. Si osservi che con questa scelta i due intervalli sono <em>adiacenti</em>: il loro estremo comune è il punto medio $(x+y)/2$, che però non appartiene a nessuno dei due, essendo gli intervalli aperti.</p>
+            <p>Se invece $x \\in \\mathbb{R}$ e $y = +\\infty$, basta scegliere $U = (x-1, x+1)$ e $V = (x+1, +\\infty]$, e di nuovo il punto $x+1$ è escluso da entrambi.</p>`
+          }
+        ],
+        extra_content: `<figure class="figura" data-id="analisi1_lez14a_d2"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="analisi1_lez14a_d2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="384.497pt" height="150.251pt" viewBox="0 0 384.497 150.251" version="1.2"><style>#analisi1_lez14a_d2 [fill="rgb(0%,0%,0%)"],#analisi1_lez14a_d2 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez14a_d2 [stroke="rgb(0%,0%,0%)"],#analisi1_lez14a_d2 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez14a_d2 [fill="rgb(100%,100%,100%)"],#analisi1_lez14a_d2 [style*="fill:rgb(100%,100%,100%)"]{fill:var(--bg-primary)!important}#analisi1_lez14a_d2 [stroke="rgb(100%,100%,100%)"],#analisi1_lez14a_d2 [style*="stroke:rgb(100%,100%,100%)"]{stroke:var(--bg-primary)!important}#analisi1_lez14a_d2 [fill="rgb(0%,0%,100%)"],#analisi1_lez14a_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez14a_d2 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez14a_d2 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez14a_d2 [stroke="rgb(0%,0%,100%)"],#analisi1_lez14a_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez14a_d2 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez14a_d2 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez14a_d2 [fill="rgb(100%,0%,0%)"],#analisi1_lez14a_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez14a_d2 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez14a_d2 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez14a_d2 [stroke="rgb(100%,0%,0%)"],#analisi1_lez14a_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez14a_d2 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez14a_d2 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph0-1">
+<path style="stroke:none;" d="M 6.875 -2.484375 C 6.875 -2.671875 6.6875 -2.671875 6.546875 -2.671875 L 1.15625 -2.671875 C 1.015625 -2.671875 0.828125 -2.671875 0.828125 -2.484375 C 0.828125 -2.28125 1.015625 -2.28125 1.15625 -2.28125 L 6.546875 -2.28125 C 6.6875 -2.28125 6.875 -2.28125 6.875 -2.484375 Z M 6.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph0-2">
+<path style="stroke:none;" d="M 9.34375 -2.140625 C 9.34375 -3.234375 8.640625 -4.375 7.46875 -4.375 C 6.046875 -4.375 5.15625 -2.90625 5.03125 -2.6875 C 4.375 -3.5 4.359375 -3.5 4.140625 -3.6875 C 3.828125 -3.96875 3.234375 -4.375 2.453125 -4.375 C 1.3125 -4.375 0.5625 -3.296875 0.5625 -2.125 C 0.5625 -1.03125 1.25 0.109375 2.421875 0.109375 C 3.859375 0.109375 4.734375 -1.359375 4.859375 -1.578125 C 5.53125 -0.765625 5.53125 -0.765625 5.75 -0.578125 C 6.078125 -0.3125 6.65625 0.109375 7.4375 0.109375 C 8.59375 0.109375 9.34375 -0.96875 9.34375 -2.140625 Z M 9.125 -2.140625 C 9.125 -1.15625 8.4375 -0.359375 7.59375 -0.359375 C 7.140625 -0.359375 6.734375 -0.59375 6.296875 -1.078125 C 6.015625 -1.390625 5.5625 -2.015625 5.296875 -2.34375 C 5.671875 -3.015625 6.421875 -4.0625 7.53125 -4.0625 C 8.59375 -4.0625 9.125 -3.03125 9.125 -2.140625 Z M 4.609375 -1.921875 C 4.234375 -1.25 3.484375 -0.203125 2.359375 -0.203125 C 1.3125 -0.203125 0.765625 -1.234375 0.765625 -2.125 C 0.765625 -3.125 1.46875 -3.90625 2.296875 -3.90625 C 2.75 -3.90625 3.15625 -3.671875 3.609375 -3.1875 C 3.890625 -2.875 4.328125 -2.265625 4.609375 -1.921875 Z M 4.609375 -1.921875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph0-3">
+<path style="stroke:none;" d="M 6.046875 -0.109375 L 6.046875 -3.78125 C 6.046875 -5.21875 4.59375 -5.921875 3.296875 -5.921875 C 2 -5.921875 0.5625 -5.203125 0.5625 -3.78125 L 0.5625 -0.109375 C 0.5625 0.03125 0.5625 0.21875 0.75 0.21875 C 0.953125 0.21875 0.953125 0.03125 0.953125 -0.109375 L 0.953125 -3.75 C 0.953125 -5.0625 2.34375 -5.53125 3.296875 -5.53125 C 4.234375 -5.53125 5.640625 -5.078125 5.640625 -3.75 L 5.640625 -0.109375 C 5.640625 0.03125 5.640625 0.21875 5.84375 0.21875 C 6.046875 0.21875 6.046875 0.03125 6.046875 -0.109375 Z M 6.046875 -0.109375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph0-4">
+<path style="stroke:none;" d="M 4.1875 -1.1875 C 4.453125 -1.875 4.484375 -2.703125 4.484375 -3.421875 C 4.484375 -4.234375 4.46875 -5.78125 3.609375 -6.625 L 3.796875 -7.265625 L 3.84375 -7.453125 C 3.84375 -7.5625 3.75 -7.640625 3.640625 -7.640625 C 3.5 -7.640625 3.46875 -7.546875 3.40625 -7.328125 L 3.28125 -6.890625 C 3.15625 -6.9375 2.84375 -7.09375 2.484375 -7.09375 C 1.90625 -7.09375 1.265625 -6.796875 0.90625 -6.03125 C 0.515625 -5.234375 0.46875 -4.34375 0.46875 -3.421875 C 0.46875 -2.8125 0.46875 -0.984375 1.328125 -0.25 L 1.09375 0.578125 C 1.09375 0.6875 1.1875 0.765625 1.296875 0.765625 C 1.453125 0.765625 1.46875 0.671875 1.53125 0.453125 L 1.671875 0.015625 C 1.90625 0.140625 2.203125 0.21875 2.46875 0.21875 C 3.578125 0.21875 4.015625 -0.71875 4.1875 -1.1875 Z M 3.1875 -6.59375 L 1.453125 -0.6875 C 1.125 -1.375 1.125 -2.59375 1.125 -3.53125 C 1.125 -4.34375 1.125 -5.015625 1.265625 -5.65625 C 1.453125 -6.578125 2.03125 -6.875 2.484375 -6.875 C 2.671875 -6.875 2.9375 -6.8125 3.1875 -6.59375 Z M 3.6875 -1.421875 C 3.515625 -0.375 2.984375 0 2.46875 0 C 2.234375 0 2 -0.078125 1.765625 -0.28125 L 3.484375 -6.203125 C 3.8125 -5.625 3.8125 -4.484375 3.8125 -3.53125 C 3.8125 -2.8125 3.8125 -2.078125 3.6875 -1.421875 Z M 3.6875 -1.421875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-1">
+<path style="stroke:none;" d="M 7.140625 -2.484375 C 7.140625 -2.671875 6.953125 -2.671875 6.8125 -2.671875 L 4.046875 -2.671875 L 4.046875 -5.453125 C 4.046875 -5.59375 4.046875 -5.78125 3.859375 -5.78125 C 3.65625 -5.78125 3.65625 -5.59375 3.65625 -5.453125 L 3.65625 -2.671875 L 0.875 -2.671875 C 0.75 -2.671875 0.5625 -2.671875 0.5625 -2.484375 C 0.5625 -2.28125 0.75 -2.28125 0.875 -2.28125 L 3.65625 -2.28125 L 3.65625 0.5 C 3.65625 0.640625 3.65625 0.828125 3.859375 0.828125 C 4.046875 0.828125 4.046875 0.640625 4.046875 0.5 L 4.046875 -2.28125 L 6.8125 -2.28125 C 6.953125 -2.28125 7.140625 -2.28125 7.140625 -2.484375 Z M 7.140625 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-2">
+<path style="stroke:none;" d="M 7.140625 -3.4375 C 7.140625 -3.640625 6.953125 -3.640625 6.8125 -3.640625 L 0.875 -3.640625 C 0.75 -3.640625 0.5625 -3.640625 0.5625 -3.4375 C 0.5625 -3.234375 0.75 -3.234375 0.890625 -3.234375 L 6.8125 -3.234375 C 6.953125 -3.234375 7.140625 -3.234375 7.140625 -3.4375 Z M 7.140625 -1.515625 C 7.140625 -1.71875 6.953125 -1.71875 6.8125 -1.71875 L 0.890625 -1.71875 C 0.75 -1.71875 0.5625 -1.71875 0.5625 -1.515625 C 0.5625 -1.3125 0.75 -1.3125 0.875 -1.3125 L 6.8125 -1.3125 C 6.953125 -1.3125 7.140625 -1.3125 7.140625 -1.515625 Z M 7.140625 -1.515625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-3">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.953125 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.921875 3.15625 -7.15625 C 3.28125 -7.28125 3.28125 -7.296875 3.28125 -7.328125 C 3.28125 -7.40625 3.234375 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.75 1.609375 -5.5 C 1.09375 -4.40625 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.234375 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-4">
+<path style="stroke:none;" d="M 4.15625 0 L 4.15625 -0.3125 L 3.828125 -0.3125 C 2.9375 -0.3125 2.90625 -0.421875 2.90625 -0.78125 L 2.90625 -6.34375 C 2.90625 -6.578125 2.90625 -6.59375 2.6875 -6.59375 C 2.078125 -5.96875 1.203125 -5.96875 0.875 -5.96875 L 0.875 -5.65625 C 1.078125 -5.65625 1.671875 -5.65625 2.171875 -5.90625 L 2.171875 -0.78125 C 2.171875 -0.421875 2.15625 -0.3125 1.265625 -0.3125 L 0.9375 -0.3125 L 0.9375 0 C 1.28125 -0.03125 2.15625 -0.03125 2.546875 -0.03125 C 2.9375 -0.03125 3.796875 -0.03125 4.15625 0 Z M 4.15625 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-5">
+<path style="stroke:none;" d="M 2.859375 -2.484375 C 2.859375 -3.25 2.75 -4.453125 2.203125 -5.5625 C 1.609375 -6.78125 0.765625 -7.4375 0.65625 -7.4375 C 0.609375 -7.4375 0.5625 -7.390625 0.5625 -7.328125 C 0.5625 -7.296875 0.5625 -7.28125 0.75 -7.109375 C 1.71875 -6.125 2.28125 -4.546875 2.28125 -2.484375 C 2.28125 -0.78125 1.921875 0.953125 0.6875 2.203125 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.65625 2.484375 C 0.765625 2.484375 1.65625 1.796875 2.234375 0.546875 C 2.75 -0.546875 2.859375 -1.640625 2.859375 -2.484375 Z M 2.859375 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph1-6">
+<path style="stroke:none;" d="M 1.578125 2.484375 L 1.578125 -7.4375 L 0.21875 -7.4375 L 0.21875 -7.03125 L 1.171875 -7.03125 L 1.171875 2.078125 L 0.21875 2.078125 L 0.21875 2.484375 Z M 1.578125 2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph2-1">
+<path style="stroke:none;" d="M 6.375 -2.453125 C 6.375 -2.484375 6.34375 -2.5625 6.25 -2.5625 C 6.15625 -2.5625 6.15625 -2.5 6.078125 -2.34375 C 5.75 -1.4375 5.3125 -0.3125 3.59375 -0.3125 L 2.671875 -0.3125 C 2.53125 -0.3125 2.5 -0.3125 2.453125 -0.3125 C 2.34375 -0.328125 2.3125 -0.34375 2.3125 -0.421875 C 2.3125 -0.453125 2.3125 -0.46875 2.375 -0.640625 L 3.703125 -6 C 3.796875 -6.34375 3.828125 -6.453125 4.75 -6.453125 C 5.046875 -6.453125 5.125 -6.453125 5.125 -6.640625 C 5.125 -6.765625 5.015625 -6.765625 4.96875 -6.765625 L 3.5 -6.734375 L 2.1875 -6.765625 C 2.125 -6.765625 2 -6.765625 2 -6.5625 C 2 -6.453125 2.09375 -6.453125 2.28125 -6.453125 C 2.28125 -6.453125 2.484375 -6.453125 2.65625 -6.4375 C 2.828125 -6.421875 2.921875 -6.40625 2.921875 -6.28125 C 2.921875 -6.234375 2.90625 -6.21875 2.875 -6.09375 L 1.5625 -0.765625 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.484375 -0.3125 0.390625 -0.3125 0.390625 -0.109375 C 0.390625 0 0.46875 0 0.65625 0 L 5.234375 0 C 5.484375 0 5.484375 0 5.546875 -0.171875 L 6.328125 -2.3125 C 6.375 -2.421875 6.375 -2.453125 6.375 -2.453125 Z M 6.375 -2.453125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph2-2">
+<path style="stroke:none;" d="M 8.734375 -0.203125 C 8.734375 -0.3125 8.640625 -0.3125 8.453125 -0.3125 C 8.078125 -0.3125 7.8125 -0.3125 7.8125 -0.484375 C 7.8125 -0.53125 7.8125 -0.546875 7.859375 -0.71875 L 9.171875 -6 C 9.265625 -6.359375 9.28125 -6.453125 10.03125 -6.453125 C 10.25 -6.453125 10.34375 -6.453125 10.34375 -6.65625 C 10.34375 -6.765625 10.25 -6.765625 10.078125 -6.765625 L 8.765625 -6.765625 C 8.515625 -6.765625 8.5 -6.765625 8.375 -6.578125 L 4.765625 -0.9375 L 4 -6.53125 C 3.96875 -6.765625 3.9375 -6.765625 3.6875 -6.765625 L 2.328125 -6.765625 C 2.140625 -6.765625 2.03125 -6.765625 2.03125 -6.578125 C 2.03125 -6.453125 2.125 -6.453125 2.3125 -6.453125 C 2.453125 -6.453125 2.625 -6.453125 2.75 -6.4375 C 2.90625 -6.421875 2.96875 -6.390625 2.96875 -6.28125 C 2.96875 -6.234375 2.953125 -6.21875 2.921875 -6.09375 L 1.671875 -1.046875 C 1.5625 -0.65625 1.390625 -0.34375 0.59375 -0.3125 C 0.546875 -0.3125 0.421875 -0.296875 0.421875 -0.125 C 0.421875 -0.03125 0.46875 0 0.5625 0 C 0.875 0 1.21875 -0.03125 1.546875 -0.03125 C 1.875 -0.03125 2.234375 0 2.5625 0 C 2.609375 0 2.75 0 2.75 -0.203125 C 2.75 -0.3125 2.640625 -0.3125 2.5625 -0.3125 C 2 -0.3125 1.890625 -0.515625 1.890625 -0.75 C 1.890625 -0.8125 1.90625 -0.859375 1.9375 -0.96875 L 3.28125 -6.375 L 4.140625 -0.234375 C 4.15625 -0.109375 4.171875 0 4.296875 0 C 4.390625 0 4.453125 -0.109375 4.5 -0.171875 L 8.515625 -6.453125 L 7.109375 -0.765625 C 7 -0.390625 6.984375 -0.3125 6.203125 -0.3125 C 6.03125 -0.3125 5.921875 -0.3125 5.921875 -0.125 C 5.921875 0 6.046875 0 6.078125 0 L 7.296875 -0.03125 C 7.703125 -0.03125 8.140625 0 8.546875 0 C 8.59375 0 8.734375 0 8.734375 -0.203125 Z M 8.734375 -0.203125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph2-3">
+<path style="stroke:none;" d="M 7.53125 -6.65625 C 7.53125 -6.65625 7.53125 -6.765625 7.40625 -6.765625 C 7.078125 -6.765625 6.71875 -6.734375 6.390625 -6.734375 C 6.046875 -6.734375 5.6875 -6.765625 5.359375 -6.765625 C 5.296875 -6.765625 5.1875 -6.765625 5.1875 -6.5625 C 5.1875 -6.453125 5.28125 -6.453125 5.359375 -6.453125 C 5.921875 -6.453125 6.03125 -6.234375 6.03125 -6.015625 C 6.03125 -6 6.015625 -5.84375 6 -5.8125 L 5.109375 -2.28125 C 4.78125 -0.953125 3.640625 -0.09375 2.640625 -0.09375 C 1.96875 -0.09375 1.4375 -0.53125 1.4375 -1.375 C 1.4375 -1.375 1.4375 -1.71875 1.546875 -2.15625 L 2.5 -6 C 2.59375 -6.359375 2.609375 -6.453125 3.34375 -6.453125 C 3.59375 -6.453125 3.671875 -6.453125 3.671875 -6.65625 C 3.671875 -6.765625 3.5625 -6.765625 3.53125 -6.765625 L 2.265625 -6.734375 L 0.984375 -6.765625 C 0.90625 -6.765625 0.796875 -6.765625 0.796875 -6.5625 C 0.796875 -6.453125 0.890625 -6.453125 1.078125 -6.453125 C 1.078125 -6.453125 1.28125 -6.453125 1.453125 -6.4375 C 1.640625 -6.421875 1.71875 -6.40625 1.71875 -6.28125 C 1.71875 -6.21875 1.609375 -5.8125 1.5625 -5.578125 L 0.734375 -2.265625 C 0.65625 -1.984375 0.65625 -1.828125 0.65625 -1.6875 C 0.65625 -0.46875 1.5625 0.21875 2.609375 0.21875 C 3.859375 0.21875 5.078125 -0.90625 5.40625 -2.203125 L 6.296875 -5.71875 C 6.390625 -6.125 6.5625 -6.421875 7.359375 -6.453125 C 7.40625 -6.453125 7.53125 -6.46875 7.53125 -6.65625 Z M 7.53125 -6.65625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph2-4">
+<path style="stroke:none;" d="M 7.625 -6.640625 C 7.625 -6.71875 7.5625 -6.765625 7.484375 -6.765625 C 7.234375 -6.765625 6.9375 -6.734375 6.671875 -6.734375 C 6.34375 -6.734375 6.015625 -6.765625 5.703125 -6.765625 C 5.640625 -6.765625 5.515625 -6.765625 5.515625 -6.578125 C 5.515625 -6.46875 5.59375 -6.453125 5.671875 -6.453125 C 5.9375 -6.4375 6.125 -6.34375 6.125 -6.125 C 6.125 -5.984375 5.96875 -5.75 5.96875 -5.75 L 2.9375 -0.921875 L 2.265625 -6.15625 C 2.265625 -6.328125 2.484375 -6.453125 2.9375 -6.453125 C 3.078125 -6.453125 3.1875 -6.453125 3.1875 -6.65625 C 3.1875 -6.75 3.109375 -6.765625 3.046875 -6.765625 C 2.65625 -6.765625 2.234375 -6.734375 1.828125 -6.734375 C 1.640625 -6.734375 1.453125 -6.75 1.28125 -6.75 C 1.09375 -6.75 0.90625 -6.765625 0.75 -6.765625 C 0.671875 -6.765625 0.5625 -6.765625 0.5625 -6.578125 C 0.5625 -6.453125 0.640625 -6.453125 0.796875 -6.453125 C 1.359375 -6.453125 1.359375 -6.375 1.390625 -6.125 L 2.171875 -0.015625 C 2.203125 0.1875 2.25 0.21875 2.375 0.21875 C 2.53125 0.21875 2.578125 0.171875 2.65625 0.046875 L 6.21875 -5.640625 C 6.703125 -6.40625 7.125 -6.4375 7.484375 -6.453125 C 7.609375 -6.46875 7.625 -6.640625 7.625 -6.640625 Z M 7.625 -6.640625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph2-5">
+<path style="stroke:none;" d="M 2.015625 -0.015625 C 2.015625 -0.65625 1.765625 -1.046875 1.375 -1.046875 C 1.046875 -1.046875 0.859375 -0.796875 0.859375 -0.53125 C 0.859375 -0.25 1.046875 0 1.375 0 C 1.5 0 1.625 -0.046875 1.71875 -0.125 C 1.75 -0.15625 1.765625 -0.15625 1.765625 -0.15625 C 1.765625 -0.15625 1.796875 -0.15625 1.796875 -0.015625 C 1.796875 0.71875 1.453125 1.3125 1.125 1.640625 C 1.015625 1.75 1.015625 1.765625 1.015625 1.796875 C 1.015625 1.875 1.0625 1.90625 1.109375 1.90625 C 1.21875 1.90625 2.015625 1.15625 2.015625 -0.015625 Z M 2.015625 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph3-1">
+<path style="stroke:none;" d="M 4.5625 -1.5 C 4.5625 -1.546875 4.515625 -1.59375 4.453125 -1.59375 C 4.375 -1.59375 4.359375 -1.546875 4.328125 -1.46875 C 4.0625 -0.796875 3.765625 -0.234375 2.6875 -0.234375 L 1.953125 -0.234375 C 1.84375 -0.234375 1.828125 -0.234375 1.765625 -0.25 L 2.578125 -3.578125 C 2.625 -3.78125 2.640625 -3.828125 3.25 -3.828125 C 3.390625 -3.828125 3.46875 -3.828125 3.46875 -3.984375 C 3.46875 -4 3.453125 -4.0625 3.359375 -4.0625 C 3.21875 -4.0625 3.0625 -4.046875 2.921875 -4.046875 L 2.015625 -4.046875 C 1.875 -4.046875 1.71875 -4.0625 1.59375 -4.0625 C 1.546875 -4.0625 1.453125 -4.0625 1.453125 -3.921875 C 1.453125 -3.828125 1.53125 -3.828125 1.65625 -3.828125 C 1.75 -3.828125 1.90625 -3.828125 2.03125 -3.78125 C 2.03125 -3.734375 2.03125 -3.6875 2 -3.59375 L 1.21875 -0.5 C 1.171875 -0.28125 1.15625 -0.234375 0.71875 -0.234375 C 0.578125 -0.234375 0.5 -0.234375 0.5 -0.09375 C 0.5 0 0.578125 0 0.6875 0 L 3.84375 0 C 4 0 4 0 4.046875 -0.125 C 4.109375 -0.265625 4.5625 -1.453125 4.5625 -1.5 Z M 4.5625 -1.5 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph3-2">
+<path style="stroke:none;" d="M 6.1875 -0.15625 C 6.171875 -0.234375 6.109375 -0.234375 5.984375 -0.234375 C 5.90625 -0.234375 5.8125 -0.25 5.75 -0.25 C 5.640625 -0.265625 5.609375 -0.265625 5.609375 -0.328125 C 5.609375 -0.34375 5.609375 -0.375 5.625 -0.4375 L 6.40625 -3.578125 C 6.453125 -3.78125 6.46875 -3.828125 6.953125 -3.828125 C 7.046875 -3.828125 7.140625 -3.828125 7.140625 -3.984375 C 7.140625 -4.0625 7.0625 -4.0625 6.953125 -4.0625 L 6.109375 -4.0625 C 5.9375 -4.0625 5.921875 -4.0625 5.828125 -3.921875 L 3.46875 -0.546875 L 2.796875 -3.90625 C 2.78125 -4.0625 2.734375 -4.0625 2.578125 -4.0625 L 1.6875 -4.0625 C 1.578125 -4.0625 1.484375 -4.0625 1.484375 -3.921875 C 1.484375 -3.828125 1.578125 -3.828125 1.6875 -3.828125 C 1.796875 -3.828125 1.9375 -3.828125 2.0625 -3.78125 C 2.0625 -3.734375 2.0625 -3.6875 2.046875 -3.59375 L 1.296875 -0.65625 C 1.25 -0.421875 1.140625 -0.25 0.65625 -0.234375 C 0.578125 -0.234375 0.53125 -0.171875 0.53125 -0.078125 C 0.53125 -0.0625 0.546875 0 0.625 0 C 0.78125 0 1.125 -0.03125 1.265625 -0.03125 L 1.59375 -0.015625 C 1.703125 -0.015625 1.828125 0 1.921875 0 C 2.046875 0 2.0625 -0.125 2.0625 -0.15625 C 2.046875 -0.234375 1.984375 -0.234375 1.90625 -0.234375 C 1.640625 -0.25 1.515625 -0.328125 1.515625 -0.46875 C 1.515625 -0.515625 1.53125 -0.53125 1.546875 -0.59375 L 2.328125 -3.78125 L 2.34375 -3.78125 L 3.046875 -0.171875 C 3.078125 -0.0625 3.09375 0 3.1875 0 C 3.28125 0 3.328125 -0.0625 3.359375 -0.125 L 5.953125 -3.828125 L 5.125 -0.5 C 5.0625 -0.28125 5.046875 -0.234375 4.609375 -0.234375 C 4.484375 -0.234375 4.46875 -0.234375 4.4375 -0.21875 C 4.40625 -0.203125 4.390625 -0.125 4.390625 -0.078125 C 4.390625 -0.0625 4.40625 0 4.484375 0 C 4.609375 0 4.734375 -0.015625 4.859375 -0.015625 L 5.25 -0.03125 L 5.671875 -0.015625 C 5.78125 -0.015625 5.921875 0 6.046875 0 C 6.078125 0 6.125 0 6.15625 -0.046875 C 6.15625 -0.0625 6.1875 -0.125 6.1875 -0.15625 Z M 6.1875 -0.15625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph4-1">
+<path style="stroke:none;" d="M 5.09375 -1.484375 C 5.09375 -1.640625 4.9375 -1.640625 4.859375 -1.640625 L 2.9375 -1.640625 L 2.9375 -3.578125 C 2.9375 -3.65625 2.9375 -3.796875 2.78125 -3.796875 C 2.625 -3.796875 2.625 -3.65625 2.625 -3.578125 L 2.625 -1.640625 L 0.703125 -1.640625 C 0.625 -1.640625 0.46875 -1.640625 0.46875 -1.484375 C 0.46875 -1.328125 0.625 -1.328125 0.703125 -1.328125 L 2.625 -1.328125 L 2.625 0.59375 C 2.625 0.671875 2.625 0.828125 2.78125 0.828125 C 2.9375 0.828125 2.9375 0.671875 2.9375 0.59375 L 2.9375 -1.328125 L 4.859375 -1.328125 C 4.9375 -1.328125 5.09375 -1.328125 5.09375 -1.484375 Z M 5.09375 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph4-2">
+<path style="stroke:none;" d="M 3.203125 -1.109375 L 2.984375 -1.109375 C 2.96875 -1.03125 2.90625 -0.640625 2.828125 -0.578125 C 2.78125 -0.53125 2.296875 -0.53125 2.21875 -0.53125 L 1.09375 -0.53125 L 1.859375 -1.15625 C 2.0625 -1.3125 2.59375 -1.703125 2.78125 -1.875 C 2.953125 -2.046875 3.203125 -2.359375 3.203125 -2.78125 C 3.203125 -3.53125 2.53125 -3.953125 1.734375 -3.953125 C 0.96875 -3.953125 0.421875 -3.453125 0.421875 -2.890625 C 0.421875 -2.59375 0.6875 -2.546875 0.75 -2.546875 C 0.90625 -2.546875 1.078125 -2.65625 1.078125 -2.875 C 1.078125 -3 1 -3.203125 0.734375 -3.203125 C 0.875 -3.5 1.234375 -3.734375 1.640625 -3.734375 C 2.265625 -3.734375 2.59375 -3.265625 2.59375 -2.78125 C 2.59375 -2.359375 2.328125 -1.921875 1.90625 -1.546875 L 0.5 -0.25 C 0.4375 -0.1875 0.421875 -0.1875 0.421875 0 L 3.015625 0 Z M 3.203125 -1.109375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph5-1">
+<path style="stroke:none;" d="M 5.875 -2.1875 C 5.875 -2.25 5.8125 -2.296875 5.75 -2.296875 C 5.671875 -2.296875 5.65625 -2.265625 5.578125 -2.09375 C 5.28125 -1.296875 4.890625 -0.28125 3.328125 -0.28125 L 2.4375 -0.28125 C 2.3125 -0.28125 2.296875 -0.28125 2.265625 -0.28125 C 2.171875 -0.296875 2.15625 -0.296875 2.15625 -0.359375 C 2.15625 -0.390625 2.15625 -0.40625 2.1875 -0.578125 L 3.40625 -5.390625 C 3.484375 -5.734375 3.5 -5.8125 4.34375 -5.8125 C 4.578125 -5.8125 4.671875 -5.8125 4.671875 -5.984375 C 4.671875 -6.09375 4.546875 -6.09375 4.515625 -6.09375 C 4.3125 -6.09375 4.09375 -6.078125 3.875 -6.078125 L 3.234375 -6.0625 L 2.609375 -6.078125 L 2.03125 -6.09375 C 1.96875 -6.09375 1.84375 -6.09375 1.84375 -5.9375 C 1.84375 -5.8125 1.921875 -5.8125 2.109375 -5.8125 C 2.15625 -5.8125 2.3125 -5.8125 2.453125 -5.796875 C 2.609375 -5.78125 2.671875 -5.765625 2.671875 -5.671875 C 2.671875 -5.625 2.65625 -5.578125 2.625 -5.484375 L 1.421875 -0.671875 C 1.34375 -0.359375 1.328125 -0.28125 0.65625 -0.28125 C 0.484375 -0.28125 0.390625 -0.28125 0.390625 -0.109375 C 0.390625 0 0.484375 0 0.640625 0 L 4.859375 0 C 5.0625 0 5.078125 -0.015625 5.140625 -0.203125 C 5.234375 -0.421875 5.875 -2.109375 5.875 -2.1875 Z M 5.875 -2.1875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph6-1">
+<path style="stroke:none;" d="M 6.609375 -2.234375 C 6.609375 -2.421875 6.4375 -2.421875 6.296875 -2.421875 L 3.75 -2.421875 L 3.75 -4.984375 C 3.75 -5.125 3.75 -5.296875 3.5625 -5.296875 C 3.375 -5.296875 3.375 -5.109375 3.375 -4.984375 L 3.375 -2.421875 L 0.828125 -2.421875 C 0.703125 -2.421875 0.515625 -2.421875 0.515625 -2.234375 C 0.515625 -2.046875 0.671875 -2.046875 0.828125 -2.046875 L 3.375 -2.046875 L 3.375 0.515625 C 3.375 0.65625 3.375 0.828125 3.5625 0.828125 C 3.75 0.828125 3.75 0.640625 3.75 0.515625 L 3.75 -2.046875 L 6.296875 -2.046875 C 6.421875 -2.046875 6.609375 -2.046875 6.609375 -2.234375 Z M 6.609375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez14a_d2-glyph6-2">
+<path style="stroke:none;" d="M 3.859375 0 L 3.859375 -0.28125 L 3.5625 -0.28125 C 2.734375 -0.28125 2.71875 -0.390625 2.71875 -0.71875 L 2.71875 -5.703125 C 2.71875 -5.921875 2.703125 -5.9375 2.484375 -5.9375 C 1.921875 -5.375 1.109375 -5.375 0.828125 -5.375 L 0.828125 -5.09375 C 1 -5.09375 1.546875 -5.09375 2.03125 -5.328125 L 2.03125 -0.71875 C 2.03125 -0.390625 2 -0.28125 1.171875 -0.28125 L 0.890625 -0.28125 L 0.890625 0 C 1.203125 -0.03125 2 -0.03125 2.359375 -0.03125 C 2.734375 -0.03125 3.53125 -0.03125 3.859375 0 Z M 3.859375 0 "/>
+</symbol>
+</g>
+</defs>
+<g id="analisi1_lez14a_d2-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -170.081953 0.000197534 L 170.081913 0.000197534 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -170.081953 -7.085732 L -170.081953 7.086127 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 170.081913 -7.085732 L 170.081913 7.086127 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-1" x="7.973111" y="67.086574"/>
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-2" x="15.683585" y="67.086574"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-1" x="346.442842" y="67.083589"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-2" x="354.153405" y="67.083589"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 131.191406 49.339844 C 131.191406 48.464844 130.484375 47.753906 129.605469 47.753906 C 128.730469 47.753906 128.019531 48.464844 128.019531 49.339844 C 128.019531 50.214844 128.730469 50.925781 129.605469 50.925781 C 130.484375 50.925781 131.191406 50.214844 131.191406 49.339844 Z M 131.191406 49.339844 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-1" x="126.234579" y="63.846725"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 244.019531 49.339844 C 244.019531 48.464844 243.308594 47.753906 242.433594 47.753906 C 241.554688 47.753906 240.847656 48.464844 240.847656 49.339844 C 240.847656 50.214844 241.554688 50.925781 242.433594 50.925781 C 243.308594 50.925781 244.019531 50.214844 244.019531 49.339844 Z M 244.019531 49.339844 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-2" x="237.082005" y="63.846725"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.994247 0.000197534 C 1.994247 1.0994 1.099182 1.994465 -0.000020108 1.994465 C -1.099222 1.994465 -1.994287 1.0994 -1.994287 0.000197534 C -1.994287 -1.099005 -1.099222 -1.99407 -0.000020108 -1.99407 C 1.099182 -1.99407 1.994247 -1.099005 1.994247 0.000197534 Z M 1.994247 0.000197534 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph3-1" x="176.945784" y="62.548198"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph4-1" x="181.97969" y="62.548198"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph3-2" x="187.541962" y="62.548198"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000473764 0.000440584 L 18.238434 0.000440584 " transform="matrix(0.99504,0,0,-0.99504,176.945784,63.973095)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph4-2" x="184.201614" y="69.230885"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -113.386667 11.337684 L -0.000020108 11.337684 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -111.396325 11.337684 C -111.396325 12.440813 -112.287464 13.331952 -113.386667 13.331952 C -114.485869 13.331952 -115.380934 12.440813 -115.380934 11.337684 C -115.380934 10.238482 -114.485869 9.347343 -113.386667 9.347343 C -112.287464 9.347343 -111.396325 10.238482 -111.396325 11.337684 Z M -111.396325 11.337684 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.994247 11.337684 C 1.994247 12.440813 1.099182 13.331952 -0.000020108 13.331952 C -1.099222 13.331952 -1.994287 12.440813 -1.994287 11.337684 C -1.994287 10.238482 -1.099222 9.347343 -0.000020108 9.347343 C 1.099182 9.347343 1.994247 10.238482 1.994247 11.337684 Z M 1.994247 11.337684 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-3" x="125.683327" y="30.324831"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000020108 11.337684 L 113.386626 11.337684 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 1.994247 11.337684 C 1.994247 12.440813 1.099182 13.331952 -0.000020108 13.331952 C -1.099222 13.331952 -1.994287 12.440813 -1.994287 11.337684 C -1.994287 10.238482 -1.099222 9.347343 -0.000020108 9.347343 C 1.099182 9.347343 1.994247 10.238482 1.994247 11.337684 Z M 1.994247 11.337684 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 115.380894 11.337684 C 115.380894 12.440813 114.485829 13.331952 113.386626 13.331952 C 112.287424 13.331952 111.396285 12.440813 111.396285 11.337684 C 111.396285 10.238482 112.287424 9.347343 113.386626 9.347343 C 114.485829 9.347343 115.380894 10.238482 115.380894 11.337684 Z M 115.380894 11.337684 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-4" x="238.438245" y="30.324831"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-3" x="163.507772" y="14.703702"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-3" x="173.559664" y="14.703702"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-4" x="182.371736" y="14.703702"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-2" x="193.111199" y="14.703702"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-4" x="203.575037" y="14.703702"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -170.081953 -73.701319 L 170.081913 -73.701319 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -170.081953 -80.787248 L -170.081953 -66.61539 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 170.081913 -80.787248 L 170.081913 -66.61539 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-1" x="7.973111" y="140.421997"/>
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-2" x="15.683585" y="140.421997"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-2" x="334.484455" y="141.414052"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-2" x="347.936397" y="141.414052"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-1" x="358.402736" y="141.414052"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-2" x="366.110798" y="141.414052"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 131.191406 122.675781 C 131.191406 121.800781 130.484375 121.089844 129.605469 121.089844 C 128.730469 121.089844 128.019531 121.800781 128.019531 122.675781 C 128.019531 123.550781 128.730469 124.261719 129.605469 124.261719 C 130.484375 124.261719 131.191406 123.550781 131.191406 122.675781 Z M 131.191406 122.675781 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-1" x="126.234579" y="137.182148"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -26.353396 -73.701319 C -26.353396 -72.602117 -27.244535 -71.710978 -28.347663 -71.710978 C -29.446866 -71.710978 -30.338005 -72.602117 -30.338005 -73.701319 C -30.338005 -74.800521 -29.446866 -75.695586 -28.347663 -75.695586 C -27.244535 -75.695586 -26.353396 -74.800521 -26.353396 -73.701319 Z M -26.353396 -73.701319 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph5-1" x="146.79807" y="137.915492"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph6-1" x="155.074811" y="137.915492"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph6-2" x="164.241196" y="137.915492"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -85.039024 -62.363832 L -28.347663 -62.363832 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -83.048682 -62.363832 C -83.048682 -61.26463 -83.939821 -60.369565 -85.039024 -60.369565 C -86.142152 -60.369565 -87.033291 -61.26463 -87.033291 -62.363832 C -87.033291 -63.463034 -86.142152 -64.354173 -85.039024 -64.354173 C -83.939821 -64.354173 -83.048682 -63.463034 -83.048682 -62.363832 Z M -83.048682 -62.363832 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M -26.353396 -62.363832 C -26.353396 -61.26463 -27.244535 -60.369565 -28.347663 -60.369565 C -29.446866 -60.369565 -30.338005 -61.26463 -30.338005 -62.363832 C -30.338005 -63.463034 -29.446866 -64.354173 -28.347663 -64.354173 C -27.244535 -64.354173 -26.353396 -63.463034 -26.353396 -62.363832 Z M -26.353396 -62.363832 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-3" x="89.19721" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-2" x="99.799358" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-3" x="110.265697" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-1" x="114.118975" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-1" x="123.068362" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-4" x="132.981943" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-5" x="137.938236" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-1" x="142.34762" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-1" x="151.29366" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-4" x="161.20486" y="101.181611"/>
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-5" x="166.161451" y="101.181611"/>
+</g>
+<path style="fill:none;stroke-width:1.19553;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -28.347663 -62.363832 L 170.081913 -62.363832 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -26.353396 -62.363832 C -26.353396 -61.26463 -27.244535 -60.369565 -28.347663 -60.369565 C -29.446866 -60.369565 -30.338005 -61.26463 -30.338005 -62.363832 C -30.338005 -63.463034 -29.446866 -64.354173 -28.347663 -64.354173 C -27.244535 -64.354173 -26.353396 -63.463034 -26.353396 -62.363832 Z M -26.353396 -62.363832 " transform="matrix(0.99504,0,0,-0.99504,186.019551,49.34004)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-4" x="222.524574" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-2" x="233.264038" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-3" x="243.730376" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-1" x="247.58266" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-1" x="256.532047" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-4" x="266.443247" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-5" x="271.401921" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-1" x="275.807957" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-2" x="283.51852" y="101.181611"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-6" x="293.432101" y="101.181611"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-3" x="163.507772" y="88.039126"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-3" x="173.559664" y="88.039126"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph2-4" x="182.371736" y="88.039126"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph1-2" x="193.111199" y="88.039126"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez14a_d2-glyph0-4" x="203.575037" y="88.039126"/>
+</g>
+</g>
+</svg></figure>
+        <p>La figura illustra i due casi. In alto: due punti finiti distinti $L \\neq M$ separati dai due intorni simmetrici di raggio $|M-L|/2$, cioè $U = \\left(L - \\frac{|M-L|}{2},\\, L + \\frac{|M-L|}{2}\\right)$ e $V = \\left(M - \\frac{|M-L|}{2},\\, M + \\frac{|M-L|}{2}\\right)$; i due intervalli hanno come estremo comune il punto medio $(L+M)/2$, che però è escluso da entrambi (pallino vuoto), per cui l'intersezione è vuota.</p>
+        <p>In basso: il caso $M = +\\infty$, in cui $+\\infty$ non è un punto a distanza finita ma un estremo simbolico e l'intorno $V$ è una semiretta; anche qui il punto di contatto $L+1$ è escluso sia da $U$ sia da $V$. In entrambi i casi <strong>nessun termine $a_n$ può appartenere contemporaneamente a $U$ e a $V$</strong>.</p>`
+      },
+
+      {
+        id: "s14-definizione-limite",
+        type: "section",
+        title: "Definizione unificata di limite di successione",
+        icon: "🔭",
+        content: `<p>L'introduzione degli intorni in $\\mathbb{R}^*$ ci permette di dare una definizione di limite di successione molto più generale ed elegante, che tiene insieme i casi di limite finito, $+\\infty$ e $-\\infty$.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Limite di successione",
+            content: `<p>Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione di numeri reali e sia $L \\in \\mathbb{R}^*$. Si dice che la successione $a_n$ <strong>tende a $L$</strong> (e, nel caso $L \\in \\mathbb{R}$, che <strong>converge a $L$</strong>, mentre nei casi $L = +\\infty$ e $L = -\\infty$ che <strong>diverge a $L$</strong>), e si scrive</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = L$$</p>
+            <p>se per ogni intorno $U$ di $L$, la successione $a_n$ appartiene a $U$ <strong>definitivamente</strong> (nel senso fissato nella nota precedente: esiste un indice soglia $n_0$ oltre il quale tutti i termini stanno in $U$).</p>
+            <p>In simboli:</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = L \\quad \\iff \\quad \\forall U \\text{ intorno di } L, \\ \\exists n_0 \\in \\mathbb{N} : \\forall n \\gt n_0, \\ a_n \\in U$$</p>`
+          },
+          {
+            subtitle: "Coerenza con le definizioni precedenti",
+            content: `<p>Questa nuova definizione è perfettamente coerente con quelle date in precedenza.</p>
+            <p><strong>Se $L \\in \\mathbb{R}$ (limite finito):</strong> gli intorni di $L$ sono gli intervalli <em>aperti</em> che contengono $L$. In particolare, possiamo considerare gli intorni simmetrici $U = (L-\\varepsilon, L+\\varepsilon)$. La condizione $a_n \\in U$ diventa $|a_n - L| \\lt \\varepsilon$. La frase "per ogni intorno $U$" si traduce in "per ogni $\\varepsilon \\gt 0$": questo è lecito grazie all'osservazione sulla riduzione agli intorni simmetrici, perché ogni intervallo aperto $U$ contenente $L$ contiene un intorno simmetrico $(L-\\varepsilon, L+\\varepsilon)$ (si prende $\\varepsilon = \\min\\{L-a, b-L\\}$ se $U = (a,b)$) e l'appartenenza a quest'ultimo implica l'appartenenza a $U$; viceversa, ogni intorno simmetrico è un intorno. Ritroviamo così la definizione originale:</p>
+            <p>$$\\forall \\varepsilon \\gt 0\\ \\exists n_0 \\in \\mathbb{N} : \\forall n \\gt n_0, \\quad |a_n - L| \\lt \\varepsilon .$$</p>
+            <p><strong>Se $L = +\\infty$ (limite infinito):</strong> gli intorni di $+\\infty$ sono del tipo $U = (M, +\\infty]$ con $M \\in \\mathbb{R}$. La condizione $a_n \\in U$ diventa $a_n \\gt M$. La frase "per ogni intorno $U$" si traduce in "per ogni $M \\in \\mathbb{R}$":</p>
+            <p>$$\\forall M \\in \\mathbb{R}\\ \\exists n_0 \\in \\mathbb{N} : \\forall n \\gt n_0, \\quad a_n \\gt M .$$</p>
+            <p><strong>Se $L = -\\infty$:</strong> il caso è analogo a quello di $+\\infty$, ma con il <em>verso della disuguaglianza invertito</em>. Gli intorni di $-\\infty$ sono del tipo $U = [-\\infty, b)$ con $b \\in \\mathbb{R}$, e la condizione $a_n \\in U$ diventa $a_n \\lt b$. Dunque</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = -\\infty \\quad \\iff \\quad \\forall b \\in \\mathbb{R}\\ \\exists n_0 \\in \\mathbb{N} : \\forall n \\gt n_0, \\quad a_n \\lt b .$$</p>
+            <p>Si noti che qui $b$ può essere un numero negativo molto grande in modulo: la condizione chiede che i termini della successione scendano <em>sotto</em> qualunque soglia prefissata.</p>
+            <p>Il grande vantaggio di questa formulazione è che ci permette di dimostrare teoremi sui limiti in modo unificato, senza dover distinguere i vari casi.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limite (forma unificata)", latex: "\\lim_{n \\to +\\infty} a_n = L \\iff \\forall U \\text{ intorno di } L,\\ \\exists n_0 : \\forall n \\gt n_0,\\ a_n \\in U" },
+          { label: "Caso $L$ finito", latex: "\\forall \\varepsilon \\gt 0\\ \\exists n_0 : \\forall n \\gt n_0,\\ |a_n - L| \\lt \\varepsilon" },
+          { label: "Caso $L = +\\infty$", latex: "\\forall M \\in \\mathbb{R}\\ \\exists n_0 : \\forall n \\gt n_0,\\ a_n \\gt M" },
+          { label: "Caso $L = -\\infty$", latex: "\\forall b \\in \\mathbb{R}\\ \\exists n_0 : \\forall n \\gt n_0,\\ a_n \\lt b" }
+        ]
+      },
+
+      {
+        id: "s14-esempi-definizione",
+        type: "section",
+        title: "Due verifiche con la definizione",
+        icon: "✅",
+        content: `<p>Vediamo su due casi concreti come si usa la definizione: il punto delicato è sempre <em>scegliere</em> l'indice $n_0$ a partire dall'intorno assegnato.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio illustrativo — verifica che $1/(n+1) \\to 0$",
+            content: `<p>Consideriamo la successione</p>
+            <p>$$a_n = \\frac{1}{n+1}, \\qquad n \\in \\mathbb{N},$$</p>
+            <p>e mostriamo con la definizione che $\\displaystyle \\lim_{n \\to +\\infty} a_n = 0$.</p>
+            <p><strong>Passo 1 (traduzione dell'intorno).</strong> Sia $U$ un intorno di $L = 0$. Per la Proposizione sulla riduzione agli intorni simmetrici esiste $\\varepsilon \\gt 0$ con $(-\\varepsilon, \\varepsilon) \\subseteq U$; basta dunque mostrare che $|a_n - 0| \\lt \\varepsilon$ definitivamente.</p>
+            <p><strong>Passo 2 (scelta di $n_0$).</strong> La disuguaglianza da verificare è</p>
+            <p>$$\\left| \\frac{1}{n+1} - 0 \\right| = \\frac{1}{n+1} \\lt \\varepsilon \\quad \\Longleftrightarrow \\quad n + 1 \\gt \\frac{1}{\\varepsilon} \\quad \\Longleftrightarrow \\quad n \\gt \\frac{1}{\\varepsilon} - 1 .$$</p>
+            <p>Scegliamo allora $n_0 \\in \\mathbb{N}$ con $n_0 \\geq 1/\\varepsilon$ (tale $n_0$ esiste perché $\\mathbb{N}$ non è superiormente limitato in $\\mathbb{R}$: è la proprietà di Archimede). Questa è una scelta <em>sufficiente</em>, non la minima possibile: va bene qualunque soglia che renda vera la disuguaglianza.</p>
+            <p><strong>Passo 3 (verifica).</strong> Se $n \\gt n_0$ allora $n \\geq 1/\\varepsilon$, quindi $n + 1 \\gt 1/\\varepsilon$ e di conseguenza</p>
+            <p>$$|a_n - 0| = \\frac{1}{n+1} \\lt \\varepsilon ,$$</p>
+            <p>cioè $a_n \\in (-\\varepsilon, \\varepsilon) \\subseteq U$ per ogni $n \\gt n_0$. Poiché $U$ era un intorno arbitrario di $0$, concludiamo che $a_n \\to 0$.</p>
+            <p><strong>Esempio numerico.</strong> Se $\\varepsilon = 10^{-2}$, allora $1/\\varepsilon = 100$ e possiamo prendere $n_0 = 100$: per ogni $n \\gt 100$ si ha $1/(n+1) \\leq 1/102 \\lt 10^{-2}$. Qui la soglia $n_0 = 100$ è meno restrittiva di quella prescritta in generale, ma la verifica diretta mostra che funziona già.</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo — verifica che $-n \\to -\\infty$",
+            content: `<p>Applichiamo ora la definizione a una successione con limite <em>infinito</em>, per vedere all'opera il caso $L = -\\infty$. Consideriamo</p>
+            <p>$$a_n = -n, \\qquad n \\in \\mathbb{N}.$$</p>
+            <p><strong>Passo 1 (traduzione dell'intorno).</strong> Sia $U$ un intorno di $-\\infty$: allora $U = [-\\infty, b)$ per un qualche $b \\in \\mathbb{R}$, e la condizione $a_n \\in U$ si scrive semplicemente</p>
+            <p>$$a_n \\lt b, \\qquad \\text{cioè} \\qquad -n \\lt b .$$</p>
+            <p><strong>Passo 2 (scelta di $n_0$).</strong> La disuguaglianza $-n \\lt b$ equivale a $n \\gt -b$. Scegliamo quindi un indice</p>
+            <p>$$n_0 \\in \\mathbb{N} \\quad \\text{con} \\quad n_0 \\geq \\max\\{0, -b\\} ,$$</p>
+            <p>che esiste per la proprietà di Archimede. Il $\\max$ con $0$ serve solo a coprire il caso $b \\gt 0$, in cui la disuguaglianza $n \\gt -b$ è automaticamente vera per ogni $n \\in \\mathbb{N}$.</p>
+            <p><strong>Passo 3 (verifica).</strong> Se $n \\gt n_0$, allora $n \\gt -b$ e dunque</p>
+            <p>$$a_n = -n \\lt b ,$$</p>
+            <p>cioè $a_n \\in [-\\infty, b) = U$ per ogni $n \\gt n_0$. Poiché $U$ era un intorno arbitrario di $-\\infty$, concludiamo che $a_n \\to -\\infty$.</p>
+            <p><strong>Esempio numerico.</strong> Se $b = -1000$, allora $-b = 1000$ e possiamo prendere $n_0 = 1000$: per ogni $n \\gt 1000$ si ha $a_n = -n \\lt -1000 = b$. Anche qui la soglia numerica è meno restrittiva della prescrizione generale, ma la verifica diretta la convalida.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s14-unicita",
+        type: "section",
+        title: "Unicità del limite",
+        icon: "🔒",
+        content: `<p>Vediamo ora come la nuova definizione semplifichi la dimostrazione di proprietà fondamentali.</p>
+        <p><strong>Teorema (Unicità del limite).</strong> Se una successione $(a_n)_{n \\in \\mathbb{N}}$ ammette limite, allora tale limite è unico.</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Dimostriamo il teorema per assurdo. Supponiamo che la successione $(a_n)$ ammetta due limiti distinti, $L$ e $M$, con $L, M \\in \\mathbb{R}^*$ e $L \\neq M$:</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = L \\quad \\text{e} \\quad \\lim_{n \\to +\\infty} a_n = M .$$</p>
+            <p>Poiché $L \\neq M$, per la proprietà di separazione (di Hausdorff) degli intorni, esistono un intorno $U$ di $L$ e un intorno $V$ di $M$ tali che la loro intersezione è vuota:</p>
+            <p>$$U \\cap V = \\emptyset$$</p>
+            <p>(si veda la figura sulla separazione per i due casi tipici).</p>
+            <p>Ora usiamo la definizione di limite:</p>
+            <ul>
+              <li>poiché $\\lim_{n \\to +\\infty} a_n = L$, per l'intorno $U$ di $L$ esiste un indice $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\gt n_0$ si ha $a_n \\in U$;</li>
+              <li>poiché $\\lim_{n \\to +\\infty} a_n = M$, per l'intorno $V$ di $M$ esiste un indice $n_1 \\in \\mathbb{N}$ tale che per ogni $n \\gt n_1$ si ha $a_n \\in V$.</li>
+            </ul>
+            <p>Scegliamo ora un indice $n \\gt \\max(n_0, n_1)$. Per un tale $n$ devono valere entrambe le condizioni:</p>
+            <p>$$a_n \\in U \\quad \\text{e} \\quad a_n \\in V .$$</p>
+            <p>Questo implicherebbe che $a_n$ appartiene all'intersezione $U \\cap V$. Ma noi avevamo scelto $U$ e $V$ in modo che $U \\cap V = \\emptyset$: siamo giunti a una contraddizione.</p>
+            <p>L'assunzione iniziale che potessero esistere due limiti distinti deve essere falsa. Pertanto il limite, se esiste, è unico. $\\blacksquare$</p>`
+          },
+          {
+            subtitle: "Esempio — il teorema all'opera sugli esempi precedenti",
+            content: `<p>Riprendiamo la successione $a_n = 1/(n+1)$ del primo Esempio illustrativo. Abbiamo verificato con la definizione che $a_n \\to 0$; il teorema di unicità ci garantisce allora che <em>nessun altro</em> elemento di $\\mathbb{R}^*$ può essere limite di $(a_n)$.</p>
+            <p>Vediamolo in concreto con il meccanismo della dimostrazione. Se qualcuno proponesse $M = 1$ come limite, basta separare $0$ e $1$ con</p>
+            <p>$$U = \\left( -\\tfrac{1}{2}, \\tfrac{1}{2} \\right), \\qquad V = \\left( \\tfrac{1}{2}, \\tfrac{3}{2} \\right), \\qquad U \\cap V = \\emptyset$$</p>
+            <p>(i due intervalli si toccano nel punto medio $1/2$, che però è escluso da entrambi). Sappiamo che $a_n \\in U$ per ogni $n \\gt 1$ (infatti $1/(n+1) \\lt 1/2$ appena $n+1 \\gt 2$); dunque da un certo indice in poi $a_n \\notin V$, e la definizione di limite con $M = 1$ non può essere soddisfatta.</p>
+            <p>Analogamente, per $M = +\\infty$ si prende $V = (1, +\\infty]$: poiché $a_n \\lt 1/2$ definitivamente, nessun termine definitivo cade in $V$. Lo stesso argomento, con gli intorni forniti dalla proprietà di Hausdorff, esclude ogni $M \\neq 0$.</p>
+            <p>Un ragionamento identico si applica alla successione $a_n = -n$ del secondo Esempio illustrativo: avendo verificato che $a_n \\to -\\infty$, il teorema esclude per esempio che $(a_n)$ possa tendere a un valore finito $M \\in \\mathbb{R}$; basta separare $-\\infty$ e $M$ con $U = [-\\infty, M-1)$ e $V = (M-1, M+1)$.</p>`
+          }
+        ],
+        quote: {
+          text: "Vedete la potenza di questa dimostrazione? Con un unico ragionamento, abbiamo dimostrato l'unicità del limite per tutti i casi possibili: limite finito, $+\\infty$ o $-\\infty$. Senza questa definizione basata sugli intorni, avremmo dovuto trattare separatamente ogni combinazione, rendendo la dimostrazione molto più lunga e ripetitiva.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s14-permanenza-segno",
+        type: "section",
+        title: "Teorema della Permanenza del Segno",
+        icon: "➖",
+        content: `<p>Iniziamo con un teorema molto importante che lega il segno del limite di una successione al segno dei termini della successione stessa. L'idea intuitiva è semplice: se una successione converge a un valore strettamente positivo, ad esempio $3$, i suoi termini dovranno, da un certo punto in poi, trovarsi in un intorno di $3$. Se scegliamo questo intorno abbastanza piccolo, ad esempio $(2, 4)$, tutti i termini che vi cadono saranno necessariamente positivi. Questo significa che la successione, anche se magari ha dei termini iniziali negativi o nulli, deve diventare <em>definitivamente</em> positiva.</p>`,
+        subsections: [
+          {
+            subtitle: "Teorema — Permanenza del Segno, prima forma",
+            content: `<p>Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione di numeri reali e sia $L \\in \\mathbb{R}^*$. Se</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = L$$</p>
+            <p>e $L \\gt 0$ (oppure $L = +\\infty$), allora esiste un indice $\\bar{n} \\in \\mathbb{N}$ tale che</p>
+            <p>$$a_n \\gt 0 \\quad \\forall n \\gt \\bar{n} .$$</p>
+            <p>In altre parole, la successione $(a_n)$ è <strong>definitivamente positiva</strong>.</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>La dimostrazione si basa sulla definizione di limite. Dobbiamo scegliere un intorno di $L$ che contenga solo numeri positivi. Distinguiamo due casi.</p>
+            <p><strong>Caso 1: $L = +\\infty$.</strong> Per definizione di limite, per ogni $M \\in \\mathbb{R}$ esiste $\\bar{n} \\in \\mathbb{N}$ tale che $a_n \\gt M$ per ogni $n \\gt \\bar{n}$. Possiamo scegliere un qualunque $M$ positivo, ad esempio $M = 1$. Con questa scelta, otteniamo che esiste $\\bar{n}$ tale che $a_n \\gt 1$ per ogni $n \\gt \\bar{n}$. Poiché $1 \\gt 0$, a maggior ragione $a_n \\gt 0$ definitivamente. L'intorno scelto è $U = (1, +\\infty]$.</p>
+            <p><strong>Caso 2: $L \\in \\mathbb{R}$ con $L \\gt 0$.</strong> Dobbiamo scegliere un intorno di $L$ che non contenga numeri negativi. Un intorno simmetrico di $L$ è un intervallo del tipo $(L-\\varepsilon, L+\\varepsilon)$; per essere sicuri che contenga solo numeri positivi basta imporre che l'estremo sinistro sia $\\geq 0$, cioè $L-\\varepsilon \\geq 0$, ossia</p>
+            <p>$$0 \\lt \\varepsilon \\leq L .$$</p>
+            <p>(Anche $\\varepsilon = L$ va bene: in tal caso $U = (0, 2L)$ contiene solo numeri positivi, perché l'estremo $0$ è escluso.)</p>
+            <p>Scegliamo per comodità $\\varepsilon = \\frac{L}{2}$. Poiché $L \\gt 0$, anche $\\varepsilon \\gt 0$. L'intorno corrispondente è</p>
+            <p>$$U = \\left( L - \\frac{L}{2}, L + \\frac{L}{2} \\right) = \\left( \\frac{L}{2}, \\frac{3L}{2} \\right) .$$</p>
+            <p>Per definizione di limite, in corrispondenza di questo $\\varepsilon$, esiste un indice $\\bar{n} \\in \\mathbb{N}$ tale che per ogni $n \\gt \\bar{n}$ si ha $a_n \\in U$, cioè</p>
+            <p>$$\\frac{L}{2} \\lt a_n \\lt \\frac{3L}{2} .$$</p>
+            <p>In particolare $a_n \\gt \\frac{L}{2}$. Poiché $L \\gt 0$, anche $\\frac{L}{2} \\gt 0$, e quindi $a_n \\gt 0$ definitivamente. $\\blacksquare$</p>`
+          },
+          {
+            subtitle: "Osservazione — versione per limiti negativi",
+            content: `<p>Un enunciato del tutto analogo vale se il limite è strettamente negativo. Se $\\lim_{n \\to +\\infty} a_n = L \\lt 0$ (o $L = -\\infty$), allora la successione $(a_n)$ è definitivamente negativa, cioè esiste $\\bar{n} \\in \\mathbb{N}$ tale che $a_n \\lt 0$ per ogni $n \\gt \\bar{n}$. La dimostrazione è identica, basta scegliere un intorno di $L$ che contenga solo numeri negativi (ad esempio con $\\varepsilon = -L/2 = |L|/2$ se $L$ è finito).</p>`
+          },
+          {
+            subtitle: "Teorema — Permanenza del Segno, seconda forma",
+            content: `<p>Il teorema della permanenza del segno può essere letto anche in un'altra direzione: se sappiamo qualcosa sul segno della successione, possiamo dedurre qualcosa sul segno del suo limite. L'enunciato seguente è una <strong>conseguenza</strong> della versione per limiti negativi appena enunciata.</p>
+            <p>Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione tale che $a_n \\geq 0$ definitivamente. Se la successione ammette limite $L \\in \\mathbb{R}^*$, cioè</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = L ,$$</p>
+            <p>allora $L \\geq 0$.</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Dimostriamo il teorema per assurdo. Supponiamo che la tesi sia falsa, ovvero che $L \\lt 0$ (o $L = -\\infty$).</p>
+            <p>Ma se il limite $L$ fosse strettamente negativo, per la prima forma del Teorema della Permanenza del Segno la successione $(a_n)$ dovrebbe essere definitivamente negativa: dovrebbe esistere $\\bar{n} \\in \\mathbb{N}$ tale che $a_n \\lt 0$ per ogni $n \\gt \\bar{n}$.</p>
+            <p>Questo però contraddice l'ipotesi, secondo cui $a_n \\geq 0$ definitivamente. L'assurdo nasce dall'aver supposto $L \\lt 0$; dunque tale supposizione deve essere falsa e deve valere $L \\geq 0$. $\\blacksquare$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Prima forma", latex: "a_n \\to L,\\ L \\gt 0 \\text{ oppure } L = +\\infty \\ \\Rightarrow\\ a_n \\gt 0 \\text{ definitivamente}" },
+          { label: "Seconda forma", latex: "a_n \\geq 0 \\text{ definitivamente},\\ a_n \\to L \\in \\mathbb{R}^* \\ \\Rightarrow\\ L \\geq 0" }
+        ]
+      },
+
+      {
+        id: "s14-alert-segno",
+        type: "alert_box",
+        title: "Attenzione: la disuguaglianza stretta non passa al limite",
+        icon: "⚠️",
+        content: `<p>Nella seconda forma l'ipotesi è $a_n \\geq 0$, mentre la tesi è $L \\geq 0$. <strong>Non possiamo concludere che $L \\gt 0$</strong> anche se i termini della successione fossero tutti strettamente positivi.</p>
+        <p>Controesempio: consideriamo $a_n = \\frac{1}{n}$ per $n \\geq 1$. Tutti i termini sono strettamente positivi, $a_n \\gt 0$ per ogni $n$. Tuttavia</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{1}{n} = 0 .$$</p>
+        <p>Il limite è $L = 0$, che soddisfa la tesi $L \\geq 0$, ma non $L \\gt 0$.</p>`
+      },
+
+      {
+        id: "s14-confronto",
+        type: "section",
+        title: "Teorema del Confronto (o dei due Carabinieri)",
+        icon: "👮",
+        content: `<p>Il prossimo teorema è uno strumento potentissimo per calcolare limiti di successioni che non sappiamo trattare direttamente. L'idea è quella di "intrappolare" una successione di cui non conosciamo il limite tra altre due successioni che invece tendono allo stesso limite.</p>`,
+        quote: {
+          text: "Questo teorema è noto anche come «Teorema dei due Carabinieri». Immaginate due carabinieri, le successioni $a_n$ e $c_n$, che scortano un prigioniero, la successione $b_n$. Se entrambi i carabinieri si dirigono verso la stessa caserma (il limite $L$), il prigioniero, che sta in mezzo a loro, non ha altra scelta che andare anche lui in quella caserma.",
+          src: "Nota del Prof."
+        },
+        subsections: [
+          {
+            subtitle: "Teorema — Confronto (due carabinieri)",
+            content: `<p>Siano $(a_n)$, $(b_n)$ e $(c_n)$ tre successioni di numeri reali. Supponiamo che:</p>
+            <ol>
+              <li>$a_n \\leq b_n \\leq c_n$ definitivamente (cioè esiste $\\bar{n}_0$ tale che la disuguaglianza vale per ogni $n \\gt \\bar{n}_0$);</li>
+              <li>le due successioni "esterne" tendono allo stesso limite $L \\in \\mathbb{R}^*$:
+              <p>$$\\lim_{n \\to +\\infty} a_n = L \\quad \\text{e} \\quad \\lim_{n \\to +\\infty} c_n = L .$$</p></li>
+            </ol>
+            <p>Allora anche la successione "centrale" ammette lo stesso limite (finito o infinito):</p>
+            <p>$$\\lim_{n \\to +\\infty} b_n = L .$$</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Dobbiamo dimostrare che $b_n \\to L$, cioè che per ogni intorno $U$ di $L$, $b_n$ appartiene definitivamente a $U$.</p>
+            <p>Fissiamo un arbitrario intorno $U$ di $L$.</p>
+            <p>Dall'ipotesi 2, $\\lim_{n \\to +\\infty} a_n = L$: per definizione di limite esiste un indice $\\bar{n}_a \\in \\mathbb{N}$ tale che</p>
+            <p>$$\\forall n \\gt \\bar{n}_a, \\quad a_n \\in U .$$</p>
+            <p>Sempre dall'ipotesi 2, $\\lim_{n \\to +\\infty} c_n = L$: esiste un indice $\\bar{n}_c \\in \\mathbb{N}$ tale che</p>
+            <p>$$\\forall n \\gt \\bar{n}_c, \\quad c_n \\in U .$$</p>
+            <p>Dall'ipotesi 1, la disuguaglianza vale definitivamente: esiste un indice $\\bar{n}_0 \\in \\mathbb{N}$ tale che</p>
+            <p>$$\\forall n \\gt \\bar{n}_0, \\quad a_n \\leq b_n \\leq c_n .$$</p>
+            <p>Affinché tutte e tre queste condizioni siano valide contemporaneamente, dobbiamo prendere un indice $n$ maggiore di tutti e tre gli indici soglia. Definiamo quindi</p>
+            <p>$$\\bar{n} = \\max\\{\\bar{n}_0, \\bar{n}_a, \\bar{n}_c\\} .$$</p>
+            <p>Per ogni $n \\gt \\bar{n}$ valgono tutte e tre le proprietà: $a_n \\in U$, $c_n \\in U$ e $a_n \\leq b_n \\leq c_n$.</p>
+            <p>Poiché ogni intorno $U$ nella retta reale estesa $\\mathbb{R}^*$ è un intervallo, e i due punti $a_n$ e $c_n$ appartengono a questo intervallo, anche ogni punto compreso tra di essi deve appartenere all'intervallo. Dato che $a_n \\leq b_n \\leq c_n$, il punto $b_n$ si trova necessariamente in $U$.</p>
+            <p>Abbiamo quindi dimostrato che per ogni intorno $U$ di $L$ esiste un $\\bar{n}$ tale che per ogni $n \\gt \\bar{n}$ si ha $b_n \\in U$. Questa è esattamente la definizione di $\\lim_{n \\to +\\infty} b_n = L$. $\\blacksquare$</p>`
+          },
+          {
+            subtitle: "Esempio — $\\sin(n)/n$",
+            content: `<p>Calcoliamo</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{\\sin(n)}{n} .$$</p>
+            <p>La successione $\\sin(n)$ non ha limite, poiché i suoi valori oscillano indefinitamente tra $-1$ e $1$. Il denominatore $n$ tende a $+\\infty$: non possiamo applicare direttamente le regole algebriche.</p>
+            <p>Tuttavia possiamo "intrappolare" la successione. Sappiamo che la funzione seno è limitata:</p>
+            <p>$$-1 \\leq \\sin(n) \\leq 1 \\quad \\forall n \\geq 1 .$$</p>
+            <p>Poiché $n \\geq 1$, $n$ è un numero positivo: possiamo quindi dividere tutti i membri della disuguaglianza per $n$ senza cambiare il verso:</p>
+            <p>$$-\\frac{1}{n} \\leq \\frac{\\sin(n)}{n} \\leq \\frac{1}{n} .$$</p>
+            <p>Le due successioni "carabinieri" sono $a_n = -\\frac{1}{n}$ e $c_n = \\frac{1}{n}$, con</p>
+            <p>$$\\lim_{n \\to +\\infty} \\left(-\\frac{1}{n}\\right) = 0, \\qquad \\lim_{n \\to +\\infty} \\frac{1}{n} = 0 .$$</p>
+            <p>Poiché entrambe le successioni esterne tendono a $0$, per il Teorema del Confronto anche la successione centrale deve tendere a $0$:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{\\sin(n)}{n} = 0 .$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Teorema del confronto", latex: "a_n \\leq b_n \\leq c_n \\text{ def.},\\ a_n \\to L,\\ c_n \\to L \\ \\Rightarrow\\ b_n \\to L" }
+        ]
+      },
+
+      {
+        id: "s14-limitata-su-divergente",
+        type: "section",
+        title: "Successione limitata divisa per una divergente",
+        icon: "📉",
+        content: `<p>L'esempio precedente è un caso particolare di un principio più generale.</p>
+        <p><strong>Teorema.</strong> Sia $(a_n)$ una successione limitata (cioè esiste $M \\gt 0$ tale che $|a_n| \\leq M$ per ogni $n$) e sia $(b_n)$ una successione divergente, cioè $\\lim_{n \\to +\\infty} b_n = +\\infty$ (o $-\\infty$). Allora</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 0 .$$</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>La dimostrazione è un'applicazione diretta del Teorema del Confronto. Dall'ipotesi $|a_n| \\leq M$ sappiamo che</p>
+            <p>$$-M \\leq a_n \\leq M .$$</p>
+            <p>Supponiamo che $\\lim_{n \\to +\\infty} b_n = +\\infty$. Allora, definitivamente, $b_n \\gt 0$: in particolare il quoziente $a_n/b_n$ è ben definito <em>almeno definitivamente</em>, e questo basta, perché la nozione di limite dipende solo dalla coda della successione. Possiamo quindi dividere la disuguaglianza per $b_n$ senza cambiare il verso:</p>
+            <p>$$-\\frac{M}{b_n} \\leq \\frac{a_n}{b_n} \\leq \\frac{M}{b_n} .$$</p>
+            <p>Verifichiamo ora, con la definizione, che le due successioni esterne tendono a $0$ — non si tratta di un'operazione algebrica con l'infinito. Sia $\\varepsilon \\gt 0$. Poiché $b_n \\to +\\infty$, applicando la definizione all'intorno $\\left(\\frac{M}{\\varepsilon}, +\\infty\\right]$ di $+\\infty$ otteniamo che definitivamente</p>
+            <p>$$b_n \\gt \\frac{M}{\\varepsilon} \\gt 0 ,$$</p>
+            <p>e quindi, passando ai reciproci (entrambi i membri positivi),</p>
+            <p>$$0 \\lt \\frac{M}{b_n} \\lt \\varepsilon .$$</p>
+            <p>Dunque $\\left|\\frac{M}{b_n} - 0\\right| \\lt \\varepsilon$ definitivamente, cioè</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{M}{b_n} = 0 \\quad \\text{e, analogamente,} \\quad \\lim_{n \\to +\\infty} \\left(-\\frac{M}{b_n}\\right) = 0 .$$</p>
+            <p>Per il Teorema del Confronto concludiamo</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 0 .$$</p>
+            <p>Il caso in cui $b_n \\to -\\infty$ è analogo (basterà invertire i versi della disuguaglianza quando si divide per $b_n$, che sarà definitivamente negativo). $\\blacksquare$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limitata / divergente", latex: "|a_n| \\leq M,\\ b_n \\to \\pm\\infty \\ \\Rightarrow\\ \\frac{a_n}{b_n} \\to 0" }
+        ]
+      },
+
+      {
+        id: "s14-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "🧪",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s14-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare la definizione di intorno di un punto $x \\in \\mathbb{R}^*$ nei tre casi $x \\in \\mathbb{R}$, $x = +\\infty$, $x = -\\infty$. Stabilire poi se l'insieme $A = \\{x \\in \\mathbb{R} : x \\gt 7\\}$ è un intorno di $+\\infty$ secondo tale definizione, e spiegare perché la risposta non cambia nulla nella verifica dei limiti di successioni reali.</p>`,
+        solution: `<p><strong>Definizioni.</strong></p>
+        <p>(i) Se $x_0 \\in \\mathbb{R}$, un intorno di $x_0$ è un qualunque intervallo aperto di $\\mathbb{R}$ che contiene $x_0$; caso particolare è l'intorno simmetrico</p>
+        <p>$$I_R(x_0) = \\{x \\in \\mathbb{R} : |x-x_0| \\lt R\\} = (x_0-R,\\ x_0+R), \\qquad R \\gt 0 .$$</p>
+        <p>(ii) Un intorno di $+\\infty$ è un insieme del tipo $(a,+\\infty] = \\{x \\in \\mathbb{R}^* : x \\gt a\\}$ con $a \\in \\mathbb{R}$.</p>
+        <p>(iii) Un intorno di $-\\infty$ è un insieme del tipo $[-\\infty,b) = \\{x \\in \\mathbb{R}^* : x \\lt b\\}$ con $b \\in \\mathbb{R}$.</p>
+        <p><strong>Risposta sull'insieme $A$.</strong> Si ha $A = (7,+\\infty)$, cioè $A \\subseteq \\mathbb{R}$ e quindi $+\\infty \\notin A$. Poiché gli intorni di $+\\infty$ contengono per definizione il simbolo $+\\infty$ (infatti $(a,+\\infty] = (a,+\\infty) \\cup \\{+\\infty\\}$, e vale la proprietà di appartenenza $x \\in U$ per ogni intorno $U$ di $x$), l'insieme $A$ non è un intorno di $+\\infty$ in senso stretto: l'intorno associato è $A \\cup \\{+\\infty\\} = (7,+\\infty]$, ottenuto con $a = 7$.</p>
+        <p><strong>Perché la distinzione è innocua nei limiti.</strong> I termini $a_n$ di una successione reale sono numeri reali, dunque $a_n \\neq +\\infty$ e la condizione $a_n \\in (7,+\\infty]$ equivale a $a_n \\gt 7$, cioè a $a_n \\in A$. In generale, per ogni intorno $U = (a,+\\infty]$ di $+\\infty$ si ha</p>
+        <p>$$a_n \\in U \\iff a_n \\in U \\cap \\mathbb{R} = (a,+\\infty) \\iff a_n \\gt a ,$$</p>
+        <p>che è esattamente la traduzione usata nella definizione $\\forall M \\in \\mathbb{R}\\ \\exists n_0 \\in \\mathbb{N} : \\forall n \\gt n_0,\\ a_n \\gt M$.</p>`
+      },
+
+      {
+        id: "s14-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare il Teorema della permanenza del segno nella prima forma per successioni. Nel caso $L \\in \\mathbb{R}$ con $L \\gt 0$, spiegare perché nella dimostrazione la scelta $\\varepsilon = \\frac{L}{2}$ è lecita e quali altre scelte di $\\varepsilon$ andrebbero ugualmente bene.</p>`,
+        solution: `<p><strong>Enunciato.</strong> Sia $(a_n)_{n\\in\\mathbb{N}}$ una successione reale con $\\lim_{n\\to+\\infty}a_n = L$, $L \\in \\mathbb{R}^*$. Se $L \\gt 0$ oppure $L = +\\infty$, allora esiste $\\bar n \\in \\mathbb{N}$ tale che $a_n \\gt 0$ per ogni $n \\gt \\bar n$ (la successione è definitivamente positiva).</p>
+        <p>Nel caso $L \\in \\mathbb{R}$, $L \\gt 0$, l'intorno simmetrico di $L$ è $U = (L-\\varepsilon, L+\\varepsilon)$ e serve che esso contenga solo numeri positivi, cioè $L-\\varepsilon \\geq 0$, ossia</p>
+        <p>$$0 \\lt \\varepsilon \\leq L .$$</p>
+        <p>Con $\\varepsilon = \\frac{L}{2}$ si ha $\\varepsilon \\gt 0$ (perché $L \\gt 0$) e $U = \\left(\\frac{L}{2},\\frac{3L}{2}\\right) \\subset (0,+\\infty)$: la scelta è dunque lecita. Per definizione di limite esiste $\\bar n$ tale che $a_n \\in U$ per ogni $n \\gt \\bar n$, quindi $a_n \\gt \\frac{L}{2} \\gt 0$ definitivamente.</p>
+        <p>Va bene qualunque $\\varepsilon$ con $0 \\lt \\varepsilon \\leq L$: ad esempio $\\varepsilon = \\frac{L}{3}$ dà $U = \\left(\\frac{2L}{3},\\frac{4L}{3}\\right)$, e anche $\\varepsilon = L$ dà $U = (0,2L) \\subset (0,+\\infty)$ (l'estremo $0$ è escluso, essendo l'intervallo aperto). Non va bene $\\varepsilon \\gt L$, perché allora $0 \\in U$ e l'intorno conterrebbe anche numeri negativi.</p>`
+      },
+
+      {
+        id: "s14-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dimostrare, a partire dalla definizione di intorno in $\\mathbb{R}^*$, le due proprietà seguenti: (a) l'intersezione di due intorni di $+\\infty$ è ancora un intorno di $+\\infty$; (b) se $L \\in \\mathbb{R}$, esistono un intorno $U$ di $L$ e un intorno $V$ di $+\\infty$ con $U \\cap V = \\emptyset$ (proprietà di separazione nel caso misto).</p>`,
+        solution: `<p><strong>(a)</strong> Siano $U = (a,+\\infty]$ e $V = (b,+\\infty]$ due intorni di $+\\infty$, con $a,b \\in \\mathbb{R}$, e sia $c = \\max\\{a,b\\} \\in \\mathbb{R}$. Per ogni $x \\in \\mathbb{R}^*$ si ha</p>
+        <p>$$x \\in U \\cap V \\iff (x \\gt a \\text{ e } x \\gt b) \\iff x \\gt \\max\\{a,b\\} = c ,$$</p>
+        <p>perché una quantità supera entrambi i numeri $a$ e $b$ se e solo se supera il maggiore dei due. Dunque $U \\cap V = (c,+\\infty]$, che è un intorno di $+\\infty$ (con il parametro $c \\in \\mathbb{R}$). Si noti che l'intersezione non è mai vuota: contiene sempre $+\\infty$.</p>
+        <p><strong>(b)</strong> Sia $L \\in \\mathbb{R}$ e poniamo</p>
+        <p>$$U = (L-1,\\ L+1), \\qquad V = (L+1,\\ +\\infty] .$$</p>
+        <p>$U$ è un intervallo aperto che contiene $L$, quindi è un intorno di $L$; $V$ è un intorno di $+\\infty$ (con $a = L+1 \\in \\mathbb{R}$). Se per assurdo esistesse $x \\in U \\cap V$, da $x \\in U$ seguirebbe $x \\lt L+1$ e da $x \\in V$ seguirebbe $x \\gt L+1$: le due disuguaglianze sono incompatibili. Dunque $U \\cap V = \\emptyset$.</p>
+        <p>Il punto di contatto $L+1$ è escluso da entrambi gli insiemi, essendo $U$ aperto a destra e $V$ aperto a sinistra. Più in generale funziona ogni coppia $U = (L-\\delta, L+\\delta)$, $V = (L+\\delta, +\\infty]$ con $\\delta \\gt 0$.</p>`
+      },
+
+      {
+        id: "s14-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>È vero che se $a_n \\gt 0$ per ogni $n$ e $\\lim_{n\\to+\\infty}a_n = L$, allora $L \\gt 0$? Giustificare la risposta, enunciare correttamente la seconda forma del teorema della permanenza del segno e spiegare perché l'ipotesi di esistenza del limite non può essere omessa.</p>`,
+        solution: `<p>L'affermazione è <strong>falsa</strong>. Controesempio: $a_n = \\frac{1}{n}$ per $n \\geq 1$ ha $a_n \\gt 0$ per ogni $n$, ma</p>
+        <p>$$\\lim_{n\\to+\\infty}\\frac{1}{n} = 0 ,$$</p>
+        <p>quindi $L = 0$ e non $L \\gt 0$.</p>
+        <p><strong>Enunciato corretto (seconda forma).</strong> Se $a_n \\geq 0$ definitivamente e la successione ammette limite $L \\in \\mathbb{R}^*$, allora $L \\geq 0$. Dall'ipotesi stretta $a_n \\gt 0$ si può dedurre solo $L \\geq 0$: la disuguaglianza stretta "passa al limite" solo in forma debole.</p>
+        <p><strong>Dimostrazione (per assurdo).</strong> Se fosse $L \\lt 0$ oppure $L = -\\infty$, per la prima forma la successione sarebbe definitivamente negativa, cioè esisterebbe $\\bar n$ con $a_n \\lt 0$ per ogni $n \\gt \\bar n$, in contraddizione con $a_n \\geq 0$ definitivamente. Quindi $L \\geq 0$.</p>
+        <p><strong>Perché serve l'esistenza del limite.</strong> La successione $a_n = 1+(-1)^n$ soddisfa $a_n \\geq 0$ per ogni $n$ ma non ammette limite (i valori oscillano fra $0$ e $2$), quindi non c'è alcun $L$ di cui discutere il segno.</p>`
+      },
+
+      {
+        id: "s14-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>(a) Sia $U = (-3,5)$ e $L = 2$: determinare il più grande $\\varepsilon \\gt 0$ tale che $(L-\\varepsilon, L+\\varepsilon) \\subseteq U$.</p>
+        <p>(b) Ripetere la richiesta con $U = (1,+\\infty)$ e $L = 4$.</p>
+        <p>(c) Stabilire se $[-\\infty,3)$ è un intorno di $-\\infty$ e se è un intorno di $0$.</p>`,
+        solution: `<p><strong>(a)</strong> Siamo nel caso $U = (a,b)$ con $a = -3$, $b = 5$ e $a \\lt L \\lt b$. La Proposizione di riduzione agli intorni simmetrici dà</p>
+        <p>$$\\varepsilon = \\min\\{L-a,\\ b-L\\} = \\min\\{2-(-3),\\ 5-2\\} = \\min\\{5,3\\} = 3 .$$</p>
+        <p>Verifica: con $\\varepsilon = 3$ si ha $(2-3,\\ 2+3) = (-1,5) \\subseteq (-3,5)$. Massimalità: se $\\varepsilon \\gt 3$ allora $2+\\varepsilon \\gt 5$, quindi il punto $5$ appartiene a $(2-\\varepsilon, 2+\\varepsilon)$ ma non a $U$; dunque l'inclusione cade. Il valore massimo è $\\varepsilon = 3$.</p>
+        <p><strong>(b)</strong> Ora $U = (1,+\\infty)$ è illimitato superiormente, quindi l'unico vincolo è sull'estremo sinistro:</p>
+        <p>$$(4-\\varepsilon,\\ 4+\\varepsilon) \\subseteq (1,+\\infty) \\iff 4-\\varepsilon \\geq 1 \\iff \\varepsilon \\leq 3 .$$</p>
+        <p>Il massimo è $\\varepsilon = 3$, e infatti $(1,7) \\subseteq (1,+\\infty)$; se $\\varepsilon \\gt 3$ il punto $1$ sta in $(4-\\varepsilon, 4+\\varepsilon)$ ma non in $U$.</p>
+        <p><strong>(c)</strong> $[-\\infty,3)$ è un intorno di $-\\infty$: è esattamente della forma $[-\\infty,b)$ con $b = 3 \\in \\mathbb{R}$, cioè $\\{x \\in \\mathbb{R}^* : x \\lt 3\\}$.</p>
+        <p>Non è invece un intorno di $0$: gli intorni di un punto finito sono, per definizione, intervalli aperti di $\\mathbb{R}$, mentre $[-\\infty,3)$ contiene il simbolo $-\\infty$, che non è un numero reale (in particolare non è un insieme del tipo $(a,b)$ con $a,b \\in \\mathbb{R}$ né una semiretta reale aperta). La sua parte reale $[-\\infty,3) \\cap \\mathbb{R} = (-\\infty,3)$ è invece un intervallo aperto che contiene $0$, quindi un intorno di $0$; e per la riduzione agli intorni simmetrici contiene $(-\\varepsilon,\\varepsilon)$ con, per esempio, $\\varepsilon = 3$.</p>`
+      },
+
+      {
+        id: "s14-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare, giustificando il procedimento, $\\displaystyle\\lim_{n\\to+\\infty}\\frac{\\cos(n^2)}{\\sqrt{n}}$.</p>`,
+        solution: `<p>La successione $\\cos(n^2)$ non ammette limite, ma è limitata: $|\\cos(n^2)| \\leq 1$ per ogni $n$, cioè</p>
+        <p>$$-1 \\leq \\cos(n^2) \\leq 1 \\qquad \\forall n \\geq 1 .$$</p>
+        <p>Per $n \\geq 1$ si ha $\\sqrt{n} \\gt 0$, quindi dividendo per $\\sqrt{n}$ il verso delle disuguaglianze non cambia:</p>
+        <p>$$-\\frac{1}{\\sqrt{n}} \\leq \\frac{\\cos(n^2)}{\\sqrt{n}} \\leq \\frac{1}{\\sqrt{n}} .$$</p>
+        <p>Le due successioni "carabinieri" sono $a_n = -\\frac{1}{\\sqrt{n}}$ e $c_n = \\frac{1}{\\sqrt{n}}$, e</p>
+        <p>$$\\lim_{n\\to+\\infty}\\left(-\\frac{1}{\\sqrt{n}}\\right) = 0, \\qquad \\lim_{n\\to+\\infty}\\frac{1}{\\sqrt{n}} = 0 .$$</p>
+        <p>Per il Teorema del Confronto</p>
+        <p>$$\\lim_{n\\to+\\infty}\\frac{\\cos(n^2)}{\\sqrt{n}} = 0 .$$</p>
+        <p>In alternativa si applica direttamente il teorema "successione limitata diviso successione divergente", con $a_n = \\cos(n^2)$ limitata ($M = 1$) e $b_n = \\sqrt{n} \\to +\\infty$.</p>`
+      },
+
+      {
+        id: "s14-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Usando la definizione di limite con gli intorni, verificare che:</p>
+        <p>(a) $\\displaystyle \\lim_{n \\to +\\infty} \\frac{3n-1}{n+2} = 3$, determinando esplicitamente un indice $n_0$ adatto a $\\varepsilon = 10^{-3}$;</p>
+        <p>(b) $\\displaystyle \\lim_{n \\to +\\infty} \\left(-\\sqrt{n}\\right) = -\\infty$, determinando esplicitamente un indice $n_0$ adatto all'intorno $[-\\infty,-50)$.</p>`,
+        solution: `<p><strong>(a)</strong> Sia $a_n = \\dfrac{3n-1}{n+2}$. Per ogni $n \\in \\mathbb{N}$ si ha $n+2 \\gt 0$ e il calcolo centrale è</p>
+        <p>$$\\begin{aligned}
+        |a_n - 3| &= \\left| \\frac{3n-1-3(n+2)}{n+2} \\right| \\\\
+        &= \\left| \\frac{3n-1-3n-6}{n+2} \\right| \\\\
+        &= \\left| \\frac{-7}{n+2} \\right| = \\frac{7}{n+2} .
+        \\end{aligned}$$</p>
+        <p>Sia $U$ un intorno di $3$: per la Proposizione di riduzione agli intorni simmetrici esiste $\\varepsilon \\gt 0$ con $(3-\\varepsilon,3+\\varepsilon) \\subseteq U$, quindi basta rendere definitivamente vera $|a_n-3| \\lt \\varepsilon$. Essendo $n+2 \\gt 0$ e $\\varepsilon \\gt 0$, risolviamo la disuguaglianza:</p>
+        <p>$$\\begin{aligned}
+        \\frac{7}{n+2} \\lt \\varepsilon
+        &\\iff n+2 \\gt \\frac{7}{\\varepsilon} \\\\
+        &\\iff n \\gt \\frac{7}{\\varepsilon} - 2 .
+        \\end{aligned}$$</p>
+        <p>Per la proprietà di Archimede esiste $n_0 \\in \\mathbb{N}$ con $n_0 \\geq \\dfrac{7}{\\varepsilon}$; allora per ogni $n \\gt n_0$ si ha $n \\gt 7/\\varepsilon - 2$, dunque $n+2 \\gt 7/\\varepsilon$ e quindi $|a_n-3| = \\frac{7}{n+2} \\lt \\varepsilon$, cioè $a_n \\in (3-\\varepsilon,3+\\varepsilon) \\subseteq U$. Poiché $U$ era arbitrario, $a_n \\to 3$.</p>
+        <p><strong>Caso $\\varepsilon = 10^{-3}$.</strong> La condizione è $n \\gt 7\\cdot 10^{3} - 2 = 6998$, quindi $n_0 = 6998$ è il più piccolo indice ammissibile. Controllo: per $n \\gt 6998$ si ha $n \\geq 6999$, cioè $n+2 \\geq 7001$ e</p>
+        <p>$$|a_n-3| = \\frac{7}{n+2} \\leq \\frac{7}{7001} \\lt 10^{-3} .$$</p>
+        <p>La scelta è ottimale, perché per $n = 6998$ si ottiene $\\frac{7}{7000} = 10^{-3}$, che non è $\\lt \\varepsilon$.</p>
+        <p><strong>(b)</strong> Sia $a_n = -\\sqrt{n}$ e sia $U = [-\\infty,b)$ un generico intorno di $-\\infty$, con $b \\in \\mathbb{R}$. La condizione $a_n \\in U$ si scrive</p>
+        <p>$$-\\sqrt{n} \\lt b \\iff \\sqrt{n} \\gt -b .$$</p>
+        <p>Se $b \\gt 0$ la disuguaglianza è vera per ogni $n \\in \\mathbb{N}$ (perché $\\sqrt{n} \\geq 0 \\gt -b$). Se $b \\leq 0$ allora $-b \\geq 0$ ed elevando al quadrato (entrambi i membri non negativi) si ottiene l'equivalenza $\\sqrt{n} \\gt -b \\iff n \\gt b^2$.</p>
+        <p>In entrambi i casi basta scegliere $n_0 \\in \\mathbb{N}$ con $n_0 \\geq b^2$: per ogni $n \\gt n_0$ si ha $n \\gt b^2$, dunque $\\sqrt n \\gt |b| \\geq -b$ e quindi $a_n = -\\sqrt{n} \\lt b$, cioè $a_n \\in [-\\infty,b) = U$. Poiché $U$ era arbitrario, $a_n \\to -\\infty$.</p>
+        <p><strong>Caso $b = -50$.</strong> Si ha $b^2 = 2500$, quindi $n_0 = 2500$. Controllo: per $n \\gt 2500$ si ha $\\sqrt{n} \\gt 50$ e dunque $a_n = -\\sqrt{n} \\lt -50 = b$; la scelta è ottimale perché per $n = 2500$ si ha $a_n = -50 = b$, che non appartiene a $[-\\infty,-50)$.</p>`
+      },
+
+      {
+        id: "s14-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare $\\displaystyle\\lim_{n\\to+\\infty}\\frac{n+\\sin n}{2n+\\cos n}$ usando il Teorema del Confronto.</p>`,
+        solution: `<p>Per ogni $n \\geq 1$ valgono $-1 \\leq \\sin n \\leq 1$ e $-1 \\leq \\cos n \\leq 1$, dunque</p>
+        <p>$$n-1 \\leq n+\\sin n \\leq n+1, \\qquad 2n-1 \\leq 2n+\\cos n \\leq 2n+1 .$$</p>
+        <p>Per $n \\geq 1$ si ha $2n-1 \\geq 1 \\gt 0$, quindi il denominatore è positivo e la successione è ben definita. Maggiorando il numeratore e minorando il denominatore (e viceversa) si ottiene, per ogni $n \\geq 1$ (il numeratore $n-1$ è $\\geq 0$, quindi le maggiorazioni conservano il verso):</p>
+        <p>$$\\frac{n-1}{2n+1} \\leq \\frac{n+\\sin n}{2n+\\cos n} \\leq \\frac{n+1}{2n-1} .$$</p>
+        <p>Calcoliamo i limiti delle due successioni esterne:</p>
+        <p>$$\\lim_{n\\to+\\infty}\\frac{n-1}{2n+1} = \\lim_{n\\to+\\infty}\\frac{1-\\frac{1}{n}}{2+\\frac{1}{n}} = \\frac{1}{2}, \\qquad \\lim_{n\\to+\\infty}\\frac{n+1}{2n-1} = \\lim_{n\\to+\\infty}\\frac{1+\\frac{1}{n}}{2-\\frac{1}{n}} = \\frac{1}{2} .$$</p>
+        <p>Poiché entrambe tendono a $\\frac{1}{2}$, per il Teorema del Confronto</p>
+        <p>$$\\lim_{n\\to+\\infty}\\frac{n+\\sin n}{2n+\\cos n} = \\frac{1}{2} .$$</p>`
+      },
+
+      {
+        id: "s14-oral-box",
+        type: "oral_box",
+        title: "Domande tipiche all'orale",
+        icon: "🎤",
+        content: `<p>Le richieste più frequenti su questa lezione sono: (1) enunciare le quattro proprietà degli intorni in $\\mathbb{R}^*$ e dire quale serve per l'unicità del limite; (2) scrivere la definizione unificata di limite e mostrare come si ricavano i tre casi classici; (3) dimostrare l'unicità del limite; (4) dimostrare la prima forma della permanenza del segno, spiegando la scelta di $\\varepsilon$; (5) dimostrare il teorema del confronto e applicarlo a $\\sin(n)/n$.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Che cos'è la retta reale estesa $\\mathbb{R}^*$? È un campo?",
+        back: "È l'insieme $\\mathbb{R}^* = \\mathbb{R} \\cup \\{+\\infty\\} \\cup \\{-\\infty\\}$. <strong>Non</strong> è un campo numerico: non si possono definire in generale somma e prodotto che coinvolgano $\\pm\\infty$ conservando le proprietà algebriche di $\\mathbb{R}$ (per esempio $+\\infty - \\infty$ è indeterminata). È però un insieme <strong>totalmente ordinato</strong>, estendendo l'ordine di $\\mathbb{R}$ con $-\\infty \\lt x \\lt +\\infty$ per ogni $x \\in \\mathbb{R}$: $-\\infty$ è il minimo e $+\\infty$ il massimo."
+      },
+      {
+        type: "definizione",
+        front: "Definisci intorno di un punto $x \\in \\mathbb{R}^*$ nei tre casi.",
+        back: "(i) Se $x_0 \\in \\mathbb{R}$: un qualsiasi intervallo aperto che contiene $x_0$; caso particolare l'intorno simmetrico $I_R(x_0) = \\{x : |x-x_0| \\lt R\\} = (x_0-R, x_0+R)$ con $R \\gt 0$. (ii) Intorno di $+\\infty$: insieme del tipo $(a,+\\infty] = \\{x \\in \\mathbb{R}^* : x \\gt a\\}$, $a \\in \\mathbb{R}$. (iii) Intorno di $-\\infty$: insieme del tipo $[-\\infty,b) = \\{x \\in \\mathbb{R}^* : x \\lt b\\}$, $b \\in \\mathbb{R}$. Attenzione: gli intorni di infinito contengono il simbolo stesso, $(a,+\\infty] = (a,+\\infty) \\cup \\{+\\infty\\}$."
+      },
+      {
+        type: "formula",
+        front: "Qual è la definizione unificata di $\\lim_{n \\to +\\infty} a_n = L$ con $L \\in \\mathbb{R}^*$?",
+        back: "$$\\lim_{n \\to +\\infty} a_n = L \\iff \\forall U \\text{ intorno di } L,\\ \\exists n_0 \\in \\mathbb{N} : \\forall n \\gt n_0,\\ a_n \\in U$$ cioè la successione appartiene <strong>definitivamente</strong> a ogni intorno di $L$. Se $L \\in \\mathbb{R}$ si dice che $a_n$ <strong>converge</strong> a $L$; se $L = \\pm\\infty$ si dice che <strong>diverge</strong>."
+      },
+      {
+        type: "definizione",
+        front: "Che significa che una proprietà vale «definitivamente» per una successione $(a_n)$?",
+        back: "Significa che esiste un indice soglia $n_0 \\in \\mathbb{N}$ tale che la proprietà $P(n)$ è vera per ogni $n \\gt n_0$. I primi termini $a_0, \\dots, a_{n_0}$ possono violarla: ciò che conta è solo la <em>coda</em> della successione."
+      },
+      {
+        type: "domanda",
+        front: "Perché nella pratica basta verificare la condizione di limite sui soli intorni simmetrici?",
+        back: "Per la Proposizione di riduzione: se $L \\in \\mathbb{R}$ e $U$ è un intervallo aperto con $L \\in U$, esiste $\\varepsilon \\gt 0$ con $(L-\\varepsilon, L+\\varepsilon) \\subseteq U$ (si prende $\\varepsilon = \\min\\{L-a, b-L\\}$ se $U = (a,b)$). Allora l'appartenenza definitiva all'intorno simmetrico implica quella a $U$: <strong>lo stesso $n_0$ funziona</strong>, perché da $a_n \\in (L-\\varepsilon,L+\\varepsilon)$ segue $a_n \\in U$. Il viceversa è banale. Nota: il passaggio funziona solo perché l'appartenenza si conserva passando a insiemi più grandi — l'inclusione fra intorni non permette di trasferire una proprietà qualsiasi."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra l'unicità del limite di una successione.",
+        back: "Per assurdo: siano $L \\neq M$ in $\\mathbb{R}^*$ entrambi limiti di $(a_n)$. Per la <strong>proprietà di separazione (Hausdorff)</strong> esistono un intorno $U$ di $L$ e un intorno $V$ di $M$ con $U \\cap V = \\emptyset$. Dalla definizione di limite: esiste $n_0$ con $a_n \\in U$ per $n \\gt n_0$, ed esiste $n_1$ con $a_n \\in V$ per $n \\gt n_1$. Preso $n \\gt \\max(n_0,n_1)$ si avrebbe $a_n \\in U \\cap V = \\emptyset$: assurdo. Dunque il limite, se esiste, è unico. Il pregio della definizione con gli intorni è che questo unico ragionamento copre tutti i casi (finito, $+\\infty$, $-\\infty$)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Enuncia e dimostra la prima forma del teorema della permanenza del segno.",
+        back: "Se $a_n \\to L$ con $L \\gt 0$ oppure $L = +\\infty$, allora esiste $\\bar n$ con $a_n \\gt 0$ per ogni $n \\gt \\bar n$ ($a_n$ definitivamente positiva). <br>Caso $L = +\\infty$: prendendo $M = 1$ nella definizione, definitivamente $a_n \\gt 1 \\gt 0$ (intorno $U = (1,+\\infty]$). <br>Caso $L \\in \\mathbb{R}$, $L \\gt 0$: serve un intorno $(L-\\varepsilon, L+\\varepsilon)$ di soli numeri positivi, cioè $L-\\varepsilon \\geq 0$, ossia $0 \\lt \\varepsilon \\leq L$. Si sceglie per comodità $\\varepsilon = L/2$, da cui $U = (L/2, 3L/2)$; definitivamente $a_n \\gt L/2 \\gt 0$."
+      },
+      {
+        type: "tranello",
+        front: "Se $a_n \\gt 0$ per ogni $n$ e $a_n \\to L$, posso concludere $L \\gt 0$?",
+        back: "<strong>No.</strong> La seconda forma del teorema dà solo $L \\geq 0$: la disuguaglianza stretta passa al limite solo in forma debole. Controesempio: $a_n = 1/n$ ha tutti i termini strettamente positivi ma $\\lim_{n\\to+\\infty} 1/n = 0$. Inoltre l'ipotesi di esistenza del limite non si può omettere: $a_n = 1+(-1)^n \\geq 0$ non ammette limite."
+      },
+      {
+        type: "dimostrazione",
+        front: "Enuncia e dimostra il teorema del confronto (due carabinieri).",
+        back: "Se $a_n \\leq b_n \\leq c_n$ definitivamente e $a_n \\to L$, $c_n \\to L$ con $L \\in \\mathbb{R}^*$, allora $b_n \\to L$. <br>Dimostrazione: fissato un intorno $U$ di $L$, esistono $\\bar n_a$ con $a_n \\in U$ per $n \\gt \\bar n_a$, $\\bar n_c$ con $c_n \\in U$ per $n \\gt \\bar n_c$, e $\\bar n_0$ oltre cui vale la disuguaglianza. Posto $\\bar n = \\max\\{\\bar n_0, \\bar n_a, \\bar n_c\\}$, per $n \\gt \\bar n$ valgono tutte tre. Poiché ogni intorno in $\\mathbb{R}^*$ è un <strong>intervallo</strong> e $a_n, c_n \\in U$, ogni punto fra i due sta in $U$: dunque $b_n \\in U$. Questa è la definizione di $b_n \\to L$."
+      },
+      {
+        type: "formula",
+        front: "Calcola $\\lim_{n\\to+\\infty} \\frac{\\sin(n)}{n}$ e enuncia il principio generale che lo governa.",
+        back: "Da $-1 \\leq \\sin(n) \\leq 1$ e $n \\geq 1 \\gt 0$ segue $-\\frac{1}{n} \\leq \\frac{\\sin n}{n} \\leq \\frac{1}{n}$; entrambi i carabinieri tendono a $0$, quindi per il confronto $\\lim_{n\\to+\\infty}\\frac{\\sin n}{n} = 0$. <br>Principio generale: se $(a_n)$ è <strong>limitata</strong> ($|a_n| \\leq M$) e $(b_n)$ <strong>divergente</strong> ($b_n \\to \\pm\\infty$), allora $\\frac{a_n}{b_n} \\to 0$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Nel teorema «limitata diviso divergente», come si giustifica che $M/b_n \\to 0$ senza fare algebra con l'infinito?",
+        back: "Con la definizione. Sia $\\varepsilon \\gt 0$: poiché $b_n \\to +\\infty$, applicando la definizione all'intorno $\\left(\\frac{M}{\\varepsilon}, +\\infty\\right]$ si ottiene che definitivamente $b_n \\gt \\frac{M}{\\varepsilon} \\gt 0$, da cui, passando ai reciproci, $0 \\lt \\frac{M}{b_n} \\lt \\varepsilon$. Dunque $\\frac{M}{b_n} \\to 0$ (e analogamente $-\\frac{M}{b_n} \\to 0$). Si noti anche che $b_n \\gt 0$ solo <em>definitivamente</em>: il quoziente $a_n/b_n$ è definito almeno definitivamente, e ciò basta perché il limite dipende solo dalla coda."
+      },
+      {
+        type: "domanda",
+        front: "Quali sono le quattro proprietà fondamentali degli intorni in $\\mathbb{R}^*$ e quale serve per l'unicità del limite?",
+        back: "(1) <strong>Appartenenza</strong>: se $U$ è intorno di $x$ allora $x \\in U$. (2) <strong>Intersezione</strong>: $U, V$ intorni di $x$ $\\Rightarrow$ $U \\cap V$ intorno di $x$ (es. $\\min(R_1,R_2)$ nel caso finito, $\\max(a,b)$ per $+\\infty$). (3) <strong>Apertura</strong>: se $y \\in U$, $y \\neq x$, esiste un intorno $V$ di $y$ con $V \\subseteq U$. (4) <strong>Separazione (Hausdorff)</strong>: $x \\neq y$ $\\Rightarrow$ esistono intorni disgiunti. È la (4) il cardine della dimostrazione dell'unicità del limite."
+      },
+      {
+        type: "domanda",
+        front: "Come si separano concretamente due punti di $\\mathbb{R}^*$ con intorni disgiunti?",
+        back: "Se $x, y \\in \\mathbb{R}$ con $x \\lt y$: posto $\\varepsilon = (y-x)/2$, gli intorni $(x-\\varepsilon,x+\\varepsilon)$ e $(y-\\varepsilon,y+\\varepsilon)$ sono disgiunti; sono <em>adiacenti</em>, con estremo comune il punto medio $(x+y)/2$, che però è escluso da entrambi perché gli intervalli sono aperti. Se $x \\in \\mathbb{R}$ e $y = +\\infty$: si prendono $U = (x-1,x+1)$ e $V = (x+1,+\\infty]$, e il punto di contatto $x+1$ è escluso da entrambi."
+      },
+      {
+        type: "dimostrazione",
+        front: "Verifica con la definizione che $1/(n+1) \\to 0$.",
+        back: "Sia $U$ intorno di $0$: per riduzione esiste $\\varepsilon \\gt 0$ con $(-\\varepsilon,\\varepsilon) \\subseteq U$. Si ha $\\left|\\frac{1}{n+1}\\right| \\lt \\varepsilon \\iff n+1 \\gt \\frac{1}{\\varepsilon} \\iff n \\gt \\frac{1}{\\varepsilon} - 1$. Per la proprietà di Archimede esiste $n_0 \\in \\mathbb{N}$ con $n_0 \\geq 1/\\varepsilon$ (scelta sufficiente, non minima). Allora per $n \\gt n_0$ vale $n+1 \\gt 1/\\varepsilon$, dunque $|a_n| \\lt \\varepsilon$ e $a_n \\in U$. Essendo $U$ arbitrario, $a_n \\to 0$."
+      }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=21"></script>
+<script src="/js/graphs.js?v=21"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
