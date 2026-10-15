@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="anno1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 15 — Analisi Matematica 1 — FeyNotes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1330'/%3E%3Cg fill='none' stroke='%237c9cff' stroke-width='1.5'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(120 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ffcf5c'/%3E%3C/svg%3E">
+  <meta name="description" content="Analisi Matematica 1, Lezione 15: Corollari sui Limiti, Successioni Infinitesime e Algebra degli Infiniti. Conseguenze dei teoremi sui limiti: generalizzazione della permanenza del segno con una soglia $m$, confronto per limiti infiniti (basta un lato), prodotto limitata × infinitesima. Poi: successioni limitate, convergente ⇒ limitata, limiti $0^+$ e $0^-$, algebra degli infiniti e forme indeterminate.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 15: Corollari sui Limiti, Successioni Infinitesime e Algebra degli Infiniti — Analisi Matematica 1">
+  <meta property="og:description" content="Conseguenze dei teoremi sui limiti: generalizzazione della permanenza del segno con una soglia $m$, confronto per limiti infiniti (basta un lato), prodotto limitata × infinitesima. Poi: successioni limitate, convergente ⇒ limitata, limiti $0^+$ e $0^-$, algebra degli infiniti e forme indeterminate.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://feynotes.eliacinti.dev/analisi1/lezioni/L15/">
+  <link rel="canonical" href="https://feynotes.eliacinti.dev/analisi1/lezioni/L15/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=21">
+  <link rel="stylesheet" href="/css/style.css?v=21">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 15 — Corollari sui Limiti, Successioni Infinitesime e Algebra degli Infiniti",
+  "description": "Conseguenze dei teoremi sui limiti: generalizzazione della permanenza del segno con una soglia $m$, confronto per limiti infiniti (basta un lato), prodotto limitata × infinitesima. Poi: successioni limitate, convergente ⇒ limitata, limiti $0^+$ e $0^-$, algebra degli infiniti e forme indeterminate.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://feynotes.eliacinti.dev/analisi1/lezioni/L15/",
+  "datePublished": "2026-10-15",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Analisi Matematica 1",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/analisi1/" class="header-logo">
+    
+    Analisi Matematica 1
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 15</span>
+  <nav class="header-nav">
+    <a href="/analisi1/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/analisi1/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/analisi1/lezioni/L14/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L15", date: "Lezione 15 — 15 Ott 2026",
+    title: "Corollari sui Limiti, Successioni Infinitesime e Algebra degli Infiniti",
+    abstract: "Conseguenze dei teoremi sui limiti: generalizzazione della permanenza del segno con una soglia $m$, confronto per limiti infiniti (basta un lato), prodotto limitata × infinitesima. Poi: successioni limitate, convergente ⇒ limitata, limiti $0^+$ e $0^-$, algebra degli infiniti e forme indeterminate.",
+
+    sections: [
+      {
+        id: "s15-permanenza-segno",
+        type: "section",
+        title: "Generalizzazione della Permanenza del Segno",
+        icon: "⚖️",
+        content: `<p>Il teorema della permanenza del segno ci dice che se il limite di una successione è <strong>strettamente positivo</strong> (o negativo), allora la successione deve essere <strong>definitivamente positiva</strong> (o negativa). Possiamo generalizzare questo risultato sostituendo lo zero con una soglia $m$ qualunque.</p>`,
+        subsections: [
+          {
+            subtitle: "Enunciato",
+            content: `<p>Siano $m \\in \\mathbb{R}$ e $(a_n)_{n \\in \\mathbb{N}}$ una successione tale che</p>
+<p>$$\\lim_{n \\to +\\infty} a_n = l \\in \\mathbb{R}^* = \\mathbb{R} \\cup \\{-\\infty, +\\infty\\}.$$</p>
+<p><strong>1.</strong> Se $m \\lt l$, allora esiste un indice $n_0 \\in \\mathbb{N}$ tale che $a_n \\gt m$ per ogni $n \\gt n_0$ (cioè $a_n$ è definitivamente maggiore di $m$).</p>
+<p><strong>2.</strong> Se $m \\gt l$, allora esiste un indice $n_0 \\in \\mathbb{N}$ tale che $a_n \\lt m$ per ogni $n \\gt n_0$ (cioè $a_n$ è definitivamente minore di $m$).</p>
+<p>In parole: <strong>la successione è definitivamente maggiore di ogni numero più piccolo del limite, e definitivamente minore di ogni numero più grande del limite.</strong></p>`
+          },
+          {
+            subtitle: "Perché è solo una riscrittura del teorema classico",
+            content: `<p>Questo risultato è una diretta conseguenza del teorema della permanenza del segno. Infatti il teorema classico corrisponde al caso in cui si sceglie $m = 0$. L'idea della dimostrazione è proprio quella di <strong>ricondursi a questo caso speciale</strong>, traslando la successione.</p>`
+          },
+          {
+            subtitle: "Dimostrazione del punto 1 — caso $l \\in \\mathbb{R}$ finito",
+            content: `<p>Vogliamo dimostrare che se $\\lim_{n \\to +\\infty} a_n = l$ e $m \\lt l$, allora $a_n \\gt m$ definitivamente. Definiamo la successione ausiliaria</p>
+<p>$$b_n = a_n - m.$$</p>
+<p>Il nostro obiettivo è dimostrare che $b_n \\gt 0$ definitivamente. Supponiamo dapprima $l \\in \\mathbb{R}$ finito, così che il calcolo seguente con l'algebra dei limiti sia lecito:</p>
+<p>$$\\lim_{n \\to +\\infty} b_n = \\lim_{n \\to +\\infty} (a_n - m) = \\left( \\lim_{n \\to +\\infty} a_n \\right) - m = l - m.$$</p>
+<p>Per ipotesi $m \\lt l$, il che implica $l - m \\gt 0$. Dato che il limite della successione $b_n$ è un numero <strong>strettamente positivo</strong>, per il teorema della permanenza del segno (nella sua prima formulazione) la successione $b_n$ è definitivamente positiva: esiste $n_0 \\in \\mathbb{N}$ tale che $b_n \\gt 0$ per ogni $n \\gt n_0$.</p>
+<p>Sostituendo la definizione di $b_n$ otteniamo $a_n - m \\gt 0$ definitivamente, da cui segue immediatamente</p>
+<p>$$a_n \\gt m \\quad \\text{definitivamente},$$</p>
+<p>che è la nostra tesi.</p>`
+          },
+          {
+            subtitle: "Dimostrazione del punto 1 — caso $l = +\\infty$",
+            content: `<p>Questo caso si tratta <strong>separatamente</strong>, perché il calcolo del limite di $b_n = a_n - m$ fatto sopra richiedeva $l$ finito. Qui però la tesi segue direttamente dalla definizione di limite infinito: scelto $M = m$ nella definizione, esiste $n_0 \\in \\mathbb{N}$ tale che</p>
+<p>$$a_n \\gt m \\quad \\text{per ogni } n \\gt n_0.$$</p>
+<p>Non serve nessuna successione ausiliaria: la definizione di $a_n \\to +\\infty$ dice già che la successione supera definitivamente <em>qualunque</em> soglia.</p>`
+          },
+          {
+            subtitle: "Il punto 2 (esercizio)",
+            content: `<p>La dimostrazione del secondo punto è del tutto analoga e viene <strong>lasciata per esercizio</strong>. Nel caso $l$ finito si può definire $b_n = a_n - m$, osservare che il suo limite $l - m$ è negativo, e concludere che $b_n$ è definitivamente negativa, da cui $a_n \\lt m$. Nel caso $l = -\\infty$ si usa direttamente la definizione di limite $-\\infty$ con soglia $m$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Punto 1", latex: "m \\lt l \\;\\Rightarrow\\; a_n \\gt m \\;\\text{ definitivamente}" },
+          { label: "Punto 2", latex: "m \\gt l \\;\\Rightarrow\\; a_n \\lt m \\;\\text{ definitivamente}" },
+          { label: "Caso classico", latex: "m = 0" }
+        ]
+      },
+
+      {
+        id: "s15-soglia-esempio",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>La proposizione garantisce <em>l'esistenza</em> della soglia $n_0$, ma non la calcola. In un esercizio concreto spesso si riesce a trovarla esplicitamente.</p>
+<p>Prendiamo $a_n = 2 - \\dfrac{1}{n}$ (per $n \\ge 1$), il cui limite è $l = 2$, e la soglia $m = \\dfrac{3}{2} \\lt 2$. La proposizione ci assicura che $a_n \\gt \\dfrac{3}{2}$ definitivamente. Verifichiamolo risolvendo la disuguaglianza:</p>
+<p>$$2 - \\frac{1}{n} \\gt \\frac{3}{2} \\iff \\frac{1}{2} \\gt \\frac{1}{n} \\iff n \\gt 2.$$</p>
+<p>Quindi possiamo prendere $n_0 = 2$: da $n = 3$ in poi la disuguaglianza vale. <strong>Da notare:</strong> il corollario garantisce che un tale $n_0$ esista, qui invece lo abbiamo calcolato esplicitamente.</p>`
+      },
+
+      {
+        id: "s15-confronto-infiniti",
+        type: "section",
+        title: "Teorema del Confronto per Limiti Infiniti",
+        icon: "👮",
+        content: `<p>Il teorema del confronto (o dei due carabinieri) è molto potente quando il limite è finito, poiché richiede di "schiacciare" la successione <strong>da entrambi i lati</strong>. Tuttavia, quando i limiti sono infiniti la situazione si semplifica: <strong>basta un confronto da un solo lato</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Enunciato",
+            content: `<p>Siano $(a_n)_{n \\in \\mathbb{N}}$ e $(b_n)_{n \\in \\mathbb{N}}$ due successioni.</p>
+<p><strong>1.</strong> Se $a_n \\le b_n$ definitivamente e $\\lim_{n \\to +\\infty} a_n = +\\infty$, allora $\\lim_{n \\to +\\infty} b_n = +\\infty$.</p>
+<p><strong>2.</strong> Se $a_n \\le b_n$ definitivamente e $\\lim_{n \\to +\\infty} b_n = -\\infty$, allora $\\lim_{n \\to +\\infty} a_n = -\\infty$.</p>`
+          },
+          {
+            subtitle: "L'idea intuitiva",
+            content: `<p>Nel primo caso, se la successione $a_n$ "spinge" verso $+\\infty$ e $b_n$ le sta sempre sopra, anche $b_n$ sarà costretta ad andare a $+\\infty$.</p>
+<p>Nel secondo caso, se $b_n$ "tira" verso $-\\infty$ e $a_n$ le sta sempre sotto, anche $a_n$ dovrà seguirla verso $-\\infty$.</p>`
+          },
+          {
+            subtitle: "Esempio 1 — numeratore limitato su $n^4$",
+            content: `<p>Calcoliamo</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{(-1)^n \\cos(n) e^{-n^2}}{n^4}.$$</p>
+<p>Analizziamo i termini al numeratore:</p>
+<p>• $(-1)^n$ è una successione che oscilla tra $-1$ e $1$;<br>
+• $\\cos(n)$ ha valori sempre compresi tra $-1$ e $1$;<br>
+• $e^{-n^2}$: l'esponente $-n^2$ è sempre minore o uguale a zero, e la funzione esponenziale $e^x$ per $x \\le 0$ assume valori nell'intervallo $(0, 1]$.</p>
+<p>Il numeratore è il prodotto di tre quantità limitate, quindi è esso stesso limitato. In particolare possiamo maggiorarne il valore assoluto:</p>
+<p>$$|(-1)^n \\cos(n) e^{-n^2}| \\le 1 \\cdot 1 \\cdot 1 = 1.$$</p>
+<p>Il numeratore è dunque sempre compreso tra $-1$ e $1$, e possiamo usare il teorema del confronto:</p>
+<p>$$-\\frac{1}{n^4} \\le \\frac{(-1)^n \\cos(n) e^{-n^2}}{n^4} \\le \\frac{1}{n^4}.$$</p>
+<p>Le due successioni esterne tendono entrambe a $0$, quindi per il teorema dei due carabinieri</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{(-1)^n \\cos(n) e^{-n^2}}{n^4} = 0.$$</p>`
+          },
+          {
+            subtitle: "Esempio 2 — $(6 + \\arctan(n^2+n)) \\cdot 2^n$",
+            content: `<p>Calcoliamo</p>
+<p>$$\\lim_{n \\to +\\infty} \\left(6 + \\arctan(n^2+n)\\right) \\cdot 2^n.$$</p>
+<p>Analizziamo i fattori: $2^n \\to +\\infty$; l'argomento dell'arcotangente $n^2+n$ tende a $+\\infty$ e, poiché $\\lim_{x \\to +\\infty} \\arctan(x) = \\frac{\\pi}{2}$, si ha $\\arctan(n^2+n) \\to \\frac{\\pi}{2}$.</p>
+<p>Il limite sembra della forma $\\left(6 + \\frac{\\pi}{2}\\right) \\cdot (+\\infty)$, che dà $+\\infty$. Per dimostrarlo rigorosamente usiamo il corollario del teorema del confronto: dobbiamo trovare una successione <strong>più piccola</strong> che tenda a $+\\infty$.</p>
+<p>L'argomento $n^2+n$ è positivo per ogni $n \\ge 1$ e l'arcotangente è positiva per argomenti positivi, quindi $\\arctan(n^2+n) \\gt 0$. Minoriamo il primo fattore:</p>
+<p>$$6 + \\arctan(n^2+n) \\gt 6 + 0 = 6.$$</p>
+<p>Di conseguenza, posto $a_n = (6 + \\arctan(n^2+n)) \\cdot 2^n$, vale</p>
+<p>$$a_n \\gt 6 \\cdot 2^n.$$</p>
+<p>La successione minorante $c_n = 6 \\cdot 2^n$ tende a $+\\infty$: nelle notazioni della proposizione è $c_n$ a svolgere il ruolo della successione minorante (chiamata lì $a_n$), mentre la nostra successione svolge il ruolo di $b_n$. Poiché $a_n$ è definitivamente maggiore di una successione che diverge a $+\\infty$, per il corollario del teorema del confronto</p>
+<p>$$\\lim_{n \\to +\\infty} \\left(6 + \\arctan(n^2+n)\\right) \\cdot 2^n = +\\infty.$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Confronto, caso $+\\infty$", latex: "a_n \\le b_n \\text{ def.},\\; a_n \\to +\\infty \\;\\Rightarrow\\; b_n \\to +\\infty" },
+          { label: "Confronto, caso $-\\infty$", latex: "a_n \\le b_n \\text{ def.},\\; b_n \\to -\\infty \\;\\Rightarrow\\; a_n \\to -\\infty" }
+        ]
+      },
+
+      {
+        id: "s15-stima-efficace",
+        type: "alert_box",
+        title: "L'importanza di una stima efficace",
+        icon: "⚠️",
+        content: `<p>Consideriamo un limite simile al precedente:</p>
+<p>$$\\lim_{n \\to +\\infty} \\arctan(n^2) \\cdot 2^n.$$</p>
+<p>Se tentassimo di minorare come prima, usando solo $\\arctan(n^2) \\gt 0$, otterremmo</p>
+<p>$$\\arctan(n^2) \\cdot 2^n \\gt 0 \\cdot 2^n = 0.$$</p>
+<p>Questa stima <strong>non ci aiuta a concludere</strong>, poiché essere maggiori di $0$ non implica divergere a $+\\infty$. Dobbiamo trovare una stima dal basso più precisa e, soprattutto, <strong>strettamente positiva</strong>.</p>
+<p>Poiché $n \\ge 1$, l'argomento soddisfa $n^2 \\ge 1$. La funzione arcotangente è crescente, quindi</p>
+<p>$$\\arctan(n^2) \\ge \\arctan(1) = \\frac{\\pi}{4},$$</p>
+<p>che è una <strong>costante positiva</strong>. Ora la stima diventa</p>
+<p>$$\\arctan(n^2) \\cdot 2^n \\ge \\frac{\\pi}{4} \\cdot 2^n,$$</p>
+<p>e poiché $\\frac{\\pi}{4} \\cdot 2^n$ diverge a $+\\infty$, per il teorema del confronto anche il nostro limite è $+\\infty$.</p>`
+      },
+
+      {
+        id: "s15-infinitesime",
+        type: "section",
+        title: "Successioni Infinitesime e Limitate",
+        icon: "🔻",
+        content: `<p>Introduciamo ora un concetto fondamentale nell'analisi dei limiti.</p>
+<p><strong>Definizione.</strong> Una successione $(a_n)_{n \\in \\mathbb{N}}$ si dice <strong>infinitesima</strong> se il suo limite è zero:</p>
+<p>$$\\lim_{n \\to +\\infty} a_n = 0.$$</p>`,
+        subsections: [
+          {
+            subtitle: "Proposizione: limitata × infinitesima = infinitesima",
+            content: `<p>Il prodotto di una successione <strong>limitata</strong> per una successione <strong>infinitesima</strong> è una successione infinitesima.</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Sia $(a_n)$ infinitesima, cioè $\\lim_{n \\to +\\infty} a_n = 0$, e sia $(b_n)$ limitata: per definizione esiste una costante $M \\gt 0$ tale che $|b_n| \\le M$ per ogni $n \\in \\mathbb{N}$, equivalentemente $-M \\le b_n \\le M$.</p>
+<p>Vogliamo dimostrare che $\\lim_{n \\to +\\infty} (a_n \\cdot b_n) = 0$. Usiamo il teorema del confronto, partendo dal valore assoluto del prodotto:</p>
+<p>$$|a_n \\cdot b_n| = |a_n| \\cdot |b_n| \\le |a_n| \\cdot M,$$</p>
+<p>disuguaglianza equivalente a</p>
+<p>$$-M|a_n| \\le a_n \\cdot b_n \\le M|a_n|.$$</p>
+<p>Poiché $(a_n)$ è infinitesima si ha anche $\\lim_{n \\to +\\infty} |a_n| = 0$, dunque</p>
+<p>$$\\lim_{n \\to +\\infty} M|a_n| = M \\cdot 0 = 0, \\qquad \\lim_{n \\to +\\infty} \\left(-M|a_n|\\right) = -M \\cdot 0 = 0.$$</p>
+<p>La successione $a_n \\cdot b_n$ è compresa tra due successioni che tendono entrambe a $0$: per il teorema del confronto</p>
+<p>$$\\lim_{n \\to +\\infty} (a_n \\cdot b_n) = 0,$$</p>
+<p>cioè la successione prodotto è infinitesima.</p>`
+          },
+          {
+            subtitle: "Esempio — lo stesso limite, risolto in una riga",
+            content: `<p>Torniamo al primo esempio:</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{(-1)^n \\cos(n) e^{-n^2}}{n^4} = \\lim_{n \\to +\\infty} \\underbrace{\\left( \\frac{1}{n^4} \\right)}_{a_n} \\cdot \\underbrace{\\left( (-1)^n \\cos(n) e^{-n^2} \\right)}_{b_n}.$$</p>
+<p>La successione $a_n = \\frac{1}{n^4}$ è infinitesima, poiché il suo limite è $0$; la successione $b_n = (-1)^n \\cos(n) e^{-n^2}$ è limitata, essendo prodotto di tre successioni limitate. Per la proposizione appena dimostrata, il limite del prodotto è $0$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Infinitesima", latex: "\\lim_{n \\to +\\infty} a_n = 0" },
+          { label: "Limitata × infinitesima", latex: "|b_n| \\le M,\\; a_n \\to 0 \\;\\Rightarrow\\; a_n b_n \\to 0" }
+        ],
+        quote: {
+          text: "Stiamo costruendo un arsenale di strumenti. Siamo partiti da una definizione di limite molto formale e difficile da applicare ($\\forall \\varepsilon \\gt 0, \\exists n_0 \\dots$), ma ora stiamo sviluppando regole di calcolo e teoremi che ci evitano di dover ricorrere ogni volta alla definizione. Questo ci permette di affrontare limiti via via più complessi in modo più efficiente.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s15-successioni-limitate",
+        type: "section",
+        title: "Successioni Limitate",
+        icon: "📏",
+        content: `<p>Definiamo formalmente cosa sia una successione limitata, concetto fondamentale per analizzare il comportamento delle successioni.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione (tre forme equivalenti)",
+            content: `<p>Una successione $\\{a_n\\}_{n \\in \\mathbb{N}}$ si dice <strong>limitata</strong> se si verifica una delle seguenti condizioni equivalenti.</p>
+<p><strong>1.</strong> Esiste $M \\gt 0$ tale che per ogni $n \\in \\mathbb{N}$: $\\;-M \\le a_n \\le M$.</p>
+<p><strong>2.</strong> Esiste $M \\gt 0$ tale che per ogni $n \\in \\mathbb{N}$: $\\;|a_n| \\le M$.</p>
+<p><strong>3.</strong> Esistono $m, M \\in \\mathbb{R}$ tali che per ogni $n \\in \\mathbb{N}$: $\\;m \\le a_n \\le M$.</p>`
+          },
+          {
+            subtitle: "Perché le tre definizioni sono equivalenti",
+            content: `<p>La prima e la seconda sono chiaramente la stessa cosa, poiché per definizione di valore assoluto $|a_n| \\le M$ equivale alla doppia disuguaglianza $-M \\le a_n \\le M$.</p>
+<p>Per la terza: se una successione è compresa tra $m$ e $M$, basta prendere un numero $M'$ abbastanza grande, per esempio</p>
+<p>$$M' = \\max\\{1, |m|, |M|\\},$$</p>
+<p>per vedere che la successione è anche compresa tra $-M'$ e $M'$.</p>
+<p><strong>L'inserimento del valore $1$ nel massimo non è un dettaglio superfluo</strong>: serve a garantire $M' \\gt 0$, come richiesto dalla prima definizione. Se infatti scegliessimo $M' = \\max\\{|m|, |M|\\}$, nel caso degenere $m = M = 0$ (successione identicamente nulla) otterremmo $M' = 0$, che non soddisfa letteralmente la condizione di stretta positività.</p>
+<p>Viceversa, la prima definizione è un caso particolare della terza, con $m = -M$.</p>
+<p>In sostanza: <strong>una successione è limitata se l'insieme dei suoi valori è un sottoinsieme limitato di $\\mathbb{R}$.</strong></p>`
+          },
+          {
+            subtitle: "Proposizione: ogni successione convergente è limitata",
+            content: `<p>L'idea intuitiva è che una successione non limitata deve avere termini che "scappano" verso $+\\infty$ o $-\\infty$, e quindi non può convergere a un valore finito. Formalizziamo.</p>
+<p>Sia $(a_n)$ convergente, cioè esiste il limite finito $\\lim_{n \\to +\\infty} a_n = L$ con $L \\in \\mathbb{R}$. Per definizione di limite, scelto un qualunque $\\varepsilon \\gt 0$ (fissiamo $\\varepsilon = 1$), esiste $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\ge n_0$:</p>
+<p>$$|a_n - L| \\lt 1 \\;\\Rightarrow\\; L - 1 \\lt a_n \\lt L + 1.$$</p>
+<p>Questo dice che la <strong>coda</strong> della successione, cioè tutti i termini dall'indice $n_0$ in poi, è limitata, perché contenuta nell'intervallo $(L-1, L+1)$.</p>
+<p>Restano da considerare i primi termini, cioè l'insieme $\\{a_0, a_1, \\dots, a_{n_0-1}\\}$: è un insieme <strong>finito</strong> di numeri reali e, come tale, è necessariamente limitato.</p>
+<p>Per trovare un limite inferiore e superiore validi per <em>tutti</em> i termini, definiamo</p>
+<p>$$M_{sup} = \\max\\{a_0, a_1, \\dots, a_{n_0-1}, L+1\\}, \\qquad M_{inf} = \\min\\{a_0, a_1, \\dots, a_{n_0-1}, L-1\\}.$$</p>
+<p>Per costruzione, per ogni $n \\in \\mathbb{N}$ vale $M_{inf} \\le a_n \\le M_{sup}$: la successione è limitata nel senso della terza definizione, e quindi — per l'equivalenza vista sopra — anche nel senso delle altre due.</p>`
+          },
+          {
+            subtitle: "Il viceversa è FALSO: controesempio $a_n = (-1)^n$",
+            content: `<p><strong>Attenzione: una successione limitata non è necessariamente convergente.</strong></p>
+<p>Consideriamo $a_n = (-1)^n$, i cui termini sono $1, -1, 1, -1, \\dots$. È chiaramente limitata, poiché i valori sono compresi in $[-1, 1]$.</p>
+<p>Tuttavia non è convergente. Dimostriamolo <strong>per assurdo</strong>: supponiamo che esista $L \\in \\mathbb{R}$ con $\\lim_{n \\to +\\infty} (-1)^n = L$. Scegliamo $\\varepsilon = \\frac{1}{2}$: dovrebbe esistere $n_0 \\in \\mathbb{N}$ tale che per ogni $n \\ge n_0$</p>
+<p>$$|a_n - L| \\lt \\frac{1}{2},$$</p>
+<p>cioè tutti i termini da $n_0$ in poi dovrebbero stare nell'intorno $\\left(L - \\frac{1}{2}, L + \\frac{1}{2}\\right)$, che ha ampiezza $1$.</p>
+<p>Ma per quanto grande sia $n_0$, troveremo sempre indici $n \\gt n_0$ sia pari che dispari: quindi sia il valore $1$ sia il valore $-1$ dovrebbero appartenere a questo intorno. Allora la distanza tra $1$ e $-1$ dovrebbe essere minore dell'ampiezza dell'intorno:</p>
+<p>$$|1 - (-1)| \\lt 1 \\;\\Rightarrow\\; 2 \\lt 1,$$</p>
+<p>palese contraddizione. L'ipotesi che il limite esista è falsa: $a_n = (-1)^n$ è limitata ma non convergente, è una successione <strong>irregolare</strong> (o oscillante).</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limitata", latex: "\\exists M \\gt 0 : |a_n| \\le M \\quad \\forall n \\in \\mathbb{N}" },
+          { label: "Costante dalla forma (3)", latex: "M' = \\max\\{1, |m|, |M|\\}" },
+          { label: "Implicazione (non invertibile)", latex: "\\text{convergente} \\;\\Rightarrow\\; \\text{limitata}" }
+        ],
+        extra_content: `<p>Un altro esempio di successione limitata ma non convergente è $a_n = \\sin(n)$. La dimostrazione della sua non convergenza è più complessa e si basa sul fatto che i valori di $\\sin(n)$ sono <strong>densi</strong> nell'intervallo $[-1, 1]$, cioè si avvicinano arbitrariamente a ogni punto di tale intervallo senza mai stabilizzarsi. La dimostrazione completa verrà presentata nelle lezioni successive.</p>`
+      },
+
+      {
+        id: "s15-limiti-destra-sinistra",
+        type: "section",
+        title: "Limite per Eccesso e per Difetto ($L^+$ e $L^-$)",
+        icon: "↔️",
+        content: `<p>Per trattare alcuni casi, come i quozienti che tendono a forme del tipo "numero fratto zero", è utile introdurre una notazione più precisa.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione",
+            content: `<p>Sia $(a_n)$ una successione e $L \\in \\mathbb{R}$.</p>
+<p>Diciamo che $a_n$ tende a $L$ <strong>per eccesso</strong> (o da destra), e scriviamo $\\lim_{n \\to +\\infty} a_n = L^+$, se $\\lim_{n \\to +\\infty} a_n = L$ e, definitivamente, $a_n \\gt L$ (disuguaglianza <em>stretta</em>). Formalmente: $\\forall \\varepsilon \\gt 0, \\exists n_0 \\in \\mathbb{N}$ tale che $\\forall n \\ge n_0$, $\\;L \\lt a_n \\lt L + \\varepsilon$.</p>
+<p>Diciamo che $a_n$ tende a $L$ <strong>per difetto</strong> (o da sinistra), e scriviamo $\\lim_{n \\to +\\infty} a_n = L^-$, se $\\lim_{n \\to +\\infty} a_n = L$ e, definitivamente, $a_n \\lt L$ (disuguaglianza <em>stretta</em>). Formalmente: $\\forall \\varepsilon \\gt 0, \\exists n_0 \\in \\mathbb{N}$ tale che $\\forall n \\ge n_0$, $\\;L - \\varepsilon \\lt a_n \\lt L$.</p>
+<p>Un caso particolarmente importante è $L = 0$: scriveremo $0^+$ per un limite nullo per eccesso (la successione è definitivamente <em>strettamente</em> positiva) e $0^-$ per un limite nullo per difetto (definitivamente <em>strettamente</em> negativa).</p>`
+          },
+          {
+            subtitle: "Perché le disuguaglianze devono essere strette",
+            content: `<p>L'uso delle disuguaglianze strette <strong>non è un capriccio formale</strong>: è indispensabile affinché le regole sui reciproci siano corrette.</p>
+<p>Supponiamo infatti di ammettere nella definizione le disuguaglianze non strette, cioè $a_n \\ge L$ per il limite per eccesso e $a_n \\le L$ per quello per difetto. Allora la successione identicamente nulla $a_n = 0$ soddisferebbe <em>contemporaneamente</em> $a_n \\to 0^+$ e $a_n \\to 0^-$. Ma il suo reciproco $1/a_n$ non è nemmeno definito, e dunque le affermazioni "$b_n \\to 0^+ \\Rightarrow 1/b_n \\to +\\infty$" e "$b_n \\to 0^- \\Rightarrow 1/b_n \\to -\\infty$" sarebbero entrambe prive di senso (e in effetti false nelle ipotesi dichiarate).</p>
+<p>Con la convenzione stretta, invece, $b_n \\to 0^+$ garantisce che $b_n \\gt 0$ definitivamente, dunque $b_n \\ne 0$ definitivamente e il reciproco è ben definito da un certo indice in poi: è esattamente ciò che serve per calcolare il limite di $1/b_n$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Per eccesso", latex: "a_n \\to L^+ \\iff a_n \\to L \\;\\text{e}\\; a_n \\gt L \\text{ def.}" },
+          { label: "Per difetto", latex: "a_n \\to L^- \\iff a_n \\to L \\;\\text{e}\\; a_n \\lt L \\text{ def.}" }
+        ]
+      },
+
+      {
+        id: "s15-algebra-infiniti",
+        type: "section",
+        title: "Algebra degli Infiniti e degli Infinitesimi",
+        icon: "♾️",
+        content: `<p>Abbiamo già visto le regole per il calcolo dei limiti di somme, prodotti e quozienti di successioni convergenti a limiti finiti. Ora estendiamo queste regole ai casi in cui uno o più limiti sono infiniti. Siano $(a_n)$ e $(b_n)$ due successioni.</p>`,
+        subsections: [
+          {
+            subtitle: "1. Somma",
+            content: `<p>Se $\\lim_{n \\to +\\infty} a_n = +\\infty$ e $\\lim_{n \\to +\\infty} b_n = L \\in \\mathbb{R} \\cup \\{+\\infty\\}$, allora</p>
+<p>$$\\lim_{n \\to +\\infty} (a_n + b_n) = +\\infty.$$</p>
+<p>Analogamente, se $\\lim a_n = -\\infty$ e $\\lim b_n = L \\in \\mathbb{R} \\cup \\{-\\infty\\}$, la somma tende a $-\\infty$.</p>
+<p>La forma $(+\\infty) + (-\\infty)$ è una <strong>forma indeterminata</strong>.</p>`
+          },
+          {
+            subtitle: "2. Prodotto",
+            content: `<p>Se $\\lim_{n \\to +\\infty} a_n = \\pm\\infty$ e $\\lim_{n \\to +\\infty} b_n = L \\in (\\mathbb{R} \\setminus \\{0\\}) \\cup \\{\\pm\\infty\\}$, il limite del prodotto segue la <strong>regola dei segni</strong>:</p>
+<p>• se $\\lim a_n = +\\infty$ e $\\lim b_n = L \\gt 0$ (oppure $L = +\\infty$), allora $\\lim (a_n \\cdot b_n) = +\\infty$;<br>
+• se $\\lim a_n = +\\infty$ e $\\lim b_n = L \\lt 0$ (oppure $L = -\\infty$), allora $\\lim (a_n \\cdot b_n) = -\\infty$.</p>
+<p>La forma $(\\pm\\infty) \\cdot 0$ è una <strong>forma indeterminata</strong>.</p>`
+          },
+          {
+            subtitle: "3. Reciproco",
+            content: `<p>Supponiamo che $b_n \\ne 0$ definitivamente, così che $1/b_n$ sia ben definito da un certo indice in poi.</p>
+<p>• Se $\\lim_{n \\to +\\infty} |b_n| = +\\infty$, allora $\\;\\lim_{n \\to +\\infty} \\dfrac{1}{b_n} = 0$.</p>
+<p>• Se $\\lim_{n \\to +\\infty} b_n = 0^+$ (quindi $b_n \\gt 0$ definitivamente), allora $\\;\\lim_{n \\to +\\infty} \\dfrac{1}{b_n} = +\\infty$.</p>
+<p>• Se $\\lim_{n \\to +\\infty} b_n = 0^-$ (quindi $b_n \\lt 0$ definitivamente), allora $\\;\\lim_{n \\to +\\infty} \\dfrac{1}{b_n} = -\\infty$.</p>`
+          },
+          {
+            subtitle: "4. Quoziente",
+            content: `<p>Combinando le regole precedenti possiamo risolvere molti quozienti (sempre supponendo $b_n \\ne 0$ definitivamente).</p>
+<p>• Se $(a_n)$ è limitata e $\\lim_{n \\to +\\infty} |b_n| = +\\infty$, allora $\\;\\lim_{n \\to +\\infty} \\dfrac{a_n}{b_n} = 0$ ("limitata fratto infinito").</p>
+<p>• Se $\\lim_{n \\to +\\infty} a_n = L \\in \\mathbb{R} \\setminus \\{0\\}$ e $\\lim_{n \\to +\\infty} b_n = 0$ <em>con segno definitivamente costante</em>, il risultato dipende dai segni:</p>
+<p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = \\begin{cases} +\\infty & \\text{se } L \\gt 0 \\text{ e } b_n \\to 0^+ \\text{ oppure } L \\lt 0 \\text{ e } b_n \\to 0^- \\\\ -\\infty & \\text{se } L \\gt 0 \\text{ e } b_n \\to 0^- \\text{ oppure } L \\lt 0 \\text{ e } b_n \\to 0^+ \\end{cases}$$</p>
+<p>Le forme $\\dfrac{\\infty}{\\infty}$ e $\\dfrac{0}{0}$ sono <strong>forme indeterminate</strong>.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limitata fratto infinito", latex: "(a_n) \\text{ limitata},\\; |b_n| \\to +\\infty \\;\\Rightarrow\\; \\frac{a_n}{b_n} \\to 0" },
+          { label: "Reciproco di $0^+$", latex: "b_n \\to 0^+ \\;\\Rightarrow\\; \\frac{1}{b_n} \\to +\\infty" },
+          { label: "Reciproco di $0^-$", latex: "b_n \\to 0^- \\;\\Rightarrow\\; \\frac{1}{b_n} \\to -\\infty" }
+        ]
+      },
+
+      {
+        id: "s15-segno-denominatore",
+        type: "alert_box",
+        title: "Il denominatore deve avere segno definitivamente costante",
+        icon: "🚨",
+        content: `<p>La tabella del quoziente "numero non nullo fratto zero" <strong>non</strong> si applica quando $b_n \\to 0$ ma il segno di $b_n$ cambia infinite volte: in tal caso non vale né $b_n \\to 0^+$ né $b_n \\to 0^-$, e il limite del quoziente può non esistere affatto, nemmeno come limite infinito.</p>
+<p>Non è dunque vero che "un numero non nullo diviso per un infinitesimo tende sempre a $+\\infty$ o a $-\\infty$".</p>
+<p><strong>Controesempio.</strong> Per $n \\ge 1$ poniamo</p>
+<p>$$a_n = 1, \\qquad b_n = \\frac{(-1)^n}{n}.$$</p>
+<p>Si ha $a_n \\to 1 \\ne 0$ e $b_n \\to 0$, poiché $|b_n| = 1/n \\to 0$. Tuttavia $b_n$ è positivo per $n$ pari e negativo per $n$ dispari: il suo segno non è definitivamente costante, dunque non si può scrivere né $b_n \\to 0^+$ né $b_n \\to 0^-$.</p>
+<p>Il quoziente vale</p>
+<p>$$\\frac{a_n}{b_n} = \\frac{1}{(-1)^n/n} = (-1)^n \\, n,$$</p>
+<p>cioè la successione $-1, 2, -3, 4, -5, \\dots$. Questa successione <strong>non ha limite</strong>: i termini di indice pari tendono a $+\\infty$, quelli di indice dispari a $-\\infty$, dunque non converge né diverge a $+\\infty$ o a $-\\infty$. È un esempio di successione irregolare e <em>illimitata</em>.</p>
+<p><strong>Morale:</strong> prima di usare la tabella, occorre sempre controllare il segno del denominatore.</p>`
+      },
+
+      {
+        id: "s15-esempi-forme",
+        type: "section",
+        title: "Forme Indeterminate: Riconoscerle e Risolverle",
+        icon: "🧩",
+        content: `<p>Due esempi illustrativi mostrano come si usa in pratica l'algebra degli infiniti e perché una "forma" simbolica non basta a determinare un limite.</p>`,
+        subsections: [
+          {
+            subtitle: "Applicazione diretta delle regole",
+            content: `<p>Calcoliamo</p>
+<p>$$\\lim_{n \\to +\\infty} \\left( n^2 - 3n + \\frac{\\sin n}{n} \\right).$$</p>
+<p>Scritto così, il limite presenta la forma indeterminata $(+\\infty) + (-\\infty)$ (il termine $n^2$ diverge a $+\\infty$, il termine $-3n$ a $-\\infty$). La strategia standard è <strong>raccogliere il termine dominante</strong>:</p>
+<p>$$n^2 - 3n + \\frac{\\sin n}{n} = n^2 \\left( 1 - \\frac{3}{n} + \\frac{\\sin n}{n^3} \\right).$$</p>
+<p>Analizziamo i due fattori separatamente: $\\lim_{n \\to +\\infty} n^2 = +\\infty$; inoltre $3/n \\to 0$ e, poiché $(\\sin n)$ è limitata e $n^3 \\to +\\infty$, per la regola "limitata fratto infinito" $\\dfrac{\\sin n}{n^3} \\to 0$. Per l'algebra dei limiti finiti il secondo fattore tende a $1 - 0 + 0 = 1 \\gt 0$.</p>
+<p>Siamo quindi nel caso "$+\\infty$ per un limite finito positivo" della regola del prodotto, e concludiamo</p>
+<p>$$\\lim_{n \\to +\\infty} \\left( n^2 - 3n + \\frac{\\sin n}{n} \\right) = +\\infty.$$</p>
+<p>Si osservi che la forma indeterminata è stata <em>risolta</em>: non eliminata per magia, ma riscritta in una forma a cui le regole dell'algebra degli infiniti si applicano.</p>`
+          },
+          {
+            subtitle: "La forma $\\infty/\\infty$ non determina il risultato",
+            content: `<p>Confrontiamo tre quozienti che, a prima vista, presentano tutti la stessa forma indeterminata $\\dfrac{+\\infty}{+\\infty}$.</p>
+<p><strong>(1)</strong> $\\dfrac{n}{n} = 1$ per ogni $n \\ge 1$, dunque $\\lim_{n \\to +\\infty} \\dfrac{n}{n} = 1$.</p>
+<p><strong>(2)</strong> $\\dfrac{n}{n^2} = \\dfrac{1}{n}$ per ogni $n \\ge 1$, dunque $\\lim_{n \\to +\\infty} \\dfrac{n}{n^2} = \\lim_{n \\to +\\infty} \\dfrac{1}{n} = 0$, per la regola del reciproco applicata a $b_n = n \\to +\\infty$.</p>
+<p><strong>(3)</strong> $\\dfrac{n^2}{n} = n$ per ogni $n \\ge 1$, dunque $\\lim_{n \\to +\\infty} \\dfrac{n^2}{n} = \\lim_{n \\to +\\infty} n = +\\infty$.</p>
+<p>Tre limiti con la <em>stessa</em> forma simbolica $\\infty/\\infty$ danno tre risultati completamente diversi: $1$, $0$ e $+\\infty$. Questo è esattamente il significato della parola "indeterminata": la sola conoscenza dei limiti di numeratore e denominatore non basta, occorre guardare <em>come</em> le due successioni divergono, cioè con quale "velocità" relativa.</p>
+<p>Dal punto di vista operativo, in tutti e tre i casi la tecnica è la stessa: semplificare (o raccogliere) il termine dominante per ricondursi a un'espressione a cui l'algebra dei limiti si applica senza ambiguità.</p>`
+          }
+        ],
+        table_compare: {
+          headers: ["Forma", "Esempio con esito A", "Esempio con esito B"],
+          rows: [
+            ["$\\infty - \\infty$", "$(n+1) - n \\to 1$", "$n^2 - n \\to +\\infty$"],
+            ["$0 \\cdot \\infty$", "$\\frac{1}{n} \\cdot n \\to 1$", "$\\frac{1}{n^2} \\cdot n \\to 0$"],
+            ["$\\frac{\\infty}{\\infty}$", "$\\frac{n}{n} \\to 1$, $\\frac{n}{n^2} \\to 0$", "$\\frac{n^2}{n} \\to +\\infty$"],
+            ["$\\frac{0}{0}$", "$\\frac{1/n}{1/n} \\to 1$", "$\\frac{1/n^2}{1/n} = \\frac{1}{n} \\to 0$"]
+          ]
+        },
+        extra_content: `<p><strong>Riepilogo delle forme indeterminate incontrate finora:</strong></p>
+<p>$$(+\\infty) - \\infty, \\quad 0 \\cdot \\infty, \\quad \\frac{\\infty}{\\infty}, \\quad \\frac{0}{0}.$$</p>
+<p>In futuro ne incontreremo altre, come $1^\\infty$, $0^0$ e $\\infty^0$. Queste forme sono dette "indeterminate" perché il risultato del limite non può essere stabilito a priori, ma dipende da come le successioni si comportano.</p>
+<p>La regola pratica è sempre la stessa: <strong>riconoscere</strong> la forma indeterminata, poi <strong>manipolare</strong> l'espressione (semplificazione, raccoglimento del termine dominante, razionalizzazione) fino a ottenere un'espressione trattabile con l'algebra dei limiti.</p>`
+      },
+
+      {
+        id: "s15-esercizi-intro",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s15-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia con precisione la generalizzazione del teorema della permanenza del segno vista a lezione e spiega perché il teorema della permanenza del segno nella forma classica ne è un caso particolare.</p>`,
+        solution: `<p><strong>Enunciato.</strong> Siano $m \\in \\mathbb{R}$ e $(a_n)_{n\\in\\mathbb{N}}$ una successione tale che $\\lim_{n\\to+\\infty} a_n = l \\in \\mathbb{R}^* = \\mathbb{R}\\cup\\{-\\infty,+\\infty\\}$. Allora:</p>
+<p>(1) se $m \\lt l$ esiste $n_0\\in\\mathbb{N}$ tale che $a_n \\gt m$ per ogni $n \\gt n_0$;<br>
+(2) se $m \\gt l$ esiste $n_0\\in\\mathbb{N}$ tale che $a_n \\lt m$ per ogni $n \\gt n_0$.</p>
+<p>In altre parole, $a_n$ è definitivamente maggiore di ogni numero minore del limite e definitivamente minore di ogni numero maggiore del limite.</p>
+<p><strong>Caso particolare.</strong> Scegliendo $m = 0$ si ottiene: se $l \\gt 0$ allora $a_n \\gt 0$ definitivamente, e se $l \\lt 0$ allora $a_n \\lt 0$ definitivamente, cioè esattamente il teorema della permanenza del segno.</p>
+<p><strong>Legame con la dimostrazione.</strong> Il punto (1) nel caso $l$ finito si riconduce proprio a questo caso ponendo $b_n = a_n - m$: per l'algebra dei limiti</p>
+<p>$$\\lim_{n\\to+\\infty} b_n = l - m \\gt 0,$$</p>
+<p>dunque per la permanenza del segno $b_n \\gt 0$ definitivamente, cioè $a_n \\gt m$ definitivamente. Se invece $l = +\\infty$, la tesi segue dalla definizione di limite infinito scegliendo $M = m$.</p>`
+      },
+
+      {
+        id: "s15-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia le tre condizioni equivalenti che definiscono una successione limitata e dimostra che la terza implica la prima, spiegando il ruolo del valore $1$ nella costruzione della costante.</p>`,
+        solution: `<p><strong>Le tre condizioni</strong> per $(a_n)$ sono:</p>
+<p>(1) esiste $M \\gt 0$ tale che $-M \\le a_n \\le M$ per ogni $n \\in \\mathbb{N}$;<br>
+(2) esiste $M \\gt 0$ tale che $|a_n| \\le M$ per ogni $n$;<br>
+(3) esistono $m, M \\in \\mathbb{R}$ tali che $m \\le a_n \\le M$ per ogni $n$.</p>
+<p><strong>Equivalenza (1) ⟺ (2).</strong> È immediata, perché per definizione di valore assoluto $|a_n| \\le M \\iff -M \\le a_n \\le M$.</p>
+<p><strong>Dimostrazione (3) $\\Rightarrow$ (1).</strong> Sia $m \\le a_n \\le M$ per ogni $n$ e poniamo</p>
+<p>$$M' = \\max\\{1, |m|, |M|\\}.$$</p>
+<p>Anzitutto $M' \\ge 1 \\gt 0$, dunque $M'$ è ammissibile come costante della condizione (1). Inoltre valgono le due catene</p>
+<p>$$a_n \\le M \\le |M| \\le M', \\qquad a_n \\ge m \\ge -|m| \\ge -M',$$</p>
+<p>e quindi, mettendole insieme,</p>
+<p>$$-M' \\le a_n \\le M' \\quad \\text{per ogni } n \\in \\mathbb{N}.$$</p>
+<p><strong>Ruolo del valore $1$.</strong> Serve a garantire la stretta positività della costante: con la sola scelta $M' = \\max\\{|m|,|M|\\}$, nel caso degenere $m = M = 0$ (successione identicamente nulla) si otterrebbe $M' = 0$, che non soddisfa la richiesta $M \\gt 0$.</p>
+<p><strong>Viceversa (1) $\\Rightarrow$ (3)</strong> è banale: basta prendere $m = -M$ e $M = M$.</p>`
+      },
+
+      {
+        id: "s15-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dimostra, usando solo la definizione di limite, il punto 1 del teorema del confronto per limiti infiniti: se $a_n \\le b_n$ definitivamente e $\\lim_{n\\to+\\infty} a_n = +\\infty$, allora $\\lim_{n\\to+\\infty} b_n = +\\infty$.</p>`,
+        solution: `<p>Sia $M \\gt 0$ arbitrario.</p>
+<p>Poiché $\\lim_{n\\to+\\infty} a_n = +\\infty$, esiste $n_1 \\in \\mathbb{N}$ tale che $a_n \\gt M$ per ogni $n \\gt n_1$.</p>
+<p>Poiché $a_n \\le b_n$ definitivamente, esiste $n_2 \\in \\mathbb{N}$ tale che $a_n \\le b_n$ per ogni $n \\gt n_2$.</p>
+<p>Posto $n_0 = \\max\\{n_1, n_2\\}$, per ogni $n \\gt n_0$ valgono entrambe le disuguaglianze, quindi</p>
+<p>$$b_n \\ge a_n \\gt M.$$</p>
+<p>Dunque per ogni $M \\gt 0$ esiste $n_0$ tale che $b_n \\gt M$ per ogni $n \\gt n_0$, cioè $\\lim_{n\\to+\\infty} b_n = +\\infty$.</p>
+<p>Si osservi che <strong>non serve alcuna maggiorazione dall'alto di $b_n$</strong>: a differenza del teorema dei due carabinieri, per i limiti infiniti basta il confronto da un solo lato.</p>`
+      },
+
+      {
+        id: "s15-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Spiega perché nella definizione di $a_n \\to 0^+$ si richiede la disuguaglianza <em>stretta</em> $a_n \\gt 0$ definitivamente, e perché la regola "numero non nullo fratto infinitesimo" richiede che il denominatore abbia segno definitivamente costante. Porta un esempio.</p>`,
+        solution: `<p><strong>Perché la disuguaglianza stretta.</strong> Se si ammettessero disuguaglianze non strette, cioè $a_n \\ge 0$ definitivamente, la successione identicamente nulla $a_n = 0$ soddisferebbe contemporaneamente $a_n \\to 0^+$ e $a_n \\to 0^-$, ma $1/a_n$ non è nemmeno definito: le implicazioni "$b_n \\to 0^+ \\Rightarrow 1/b_n \\to +\\infty$" e "$b_n \\to 0^- \\Rightarrow 1/b_n \\to -\\infty$" perderebbero senso.</p>
+<p>Con la convenzione stretta, invece, $b_n \\to 0^+$ garantisce $b_n \\gt 0$ definitivamente, quindi $b_n \\ne 0$ definitivamente e il reciproco è ben definito da un certo indice in poi.</p>
+<p><strong>Perché serve il segno definitivamente costante.</strong> Se $b_n \\to 0$ ma il segno cambia infinite volte, non vale né $b_n \\to 0^+$ né $b_n \\to 0^-$ e la tabella non si applica. Ad esempio, con</p>
+<p>$$a_n = 1, \\qquad b_n = \\frac{(-1)^n}{n},$$</p>
+<p>si ha $a_n \\to 1 \\ne 0$ e $|b_n| = 1/n \\to 0$, ma</p>
+<p>$$\\frac{a_n}{b_n} = (-1)^n n,$$</p>
+<p>successione $-1, 2, -3, 4, \\dots$ che non ha limite: i termini di indice pari tendono a $+\\infty$, quelli di indice dispari a $-\\infty$. È irregolare e illimitata.</p>`
+      },
+
+      {
+        id: "s15-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcola $\\displaystyle\\lim_{n\\to+\\infty}\\frac{\\sin(n)+\\cos(n^3)}{n+1}$, giustificando ogni passaggio.</p>`,
+        solution: `<p><strong>Perché non basta l'algebra dei limiti.</strong> Né $\\sin(n)$ né $\\cos(n^3)$ ammettono limite, quindi non possiamo applicare direttamente le regole su somme e quozienti.</p>
+<p><strong>Impostazione.</strong> Poniamo</p>
+<p>$$b_n = \\sin(n)+\\cos(n^3), \\qquad a_n = \\frac{1}{n+1}.$$</p>
+<p><strong>Limitatezza di $b_n$.</strong> Per ogni $n$ vale $|\\sin(n)| \\le 1$ e $|\\cos(n^3)| \\le 1$, quindi</p>
+<p>$$|b_n| \\le |\\sin(n)| + |\\cos(n^3)| \\le 2.$$</p>
+<p><strong>Infinitesimalità di $a_n$.</strong> Si ha $\\lim_{n\\to+\\infty} \\frac{1}{n+1} = 0$.</p>
+<p><strong>Conclusione.</strong> Per la proposizione sul prodotto di una successione limitata per una infinitesima, $\\lim_{n\\to+\\infty} a_n b_n = 0$, cioè</p>
+<p>$$\\lim_{n\\to+\\infty}\\frac{\\sin(n)+\\cos(n^3)}{n+1} = 0.$$</p>
+<p><strong>Alternativa (due carabinieri).</strong> Vale</p>
+<p>$$-\\frac{2}{n+1} \\le \\frac{\\sin(n)+\\cos(n^3)}{n+1} \\le \\frac{2}{n+1},$$</p>
+<p>e le due successioni esterne tendono a $0$.</p>`
+      },
+
+      {
+        id: "s15-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcola $\\lim_{n \\to +\\infty}\\left(2n^3 - 5n^2 + \\cos n\\right)$, giustificando ogni passaggio con le regole dell'algebra degli infiniti.</p>`,
+        solution: `<p><strong>Riconoscimento della forma.</strong> Scritto così, il limite presenta la forma indeterminata $(+\\infty) + (-\\infty)$, perché $2n^3 \\to +\\infty$ e $-5n^2 \\to -\\infty$ (mentre $\\cos n$ è solo limitata).</p>
+<p><strong>Raccoglimento del termine dominante $n^3$.</strong></p>
+<p>$$2n^3 - 5n^2 + \\cos n = n^3\\left(2 - \\frac{5}{n} + \\frac{\\cos n}{n^3}\\right).$$</p>
+<p><strong>Analisi dei fattori.</strong> $\\frac{5}{n} \\to 0$ per la regola del reciproco ($n \\to +\\infty$); inoltre $(\\cos n)$ è limitata e $n^3 \\to +\\infty$, dunque per la regola "limitata fratto infinito" $\\frac{\\cos n}{n^3} \\to 0$. Per l'algebra dei limiti finiti il secondo fattore tende a $2 - 0 + 0 = 2 \\gt 0$, mentre $n^3 \\to +\\infty$.</p>
+<p><strong>Conclusione.</strong> Siamo nel caso "$+\\infty$ per limite finito positivo" della regola del prodotto, quindi</p>
+<p>$$\\lim_{n \\to +\\infty}\\left(2n^3 - 5n^2 + \\cos n\\right) = +\\infty.$$</p>`
+      },
+
+      {
+        id: "s15-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcola $\\displaystyle\\lim_{n\\to+\\infty}\\left(2+\\sin(n)\\right)3^{\\,n}$, spiegando perché non si può concludere con l'algebra dei limiti e quale stima dal basso serve.</p>`,
+        solution: `<p><strong>Perché l'algebra dei limiti non basta.</strong> La successione $\\sin(n)$ non ammette limite, quindi l'algebra dei limiti non è applicabile al primo fattore. La limitatezza del primo fattore e la divergenza del secondo, da sole, non determinano il comportamento del prodotto. Cerchiamo quindi una <strong>minorazione che tenda a $+\\infty$</strong>, cioè una stima dal basso con una costante strettamente positiva.</p>
+<p><strong>Stima dal basso.</strong> Da $-1 \\le \\sin(n) \\le 1$ segue $2 + \\sin(n) \\ge 1 \\gt 0$ per ogni $n$, quindi, essendo $3^n \\gt 0$,</p>
+<p>$$\\left(2+\\sin(n)\\right)3^n \\ge 3^n \\quad \\text{per ogni } n \\in \\mathbb{N}.$$</p>
+<p><strong>Divergenza della minorante.</strong> Poiché $3 \\gt 1$, si ha $\\lim_{n\\to+\\infty} 3^n = +\\infty$.</p>
+<p><strong>Conclusione.</strong> Applicando il punto 1 del teorema del confronto per limiti infiniti con successione minorante $3^n$ (il ruolo di $a_n$) e maggiorante $\\left(2+\\sin(n)\\right)3^n$ (il ruolo di $b_n$):</p>
+<p>$$\\lim_{n\\to+\\infty}\\left(2+\\sin(n)\\right)3^n = +\\infty.$$</p>
+<p><strong>Da notare.</strong> La stima grossolana $2+\\sin(n) \\ge 0$ darebbe solo $\\left(2+\\sin(n)\\right)3^n \\ge 0$, inutile ai fini della divergenza.</p>`
+      },
+
+      {
+        id: "s15-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcola $\\lim_{n \\to +\\infty}\\dfrac{3n^2 - 7n + 4}{5n^2 + 2n}$.</p>`,
+        solution: `<p><strong>Riconoscimento della forma.</strong> Numeratore e denominatore tendono entrambi a $+\\infty$: la forma è $\\frac{\\infty}{\\infty}$, indeterminata, e come tale non determina il risultato.</p>
+<p><strong>Raccoglimento del termine dominante</strong> sopra e sotto, per $n \\ge 1$:</p>
+<p>$$\\frac{3n^2 - 7n + 4}{5n^2 + 2n} = \\frac{n^2\\left(3 - \\frac{7}{n} + \\frac{4}{n^2}\\right)}{n^2\\left(5 + \\frac{2}{n}\\right)} = \\frac{3 - \\frac{7}{n} + \\frac{4}{n^2}}{5 + \\frac{2}{n}},$$</p>
+<p>dove la semplificazione di $n^2 \\ne 0$ è lecita per ogni $n \\ge 1$.</p>
+<p><strong>Limiti dei due pezzi.</strong> Per la regola del reciproco $\\frac{1}{n} \\to 0$ e $\\frac{1}{n^2} \\to 0$, quindi il numeratore tende a $3$ e il denominatore a $5 \\ne 0$.</p>
+<p><strong>Conclusione</strong> (algebra dei limiti finiti):</p>
+<p>$$\\lim_{n \\to +\\infty}\\frac{3n^2 - 7n + 4}{5n^2 + 2n} = \\frac{3}{5}.$$</p>`
+      },
+
+      {
+        id: "s15-oral-box",
+        type: "oral_box",
+        title: "Domande tipiche all'orale",
+        icon: "🎤",
+        content: `<p>Le domande più ricorrenti su questa lezione riguardano: la <strong>generalizzazione della permanenza del segno</strong> (con la traslazione $b_n = a_n - m$ e il caso $l = +\\infty$ trattato separatamente); il motivo per cui nel confronto per limiti infiniti <strong>basta un solo lato</strong>; la dimostrazione che <strong>limitata × infinitesima = infinitesima</strong>; l'implicazione <strong>convergente ⇒ limitata</strong> con il controesempio $(-1)^n$ per il viceversa; e infine perché nelle definizioni di $0^+$ e $0^-$ le <strong>disuguaglianze devono essere strette</strong>.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Enuncia la generalizzazione del teorema della permanenza del segno.",
+        back: "Siano $m \\in \\mathbb{R}$ e $(a_n)$ con $\\lim_{n\\to+\\infty} a_n = l \\in \\mathbb{R}^* = \\mathbb{R}\\cup\\{-\\infty,+\\infty\\}$. Allora: (1) se $m \\lt l$ esiste $n_0$ tale che $a_n \\gt m$ per ogni $n \\gt n_0$; (2) se $m \\gt l$ esiste $n_0$ tale che $a_n \\lt m$ per ogni $n \\gt n_0$. In parole: la successione è definitivamente maggiore di ogni numero minore del limite e definitivamente minore di ogni numero maggiore del limite. Con $m = 0$ si ritrova il teorema classico."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra il punto 1 della generalizzazione della permanenza del segno (caso $l$ finito) e spiega come si tratta il caso $l = +\\infty$.",
+        back: "Caso $l$ finito: si pone $b_n = a_n - m$. Per l'algebra dei limiti $\\lim b_n = l - m \\gt 0$ (perché $m \\lt l$). Essendo il limite strettamente positivo, per la permanenza del segno $b_n \\gt 0$ definitivamente, cioè $a_n \\gt m$ definitivamente. Caso $l = +\\infty$: si tratta separatamente, perché il calcolo del limite di $b_n$ richiedeva $l$ finito. Basta la definizione di limite infinito con soglia $M = m$: esiste $n_0$ con $a_n \\gt m$ per ogni $n \\gt n_0$."
+      },
+      {
+        type: "domanda",
+        front: "Perché per i limiti infiniti basta un confronto da un solo lato, mentre per i limiti finiti servono due carabinieri?",
+        back: "Se $a_n \\le b_n$ definitivamente e $a_n \\to +\\infty$, allora per ogni $M \\gt 0$ esiste $n_0$ oltre il quale $b_n \\ge a_n \\gt M$: la divergenza della minorante trascina su $b_n$ senza bisogno di controllarla dall'alto. Con un limite finito invece bisogna impedire a $b_n$ di scappare sia sopra sia sotto, e serve $a_n \\le b_n \\le c_n$ con $a_n, c_n \\to L$. Simmetricamente: se $a_n \\le b_n$ definitivamente e $b_n \\to -\\infty$, allora $a_n \\to -\\infty$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che il prodotto di una successione limitata per una infinitesima è infinitesimo.",
+        back: "Sia $a_n \\to 0$ e $|b_n| \\le M$ con $M \\gt 0$. Allora $|a_n b_n| = |a_n||b_n| \\le M|a_n|$, equivalente a $-M|a_n| \\le a_n b_n \\le M|a_n|$. Poiché $a_n \\to 0$ si ha $|a_n| \\to 0$, dunque entrambe le successioni esterne tendono a $M \\cdot 0 = 0$. Per il teorema del confronto $\\lim_{n\\to+\\infty} a_n b_n = 0$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che ogni successione convergente è limitata.",
+        back: "Sia $a_n \\to L \\in \\mathbb{R}$. Scelto $\\varepsilon = 1$, esiste $n_0$ tale che per $n \\ge n_0$ vale $|a_n - L| \\lt 1$, cioè $L - 1 \\lt a_n \\lt L + 1$: la coda è contenuta in un intervallo limitato. I primi termini $\\{a_0, \\dots, a_{n_0-1}\\}$ sono un insieme finito, quindi limitato. Ponendo $M_{sup} = \\max\\{a_0,\\dots,a_{n_0-1}, L+1\\}$ e $M_{inf} = \\min\\{a_0,\\dots,a_{n_0-1}, L-1\\}$ si ha $M_{inf} \\le a_n \\le M_{sup}$ per ogni $n$."
+      },
+      {
+        type: "tranello",
+        front: "Una successione limitata è convergente?",
+        back: "NO: il viceversa è falso. Controesempio $a_n = (-1)^n$, limitata in $[-1,1]$ ma non convergente. Per assurdo, se $a_n \\to L$, con $\\varepsilon = 1/2$ tutti i termini da un certo punto starebbero in un intorno di ampiezza $1$; ma vi starebbero sia $1$ (indici pari) sia $-1$ (indici dispari), da cui $|1-(-1)| \\lt 1$, cioè $2 \\lt 1$: assurdo. È una successione irregolare (oscillante). Altro esempio: $a_n = \\sin(n)$."
+      },
+      {
+        type: "domanda",
+        front: "Perché nella definizione di $a_n \\to 0^+$ la disuguaglianza $a_n \\gt 0$ deve essere stretta?",
+        back: "Con disuguaglianze non strette ($a_n \\ge 0$) la successione identicamente nulla $a_n = 0$ soddisferebbe contemporaneamente $a_n \\to 0^+$ e $a_n \\to 0^-$, ma $1/a_n$ non è nemmeno definito: le regole \"$b_n \\to 0^+ \\Rightarrow 1/b_n \\to +\\infty$\" e \"$b_n \\to 0^- \\Rightarrow 1/b_n \\to -\\infty$\" perderebbero senso. Con la convenzione stretta, $b_n \\to 0^+$ garantisce $b_n \\gt 0$ definitivamente, quindi $b_n \\ne 0$ definitivamente e il reciproco è ben definito da un certo indice in poi."
+      },
+      {
+        type: "tranello",
+        front: "È vero che \"un numero non nullo diviso per un infinitesimo tende sempre a $+\\infty$ o a $-\\infty$\"?",
+        back: "NO. La tabella richiede che il denominatore abbia segno DEFINITIVAMENTE COSTANTE, cioè $b_n \\to 0^+$ oppure $b_n \\to 0^-$. Controesempio: $a_n = 1$, $b_n = \\frac{(-1)^n}{n}$. Si ha $a_n \\to 1 \\ne 0$ e $|b_n| = 1/n \\to 0$, ma il segno di $b_n$ cambia infinite volte. Il quoziente è $\\frac{a_n}{b_n} = (-1)^n n = -1, 2, -3, 4, \\dots$, che non ha limite: è irregolare e illimitata."
+      },
+      {
+        type: "formula",
+        front: "Quali sono le regole di reciproco e quoziente nell'algebra degli infiniti (con $b_n \\ne 0$ definitivamente)?",
+        back: "Reciproco: $|b_n| \\to +\\infty \\Rightarrow \\frac{1}{b_n} \\to 0$; $b_n \\to 0^+ \\Rightarrow \\frac{1}{b_n} \\to +\\infty$; $b_n \\to 0^- \\Rightarrow \\frac{1}{b_n} \\to -\\infty$. Quoziente: se $(a_n)$ è limitata e $|b_n| \\to +\\infty$ allora $\\frac{a_n}{b_n} \\to 0$ (\"limitata fratto infinito\"); se $a_n \\to L \\ne 0$ e $b_n \\to 0$ con segno definitivamente costante, il risultato è $\\pm\\infty$ secondo la regola dei segni."
+      },
+      {
+        type: "domanda",
+        front: "Che cosa significa che $\\frac{\\infty}{\\infty}$ è una forma indeterminata? Fai esempi.",
+        back: "Significa che la sola conoscenza dei limiti di numeratore e denominatore non basta a determinare il limite: conta COME divergono, cioè con quale velocità relativa. Tre esempi con la stessa forma: $\\frac{n}{n} \\to 1$, $\\frac{n}{n^2} = \\frac{1}{n} \\to 0$, $\\frac{n^2}{n} = n \\to +\\infty$. Le altre forme indeterminate viste: $(+\\infty) - \\infty$, $0 \\cdot \\infty$, $\\frac{0}{0}$ (in futuro $1^\\infty$, $0^0$, $\\infty^0$). La tecnica è sempre riconoscere la forma e poi raccogliere/semplificare il termine dominante."
+      },
+      {
+        type: "tranello",
+        front: "Per mostrare che $\\arctan(n^2) \\cdot 2^n \\to +\\infty$, basta dire che $\\arctan(n^2) \\gt 0$?",
+        back: "NO: si otterrebbe solo $\\arctan(n^2) \\cdot 2^n \\gt 0$, e essere maggiori di $0$ non implica divergere. Serve una stima dal basso con una COSTANTE STRETTAMENTE POSITIVA: poiché $n^2 \\ge 1$ e l'arcotangente è crescente, $\\arctan(n^2) \\ge \\arctan(1) = \\frac{\\pi}{4}$, quindi $\\arctan(n^2) \\cdot 2^n \\ge \\frac{\\pi}{4} \\cdot 2^n \\to +\\infty$, e si conclude col confronto per limiti infiniti."
+      },
+      {
+        type: "domanda",
+        front: "Nella costruzione $M' = \\max\\{1, |m|, |M|\\}$, a cosa serve il valore $1$?",
+        back: "Serve a garantire $M' \\gt 0$, come richiesto dalla prima definizione di successione limitata. Con la sola scelta $M' = \\max\\{|m|,|M|\\}$, nel caso degenere $m = M = 0$ (successione identicamente nulla) si otterrebbe $M' = 0$, che non soddisfa letteralmente la condizione di stretta positività. Con l'1 si ha sempre $M' \\ge 1 \\gt 0$ e inoltre $a_n \\le M \\le |M| \\le M'$ e $a_n \\ge m \\ge -|m| \\ge -M'$."
+      }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=21"></script>
+<script src="/js/graphs.js?v=21"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
