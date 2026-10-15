@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="anno1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 7 — Algebra e Logica — FeyNotes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1330'/%3E%3Cg fill='none' stroke='%237c9cff' stroke-width='1.5'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.5' transform='rotate(120 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2.8' fill='%23ffcf5c'/%3E%3C/svg%3E">
+  <meta name="description" content="Algebra e Logica, Lezione 7: Insiemi con operazioni: gruppi, anelli, campi. Operazioni algebriche e tavole di Cayley; proprietà e strutture con una o due operazioni. Unicità del neutro e dell'inverso, gruppo degli invertibili, esempi con numeri, insiemi e funzioni, campi di classi di resto ed esercizi proposti.">
+  <meta name="author" content="Elia Cinti">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lezione 7: Insiemi con operazioni: gruppi, anelli, campi — Algebra e Logica">
+  <meta property="og:description" content="Operazioni algebriche e tavole di Cayley; proprietà e strutture con una o due operazioni. Unicità del neutro e dell'inverso, gruppo degli invertibili, esempi con numeri, insiemi e funzioni, campi di classi di resto ed esercizi proposti.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://feynotes.eliacinti.dev/algebra/lezioni/L07/">
+  <link rel="canonical" href="https://feynotes.eliacinti.dev/algebra/lezioni/L07/">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/base.css?v=21">
+  <link rel="stylesheet" href="/css/style.css?v=21">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Lezione 7 — Insiemi con operazioni: gruppi, anelli, campi",
+  "description": "Operazioni algebriche e tavole di Cayley; proprietà e strutture con una o due operazioni. Unicità del neutro e dell'inverso, gruppo degli invertibili, esempi con numeri, insiemi e funzioni, campi di classi di resto ed esercizi proposti.",
+  "educationalLevel": "University",
+  "inLanguage": "it",
+  "url": "https://feynotes.eliacinti.dev/algebra/lezioni/L07/",
+  "datePublished": "2026-10-14",
+  "author": {
+    "@type": "Person",
+    "name": "Elia Cinti"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Algebra e Logica",
+    "provider": {
+      "@type": "Organization",
+      "name": "Università di Roma Tor Vergata"
+    }
+  }
+}</script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<!-- ─── Header ─── -->
+<header id="site-header">
+  <a href="/" class="header-home">fey<span class="header-home-accent">_</span>notes</a>
+  <span class="header-sep">/</span>
+  <a href="/algebra/" class="header-logo">
+    
+    Algebra e Logica
+  </a>
+  <span class="header-sep">/</span>
+  <span class="header-lesson">Lezione 7</span>
+  <nav class="header-nav">
+    <a href="/algebra/" class="active">Lezioni</a>
+  </nav>
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
+</header>
+
+<!-- ─── Lesson Layout ─── -->
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <a href="/algebra/" class="sidebar-back">← Tutte le lezioni</a>
+    <div class="sidebar-title">In questa lezione</div>
+    <div id="lesson-sidebar-links"></div>
+    <div class="sidebar-nav-buttons">
+      <a href="/algebra/lezioni/L06/">← Prec.</a>
+      <a href="#" style="opacity:0.3">Succ. →</a>
+    </div>
+  </aside>
+
+  <main class="lesson-content" id="lesson-content">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Mostra/nascondi indice">☰</button>
+  </main>
+</div>
+
+<!-- ─── Lesson Data ─── -->
+<script>
+const LESSON = {
+    id: "L07",
+    date: "Lezione 7 — 14 Ott 2026",
+    title: "Insiemi con operazioni: gruppi, anelli, campi",
+    abstract: "Operazioni algebriche e tavole di Cayley; proprietà e strutture con una o due operazioni. Unicità del neutro e dell'inverso, gruppo degli invertibili, esempi con numeri, insiemi e funzioni, campi di classi di resto ed esercizi proposti.",
+
+    sections: [
+        {
+            id: "s07-operazioni",
+            type: "section",
+            title: "Operazioni algebriche e gruppoidi",
+            icon: "⚙️",
+            content: `<p>Dato un insieme $S$ e un numero naturale $n\\in\\mathbb{N}$, un'<strong>operazione n-aria</strong> su $S$ è una qualsiasi applicazione</p><p>$$S^n:=\\underbrace{S\\times\\dots\\times S}_{n\\text{ volte}}\\to S.$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Operazioni binarie",
+                    content: `<p>Se $n=2$, si parla di <strong>operazione binaria</strong>. Si usa comunemente una notazione infissa, per esempio $*$:</p><p>$$*:S\\times S\\to S,\\qquad (s,t)\\mapsto *(s,t)=:s*t.$$</p><p>Un insieme $(S,*)$ munito di un'operazione binaria si dice <strong>gruppoide</strong>.</p>`
+                },
+                {
+                    subtitle: "Operazioni nullarie",
+                    content: `<p>Se $n=0$, si parla di <strong>operazione nullaria</strong>. Per definizione $S^0$ è un singoletto, indicato con $\\{\\text{pt}\\}$. Un'operazione nullaria è quindi un'applicazione</p><p>$$\\zeta:\\{\\text{pt}\\}=:S^0\\to S.$$</p><p>Questo equivale alla scelta di un elemento particolare di $S$: l'immagine $\\zeta(\\text{pt})$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s07-tavole-cayley",
+            type: "section",
+            title: "Tavole di Cayley",
+            icon: "▦",
+            content: `<p>Se $S$ è finito e ha $n$ elementi, un'operazione binaria $*$ può essere descritta completamente elencando il risultato di $s*s'$ per ogni coppia $s,s'\\in S$. La <strong>tavola di Cayley</strong> raccoglie questi risultati in forma compatta.</p><p>Detti $s_1,s_2,\\dots,s_n$ gli elementi di $S$, la tavola ha la forma:</p><p>$$\\begin{array}{c|cccc}
+* & s_1 & s_2 & \\dots & s_n \\\\
+\\hline
+s_1 & s_1*s_1 & s_1*s_2 & \\dots & s_1*s_n \\\\
+s_2 & s_2*s_1 & s_2*s_2 & \\dots & s_2*s_n \\\\
+\\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\
+s_n & s_n*s_1 & s_n*s_2 & \\dots & s_n*s_n
+\\end{array}$$\lt /p>\lt ul>\lt li\gt In alto a sinistra si scrive il simbolo dell'operazione.\lt /li>\lt li\gt La prima riga e la prima colonna elencano tutti gli elementi di $S$.\lt /li>\lt li\gt Il risultato $s*s'$ si legge all'intersezione della \lt strong\gt riga del primo elemento\lt /strong\gt $s$ e della \lt strong\gt colonna del secondo elemento\lt /strong\gt $s'$.</li></ul>`
+        },
+        {
+            id: "s07-proprieta",
+            type: "section",
+            title: "Proprietà delle operazioni binarie",
+            icon: "🔎",
+            content: `<p>Sia $(S,*)$ un gruppoide. Le seguenti proprietà permettono di distinguere le principali strutture algebriche.</p>`,
+            subsections: [
+                {
+                    subtitle: "Associatività",
+                    content: `<p>L'operazione $*$ è <strong>associativa</strong> se:</p><p>$$(r*s)*t=r*(s*t),\\qquad\\forall r,s,t\\in S.$$</p>`
+                },
+                {
+                    subtitle: "Commutatività",
+                    content: `<p>L'operazione $*$ è <strong>commutativa</strong>, o abeliana, se:</p><p>$$s*t=t*s,\\qquad\\forall s,t\\in S.$$</p>`
+                },
+                {
+                    subtitle: "Elemento neutro",
+                    content: `<p>Un elemento $e\\in S$ è un <strong>elemento neutro</strong> se:</p><p>$$s*e=s=e*s,\\qquad\\forall s\\in S.$$</p>`
+                },
+                {
+                    subtitle: "Elementi invertibili",
+                    content: `<p>Se esiste un elemento neutro $e$, un elemento $s\\in S$ è <strong>invertibile</strong> se esiste $s'\\in S$, detto <strong>inverso</strong> di $s$, tale che:</p><p>$$s'*s=e=s*s'.$$</p><p>L'elemento neutro è sempre inverso di se stesso, perché $e*e=e$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s07-unicita",
+            type: "section",
+            title: "Unicità dell'elemento neutro e dell'inverso",
+            icon: "🧩",
+            content: `<p>In un gruppoide, l'elemento neutro, se esiste, è unico. Se inoltre l'operazione è associativa, ogni elemento invertibile ha un unico inverso.</p>`,
+            subsections: [
+                {
+                    subtitle: "Dimostrazione dell'unicità del neutro",
+                    content: `<p>Supponiamo che $e$ ed $e'$ siano entrambi elementi neutri. Poiché $e$ è neutro, vale $e'*e=e'$. Poiché anche $e'$ è neutro, vale $e'*e=e$.</p><p>Per la proprietà transitiva dell'uguaglianza, concludiamo che $e=e'$.</p>`
+                },
+                {
+                    subtitle: "Dimostrazione dell'unicità dell'inverso",
+                    content: `<p>Supponiamo che $s$ abbia due inversi, $s'$ e $s''$. Usando il neutro, le proprietà degli inversi e l'associatività:</p><p>$$\\begin{aligned}
+s'&=s'*e &&\\text{(elemento neutro)}\\\\
+&=s'*(s*s'') &&\\text{(}s''\\text{ è inverso di }s\\text{)}\\\\
+&=(s'*s)*s'' &&\\text{(associatività)}\\\\
+&=e*s'' &&\\text{(}s'\\text{ è inverso di }s\\text{)}\\\\
+&=s'' &&\\text{(elemento neutro).}
+\\end{aligned}$$\lt /p>\lt p\gt Quindi $s'=s''$: l'inverso è unico.</p>`
+                }
+            ]
+        },
+        {
+            id: "s07-associativita-inverso",
+            type: "alert_box",
+            title: "L'associatività è cruciale per l'unicità dell'inverso",
+            icon: "⚠️",
+            content: `<p>L'ipotesi di <strong>associatività</strong> nella dimostrazione dell'unicità dell'inverso è cruciale. Esistono gruppoidi non associativi in cui un elemento può avere più di un inverso.</p>`
+        },
+        {
+            id: "s07-strutture",
+            type: "section",
+            title: "Semigruppi, monoidi e gruppi",
+            icon: "🗂️",
+            content: `<p>A seconda delle proprietà soddisfatte, un gruppoide $(S,*)$ assume nomi specifici.</p><ul><li><strong>Semigruppo:</strong> un gruppoide con operazione associativa.</li><li><strong>Gruppoide unitario:</strong> un gruppoide con elemento neutro.</li><li><strong>Monoide:</strong> un semigruppo con elemento neutro, cioè un gruppoide associativo e unitario.</li><li><strong>Gruppo:</strong> un monoide in cui ogni elemento è invertibile.</li><li><strong>Gruppo abeliano:</strong> un gruppo con operazione commutativa.</li></ul>`,
+            subsections: [
+                {
+                    subtitle: "Il neutro come operazione nullaria",
+                    content: `<p>In un monoide $(S,*,e)$, l'esistenza del neutro $e$ equivale all'esistenza di un'operazione nullaria</p><p>$$\\zeta:\\{\\text{pt}\\}\\to S,\\qquad\\zeta(\\text{pt})=e.$$</p>`
+                },
+                {
+                    subtitle: "L'inverso come operazione unaria",
+                    content: `<p>Se $(S,*,e)$ è un gruppo, l'esistenza dell'inverso per ogni elemento equivale all'esistenza di un'operazione unaria, cioè una funzione $i:S\\to S$, che associa a ogni $s$ il suo unico inverso, comunemente indicato con $s^{-1}$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s07-gruppo-invertibili",
+            type: "section",
+            title: "Il gruppo degli elementi invertibili",
+            icon: "🔄",
+            content: `<p>Sia $(M,*,e)$ un monoide. Indichiamo con $U(M)$ l'insieme dei suoi elementi invertibili:</p><p>$$U(M):=\\{m\\in M\\mid\\exists m^{-1}\\in M\\}.$$</p><p>Vogliamo dimostrare che $*$ si restringe a un'operazione binaria su $U(M)$ e che $(U(M),*)$ è un gruppo con elemento neutro $e$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Chiusura e inverso di un prodotto",
+                    content: `<p>Siano $a,b\\in U(M)$, con inversi $a^{-1}$ e $b^{-1}$. Consideriamo $b^{-1}*a^{-1}$. Per associatività:</p><p>$$(a*b)*(b^{-1}*a^{-1})=a*(b*b^{-1})*a^{-1}=a*e*a^{-1}=a*a^{-1}=e.$$</p><p>Analogamente:</p><p>$$(b^{-1}*a^{-1})*(a*b)=e.$$</p><p>Quindi $a*b$ è invertibile, appartiene a $U(M)$ e il suo inverso è:</p><p>$$(a*b)^{-1}=b^{-1}*a^{-1}.$$</p><p>L'operazione è dunque chiusa in $U(M)$.</p>`
+                },
+                {
+                    subtitle: "Verifica delle proprietà di gruppo",
+                    content: `<ul><li><strong>Associatività:</strong> l'operazione è associativa in $U(M)$ perché lo è in $M$ e $U(M)\\subseteq M$.</li><li><strong>Elemento neutro:</strong> $e$ è invertibile, essendo inverso di se stesso. Quindi $e\\in U(M)$ ed è neutro anche per l'operazione ristretta.</li><li><strong>Inversi:</strong> se $m\\in U(M)$, il suo inverso $m^{-1}$ appartiene inizialmente a $M$. Poiché $(m^{-1})^{-1}=m$, anche $m^{-1}$ è invertibile e appartiene a $U(M)$.</li></ul><p>Tutte le proprietà sono verificate: $(U(M),*)$ è un gruppo.</p>`
+                }
+            ],
+            formulas: [
+                {
+                    label: "Inverso di un prodotto",
+                    latex: "(a*b)^{-1}=b^{-1}*a^{-1}"
+                }
+            ]
+        },
+        {
+            id: "s07-differenza-simmetrica",
+            type: "section",
+            title: "Differenza simmetrica",
+            icon: "🔀",
+            content: `<p>Siano $A,B\\subseteq E$. La <strong>differenza simmetrica</strong> è:</p><p>$$A\\oplus B:=(A\\setminus B)\\cup(B\\setminus A).$$</p><p>Contiene gli elementi che appartengono <strong>esattamente a uno</strong> dei due insiemi. Gli elementi comuni ad $A$ e $B$ vengono esclusi.</p>`,
+            subsections: [
+                {
+                    subtitle: "Esempio illustrativo",
+                    content: `<p>In $E=\\{1,2,3,4\\}$, scegliamo $A=\\{1,2,3\\}$ e $B=\\{2,4\\}$. Si ha:</p><p>$$A\\setminus B=\\{1,3\\},\\qquad B\\setminus A=\\{4\\}.$$</p><p>Quindi:</p><p>$$A\\oplus B=\\{1,3,4\\}.$$</p><p>L'elemento $2$ non compare perché appartiene a entrambi gli insiemi.</p>`
+                },
+                {
+                    subtitle: "Neutro e inverso",
+                    content: `<p>Dalla definizione si ricavano:</p><p>$$A\\oplus\\emptyset=A=\\emptyset\\oplus A,\\qquad A\\oplus A=\\emptyset.$$</p><p>Queste identità spiegano rispettivamente l'elemento neutro e l'inverso nella struttura con operazione $\\oplus$.</p>`
+                }
+            ],
+            formulas: [
+                {
+                    label: "Differenza simmetrica",
+                    latex: "A\\oplus B=(A\\setminus B)\\cup(B\\setminus A)"
+                }
+            ]
+        },
+        {
+            id: "s07-esempi-strutture",
+            type: "section",
+            title: "Esempi di strutture con una operazione",
+            icon: "📚",
+            content: `<p>Assumiamo $\\mathbb{N}=\\{0,1,2,\\dots\\}$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Strutture numeriche",
+                    content: `<ul><li>$(\\mathbb{N},+)$ è un <strong>monoide commutativo</strong>, con neutro $0$. Non è un gruppo: l'inverso additivo di $1$ sarebbe $-1$, che non appartiene a $\\mathbb{N}$.</li><li>$(\\mathbb{N}_+,+)$, dove $\\mathbb{N}_+=\\{1,2,\\dots\\}$, è un <strong>semigruppo commutativo</strong>. Non è un monoide perché manca il neutro.</li><li>$(\\mathbb{N},\\cdot)$ è un <strong>monoide commutativo</strong>, con neutro $1$.</li><li>$(\\mathbb{Z},+)$ è un <strong>gruppo abeliano</strong>.</li><li>$(\\mathbb{Z},\\cdot)$ è un <strong>monoide commutativo</strong>. Gli unici invertibili sono $1$ e $-1$: $U(\\mathbb{Z},\\cdot)=\\{1,-1\\}$.</li><li>$(\\mathbb{Q},+)$ è un <strong>gruppo abeliano</strong>.</li><li>$(\\mathbb{Q},\\cdot)$ è un <strong>monoide commutativo</strong>.</li><li>$(\\mathbb{Q}^*,\\cdot)$, dove $\\mathbb{Q}^*=\\mathbb{Q}\\setminus\\{0\\}$, è un <strong>gruppo abeliano</strong>.</li></ul>`
+                },
+                {
+                    subtitle: "Insieme delle parti",
+                    content: `<ul><li>$(\\mathcal{P}(E),\\cup)$ è un <strong>monoide commutativo</strong>, con neutro $\\emptyset$.</li><li>$(\\mathcal{P}(E),\\cap)$ è un <strong>monoide commutativo</strong>, con neutro $E$.</li><li>$(\\mathcal{P}(E),\\oplus)$ è un <strong>gruppo abeliano</strong>. Il neutro è $\\emptyset$ e ogni elemento è inverso di se stesso: $A\\oplus A=\\emptyset$.</li></ul>`
+                },
+                {
+                    subtitle: "Funzioni e biiezioni",
+                    content: `<ul><li>$(E^E,\\circ)$, formato dalle funzioni da $E$ in $E$ con la composizione, è un <strong>monoide</strong>. Il neutro è la funzione identità. Non è commutativo se $|E|\\ge 2$.</li><li>$(S(E),\\circ)$, formato dalle funzioni biiettive da $E$ in $E$, è un <strong>gruppo</strong>. È il gruppo degli invertibili di $(E^E,\\circ)$: $S(E)=U(E^E)$. Non è abeliano se $|E|\\ge 3$.</li></ul>`
+                }
+            ]
+        },
+        {
+            id: "s07-funzioni-costanti",
+            type: "section",
+            title: "Composizione di funzioni costanti",
+            icon: "🔁",
+            content: `<p>Sia $E=\\{1,2\\}$. Definiamo due funzioni costanti $f,g:E\\to E$:</p><p>$$f(1)=f(2)=1,\\qquad g(1)=g(2)=2.$$</p><p>Ricordiamo che $(f\\circ g)(x)=f(g(x))$: <strong>si applica prima la funzione scritta a destra</strong>. Per ogni $x\\in E$:</p><p>$$(f\\circ g)(x)=f(2)=1,\\qquad(g\\circ f)(x)=g(1)=2.$$</p><p>Pertanto:</p><p>$$f\\circ g=f,\\qquad g\\circ f=g,\\qquad f\\circ g\\ne g\\circ f.$$</p><p>Questo dimostra che $(E^E,\\circ)$ non è commutativo. Lo stesso ragionamento vale per qualsiasi insieme $E$ con almeno due elementi distinti $a,b$, usando le funzioni costanti di valore $a$ e $b$.</p>`
+        },
+        {
+            id: "s07-permutazioni",
+            type: "section",
+            title: "Composizione di permutazioni",
+            icon: "🔀",
+            content: `<p>Sia $E=\\{1,2,3\\}$. Consideriamo le permutazioni $\\sigma,\\tau:E\\to E$ definite dalla tabella:</p><p>$$\\begin{array}{c|ccc}
+x & 1 & 2 & 3\\\\
+\\hline
+\\sigma(x) & 2 & 1 & 3\\\\
+\\tau(x) & 1 & 3 & 2
+\\end{array}$$\lt /p>\lt p\gt $\\sigma$ scambia $1$ e $2$ e lascia fisso $3$; $\\tau$ scambia $2$ e $3$ e lascia fisso $1$. Entrambe sono biiettive.\lt /p>\lt p\gt Calcoliamo le due composizioni, applicando sempre prima la funzione scritta a destra:\lt /p>\lt p\gt $$\\begin{array}{c|ccc}
+x & 1 & 2 & 3\\\\
+\\hline
+(\\sigma\\circ\\tau)(x) & \\sigma(1)=2 & \\sigma(3)=3 & \\sigma(2)=1\\\\
+(\\tau\\circ\\sigma)(x) & \\tau(2)=3 & \\tau(1)=1 & \\tau(3)=2
+\\end{array}$$</p><p>In particolare:</p><p>$$(\\sigma\\circ\\tau)(1)=2\\ne 3=(\\tau\\circ\\sigma)(1).$$\lt /p>\lt p\gt Le due composizioni sono funzioni diverse, quindi $S(E)$ non è abeliano. Se un insieme ha almeno tre elementi, si possono scegliere tre elementi distinti, effettuare gli stessi scambi e lasciare fissi tutti gli altri.</p>`
+        },
+        {
+            id: "s07-verificare-commutativita",
+            type: "note_box",
+            title: "Come dimostrare o negare la commutatività",
+            icon: "💡",
+            content: `<p>Per dimostrare che un'operazione <strong>non è commutativa</strong> basta trovare una coppia di elementi per cui l'ordine cambia il risultato.</p><p>Per dimostrare che due funzioni sono diverse basta trovare un argomento su cui assumono valori diversi. Verificare invece la commutatività richiede un'uguaglianza valida per <strong>tutte le coppie</strong>.</p>`
+        },
+        {
+            id: "s07-linguaggio-libero",
+            type: "section",
+            title: "Linguaggio libero e concatenazione",
+            icon: "🔤",
+            content: `<p>Sia $A$ un insieme non vuoto, chiamato <strong>alfabeto</strong>. L'insieme $A^*$ contiene tutte le sequenze finite di elementi di $A$, chiamate <strong>parole</strong>:</p><p>$$A^*:=\\bigcup_{n=0}^{\\infty}A^n.$$</p><p>$A^n$ è l'insieme delle sequenze di lunghezza $n$. L'unico elemento di $A^0$ è la <strong>parola vuota</strong>.</p><p>Definiamo la <strong>concatenazione</strong>, o <strong>giustapposizione</strong>:</p><p>$$\\cdot:A^*\\times A^*\\to A^*,\\qquad(p,q)\\mapsto p\\cdot q.$$</p><p>Se $p=a_1a_2\\dots a_r\\in A^r$ e $q=a'_1a'_2\\dots a'_s\\in A^s$, allora:</p><p>$$p\\cdot q:=a_1a_2\\dots a_r a'_1a'_2\\dots a'_s\\in A^{r+s}.$$</p><p>La struttura $(A^*,\\cdot)$ è un <strong>monoide</strong>: la concatenazione è associativa e il neutro è la parola vuota.</p><p>Non è un gruppo: l'unico elemento invertibile è la parola vuota. In genere non è commutativo. Si chiama <strong>monoide libero</strong> o <strong>linguaggio libero</strong> su $A$.</p>`
+        },
+        {
+            id: "s07-due-operazioni",
+            type: "section",
+            title: "Distributività, semianelli e anelli",
+            icon: "⚙️",
+            content: `<p>Consideriamo un insieme $S$ con due operazioni binarie, indicate con $*$ e $\\bullet$.</p>`,
+            subsections: [
+                {
+                    subtitle: "Distributività",
+                    content: `<p>L'operazione $*$ è <strong>distributiva rispetto a</strong> $\\bullet$ se, per ogni $r,s,t\\in S$, valgono entrambe le identità:</p><p>$$r*(s\\bullet t)=(r*s)\\bullet(r*t)\\qquad\\text{(distributività a sinistra)},$$</p><p>$$(s\\bullet t)*r=(s*r)\\bullet(t*r)\\qquad\\text{(distributività a destra)}.$$</p>`
+                },
+                {
+                    subtitle: "Semianello",
+                    content: `<p>La terna $(S,\\bullet,*)$ è un <strong>semianello</strong> se:</p><ol><li>$(S,\\bullet)$ è un monoide commutativo.</li><li>$(S,*)$ è un semigruppo.</li><li>$*$ è distributiva rispetto a $\\bullet$.</li></ol>`
+                },
+                {
+                    subtitle: "Anello, struttura unitaria e struttura commutativa",
+                    content: `<ul><li>Un semianello $(S,\\bullet,*)$ è un <strong>anello</strong> se $(S,\\bullet)$ è un gruppo abeliano.</li><li>Un semianello o anello è <strong>unitario</strong> se $(S,*)$ è un monoide.</li><li>Un semianello o anello è <strong>commutativo</strong> se $(S,*)$ è commutativo.</li></ul>`
+                }
+            ],
+            extra_content: `<p>Per convenzione, $\\bullet$ è spesso chiamata <strong>somma</strong> e indicata con $+$; $*$ è chiamata <strong>prodotto</strong> e indicata con $\\cdot$. Il neutro della somma si indica con $0$, quello del prodotto con $1$.</p>`
+        },
+        {
+            id: "s07-campo",
+            type: "section",
+            title: "Campo",
+            icon: "🔢",
+            content: `<p>Un anello $(S,\\bullet,*)$ è un <strong>campo</strong> se è commutativo, unitario e soddisfa le seguenti condizioni:</p><ol><li>$(S,\\bullet,0_S)$ è un gruppo abeliano. Il neutro è $0_S$ e gli inversi rispetto a $\\bullet$ si indicano con $-s$.</li><li>$(S\\setminus\\{0_S\\},*,1_S)$ è un gruppo abeliano. Il neutro è $1_S$ e gli inversi rispetto a $*$ si indicano con $s^{-1}$.</li><li>$*$ è distributiva rispetto a $\\bullet$.</li></ol><p>In un campo si può sommare, sottrarre, moltiplicare e dividere, <strong>tranne che per zero</strong>, con le usuali proprietà.</p>`
+        },
+        {
+            id: "s07-esempi-distributivita",
+            type: "section",
+            title: "Esempi di distributività",
+            icon: "🔎",
+            content: `<p>In $\\mathbb{N},\\mathbb{Z},\\mathbb{Q}$, il prodotto è distributivo rispetto alla somma, ma la somma non è distributiva rispetto al prodotto. Per esempio:</p><p>$$1+(2\\cdot3)=7,\\qquad(1+2)\\cdot(1+3)=3\\cdot4=12.$$</p><p>Nell'insieme delle parti $\\mathcal{P}(E)$:</p><ul><li>$\\cap$ è distributiva rispetto a $\\cup$.</li><li>$\\cup$ è distributiva rispetto a $\\cap$.</li><li>$\\cap$ è distributiva rispetto a $\\oplus$.</li><li>$\\cup$ non è distributiva rispetto a $\\oplus$ se $E\\ne\\emptyset$. Se $E=\\emptyset$, anche questa distributività vale.</li></ul>`
+        },
+        {
+            id: "s07-esempi-anelli-campi",
+            type: "section",
+            title: "Esempi di anelli e campi",
+            icon: "📚",
+            content: `<ul><li>$(\\mathbb{N},+,\\cdot)$ è un <strong>semianello commutativo unitario</strong>.</li><li>$(\\mathbb{Z},+,\\cdot)$ è un <strong>anello commutativo unitario</strong>. Non è un campo perché non tutti gli elementi non nulli hanno un inverso moltiplicativo: per esempio, $2$ non ha inverso in $\\mathbb{Z}$.</li><li>$(3\\mathbb{Z},+,\\cdot)$, l'insieme dei multipli di $3$, è un <strong>anello commutativo non unitario</strong>.</li><li>$(\\mathbb{Q},+,\\cdot)$ è un <strong>campo</strong>.</li><li>$(\\mathbb{R},+,\\cdot)$ è un <strong>campo</strong>.</li><li>$(\\mathcal{P}(E),\\cup,\\cap)$ è un <strong>semianello commutativo unitario</strong>.</li><li>$(\\mathcal{P}(E),\\oplus,\\cap)$ è un <strong>anello commutativo unitario</strong>. Il neutro per $\\oplus$ è $\\emptyset$, quello per $\\cap$ è $E$. Non è un campo se $|E|\\gt1$.</li></ul>`
+        },
+        {
+            id: "s07-campo-z2",
+            type: "section",
+            title: "Il campo ℤ₂",
+            icon: "🔢",
+            content: `<p>Consideriamo $\\mathbb{Z}_2=\\{p,d\\}$, dove $p$ rappresenta la classe di tutti gli interi pari e $d$ quella di tutti gli interi dispari. Gli elementi di $\\mathbb{Z}_2$ sono dunque <strong>classi di interi</strong>.</p><p>Le operazioni sono definite dalle tavole di Cayley:</p><p>$$\\begin{array}{c|cc}
++ & p & d\\\\
+\\hline
+p & p & d\\\\
+d & d & p
+\\end{array}
+\\qquad\\qquad
+\\begin{array}{c|cc}
+\\cdot & p & d\\\\
+\\hline
+p & p & p\\\\
+d & p & d
+\\end{array}$$\lt /p>\lt p\gt Questa struttura è un campo:\lt /p>\lt ul>\lt li\gt $(\\mathbb{Z}_2,+)$ è un gruppo abeliano con neutro $p$.\lt /li>\lt li\gt $(\\mathbb{Z}_2\\setminus\\{p\\},\\cdot)=(\\{d\\},\\cdot)$ è un gruppo abeliano con neutro $d$.\lt /li>\lt li\gt Vale la distributività.\lt /li>\lt /ul>\lt p\gt Identificando $p$ con $0$ e $d$ con $1$, usiamo questi numeri come <strong>etichette delle rispettive classi</strong> e otteniamo il campo finito con due elementi.</p>`
+        },
+        {
+            id: "s07-classi-modulo5",
+            type: "section",
+            title: "Classi di resto modulo 5",
+            icon: "🧮",
+            content: `<p>Per ogni intero $x$, la <strong>classe di resto di $x$ modulo $5$</strong> è:</p><p>$$\\bar{x}:=\\{x+5k\\mid k\\in\\mathbb{Z}\\}.$$</p><p>La barra indica un insieme di interi: $\\bar{x}$ contiene tutti gli interi che differiscono da $x$ per un multiplo di $5$. Due interi individuano la stessa classe esattamente quando la loro differenza è un multiplo di $5$.</p><p>Consideriamo l'insieme delle classi:</p><p>$$\\mathbb{Z}_5=\\{\\bar{0},\\bar{1},\\bar{2},\\bar{3},\\bar{4}\\}.$$</p><p>Ogni intero si scrive come $x=5q+r$, con $q\\in\\mathbb{Z}$ e $0\\le r\\lt5$. Pertanto $\\bar{x}=\\bar{r}$. Il resto $r$ è il <strong>rappresentante scelto</strong>, mentre $\\bar{r}$ è la classe stessa.</p>`,
+            subsections: [
+                {
+                    subtitle: "Operazioni sulle classi",
+                    content: `<p>Definiamo:</p><p>$$\\begin{aligned}
+\\bar{x}+\\bar{y}&:=\\overline{x+y},\\\\
+\\bar{x}\\cdot\\bar{y}&:=\\overline{x\\cdot y}.
+\\end{aligned}$$\lt /p>\lt p\gt Si sommano o si moltiplicano i rappresentanti e si prende la classe del risultato. Per usare uno dei rappresentanti $0,1,2,3,4$, si calcola il resto della divisione per $5$.\lt /p>\lt p\gt Le operazioni non dipendono dai rappresentanti scelti: sostituire $x$ o $y$ con un intero della stessa classe modifica sia la somma sia il prodotto soltanto di un multiplo di $5$.</p>`
+                },
+                {
+                    subtitle: "Esempio illustrativo",
+                    content: `<p>Per la somma:</p><p>$$\\bar{3}+\\bar{4}=\\overline{3+4}=\\bar{7}=\\bar{2},$$</p><p>perché $7=5+2$. L'uguaglianza $\\bar{7}=\\bar{2}$ significa che $7$ e $2$ appartengono alla stessa classe, <strong>non che siano lo stesso numero intero</strong>.</p><p>Per il prodotto:</p><p>$$\\bar{3}\\cdot\\bar{4}=\\overline{12}=\\bar{2},$$</p><p>perché $12=2\\cdot5+2$.</p>`
+                }
+            ]
+        },
+        {
+            id: "s07-campo-z5",
+            type: "section",
+            title: "Tavole e proprietà del campo ℤ₅",
+            icon: "📊",
+            content: `<p>La struttura $\\mathbb{Z}_5$ è un campo. Le tavole di Cayley sono:</p><p>$$\\begin{array}{c|ccccc}
++ & \\bar{0} & \\bar{1} & \\bar{2} & \\bar{3} & \\bar{4}\\\\
+\\hline
+\\bar{0} & \\bar{0} & \\bar{1} & \\bar{2} & \\bar{3} & \\bar{4}\\\\
+\\bar{1} & \\bar{1} & \\bar{2} & \\bar{3} & \\bar{4} & \\bar{0}\\\\
+\\bar{2} & \\bar{2} & \\bar{3} & \\bar{4} & \\bar{0} & \\bar{1}\\\\
+\\bar{3} & \\bar{3} & \\bar{4} & \\bar{0} & \\bar{1} & \\bar{2}\\\\
+\\bar{4} & \\bar{4} & \\bar{0} & \\bar{1} & \\bar{2} & \\bar{3}
+\\end{array}$$</p><p>$$\\begin{array}{c|ccccc}
+\\cdot & \\bar{0} & \\bar{1} & \\bar{2} & \\bar{3} & \\bar{4}\\\\
+\\hline
+\\bar{0} & \\bar{0} & \\bar{0} & \\bar{0} & \\bar{0} & \\bar{0}\\\\
+\\bar{1} & \\bar{0} & \\bar{1} & \\bar{2} & \\bar{3} & \\bar{4}\\\\
+\\bar{2} & \\bar{0} & \\bar{2} & \\bar{4} & \\bar{1} & \\bar{3}\\\\
+\\bar{3} & \\bar{0} & \\bar{3} & \\bar{1} & \\bar{4} & \\bar{2}\\\\
+\\bar{4} & \\bar{0} & \\bar{4} & \\bar{3} & \\bar{2} & \\bar{1}
+\\end{array}$$</p>`,
+            subsections: [
+                {
+                    subtitle: "Neutro e inversi additivi",
+                    content: `<p>Il neutro della somma è $\\bar{0}$. Gli inversi additivi sono:</p><p>$$-\\bar{0}=\\bar{0},\\qquad-\\bar{1}=\\bar{4},\\qquad-\\bar{2}=\\bar{3},\\qquad-\\bar{3}=\\bar{2},\\qquad-\\bar{4}=\\bar{1}.$$</p><p>Per trovarli, si cerca $\\bar{0}$ nella riga di ciascun elemento.</p>`
+                },
+                {
+                    subtitle: "Neutro e inversi moltiplicativi",
+                    content: `<p>Il neutro del prodotto è $\\bar{1}$. Gli inversi degli elementi non nulli sono:</p><p>$$\\bar{1}^{-1}=\\bar{1},\\qquad\\bar{2}^{-1}=\\bar{3},\\qquad\\bar{3}^{-1}=\\bar{2},\\qquad\\bar{4}^{-1}=\\bar{4}.$$</p><p>Per trovarli, si cerca $\\bar{1}$ nella riga di ciascun elemento non nullo. In particolare, $\\bar{2}\\cdot\\bar{3}=\\bar{1}$ e $\\bar{4}\\cdot\\bar{4}=\\bar{1}$.</p>`
+                },
+                {
+                    subtitle: "Verifica della struttura di campo",
+                    content: `<p>La tavola del prodotto mostra che il prodotto di due classi non nulle è ancora non nullo. La <strong>commutatività</strong> si riconosce dalla simmetria delle tabelle rispetto alla diagonale principale.</p><p>L'<strong>associatività</strong> delle due operazioni e la <strong>distributività</strong> sono ereditate dalle corrispondenti proprietà degli interi.</p><p>Quindi $(\\mathbb{Z}_5,+)$ e $(\\mathbb{Z}_5\\setminus\\{\\bar{0}\\},\\cdot)$ sono gruppi abeliani. Insieme alla distributività, queste proprietà confermano che $\\mathbb{Z}_5$ è un campo.</p>`
+                }
+            ]
+        },
+        {
+            id: "s07-criterio-campi-resto",
+            type: "section",
+            title: "Criterio per i campi di classi di resto",
+            icon: "📌",
+            content: `<p>Per ogni intero $n\\ge2$, sia $\\mathbb{Z}_n$ l'insieme delle classi di resto modulo $n$, dove:</p><p>$$\\bar{x}=\\{x+nk\\mid k\\in\\mathbb{Z}\\}.$$</p><p>Le operazioni sono:</p><p>$$\\bar{x}+\\bar{y}:=\\overline{x+y},\\qquad\\bar{x}\\cdot\\bar{y}:=\\overline{x\\cdot y}.$$</p><p><strong>$\\mathbb{Z}_n$ è un campo se e solo se $n$ è un numero primo.</strong></p>`,
+            formulas: [
+                {
+                    label: "Criterio per ℤₙ",
+                    latex: "\\mathbb{Z}_n\\text{ è un campo}\\iff n\\text{ è primo},\\qquad n\\ge2"
+                }
+            ]
+        },
+        {
+            id: "s07-esercizi-integrazione",
+            type: "integrazione_box",
+            title: "Integrazione — non detto dal docente",
+            content: `<p>Esercizi sui contenuti di questa lezione, <strong>generati dal verificatore e non svolti dal docente</strong>. Le soluzioni sono nel box sotto ogni traccia.</p>`
+        },
+        {
+            id: "s07-teoria-1",
+            type: "esercizio",
+            title: "Teoria 1",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Dimostrare che l'elemento neutro di un gruppoide, quando esiste, è unico. Dimostrare inoltre che in un monoide ogni elemento invertibile ha un unico inverso, indicando dove interviene l'associatività.</p>`,
+            solution: `<p><strong>Unicità del neutro.</strong> Se $e$ ed $e'$ sono entrambi elementi neutri, allora $e*e'=e$ perché $e'$ è neutro, mentre $e*e'=e'$ perché $e$ è neutro. Quindi $e=e'$.</p><p><strong>Unicità dell'inverso.</strong> Siano $b$ e $c$ due inversi dello stesso elemento $a$ di un monoide con neutro $e$. Si ha:</p><p>$$b=b*e=b*(a*c)=(b*a)*c=e*c=c.$$</p><p>L'associatività interviene nell'uguaglianza $b*(a*c)=(b*a)*c$; per l'unicità del neutro non serve.</p>`
+        },
+        {
+            id: "s07-teoria-2",
+            type: "esercizio",
+            title: "Teoria 2",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Sia $(M,*,e)$ un monoide. Dimostrare che l'insieme $U(M)$ degli elementi invertibili è un gruppo con l'operazione indotta da $M$ e ricavare la formula dell'inverso di un prodotto.</p>`,
+            solution: `<p>Il neutro appartiene a $U(M)$ perché $e*e=e$.</p><p>Se $a,b\\in U(M)$, l'associatività permette di calcolare:</p><p>$$(a*b)*(b^{-1}*a^{-1})=a*(b*b^{-1})*a^{-1}=e,$$</p><p>$$(b^{-1}*a^{-1})*(a*b)=b^{-1}*(a^{-1}*a)*b=e.$$</p><p>Pertanto $a*b\\in U(M)$ e:</p><p>$$(a*b)^{-1}=b^{-1}*a^{-1}.$$</p><p>L'operazione si restringe dunque a $U(M)$ e rimane associativa. Il suo neutro è $e$.</p><p>Infine, se $a\\in U(M)$, le uguaglianze $a*a^{-1}=e=a^{-1}*a$ mostrano che anche $a^{-1}$ è invertibile, con inverso $a$.</p><p>Quindi ogni elemento di $U(M)$ ha il proprio inverso in $U(M)$ e questa struttura è un gruppo.</p>`
+        },
+        {
+            id: "s07-teoria-3",
+            type: "esercizio",
+            title: "Teoria 3",
+            kind: "teoria",
+            source: "integrazione",
+            content: `<p>Enunciare e dimostrare il criterio che caratterizza gli interi $n\\ge2$ per cui $\\mathbb{Z}_n$ è un campo.</p>`,
+            solution: `<p><strong>Enunciato.</strong> $\\mathbb{Z}_n$ è un campo se e solo se $n$ è primo.</p><p>Le operazioni sulle classi ereditano dagli interi associatività, commutatività e distributività. I neutri sono $\\bar{0}$ e $\\bar{1}$; l'opposto di $\\bar{x}$ è $\\overline{-x}$. Inoltre $\\bar{0}\\ne\\bar{1}$ perché $n\\ge2$.</p><p><strong>Se $n=p$ è primo.</strong> Per $\\bar{a}\\ne\\bar{0}$, consideriamo:</p><p>$$T_a:\\mathbb{Z}_p\\to\\mathbb{Z}_p,\\qquad T_a(\\bar{x})=\\overline{ax}.$$</p><p>Se $T_a(\\bar{x})=T_a(\\bar{y})$, allora $p\\mid a(x-y)$. Qui si usa la proprietà dei numeri primi: se un primo divide un prodotto, divide almeno uno dei fattori. Poiché $p\\nmid a$, segue $p\\mid x-y$, cioè $\\bar{x}=\\bar{y}$.</p><p>La funzione è quindi iniettiva. Essendo una funzione da un insieme di $p$ elementi in se stesso, ha $p$ immagini distinte, che esauriscono il codominio: è anche suriettiva. Esiste perciò $\\bar{b}$ tale che:</p><p>$$\\bar{a}\\bar{b}=\\bar{1}.$$</p><p>Inoltre il prodotto di due classi non nulle è non nullo, perché $p\\mid ab$ implicherebbe $p\\mid a$ oppure $p\\mid b$. Le classi non nulle formano dunque un gruppo abeliano moltiplicativo e $\\mathbb{Z}_p$ è un campo.</p><p><strong>Se $n$ è composto.</strong> Possiamo scrivere $n=ab$ con $1\\lt a,b\\lt n$. Le classi $\\bar{a}$ e $\\bar{b}$ sono non nulle, ma:</p><p>$$\\bar{a}\\bar{b}=\\bar{0}.$$</p><p>Se $\\bar{a}$ avesse un inverso, moltiplicando questa uguaglianza per esso otterremmo $\\bar{b}=\\bar{0}$, assurdo. Pertanto $\\mathbb{Z}_n$ non è un campo.</p>`
+        },
+        {
+            id: "s07-scritto-1",
+            type: "esercizio",
+            title: "Scritto 1",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Su $\\mathbb{Z}$ si definisce $a*b=a+b+1$. Stabilire se $(\\mathbb{Z},*)$ è un semigruppo, un monoide o un gruppo e se è commutativo. Determinare l'eventuale elemento neutro e gli inversi. Risolvere infine $3*x=7$.</p>`,
+            solution: `<p><strong>Operazione interna, associativa e commutativa.</strong> L'operazione è interna perché $a+b+1\\in\\mathbb{Z}$ per ogni $a,b\\in\\mathbb{Z}$. Inoltre:</p><p>$$(a*b)*c=a+b+c+2=a*(b*c),$$</p><p>quindi è associativa. È commutativa perché $a+b+1=b+a+1$.</p><p><strong>Elemento neutro.</strong> L'equazione $a*e=a$ equivale ad $a+e+1=a$, quindi $e=-1$. Si verifica anche $(-1)*a=a$.</p><p><strong>Inversi.</strong> L'inverso di $a$ rispetto a $*$ è l'intero $b$ che soddisfa $a*b=-1$, ossia $a+b+1=-1$. Pertanto:</p><p>$$b=-a-2.$$</p><p>Per commutatività vale anche $b*a=-1$. La struttura è quindi un <strong>gruppo abeliano</strong> e, di conseguenza, anche un monoide e un semigruppo.</p><p><strong>Equazione.</strong> $3*x=7$ equivale a $3+x+1=7$, da cui l'unica soluzione è $x=3$.</p>`
+        },
+        {
+            id: "s07-scritto-2",
+            type: "esercizio",
+            title: "Scritto 2",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Nel campo $\\mathbb{Z}_5$, determinare l'inverso moltiplicativo di ogni elemento non nullo e risolvere l'equazione:</p><p>$$\\bar{2}x^2+\\bar{3}x+\\bar{1}=\\bar{0}.$$</p>`,
+            solution: `<p><strong>Inversi moltiplicativi.</strong> Si ricavano dalle uguaglianze:</p><p>$$\\bar{1}\\cdot\\bar{1}=\\bar{1},\\qquad\\bar{2}\\cdot\\bar{3}=\\bar{6}=\\bar{1},\\qquad\\bar{4}\\cdot\\bar{4}=\\overline{16}=\\bar{1}.$$</p><p>Quindi:</p><p>$$\\bar{1}^{-1}=\\bar{1},\\qquad\\bar{2}^{-1}=\\bar{3},\\qquad\\bar{3}^{-1}=\\bar{2},\\qquad\\bar{4}^{-1}=\\bar{4}.$$</p><p><strong>Risoluzione dell'equazione.</strong> Il polinomio si fattorizza come:</p><p>$$\\bar{2}x^2+\\bar{3}x+\\bar{1}=(\\bar{2}x+\\bar{1})(x+\\bar{1}).$$</p><p>In un campo un prodotto è nullo soltanto se almeno un fattore è nullo: se il primo fattore fosse non nullo, si potrebbe moltiplicare per il suo inverso. Pertanto:</p><p>$$\\bar{2}x+\\bar{1}=\\bar{0}\\qquad\\text{oppure}\\qquad x+\\bar{1}=\\bar{0}.$$</p><p>Nel primo caso:</p><p>$$x=\\bar{3}\\cdot\\bar{4}=\\overline{12}=\\bar{2}.$$</p><p>Nel secondo caso $x=\\bar{4}$. Entrambi i valori annullano uno dei fattori, quindi l'insieme delle soluzioni è:</p><p>$$\\{\\bar{2},\\bar{4}\\}.$$</p>`
+        },
+        {
+            id: "s07-scritto-3",
+            type: "esercizio",
+            title: "Scritto 3",
+            kind: "scritto",
+            source: "integrazione",
+            content: `<p>Nell'anello $(\\mathcal{P}(E),\\oplus,\\cap)$, determinare gli elementi invertibili rispetto al prodotto e stabilire per quali insiemi $E$ si ottiene un campo.</p><p>Dati $A,B,C\\subseteq E$, determinare poi tutte le soluzioni $X\\subseteq E$ dell'equazione:</p><p>$$(A\\cap X)\\oplus B=C.$$</p><p>Applicare il risultato a $E=\\{1,2,3,4\\}$, $A=\\{1,2,3\\}$, $B=\\{1,4\\}$ e $C=\\{2,4\\}$.</p>`,
+            solution: `<p><strong>Elementi invertibili.</strong> Il neutro moltiplicativo è $E$. Un sottoinsieme $D$ è invertibile se esiste $F\\subseteq E$ tale che $D\\cap F=E$. Poiché $D,F\\subseteq E$, questa uguaglianza impone $D=F=E$. Viceversa $E\\cap E=E$: l'unico elemento invertibile è $E$.</p><p><strong>Quando si ottiene un campo?</strong></p><ul><li>Se $E=\\emptyset$, l'anello ha un solo elemento e non è un campo, perché il neutro additivo coincide con quello moltiplicativo.</li><li>Se $E$ ha un solo elemento, $\\mathcal{P}(E)=\\{\\emptyset,E\\}$ e l'unico elemento non nullo è invertibile: si ottiene un campo.</li><li>Se $E$ ha almeno due elementi, esiste un sottoinsieme non vuoto proprio, che è non nullo e non invertibile: non si ottiene un campo.</li></ul><p>La struttura è dunque un campo esattamente quando $|E|=1$.</p><p><strong>Risoluzione dell'equazione.</strong> Applichiamo la differenza simmetrica con $B$ a entrambi i membri:</p><p>$$((A\\cap X)\\oplus B)\\oplus B=C\\oplus B.$$</p><p>Per associatività, usando $B\\oplus B=\\emptyset$, il neutro $\\emptyset$ e la commutatività:</p><p>$$A\\cap X=C\\oplus B=B\\oplus C.$$</p><p>Poniamo $D=B\\oplus C$. È necessario che $D\\subseteq A$, perché $A\\cap X\\subseteq A$. Se questa condizione vale, tutte e sole le soluzioni sono:</p><p>$$X=D\\cup Y,\\qquad Y\\subseteq E\\setminus A.$$</p><p>Infatti l'intersezione con $A$ è esattamente $D$, mentre gli elementi esterni ad $A$ sono liberi. Se $D\\nsubseteq A$, non esistono soluzioni.</p><p><strong>Applicazione.</strong> Nell'esempio:</p><p>$$D=\\{1,4\\}\\oplus\\{2,4\\}=\\{1,2\\}\\subseteq A,\\qquad E\\setminus A=\\{4\\}.$$</p><p>Le soluzioni sono quindi:</p><p>$$X=\\{1,2\\}\\qquad\\text{oppure}\\qquad X=\\{1,2,4\\}.$$</p>`
+        }
+    ],
+
+    oral_cards: [
+        {
+            type: "definizione",
+            front: "Che cos'è un'operazione n-aria su un insieme $S$?",
+            back: "È un'applicazione $S^n\\to S$. Per $n=2$ è binaria; un insieme con un'operazione binaria è un gruppoide. Per $n=0$, poiché $S^0=\\{\\text{pt}\\}$, equivale alla scelta di un elemento di $S$."
+        },
+        {
+            type: "domanda",
+            front: "Come si legge il risultato $s*s'$ in una tavola di Cayley?",
+            back: "Si prende la riga del primo elemento $s$ e la colonna del secondo elemento $s'$. La loro intersezione contiene $s*s'$."
+        },
+        {
+            type: "definizione",
+            front: "Definisci associatività, commutatività, elemento neutro e inverso.",
+            back: "Associatività: $(r*s)*t=r*(s*t)$ per tutti $r,s,t$. Commutatività: $s*t=t*s$ per tutti $s,t$. Neutro: $s*e=s=e*s$ per ogni $s$. Inverso di $s$: un elemento $s'$ tale che $s'*s=e=s*s'$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Perché l'elemento neutro di un gruppoide è unico?",
+            back: "Se $e$ ed $e'$ sono neutri, allora $e'*e=e'$ perché $e$ è neutro, ed $e'*e=e$ perché $e'$ è neutro. Quindi $e=e'$. Non serve l'associatività."
+        },
+        {
+            type: "dimostrazione",
+            front: "Dimostra l'unicità dell'inverso in un monoide.",
+            back: "Se $s'$ e $s''$ sono inversi di $s$, allora $s'=s'*e=s'*(s*s'')=(s'*s)*s''=e*s''=s''$. L'associatività permette di passare da $s'*(s*s'')$ a $(s'*s)*s''$."
+        },
+        {
+            type: "tranello",
+            front: "In un gruppoide con elemento neutro l'inverso è sempre unico?",
+            back: "No. L'associatività è cruciale nella dimostrazione dell'unicità: esistono gruppoidi non associativi in cui un elemento ha più di un inverso."
+        },
+        {
+            type: "definizione",
+            front: "Distingui semigruppo, gruppoide unitario, monoide e gruppo.",
+            back: "Un semigruppo è un gruppoide associativo. Un gruppoide unitario ha un neutro. Un monoide è associativo e ha un neutro. Un gruppo è un monoide in cui ogni elemento è invertibile; è abeliano se l'operazione è commutativa."
+        },
+        {
+            type: "domanda",
+            front: "Come si interpretano neutro e inversione come operazioni?",
+            back: "Il neutro è individuato da un'operazione nullaria $\\zeta:\\{\\text{pt}\\}\\to S$ con $\\zeta(\\text{pt})=e$. In un gruppo, l'inversione è un'operazione unaria $i:S\\to S$ che associa a ogni $s$ il suo unico inverso $s^{-1}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Perché gli elementi invertibili di un monoide formano un gruppo?",
+            back: "Il prodotto di invertibili è invertibile: $(a*b)*(b^{-1}*a^{-1})=e$ e $(b^{-1}*a^{-1})*(a*b)=e$. L'associatività si eredita dal monoide; il neutro appartiene a $U(M)$; l'inverso di un invertibile è ancora invertibile, perché $(a^{-1})^{-1}=a$."
+        },
+        {
+            type: "formula",
+            front: "Qual è l'inverso di un prodotto di elementi invertibili?",
+            back: "$(a*b)^{-1}=b^{-1}*a^{-1}$. L'ordine dei fattori si inverte."
+        },
+        {
+            type: "definizione",
+            front: "Che cos'è la differenza simmetrica e quale struttura definisce su $\\mathcal{P}(E)$?",
+            back: "$A\\oplus B=(A\\setminus B)\\cup(B\\setminus A)$: contiene gli elementi appartenenti esattamente a uno dei due insiemi. $(\\mathcal{P}(E),\\oplus)$ è un gruppo abeliano con neutro $\\emptyset$ e ogni elemento inverso di se stesso, perché $A\\oplus A=\\emptyset$."
+        },
+        {
+            type: "domanda",
+            front: "Perché $(\\mathbb{N},+)$ non è un gruppo? Quali sono gli invertibili di $(\\mathbb{Z},\\cdot)$?",
+            back: "Assumendo $\\mathbb{N}=\\{0,1,2,\\dots\\}$, $(\\mathbb{N},+)$ è un monoide commutativo ma $1$ non ha inverso additivo in $\\mathbb{N}$. In $(\\mathbb{Z},\\cdot)$ gli unici invertibili sono $1$ e $-1$."
+        },
+        {
+            type: "tranello",
+            front: "Nella composizione $f\\circ g$, quale funzione si applica per prima?",
+            back: "Si applica prima $g$, perché $(f\\circ g)(x)=f(g(x))$. Su $E=\\{1,2\\}$, se $f$ è costante di valore $1$ e $g$ di valore $2$, allora $f\\circ g=f$ e $g\\circ f=g$: la composizione non è commutativa."
+        },
+        {
+            type: "domanda",
+            front: "Qual è il gruppo degli invertibili di $(E^E,\\circ)$? Quando non è abeliano?",
+            back: "È $S(E)$, l'insieme delle biiezioni da $E$ in se stesso. Non è abeliano se $|E|\\ge3$: su $\\{1,2,3\\}$, scambiando rispettivamente $1,2$ e $2,3$, si ottiene $(\\sigma\\circ\\tau)(1)=2$ mentre $(\\tau\\circ\\sigma)(1)=3$."
+        },
+        {
+            type: "definizione",
+            front: "Che cos'è il monoide libero su un alfabeto non vuoto $A$?",
+            back: "È $A^*=\\bigcup_{n=0}^{\\infty}A^n$, l'insieme delle parole finite su $A$, con la concatenazione. L'operazione è associativa e il neutro è la parola vuota. Solo la parola vuota è invertibile; il monoide non è un gruppo e in genere non è commutativo."
+        },
+        {
+            type: "definizione",
+            front: "Quando $*$ è distributiva rispetto a $\\bullet$?",
+            back: "Quando, per tutti $r,s,t$, valgono $r*(s\\bullet t)=(r*s)\\bullet(r*t)$ e $(s\\bullet t)*r=(s*r)\\bullet(t*r)$, cioè la distributività a sinistra e a destra."
+        },
+        {
+            type: "definizione",
+            front: "Distingui semianello e anello. Che cosa significano unitario e commutativo?",
+            back: "In un semianello $(S,\\bullet,*)$, $(S,\\bullet)$ è un monoide commutativo, $(S,*)$ è un semigruppo e $*$ è distributiva rispetto a $\\bullet$. È un anello se $(S,\\bullet)$ è un gruppo abeliano; è unitario se $(S,*)$ è un monoide e commutativo se il prodotto è commutativo."
+        },
+        {
+            type: "definizione",
+            front: "Quali proprietà caratterizzano un campo?",
+            back: "La somma forma un gruppo abeliano su tutto l'insieme; il prodotto forma un gruppo abeliano sugli elementi diversi dal neutro additivo; il prodotto è distributivo rispetto alla somma. Si può dividere per ogni elemento diverso da zero."
+        },
+        {
+            type: "tranello",
+            front: "La distributività del prodotto rispetto alla somma implica quella della somma rispetto al prodotto?",
+            back: "No. Per esempio $1+(2\\cdot3)=7$, mentre $(1+2)\\cdot(1+3)=12$."
+        },
+        {
+            type: "domanda",
+            front: "Perché $(\\mathbb{Z},+,\\cdot)$ non è un campo? Quale proprietà manca a $(3\\mathbb{Z},+,\\cdot)$ per essere unitario?",
+            back: "In $\\mathbb{Z}$ non tutti gli elementi non nulli hanno un inverso moltiplicativo: per esempio $2$ non lo ha. L'anello dei multipli di $3$ è commutativo ma non ha un elemento neutro moltiplicativo."
+        },
+        {
+            type: "tranello",
+            front: "Che cosa significa $\\bar{7}=\\bar{2}$ in $\\mathbb{Z}_5$?",
+            back: "Significa che $7$ e $2$ individuano la stessa classe di resto, perché differiscono di un multiplo di $5$. Non significa che siano uguali come interi. La classe è $\\bar{x}=\\{x+5k\\mid k\\in\\mathbb{Z}\\}$."
+        },
+        {
+            type: "formula",
+            front: "Come si definiscono somma e prodotto in $\\mathbb{Z}_n$?",
+            back: "$\\bar{x}+\\bar{y}=\\overline{x+y}$ e $\\bar{x}\\cdot\\bar{y}=\\overline{x\\cdot y}$. Si opera sui rappresentanti e si prende la classe del risultato."
+        },
+        {
+            type: "formula",
+            front: "Quali sono gli inversi moltiplicativi degli elementi non nulli di $\\mathbb{Z}_5$?",
+            back: "$\\bar{1}^{-1}=\\bar{1}$, $\\bar{2}^{-1}=\\bar{3}$, $\\bar{3}^{-1}=\\bar{2}$ e $\\bar{4}^{-1}=\\bar{4}$. Nella tavola del prodotto si cerca $\\bar{1}$ nella riga dell'elemento."
+        },
+        {
+            type: "domanda",
+            front: "Per $n\\ge2$, quando $\\mathbb{Z}_n$ è un campo?",
+            back: "$\\mathbb{Z}_n$ è un campo se e solo se $n$ è un numero primo."
+        },
+        {
+            type: "dimostrazione",
+            front: "Nell'esercizio integrativo Teoria 3, come si prova l'esistenza degli inversi quando il modulo $p$ è primo?",
+            back: "Per $\\bar{a}\\ne\\bar{0}$ si considera $T_a(\\bar{x})=\\overline{ax}$. Se due immagini coincidono, $p\\mid a(x-y)$; essendo $p$ primo e $p\\nmid a$, segue $p\\mid x-y$. Quindi $T_a$ è iniettiva e, sull'insieme finito $\\mathbb{Z}_p$, suriettiva. Esiste allora $\\bar{b}$ con $\\bar{a}\\bar{b}=\\bar{1}$."
+        },
+        {
+            type: "dimostrazione",
+            front: "Nell'esercizio integrativo Teoria 3, perché un modulo composto impedisce a $\\mathbb{Z}_n$ di essere un campo?",
+            back: "Se $n=ab$ con $1\\lt a,b\\lt n$, le classi $\\bar{a}$ e $\\bar{b}$ sono non nulle ma $\\bar{a}\\bar{b}=\\bar{0}$. Se $\\bar{a}$ avesse inverso, moltiplicando per esso si otterrebbe $\\bar{b}=\\bar{0}$, assurdo."
+        },
+        {
+            type: "domanda",
+            front: "Nell'esercizio integrativo Scritto 3, quali sottoinsiemi sono invertibili per $\\cap$ e quando $(\\mathcal{P}(E),\\oplus,\\cap)$ è un campo?",
+            back: "L'unico invertibile è $E$: se $D\\cap F=E$ con $D,F\\subseteq E$, allora $D=F=E$. La struttura è un campo esattamente quando $|E|=1$. Se $E=\\emptyset$, i due neutri coincidono; se $|E|\\ge2$, esistono sottoinsiemi non nulli non invertibili."
+        },
+        {
+            type: "formula",
+            front: "Nell'esercizio integrativo Scritto 3, quali sono le soluzioni di $(A\\cap X)\\oplus B=C$?",
+            back: "Posto $D=B\\oplus C$, l'equazione equivale ad $A\\cap X=D$. Se $D\\nsubseteq A$ non ci sono soluzioni. Se $D\\subseteq A$, tutte e sole le soluzioni sono $X=D\\cup Y$, con $Y\\subseteq E\\setminus A$."
+        }
+    ]
+};
+
+
+</script>
+
+<!-- ─── Renderer & Graphs ─── -->
+<script src="/js/renderer.js?v=21"></script>
+<script src="/js/graphs.js?v=21"></script>
+
+<!-- ─── Sidebar Toggle ─── -->
+<script>
+const toggleBtn = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.lesson-sidebar');
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    toggleBtn.classList.toggle('collapsed');
+  });
+}
+</script>
+
+</body>
+</html>
