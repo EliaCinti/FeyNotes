@@ -1,0 +1,681 @@
+const LESSON = {
+    id: "L16", date: "Lezione 16 — 16 Ott 2026",
+    title: "Forme Indeterminate, o-piccolo e Gerarchia degli Infiniti",
+    abstract: "Le sette forme indeterminate e perché l'algebra dei limiti non basta; il simbolo di Landau $o(1)$ come scorciatoia per 'qualcosa che va a zero'; successioni asintoticamente equivalenti e principio di sostituzione (con i suoi limiti di applicabilità); teorema sulle successioni monotone e gerarchia degli infiniti.",
+
+    sections: [
+      {
+        id: "s16-divisione-infinitesimo",
+        type: "section",
+        title: "Divisione per una successione infinitesima: enunciato corretto",
+        icon: "➗",
+        content: `<p>Tra le regole dell'algebra dei limiti, una delle più usate riguarda il quoziente in cui il denominatore diventa piccolo. Va enunciata con cura: la formulazione sbrigativa <em>"finito o infinito diviso qualcosa che va a zero fa infinito"</em> è <strong>falsa</strong>. Bisogna sapere sia che il numeratore <strong>non</strong> tende a zero, sia <strong>con quale segno</strong> il denominatore si avvicina a zero.</p>
+        <p>Siano $(a_n)$ e $(b_n)$ due successioni con $b_n \\neq 0$ definitivamente, e supponiamo $b_n \\to 0$.</p>`,
+        subsections: [
+          {
+            subtitle: "I cinque casi da distinguere",
+            content: `<p><strong>1.</strong> Se $a_n \\to L$ con $L \\gt 0$ (oppure $a_n \\to +\\infty$) e $b_n \\to 0$ <strong>restando positiva</strong> ($b_n \\gt 0$ definitivamente), allora</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = +\\infty$$</p>
+            <p><strong>2.</strong> Se $a_n \\to L$ con $L \\gt 0$ (oppure $a_n \\to +\\infty$) e $b_n \\to 0$ <strong>restando negativa</strong> ($b_n \\lt 0$ definitivamente), allora</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = -\\infty$$</p>
+            <p><strong>3.</strong> Se $a_n \\to L$ con $L \\lt 0$ (oppure $a_n \\to -\\infty$), le due conclusioni precedenti si scambiano di segno.</p>
+            <p><strong>4.</strong> Se $b_n$ <strong>cambia segno infinite volte</strong>, il limite del quoziente può non esistere, nemmeno nel senso di $\\pm\\infty$.</p>
+            <p><strong>5.</strong> Se <strong>anche</strong> il numeratore tende a zero, non siamo in questo caso: si tratta della forma indeterminata $\\frac{0}{0}$, e non si può concludere nulla senza uno studio più fine.</p>`
+          },
+          {
+            subtitle: "Esempio — il segno del denominatore conta",
+            content: `<p>Prendiamo $a_n = 1$ (quindi $a_n \\to 1 \\gt 0$) e confrontiamo tre denominatori infinitesimi.</p>
+            <p><strong>(a)</strong> $b_n = \\dfrac{1}{n} \\gt 0$: allora $\\dfrac{a_n}{b_n} = n \\to +\\infty$.</p>
+            <p><strong>(b)</strong> $b_n = -\\dfrac{1}{n} \\lt 0$: allora $\\dfrac{a_n}{b_n} = -n \\to -\\infty$.</p>
+            <p><strong>(c)</strong> $b_n = \\dfrac{(-1)^n}{n}$: anche qui $b_n \\to 0$, ma il segno cambia a ogni passo. Si ottiene</p>
+            <p>$$\\frac{a_n}{b_n} = \\frac{1}{\\frac{(-1)^n}{n}} = (-1)^n \\, n$$</p>
+            <p>successione che vale $-1, +2, -3, +4, \\dots$: non tende a $+\\infty$, non tende a $-\\infty$ e <strong>non ha limite</strong>.</p>
+            <p>Questo terzo caso mostra che l'ipotesi sul segno del denominatore è essenziale e non può essere omessa.</p>`
+          }
+        ],
+        extra_content: `<p>L'intuizione resta comunque utile, purché applicata al caso corretto (numeratore che non tende a zero, denominatore di segno costante): se dividiamo una torta in porzioni sempre più piccole, il numero di porzioni tende all'infinito.</p>`
+      },
+
+      {
+        id: "s16-sette-forme",
+        type: "section",
+        title: "Le sette forme indeterminate",
+        icon: "❓",
+        content: `<p>Non tutte le situazioni sono così semplici. Esistono delle configurazioni, dette <strong>forme indeterminate</strong>, in cui il risultato del limite non può essere determinato a priori solo guardando i limiti delle singole componenti.</p>
+        <p>Le principali forme indeterminate sono sette:</p>
+        <p>$$+\\infty - \\infty \\qquad \\frac{0}{0} \\qquad \\frac{\\infty}{\\infty} \\qquad 0 \\cdot \\infty$$</p>
+        <p>$$1^{\\infty} \\qquad \\infty^{0} \\qquad 0^{0}$$</p>`,
+        quote: {
+          text: "Dire che una forma è \"indeterminata\" non significa che il problema non si può risolvere. Significa che dobbiamo trovare dei modi più fini, più intelligenti, di affrontare il problema, perché le regole base dell'algebra dei limiti non bastano.",
+          src: "Nota del Prof."
+        },
+        subsections: [
+          {
+            subtitle: "La forma $+\\infty - \\infty$",
+            content: `<p>Consideriamo una differenza di due successioni che tendono entrambe a $+\\infty$. Il risultato non è scontato.</p>
+            <p><strong>Primo esempio.</strong> $\\lim_{n \\to +\\infty} (n^4 - 2n^4)$. Qui $a_n = n^4 \\to +\\infty$ e $b_n = 2n^4 \\to +\\infty$: siamo nel caso $+\\infty - \\infty$. Svolgendo il calcolo algebrico:</p>
+            <p>$$\\lim_{n \\to +\\infty} (-n^4) = -\\infty$$</p>
+            <p><strong>Secondo esempio.</strong> $\\lim_{n \\to +\\infty} (2n^4 - n^4)$. Anche qui la forma è $+\\infty - \\infty$, ma il risultato è diverso:</p>
+            <p>$$\\lim_{n \\to +\\infty} (n^4) = +\\infty$$</p>
+            <p>A seconda di <em>come</em> le successioni vanno all'infinito, il risultato può essere $-\\infty$, $+\\infty$, o anche un valore finito. Per esempio, con $a_n = n^4 + 1$ e $b_n = n^4$:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\bigl((n^4+1) - n^4\\bigr) = \\lim_{n \\to +\\infty} 1 = 1$$</p>
+            <p>Non c'è una risposta unica; bisogna studiare caso per caso.</p>`
+          },
+          {
+            subtitle: "La forma $\\frac{0}{0}$: tre esiti diversi",
+            content: `<p>Quando scriviamo la forma $\\frac{0}{0}$, intendiamo studiare $\\lim_{n \\to +\\infty} \\frac{a_n}{b_n}$ con $a_n \\to 0$ e $b_n \\to 0$. In tutti i casi seguenti la "fotografia" dei due limiti separati è sempre la stessa, eppure i risultati sono tre.</p>
+            <p><strong>(a) Numeratore più veloce del denominatore:</strong> $a_n = \\dfrac{1}{n^2}$, $b_n = \\dfrac{1}{n}$.</p>
+            <p>$$\\frac{a_n}{b_n} = \\frac{1/n^2}{1/n} = \\frac{1}{n^2} \\cdot n = \\frac{1}{n} \\overset{n \\to +\\infty}{\\longrightarrow} 0$$</p>
+            <p><strong>(b) Denominatore più veloce del numeratore:</strong> $a_n = \\dfrac{1}{n}$, $b_n = \\dfrac{1}{n^2}$.</p>
+            <p>$$\\frac{a_n}{b_n} = \\frac{1/n}{1/n^2} = \\frac{1}{n} \\cdot n^2 = n \\overset{n \\to +\\infty}{\\longrightarrow} +\\infty$$</p>
+            <p><strong>(c) Stessa velocità:</strong> $a_n = \\dfrac{2}{n}$, $b_n = \\dfrac{1}{n}$.</p>
+            <p>$$\\frac{a_n}{b_n} = \\frac{2/n}{1/n} = 2 \\overset{n \\to +\\infty}{\\longrightarrow} 2$$</p>
+            <p><strong>Morale:</strong> conoscere soltanto $\\lim a_n = 0$ e $\\lim b_n = 0$ non basta a determinare $\\lim \\frac{a_n}{b_n}$. Serve sapere <em>quanto rapidamente</em> i due infinitesimi si annullano l'uno rispetto all'altro.</p>`
+          },
+          {
+            subtitle: "La forma $\\frac{\\infty}{\\infty}$",
+            content: `<p>Lo stesso fenomeno si presenta per il rapporto di due infiniti. Tre limiti con risultati diversi:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{n^4}{n^3} = \\lim_{n \\to +\\infty} n = +\\infty$$</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{n^3}{n^4} = \\lim_{n \\to +\\infty} \\frac{1}{n} = 0$$</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{2n^3}{n^3} = \\lim_{n \\to +\\infty} 2 = 2$$</p>
+            <p>Come si vede, la forma $\\frac{\\infty}{\\infty}$ può dare come risultato $+\\infty$, $0$ o un numero finito diverso da zero.</p>
+            <p><strong>Un parallelismo da notare.</strong> Passando dagli infinitesimi $\\frac{1}{n^k}$ agli infiniti $n^k$ si ritrovano gli stessi tre esiti. Il legame si vede bene sugli esempi positivi appena visti: se $a_n, b_n \\gt 0$ e tendono entrambe a zero, allora i reciproci $\\frac{1}{a_n}$ e $\\frac{1}{b_n}$ tendono a $+\\infty$, e il loro quoziente è</p>
+            <p>$$\\frac{1/a_n}{1/b_n} = \\frac{b_n}{a_n}$$</p>
+            <p>cioè il <strong>reciproco</strong> del rapporto di partenza. Questo scambia gli esiti $0$ e $+\\infty$ e lascia invariato il caso del limite finito non nullo (che si trasforma nel suo reciproco). <strong>Attenzione:</strong> il passaggio richiede che le successioni non si annullino e abbiano segno costante; un infinitesimo che cambia segno infinite volte non ha reciproco con limite infinito.</p>`
+          },
+          {
+            subtitle: "Altre forme indeterminate: $1^\\infty$",
+            content: `<p>Supponiamo $a_n \\to 1$, con $a_n \\gt 0$ in modo che la potenza sia ben definita, e $b_n \\to +\\infty$, e di voler calcolare $\\lim_{n \\to +\\infty} (a_n)^{b_n}$. Riscriviamo usando esponenziale e logaritmo:</p>
+            <p>$$(a_n)^{b_n} = e^{\\ln\\left((a_n)^{b_n}\\right)} = e^{b_n \\ln(a_n)}$$</p>
+            <p>Poiché $a_n \\to 1$, il suo logaritmo $\\ln(a_n) \\to \\ln(1) = 0$. L'esponente $b_n \\ln(a_n)$ è quindi del tipo $\\infty \\cdot 0$, che è un'altra forma indeterminata.</p>
+            <p>Quindi la forma $1^\\infty$ si riconduce alla forma $\\infty \\cdot 0$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s16-o-piccolo",
+        type: "section",
+        title: "Il simbolo di Landau: l'o-piccolo",
+        icon: "🔍",
+        content: `<p>Abbiamo già incontrato e risolto forme indeterminate, per esempio nel calcolo di limiti di funzioni razionali (rapporti di polinomi). Vediamo come il metodo che usiamo può essere generalizzato e descritto con una notazione più comoda.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio guida: un rapporto di polinomi",
+            content: `<p>Calcoliamo:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{n^4 - 2n^3 + 1}{n^2 + n + 13}$$</p>
+            <p>Il numeratore è una forma indeterminata del tipo $+\\infty - \\infty$; il denominatore tende a $+\\infty$; l'intera frazione è della forma $\\frac{\\infty}{\\infty}$. Il metodo consiste nel raccogliere il termine di grado massimo sia sopra che sotto:</p>
+            <p>$$\\begin{aligned}
+            \\lim_{n \\to +\\infty} \\frac{n^4 \\left(1 - \\frac{2n^3}{n^4} + \\frac{1}{n^4}\\right)}{n^2 \\left(1 + \\frac{n}{n^2} + \\frac{13}{n^2}\\right)} &= \\lim_{n \\to +\\infty} \\frac{n^4 \\left(1 - \\frac{2}{n} + \\frac{1}{n^4}\\right)}{n^2 \\left(1 + \\frac{1}{n} + \\frac{13}{n^2}\\right)} \\\\
+            &= \\lim_{n \\to +\\infty} n^2 \\cdot \\frac{1 - \\frac{2}{n} + \\frac{1}{n^4}}{1 + \\frac{1}{n} + \\frac{13}{n^2}}
+            \\end{aligned}$$</p>
+            <p>Tutti i termini frazionari tendono a zero. Per l'algebra dei limiti la frazione tende a</p>
+            <p>$$\\frac{1-0+0}{1+0+0} = 1$$</p>
+            <p>dove il passaggio è lecito perché il limite del denominatore vale $1 \\neq 0$. Abbiamo così il prodotto di una successione che tende a $+\\infty$ (il fattore $n^2$) e di una successione che tende al numero <em>strettamente positivo</em> $1$: per la regola del prodotto</p>
+            <p>$$\\lim_{n \\to +\\infty} n^2 \\cdot \\frac{1 - \\frac{2}{n} + \\frac{1}{n^4}}{1 + \\frac{1}{n} + \\frac{13}{n^2}} = +\\infty$$</p>`
+          },
+          {
+            subtitle: "L'idea dietro il metodo",
+            content: `<blockquote><p>Qual è l'idea fondamentale dietro questo metodo? Abbiamo risolto la forma indeterminata $+\\infty - \\infty$ al numeratore capendo quale termine "domina", cioè cresce più velocemente. Tra $n^4$ e $n^3$, il termine dominante è $n^4$. Cosa vuol dire "domina"? Vuol dire che quando lo metto in evidenza, tutti gli altri pezzi, divisi per $n^4$, tendono a zero. Questa idea di "qualcosa che va a zero e che possiamo trascurare" è così importante che le diamo un nome.</p><p style="text-align:right"><em>— Nota del Prof.</em></p></blockquote>
+            <p>Tutti i termini che vanno a zero e che, ai fini del calcolo del limite, non ci interessano nella loro forma specifica, li indicheremo con il simbolo <strong>o-piccolo di 1</strong>, scritto $o(1)$.</p>
+            <p>Rivediamo l'esempio precedente con questa notazione. I termini $\\left(-\\frac{2}{n} + \\frac{1}{n^4}\\right)$ al numeratore e $\\left(\\frac{1}{n} + \\frac{13}{n^2}\\right)$ al denominatore sono somme di successioni infinitesime, quindi sono esse stesse infinitesime:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{n^4 (1 + o(1))}{n^2 (1 + o(1))}$$</p>
+            <p>Qui $o(1)$ rappresenta una generica quantità che tende a zero per $n \\to +\\infty$: non ci interessa la sua forma esatta.</p>`
+          },
+          {
+            subtitle: "Definizione formale",
+            content: `<p>Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione <strong>infinitesima</strong>, cioè tale che</p>
+            <p>$$\\lim_{n \\to +\\infty} a_n = 0$$</p>
+            <p>Allora scriveremo</p>
+            <p>$$a_n = o(1) \\quad \\text{per } n \\to +\\infty$$</p>
+            <p>e leggeremo "$a_n$ è un o-piccolo di uno".</p>
+            <p>Il simbolo $o(1)$ non indica una specifica successione, ma una <strong>proprietà</strong>: quella di avere limite zero. L'uguaglianza $a_n = o(1)$ va letta da sinistra verso destra ("$a_n$ è infinitesima") e <strong>non è simmetrica</strong>: da $a_n = o(1)$ e $b_n = o(1)$ <strong>non</strong> segue $a_n = b_n$.</p>
+            <p>Sono invece corrette, e molto usate nei calcoli, regole del tipo</p>
+            <p>$$o(1) + o(1) = o(1), \\qquad \\lambda \\cdot o(1) = o(1) \\ \\ (\\lambda \\in \\mathbb{R}), \\qquad (\\text{successione limitata}) \\cdot o(1) = o(1)$$</p>
+            <p>dove ogni occorrenza del simbolo può rappresentare una successione infinitesima diversa.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Definizione di o-piccolo di 1", latex: "a_n = o(1) \\iff \\lim_{n \\to +\\infty} a_n = 0" },
+          { label: "Algebra degli o-piccoli", latex: "o(1) + o(1) = o(1), \\quad \\lambda \\cdot o(1) = o(1), \\quad \\frac{1}{1+o(1)} = 1 + o(1)" }
+        ]
+      },
+
+      {
+        id: "s16-due-o-piccoli",
+        type: "alert_box",
+        title: "Due $o(1)$ non sono lo stesso $o(1)$",
+        icon: "⚠️",
+        content: `<p>Nella scrittura $\\dfrac{n^4(1+o(1))}{n^2(1+o(1))}$ le due occorrenze di $o(1)$ indicano successioni <strong>diverse</strong>. Nel nostro caso</p>
+        <p>$$u_n = -\\frac{2}{n} + \\frac{1}{n^4}, \\qquad v_n = \\frac{1}{n} + \\frac{13}{n^2}$$</p>
+        <p>e si ha $u_n \\to 0$, $v_n \\to 0$, ma $u_n \\neq v_n$ (già per $n=1$: $u_1 = -1$ e $v_1 = 14$).</p>
+        <p>Di conseguenza i due fattori $1+u_n$ e $1+v_n$ <strong>non si possono cancellare</strong> come se fossero identici. Quello che si può dire, ed è esattamente ciò che serve, è che il loro <em>rapporto</em></p>
+        <p>$$c_n = \\frac{1+u_n}{1+v_n}$$</p>
+        <p>tende a $1$, senza però essere necessariamente uguale a $1$ per nessun $n$. Il simbolo $o(1)$ è un'abbreviazione per "una qualche successione infinitesima", non il nome di una successione fissata.</p>`
+      },
+
+      {
+        id: "s16-sostituzione-limite",
+        type: "section",
+        title: "Perché si può \"sostituire\" il rapporto con il suo limite",
+        icon: "🧩",
+        content: `<p>Poniamo, come sopra, $c_n = \\dfrac{1+u_n}{1+v_n}$ con $u_n \\to 0$ e $v_n \\to 0$. Dall'algebra dei limiti segue</p>
+        <p>$$\\lim_{n \\to +\\infty} c_n = \\frac{1+0}{1+0} = 1$$</p>
+        <p>Poiché $c_n \\to 1 \\gt \\frac12$, per definizione di limite esiste $N$ tale che $c_n \\gt \\frac12$ per ogni $n \\geq N$ (definitivamente). Quindi, per $n \\geq N$,</p>
+        <p>$$n^2 c_n \\geq \\frac{n^2}{2} \\overset{n \\to +\\infty}{\\longrightarrow} +\\infty$$</p>
+        <p>e per confronto $n^2 c_n \\to +\\infty$.</p>
+        <p>Lo stesso risultato si ottiene in un colpo solo richiamando la regola del prodotto: <em>se $x_n \\to +\\infty$ e $y_n \\to L$ con $L \\gt 0$, allora $x_n y_n \\to +\\infty$</em>. Qui $x_n = n^2$ e $y_n = c_n$ con $L = 1 \\gt 0$.</p>
+        <p><strong>Il punto da ricordare</strong> è che non stiamo "sostituendo un fattore con il suo limite" come operazione formale, bensì applicando un teorema sul prodotto; e quel teorema richiede $L \\gt 0$. Se, per esempio, il fattore tendesse a $0$, il prodotto $n^2 \\cdot y_n$ sarebbe di nuovo una forma indeterminata $\\infty \\cdot 0$.</p>`,
+        extra_content: `<p>Con questa giustificazione, il calcolo si scrive in forma compatta:</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{n^4 (1 + o(1))}{n^2 (1 + o(1))} = \\lim_{n \\to +\\infty} n^2 \\cdot \\underbrace{\\frac{1+o(1)}{1+o(1)}}_{\\to \\, 1} = +\\infty$$</p>
+        <p>La scrittura è molto più pulita e mette in evidenza il comportamento asintotico: il limite è governato dal rapporto $\\frac{n^4}{n^2} = n^2$ tra i termini dominanti.</p>`
+      },
+
+      {
+        id: "s16-esempi-asintotici",
+        type: "section",
+        title: "Due esempi di analisi asintotica",
+        icon: "✦",
+        content: `<p>Mettiamo subito all'opera la notazione $o(1)$ su due limiti classici: una differenza con radice (forma $+\\infty - \\infty$) e un rapporto di esponenziali.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio 1 — $\\lim_{n \\to +\\infty} \\left( \\sqrt{n^2+1} - n \\right)$",
+            content: `<p>Razionalizziamo, moltiplicando e dividendo per $\\sqrt{n^2+1} + n$:</p>
+            <p>$$\\begin{aligned}
+            \\lim_{n \\to +\\infty} \\left( \\sqrt{n^2+1} - n \\right) &= \\lim_{n \\to +\\infty} \\frac{(\\sqrt{n^2+1} - n)(\\sqrt{n^2+1} + n)}{\\sqrt{n^2+1} + n} \\\\
+            &= \\lim_{n \\to +\\infty} \\frac{n^2+1 - n^2}{\\sqrt{n^2+1} + n} = \\lim_{n \\to +\\infty} \\frac{1}{\\sqrt{n^2+1} + n}
+            \\end{aligned}$$</p>
+            <p>Questa forma è migliore, perché non è più indeterminata: il denominatore è una somma di infiniti,</p>
+            <p>$$\\sqrt{n^2+1} + n \\to +\\infty + \\infty = +\\infty$$</p>
+            <p>e quindi il limite vale $\\left[\\frac{1}{+\\infty}\\right] = 0$. Potremmo già concludere, ma svolgiamo i passaggi in modo più formale per esercitarci con la notazione o-piccolo. Mettiamo in evidenza $n$ al denominatore:</p>
+            <p>$$\\begin{aligned}
+            \\sqrt{n^2+1} + n &= \\sqrt{n^2 \\left(1 + \\frac{1}{n^2}\\right)} + n \\\\
+            &= n \\sqrt{1 + \\frac{1}{n^2}} + n \\quad (\\text{poiché } n \\gt 0,\\ \\sqrt{n^2}=n) \\\\
+            &= n \\left( \\sqrt{1 + \\frac{1}{n^2}} + 1 \\right)
+            \\end{aligned}$$</p>
+            <p>Poiché $\\frac{1}{n^2} \\to 0$, possiamo scrivere $\\frac{1}{n^2} = o(1)$, e l'espressione diventa $n \\left( \\sqrt{1 + o(1)} + 1 \\right)$. Il termine $\\sqrt{1+o(1)}$ tende a $\\sqrt{1+0}=1$, quindi la parentesi tende a $1+1=2$: il denominatore si comporta come $2n$ e va a $+\\infty$. Il limite è dunque</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{1}{n \\left( \\sqrt{1 + \\frac{1}{n^2}} + 1 \\right)} = \\frac{1}{+\\infty \\cdot (1+1)} = 0$$</p>`
+          },
+          {
+            subtitle: "Esempio 2 — $\\lim_{n \\to +\\infty} \\frac{2 \\cdot 4^n - 5^n}{4^n - 2 \\cdot 5^n}$",
+            content: `<p>Siamo di fronte a una forma indeterminata del tipo $\\frac{\\infty - \\infty}{\\infty - \\infty}$. Per risolverla dobbiamo capire qual è il termine che cresce più velocemente sia sopra che sotto. Tra $4^n$ e $5^n$ il termine dominante è $5^n$. Mettiamolo in evidenza:</p>
+            <p>$$\\begin{aligned}
+            \\lim_{n \\to +\\infty} \\frac{2 \\cdot 4^n - 5^n}{4^n - 2 \\cdot 5^n} &= \\lim_{n \\to +\\infty} \\frac{5^n \\left( 2 \\cdot \\frac{4^n}{5^n} - 1 \\right)}{5^n \\left( \\frac{4^n}{5^n} - 2 \\right)} \\\\
+            &= \\lim_{n \\to +\\infty} \\frac{2 \\cdot \\left(\\frac{4}{5}\\right)^n - 1}{\\left(\\frac{4}{5}\\right)^n - 2}
+            \\end{aligned}$$</p>
+            <p>Poiché la base $\\frac{4}{5}$ è minore di 1, il termine $\\left(\\frac{4}{5}\\right)^n$ tende a 0: in notazione o-piccolo, $\\left(\\frac{4}{5}\\right)^n = o(1)$. Dunque</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{2 \\cdot o(1) - 1}{o(1) - 2} = \\frac{2 \\cdot 0 - 1}{0 - 2} = \\frac{-1}{-2} = \\frac{1}{2}$$</p>
+            <p>Più avanti rivedremo questo stesso limite con il linguaggio delle successioni asintoticamente equivalenti: vedremo che la tecnica del "termine dominante" usata qui è esattamente l'applicazione del principio di sostituzione.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s16-equivalenza-asintotica",
+        type: "section",
+        title: "Successioni Asintoticamente Equivalenti",
+        icon: "≈",
+        content: `<p>Negli esempi precedenti abbiamo visto che il comportamento di una somma di termini infiniti è determinato dal termine "più forte", cioè quello che va all'infinito più velocemente. Questo concetto si formalizza con la nozione di successioni asintoticamente equivalenti.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione",
+            content: `<p>Siano $(a_n)$ e $(b_n)$ due successioni e supponiamo che <strong>$b_n$ sia definitivamente diversa da zero</strong> (cioè esista $\\bar{n} \\in \\mathbb{N}$ tale che $b_n \\neq 0$ per ogni $n \\geq \\bar{n}$). Diremo che $a_n$ è <strong>asintoticamente equivalente</strong> a $b_n$ per $n \\to +\\infty$, e scriveremo $a_n \\sim b_n$, se vale una delle seguenti condizioni equivalenti:</p>
+            <p><strong>(1)</strong> $a_n = b_n (1 + o(1))$</p>
+            <p><strong>(2)</strong> $b_n = a_n (1 + o(1))$</p>
+            <p><strong>(3)</strong> $\\displaystyle \\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1$</p>
+            <p>L'ipotesi $b_n \\neq 0$ definitivamente è comune a tutte e tre le condizioni: è proprio essa a rendere ben definito il quoziente $\\frac{a_n}{b_n}$ della condizione (3), almeno per $n$ grande, che è tutto ciò che conta per il calcolo del limite. Senza questa ipotesi le condizioni (1) e (2) sarebbero verificate anche dalla scelta banale $a_n = b_n = 0$, per la quale il rapporto della (3) non ha alcun senso.</p>`
+          },
+          {
+            subtitle: "Entrambe le successioni sono definitivamente non nulle",
+            content: `<p>Osserviamo subito un fatto che useremo più volte: <strong>se vale la condizione (1), allora anche $a_n$ è definitivamente diversa da zero.</strong></p>
+            <p>Infatti, posto $\\varepsilon_n = o(1)$, si ha $\\varepsilon_n \\to 0$ e quindi $1 + \\varepsilon_n \\to 1$. Per la definizione di limite, scegliendo $\\varepsilon = \\frac{1}{2}$, esiste $n_1$ tale che $|1+\\varepsilon_n - 1| \\lt \\frac{1}{2}$ per ogni $n \\geq n_1$, ossia</p>
+            <p>$$\\frac{1}{2} \\lt 1 + \\varepsilon_n \\lt \\frac{3}{2} \\qquad \\text{per ogni } n \\geq n_1$$</p>
+            <p>In particolare $1+o(1)$ è <em>definitivamente non nullo</em>. Poiché $a_n = b_n(1+\\varepsilon_n)$ e $b_n \\neq 0$ definitivamente, il prodotto di due quantità definitivamente non nulle è definitivamente non nullo: dunque $a_n \\neq 0$ per ogni $n$ sufficientemente grande. Questo giustifica il fatto che, nelle dimostrazioni seguenti, si possa dividere per $a_n$ e considerare il reciproco $\\frac{b_n}{a_n}$.</p>`
+          },
+          {
+            subtitle: "Equivalenza delle tre condizioni",
+            content: `<p>Tutte le implicazioni seguenti valgono sotto l'ipotesi $b_n \\neq 0$ definitivamente.</p>
+            <p><strong>$(3) \\Rightarrow (1)$:</strong> se $\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1$, per la definizione di limite la successione $\\frac{a_n}{b_n}$ si scrive come la sua destinazione $1$ più un termine infinitesimo, cioè $\\frac{a_n}{b_n} = 1 + o(1)$. Moltiplicando per $b_n$ si ottiene $a_n = b_n(1+o(1))$.</p>
+            <p><strong>$(1) \\Rightarrow (3)$:</strong> se $a_n = b_n(1+o(1))$, dividendo per $b_n$ (non nullo definitivamente) si ha $\\frac{a_n}{b_n} = 1+o(1)$. Passando al limite, $\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1$.</p>
+            <p><strong>$(1) \\Leftrightarrow (2)$:</strong> se $a_n \\sim b_n$, allora $\\frac{a_n}{b_n} = 1+o(1)$. Per l'osservazione precedente $a_n$ è definitivamente non nulla, quindi possiamo invertire la frazione: $\\frac{b_n}{a_n} = \\frac{1}{1+o(1)}$ per $n$ grande. Ricordando che $\\frac{1}{1+o(1)} = 1+o(1)$ (conseguenza del fatto che $\\frac{1}{1+\\varepsilon_n} \\to 1$ quando $\\varepsilon_n \\to 0$), otteniamo $\\frac{b_n}{a_n} = 1+o(1)$, cioè $b_n = a_n(1+o(1))$. Scambiando i ruoli di $a_n$ e $b_n$ si ottiene l'implicazione inversa.</p>
+            <p>In particolare la relazione $\\sim$ è <strong>simmetrica</strong>: $a_n \\sim b_n$ se e solo se $b_n \\sim a_n$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Equivalenza asintotica (condizione operativa)", latex: "a_n \\sim b_n \\iff \\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1" }
+        ]
+      },
+
+      {
+        id: "s16-principio-sostituzione",
+        type: "section",
+        title: "Principio di Sostituzione degli Infiniti e Infinitesimi",
+        icon: "🔄",
+        content: `<p>La nozione di equivalenza asintotica è molto potente perché ci permette di semplificare i calcoli dei limiti, sostituendo espressioni complicate con altre più semplici che ne catturano il comportamento dominante.</p>
+        <p><strong>Proposizione (Principio di Sostituzione).</strong> Siano $a_n \\sim a_n'$ e $b_n \\sim b_n'$ per $n \\to +\\infty$, con $a_n, a_n', b_n, b_n'$ definitivamente diverse da zero. Se <strong>uno</strong> dei due quozienti</p>
+        <p>$$\\frac{a_n}{b_n} \\qquad \\text{oppure} \\qquad \\frac{a_n'}{b_n'}$$</p>
+        <p>ammette limite $L$ per $n \\to +\\infty$, finito o infinito, allora <strong>anche l'altro</strong> ammette limite e tale limite vale $L$:</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = \\lim_{n \\to +\\infty} \\frac{a_n'}{b_n'} = L$$</p>`,
+        subsections: [
+          {
+            subtitle: "Perché serve l'ipotesi di esistenza del limite",
+            content: `<p>L'equivalenza asintotica da sola <strong>non</strong> garantisce che i limiti esistano: essa afferma soltanto che i due quozienti hanno lo <em>stesso</em> comportamento, non che tale comportamento sia un limite.</p>
+            <p>Si prenda infatti $a_n = a_n' = (-1)^n$ e $b_n = b_n' = 1$. Tutte le ipotesi di equivalenza sono banalmente soddisfatte ($\\frac{a_n}{a_n'} = 1$ e $\\frac{b_n}{b_n'} = 1$), le successioni sono non nulle, ma</p>
+            <p>$$\\frac{a_n}{b_n} = \\frac{a_n'}{b_n'} = (-1)^n$$</p>
+            <p>non ammette limite per $n \\to +\\infty$. Per questo l'enunciato corretto è <strong>condizionale</strong>: <em>se uno dei due limiti esiste, allora esiste anche l'altro e i due coincidono</em>.</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Supponiamo che esista</p>
+            <p>$$L = \\lim_{n \\to +\\infty} \\frac{a_n'}{b_n'} \\in \\mathbb{R} \\cup \\{-\\infty, +\\infty\\}$$</p>
+            <p>L'idea è di "far apparire" i termini che ci servono moltiplicando e dividendo. Poiché tutte le successioni in gioco sono definitivamente non nulle, per $n$ sufficientemente grande possiamo scrivere l'identità algebrica</p>
+            <p>$$\\frac{a_n}{b_n} = \\frac{a_n}{a_n'} \\cdot \\frac{a_n'}{b_n'} \\cdot \\frac{b_n'}{b_n}$$</p>
+            <p>Studiamo separatamente i tre fattori:</p>
+            <p>• per ipotesi $a_n \\sim a_n'$, quindi $\\displaystyle \\lim_{n \\to +\\infty} \\frac{a_n}{a_n'} = 1$;</p>
+            <p>• per ipotesi $b_n \\sim b_n'$, quindi $\\displaystyle \\lim_{n \\to +\\infty} \\frac{b_n}{b_n'} = 1$ e, per la simmetria della relazione $\\sim$ (oppure passando ai reciproci), anche $\\displaystyle \\lim_{n \\to +\\infty} \\frac{b_n'}{b_n} = 1$;</p>
+            <p>• il fattore centrale tende a $L$ per ipotesi.</p>
+            <p>Applicando l'algebra dei limiti al prodotto dei tre fattori otteniamo</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1 \\cdot L \\cdot 1 = L$$</p>
+            <p>Si noti che il passaggio è lecito anche quando $L = \\pm\\infty$: il prodotto $1 \\cdot (\\pm\\infty) \\cdot 1$ non è una forma indeterminata, perché i due fattori esterni tendono a $1 \\neq 0$.</p>
+            <p>Il viceversa si ottiene scambiando i ruoli delle successioni: se è $\\frac{a_n}{b_n}$ ad ammettere limite $L$, basta scrivere</p>
+            <p>$$\\frac{a_n'}{b_n'} = \\frac{a_n'}{a_n} \\cdot \\frac{a_n}{b_n} \\cdot \\frac{b_n}{b_n'}$$</p>
+            <p>e ripetere lo stesso ragionamento, usando $\\lim \\frac{a_n'}{a_n} = 1$ e $\\lim \\frac{b_n}{b_n'} = 1$. $\\square$</p>`
+          },
+          {
+            subtitle: "Applicazione: di nuovo $\\frac{2 \\cdot 4^n - 5^n}{4^n - 2 \\cdot 5^n}$",
+            content: `<p>Riprendiamo il limite già calcolato per via diretta, risolvendolo ora sostituendo numeratore e denominatore con i rispettivi termini dominanti.</p>
+            <p><strong>Passo 1: equivalenza al numeratore.</strong> Mostriamo che $2 \\cdot 4^n - 5^n \\sim -5^n$. Poiché $-5^n \\neq 0$ per ogni $n$,</p>
+            <p>$$\\frac{2 \\cdot 4^n - 5^n}{-5^n} = \\frac{2 \\cdot 4^n}{-5^n} + \\frac{-5^n}{-5^n} = 1 - 2\\left(\\frac{4}{5}\\right)^n \\longrightarrow 1 - 0 = 1$$</p>
+            <p>perché $\\left(\\frac{4}{5}\\right)^n \\to 0$ essendo $0 \\lt \\frac{4}{5} \\lt 1$. Per la condizione (3) della definizione, dunque $2\\cdot 4^n - 5^n \\sim -5^n$.</p>
+            <p><strong>Passo 2: equivalenza al denominatore.</strong> Analogamente, con $-2\\cdot 5^n \\neq 0$:</p>
+            <p>$$\\frac{4^n - 2 \\cdot 5^n}{-2 \\cdot 5^n} = -\\frac{1}{2}\\left(\\frac{4}{5}\\right)^n + 1 \\longrightarrow 1$$</p>
+            <p>quindi $4^n - 2\\cdot 5^n \\sim -2 \\cdot 5^n$.</p>
+            <p><strong>Passo 3: sostituzione.</strong> Il quoziente delle successioni "semplificate" ammette limite:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{-5^n}{-2 \\cdot 5^n} = \\lim_{n \\to +\\infty} \\frac{1}{2} = \\frac{1}{2}$$</p>
+            <p>Poiché questo limite esiste (ed è finito) e tutte le successioni coinvolte sono definitivamente non nulle, il principio di sostituzione garantisce che anche il quoziente originale ammette lo stesso limite:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{2 \\cdot 4^n - 5^n}{4^n - 2 \\cdot 5^n} = \\frac{1}{2}$$</p>
+            <p>in accordo con il calcolo svolto in precedenza. Si noti il vantaggio operativo: una volta riconosciuti i termini dominanti, il limite si riduce a una semplificazione immediata di potenze.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Identità chiave della dimostrazione", latex: "\\frac{a_n}{b_n} = \\frac{a_n}{a_n'} \\cdot \\frac{a_n'}{b_n'} \\cdot \\frac{b_n'}{b_n}" }
+        ]
+      },
+
+      {
+        id: "s16-limiti-sostituzione",
+        type: "alert_box",
+        title: "Attenzione: limiti di applicabilità del principio di sostituzione",
+        icon: "🚫",
+        content: `<p>Il principio di sostituzione è valido per <strong>prodotti e quozienti</strong>, ma in generale <strong>non vale</strong> per somme, differenze o composizioni di funzioni.</p>`,
+        subsections: [
+          {
+            subtitle: "Somme e differenze",
+            content: `<p>Consideriamo l'espressione $(n+1)^2 - n^2$. Sappiamo che $(n+1)^2 = n^2+2n+1 \\sim n^2$, poiché $\\lim_{n \\to +\\infty} \\frac{(n+1)^2}{n^2} = 1$. Se applicassimo ingenuamente il principio di sostituzione otterremmo</p>
+            <p>$$(n+1)^2 - n^2 \\sim n^2 - n^2 = 0 \\quad (\\text{ERRATO!})$$</p>
+            <p>Questo è palesemente falso. Il calcolo corretto è</p>
+            <p>$$(n+1)^2 - n^2 = (n^2+2n+1) - n^2 = 2n+1 \\to +\\infty$$</p>
+            <p>L'errore nasce dal trascurare il termine $o(1)$. Infatti $(n+1)^2 = n^2(1+o(1))$; sostituendo,</p>
+            <p>$$n^2(1+o(1)) - n^2 = n^2 + n^2 \\cdot o(1) - n^2 = n^2 \\cdot o(1)$$</p>
+            <p>Ma $o(1)$ in questo caso era $\\frac{2n+1}{n^2}$, quindi $n^2 \\cdot o(1) = n^2 \\cdot \\frac{2n+1}{n^2} = 2n+1$, che non è affatto trascurabile.</p>`
+          },
+          {
+            subtitle: "Composizione di funzioni",
+            content: `<p>Consideriamo $e^{n^2+n}$. L'argomento dell'esponenziale è $n^2+n \\sim n^2$: se sostituissimo, otterremmo $e^{n^2}$. Verifichiamo se $e^{n^2+n} \\sim e^{n^2}$:</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{e^{n^2+n}}{e^{n^2}} = \\lim_{n \\to +\\infty} e^{(n^2+n) - n^2} = \\lim_{n \\to +\\infty} e^n = +\\infty$$</p>
+            <p>Poiché il limite non è $1$, le due espressioni <strong>non</strong> sono asintoticamente equivalenti. La sostituzione non è valida.</p>`
+          }
+        ],
+        extra_content: `<p><strong>Punto chiave:</strong> la sostituzione con il comportamento asintotico (cioè rimpiazzare un'espressione con il suo termine dominante) è una tecnica sicura solo all'interno di <strong>prodotti e quozienti</strong>, e a condizione che uno dei due quozienti ammetta limite.</p>`
+      },
+
+      {
+        id: "s16-monotone",
+        type: "section",
+        title: "Teorema sulle Successioni Monotone",
+        icon: "📈",
+        content: `<p>Per affrontare una gamma più vasta di esercizi sui limiti, specialmente quelli con forme indeterminate complesse, serve un ultimo risultato teorico fondamentale. Finora abbiamo imparato a confrontare polinomi, esponenziali e logaritmi, ma non abbiamo un metodo sistematico per confrontare famiglie diverse, come potenze e fattoriali, o per gestire i limiti notevoli.</p>
+        <p>Il teorema che introduciamo fornisce una <strong>condizione sufficiente per garantire l'esistenza del limite</strong> (finito o infinito) di una successione; aggiungendo l'ipotesi di limitatezza si ottiene poi la convergenza.</p>
+        <p>Data una successione generica $a_n$, non è affatto ovvio se essa converga o meno: $a_n = (-1)^n$ non converge, mentre $a_n = 1/n$ converge. Esistono però delle classi di successioni per cui la convergenza (o la divergenza regolare) è garantita. La proprietà chiave è la <strong>monotonia</strong>.</p>
+        <p>Una successione crescente non può oscillare: o si stabilizza avvicinandosi a un valore finito, oppure cresce illimitatamente. In entrambi i casi, ammette limite.</p>`,
+        subsections: [
+          {
+            subtitle: "Enunciato",
+            content: `<p><strong>Teorema (Convergenza delle Successioni Monotone).</strong> Sia $(a_n)_{n \\in \\mathbb{N}}$ una successione monotona. Allora $(a_n)$ <strong>ammette limite</strong> (finito o infinito). In particolare:</p>
+            <p>• Se $(a_n)$ è crescente, allora $\\displaystyle \\lim_{n \\to +\\infty} a_n = \\sup_{n \\in \\mathbb{N}} \\{a_n\\}$.</p>
+            <p>• Se $(a_n)$ è decrescente, allora $\\displaystyle \\lim_{n \\to +\\infty} a_n = \\inf_{n \\in \\mathbb{N}} \\{a_n\\}$.</p>`
+          },
+          {
+            subtitle: "Dimostrazione (caso crescente)",
+            content: `<p>Il caso decrescente è analogo. Sia $L = \\sup_{n \\in \\mathbb{N}} \\{a_n\\}$. L'estremo superiore di un insieme di numeri reali può essere un numero reale (se l'insieme è limitato superiormente) o $+\\infty$ (se non lo è). Analizziamo i due casi.</p>
+            <p><strong>Caso 1: la successione è limitata superiormente ($L \\in \\mathbb{R}$).</strong> Per definizione di estremo superiore valgono due proprietà:</p>
+            <p>(i) $a_n \\le L$ per ogni $n \\in \\mathbb{N}$ ($L$ è un maggiorante);</p>
+            <p>(ii) per ogni $\\varepsilon \\gt 0$, $L-\\varepsilon$ non è un maggiorante, cioè esiste un indice $n_0 \\in \\mathbb{N}$ tale che $a_{n_0} \\gt L-\\varepsilon$.</p>
+            <p>Ora usiamo la crescenza: per ogni $n \\gt n_0$ si ha $a_n \\ge a_{n_0}$. Combinando, per ogni $n \\gt n_0$:</p>
+            <p>$$L - \\varepsilon \\lt a_{n_0} \\le a_n \\le L \\lt L + \\varepsilon$$</p>
+            <p>cioè $|a_n - L| \\lt \\varepsilon$. Per la definizione di limite, $\\lim_{n \\to +\\infty} a_n = L$.</p>
+            <p><strong>Caso 2: la successione non è limitata superiormente ($L = +\\infty$).</strong> Se il sup è $+\\infty$, l'insieme dei valori $\\{a_n\\}$ non è limitato superiormente: per ogni $M \\in \\mathbb{R}$, $M$ non è un maggiorante. Quindi per ogni $M \\gt 0$ esiste $n_0 \\in \\mathbb{N}$ tale che $a_{n_0} \\gt M$. Poiché la successione è crescente, per ogni $n \\gt n_0$ vale $a_n \\ge a_{n_0} \\gt M$. Questa è esattamente la definizione di limite infinito, quindi $\\lim_{n \\to +\\infty} a_n = +\\infty$. $\\square$</p>`
+          },
+          {
+            subtitle: "Corollario: monotona + limitata ⟹ convergente",
+            content: `<p><strong>Corollario.</strong> Ogni successione monotona e limitata è convergente (cioè ammette limite finito).</p>
+            <p><em>Dimostrazione.</em> Se $(a_n)$ è limitata, esistono $m, M \\in \\mathbb{R}$ tali che $m \\le a_n \\le M$ per ogni $n$. Se è anche monotona (ad esempio crescente), il suo insieme di valori è limitato superiormente da $M$. Per il teorema precedente il suo limite è il suo estremo superiore $L = \\sup\\{a_n\\}$, e poiché la successione è limitata superiormente, $L$ deve essere un numero reale finito. Quindi la successione converge. Il ragionamento è analogo per le successioni decrescenti e limitate inferiormente. $\\square$</p>
+            <p><strong>Attenzione alla logica:</strong> la monotonia da sola garantisce l'esistenza di un limite <em>finito o infinito</em> (si pensi a $a_n = n$, crescente ma divergente). Monotonia <em>e</em> limitatezza insieme sono sufficienti per la convergenza; la monotonia non è invece necessaria (si pensi a $a_n = \\frac{(-1)^n}{n}$, convergente a $0$ ma non monotona).</p>`
+          }
+        ],
+        quote: {
+          text: "Come si studia un teorema come questo? Non cercate di imparare a memoria i passaggi. Concentratevi sulle definizioni chiave. Per dimostrare questo teorema, l'unica cosa che serve veramente sapere è la definizione di estremo superiore (sup). Se avete chiara quella, potete ricostruire l'intera dimostrazione ragionando. La matematica non è uno sforzo mnemonico, ma di ragionamento.",
+          src: "Nota del Prof."
+        },
+        extra_content: `<p><strong>Applicazione futura: il numero di Nepero $e$.</strong> Lunedì useremo questo risultato per dimostrare l'esistenza di un limite fondamentale. Consideriamo la successione</p>
+        <p>$$a_n = \\left(1 + \\frac{1}{n}\\right)^n$$</p>
+        <p>Dimostreremo che $(a_n)$ è crescente e che $(a_n)$ è limitata. Per il corollario appena visto, questo implica che la successione converge a un limite finito, chiamato numero di Nepero e indicato con $e$:</p>
+        <p>$$\\lim_{n \\to +\\infty} \\left(1 + \\frac{1}{n}\\right)^n = e \\approx 2.71828\\ldots$$</p>
+        <p>In seguito dimostreremo anche che $e$ è un numero irrazionale.</p>`
+      },
+
+      {
+        id: "s16-gerarchia",
+        type: "section",
+        title: "Gerarchia degli Infiniti",
+        icon: "🪜",
+        content: `<p>Applichiamo ora le nostre conoscenze per stabilire un ordine di grandezza tra le principali famiglie di successioni che tendono a infinito.</p>`,
+        subsections: [
+          {
+            subtitle: "Fattoriale vs Potenza",
+            content: `<p>Calcoliamo $\\displaystyle \\lim_{n \\to +\\infty} \\frac{n!}{n^3}$.</p>
+            <p>$$\\begin{aligned}
+            \\lim_{n \\to +\\infty} \\frac{n!}{n^3} &= \\lim_{n \\to +\\infty} \\frac{n \\cdot (n-1) \\cdot (n-2) \\cdot (n-3)!}{n \\cdot n \\cdot n} \\\\
+            &= \\lim_{n \\to +\\infty} \\left( \\frac{n}{n} \\cdot \\frac{n-1}{n} \\cdot \\frac{n-2}{n} \\cdot (n-3)! \\right) \\\\
+            &= 1 \\cdot 1 \\cdot 1 \\cdot (+\\infty) = +\\infty
+            \\end{aligned}$$</p>
+            <p>Il fattoriale $n!$ cresce più velocemente di $n^3$. Il ragionamento si generalizza a qualsiasi potenza: per ogni $\\alpha \\in \\mathbb{R}$,</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{n!}{n^\\alpha} = +\\infty$$</p>`
+          },
+          {
+            subtitle: "Fattoriale vs $n^n$",
+            content: `<p>Calcoliamo $\\displaystyle \\lim_{n \\to +\\infty} \\frac{n!}{n^n}$. Scriviamo i termini del rapporto:</p>
+            <p>$$\\frac{n!}{n^n} = \\frac{n \\cdot (n-1) \\cdot (n-2) \\cdots 2 \\cdot 1}{n \\cdot n \\cdot n \\cdots n \\cdot n} = \\frac{n}{n} \\cdot \\frac{n-1}{n} \\cdot \\frac{n-2}{n} \\cdots \\frac{2}{n} \\cdot \\frac{1}{n}$$</p>
+            <p>Ogni termine di questo prodotto, tranne il primo, è strettamente minore di 1. Possiamo stabilire una maggiorazione:</p>
+            <p>$$0 \\le \\frac{n!}{n^n} = \\underbrace{\\left(\\frac{n}{n} \\cdot \\frac{n-1}{n} \\cdots \\frac{2}{n}\\right)}_{\\le 1 \\text{ per ogni termine}} \\cdot \\frac{1}{n} \\le 1 \\cdot \\frac{1}{n} = \\frac{1}{n}$$</p>
+            <p>Poiché $\\lim_{n \\to +\\infty} \\frac{1}{n} = 0$, per il <strong>Teorema dei Carabinieri</strong> concludiamo che</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{n!}{n^n} = 0$$</p>
+            <p>La successione $n^n$ cresce molto più velocemente del fattoriale $n!$.</p>`
+          },
+          {
+            subtitle: "Esponenziale vs Fattoriale",
+            content: `<p>Calcoliamo $\\displaystyle \\lim_{n \\to +\\infty} \\frac{5^n}{n!}$.</p>
+            <p>$$\\begin{aligned}
+            \\frac{5^n}{n!} &= \\frac{5 \\cdot 5 \\cdot 5 \\cdots 5}{n \\cdot (n-1) \\cdot (n-2) \\cdots 1} \\\\
+            &= \\left(\\frac{5}{1} \\cdot \\frac{5}{2} \\cdot \\frac{5}{3} \\cdot \\frac{5}{4} \\cdot \\frac{5}{5}\\right) \\cdot \\left(\\frac{5}{6} \\cdot \\frac{5}{7} \\cdots \\frac{5}{n}\\right)
+            \\end{aligned}$$</p>
+            <p>Il primo gruppo di termini è una costante $C = \\frac{5^5}{5!}$. Per $n \\gt 5$, tutti i termini del secondo gruppo sono minori di 1; in particolare sono tutti minori o uguali a $5/6$. Possiamo quindi maggiorare, per $n \\gt 5$:</p>
+            <p>$$0 \\le \\frac{5^n}{n!} = C \\cdot \\underbrace{\\frac{5}{6} \\cdot \\frac{5}{7} \\cdots \\frac{5}{n}}_{\\text{ci sono } n-5 \\text{ termini}} \\le C \\cdot \\left(\\frac{5}{6}\\right)^{n-5}$$</p>
+            <p>Poiché $5/6 \\lt 1$, la successione geometrica $\\left(\\frac{5}{6}\\right)^{n-5}$ tende a 0. Per il Teorema dei Carabinieri,</p>
+            <p>$$\\lim_{n \\to +\\infty} \\frac{5^n}{n!} = 0$$</p>
+            <p>Il fattoriale $n!$ cresce più velocemente di qualsiasi esponenziale $a^n$ (con $a \\gt 1$).</p>`
+          }
+        ],
+        formulas: [
+          { label: "Gerarchia degli infiniti", latex: "\\log(n) \\ll n^\\alpha \\ll a^n \\ll n! \\ll n^n \\quad (\\alpha \\gt 0,\\ a \\gt 1)" }
+        ],
+        extra_content: `<p>Abbiamo stabilito un ordine di crescita per le principali successioni divergenti. In ordine crescente di "velocità" con cui tendono a $+\\infty$:</p>
+        <p>$$\\log(n) \\ll n^\\alpha \\ll a^n \\ll n! \\ll n^n \\quad (\\text{per } \\alpha \\gt 0,\\ a \\gt 1)$$</p>
+        <p>dove il simbolo $\\ll$ significa "cresce molto più lentamente di". Questo significa che il limite del rapporto tra una successione e una successiva a destra nella gerarchia è $0$.</p>
+        <p><strong>Avviso sugli esercizi.</strong> Sul sito web del corso potete trovare un foglio di esercizi. L'esercizio 4, in particolare, riguarda l'ordine di infinito e infinitesimo e può essere affrontato con gli strumenti visti oggi. Troverete anche le date degli appelli, i testi degli esoneri passati e le soluzioni degli esercizi.</p>`
+      },
+
+      {
+        id: "s16-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "📝",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s16-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1 — Equivalenza asintotica e non annullamento",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Dai la definizione di successioni asintoticamente equivalenti $a_n \\sim b_n$ per $n \\to +\\infty$, elencando le tre condizioni equivalenti. Spiega perché si richiede che $b_n$ sia definitivamente diversa da zero e dimostra che, se vale $a_n = b_n(1+o(1))$, allora anche $a_n$ è definitivamente diversa da zero.</p>`,
+        solution: `<p>Siano $(a_n)$ e $(b_n)$ successioni con $b_n$ definitivamente non nulla, cioè esiste $\\bar n \\in \\mathbb{N}$ tale che $b_n \\neq 0$ per ogni $n \\geq \\bar n$. Si dice che $a_n \\sim b_n$ per $n \\to +\\infty$ se vale una (e allora ciascuna) delle condizioni equivalenti:</p>
+        <p>(1) $a_n = b_n(1+o(1))$; &nbsp;&nbsp; (2) $b_n = a_n(1+o(1))$; &nbsp;&nbsp; (3) $\\displaystyle\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1$.</p>
+        <p><strong>Perché l'ipotesi $b_n \\neq 0$ definitivamente.</strong> Serve a rendere ben definito il quoziente $\\frac{a_n}{b_n}$ almeno per $n$ grande, che è l'unica cosa che conta per il limite. Senza di essa la definizione sarebbe difettosa: la scelta banale $a_n = b_n = 0$ per ogni $n$ soddisfa formalmente (1) e (2) (con qualunque infinitesimo $o(1)$), mentre il rapporto della (3) non ha alcun senso; dunque le tre condizioni non sarebbero più equivalenti.</p>
+        <p><strong>Dimostrazione che (1) implica $a_n \\neq 0$ definitivamente.</strong> Scriviamo $a_n = b_n(1+\\varepsilon_n)$ con $\\varepsilon_n = o(1)$, cioè $\\varepsilon_n \\to 0$. Per la definizione di limite, scelto $\\varepsilon = \\frac{1}{2}$, esiste $n_1$ tale che $|\\varepsilon_n| \\lt \\frac{1}{2}$ per ogni $n \\geq n_1$, ossia</p>
+        <p>$$\\frac{1}{2} \\lt 1+\\varepsilon_n \\lt \\frac{3}{2} \\qquad \\text{per ogni } n \\geq n_1$$</p>
+        <p>In particolare $1+\\varepsilon_n \\neq 0$ per $n \\geq n_1$. Poiché inoltre $b_n \\neq 0$ per $n \\geq \\bar n$, per ogni $n \\geq \\max\\{\\bar n, n_1\\}$ il prodotto $a_n = b_n(1+\\varepsilon_n)$ è prodotto di due fattori non nulli, quindi $a_n \\neq 0$. Questo è ciò che permette, nelle dimostrazioni, di passare al reciproco $\\frac{b_n}{a_n}$ e di ottenere la simmetria della relazione $\\sim$.</p>`
+      },
+
+      {
+        id: "s16-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2 — Monotonia e convergenza",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Enuncia il teorema sulle successioni monotone. È vero che ogni successione monotona è convergente? È vero che ogni successione convergente è monotona? Giustifica entrambe le risposte con un esempio.</p>`,
+        solution: `<p><strong>Teorema.</strong> Se $(a_n)_{n\\in\\mathbb{N}}$ è monotona, allora ammette limite (finito o infinito); in particolare se $(a_n)$ è crescente $\\lim_{n\\to+\\infty}a_n=\\sup_{n}\\{a_n\\}$, se è decrescente $\\lim_{n\\to+\\infty}a_n=\\inf_{n}\\{a_n\\}$.</p>
+        <p><strong>Monotona $\\Rightarrow$ convergente? No.</strong> La monotonia garantisce solo l'esistenza del limite in $\\overline{\\mathbb{R}} = \\mathbb{R} \\cup \\{-\\infty,+\\infty\\}$ (i <em>reali estesi</em>, cioè la retta reale con i due simboli di infinito). Ad esempio $a_n=n$ è crescente ma $\\sup_n\\{n\\}=+\\infty$, quindi $a_n\\to+\\infty$: il limite esiste ma non è finito. Per avere la convergenza serve l'ipotesi aggiuntiva di limitatezza (corollario: monotona $+$ limitata $\\Rightarrow$ convergente), perché allora $L=\\sup_n\\{a_n\\}\\in\\mathbb{R}$.</p>
+        <p><strong>Convergente $\\Rightarrow$ monotona? No.</strong> La successione $a_n=\\dfrac{(-1)^n}{n}$ converge a $0$ (infatti $|a_n-0|=\\frac1n\\to 0$) ma non è né crescente né decrescente, dato che i suoi termini sono alternativamente positivi e negativi.</p>
+        <p><strong>Conclusione corretta.</strong> La monotonia garantisce l'esistenza di un limite finito o infinito. Monotonia <em>e</em> limitatezza insieme sono sufficienti per la convergenza; la monotonia non è necessaria per la convergenza.</p>`
+      },
+
+      {
+        id: "s16-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3 — Principio di sostituzione",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Enuncia il principio di sostituzione per quozienti, precisando tutte le ipotesi, e dimostralo. Spiega poi, con un controesempio, perché l'enunciato deve essere condizionale, cioè della forma "se uno dei due quozienti ammette limite, allora anche l'altro e i limiti coincidono".</p>`,
+        solution: `<p><strong>Enunciato.</strong> Siano $a_n \\sim a_n'$ e $b_n \\sim b_n'$ per $n \\to +\\infty$, con $a_n, a_n', b_n, b_n'$ definitivamente diverse da zero. Se uno dei due quozienti $\\frac{a_n}{b_n}$ oppure $\\frac{a_n'}{b_n'}$ ammette limite $L \\in \\overline{\\mathbb{R}}$, allora anche l'altro ammette limite e vale</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = \\lim_{n \\to +\\infty} \\frac{a_n'}{b_n'} = L$$</p>
+        <p><strong>Dimostrazione.</strong> Supponiamo che esista $L = \\lim_{n \\to +\\infty} \\frac{a_n'}{b_n'}$. Poiché tutte le successioni sono definitivamente non nulle, per $n$ grande vale l'identità</p>
+        <p>$$\\frac{a_n}{b_n} = \\frac{a_n}{a_n'} \\cdot \\frac{a_n'}{b_n'} \\cdot \\frac{b_n'}{b_n}$$</p>
+        <p>Da $a_n \\sim a_n'$ segue $\\lim \\frac{a_n}{a_n'} = 1$; da $b_n \\sim b_n'$ segue $\\lim \\frac{b_n}{b_n'} = 1$ e, per simmetria (ossia passando ai reciproci, lecito perché i limiti sono $1 \\neq 0$), anche $\\lim \\frac{b_n'}{b_n} = 1$; il fattore centrale tende a $L$ per ipotesi. Per l'algebra dei limiti</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1 \\cdot L \\cdot 1 = L$$</p>
+        <p>e il passaggio è lecito anche per $L = \\pm\\infty$, perché i fattori esterni tendono a $1 \\neq 0$ e dunque $1 \\cdot (\\pm\\infty) \\cdot 1$ non è una forma indeterminata. L'implicazione opposta si ottiene scambiando i ruoli, scrivendo</p>
+        <p>$$\\frac{a_n'}{b_n'} = \\frac{a_n'}{a_n} \\cdot \\frac{a_n}{b_n} \\cdot \\frac{b_n}{b_n'}$$</p>
+        <p><strong>Perché l'enunciato è condizionale.</strong> L'equivalenza asintotica trasporta il comportamento del quoziente, ma non crea l'esistenza del limite. Prendiamo $a_n = a_n' = (-1)^n$ e $b_n = b_n' = 1$: le successioni sono tutte non nulle e le equivalenze valgono banalmente, perché $\\frac{a_n}{a_n'} = 1$ e $\\frac{b_n}{b_n'} = 1$. Tuttavia</p>
+        <p>$$\\frac{a_n}{b_n} = \\frac{a_n'}{b_n'} = (-1)^n$$</p>
+        <p>non ammette limite per $n \\to +\\infty$ (le sottosuccessioni di indice pari e dispari tendono a $1$ e a $-1$). Quindi non si può affermare che "il limite esiste e vale $L$": si può solo affermare che, se uno dei due esiste, esiste anche l'altro e i due coincidono.</p>`
+      },
+
+      {
+        id: "s16-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4 — Limite di una crescente limitata è il sup",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Sia $(a_n)$ una successione crescente e limitata superiormente e sia $L=\\sup_{n\\in\\mathbb{N}}\\{a_n\\}$. Dimostra, usando solo la definizione di estremo superiore, che $\\lim_{n\\to+\\infty}a_n=L$.</p>`,
+        solution: `<p>Poiché l'insieme $\\{a_n:\\ n\\in\\mathbb{N}\\}$ è non vuoto e limitato superiormente, $L=\\sup_n\\{a_n\\}\\in\\mathbb{R}$ esiste e per definizione di estremo superiore valgono:</p>
+        <p>(i) $a_n\\le L$ per ogni $n\\in\\mathbb{N}$ ($L$ è un maggiorante);</p>
+        <p>(ii) per ogni $\\varepsilon \\gt 0$ il numero $L-\\varepsilon$ non è un maggiorante, cioè esiste $n_0\\in\\mathbb{N}$ tale che $a_{n_0} \\gt L-\\varepsilon$.</p>
+        <p>Fissiamo $\\varepsilon \\gt 0$ e prendiamo $n_0$ come in (ii). Per la crescenza, per ogni $n\\ge n_0$ si ha $a_n\\ge a_{n_0}$. Combinando con (i) e (ii), per ogni $n\\ge n_0$:</p>
+        <p>$$L-\\varepsilon \\lt a_{n_0}\\le a_n\\le L \\lt L+\\varepsilon$$</p>
+        <p>quindi $|a_n-L| \\lt \\varepsilon$. Poiché $\\varepsilon \\gt 0$ era arbitrario, per definizione di limite $\\lim_{n\\to+\\infty}a_n=L=\\sup_n\\{a_n\\}$.</p>
+        <p>Si noti che la crescenza è stata usata una sola volta (per passare da $a_{n_0}$ ad $a_n$) e la limitatezza superiore serve solo a garantire $L\\in\\mathbb{R}$.</p>`
+      },
+
+      {
+        id: "s16-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1 — Rapporto di esponenziali",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Calcolare, usando il principio di sostituzione, $\\displaystyle \\lim_{n \\to +\\infty} \\frac{3^n - 2 \\cdot 4^n}{5 \\cdot 4^n + 3^{n+1}}$.</p>`,
+        solution: `<p>Il termine dominante, sia al numeratore sia al denominatore, è $4^n$ (perché $3^n$ è infinito di ordine inferiore: $\\left(\\frac{3}{4}\\right)^n \\to 0$ essendo $0 \\lt \\frac{3}{4} \\lt 1$).</p>
+        <p><strong>Passo 1: equivalenza al numeratore.</strong> Poiché $-2 \\cdot 4^n \\neq 0$ per ogni $n$,</p>
+        <p>$$\\frac{3^n - 2 \\cdot 4^n}{-2 \\cdot 4^n} = \\frac{3^n}{-2 \\cdot 4^n} + 1 = 1 - \\frac{1}{2}\\left(\\frac{3}{4}\\right)^n \\longrightarrow 1$$</p>
+        <p>quindi $3^n - 2 \\cdot 4^n \\sim -2 \\cdot 4^n$.</p>
+        <p><strong>Passo 2: equivalenza al denominatore.</strong> Scrivendo $3^{n+1} = 3 \\cdot 3^n$ e poiché $5 \\cdot 4^n \\neq 0$,</p>
+        <p>$$\\frac{5 \\cdot 4^n + 3 \\cdot 3^n}{5 \\cdot 4^n} = 1 + \\frac{3}{5}\\left(\\frac{3}{4}\\right)^n \\longrightarrow 1$$</p>
+        <p>quindi $5 \\cdot 4^n + 3^{n+1} \\sim 5 \\cdot 4^n$.</p>
+        <p><strong>Passo 3: sostituzione.</strong> Il quoziente semplificato ammette limite:</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{-2 \\cdot 4^n}{5 \\cdot 4^n} = -\\frac{2}{5}$$</p>
+        <p>Tutte le successioni coinvolte sono definitivamente non nulle e il limite del quoziente semplificato esiste, dunque per il principio di sostituzione</p>
+        <p>$$\\lim_{n \\to +\\infty} \\frac{3^n - 2 \\cdot 4^n}{5 \\cdot 4^n + 3^{n+1}} = -\\frac{2}{5}$$</p>`
+      },
+
+      {
+        id: "s16-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2 — Gerarchia con fattoriale",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Calcola $\\displaystyle\\lim_{n\\to+\\infty}\\frac{3^{n}+n^{10}}{n!+2^{n}}$.</p>`,
+        solution: `<p>Numeratore e denominatore tendono entrambi a $+\\infty$: forma indeterminata $\\frac{\\infty}{\\infty}$. Raccogliamo al denominatore il termine di ordine massimo, che per la gerarchia degli infiniti è $n!$ (infatti $2^n \\ll n!$), e dividiamo sopra e sotto per $n!$:</p>
+        <p>$$\\frac{3^{n}+n^{10}}{n!+2^{n}}=\\frac{\\dfrac{3^{n}}{n!}+\\dfrac{n^{10}}{n!}}{1+\\dfrac{2^{n}}{n!}}$$</p>
+        <p>Per la gerarchia $a^n \\ll n!$ (con $a=3$ e $a=2$) si ha $\\dfrac{3^n}{n!}\\to 0$ e $\\dfrac{2^n}{n!}\\to 0$; per $n^{\\alpha} \\ll n!$ si ha $\\dfrac{n^{10}}{n!}\\to 0$. Dunque</p>
+        <p>$$\\lim_{n\\to+\\infty}\\frac{3^{n}+n^{10}}{n!+2^{n}}=\\frac{0+0}{1+0}=0$$</p>`
+      },
+
+      {
+        id: "s16-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3 — Razionalizzazione con o-piccolo",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to +\\infty} \\left( \\sqrt{n^2+3n} - n \\right)$, giustificando i passaggi con la notazione $o(1)$.</p>`,
+        solution: `<p>La forma è indeterminata del tipo $+\\infty - \\infty$. Razionalizziamo moltiplicando e dividendo per $\\sqrt{n^2+3n} + n$, che è positivo per $n \\geq 1$:</p>
+        <p>$$\\begin{aligned}
+        \\sqrt{n^2+3n} - n &= \\frac{(\\sqrt{n^2+3n} - n)(\\sqrt{n^2+3n} + n)}{\\sqrt{n^2+3n} + n} \\\\
+        &= \\frac{(n^2+3n) - n^2}{\\sqrt{n^2+3n} + n} = \\frac{3n}{\\sqrt{n^2+3n} + n}
+        \\end{aligned}$$</p>
+        <p>Ora lavoriamo sul denominatore mettendo in evidenza $n$; poiché $n \\gt 0$ si ha $\\sqrt{n^2} = n$:</p>
+        <p>$$\\begin{aligned}
+        \\sqrt{n^2+3n} + n &= \\sqrt{n^2\\left(1 + \\frac{3}{n}\\right)} + n \\\\
+        &= n\\sqrt{1 + \\frac{3}{n}} + n \\\\
+        &= n\\left(\\sqrt{1 + \\frac{3}{n}} + 1\\right)
+        \\end{aligned}$$</p>
+        <p>Siccome $\\frac{3}{n} \\to 0$, cioè $\\frac{3}{n} = o(1)$, si ha $\\sqrt{1 + o(1)} \\to \\sqrt{1} = 1$ e quindi la parentesi tende a $1+1 = 2$: in particolare $\\sqrt{n^2+3n} + n \\sim 2n$.</p>
+        <p>Dunque, usando il principio di sostituzione sul quoziente (numeratore e denominatore definitivamente non nulli):</p>
+        <p>$$\\begin{aligned}
+        \\lim_{n \\to +\\infty} \\frac{3n}{n\\left(\\sqrt{1+\\frac{3}{n}} + 1\\right)} &= \\lim_{n \\to +\\infty} \\frac{3}{\\sqrt{1+\\frac{3}{n}}+1} \\\\
+        &= \\frac{3}{1+1} = \\frac{3}{2}
+        \\end{aligned}$$</p>
+        <p>Il limite richiesto vale quindi $\\frac{3}{2}$.</p>`
+      },
+
+      {
+        id: "s16-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4 — Fattoriali al denominatore",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Calcola $\\displaystyle\\lim_{n\\to+\\infty}\\frac{n!+3^{n}}{(n+1)!-n!}$.</p>`,
+        solution: `<p>Semplifichiamo prima il denominatore usando $(n+1)!=(n+1)\\cdot n!$:</p>
+        <p>$$(n+1)!-n!=n!\\,\\big[(n+1)-1\\big]=n!\\,n$$</p>
+        <p>Quindi, per $n\\ge 1$,</p>
+        <p>$$\\frac{n!+3^{n}}{(n+1)!-n!}=\\frac{n!+3^{n}}{n!\\,n}=\\frac{n!}{n!\\,n}+\\frac{3^{n}}{n!\\,n}=\\frac{1}{n}+\\frac{1}{n}\\cdot\\frac{3^{n}}{n!}$$</p>
+        <p>Ora $\\dfrac1n\\to 0$ e, per la gerarchia degli infiniti ($3^n \\ll n!$), $\\dfrac{3^{n}}{n!}\\to 0$; il prodotto di due successioni infinitesime è infinitesimo. Pertanto</p>
+        <p>$$\\lim_{n\\to+\\infty}\\frac{n!+3^{n}}{(n+1)!-n!}=0+0\\cdot 0=0$$</p>`
+      },
+
+      {
+        id: "s16-oral-box",
+        type: "oral_box",
+        title: "Domanda tipica d'orale",
+        icon: "🎤",
+        content: `<p><strong>"Mi spieghi perché $\\frac{0}{0}$ si chiama forma indeterminata, con esempi."</strong></p>
+        <p>La risposta attesa non è una definizione astratta, ma la costruzione di <strong>tre esempi con tre esiti diversi</strong>, tutti con numeratore e denominatore infinitesimi: $\\frac{1/n^2}{1/n} \\to 0$, $\\frac{1/n}{1/n^2} \\to +\\infty$, $\\frac{2/n}{1/n} \\to 2$. La conclusione da enunciare esplicitamente è che conoscere i due limiti separati non determina il limite del quoziente: serve sapere la <em>velocità relativa</em> con cui i due infinitesimi si annullano.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "tranello",
+        front: "È vero che «finito diviso qualcosa che tende a zero fa infinito»?",
+        back: "No, è una formulazione sbrigativa e falsa. Servono due ipotesi: (a) il numeratore <strong>non</strong> deve tendere a zero (altrimenti si ricade nella forma indeterminata $\\frac{0}{0}$); (b) il denominatore deve avere <strong>segno definitivamente costante</strong>. Controesempio: $a_n = 1$, $b_n = \\frac{(-1)^n}{n}$. Qui $b_n \\to 0$ ma cambia segno, e $\\frac{a_n}{b_n} = (-1)^n n = -1, +2, -3, +4, \\dots$ non ha limite, né finito né infinito."
+      },
+      {
+        type: "definizione",
+        front: "Quali sono le sette forme indeterminate?",
+        back: "$+\\infty - \\infty$, &nbsp; $\\frac{0}{0}$, &nbsp; $\\frac{\\infty}{\\infty}$, &nbsp; $0 \\cdot \\infty$, &nbsp; $1^{\\infty}$, &nbsp; $\\infty^{0}$, &nbsp; $0^{0}$. «Indeterminata» non vuol dire «irrisolubile»: vuol dire che le regole base dell'algebra dei limiti non bastano e servono metodi più fini."
+      },
+      {
+        type: "dimostrazione",
+        front: "Perché la forma $1^\\infty$ si riconduce a $0 \\cdot \\infty$?",
+        back: "Siano $a_n \\to 1$ con $a_n \\gt 0$ e $b_n \\to +\\infty$. Si scrive $(a_n)^{b_n} = e^{\\ln\\left((a_n)^{b_n}\\right)} = e^{b_n \\ln(a_n)}$. Poiché $a_n \\to 1$, si ha $\\ln(a_n) \\to \\ln 1 = 0$, mentre $b_n \\to +\\infty$: l'esponente $b_n \\ln(a_n)$ è della forma $\\infty \\cdot 0$. Dunque lo studio di $1^\\infty$ si riduce a quello di $0 \\cdot \\infty$."
+      },
+      {
+        type: "definizione",
+        front: "Che cosa significa $a_n = o(1)$ per $n \\to +\\infty$?",
+        back: "Significa semplicemente che $(a_n)$ è <strong>infinitesima</strong>, cioè $\\lim_{n \\to +\\infty} a_n = 0$. Il simbolo $o(1)$ non è il nome di una successione fissata ma indica una <em>proprietà</em>: «una qualche successione che tende a zero»."
+      },
+      {
+        type: "tranello",
+        front: "Nella scrittura $\\frac{n^4(1+o(1))}{n^2(1+o(1))}$ posso cancellare i due fattori $(1+o(1))$?",
+        back: "<strong>No.</strong> Le due occorrenze di $o(1)$ denotano successioni <em>diverse</em> (nell'esempio della lezione, $u_n = -\\frac{2}{n}+\\frac{1}{n^4}$ e $v_n = \\frac{1}{n}+\\frac{13}{n^2}$, con $u_1 = -1 \\neq 14 = v_1$). Ciò che si può dire è che il loro <em>rapporto</em> $c_n = \\frac{1+u_n}{1+v_n}$ tende a $1$, senza essere uguale a $1$ per alcun $n$. L'uguaglianza con $o(1)$ non è simmetrica: da $a_n = o(1)$ e $b_n = o(1)$ non segue $a_n = b_n$."
+      },
+      {
+        type: "domanda",
+        front: "Nel calcolo $\\lim n^2 \\cdot c_n$ con $c_n \\to 1$, perché è lecito «sostituire $c_n$ con $1$»?",
+        back: "Non si sta sostituendo formalmente un fattore col suo limite: si applica il <strong>teorema sul prodotto</strong> «se $x_n \\to +\\infty$ e $y_n \\to L$ con $L \\gt 0$, allora $x_n y_n \\to +\\infty$». In alternativa, poiché $c_n \\to 1 \\gt \\frac12$, definitivamente $c_n \\gt \\frac12$ e quindi $n^2 c_n \\geq \\frac{n^2}{2} \\to +\\infty$, da cui la tesi per confronto. <strong>L'ipotesi $L \\gt 0$ è essenziale:</strong> se il fattore tendesse a $0$ avremmo di nuovo la forma indeterminata $\\infty \\cdot 0$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci $a_n \\sim b_n$ per $n \\to +\\infty$ (tre condizioni equivalenti).",
+        back: "Sotto l'ipotesi che $b_n$ sia <strong>definitivamente diversa da zero</strong>, $a_n \\sim b_n$ se vale una (e allora ciascuna) delle condizioni: (1) $a_n = b_n(1+o(1))$; (2) $b_n = a_n(1+o(1))$; (3) $\\lim_{n \\to +\\infty} \\frac{a_n}{b_n} = 1$. L'ipotesi sul non annullamento rende ben definito il quoziente della (3); senza di essa la scelta banale $a_n = b_n = 0$ soddisfarebbe (1) e (2) ma non (3)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Perché, se $a_n = b_n(1+o(1))$, anche $a_n$ è definitivamente non nulla?",
+        back: "Posto $\\varepsilon_n = o(1)$, si ha $\\varepsilon_n \\to 0$. Scegliendo $\\varepsilon = \\frac12$ nella definizione di limite, esiste $n_1$ con $|\\varepsilon_n| \\lt \\frac12$ per $n \\geq n_1$, cioè $\\frac12 \\lt 1+\\varepsilon_n \\lt \\frac32$: dunque $1+\\varepsilon_n \\neq 0$ definitivamente. Poiché $b_n \\neq 0$ definitivamente, per $n$ grande $a_n = b_n(1+\\varepsilon_n)$ è prodotto di due fattori non nulli, quindi $a_n \\neq 0$. Questo permette di passare al reciproco $\\frac{b_n}{a_n}$ e dimostrare la simmetria di $\\sim$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Enuncia e dimostra il principio di sostituzione per i quozienti.",
+        back: "Se $a_n \\sim a_n'$, $b_n \\sim b_n'$, tutte definitivamente non nulle, e <strong>uno</strong> dei quozienti $\\frac{a_n}{b_n}$, $\\frac{a_n'}{b_n'}$ ammette limite $L$ (finito o infinito), allora anche l'altro lo ammette e vale $L$. Dimostrazione: per $n$ grande $\\frac{a_n}{b_n} = \\frac{a_n}{a_n'} \\cdot \\frac{a_n'}{b_n'} \\cdot \\frac{b_n'}{b_n}$; il primo e il terzo fattore tendono a $1$, il centrale a $L$, quindi il prodotto tende a $1 \\cdot L \\cdot 1 = L$. Il passaggio è lecito anche per $L = \\pm\\infty$ perché i fattori esterni tendono a $1 \\neq 0$."
+      },
+      {
+        type: "tranello",
+        front: "Perché l'enunciato del principio di sostituzione deve essere condizionale?",
+        back: "Perché l'equivalenza asintotica trasporta il comportamento del quoziente ma non <em>crea</em> l'esistenza del limite. Controesempio: $a_n = a_n' = (-1)^n$, $b_n = b_n' = 1$. Le equivalenze valgono banalmente e le successioni sono non nulle, ma $\\frac{a_n}{b_n} = \\frac{a_n'}{b_n'} = (-1)^n$ non ammette limite. Si può solo dire: <em>se uno dei due limiti esiste, esiste anche l'altro e coincide</em>."
+      },
+      {
+        type: "tranello",
+        front: "Posso usare il principio di sostituzione in una differenza? E dentro un'esponenziale?",
+        back: "<strong>No in entrambi i casi.</strong> Differenze: $(n+1)^2 \\sim n^2$, ma $(n+1)^2 - n^2 = 2n+1 \\to +\\infty$, non $0$; l'errore è trascurare $n^2 \\cdot o(1) = 2n+1$, che non è affatto trascurabile. Composizioni: $n^2+n \\sim n^2$, ma $\\frac{e^{n^2+n}}{e^{n^2}} = e^n \\to +\\infty \\neq 1$, quindi $e^{n^2+n} \\not\\sim e^{n^2}$. La sostituzione è sicura <strong>solo in prodotti e quozienti</strong>."
+      },
+      {
+        type: "domanda",
+        front: "Enuncia il teorema sulle successioni monotone. Una successione monotona è sempre convergente?",
+        back: "Se $(a_n)$ è monotona allora <strong>ammette limite</strong> (finito o infinito): se crescente $\\lim a_n = \\sup_n\\{a_n\\}$, se decrescente $\\lim a_n = \\inf_n\\{a_n\\}$. <strong>Non</strong> è però sempre convergente: $a_n = n$ è crescente ma $\\to +\\infty$. La monotonia garantisce un limite in $\\overline{\\mathbb{R}}$; monotonia <em>e</em> limitatezza insieme garantiscono la convergenza (corollario). Viceversa la monotonia non è necessaria: $a_n = \\frac{(-1)^n}{n} \\to 0$ converge senza essere monotona."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che una successione crescente e limitata superiormente converge al suo estremo superiore.",
+        back: "Sia $L = \\sup_n\\{a_n\\} \\in \\mathbb{R}$. Per definizione di sup: (i) $a_n \\le L$ per ogni $n$; (ii) per ogni $\\varepsilon \\gt 0$ esiste $n_0$ con $a_{n_0} \\gt L - \\varepsilon$. Per la crescenza, per $n \\geq n_0$ vale $a_n \\geq a_{n_0}$, quindi $L - \\varepsilon \\lt a_{n_0} \\le a_n \\le L \\lt L+\\varepsilon$, cioè $|a_n - L| \\lt \\varepsilon$. Essendo $\\varepsilon$ arbitrario, $a_n \\to L$. Nel caso non limitato ($L = +\\infty$), per ogni $M$ esiste $n_0$ con $a_{n_0} \\gt M$ e quindi $a_n \\gt M$ per $n \\gt n_0$: $a_n \\to +\\infty$."
+      },
+      {
+        type: "formula",
+        front: "Qual è la gerarchia degli infiniti?",
+        back: "$$\\log(n) \\ll n^\\alpha \\ll a^n \\ll n! \\ll n^n \\qquad (\\alpha \\gt 0,\\ a \\gt 1)$$ Il simbolo $\\ll$ significa «cresce molto più lentamente di»: il rapporto tra una successione e una successiva a destra tende a $0$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\lim_{n \\to +\\infty} \\frac{n!}{n^n} = 0$.",
+        back: "Si scrive $\\frac{n!}{n^n} = \\frac{n}{n} \\cdot \\frac{n-1}{n} \\cdots \\frac{2}{n} \\cdot \\frac{1}{n}$. Ogni fattore è $\\le 1$, quindi $0 \\le \\frac{n!}{n^n} \\le 1 \\cdot \\frac{1}{n} = \\frac{1}{n}$. Poiché $\\frac1n \\to 0$, per il <strong>Teorema dei Carabinieri</strong> si conclude $\\frac{n!}{n^n} \\to 0$: $n^n$ cresce molto più velocemente di $n!$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\lim_{n \\to +\\infty} \\frac{5^n}{n!} = 0$.",
+        back: "Si spezza il prodotto: $\\frac{5^n}{n!} = \\left(\\frac51 \\cdot \\frac52 \\cdot \\frac53 \\cdot \\frac54 \\cdot \\frac55\\right)\\cdot\\left(\\frac56 \\cdot \\frac57 \\cdots \\frac5n\\right)$. Il primo gruppo è la costante $C = \\frac{5^5}{5!}$; per $n \\gt 5$ ciascuno degli $n-5$ fattori restanti è $\\le \\frac56$. Dunque $0 \\le \\frac{5^n}{n!} \\le C\\left(\\frac56\\right)^{n-5} \\to 0$ (geometrica di ragione $\\lt 1$), e per i Carabinieri il limite è $0$. In generale $n!$ batte qualsiasi $a^n$ con $a \\gt 1$."
+      },
+      {
+        type: "domanda",
+        front: "Come si userà il teorema sulle successioni monotone per definire il numero $e$?",
+        back: "Si considera $a_n = \\left(1+\\frac1n\\right)^n$ e si dimostra che è <strong>crescente</strong> e <strong>limitata</strong>. Per il corollario (monotona + limitata $\\Rightarrow$ convergente) la successione ammette limite finito, che si chiama numero di Nepero: $\\lim_{n\\to+\\infty}\\left(1+\\frac1n\\right)^n = e \\approx 2{,}71828\\ldots$ In seguito si dimostrerà che $e$ è irrazionale."
+      }
+    ]
+};
+
