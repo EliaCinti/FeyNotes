@@ -21,6 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script type="application/ld+json">{{JSON_LD}}</script>
   <script src="/js/theme.js"></script>
+  <script defer src="/js/support.js?v={{CSS_VERSION}}"></script>
 </head>
 <body>
 
@@ -33,6 +34,7 @@
   <nav class="header-nav">
     {{NAV_LINKS}}
   </nav>
+  <a class="header-donate" data-donate href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer" aria-label="Dona per sostenere FeyNotes">Dona <span aria-hidden="true">♥</span></a>
   <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()"></button>
 </header>
 
@@ -52,7 +54,7 @@
 
 <div class="fn-page">
   <footer class="fn-footer">
-    <div class="fn-footer-coffee">Se ti sono stati utili, <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">offrimi un caffè</a></div>
+    <div class="fn-footer-coffee">Aiuta FeyNotes a restare gratuito: <a data-donate href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">sostieni il progetto con una donazione</a></div>
     <div class="fn-footer-inner">
       <span class="fn-footer-copy">&copy; 2026 Elia Cinti</span>
       <div class="fn-footer-links">

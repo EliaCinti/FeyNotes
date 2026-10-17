@@ -146,3 +146,18 @@ Dopo aver modificato `base.css` o `style.css`, incrementa `cssVersion` in `src/c
 - Node.js per il build (zero dipendenze)
 - Nginx + Docker + Cloudflare
 - Hetzner CX23
+
+## Donazioni
+
+Il pulsante **Dona** è presente nella home e nei due template condivisi. Le lezioni
+mostrano anche una richiesta dopo gli appunti, prima delle flashcard. Tutti i link
+portano alla pagina Ko-fi esistente; accesso e contenuti restano gratuiti.
+
+`js/support.js` mostra un dialogo sopra il contenuto, anche per chi arriva
+direttamente a una lezione. X, Esc, clic sullo sfondo e **Continua a studiare** lo
+chiudono immediatamente. La chiusura o il clic su un link di donazione lo nasconde
+per 30 giorni nello stesso browser, usando localStorage e sessionStorage come
+ripiego. Se entrambi sono bloccati, la chiusura funziona comunque, ma non può
+essere ricordata fra le pagine. Il dialogo non compare nella stampa. Non vengono
+caricati widget o sistemi di tracciamento esterni; un clic non viene considerato
+una donazione completata. Importo e frequenza si scelgono su Ko-fi.

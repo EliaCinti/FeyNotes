@@ -27,11 +27,15 @@ function renderLesson(lesson) {
     html += renderSection(sec);
   }
 
-  // ─── Ko-fi banner ───
-  html += `<div style="text-align: center; margin: 3rem 0 1rem; padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg);">
-    <p style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-secondary);">Ti è stata utile questa lezione?</p>
-    <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1rem;">☕ Offrimi un caffè</a>
-  </div>`;
+  // ─── Support the project, after the lesson content ───
+  html += `<section class="fn-support-inline" aria-labelledby="lesson-support-title">
+    <div class="fn-support-eyebrow">// studiare insieme, condividere di più</div>
+    <h2 id="lesson-support-title">Questa lezione ti ha dato una mano?</h2>
+    <p>Una donazione aiuta il lavoro dietro FeyNotes: preparare gli appunti, correggerli e continuare ad aggiornarli per tutti.</p>
+    <a class="fn-donate-button" data-donate href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">Dona su Ko-fi <span aria-hidden="true">↗</span></a>
+    <p class="fn-support-note">Anche 2 € sono un aiuto · Importo libero</p>
+    <p class="fn-support-free">Gli appunti restano gratuiti, anche senza donare.</p>
+  </section>`;
 
   // ─── Flashcards ───
   if (lesson.oral_cards && lesson.oral_cards.length > 0) {
@@ -84,7 +88,7 @@ function renderLesson(lesson) {
   html += `<footer class="site-footer" style="margin-top: 60px;">
     Realizzato da <span class="footer-name">Elia Cinti</span> · <span class="footer-uni">Ingegneria Informatica — Università di Roma Tor Vergata</span> · A.A. 2025/2026
     <br>
-    <a href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-size: 0.85rem;">☕ Offrimi un caffè</a>
+    <a data-donate href="https://ko-fi.com/eliacinti" target="_blank" rel="noopener noreferrer">Sostieni FeyNotes con una donazione</a>
   </footer>`;
 
   main.innerHTML = html;

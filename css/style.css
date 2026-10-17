@@ -181,7 +181,7 @@ a:hover { color: var(--accent); }
 .sidebar-nav-buttons { padding: 16px 20px 0; margin-top: 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
 .sidebar-nav-buttons a { flex: 1; text-align: center; padding: 8px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 500; background: var(--bg-tertiary); color: var(--text-muted); transition: all var(--transition); }
 .sidebar-nav-buttons a:hover { background: var(--bg-hover); color: var(--text-primary); }
-.lesson-content { flex: 1; overflow-y: visible; padding: 36px 80px 80px; }
+.lesson-content { flex: 1; min-width: 0; overflow-y: visible; padding: 36px 80px 80px; }
 .lesson-content > * { max-width: 1000px; margin-left: auto; margin-right: auto; }
 
 .lesson-header { margin-bottom: 40px; }
@@ -195,6 +195,7 @@ a:hover { color: var(--accent); }
 .lesson-abstract { font-size: 0.92rem; color: var(--text-muted); font-style: italic; border-left: 3px solid var(--border-light); padding-left: 16px; max-width: 650px; font-weight: 300; }
 
 .content-section { margin-bottom: 40px; scroll-margin-top: calc(var(--header-h) + 24px); }
+.content-section:has(.compare-table, .info-table) { overflow-x: auto; }
 .content-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
 .content-section h2 .sec-icon { font-size: 1.15rem; }
 .content-section h3 { font-size: 1.05rem; font-weight: 600; margin: 20px 0 10px; color: var(--text-primary); }
@@ -207,14 +208,14 @@ a:hover { color: var(--accent); }
 .formula-item { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
 .formula-item:last-child { margin-bottom: 0; }
 .formula-label { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; min-width: 130px; }
-.formula-katex { font-size: 1.05rem; }
+.formula-katex { font-size: 1.05rem; min-width: 0; max-width: 100%; overflow-x: auto; }
 
 .steps-box { background: var(--blue-dim); border: 1px solid rgba(116,192,252,0.18); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; }
 .steps-box .sb-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin-bottom: 14px; }
 .step-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
 .step-item:last-child { margin-bottom: 0; }
 .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(116,192,252,0.15); color: var(--blue); font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-.step-text { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+.step-text { min-width: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
 .step-text strong { color: var(--text-primary); }
 
 .alert-box { background: var(--red-dim); border: 1px solid rgba(255,107,107,0.2); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; }

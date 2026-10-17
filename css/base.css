@@ -64,6 +64,8 @@
   /* Motion */
   --transition: 0.2s ease;
   --transition-fast: 0.15s ease;
+  --support-button-text: #17130a;
+  --support-backdrop: rgba(0, 0, 0, 0.72);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -823,3 +825,124 @@ a:hover { color: var(--text-primary); }
   --accent-glow-strong: rgba(59,130,246,0.25);
 }
 
+
+/* Donations: shared by the home, course indexes and lesson pages. */
+#site-header .header-donate,
+.fn-donate-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-sm);
+  background: var(--gold);
+  color: var(--support-button-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 1.4;
+}
+#site-header .header-donate {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 6px 14px;
+  margin-left: 12px;
+  font-size: 0.82rem;
+}
+#site-header .theme-toggle { margin-left: 12px; flex-shrink: 0; }
+#site-header .header-donate:hover,
+.fn-donate-button:hover { background: var(--gold-dim); color: var(--text-primary); }
+.header-donate:focus-visible,
+.fn-donate-button:focus-visible,
+.fn-support-dialog button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; }
+body.fn-support-open { overflow: hidden; }
+.fn-support-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(560px, calc(100% - 32px));
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: 36px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--border-light);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  text-align: left;
+}
+.fn-support-dialog::backdrop { background: var(--support-backdrop); backdrop-filter: blur(4px); }
+.fn-support-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: 1.6rem/1 var(--font-body);
+  cursor: pointer;
+}
+.fn-support-close:hover { background: var(--bg-hover); }
+.fn-support-eyebrow { margin: 0 40px 14px 0; font: 0.7rem/1.6 var(--font-mono); color: var(--text-secondary); }
+.fn-support-symbol { margin-bottom: 12px; color: var(--gold); font-size: 2rem; line-height: 1; }
+.fn-support-dialog h2 { margin: 0 0 18px; font-size: clamp(1.6rem, 5vw, 2rem); font-weight: 700; letter-spacing: -0.7px; line-height: 1.2; }
+.fn-support-dialog p,
+.fn-support-inline p { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; }
+.fn-support-dialog .fn-support-reason { margin-top: 14px; }
+.fn-support-reason strong { color: var(--text-primary); }
+.fn-support-dialog .fn-donate-button { width: 100%; margin-top: 24px; }
+.fn-support-dialog .fn-support-note,
+.fn-support-inline .fn-support-note { margin-top: 10px; font-size: 0.8rem; text-align: center; }
+.fn-support-continue {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 10px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: 500 0.9rem var(--font-body);
+  cursor: pointer;
+}
+.fn-support-continue:hover { background: var(--bg-hover); }
+.fn-support-dialog .fn-support-free,
+.fn-support-inline .fn-support-free { margin-top: 14px; font-size: 0.8rem; text-align: center; }
+.fn-support-inline { margin: 48px 0 28px; padding: 28px; border: 1px solid var(--border-light); border-top: 2px solid var(--gold); border-radius: var(--radius); background: var(--bg-secondary); }
+.fn-support-inline h2 { margin-bottom: 10px; font-size: 1.4rem; line-height: 1.3; }
+.fn-support-inline .fn-donate-button { display: flex; width: fit-content; min-width: 200px; margin: 22px auto 0; }
+@media (max-width: 1100px) {
+  body:has(.lesson-layout) #site-header .header-nav { display: none; }
+  body:has(.lesson-layout) #site-header .header-donate { margin-left: auto; }
+}
+@media (max-width: 760px) {
+  #site-header { padding: 0 12px; gap: 8px; }
+  #site-header .header-nav,
+  #site-header .header-sep,
+  #site-header .header-lesson { display: none; }
+  #site-header .header-home { flex-shrink: 0; }
+  #site-header .header-logo { min-width: 0; overflow: hidden; text-overflow: ellipsis; display: block; font-size: 0.85rem; }
+  #site-header .header-donate { margin-left: auto; padding: 6px 10px; }
+  #site-header .theme-toggle { margin-left: 0; }
+  .fn-support-dialog { padding: 28px 22px 22px; }
+  .fn-support-dialog .fn-support-eyebrow { font-size: 0.65rem; }
+  .fn-support-inline { padding: 22px; }
+}
+@media print {
+  .fn-support-dialog,
+  .fn-support-inline,
+  #site-header .header-donate { display: none !important; }
+  body.fn-support-open { overflow: visible; }
+}
