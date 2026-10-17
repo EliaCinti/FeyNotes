@@ -10,7 +10,7 @@ const SITE = {
   title: 'FeyNotes',
   author: 'Elia Cinti',
   description: 'Appunti di Ingegneria Informatica — Tor Vergata',
-  cssVersion: 24,
+  cssVersion: 26,
 };
 
 const COURSES = {
@@ -260,6 +260,7 @@ const COURSES = {
       { id: 'L05', num: 'Lezione 5', date: '6 Ott 2026', title: 'Flusso del Campo Elettrico e Teorema di Gauss', abstract: 'Dal flusso infinitesimo di un campo vettoriale al teorema di Gauss: convenzioni sull\'orientazione delle superfici, strategia delle superfici Gaussiane e applicazione ai tre casi classici — piano indefinito, sfera uniformemente carica in volume, filo rettilineo infinito — con l\'esercizio sul cilindro carico.', category: 'elettrostatica' },
       { id: 'L06', num: 'Lezione 6', date: '9 Ott 2026', title: 'Teorema di Gauss in Forma Locale e Potenziale Elettrostatico', abstract: 'Dalla forma integrale del teorema di Gauss alla sua forma locale (prima equazione di Maxwell), passando per il teorema della divergenza e per il calcolo diretto del flusso attraverso un cubetto infinitesimo. Nella seconda parte: conservatività del campo elettrostatico, energia potenziale, potenziale, relazione $\\vec{E} = -\\nabla V$ e superfici equipotenziali.', category: 'elettrostatica' },
       { id: 'L07', num: 'Lezione 7', date: '13 Ott 2026', title: 'Il Potenziale Elettrostatico: sfera, cilindro e cavo coassiale', abstract: 'Dalla conservatività del campo elettrostatico alla definizione di potenziale. Scelta del riferimento (zero all\'infinito e suoi limiti), principio di sovrapposizione scalare, potenziale di distribuzioni continue. Applicazioni complete: sfera uniformemente carica, cilindro indefinito, cavo coassiale e sua capacità.', category: 'elettrostatica' },
+      { id: 'L08', num: 'Lezione 8', date: '16 Ott 2026', title: 'Potenziale di Distribuzioni Continue, Dipolo Elettrico e Gradiente', abstract: 'Dal ripasso del cilindro carico al potenziale di sbarretta, disco e dipolo; poi filo e piano indefiniti, condensatore piano e la relazione differenziale fra campo e potenziale: gradiente, Laplaciano, equazioni di Poisson e Laplace.', category: 'elettrostatica' },
     ],
   },
   algebra: {

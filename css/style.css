@@ -205,17 +205,17 @@ a:hover { color: var(--accent); }
 /* ─── Component Boxes ─── */
 .formula-box { background: var(--gold-dim); border: 1px solid rgba(240,192,80,0.2); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; }
 .formula-box .fb-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--gold); margin-bottom: 14px; }
-.formula-item { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.formula-item { display: grid; grid-template-columns: minmax(130px, 32%) minmax(0, 1fr); align-items: center; gap: 12px; margin-bottom: 10px; }
 .formula-item:last-child { margin-bottom: 0; }
-.formula-label { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; min-width: 130px; }
-.formula-katex { font-size: 1.05rem; min-width: 0; max-width: 100%; overflow-x: auto; }
+.formula-label { font-size: 0.78rem; color: var(--text-muted); overflow-wrap: anywhere; }
+.formula-katex { display: block; font-size: 1.05rem; min-width: 0; max-width: 100%; padding: 8px 2px; overflow-x: auto; overflow-y: hidden; }
 
 .steps-box { background: var(--blue-dim); border: 1px solid rgba(116,192,252,0.18); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; }
 .steps-box .sb-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin-bottom: 14px; }
 .step-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
 .step-item:last-child { margin-bottom: 0; }
 .step-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(116,192,252,0.15); color: var(--blue); font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-.step-text { min-width: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+.step-text { flex: 1; min-width: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
 .step-text strong { color: var(--text-primary); }
 
 .alert-box { background: var(--red-dim); border: 1px solid rgba(255,107,107,0.2); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; }
@@ -248,6 +248,7 @@ a:hover { color: var(--accent); }
 
 /* ─── KaTeX ─── */
 .katex-display { margin: 16px 0; padding: 6px 0; overflow-x: auto; overflow-y: hidden; }  /* overflow-x da solo rende auto anche l'asse y: le frazioni alte di qualche pixel mostravano una barra verticale */
+.katex-display > .katex { width: max-content; min-width: 100%; } /* Le equazioni lunghe scorrono dall'inizio, senza perdere il lato sinistro. */
 .content-section .katex { font-size: 1.05rem; }
 
 .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 28px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); scroll-margin-top: calc(var(--header-h) + 24px); }
@@ -348,7 +349,7 @@ a:hover { color: var(--accent); }
 @media (max-width: 600px) {
   .hero h1 { font-size: 1.6rem; }
   .lesson-header h1 { font-size: 1.5rem; }
-  .formula-item { flex-direction: column; gap: 4px; }
+  .formula-item { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .formula-label { min-width: unset; }
   .site-footer-inner { flex-direction: column; gap: 12px; text-align: center; }
 }
