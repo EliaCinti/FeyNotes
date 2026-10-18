@@ -1,0 +1,769 @@
+const LESSON = {
+    id: "L08", date: "Lezione 8 — 15 Ott 2026",
+    title: "Operazioni tra Relazioni e Numeri Naturali",
+    abstract: "Prima parte: l'insieme $R_E$ di tutte le relazioni su $E$ con le sue operazioni, i monoidi $(R_E,\\cup,\\emptyset)$ e $(R_E,\\circ,id_E)$, la distributivita' di $\\circ$ rispetto a $\\cup$ e la struttura di semianello. Seconda parte: costruzione assiomatica di $\\mathbb{N}$ con gli assiomi di Peano, forme equivalenti del principio di induzione (debole, forte, principio del minimo) e applicazioni combinatorie.",
+
+    sections: [
+      {
+        id: "s08-composizione-inversione",
+        type: "section",
+        title: "Composizione e inversione di relazioni",
+        icon: "🔗",
+        content: `<p>Prima di elencare le operazioni su $R_E$ conviene richiamare in modo esplicito le due operazioni tipiche delle relazioni — <strong>composizione</strong> e <strong>inversione</strong> — fissando una volta per tutte la convenzione sull'ordine con cui si percorrono le relazioni nella composizione: e' la convenzione che useremo in tutte le dimostrazioni di questa sezione.</p>
+        <p>Siano $\\rho, \\rho' \\subseteq E \\times E$ due relazioni su $E$.</p>`,
+        subsections: [
+          {
+            subtitle: "Composizione",
+            content: `<p>La composizione di $\\rho$ e $\\rho'$ e' la relazione</p>
+            <p>$$\\rho \\circ \\rho' := \\{(x,z) \\in E \\times E \\mid \\exists\\, y \\in E \\text{ tale che } (x,y) \\in \\rho' \\text{ e } (y,z) \\in \\rho\\}.$$</p>
+            <p>Si noti l'ordine: in $\\rho \\circ \\rho'$ si percorre <strong>prima</strong> $\\rho'$ (dal primo elemento $x$ all'elemento intermedio $y$) e <strong>poi</strong> $\\rho$ (da $y$ all'elemento finale $z$), esattamente come per la composizione di funzioni $(f \\circ g)(x) = f(g(x))$. L'elemento $y$ viene detto <em>testimone</em> (o elemento intermedio) della coppia $(x,z)$.</p>`
+          },
+          {
+            subtitle: "Inversa",
+            content: `<p>L'inversa di $\\rho$ e' la relazione ottenuta scambiando le due componenti di ogni coppia:</p>
+            <p>$$\\rho^{-1} := \\{(y,x) \\in E \\times E \\mid (x,y) \\in \\rho\\}.$$</p>`
+          },
+          {
+            subtitle: "Esempio: calcolo esplicito di una composizione e di un'inversa",
+            content: `<p>Sia $E = \\{1,2,3\\}$, $\\rho = \\{(2,3)\\}$ e $\\rho' = \\{(1,2)\\}$. Per calcolare $\\rho \\circ \\rho'$ cerchiamo i percorsi: da $1$ si va in $2$ tramite $\\rho'$ e da $2$ si va in $3$ tramite $\\rho$, dunque</p>
+            <p>$$\\rho \\circ \\rho' = \\{(1,3)\\}, \\qquad \\text{mentre} \\qquad \\rho' \\circ \\rho = \\emptyset,$$</p>
+            <p>perche' nessun secondo elemento di una coppia di $\\rho$ (cioe' $3$) e' primo elemento di una coppia di $\\rho'$. Questo mostra concretamente che $\\circ$ <strong>non e' commutativa</strong>. Inoltre $\\rho^{-1} = \\{(3,2)\\}$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Composizione (convenzione: prima $\\rho'$, poi $\\rho$)", latex: "\\rho \\circ \\rho' = \\{(x,z) \\mid \\exists\\, y \\in E : (x,y) \\in \\rho',\\ (y,z) \\in \\rho\\}" },
+          { label: "Inversa", latex: "\\rho^{-1} = \\{(y,x) \\mid (x,y) \\in \\rho\\}" }
+        ]
+      },
+
+      {
+        id: "s08-operazioni-re",
+        type: "section",
+        title: "Le operazioni sull'insieme $R_E$ delle relazioni",
+        icon: "⚙️",
+        content: `<p>Sia $R_E := \\mathcal{P}(E \\times E)$ l'insieme di tutte le relazioni binarie sull'insieme $E$, come definito nella Lezione 2. Su $R_E$ convivono due famiglie di operazioni: quelle insiemistiche (perche' $R_E$ e' un insieme delle parti) e quelle specifiche delle relazioni.</p>`,
+        subsections: [
+          {
+            subtitle: "1) Operazioni insiemistiche (perche' $R_E = \\mathcal{P}(X)$ con $X = E \\times E$)",
+            content: `<p><strong>Binarie:</strong> unione ($\\cup$), intersezione ($\\cap$), differenza ($\\setminus$), differenza simmetrica ($\\oplus$). Prendono due relazioni e ne restituiscono una terza:</p>
+            <p>$$\\cup, \\cap, \\setminus, \\oplus : R_E \\times R_E \\to R_E.$$</p>
+            <p><strong>Unaria:</strong> complementazione $C_{E \\times E}$. Data $\\rho \\subseteq E \\times E$, il suo complementare e' $(E \\times E) \\setminus \\rho$.</p>
+            <p><strong>Nullarie:</strong> le costanti, ovvero la relazione vuota $\\emptyset$ e la relazione totale $E \\times E$.</p>`
+          },
+          {
+            subtitle: "2) Operazioni specifiche delle relazioni",
+            content: `<p><strong>Binaria:</strong> composizione $\\circ$. Date $\\rho, \\rho' \\in R_E$,</p>
+            <p>$$\\rho \\circ \\rho' = \\{(x,z) \\mid \\exists\\, y \\in E : (x,y) \\in \\rho',\\ (y,z) \\in \\rho\\} \\in R_E,$$</p>
+            <p>dunque $\\circ : R_E \\times R_E \\to R_E$.</p>
+            <p><strong>Unaria:</strong> inversione. Data $\\rho \\in R_E$, la sua inversa e' $\\rho^{-1} = \\{(y,x) \\mid (x,y) \\in \\rho\\}$, e l'operazione e' $(\\cdot)^{-1} : R_E \\to R_E$.</p>
+            <p><strong>Nullaria:</strong> la relazione identita' $id_E = \\{(x,x) \\mid x \\in E\\}$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s08-monoidi",
+        type: "section",
+        title: "Due monoidi su $R_E$",
+        icon: "🏛️",
+        content: `<p>Considerando le operazioni appena elencate, possiamo identificare diverse strutture algebriche.</p>`,
+        subsections: [
+          {
+            subtitle: "$(R_E, \\cup, \\emptyset)$ e' un monoide commutativo",
+            content: `<p>L'unione e' associativa e commutativa, e la relazione vuota $\\emptyset$ funge da elemento neutro.</p>`
+          },
+          {
+            subtitle: "$(R_E, \\circ, id_E)$ e' sempre un monoide",
+            content: `<p>La composizione e' associativa (Proprieta' 2.3) e la relazione identita' $id_E$ e' l'elemento neutro, cioe'</p>
+            <p>$$\\rho \\circ id_E = \\rho = id_E \\circ \\rho \\qquad \\text{per ogni } \\rho \\in R_E.$$</p>
+            <p>Tale monoide e' <strong>non commutativo appena $E$ possiede almeno due elementi</strong>: l'esempio precedente, con $E = \\{1,2,3\\}$, esibisce due relazioni per cui $\\rho \\circ \\rho' \\neq \\rho' \\circ \\rho$, e la stessa costruzione si ripete con $E = \\{1,2\\}$ prendendo $\\rho = \\{(2,2)\\}$ e $\\rho' = \\{(1,2)\\}$.</p>
+            <p><strong>Casi degeneri.</strong> Se $E = \\emptyset$ oppure $|E| = 1$, invece, $R_E$ ha rispettivamente uno e due elementi e la composizione risulta commutativa: la non commutativita' <strong>non e' dunque un fatto automatico</strong>, ma dipende dalla taglia di $E$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s08-semianello",
+        type: "section",
+        title: "La struttura di semianello $(R_E, \\cup, \\circ, \\emptyset, id_E)$",
+        icon: "🧩",
+        content: `<p>La composizione e' distributiva rispetto all'unione (come vedremo nel Lemma 6.17). Per enunciare correttamente la conclusione, richiamiamo la definizione di semianello che adottiamo.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Semianello",
+            content: `<p>Una struttura $(S, +, \\cdot, 0_S, 1_S)$ si dice <strong>semianello</strong> se:</p>
+            <p>1. $(S, +, 0_S)$ e' un monoide commutativo;<br>
+            2. $(S, \\cdot, 1_S)$ e' un monoide;<br>
+            3. $\\cdot$ e' distributiva rispetto a $+$ sia a sinistra sia a destra;<br>
+            4. $0_S$ e' elemento <strong>assorbente</strong> per $\\cdot$, cioe' $0_S \\cdot s = s \\cdot 0_S = 0_S$ per ogni $s \\in S$.</p>
+            <p>A differenza di un anello, <strong>non si richiede l'esistenza degli opposti</strong> rispetto a $+$.</p>`
+          },
+          {
+            subtitle: "Verifica dei quattro requisiti su $R_E$",
+            content: `<p>Poniamo $+ := \\cup$, $\\cdot := \\circ$, $0_S := \\emptyset$ e $1_S := id_E$.</p>
+            <p>1. $(R_E, \\cup, \\emptyset)$ e' un monoide commutativo: l'unione e' associativa, commutativa e ha $\\emptyset$ come elemento neutro;<br>
+            2. $(R_E, \\circ, id_E)$ e' un monoide: la composizione e' associativa e $id_E$ e' neutro (non si richiede la commutativita');<br>
+            3. la composizione e' distributiva rispetto all'unione, a sinistra e a destra (Lemma 6.17 e osservazione successiva);<br>
+            4. la relazione vuota e' assorbente per la composizione: $\\rho \\circ \\emptyset = \\emptyset = \\emptyset \\circ \\rho$ per ogni $\\rho$.</p>
+            <p>Di conseguenza $(R_E, \\cup, \\circ, \\emptyset, id_E)$ e' un <strong>semianello</strong> (in generale non commutativo).</p>`
+          }
+        ],
+        formulas: [
+          { label: "Semianello delle relazioni", latex: "(R_E, \\cup, \\circ, \\emptyset, id_E)" },
+          { label: "Neutro moltiplicativo", latex: "\\rho \\circ id_E = \\rho = id_E \\circ \\rho" }
+        ]
+      },
+
+      {
+        id: "s08-non-anello",
+        type: "alert_box",
+        title: "Perche' $(R_E, \\cup, \\circ)$ NON e' un anello",
+        icon: "⚠️",
+        content: `<p>Un anello richiede che la prima operazione (in questo caso $\\cup$) formi un <strong>gruppo abeliano</strong>. Supponiamo $E \\neq \\emptyset$, cosi' che esistano relazioni non vuote. Allora $(R_E, \\cup)$ non e' un gruppo, poiche' <strong>mancano gli inversi</strong>: data una relazione non vuota $\\rho$, non esiste alcuna relazione $\\rho'$ tale che $\\rho \\cup \\rho' = \\emptyset$ (l'elemento neutro). Infatti</p>
+        <p>$$\\rho \\subseteq \\rho \\cup \\rho',$$</p>
+        <p>quindi l'unione non puo' essere vuota se $\\rho$ non lo e'.</p>
+        <p>Nel caso degenere $E = \\emptyset$ si ha $R_E = \\{\\emptyset\\}$, che e' il gruppo banale: l'argomento richiede dunque, essenzialmente, $E$ non vuoto.</p>`
+      },
+
+      {
+        id: "s08-nota-assorbente",
+        type: "note_box",
+        title: "La relazione vuota e' assorbente — ma non solo lei produce il vuoto",
+        icon: "📝",
+        content: `<p>Si noti che la relazione vuota $\\emptyset$ agisce come elemento assorbente per la composizione:</p>
+        <p>$$\\rho \\circ \\emptyset = \\emptyset = \\emptyset \\circ \\rho \\qquad \\forall \\rho \\in R_E.$$</p>
+        <p>D'altra parte, puo' capitare che la composizione di due relazioni <strong>non vuote</strong> sia la relazione vuota: basta che nessun percorso si possa concatenare. Ad esempio, se $E = \\{1,2,3\\}$, $\\rho = \\{(1,2)\\}$ e $\\rho' = \\{(3,3)\\}$, allora</p>
+        <p>$$\\rho \\circ \\rho' = \\emptyset$$</p>
+        <p>anche se $\\rho \\neq \\emptyset$ e $\\rho' \\neq \\emptyset$. Infatti l'unico secondo elemento di una coppia di $\\rho'$ e' $3$, che non e' primo elemento di alcuna coppia di $\\rho$: <strong>manca il testimone intermedio</strong>.</p>`
+      },
+
+      {
+        id: "s08-distributivita",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Distributivita' di $\\circ$ rispetto a $\\cup$ (Lemma 6.17)",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Dimostrare che per ogni $\\rho, \\rho', \\rho'' \\in R_E$ si ha</p>
+        <p>$$\\rho \\circ (\\rho' \\cup \\rho'') = (\\rho \\circ \\rho') \\cup (\\rho \\circ \\rho''),$$</p>
+        <p>ossia $\\circ$ e' distributiva (a sinistra) rispetto a $\\cup$. Si dimostra l'uguaglianza tra i due insiemi mostrando la doppia inclusione, ricordando la convenzione: $(x,z) \\in \\rho \\circ \\tau$ significa che esiste $y \\in E$ con $(x,y) \\in \\tau$ e $(y,z) \\in \\rho$.</p>`,
+        steps: [
+          `<strong>Inclusione $\\subseteq$.</strong> Sia $(x,z) \\in \\rho \\circ (\\rho' \\cup \\rho'')$. Per definizione di composizione esiste $y \\in E$ tale che $(x,y) \\in \\rho' \\cup \\rho''$ e $(y,z) \\in \\rho$. La condizione $(x,y) \\in \\rho' \\cup \\rho''$ significa che $(x,y) \\in \\rho'$ <em>oppure</em> $(x,y) \\in \\rho''$.`,
+          `Se $(x,y) \\in \\rho'$, allora, poiche' $(y,z) \\in \\rho$, si ha $(x,z) \\in \\rho \\circ \\rho'$.`,
+          `Se $(x,y) \\in \\rho''$, allora, poiche' $(y,z) \\in \\rho$, si ha $(x,z) \\in \\rho \\circ \\rho''$.`,
+          `In entrambi i casi $(x,z)$ appartiene a $\\rho \\circ \\rho'$ o a $\\rho \\circ \\rho''$, quindi $(x,z) \\in (\\rho \\circ \\rho') \\cup (\\rho \\circ \\rho'')$.`,
+          `<strong>Inclusione $\\supseteq$.</strong> Sia $(x,z) \\in (\\rho \\circ \\rho') \\cup (\\rho \\circ \\rho'')$. Questo significa che $(x,z) \\in \\rho \\circ \\rho'$ oppure $(x,z) \\in \\rho \\circ \\rho''$.`,
+          `Se $(x,z) \\in \\rho \\circ \\rho'$, esiste $y \\in E$ con $(x,y) \\in \\rho'$ e $(y,z) \\in \\rho$. Poiche' $(x,y) \\in \\rho'$, a maggior ragione $(x,y) \\in \\rho' \\cup \\rho''$. Quindi esiste $y$ con $(x,y) \\in \\rho' \\cup \\rho''$ e $(y,z) \\in \\rho$, il che implica $(x,z) \\in \\rho \\circ (\\rho' \\cup \\rho'')$.`,
+          `Se $(x,z) \\in \\rho \\circ \\rho''$, esiste $y' \\in E$ con $(x,y') \\in \\rho''$ e $(y',z) \\in \\rho$. Poiche' $(x,y') \\in \\rho''$, a maggior ragione $(x,y') \\in \\rho' \\cup \\rho''$, dunque $(x,z) \\in \\rho \\circ (\\rho' \\cup \\rho'')$.`,
+          `Avendo provato la doppia inclusione, l'uguaglianza e' dimostrata. $\\square$`,
+          `<strong>Distributivita' a destra.</strong> Analogamente si puo' dimostrare che $(\\rho' \\cup \\rho'') \\circ \\rho = (\\rho' \\circ \\rho) \\cup (\\rho'' \\circ \\rho)$.`,
+          `<strong>Il motivo profondo.</strong> La dimostrazione funziona con l'unione perche' l'unione corrisponde a un <em>oppure</em>, e il quantificatore esistenziale $\\exists y$ della composizione commuta con l'oppure. Con l'intersezione (un <em>e</em>) questo non succede: il testimone $y$ che serve per $\\rho'$ puo' essere diverso da quello che serve per $\\rho''$, e in generale non e' garantita l'esistenza di un testimone comune.`
+        ]
+      },
+
+      {
+        id: "s08-esercizi-618",
+        type: "section",
+        title: "Esercizi 6.18 — le inclusioni in un solo verso",
+        icon: "📐",
+        content: `<p><strong>Consegna (da svolgere).</strong> La composizione $\\circ$ non e' distributiva rispetto a $\\cap$, ne' a $\\setminus$, ne' a $\\oplus$: valgono pero' sempre delle inclusioni in un solo verso. Si dimostri che per ogni $\\rho, \\rho', \\rho''$ valgono le seguenti relazioni:</p>
+        <p>1. $\\rho \\circ (\\rho' \\cap \\rho'') \\subseteq (\\rho \\circ \\rho') \\cap (\\rho \\circ \\rho'')$ e $(\\rho' \\cap \\rho'') \\circ \\rho \\subseteq (\\rho' \\circ \\rho) \\cap (\\rho'' \\circ \\rho)$</p>
+        <p>2. $\\rho \\circ (\\rho' \\setminus \\rho'') \\supseteq (\\rho \\circ \\rho') \\setminus (\\rho \\circ \\rho'')$ e $(\\rho' \\setminus \\rho'') \\circ \\rho \\supseteq (\\rho' \\circ \\rho) \\setminus (\\rho'' \\circ \\rho)$</p>
+        <p>3. $\\rho \\circ (\\rho' \\oplus \\rho'') \\supseteq (\\rho \\circ \\rho') \\oplus (\\rho \\circ \\rho'')$ e $(\\rho' \\oplus \\rho'') \\circ \\rho \\supseteq (\\rho' \\circ \\rho) \\oplus (\\rho'' \\circ \\rho)$</p>
+        <p>Per ciascuna delle tre, si cerchi inoltre un esempio in cui l'inclusione e' <strong>stretta</strong>, cosi' da verificare che l'uguaglianza (cioe' la distributivita') effettivamente cade.</p>`
+      },
+
+      {
+        id: "s08-int-intersezione",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><em>Svolgimento del punto 1 e controesempio alla distributivita' rispetto a $\\cap$.</em></p>
+        <p><strong>Inclusione.</strong> Proviamo $\\rho \\circ (\\rho' \\cap \\rho'') \\subseteq (\\rho \\circ \\rho') \\cap (\\rho \\circ \\rho'')$. Sia $(x,z) \\in \\rho \\circ (\\rho' \\cap \\rho'')$: esiste allora $y \\in E$ con $(x,y) \\in \\rho' \\cap \\rho''$ e $(y,z) \\in \\rho$. Poiche' $(x,y) \\in \\rho'$ e $(y,z) \\in \\rho$, si ha $(x,z) \\in \\rho \\circ \\rho'$; poiche' $(x,y) \\in \\rho''$ e $(y,z) \\in \\rho$, si ha $(x,z) \\in \\rho \\circ \\rho''$. Dunque $(x,z) \\in (\\rho \\circ \\rho') \\cap (\\rho \\circ \\rho'')$. Punto chiave: <strong>lo stesso</strong> testimone $y$ serve per entrambe le composizioni.</p>
+        <p><strong>Perche' l'altra inclusione puo' fallire.</strong> Se $(x,z) \\in (\\rho \\circ \\rho') \\cap (\\rho \\circ \\rho'')$, sappiamo soltanto che esiste un testimone $y_1$ con $(x,y_1) \\in \\rho'$ e $(y_1,z) \\in \\rho$, e un testimone $y_2$ con $(x,y_2) \\in \\rho''$ e $(y_2,z) \\in \\rho$. I due testimoni possono essere diversi e non e' garantita l'esistenza di un testimone comune $y$ con $(x,y) \\in \\rho' \\cap \\rho''$ e $(y,z) \\in \\rho$. Si noti che il dato rilevante non e' l'appartenenza dei singoli elementi intermedi alle relazioni, bensi' quella delle <em>coppie</em> $(x,y_1)$ e $(x,y_2)$.</p>
+        <p><strong>Controesempio con inclusione stretta.</strong> Sia $E = \\{1,2,3,4\\}$ e</p>
+        <p>$$\\rho' = \\{(1,2)\\}, \\qquad \\rho'' = \\{(1,3)\\}, \\qquad \\rho = \\{(2,4),\\,(3,4)\\}.$$</p>
+        <p>Allora</p>
+        <p>$$\\rho' \\cap \\rho'' = \\emptyset \\quad \\Rightarrow \\quad \\rho \\circ (\\rho' \\cap \\rho'') = \\emptyset,$$</p>
+        <p>mentre, usando il testimone $y_1 = 2$ per $\\rho'$ e il testimone $y_2 = 3$ per $\\rho''$,</p>
+        <p>$$\\rho \\circ \\rho' = \\{(1,4)\\}, \\qquad \\rho \\circ \\rho'' = \\{(1,4)\\}, \\qquad (\\rho \\circ \\rho') \\cap (\\rho \\circ \\rho'') = \\{(1,4)\\} \\neq \\emptyset.$$</p>
+        <p>L'inclusione e' dunque stretta: la coppia $(1,4)$ si ottiene in entrambe le composizioni, ma gli unici elementi intermedi disponibili sono $2$ per $\\rho'$ e $3$ per $\\rho''$, e <strong>non esiste alcun testimone comune</strong> (qui $\\rho' \\cap \\rho''$ e' perfino vuota). Questo e' esattamente l'ostacolo alla distributivita' rispetto a $\\cap$.</p>`
+      },
+
+      {
+        id: "s08-idea-naturali",
+        type: "section",
+        title: "I numeri naturali: contare ed enumerare",
+        icon: "🔢",
+        content: `<p>L'idea intuitiva dell'insieme $\\mathbb{N}$ dei numeri naturali e' legata a due concetti fondamentali:</p>
+        <p><strong>Contare:</strong> valutare la quantita' di oggetti in un insieme (cardinalita').<br>
+        <strong>Enumerare:</strong> associare a ciascun oggetto un'etichetta unica e ordinata.</p>
+        <p>Questi due punti di vista portano a costruzioni diverse ma equivalenti di $\\mathbb{N}$. Seguiremo l'approccio dell'<strong>enumerazione</strong>, che conduce agli assiomi di Peano. La strategia consiste nel definire un punto di partenza (lo zero) e una regola per generare il "successivo" di ogni numero.</p>`,
+        subsections: [
+          {
+            subtitle: "La costruzione intuitiva passo per passo",
+            content: `<p>1. Esiste un punto di partenza, $0 \\in \\mathbb{N}$, che corrisponde all'insieme vuoto $\\emptyset$.<br>
+            2. Esiste un punto successivo di $0$, $1 \\in \\mathbb{N}$, che corrisponde al passo $+1$, ossia all'insieme $\\{\\emptyset\\}$.<br>
+            3. Esiste un punto successivo di $1$, $2 \\in \\mathbb{N}$, che corrisponde all'insieme $\\{\\emptyset, \\{\\emptyset\\}\\}$.<br>
+            4. Esiste un punto successivo di $2$, $3 \\in \\mathbb{N}$, che corrisponde all'insieme $\\{\\emptyset, \\{\\emptyset\\}, \\{\\emptyset, \\{\\emptyset\\}\\}\\}$.<br>
+            5. E cosi' via.</p>
+            <p>Questa costruzione intuitiva viene formalizzata attraverso un sistema assiomatico.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s08-assiomi-peano",
+        type: "section",
+        title: "Sistema dei numeri naturali (s.n.n.) e assiomi di Peano",
+        icon: "📜",
+        content: `<p>Si dice <strong>sistema dei numeri naturali</strong> (s.n.n.) ogni terna $(\\mathbb{N}, 0, \\sigma)$ tale che valgono i seguenti <strong>assiomi di Peano</strong>.</p>
+        <p><strong>p0</strong> — $\\mathbb{N}$ e' un insieme, $0 \\in \\mathbb{N}$ e $\\sigma: \\mathbb{N} \\to \\mathbb{N}$ e' una funzione (detta <em>funzione successore</em>).</p>
+        <p><strong>p1</strong> — $\\sigma: \\mathbb{N} \\to \\mathbb{N}$ e' iniettiva (numeri diversi hanno successori diversi).</p>
+        <p><strong>p2</strong> — $0 \\notin \\text{Im}(\\sigma)$, cioe' non esiste alcun $n \\in \\mathbb{N}$ tale che $\\sigma(n) = 0$ (lo zero non e' il successore di nessun numero).</p>
+        <p><strong>p3</strong> — Vale il <strong>principio di induzione (debole)</strong>: per ogni sottoinsieme $U \\subseteq \\mathbb{N}$ tale che</p>
+        <p><strong>b)</strong> $0 \\in U$ (base dell'induzione);<br>
+        <strong>i$_d$)</strong> per ogni $k \\in U$ segue che $\\sigma(k) \\in U$ (passo induttivo);</p>
+        <p>allora si ha che $U = \\mathbb{N}$.</p>`,
+        subsections: [
+          {
+            subtitle: "Il ruolo di ciascun assioma: cosa impedisce",
+            content: `<p><strong>p1</strong> impedisce che due numeri distinti collassino sullo stesso successore (ad esempio un "ciclo" come $\\sigma(3)=1$ con $\\sigma(0)=1$);</p>
+            <p><strong>p2</strong> impedisce che la catena dei successori si chiuda su $0$ o prosegua "indietro" oltre lo zero;</p>
+            <p><strong>p3</strong> impedisce che ci siano elementi <em>irraggiungibili</em> a partire da $0$ applicando ripetutamente $\\sigma$: esso dice che $\\mathbb{N}$ e' <strong>il piu' piccolo insieme che contiene $0$ ed e' chiuso per $\\sigma$</strong>.</p>`
+          },
+          {
+            subtitle: "Esistenza e unicita'",
+            content: `<p>L'<strong>esistenza</strong> di un s.n.n. si postula attraverso l'assioma dell'infinito nella teoria assiomatica degli insiemi di Zermelo-Fraenkel.</p>
+            <p>L'<strong>unicita'</strong> (a meno di isomorfismi) di un s.n.n. si puo' dimostrare: se $(\\mathbb{N}, 0, \\sigma)$ e $(\\mathbb{N}', 0', \\sigma')$ sono due s.n.n., allora esiste un'unica biiezione $\\Phi: \\mathbb{N} \\to \\mathbb{N}'$ tale che</p>
+            <p>$$\\Phi(0) = 0' \\qquad \\text{e} \\qquad \\Phi \\circ \\sigma = \\sigma' \\circ \\Phi.$$</p>
+            <p>La dimostrazione completa di questo risultato verra' presentata nelle lezioni successive.</p>`
+          }
+        ],
+        formulas: [
+          { label: "p1 — iniettivita'", latex: "\\sigma(n) = \\sigma(m) \\Rightarrow n = m" },
+          { label: "p2 — zero non e' successore", latex: "0 \\notin \\text{Im}(\\sigma)" },
+          { label: "p3 — induzione debole", latex: "\\big(0 \\in U \\ \\wedge\\ \\forall k \\in U:\\ \\sigma(k) \\in U\\big) \\Rightarrow U = \\mathbb{N}" }
+        ]
+      },
+
+      {
+        id: "s08-controesempi-peano",
+        type: "section",
+        title: "Controesempi agli assiomi di Peano",
+        icon: "🚫",
+        content: `<p>Vediamo due esempi di strutture che <strong>non</strong> sono sistemi di numeri naturali: in ciascuno fallisce almeno un assioma, e i due casi mettono in luce fenomeni diversi.</p>`,
+        subsections: [
+          {
+            subtitle: "1) Gli interi $\\mathbb{Z}$: cade p2 (e cade anche p3)",
+            content: `<p>Si consideri l'insieme $\\mathbb{Z}$ con l'elemento $0$ e la funzione successore $\\sigma(n) = n+1$. Qui $\\sigma$ e' una funzione ben definita su tutto $\\mathbb{Z}$ (p0) ed e' iniettiva (p1), ma l'assioma <strong>p2</strong> non vale: infatti $0 = \\sigma(-1)$, quindi $0 \\in \\text{Im}(\\sigma)$.</p>
+            <p>Si noti pero' che negli interi, con il successore usuale, <strong>fallisce anche p3</strong>: prendendo $U$ uguale all'insieme degli interi non negativi, si ha $0 \\in U$ e $U$ e' chiuso per successore (se $n \\ge 0$ allora $n+1 \\ge 0$), ma $U \\neq \\mathbb{Z}$ perche' gli interi negativi non vi appartengono. Dunque questo esempio <strong>non isola</strong> il fallimento del solo <strong>p2</strong>.</p>`
+          },
+          {
+            subtitle: "2) I naturali con un punto all'infinito: cade soltanto p3",
+            content: `<p>Si consideri $\\bar{\\mathbb{N}} := \\mathbb{N} \\cup \\{\\infty\\}$ con l'elemento $0$ e la funzione successore estesa</p>
+            <p>$$\\bar{\\sigma}(n) := \\sigma(n) = n+1 \\ \\text{ per } n \\in \\mathbb{N}, \\qquad \\bar{\\sigma}(\\infty) := \\infty.$$</p>
+            <p><strong>p0</strong> vale: $\\bar{\\sigma}: \\bar{\\mathbb{N}} \\to \\bar{\\mathbb{N}}$ e' definita su tutto $\\bar{\\mathbb{N}}$ e $0 \\in \\bar{\\mathbb{N}}$.</p>
+            <p><strong>p1</strong> vale: $\\bar{\\sigma}$ e' iniettiva. Infatti su $\\mathbb{N}$ coincide con il successore usuale, che e' iniettivo; nessun naturale ha come immagine $\\infty$ (le immagini dei naturali sono naturali); e $\\infty$ e' l'unico elemento la cui immagine e' $\\infty$. Dunque non esistono due elementi distinti con la stessa immagine: il punto fisso $\\bar{\\sigma}(\\infty)=\\infty$ <em>non</em> crea alcun conflitto di iniettivita'.</p>
+            <p><strong>p2</strong> vale: $0$ non e' immagine di nessun elemento, poiche' $\\bar{\\sigma}(n) = n+1 \\neq 0$ per $n \\in \\mathbb{N}$ e $\\bar{\\sigma}(\\infty) = \\infty \\neq 0$.</p>
+            <p><strong>p3 cade</strong>: si prenda $U := \\mathbb{N} \\subseteq \\bar{\\mathbb{N}}$. Allora $0 \\in U$ e $U$ e' chiuso rispetto al successore (se $n \\in \\mathbb{N}$, anche $\\bar{\\sigma}(n) = n+1 \\in \\mathbb{N}$), ma $U = \\mathbb{N} \\neq \\mathbb{N} \\cup \\{\\infty\\} = \\bar{\\mathbb{N}}$. Dunque il principio di induzione non vale.</p>
+            <p>Questo secondo esempio soddisfa dunque <strong>p0-p2</strong> e viola soltanto <strong>p3</strong>: e' esattamente l'esempio tipico di elemento <em>irraggiungibile</em> da $0$, e mostra che <strong>p3</strong> e' proprio cio' che esclude strutture come questa.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s08-ordine-operazioni",
+        type: "section",
+        title: "Ordine e operazioni in $\\mathbb{N}$",
+        icon: "⚖️",
+        content: `<p><strong>Lemma (relazione d'ordine in $\\mathbb{N}$).</strong> Sia $(\\mathbb{N}, 0, \\sigma)$ un s.n.n. (quindi valgono <strong>p0-p3</strong>). In $\\mathbb{N}$ sia data la relazione $\\le$ definita da:</p>
+        <p>1. $0 \\le n$, per ogni $n \\in \\mathbb{N}$;</p>
+        <p>2. $\\sigma(l) \\le n \\iff \\exists\\, m \\in \\mathbb{N} \\mid (n = \\sigma(m)) \\wedge (l \\le m)$, per ogni $l, n \\in \\mathbb{N}$.</p>
+        <p>Allora $\\le$ e' una relazione di <strong>ordine totale</strong> in $\\mathbb{N}$.</p>
+        <p><em>Dimostrazione non riportata nelle fonti: la verifica completa di riflessivita', antisimmetria, transitivita' e totalita' verra' presentata nelle lezioni successive.</em></p>`,
+        subsections: [
+          {
+            subtitle: "La definizione di $\\le$ e' ricorsiva — e p3 la legittima",
+            content: `<p>Per definire $l \\le n$ per ogni coppia $(l, n)$ si procede per "induzione su $l$":</p>
+            <p>Per $l=0$, la proprieta' $0 \\le n$ e' definita vera per ogni $n$.</p>
+            <p>Passando da $l$ a $\\sigma(l)$, la definizione di $\\sigma(l) \\le n$ si basa sulla proprieta' $l \\le m$ (con $n=\\sigma(m)$), che si assume gia' definita.</p>
+            <p>Ad esempio, $\\sigma(0) \\le \\sigma(\\sigma(0))$ (cioe' $1 \\le 2$) vale perche', scegliendo $m = \\sigma(0)$, si ha $\\sigma(\\sigma(0)) = \\sigma(m)$ e $0 \\le m$, che e' vero per il primo punto della definizione.</p>
+            <p>E' importante sottolineare che questa definizione ricorsiva e' legittima <strong>proprio grazie a p3</strong>: l'induzione su $l$ garantisce che la clausola di base e quella di passo determinino $l \\le n$ per <em>ogni</em> coppia. Senza <strong>p3</strong> potrebbero esistere elementi irraggiungibili da $0$ (come $\\infty$ nell'esempio precedente), per i quali ne' la prima ne' la seconda clausola determinano univocamente il valore di verita' di $l \\le n$.</p>`
+          },
+          {
+            subtitle: "Definizione — Somma e prodotto (ricorsione sul primo argomento)",
+            content: `<p>Sia $(\\mathbb{N}, 0, \\sigma)$ un s.n.n. Si definiscono in $\\mathbb{N}$ le due seguenti operazioni binarie in modo induttivo.</p>
+            <p><strong>Somma</strong>: per ogni $a, b \\in \\mathbb{N}$,</p>
+            <p>$$0 + b := b, \\qquad \\sigma(a) + b := \\sigma(a+b).$$</p>
+            <p><strong>Prodotto</strong>: per ogni $a, b \\in \\mathbb{N}$,</p>
+            <p>$$0 \\cdot b := 0, \\qquad \\sigma(a) \\cdot b := (a \\cdot b) + b.$$</p>`
+          },
+          {
+            subtitle: "Esempio illustrativo: calcolo di $2+1$ con le definizioni ricorsive",
+            content: `<p>Posto $1 := \\sigma(0)$ e $2 := \\sigma(\\sigma(0))$, si ha</p>
+            <p>$$2 + 1 = \\sigma(\\sigma(0)) + 1 = \\sigma\\big(\\sigma(0) + 1\\big) = \\sigma\\big(\\sigma(0 + 1)\\big) = \\sigma(\\sigma(1)) = 3,$$</p>
+            <p>dove nell'ultimo passaggio si e' usato $0 + 1 = 1$ (prima clausola della somma). Si vede che la definizione "scarica" il primo argomento fino a $0$ e poi ricostruisce il risultato applicando $\\sigma$.</p>`
+          },
+          {
+            subtitle: "Teorema — Proprieta' algebriche di $\\mathbb{N}$",
+            content: `<p>La terna $(\\mathbb{N}, +, \\cdot)$ definisce un <strong>semianello commutativo unitario</strong>, con $0$ elemento neutro per la somma e $1 := \\sigma(0)$ elemento neutro per il prodotto. Inoltre le due operazioni sono compatibili con la relazione di ordine $\\le$: per ogni $n_1, n_2, n, k \\in \\mathbb{N}$</p>
+            <p>$$n_1 \\le n_2 \\iff n_1 + n \\le n_2 + n,$$</p>
+            <p>$$n_1 \\le n_2 \\Rightarrow n_1 \\cdot k \\le n_2 \\cdot k, \\quad \\text{e se } k \\neq 0 \\text{ vale anche l'implicazione inversa.}$$</p>
+            <p><em>Dimostrazione non riportata nelle fonti: tutte le verifiche si ottengono per induzione a partire dalle definizioni ricorsive di $+$ e $\\cdot$, e verranno presentate nelle lezioni successive.</em></p>`
+          }
+        ],
+        formulas: [
+          { label: "Somma (ricorsiva)", latex: "0 + b = b, \\qquad \\sigma(a) + b = \\sigma(a+b)" },
+          { label: "Prodotto (ricorsivo)", latex: "0 \\cdot b = 0, \\qquad \\sigma(a) \\cdot b = (a \\cdot b) + b" }
+        ]
+      },
+
+      {
+        id: "s08-forme-induzione",
+        type: "section",
+        title: "Altre forme del principio di induzione",
+        icon: "🔁",
+        content: `<p>Nella pratica, per dimostrare che una proprieta' vale per tutti i naturali, si usano indifferentemente tre strumenti: l'<strong>induzione debole</strong> (p3), l'<strong>induzione forte</strong> e il <strong>principio del minimo</strong>. Il risultato che segue afferma che, <em>sul sistema dei numeri naturali gia' costruito</em>, i tre strumenti hanno la stessa forza: ciascuno dei tre puo' essere dedotto dagli altri due.</p>`,
+        subsections: [
+          {
+            subtitle: "Un presupposto da chiarire",
+            content: `<p>Enunciati come "$\\overline{\\text{p3}}$ e <strong>m</strong> sono equivalenti a <strong>p3</strong> per ogni terna che soddisfa <strong>p0-p2</strong>" vanno maneggiati con cura, perche' entrambi questi principi <em>parlano della relazione $\\le$</em>, e la relazione $\\le$ e' stata definita per ricorsione usando <strong>p3</strong>.</p>
+            <p>Sotto le sole ipotesi <strong>p0-p2</strong> la terna puo' avere elementi irraggiungibili da $0$ (si ricordi $\\bar{\\mathbb{N}} = \\mathbb{N} \\cup \\{\\infty\\}$) e, su tali elementi, le due clausole ricorsive non determinano univocamente l'ordine: ad esempio non vi e' nulla che fissi il valore di verita' di $\\infty \\le \\infty$, perche' la clausola di passo rimanda indefinitamente a se' stessa. Dunque, con <strong>p0-p2</strong> soltanto, non si dispone di una relazione $\\le$ ben definita, ne' delle sue proprieta' (ordine totale, compatibilita' con $+$ e $\\cdot$), che vengono invece dimostrate per induzione.</p>
+            <p>Per questo motivo enunciamo il risultato come <strong>equivalenza dei tre metodi dimostrativi sul sistema dei naturali gia' costruito</strong>, cioe' su una terna che soddisfa <strong>p0-p3</strong> e nella quale $\\le$ e' la relazione d'ordine totale del lemma precedente.</p>
+            <p>Chi volesse una formulazione come <em>sostituzione assiomatica</em> (ossia: "assumendo <strong>p0-p2</strong> e $\\overline{\\text{p3}}$ si ricava <strong>p3</strong>") deve prima dare una definizione di $\\le$ che non dipenda da <strong>p3</strong>. Una possibilita' e' la definizione esplicita in cui si usano i naturali standard <em>esterni</em> alla struttura candidata $M$ per contare le iterazioni: posto $\\sigma^{d}$ con $d$ naturale standard, si pone</p>
+            <p>$$l \\le n \\quad :\\Longleftrightarrow \\quad \\exists\\, d \\ \\text{naturale standard tale che} \\ n = \\sigma^{d}(l),$$</p>
+            <p>dove $\\sigma^d$ indica la $d$-esima iterata di $\\sigma$ su $M$ (ben definita solo perche' $d$ e' un intero finito contato dall'esterno: senza questa distinzione, su elementi irraggiungibili come $\\infty$ l'iterata non sarebbe definita). Va inoltre precisato che, senza <strong>p3</strong>, di tale relazione si hanno soltanto riflessivita' e transitivita', mentre antisimmetria e totalita' possono cadere. <strong>Non svilupperemo qui questa strada</strong>: ci limitiamo all'equivalenza dei metodi sul s.n.n.</p>`
+          },
+          {
+            subtitle: "$\\overline{\\text{p3}}$ — Principio di induzione forte",
+            content: `<p>Per ogni $V \\subseteq \\mathbb{N}$ tale che:</p>
+            <p><strong>b)</strong> $0 \\in V$ (base);</p>
+            <p><strong>i$_f$)</strong> per ogni $v \\in \\mathbb{N}$, se $u \\in V$ per ogni $u \\le v$, allora $\\sigma(v) \\in V$, ossia</p>
+            <p>$$\\forall v \\in \\mathbb{N}, \\quad \\big(\\{u \\in \\mathbb{N} \\mid u \\le v\\} \\subseteq V\\big) \\Rightarrow \\sigma(v) \\in V$$</p>
+            <p>(passo induttivo forte: se <em>tutti</em> i numeri fino a $v$ appartengono a $V$, allora anche il successore di $v$ appartiene a $V$);</p>
+            <p>allora $V = \\mathbb{N}$.</p>`
+          },
+          {
+            subtitle: "m — Principio del minimo",
+            content: `<p>La relazione $\\le$ e' un <strong>buon ordinamento</strong>, ovvero ogni sottoinsieme non vuoto $T \\subseteq \\mathbb{N}$ ammette un elemento minimo:</p>
+            <p>$$\\forall T \\subseteq \\mathbb{N}, \\ T \\neq \\emptyset \\Rightarrow \\exists\\, t_0 \\in T \\mid t_0 \\le t, \\ \\forall t \\in T.$$</p>
+            <p>Allora $\\overline{\\text{p3}}$ e <strong>m</strong> sono entrambe vere, e ciascuna di esse puo' essere dedotta da <strong>p3</strong> e viceversa: i tre principi sono dunque <strong>intercambiabili come strumenti di dimostrazione</strong> su $\\mathbb{N}$.</p>`
+          },
+          {
+            subtitle: "Teorema di equivalenza",
+            content: `<p>Sia $(\\mathbb{N}, 0, \\sigma)$ un s.n.n. e sia $\\le$ la relazione d'ordine totale definita sopra. Allora i tre principi <strong>p3</strong> (induzione debole), $\\overline{\\text{p3}}$ (induzione forte) e <strong>m</strong> (principio del minimo) sono a due a due equivalenti:</p>
+            <p>$$\\text{p3} \\iff \\overline{\\text{p3}} \\iff \\text{m}.$$</p>
+            <p><em>Dimostrazione non riportata nelle fonti: la catena completa di implicazioni verra' presentata nelle lezioni successive.</em> Intuitivamente, p3 $\\Rightarrow \\overline{\\text{p3}}$ si ottiene applicando l'induzione debole all'insieme <em>rafforzato</em> $\\{n \\in \\mathbb{N} \\mid \\forall u \\le n,\\ u \\in V\\}$, mentre $\\overline{\\text{p3}} \\Rightarrow$ m si ottiene per contrapposizione: se $T$ non ha minimo, allora il suo complementare soddisfa base e passo forte, dunque $T = \\emptyset$.</p>`
+          },
+          {
+            subtitle: "Che cosa significa \"equivalenti\" nella pratica",
+            content: `<p>L'equivalenza dei tre principi ha una conseguenza operativa importante: <strong>nessuna</strong> proprieta' dimostrabile con l'induzione forte o con il principio del minimo e' indimostrabile con l'induzione debole.</p>
+            <p>Quando piu' avanti diremo che "serve l'induzione forte", intenderemo sempre che <em>la sola ipotesi $P(k)$ non basta</em> per effettuare il passo: per usare l'induzione debole occorre allora applicarla a una proprieta' opportunamente <strong>rafforzata</strong>, tipicamente $Q(k) :=$ "$P(i)$ vale per ogni $i \\le k$".</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s08-errori-induzione-forte",
+        type: "alert_box",
+        title: "Come NON enunciare l'induzione forte",
+        icon: "⚠️",
+        content: `<p>E' importante formulare correttamente il passo <strong>i$_f$)</strong>. Due errori frequenti:</p>
+        <p><strong>Errore 1 — scrivere l'ipotesi come $\\{u \\in V \\mid u \\le v\\} \\subseteq V$.</strong> Questa inclusione e' <em>sempre vera</em>, perche' per costruzione gli elementi di $\\{u \\in V \\mid u \\le v\\}$ stanno in $V$: essendo l'antecedente sempre vero, il passo si ridurrebbe a richiedere <strong>direttamente</strong> $\\sigma(v) \\in V$ per ogni $v$, perdendo completamente il significato di deduzione dai casi precedenti (e trasformandosi in una condizione molto forte, non in una vera ipotesi induttiva). L'ipotesi corretta e' $\\{u \\in \\mathbb{N} \\mid u \\le v\\} \\subseteq V$, cioe': <em>tutti</em> i naturali $\\le v$ (non solo quelli che gia' sappiamo stare in $V$) appartengono a $V$.</p>
+        <p><strong>Errore 2 — concludere $v \\in V$ invece di $\\sigma(v) \\in V$.</strong> La conclusione $v \\in V$ e' gia' contenuta nell'ipotesi (poiche' $v \\le v$), e l'enunciato diventerebbe una tautologia, inutilizzabile e non equivalente a <strong>p3</strong>.</p>
+        <p><strong>Formulazione corretta:</strong> <em>base</em> $0 \\in V$; <em>passo</em>, per ogni $v$, se ogni $u \\le v$ sta in $V$ allora $\\sigma(v) \\in V$. Nella pratica, con $V = \\{n \\mid P(n)\\}$, cio' corrisponde a: dimostrare $P(0)$ e poi dedurre $P(k+1)$ dall'ipotesi "$P(i)$ vale per ogni $i \\le k$".</p>`
+      },
+
+      {
+        id: "s08-schemi-dimostrativi",
+        type: "section",
+        title: "Dimostrazioni per induzione: i tre schemi operativi",
+        icon: "🛠️",
+        content: `<p>Per dimostrare che una proprieta' $P(n)$ e' vera per ogni $n \\in \\mathbb{N}$, si definisce l'insieme</p>
+        <p>$$B := \\{m \\in \\mathbb{N} \\mid P(m) \\text{ e' vera}\\}$$</p>
+        <p>e si dimostra che $B = \\mathbb{N}$ usando uno dei tre principi.</p>`,
+        subsections: [
+          {
+            subtitle: "Induzione debole (id)",
+            content: `<p>Si prova che $B=\\mathbb{N}$ usando l'assioma <strong>p3</strong> con $U:=B$.</p>
+            <p>1. <strong>Base:</strong> si verifica che $P(0)$ e' vera (cioe' $0 \\in B$).<br>
+            2. <strong>Passo induttivo:</strong> si assume che $P(k)$ sia vera per un generico $k \\in \\mathbb{N}$ (ipotesi induttiva) e da questo si dimostra che anche $P(k+1)$ e' vera.</p>`
+          },
+          {
+            subtitle: "Induzione forte (if)",
+            content: `<p>Si prova che $B=\\mathbb{N}$ usando il principio $\\overline{\\text{p3}}$ con $V:=B$.</p>
+            <p>1. <strong>Base:</strong> si verifica che $P(0)$ e' vera.<br>
+            2. <strong>Passo induttivo:</strong> si assume che $P(i)$ sia vera per <em>ogni</em> $i \\le k$ (ipotesi induttiva forte) e da questo si dimostra che anche $P(k+1)$ e' vera.</p>
+            <p>Si usa quando per ottenere $P(k+1)$ non basta il passo immediatamente precedente, ma servono valori piu' piccoli e <strong>non prevedibili a priori</strong> (ad esempio quando si spezza $k+1$ in un prodotto o in una somma di due pezzi).</p>`
+          },
+          {
+            subtitle: "Principio del minimo (pm)",
+            content: `<p>Si prova che $B=\\mathbb{N}$ per assurdo. Si suppone che $B \\neq \\mathbb{N}$, quindi l'insieme dei "controesempi" $T := \\mathbb{N} \\setminus B$ e' non vuoto. Per il principio del minimo, $T$ deve avere un elemento minimo $t_0$. Si cerca quindi una contraddizione, tipicamente mostrando che se $P(t_0)$ e' falsa, allora deve esistere un controesempio <strong>piu' piccolo</strong>, contro la minimalita' di $t_0$.</p>
+            <p>Si usa quando e' comodo ragionare sul "primo caso in cui la proprieta' fallisce".</p>`
+          }
+        ],
+        extra_content: `<p>Poiche' i tre principi sono equivalenti, la scelta fra <strong>(id)</strong>, <strong>(if)</strong> e <strong>(pm)</strong> e' una questione di <em>comodita'</em>, non di potenza dimostrativa.</p>`
+      },
+
+      {
+        id: "s08-somma-primi-n",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Somma dei primi $n$ interi",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Dimostrare per induzione che per ogni $n \\in \\mathbb{N}$</p>
+        <p>$$\\sum_{l=0}^{n} l = \\frac{n(n+1)}{2}.$$</p>
+        <p>Usiamo l'induzione debole. Sia $P(n)$ la proprieta' $\\sum_{l=0}^{n} l = \\frac{n(n+1)}{2}$.</p>`,
+        steps: [
+          `<strong>Base ($n=0$).</strong> Verifichiamo $P(0)$. Il lato sinistro e' $\\sum_{l=0}^{0} l = 0$. Il lato destro e' $\\frac{0(0+1)}{2} = 0$. L'uguaglianza vale.`,
+          `<strong>Ipotesi induttiva.</strong> Assumiamo che $P(k)$ sia vera per un generico $k \\in \\mathbb{N}$: $$\\sum_{l=0}^{k} l = \\frac{k(k+1)}{2}.$$`,
+          `<strong>Tesi.</strong> Vogliamo dimostrare $P(k+1)$, cioe' $$\\sum_{l=0}^{k+1} l = \\frac{(k+1)((k+1)+1)}{2} = \\frac{(k+1)(k+2)}{2}.$$`,
+          `<strong>Calcolo.</strong> Partiamo dal lato sinistro dell'uguaglianza per $k+1$: $$\\begin{aligned} \\sum_{l=0}^{k+1} l &= \\left(\\sum_{l=0}^{k} l\\right) + (k+1) \\\\ &= \\frac{k(k+1)}{2} + (k+1) \\qquad \\text{(ipotesi induttiva)} \\\\ &= (k+1)\\left(\\frac{k}{2} + 1\\right) \\\\ &= (k+1)\\left(\\frac{k+2}{2}\\right) \\\\ &= \\frac{(k+1)(k+2)}{2}. \\end{aligned}$$`,
+          `Questo e' esattamente il lato destro dell'uguaglianza per $P(k+1)$. Poiche' la base e il passo induttivo sono verificati, per il principio di induzione la formula e' vera per ogni $n \\in \\mathbb{N}$. $\\square$`
+        ]
+      },
+
+      {
+        id: "s08-int-induzione-forte",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><em>Un esempio di induzione forte.</em></p>
+        <p><strong>Enunciato.</strong> Ogni numero naturale $n \\ge 2$ si scrive come prodotto di (uno o piu') numeri primi.</p>
+        <p><strong>Perche' conviene l'induzione forte.</strong> Per trattare $n+1$ non possiamo appoggiarci al solo caso $n$: se $n+1$ non e' primo lo spezziamo come $n+1 = a \\cdot b$ con $2 \\le a, b \\le n$, e i due fattori $a, b$ sono numeri <em>qualsiasi</em> piu' piccoli, non necessariamente il predecessore. Serve dunque l'ipotesi forte "la proprieta' vale per ogni $i \\le k$".</p>
+        <p><strong>Dimostrazione.</strong> Sia $P(n)$: "$n$ e' prodotto di numeri primi oppure $n \\lt 2$". Procediamo con lo schema <strong>(if)</strong>.</p>
+        <p><strong>Base:</strong> $P(0)$ e $P(1)$ sono vere per convenzione (sono i casi $n \\lt 2$, esclusi dall'enunciato).</p>
+        <p><strong>Passo forte:</strong> sia $k \\in \\mathbb{N}$ e supponiamo che $P(i)$ valga per ogni $i \\le k$. Dimostriamo $P(k+1)$. Se $k+1 \\lt 2$ non c'e' nulla da provare. Sia dunque $k+1 \\ge 2$ e distinguiamo due casi:</p>
+        <p>• se $k+1$ e' primo, allora e' esso stesso un prodotto (con un solo fattore) di primi, e $P(k+1)$ vale;</p>
+        <p>• se $k+1$ non e' primo, esistono $a, b$ con $k+1 = a \\cdot b$ e $2 \\le a \\le k$, $2 \\le b \\le k$. Poiche' $a \\le k$ e $b \\le k$, l'ipotesi induttiva forte si applica sia ad $a$ sia a $b$: entrambi sono prodotti di primi, cioe' $a = p_1 \\cdots p_r$ e $b = q_1 \\cdots q_s$ con $p_i, q_j$ primi. Allora</p>
+        <p>$$k+1 = p_1 \\cdots p_r \\cdot q_1 \\cdots q_s$$</p>
+        <p>e' un prodotto di primi, quindi $P(k+1)$ vale.</p>
+        <p>Per il principio di induzione forte $\\overline{\\text{p3}}$, $P(n)$ vale per ogni $n \\in \\mathbb{N}$; in particolare ogni $n \\ge 2$ e' prodotto di primi.</p>
+        <p><strong>Osservazione sul ruolo dei due principi.</strong> L'ipotesi $P(k)$, da sola, non permette questo passaggio: l'informazione sul solo $k$ non dice nulla sui fattori $a$ e $b$. Possiamo allora usare direttamente l'induzione forte, oppure applicare l'induzione debole alla proprieta' <em>rafforzata</em></p>
+        <p>$$Q(k) := \\text{"ogni intero } i \\text{ con } 2 \\le i \\le k \\text{ e' prodotto di primi"},$$</p>
+        <p>per la quale il passo $Q(k) \\Rightarrow Q(k+1)$ e' esattamente l'argomento appena svolto. Coerentemente con l'equivalenza fra <strong>p3</strong> e $\\overline{\\text{p3}}$, non e' il principio di induzione debole a essere insufficiente, ma la scelta di una proprieta' troppo debole su cui applicarlo.</p>`
+      },
+
+      {
+        id: "s08-int-principio-minimo",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><em>Un esempio con il principio del minimo.</em></p>
+        <p><strong>Enunciato.</strong> Ogni numero naturale $n \\ge 1$ si scrive come $n = 2^k \\cdot m$ con $k \\in \\mathbb{N}$ e $m$ dispari.</p>
+        <p><strong>Perche' il principio del minimo.</strong> La costruzione naturale e' "divido per $2$ finche' posso": e' comodo ragionare sul <em>primo</em> numero per cui la scrittura fallisce e mostrare che da esso si ricava un controesempio ancora piu' piccolo.</p>
+        <p><strong>Dimostrazione (schema pm).</strong> Sia</p>
+        <p>$$B := \\{n \\ge 1 \\mid n = 2^k \\cdot m \\text{ per qualche } k \\in \\mathbb{N} \\text{ e } m \\text{ dispari}\\}$$</p>
+        <p>e supponiamo per assurdo che $B$ non contenga tutti i naturali $\\ge 1$. Allora l'insieme dei controesempi</p>
+        <p>$$T := \\{n \\in \\mathbb{N} \\mid n \\ge 1\\} \\setminus B$$</p>
+        <p>e' non vuoto e, per il principio del minimo <strong>m</strong>, ammette un elemento minimo $t_0$.</p>
+        <p>• $t_0 \\neq 1$, perche' $1 = 2^0 \\cdot 1$ con $1$ dispari, dunque $1 \\in B$.</p>
+        <p>• $t_0$ non e' dispari: se lo fosse, $t_0 = 2^0 \\cdot t_0$ sarebbe una scrittura valida e $t_0 \\in B$.</p>
+        <p>• Resta il caso $t_0$ pari: allora $t_0 = 2 t'$ con $1 \\le t' \\lt t_0$. Per la <strong>minimalita'</strong> di $t_0$, il numero $t'$ non e' un controesempio, cioe' $t' \\in B$: esistono $k$ e $m$ dispari con $t' = 2^k m$. Ma allora</p>
+        <p>$$t_0 = 2 t' = 2 \\cdot 2^k m = 2^{k+1} m,$$</p>
+        <p>con $m$ dispari, cioe' $t_0 \\in B$.</p>
+        <p>In ogni caso otteniamo $t_0 \\in B$, contro $t_0 \\in T = \\mathbb{N}_+ \\setminus B$: assurdo. Dunque $T = \\emptyset$ e la proprieta' vale per ogni $n \\ge 1$.</p>
+        <p><strong>Struttura tipica dello schema:</strong> (1) si suppone l'esistenza di un controesempio; (2) si prende il <em>minimo</em>; (3) si esclude che possa essere il caso base; (4) dal minimo controesempio si costruisce un controesempio piu' piccolo oppure si mostra direttamente che il minimo soddisfa la proprieta', ottenendo la contraddizione. Anche qui, per l'equivalenza dei tre principi, la stessa dimostrazione potrebbe essere riscritta per induzione (forte) su $n$: il principio del minimo e' soltanto la formulazione piu' comoda.</p>`
+      },
+
+      {
+        id: "s08-esercizi-712",
+        type: "section",
+        title: "Esercizi 7.12 — dimostrazioni per induzione",
+        icon: "📐",
+        content: `<p>Dimostrare per induzione che:</p>
+        <p><strong>i)</strong> $(n-3)^2 \\le n^2 + 11$, $\\forall n \\in \\mathbb{N}$.</p>
+        <p><strong>ii)</strong> $\\sum_{l=0}^{n} (4l+1) = (2n+1)(n+1)$, $\\forall n \\in \\mathbb{N}$.</p>
+        <p><strong>iii)</strong> $\\sum_{l=1}^{n} (2l-1) = n^2$, $\\forall n \\in \\mathbb{N}_+$. <em>(Suggerimento: prendere $1$ come base dell'induzione.)</em></p>
+        <p><strong>iv)</strong> $h \\lt l \\Rightarrow h^2 \\lt hl \\lt l^2$, $\\forall h, l \\in \\mathbb{N}_+$. <em>(Suggerimento: induzione su $n := l-h \\in \\mathbb{N}_+$.)</em></p>
+        <p><strong>v)</strong> $7$ divide $(3^{2n+1} + 2^{n+2})$ in $\\mathbb{N}$, per ogni $n \\in \\mathbb{N}$.</p>
+        <p>In tutti questi casi e' sufficiente l'ipotesi induttiva $P(k)$ relativa al <strong>solo passo precedente</strong>: il passaggio $k \\to k+1$ si ottiene direttamente dal caso precedente, senza bisogno di rafforzare la proprieta'.</p>`
+      },
+
+      {
+        id: "s08-cardinalita-parti",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $|\\mathcal{P}(A)| = 2^{|A|}$",
+        icon: "✎",
+        source: "docente",
+        content: `<p><strong>Lemma.</strong> Per ogni insieme finito $A$, si ha $|\\mathcal{P}(A)| = 2^{|A|}$.</p>
+        <p>Dimostriamo per induzione sulla cardinalita' $n = |A|$. Sia $P(n)$ la proprieta': "se $|A|=n$, allora $|\\mathcal{P}(A)| = 2^n$".</p>`,
+        steps: [
+          `<strong>Base ($n=0$).</strong> Se $|A|=0$, allora $A = \\emptyset$. L'insieme delle parti di $A$ e' $\\mathcal{P}(\\emptyset) = \\{\\emptyset\\}$, che ha cardinalita' $1$. La formula da' $2^0 = 1$. La base e' verificata.`,
+          `<strong>Ipotesi induttiva.</strong> Assumiamo $P(k)$ vera per un $k \\in \\mathbb{N}$: per ogni insieme $X$ con $|X|=k$ si ha $|\\mathcal{P}(X)| = 2^k$.`,
+          `<strong>Costruzione.</strong> Vogliamo dimostrare $P(k+1)$. Sia $A$ un insieme con $|A|=k+1$. Scegliamo un elemento arbitrario $a_0 \\in A$ e poniamo $A' = A \\setminus \\{a_0\\}$, cosi' che $|A'| = k$.`,
+          `<strong>Prima categoria.</strong> I sottoinsiemi di $A$ che <strong>non</strong> contengono $a_0$ sono esattamente i sottoinsiemi di $A'$. Poiche' $|A'|=k$, per l'ipotesi induttiva ci sono $2^k$ tali sottoinsiemi.`,
+          `<strong>Seconda categoria.</strong> I sottoinsiemi di $A$ che <strong>contengono</strong> $a_0$ sono della forma $S \\cup \\{a_0\\}$ con $S \\subseteq A'$. L'applicazione $S \\mapsto S \\cup \\{a_0\\}$ e' una biiezione tra $\\mathcal{P}(A')$ e questa famiglia (l'inversa e' $T \\mapsto T \\setminus \\{a_0\\}$). Quindi anche questi sono $2^k$.`,
+          `<strong>Conteggio.</strong> Le due categorie sono disgiunte e coprono tutto $\\mathcal{P}(A)$, dunque $$|\\mathcal{P}(A)| = 2^k + 2^k = 2 \\cdot 2^k = 2^{k+1}.$$ Questo dimostra $P(k+1)$ e, per il principio di induzione, il lemma e' vero. $\\square$`,
+          `<strong>Verifica per $|A|=3$.</strong> Sia $A = \\{1,2,3\\}$. I suoi sottoinsiemi sono $\\emptyset,\\ \\{1\\},\\ \\{2\\},\\ \\{3\\},\\ \\{1,2\\},\\ \\{1,3\\},\\ \\{2,3\\},\\ \\{1,2,3\\}$, in totale $8 = 2^3$ insiemi. Separandoli secondo l'elemento $a_0 = 3$: i quattro che non contengono $3$ sono i sottoinsiemi di $\\{1,2\\}$ (cioe' $2^2 = 4$), e gli altri quattro si ottengono da questi aggiungendo $3$. Si riconosce esattamente la biiezione usata nel passo induttivo.`
+        ]
+      },
+
+      {
+        id: "s08-fattoriale",
+        type: "section",
+        title: "Il fattoriale",
+        icon: "❗",
+        content: `<p><strong>Definizione.</strong> Per ogni $n \\in \\mathbb{N}$, il numero <strong>fattoriale</strong> di $n$, denotato con $n!$, e' definito induttivamente come segue:</p>
+        <p>$$n! := \\begin{cases} 1 & \\text{se } n=0 \\\\ n \\cdot (n-1)! & \\text{se } n \\gt 0 \\end{cases}$$</p>`,
+        subsections: [
+          {
+            subtitle: "La forma ricorsiva alla Peano",
+            content: `<p>Nel linguaggio degli assiomi di Peano, dove non si dispone a priori della sottrazione, la stessa definizione si scrive come</p>
+            <p>$$0! := 1, \\qquad \\sigma(n)! := \\sigma(n) \\cdot n! \\quad \\text{per ogni } n \\in \\mathbb{N},$$</p>
+            <p>che e' la forma ricorsiva standard: il valore in $\\sigma(n)$ e' definito a partire dal valore in $n$. Ad esempio $1! = 1 \\cdot 0! = 1$, $2! = 2 \\cdot 1! = 2$, $3! = 3 \\cdot 2! = 6$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Fattoriale (forma ricorsiva)", latex: "0! = 1, \\qquad \\sigma(n)! = \\sigma(n) \\cdot n!" }
+        ]
+      },
+
+      {
+        id: "s08-conteggio-funzioni",
+        type: "section",
+        title: "Lemma — conteggio delle funzioni e delle biiezioni",
+        icon: "🔢",
+        content: `<p><strong>i)</strong> Per $A, B$ insiemi finiti arbitrari, si ha che $|B^A| = |B|^{|A|}$, dove $B^A$ e' l'insieme delle funzioni da $A$ a $B$.</p>
+        <p><strong>ii)</strong> Per $A, B$ insiemi finiti arbitrari della stessa cardinalita' $n \\ge 1$, sia</p>
+        <p>$$\\text{Iso}(A,B) := \\{f \\in B^A \\mid f \\text{ e' invertibile}\\}$$</p>
+        <p>l'insieme degli isomorfismi (funzioni biiettive) da $A$ in $B$. Allora $|\\text{Iso}(A,B)| = n!$.</p>`,
+        subsections: [
+          {
+            subtitle: "Convenzione sul caso degenere di i)",
+            content: `<p>L'enunciato i) comprende anche il caso $A = B = \\emptyset$. Per non lasciare l'espressione indeterminata, nel conteggio si adotta la convenzione <strong>$0^0 = 1$</strong>: esiste esattamente <em>una</em> funzione dall'insieme vuoto all'insieme vuoto, la <strong>funzione vuota</strong> (il grafico vuoto). Dunque $|\\emptyset^{\\emptyset}| = 1 = 0^0$, coerentemente con la formula.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Numero di funzioni", latex: "|B^A| = |B|^{|A|}" },
+          { label: "Numero di biiezioni", latex: "|\\text{Iso}(A,B)| = n! \\quad (|A|=|B|=n)" }
+        ]
+      },
+
+      {
+        id: "s08-iso-fattoriale",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $|\\text{Iso}(A,B)| = n!$ (punto ii del lemma)",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Procediamo per induzione su $n = |A| = |B|$. Sia $P(n)$ la proprieta': "se $|A|=|B|=n$, allora $|\\text{Iso}(A,B)| = n!$".</p>`,
+        steps: [
+          `<strong>Base ($n=1$).</strong> Siano $A=\\{a_1\\}$ e $B=\\{b_1\\}$. Esiste una sola funzione $f: A \\to B$, definita da $f(a_1)=b_1$. Questa funzione e' chiaramente una biiezione. Quindi $|\\text{Iso}(A,B)|=1$. La formula da' $1! = 1$: la base e' verificata.`,
+          `<strong>Ipotesi induttiva.</strong> Assumiamo $P(k)$ vera per un $k \\ge 1$. Siano $A, B$ insiemi con $|A|=|B|=k+1$ e sia $A = \\{a_1, \\dots, a_{k+1}\\}$.`,
+          `<strong>Passo 1 — scelta dell'immagine di $a_1$.</strong> Ci sono $k+1$ possibili scelte per $f(a_1)$ in $B$.`,
+          `<strong>Passo 2 — completamento.</strong> Una volta fissata l'immagine $b_j = f(a_1)$, dobbiamo definire una biiezione dal resto del dominio $A' = A \\setminus \\{a_1\\}$ al resto del codominio $B' = B \\setminus \\{b_j\\}$. Gli insiemi $A'$ e $B'$ hanno entrambi cardinalita' $k$, quindi per l'ipotesi induttiva il numero di biiezioni da $A'$ a $B'$ e' $k!$.`,
+          `<strong>Conteggio.</strong> Poiche' per ognuna delle $k+1$ scelte per $f(a_1)$ abbiamo $k!$ modi per completare la funzione, e scelte diverse di $f(a_1)$ danno funzioni diverse, per il principio di moltiplicazione $$|\\text{Iso}(A,B)| = (k+1) \\cdot k! = (k+1)!$$ Questo dimostra $P(k+1)$ e, per il principio di induzione, il lemma e' vero. $\\square$`,
+          `<strong>Verifica per $n=3$.</strong> Siano $A = \\{a_1,a_2,a_3\\}$ e $B = \\{b_1,b_2,b_3\\}$. Secondo il lemma vi sono $3! = 6$ biiezioni. Seguendo la costruzione: ci sono $3$ scelte per $f(a_1)$ e, fissata quella, $2! = 2$ modi di completare la biiezione tra i due insiemi residui, per un totale di $3 \\cdot 2 = 6$ funzioni, che sono esattamente le sei permutazioni degli indici $1,2,3$.`
+        ]
+      },
+
+      {
+        id: "s08-esercizio-716",
+        type: "section",
+        title: "Esercizio 7.16 — biiezione e uguaglianza di cardinalita'",
+        icon: "📐",
+        content: `<p>Siano $A, B$ insiemi finiti e supponiamo che esista una funzione biiettiva $f: A \\to B$. Dimostrare che allora $|A| = |B|$.</p>
+        <p><em>Dimostrazione non riportata nelle fonti: verra' presentata nelle lezioni successive.</em> Si puo' procedere per induzione sulla cardinalita' di uno dei due insiemi, rimuovendo un elemento $a_0 \\in A$ e la sua immagine $f(a_0) \\in B$ e applicando l'ipotesi induttiva alla restrizione di $f$ ad $A \\setminus \\{a_0\\}$.</p>`
+      },
+
+      {
+        id: "s08-oral-box",
+        type: "oral_box",
+        title: "Domande tipiche dell'orale su questa lezione",
+        icon: "🎤",
+        content: `<p>• Enuncia la definizione di composizione di relazioni <strong>precisando l'ordine</strong>: in $\\rho \\circ \\rho'$ si percorre prima $\\rho'$ e poi $\\rho$. Chi sbaglia l'ordine sbaglia tutti i calcoli successivi.</p>
+        <p>• Perche' $(R_E, \\cup, \\circ, \\emptyset, id_E)$ e' un semianello <strong>ma non un anello</strong>? (Risposta: mancano gli opposti rispetto a $\\cup$.)</p>
+        <p>• Perche' la distributivita' funziona con $\\cup$ e cade con $\\cap$? (Risposta: il testimone comune.)</p>
+        <p>• Qual e' l'esempio canonico di struttura che soddisfa <strong>p0-p2</strong> ma non <strong>p3</strong>? (Risposta: $\\bar{\\mathbb{N}} = \\mathbb{N} \\cup \\{\\infty\\}$ con $\\bar{\\sigma}(\\infty)=\\infty$.)</p>
+        <p>• Enuncia correttamente l'induzione forte, evidenziando i due errori di formulazione piu' frequenti.</p>
+        <p>• In che senso i tre principi sono "equivalenti"? Quando si dice che "serve l'induzione forte", che cosa si intende davvero?</p>`
+      },
+
+      {
+        id: "s08-esercizi-proposti-intro",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s08-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dare la definizione di composizione $\\rho\\circ\\rho'$ e di inversa $\\rho^{-1}$ di due relazioni su un insieme $E$, precisando l'ordine con cui si percorrono le relazioni. Dimostrare poi che $(R_E,\\circ,id_E)$ e' un monoide e stabilire se e' commutativo, giustificando la risposta con un esempio su un insieme $E$ con due elementi e discutendo i casi degeneri.</p>`,
+        solution: `<p>Siano $\\rho,\\rho'\\subseteq E\\times E$. Si pone $\\rho\\circ\\rho'=\\{(x,z)\\in E\\times E\\mid \\exists\\, y\\in E:\\ (x,y)\\in\\rho'\\ \\text{e}\\ (y,z)\\in\\rho\\}$: si percorre <strong>prima</strong> $\\rho'$ e <strong>poi</strong> $\\rho$, in analogia con $(f\\circ g)(x)=f(g(x))$; l'elemento $y$ e' il <em>testimone</em> della coppia $(x,z)$. L'inversa e' $\\rho^{-1}=\\{(y,x)\\mid (x,y)\\in\\rho\\}$.</p>
+        <p><strong>Associativita'.</strong> $(x,w)\\in(\\rho\\circ\\rho')\\circ\\rho''$ significa che esiste $y$ con $(x,y)\\in\\rho''$ e $(y,w)\\in\\rho\\circ\\rho'$, cioe' che esistono $y,z$ con $(x,y)\\in\\rho''$, $(y,z)\\in\\rho'$, $(z,w)\\in\\rho$. Sviluppando $(x,w)\\in\\rho\\circ(\\rho'\\circ\\rho'')$ si ottiene: esiste $z$ con $(x,z)\\in\\rho'\\circ\\rho''$ e $(z,w)\\in\\rho$, cioe' esistono $y,z$ con $(x,y)\\in\\rho''$, $(y,z)\\in\\rho'$, $(z,w)\\in\\rho$. Le due condizioni sono identiche, dunque $(\\rho\\circ\\rho')\\circ\\rho''=\\rho\\circ(\\rho'\\circ\\rho'')$.</p>
+        <p><strong>Elemento neutro.</strong> $\\rho\\circ id_E=\\{(x,z)\\mid\\exists y:\\ (x,y)\\in id_E,\\ (y,z)\\in\\rho\\}$; ma $(x,y)\\in id_E$ forza $y=x$, quindi la condizione diventa $(x,z)\\in\\rho$ e $\\rho\\circ id_E=\\rho$. Analogamente $id_E\\circ\\rho=\\{(x,z)\\mid\\exists y:\\ (x,y)\\in\\rho,\\ (y,z)\\in id_E\\}=\\rho$. Quindi $(R_E,\\circ,id_E)$ e' un monoide.</p>
+        <p><strong>Commutativita'.</strong> Il monoide non e' commutativo appena $|E|\\ge 2$. Con $E=\\{1,2\\}$, $\\rho=\\{(2,2)\\}$ e $\\rho'=\\{(1,2)\\}$ si ha $\\rho\\circ\\rho'=\\{(1,2)\\}$ (testimone $y=2$: $(1,2)\\in\\rho'$ e $(2,2)\\in\\rho$), mentre $\\rho'\\circ\\rho=\\emptyset$, poiche' l'unico secondo elemento di una coppia di $\\rho$ e' $2$ e non esiste $z$ con $(2,z)\\in\\rho'$.</p>
+        <p><strong>Casi degeneri.</strong> Se $E=\\emptyset$ allora $R_E=\\{\\emptyset\\}$ ha un solo elemento; se $|E|=1$ allora $R_E=\\{\\emptyset,id_E\\}$ e si verifica direttamente che tutte le composizioni commutano. Si noti infine che $\\emptyset$ e' assorbente: $\\rho\\circ\\emptyset=\\emptyset=\\emptyset\\circ\\rho$ per ogni $\\rho$.</p>`
+      },
+
+      {
+        id: "s08-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare gli assiomi di Peano <strong>p0</strong>-<strong>p3</strong>. Verificare poi che la terna $(\\bar{\\mathbb{N}},0,\\bar{\\sigma})$, con $\\bar{\\mathbb{N}}=\\mathbb{N}\\cup\\{\\infty\\}$, $\\bar{\\sigma}(n)=n+1$ per $n\\in\\mathbb{N}$ e $\\bar{\\sigma}(\\infty)=\\infty$, soddisfa <strong>p0</strong>, <strong>p1</strong>, <strong>p2</strong> ma non <strong>p3</strong>. Che cosa mostra questo esempio sul ruolo di <strong>p3</strong>?</p>`,
+        solution: `<p>Una terna $(\\mathbb{N},0,\\sigma)$ e' un sistema dei numeri naturali se: <strong>p0</strong> $\\mathbb{N}$ e' un insieme, $0\\in\\mathbb{N}$ e $\\sigma:\\mathbb{N}\\to\\mathbb{N}$ e' una funzione; <strong>p1</strong> $\\sigma$ e' iniettiva; <strong>p2</strong> $0\\notin\\mathrm{Im}(\\sigma)$, cioe' non esiste $n$ con $\\sigma(n)=0$; <strong>p3</strong> (induzione debole) se $U\\subseteq\\mathbb{N}$ soddisfa $0\\in U$ e $\\sigma(k)\\in U$ per ogni $k\\in U$, allora $U=\\mathbb{N}$.</p>
+        <p><strong>p0</strong>: $\\bar{\\sigma}$ e' definita su tutto $\\bar{\\mathbb{N}}$ (sui naturali dal successore usuale, su $\\infty$ dalla clausola $\\bar{\\sigma}(\\infty)=\\infty$) e assume valori in $\\bar{\\mathbb{N}}$; inoltre $0\\in\\bar{\\mathbb{N}}$.</p>
+        <p><strong>p1</strong>: se $\\bar{\\sigma}(a)=\\bar{\\sigma}(b)$, distinguiamo i casi. Se $a,b\\in\\mathbb{N}$ allora $a+1=b+1$ e dunque $a=b$ per iniettivita' del successore usuale. Se $a\\in\\mathbb{N}$ e $b=\\infty$ allora $a+1=\\infty$, impossibile perche' $a+1\\in\\mathbb{N}$. Se $a=b=\\infty$ non c'e' nulla da provare. Quindi $\\bar{\\sigma}$ e' iniettiva: il punto fisso $\\bar{\\sigma}(\\infty)=\\infty$ non viola l'iniettivita', perche' $\\infty$ e' l'unico elemento la cui immagine e' $\\infty$.</p>
+        <p><strong>p2</strong>: $\\bar{\\sigma}(n)=n+1\\neq 0$ per ogni $n\\in\\mathbb{N}$ e $\\bar{\\sigma}(\\infty)=\\infty\\neq 0$, dunque $0\\notin\\mathrm{Im}(\\bar{\\sigma})$.</p>
+        <p><strong>p3 cade</strong>: si prenda $U:=\\mathbb{N}\\subseteq\\bar{\\mathbb{N}}$. Si ha $0\\in U$ e $U$ e' chiuso per $\\bar{\\sigma}$ (se $n\\in\\mathbb{N}$ allora $\\bar{\\sigma}(n)=n+1\\in\\mathbb{N}$), ma $U=\\mathbb{N}\\neq\\mathbb{N}\\cup\\{\\infty\\}=\\bar{\\mathbb{N}}$.</p>
+        <p>L'esempio mostra che <strong>p0</strong>-<strong>p2</strong> non bastano a caratterizzare i naturali: <strong>p3</strong> e' esattamente l'assioma che esclude elementi <em>irraggiungibili</em> da $0$ mediante applicazioni ripetute del successore, ossia dice che $\\mathbb{N}$ e' il piu' piccolo insieme che contiene $0$ ed e' chiuso per $\\sigma$.</p>`
+      },
+
+      {
+        id: "s08-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare nella forma corretta il principio di induzione forte $\\overline{\\textbf{p3}}$, spiegando perche' sono scorrette le varianti in cui l'ipotesi del passo e' $\\{u\\in V\\mid u\\le v\\}\\subseteq V$ oppure la conclusione e' $v\\in V$. Dedurre poi da $\\overline{\\textbf{p3}}$ il principio del minimo <strong>m</strong>.</p>`,
+        solution: `<p><strong>Enunciato corretto.</strong> $\\overline{\\textbf{p3}}$: per ogni $V\\subseteq\\mathbb{N}$ tale che (b) $0\\in V$ e (i$_f$) per ogni $v\\in\\mathbb{N}$, $\\big(\\{u\\in\\mathbb{N}\\mid u\\le v\\}\\subseteq V\\big)\\Rightarrow \\sigma(v)\\in V$, si ha $V=\\mathbb{N}$.</p>
+        <p><strong>Perche' le varianti sono scorrette.</strong> L'ipotesi $\\{u\\in V\\mid u\\le v\\}\\subseteq V$ e' vera per qualunque $V$ e qualunque $v$, perche' per costruzione gli elementi di $\\{u\\in V\\mid u\\le v\\}$ stanno in $V$: l'<strong>antecedente e' sempre vero</strong> e quindi il passo si riduce a richiedere direttamente $\\sigma(v)\\in V$ per ogni $v\\in\\mathbb{N}$ — una condizione molto forte, che perde completamente il significato di <em>deduzione dai casi precedenti</em>. Occorre quindi $\\{u\\in\\mathbb{N}\\mid u\\le v\\}\\subseteq V$, cioe' <em>tutti</em> i naturali $\\le v$ appartengono a $V$.</p>
+        <p>Se poi si sostituisse la conclusione $\\sigma(v)\\in V$ con $v\\in V$, l'implicazione diventerebbe una tautologia: da $\\{u\\in\\mathbb{N}\\mid u\\le v\\}\\subseteq V$ segue subito $v\\in V$, essendo $v\\le v$; l'enunciato risulterebbe inutilizzabile e non equivalente a <strong>p3</strong>.</p>
+        <p><strong>Da $\\overline{\\textbf{p3}}$ a m.</strong> Sia $T\\subseteq\\mathbb{N}$, $T\\neq\\emptyset$, e supponiamo per assurdo che $T$ non abbia minimo. Poniamo $V:=\\mathbb{N}\\setminus T$ e verifichiamo le ipotesi di $\\overline{\\textbf{p3}}$.</p>
+        <p>(b) $0\\in V$: se fosse $0\\in T$, poiche' $0\\le t$ per ogni $t\\in\\mathbb{N}$, l'elemento $0$ sarebbe il minimo di $T$, contro l'ipotesi.</p>
+        <p>(i$_f$) Sia $v\\in\\mathbb{N}$ con $\\{u\\in\\mathbb{N}\\mid u\\le v\\}\\subseteq V$, cioe' nessun $u\\le v$ appartiene a $T$. Supponiamo per assurdo $\\sigma(v)\\in T$. Preso $t\\in T$ qualsiasi, si ha $t\\not\\le v$; per la totalita' di $\\le$ vale allora $v\\le t$ con $v\\neq t$, da cui $\\sigma(v)\\le t$ (proprieta' dell'ordine in $\\mathbb{N}$: $v\\lt t$ implica $\\sigma(v)\\le t$). Dunque $\\sigma(v)$ sarebbe un elemento di $T$ minore o uguale di ogni elemento di $T$, cioe' il minimo di $T$: assurdo. Quindi $\\sigma(v)\\in V$.</p>
+        <p>Per $\\overline{\\textbf{p3}}$ segue $V=\\mathbb{N}$, cioe' $T=\\emptyset$, contro l'ipotesi $T\\neq\\emptyset$. Pertanto ogni $T\\subseteq\\mathbb{N}$ non vuoto ammette minimo, cioe' vale <strong>m</strong> e $\\le$ e' un buon ordinamento.</p>`
+      },
+
+      {
+        id: "s08-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $E=\\{1,2,3,4\\}$ e siano $\\rho=\\{(1,2),(2,3),(3,4)\\}$ e $\\rho'=\\{(2,1),(4,2)\\}$. Calcolare $\\rho\\circ\\rho'$, $\\rho'\\circ\\rho$, $\\rho\\circ\\rho$, $\\rho^{-1}$ e $\\rho\\circ\\rho^{-1}$. Dedurne che $\\circ$ non e' commutativa e che $\\rho^{-1}$ non e' l'inverso di $\\rho$ nel monoide $(R_E,\\circ,id_E)$.</p>`,
+        solution: `<p>Si usa la convenzione $\\rho\\circ\\tau=\\{(x,z)\\mid \\exists y:\\ (x,y)\\in\\tau,\\ (y,z)\\in\\rho\\}$: prima si percorre la relazione scritta a destra.</p>
+        <p><strong>Calcolo di $\\rho\\circ\\rho'$.</strong> Si parte dalle coppie di $\\rho'$. Da $(2,1)\\in\\rho'$: cerchiamo $(1,z)\\in\\rho$, e troviamo $(1,2)$, quindi $(2,2)$. Da $(4,2)\\in\\rho'$: cerchiamo $(2,z)\\in\\rho$, e troviamo $(2,3)$, quindi $(4,3)$. Dunque $\\rho\\circ\\rho'=\\{(2,2),(4,3)\\}$.</p>
+        <p><strong>Calcolo di $\\rho'\\circ\\rho$.</strong> Si parte dalle coppie di $\\rho$. Da $(1,2)\\in\\rho$: $(2,1)\\in\\rho'$, quindi $(1,1)$. Da $(2,3)\\in\\rho$: non esiste $z$ con $(3,z)\\in\\rho'$, nessun contributo. Da $(3,4)\\in\\rho$: $(4,2)\\in\\rho'$, quindi $(3,2)$. Dunque $\\rho'\\circ\\rho=\\{(1,1),(3,2)\\}$.</p>
+        <p>Poiche' $\\{(2,2),(4,3)\\}\\neq\\{(1,1),(3,2)\\}$, si ha $\\rho\\circ\\rho'\\neq\\rho'\\circ\\rho$: la composizione non e' commutativa.</p>
+        <p><strong>Calcolo di $\\rho\\circ\\rho$.</strong> Da $(1,2)\\in\\rho$ e $(2,3)\\in\\rho$: $(1,3)$. Da $(2,3)\\in\\rho$ e $(3,4)\\in\\rho$: $(2,4)$. Da $(3,4)\\in\\rho$ non esiste $(4,z)\\in\\rho$. Dunque $\\rho\\circ\\rho=\\{(1,3),(2,4)\\}$.</p>
+        <p><strong>Inversa.</strong> Scambiando le componenti: $\\rho^{-1}=\\{(2,1),(3,2),(4,3)\\}$.</p>
+        <p><strong>Calcolo di $\\rho\\circ\\rho^{-1}$.</strong> Da $(2,1)\\in\\rho^{-1}$ e $(1,2)\\in\\rho$: $(2,2)$. Da $(3,2)\\in\\rho^{-1}$ e $(2,3)\\in\\rho$: $(3,3)$. Da $(4,3)\\in\\rho^{-1}$ e $(3,4)\\in\\rho$: $(4,4)$. Dunque $\\rho\\circ\\rho^{-1}=\\{(2,2),(3,3),(4,4)\\}$.</p>
+        <p>Poiche' $id_E=\\{(1,1),(2,2),(3,3),(4,4)\\}$, si ha $\\rho\\circ\\rho^{-1}=\\{(2,2),(3,3),(4,4)\\}\\neq id_E$ (manca la coppia $(1,1)$): dunque $\\rho^{-1}$ non e' l'inverso di $\\rho$ rispetto a $\\circ$. Cio' e' coerente con il fatto che $(R_E,\\circ,id_E)$ e' un monoide ma in generale <strong>non un gruppo</strong>.</p>`
+      },
+
+      {
+        id: "s08-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Dimostrare per induzione che $7$ divide $3^{2n+1}+2^{n+2}$ per ogni $n\\in\\mathbb{N}$.</p>`,
+        solution: `<p>Sia $P(n)$ la proprieta': "$7$ divide $3^{2n+1}+2^{n+2}$", cioe' esiste $q\\in\\mathbb{N}$ con $3^{2n+1}+2^{n+2}=7q$. Usiamo l'induzione debole, ponendo $B=\\{n\\in\\mathbb{N}\\mid P(n)\\}$.</p>
+        <p><strong>Base ($n=0$).</strong> $3^{2\\cdot 0+1}+2^{0+2}=3^1+2^2=3+4=7=7\\cdot 1$, dunque $P(0)$ e' vera.</p>
+        <p><strong>Passo induttivo.</strong> Sia $k\\in\\mathbb{N}$ e supponiamo $P(k)$ vera, cioe' $3^{2k+1}+2^{k+2}=7q$ per un opportuno $q\\in\\mathbb{N}$. Vogliamo $P(k+1)$, cioe' che $7$ divida $3^{2(k+1)+1}+2^{(k+1)+2}=3^{2k+3}+2^{k+3}$.</p>
+        <p>Il punto tecnico e' <strong>aggiungere e sottrarre lo stesso termine</strong> ($9\\cdot 2^{k+2}$) per far comparire esattamente l'espressione dell'ipotesi induttiva $3^{2k+1}+2^{k+2}$. Un'uguaglianza per riga:</p>
+        <p>$$\\begin{aligned} 3^{2k+3}+2^{k+3} &= 9\\cdot 3^{2k+1}+2\\cdot 2^{k+2} \\\\ &= 9\\big(3^{2k+1}+2^{k+2}\\big)-9\\cdot 2^{k+2}+2\\cdot 2^{k+2} \\\\ &= 9\\big(3^{2k+1}+2^{k+2}\\big)-7\\cdot 2^{k+2}. \\end{aligned}$$</p>
+        <p>Usando l'ipotesi induttiva $3^{2k+1}+2^{k+2}=7q$:</p>
+        <p>$$\\begin{aligned} 3^{2k+3}+2^{k+3} &= 9\\cdot 7q-7\\cdot 2^{k+2} \\\\ &= 7\\big(9q-2^{k+2}\\big), \\end{aligned}$$</p>
+        <p>e $9q-2^{k+2}$ e' un numero naturale perche' $7(9q-2^{k+2})=3^{2k+3}+2^{k+3} \\gt 0$. Dunque $7$ divide $3^{2k+3}+2^{k+3}$ e $P(k+1)$ e' vera.</p>
+        <p>Base e passo sono verificati, quindi per il principio di induzione $B=\\mathbb{N}$: $7$ divide $3^{2n+1}+2^{n+2}$ per ogni $n\\in\\mathbb{N}$. Si noti che e' bastata l'ipotesi $P(k)$ sul solo passo precedente.</p>`
+      },
+
+      {
+        id: "s08-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $(a_n)_{n\\in\\mathbb{N}}$ la successione definita da $a_0=0$, $a_1=1$ e $a_{n+2}=3a_{n+1}-2a_n$ per ogni $n\\in\\mathbb{N}$. Dimostrare che $a_n=2^n-1$ per ogni $n\\in\\mathbb{N}$, spiegando perche' conviene usare l'induzione forte e come si potrebbe procedere con la sola induzione debole.</p>`,
+        solution: `<p>Sia $P(n)$ la proprieta' "$a_n=2^n-1$" e sia $V=\\{n\\in\\mathbb{N}\\mid P(n)\\}$.</p>
+        <p><strong>Perche' l'induzione forte.</strong> Il passo di ricorrenza esprime $a_{k+1}$ mediante <em>due</em> valori precedenti, $a_k$ e $a_{k-1}$: la sola ipotesi $P(k)$ non permette di concludere, perche' non dice nulla su $a_{k-1}$. Serve dunque l'ipotesi forte "$P(i)$ vale per ogni $i\\le k$".</p>
+        <p><strong>Base.</strong> $a_0=0=2^0-1$, dunque $0\\in V$.</p>
+        <p><strong>Passo forte.</strong> Sia $k\\in\\mathbb{N}$ e supponiamo che $P(i)$ valga per ogni $i\\le k$; dimostriamo $P(k+1)$, cioe' $\\sigma(k)\\in V$.</p>
+        <p><em>Caso $k=0$, cioe' $k+1=1$:</em> per definizione $a_1=1=2^1-1$, dunque $P(1)$ vale.</p>
+        <p><em>Caso $k\\ge 1$, cioe' $k+1\\ge 2$:</em> scriviamo $k+1=m+2$ con $m=k-1\\in\\mathbb{N}$, cosi' che la ricorrenza da'</p>
+        <p>$$a_{k+1}=3a_k-2a_{k-1}.$$</p>
+        <p>Poiche' $k\\le k$ e $k-1\\le k$, l'ipotesi induttiva forte si applica sia a $k$ sia a $k-1$: $a_k=2^k-1$ e $a_{k-1}=2^{k-1}-1$. Dunque</p>
+        <p>$$\\begin{aligned} a_{k+1} &= 3\\big(2^k-1\\big)-2\\big(2^{k-1}-1\\big) \\\\ &= 3\\cdot 2^k-3-2^k+2 \\\\ &= 2\\cdot 2^k-1 \\\\ &= 2^{k+1}-1, \\end{aligned}$$</p>
+        <p>cioe' $P(k+1)$ vale. Per il principio di induzione forte $\\overline{\\textbf{p3}}$ si conclude $V=\\mathbb{N}$, cioe' $a_n=2^n-1$ per ogni $n\\in\\mathbb{N}$.</p>
+        <p><strong>Con la sola induzione debole.</strong> Si applica <strong>p3</strong> alla proprieta' rafforzata $Q(k):=$ "$a_k=2^k-1$ e $a_{k+1}=2^{k+1}-1$". La base $Q(0)$ e' la verifica $a_0=0$, $a_1=1$; il passo $Q(k)\\Rightarrow Q(k+1)$ richiede solo di calcolare $a_{k+2}=3a_{k+1}-2a_k=3(2^{k+1}-1)-2(2^k-1)=2^{k+2}-1$. Coerentemente con l'equivalenza dei tre principi, non e' l'induzione debole a essere insufficiente, ma la scelta di una proprieta' troppo debole su cui applicarla.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Definisci la composizione $\\rho \\circ \\rho'$ di due relazioni su $E$, precisando l'ordine.",
+        back: "$\\rho \\circ \\rho' = \\{(x,z) \\in E \\times E \\mid \\exists\\, y \\in E : (x,y) \\in \\rho' \\text{ e } (y,z) \\in \\rho\\}$. Si percorre <strong>prima</strong> $\\rho'$ (da $x$ al testimone $y$) e <strong>poi</strong> $\\rho$ (da $y$ a $z$), in analogia con $(f \\circ g)(x) = f(g(x))$. L'elemento $y$ si chiama testimone della coppia $(x,z)$."
+      },
+      {
+        type: "tranello",
+        front: "Il monoide $(R_E, \\circ, id_E)$ e' sempre non commutativo?",
+        back: "No. E' <strong>sempre un monoide</strong> ($\\circ$ associativa, $id_E$ neutro), ed e' non commutativo <strong>appena $|E| \\ge 2$</strong> (es. $E=\\{1,2\\}$, $\\rho=\\{(2,2)\\}$, $\\rho'=\\{(1,2)\\}$ danno $\\rho\\circ\\rho'=\\{(1,2)\\}$ e $\\rho'\\circ\\rho=\\emptyset$). Nei casi degeneri $E=\\emptyset$ (allora $|R_E|=1$) e $|E|=1$ (allora $R_E=\\{\\emptyset,id_E\\}$) la composizione e' invece commutativa: la non commutativita' dipende dalla taglia di $E$."
+      },
+      {
+        type: "domanda",
+        front: "Perche' $(R_E, \\cup, \\circ, \\emptyset, id_E)$ e' un semianello ma non un anello?",
+        back: "E' un semianello perche': $(R_E,\\cup,\\emptyset)$ e' monoide commutativo; $(R_E,\\circ,id_E)$ e' monoide; $\\circ$ distribuisce su $\\cup$ a sinistra e a destra; $\\emptyset$ e' assorbente, $\\rho\\circ\\emptyset=\\emptyset=\\emptyset\\circ\\rho$. Non e' un anello perche' $(R_E,\\cup)$ non e' un gruppo: <strong>mancano gli opposti</strong>. Se $\\rho \\neq \\emptyset$, da $\\rho \\subseteq \\rho \\cup \\rho'$ segue che $\\rho \\cup \\rho'$ non puo' essere $\\emptyset$. (Nel caso degenere $E=\\emptyset$ si ha $R_E=\\{\\emptyset\\}$, gruppo banale.)"
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\rho \\circ (\\rho' \\cup \\rho'') = (\\rho \\circ \\rho') \\cup (\\rho \\circ \\rho'')$.",
+        back: "Doppia inclusione. $\\subseteq$: se $(x,z) \\in \\rho\\circ(\\rho'\\cup\\rho'')$ esiste $y$ con $(x,y)\\in\\rho'\\cup\\rho''$ e $(y,z)\\in\\rho$; se $(x,y)\\in\\rho'$ allora $(x,z)\\in\\rho\\circ\\rho'$, se $(x,y)\\in\\rho''$ allora $(x,z)\\in\\rho\\circ\\rho''$. $\\supseteq$: se $(x,z)\\in\\rho\\circ\\rho'$ esiste $y$ con $(x,y)\\in\\rho'\\subseteq\\rho'\\cup\\rho''$ e $(y,z)\\in\\rho$, dunque $(x,z)\\in\\rho\\circ(\\rho'\\cup\\rho'')$; analogamente per $\\rho''$. Il motivo profondo: $\\cup$ e' un <em>oppure</em> e l'$\\exists y$ commuta con l'oppure."
+      },
+      {
+        type: "tranello",
+        front: "Perche' la composizione NON distribuisce rispetto a $\\cap$?",
+        back: "Vale solo $\\rho\\circ(\\rho'\\cap\\rho'')\\subseteq(\\rho\\circ\\rho')\\cap(\\rho\\circ\\rho'')$, perche' nel verso $\\subseteq$ si usa <strong>lo stesso</strong> testimone $y$. Nel verso opposto si hanno due testimoni possibilmente diversi $y_1$ (per $\\rho'$) e $y_2$ (per $\\rho''$) e non e' garantito un testimone comune. Controesempio: $E=\\{1,2,3,4\\}$, $\\rho'=\\{(1,2)\\}$, $\\rho''=\\{(1,3)\\}$, $\\rho=\\{(2,4),(3,4)\\}$: $\\rho'\\cap\\rho''=\\emptyset$ quindi $\\rho\\circ(\\rho'\\cap\\rho'')=\\emptyset$, ma $(\\rho\\circ\\rho')\\cap(\\rho\\circ\\rho'')=\\{(1,4)\\}$."
+      },
+      {
+        type: "definizione",
+        front: "Enuncia gli assiomi di Peano p0-p3 per un sistema dei numeri naturali.",
+        back: "Terna $(\\mathbb{N},0,\\sigma)$ con: <strong>p0</strong> $\\mathbb{N}$ insieme, $0\\in\\mathbb{N}$, $\\sigma:\\mathbb{N}\\to\\mathbb{N}$ funzione; <strong>p1</strong> $\\sigma$ iniettiva; <strong>p2</strong> $0\\notin\\text{Im}(\\sigma)$; <strong>p3</strong> (induzione debole) se $U\\subseteq\\mathbb{N}$ ha $0\\in U$ e $k\\in U \\Rightarrow \\sigma(k)\\in U$, allora $U=\\mathbb{N}$."
+      },
+      {
+        type: "domanda",
+        front: "Qual e' il ruolo specifico di ciascuno degli assiomi p1, p2, p3? Cosa impediscono?",
+        back: "<strong>p1</strong> impedisce che due numeri distinti collassino sullo stesso successore (cicli come $\\sigma(3)=1=\\sigma(0)$). <strong>p2</strong> impedisce che la catena si chiuda su $0$ o prosegua indietro oltre lo zero. <strong>p3</strong> impedisce l'esistenza di elementi <strong>irraggiungibili</strong> da $0$ iterando $\\sigma$: dice che $\\mathbb{N}$ e' il piu' piccolo insieme che contiene $0$ ed e' chiuso per $\\sigma$."
+      },
+      {
+        type: "domanda",
+        front: "Esibisci una struttura che soddisfa p0, p1, p2 ma non p3, e una in cui cade p2.",
+        back: "<strong>Solo p3 cade:</strong> $\\bar{\\mathbb{N}}=\\mathbb{N}\\cup\\{\\infty\\}$ con $\\bar{\\sigma}(n)=n+1$ e $\\bar{\\sigma}(\\infty)=\\infty$. p1 vale (il punto fisso non crea conflitti: $\\infty$ e' l'unico con immagine $\\infty$), p2 vale, ma con $U=\\mathbb{N}$ si ha $0\\in U$, $U$ chiuso per $\\bar{\\sigma}$ e $U\\neq\\bar{\\mathbb{N}}$. <strong>Cade p2:</strong> $\\mathbb{Z}$ con $\\sigma(n)=n+1$, poiche' $0=\\sigma(-1)$; attenzione: qui cade <em>anche</em> p3 (prendere $U$ = interi non negativi), quindi $\\mathbb{Z}$ non isola il fallimento del solo p2."
+      },
+      {
+        type: "tranello",
+        front: "Come NON va enunciato il passo dell'induzione forte?",
+        back: "Due errori. (1) Scrivere l'ipotesi come $\\{u\\in V\\mid u\\le v\\}\\subseteq V$: l'<strong>antecedente e' sempre vero</strong>, quindi il passo si riduce a richiedere direttamente $\\sigma(v)\\in V$ per ogni $v$ — condizione molto forte che perde il senso di deduzione dai casi precedenti. Corretto: $\\{u\\in\\mathbb{N}\\mid u\\le v\\}\\subseteq V$. (2) Concludere $v\\in V$ invece di $\\sigma(v)\\in V$: $v\\in V$ e' gia' nell'ipotesi (perche' $v\\le v$) e l'enunciato diventa una tautologia."
+      },
+      {
+        type: "domanda",
+        front: "In che senso induzione debole, induzione forte e principio del minimo sono \"equivalenti\"? E cosa vuol dire \"serve l'induzione forte\"?",
+        back: "Sul s.n.n. gia' costruito (p0-p3, con $\\le$ ordine totale) vale $\\text{p3} \\iff \\overline{\\text{p3}} \\iff \\text{m}$: <strong>nessuna</strong> proprieta' dimostrabile con induzione forte o principio del minimo e' indimostrabile con l'induzione debole. Dire \"serve l'induzione forte\" significa solo che la sola $P(k)$ non basta per il passo: con l'induzione debole si deve applicare la procedura alla proprieta' <strong>rafforzata</strong> $Q(k)=$ \"$P(i)$ vale per ogni $i\\le k$\"."
+      },
+      {
+        type: "domanda",
+        front: "Perche' la definizione ricorsiva di $\\le$ in $\\mathbb{N}$ ha bisogno di p3?",
+        back: "Le clausole sono: $0\\le n$ per ogni $n$; $\\sigma(l)\\le n \\iff \\exists m: n=\\sigma(m) \\wedge l\\le m$. L'induzione su $l$ (cioe' p3) garantisce che base e passo determinino $l\\le n$ per <em>ogni</em> coppia. Senza p3 potrebbero esistere elementi irraggiungibili da $0$ (come $\\infty$): su di essi nessuna delle due clausole fissa il valore di verita', ad esempio la clausola di passo per $\\infty\\le\\infty$ rimanda indefinitamente a se' stessa."
+      },
+      {
+        type: "formula",
+        front: "Definizioni ricorsive di somma, prodotto e fattoriale negli assiomi di Peano.",
+        back: "Somma: $0+b=b$, $\\sigma(a)+b=\\sigma(a+b)$. Prodotto: $0\\cdot b=0$, $\\sigma(a)\\cdot b=(a\\cdot b)+b$. Fattoriale: $0!=1$, $\\sigma(n)!=\\sigma(n)\\cdot n!$. Esempio: $2+1=\\sigma(\\sigma(0))+1=\\sigma(\\sigma(0)+1)=\\sigma(\\sigma(0+1))=\\sigma(\\sigma(1))=3$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra per induzione che $|\\mathcal{P}(A)| = 2^{|A|}$ per $A$ finito.",
+        back: "Base $n=0$: $A=\\emptyset$, $\\mathcal{P}(\\emptyset)=\\{\\emptyset\\}$, cardinalita' $1=2^0$. Passo: sia $|A|=k+1$, si fissa $a_0\\in A$ e $A'=A\\setminus\\{a_0\\}$ con $|A'|=k$. I sottoinsiemi che non contengono $a_0$ sono i sottoinsiemi di $A'$: $2^k$ per ipotesi induttiva. Quelli che contengono $a_0$ sono in biiezione con $\\mathcal{P}(A')$ via $S\\mapsto S\\cup\\{a_0\\}$ (inversa $T\\mapsto T\\setminus\\{a_0\\}$): altri $2^k$. Totale $2^k+2^k=2^{k+1}$."
+      },
+      {
+        type: "formula",
+        front: "Quanti sono $|B^A|$ e $|\\text{Iso}(A,B)|$ per insiemi finiti? Attenzione al caso degenere.",
+        back: "$|B^A| = |B|^{|A|}$ (numero di funzioni $A\\to B$) e, se $|A|=|B|=n\\ge 1$, $|\\text{Iso}(A,B)|=n!$. Nel conteggio si adotta la convenzione <strong>$0^0=1$</strong>: per $A=B=\\emptyset$ esiste esattamente una funzione, la <strong>funzione vuota</strong>, quindi $|\\emptyset^\\emptyset|=1=0^0$. La formula $n!$ si prova per induzione: $k+1$ scelte per $f(a_1)$ moltiplicate per $k!$ modi di completare la biiezione fra i residui, cioe' $(k+1)\\cdot k!=(k+1)!$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Come si usa il principio del minimo in pratica? Esempio: ogni $n\\ge 1$ e' $n=2^k m$ con $m$ dispari.",
+        back: "Schema: (1) si suppone che esista un controesempio, cioe' $T=\\mathbb{N}_+\\setminus B \\neq \\emptyset$; (2) si prende il minimo $t_0$; (3) si esclude il caso base ($1=2^0\\cdot 1\\in B$) e il caso $t_0$ dispari ($t_0=2^0 t_0\\in B$); (4) se $t_0$ e' pari, $t_0=2t'$ con $1\\le t' \\lt t_0$, e per minimalita' $t'\\in B$, $t'=2^k m$: allora $t_0=2^{k+1}m\\in B$. In ogni caso $t_0\\in B$, assurdo, dunque $T=\\emptyset$."
+      }
+    ]
+};
+
