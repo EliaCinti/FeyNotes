@@ -1,0 +1,783 @@
+const LESSON = {
+    id: "L17", date: "Lezione 17 — 19 Ott 2026",
+    title: "Il Numero di Nepero e i Limiti Notevoli",
+    abstract: "Dalla regolarità delle successioni monotone alla costruzione del numero $e$: monotonia e limitatezza di $(1+1/n)^n$ tramite la disuguaglianza di Bernoulli, la successione ausiliaria $b_n$, le stime $2 \\lt e \\lt 3$ e i limiti notevoli del logaritmo e dell'esponenziale.",
+
+    sections: [
+      {
+        id: "s17-monotone-limitate",
+        type: "section",
+        title: "Monotonia e limitatezza: un'osservazione di base",
+        icon: "📐",
+        content: `<p>Il punto di partenza è un'osservazione semplice ma decisiva: la monotonia di una successione porta <strong>gratis</strong> una metà della limitatezza.</p>
+<p>Una successione crescente è <strong>sempre</strong> limitata inferiormente. Infatti, il suo primo termine è un minorante di tutti i termini successivi: se $\\{a_n\\}_{n \\in \\mathbb{N}}$ è crescente, allora per definizione $a_n \\le a_{n+1}$ per ogni $n$, dunque</p>
+<p>$$a_0 \\le a_1 \\le a_2 \\le \\dots \\le a_n \\le \\dots$$</p>
+<p>Quindi $a_0$ è il minimo della successione e, di conseguenza, la successione è limitata inferiormente:</p>
+<p>$$a_0 \\le a_n \\quad \\forall n \\in \\mathbb{N}$$</p>
+<p>Una successione crescente <strong>può</strong> essere limitata o non limitata superiormente, ma è <em>sempre</em> limitata inferiormente. Analogamente, una successione decrescente è sempre limitata superiormente, e il suo primo termine $a_0$ è un maggiorante:</p>
+<p>$$a_n \\le a_0 \\quad \\forall n \\in \\mathbb{N}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Teorema di regolarità delle successioni monotone",
+            content: `<p>Ogni successione monotona ammette limite (finito o infinito). In altre parole, <strong>ogni successione monotona è regolare</strong>. In particolare, se $\\{a_n\\}_{n \\in \\mathbb{N}}$ è monotona:</p>
+<ul>
+  <li>se $\\{a_n\\}$ è <strong>crescente</strong>, allora $\\displaystyle \\lim_{n \\to +\\infty} a_n = \\sup_{n \\in \\mathbb{N}} \\{a_n\\}$;</li>
+  <li>se $\\{a_n\\}$ è <strong>decrescente</strong>, allora $\\displaystyle \\lim_{n \\to +\\infty} a_n = \\inf_{n \\in \\mathbb{N}} \\{a_n\\}$.</li>
+</ul>`
+          }
+        ],
+        formulas: [
+          { label: "Limite di una successione crescente", latex: "\\lim_{n \\to +\\infty} a_n = \\sup_{n \\in \\mathbb{N}} \\{a_n\\}" },
+          { label: "Limite di una successione decrescente", latex: "\\lim_{n \\to +\\infty} a_n = \\inf_{n \\in \\mathbb{N}} \\{a_n\\}" }
+        ],
+        quote: {
+          text: "Questo teorema è molto potente. Ci dice che per le successioni monotone non dobbiamo chiederci se il limite esiste, ma solo quale sia il suo valore. Se una successione crescente è anche limitata superiormente, il suo limite sarà finito e coinciderà con l'estremo superiore. Se non è limitata superiormente, il suo limite sarà $+\\infty$.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s17-esempio-elementare",
+        type: "section",
+        title: "Esempio illustrativo: due casi elementari",
+        icon: "🧮",
+        content: `<p>Prima di affrontare l'applicazione più importante di questo teorema, conviene fissare le idee su un caso elementare, in cui tutti gli ingredienti (monotonia, limitatezza, estremo superiore) si possono calcolare a mano. Consideriamo</p>
+<p>$$c_n = 1 - \\frac{1}{n}, \\qquad n \\ge 1 .$$</p>`,
+        subsections: [
+          {
+            subtitle: "Monotonia",
+            content: `<p>Per ogni $n \\ge 1$ si ha $\\frac{1}{n+1} \\lt \\frac{1}{n}$, e dunque</p>
+<p>$$c_{n+1} - c_n = \\left(1 - \\frac{1}{n+1}\\right) - \\left(1 - \\frac{1}{n}\\right) = \\frac{1}{n} - \\frac{1}{n+1} = \\frac{1}{n(n+1)} \\gt 0 ,$$</p>
+<p>quindi $\\{c_n\\}$ è (strettamente) crescente.</p>`
+          },
+          {
+            subtitle: "Limitatezza superiore",
+            content: `<p>Poiché $\\frac{1}{n} \\gt 0$ per ogni $n \\ge 1$, si ha $c_n = 1 - \\frac{1}{n} \\lt 1$: il numero $1$ è un maggiorante.</p>`
+          },
+          {
+            subtitle: "Estremo superiore e limite",
+            content: `<p>Nessun numero $M \\lt 1$ può essere un maggiorante: scelto $n \\gt \\frac{1}{1-M}$ si ottiene $\\frac{1}{n} \\lt 1-M$, cioè $c_n \\gt M$. Dunque</p>
+<p>$$\\sup_{n \\ge 1} c_n = 1 ,$$</p>
+<p>e per il teorema di regolarità</p>
+<p>$$\\lim_{n \\to +\\infty} c_n = \\sup_{n \\ge 1} c_n = 1 .$$</p>
+<p>Si noti che il valore $1$ <strong>non viene mai assunto</strong> dalla successione: l'estremo superiore è un maggiorante <em>ottimale</em>, non necessariamente un massimo.</p>`
+          },
+          {
+            subtitle: "Il caso non limitato",
+            content: `<p>Confrontiamo questo caso con quello della successione</p>
+<p>$$d_n = n, \\qquad n \\ge 1 ,$$</p>
+<p>anch'essa crescente, ma <em>non</em> limitata superiormente: per ogni $M \\in \\mathbb{R}$ esiste $n \\gt M$ con $d_n \\gt M$. In questo caso $\\sup_{n \\ge 1} d_n = +\\infty$ e il teorema di regolarità dà</p>
+<p>$$\\lim_{n \\to +\\infty} d_n = +\\infty .$$</p>`
+          }
+        ],
+        extra_content: `<p><strong>Lo schema è sempre lo stesso:</strong> per una successione crescente il limite esiste <em>sempre</em> e coincide con l'estremo superiore; è la limitatezza superiore a decidere se tale limite sia finito oppure $+\\infty$.</p>`
+      },
+
+      {
+        id: "s17-successione-an",
+        type: "section",
+        title: "La successione che definisce $e$: strategia",
+        icon: "🎯",
+        content: `<p>Consideriamo ora una successione di fondamentale importanza in analisi matematica:</p>
+<p>$$a_n = \\left(1 + \\frac{1}{n}\\right)^n, \\qquad n \\in \\mathbb{N}, \\ n \\ge 1 .$$</p>
+<p>La restrizione $n \\ge 1$ è necessaria: per $n = 0$ l'espressione $\\frac{1}{n}$ non è definita, quindi il termine $a_0$ non esiste e tutte le affermazioni che seguono vanno intese per indici $n \\ge 1$.</p>
+<p>Vogliamo dimostrare che questa successione è <strong>convergente</strong>. Per farlo useremo il teorema di regolarità, dimostrando che la successione è monotona (crescente) e limitata superiormente: <em>esattamente la stessa strategia usata nell'esempio illustrativo</em>, ma con calcoli più impegnativi.</p>`,
+        subsections: [
+          {
+            subtitle: "Articolazione della dimostrazione",
+            content: `<ol>
+  <li>Dimostriamo che $\\{a_n\\}_{n \\ge 1}$ è <strong>crescente</strong>.</li>
+  <li>Dimostriamo che $\\{a_n\\}_{n \\ge 1}$ è <strong>limitata superiormente</strong>.</li>
+</ol>
+<p>Poiché una successione crescente e limitata superiormente ammette limite finito, questi due punti sono sufficienti per dimostrare la convergenza.</p>`
+          },
+          {
+            subtitle: "L'idea chiave per la limitatezza",
+            content: `<p>Una successione crescente è sempre limitata inferiormente (ad esempio dal suo primo termine $a_1$). Perché una successione sia detta <em>limitata</em> deve essere limitata sia inferiormente sia superiormente: il nostro obiettivo è quindi la limitatezza <strong>superiore</strong>.</p>
+<p>L'idea, non immediata, è quella di costruire una seconda successione $b_n$ con due proprietà specifiche:</p>
+<ol>
+  <li>$b_n \\ge a_n$ per ogni $n \\ge 1$ (cioè $b_n$ domina $a_n$ termine a termine; il maggiorante numerico di $\\{a_n\\}$ sarà poi $b_1$);</li>
+  <li>$b_n$ è una successione <strong>decrescente</strong>.</li>
+</ol>
+<p>Se troviamo una tale successione, la convergenza di $a_n$ segue facilmente: per ogni $n \\ge 1$ avremmo</p>
+<p>$$a_n \\le b_n \\le b_1 .$$</p>
+<p>La prima disuguaglianza deriva dalla proprietà 1, la seconda dal fatto che $b_n$, essendo decrescente, ha come maggiorante il suo primo termine $b_1$. La relazione $a_n \\le b_1$ per ogni $n$ dimostra che $a_n$ è limitata superiormente; essendo anche crescente, per il teorema di regolarità delle successioni monotone $a_n$ deve convergere a un limite finito.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s17-passo1-crescente",
+        type: "section",
+        title: "Passo 1 — $\\{a_n\\}$ è crescente",
+        icon: "📈",
+        content: `<p>Per dimostrare che la successione è crescente, dobbiamo verificare che $a_n \\ge a_{n-1}$ per ogni $n \\ge 2$ (serve $n \\ge 2$ perché il termine di indice $n-1$ deve essere a sua volta definito, cioè $n-1 \\ge 1$). Studiamo il rapporto $\\frac{a_n}{a_{n-1}}$ e mostriamo che è maggiore o uguale a $1$.</p>
+<p>$$\\begin{aligned}
+\\frac{a_n}{a_{n-1}} &= \\frac{\\left(1 + \\frac{1}{n}\\right)^n}{\\left(1 + \\frac{1}{n-1}\\right)^{n-1}} \\\\[4pt]
+&= \\frac{\\left(\\frac{n+1}{n}\\right)^n}{\\left(\\frac{n-1+1}{n-1}\\right)^{n-1}} = \\frac{\\left(\\frac{n+1}{n}\\right)^n}{\\left(\\frac{n}{n-1}\\right)^{n-1}} \\\\[4pt]
+&= \\left(\\frac{n+1}{n}\\right)^n \\cdot \\left(\\frac{n-1}{n}\\right)^{n-1} \\\\[4pt]
+&= \\left(\\frac{n+1}{n}\\right)^n \\cdot \\left(\\frac{n-1}{n}\\right)^n \\cdot \\left(\\frac{n-1}{n}\\right)^{-1} \\\\[4pt]
+&= \\left(\\frac{(n+1)(n-1)}{n^2}\\right)^n \\cdot \\frac{n}{n-1} \\\\[4pt]
+&= \\left(\\frac{n^2-1}{n^2}\\right)^n \\cdot \\frac{n}{n-1} = \\left(1 - \\frac{1}{n^2}\\right)^n \\cdot \\frac{n}{n-1}
+\\end{aligned}$$</p>
+<p>A questo punto utilizziamo la <strong>disuguaglianza di Bernoulli</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Disuguaglianza di Bernoulli",
+            content: `<p>Per ogni $h \\gt -1$ e per ogni $n \\in \\mathbb{N}$ vale</p>
+<p>$$(1+h)^n \\ge 1 + nh$$</p>`
+          },
+          {
+            subtitle: "Applicazione con $h = -1/n^2$",
+            content: `<p>Nel nostro caso poniamo $h = -\\frac{1}{n^2}$. Poiché $n \\ge 2$ si ha $n^2 \\ge 4$, quindi $0 \\lt \\frac{1}{n^2} \\le \\frac{1}{4}$ e $-\\frac{1}{4} \\le -\\frac{1}{n^2} \\lt 0$: la condizione $h \\gt -1$ è ampiamente soddisfatta. Applicando la disuguaglianza otteniamo</p>
+<p>$$\\left(1 - \\frac{1}{n^2}\\right)^n \\ge 1 + n \\left(-\\frac{1}{n^2}\\right) = 1 - \\frac{1}{n}$$</p>
+<p>Sostituendo questo risultato nel calcolo precedente:</p>
+<p>$$\\frac{a_n}{a_{n-1}} = \\left(1 - \\frac{1}{n^2}\\right)^n \\cdot \\frac{n}{n-1} \\ge \\left(1 - \\frac{1}{n}\\right) \\cdot \\frac{n}{n-1} = \\left(\\frac{n-1}{n}\\right) \\cdot \\left(\\frac{n}{n-1}\\right) = 1$$</p>
+<p>Abbiamo quindi dimostrato che $\\frac{a_n}{a_{n-1}} \\ge 1$, ovvero $a_n \\ge a_{n-1}$ per ogni $n \\ge 2$: la successione è crescente (in senso debole, ed è tutto ciò che ci serve per applicare il teorema di regolarità).</p>`
+          }
+        ],
+        formulas: [
+          { label: "Rapporto riscritto", latex: "\\frac{a_n}{a_{n-1}} = \\left(1 - \\frac{1}{n^2}\\right)^n \\cdot \\frac{n}{n-1}" },
+          { label: "Disuguaglianza di Bernoulli", latex: "(1+h)^n \\ge 1 + nh, \\qquad h \\gt -1" }
+        ]
+      },
+
+      {
+        id: "s17-passo2-bn",
+        type: "section",
+        title: "Passo 2 — la successione ausiliaria $b_n$ e la limitatezza",
+        icon: "🧱",
+        content: `<p>Per dimostrare che $\\{a_n\\}$ è limitata superiormente, introduciamo la successione ausiliaria definita, anch'essa per $n \\in \\mathbb{N}$ con $n \\ge 1$, come</p>
+<p>$$b_n = \\left(1 + \\frac{1}{n}\\right)^{n+1}, \\qquad n \\ge 1 .$$</p>
+<p>Mostreremo che: <strong>a)</strong> $b_n \\gt a_n$ per ogni $n \\ge 1$; <strong>b)</strong> $\\{b_n\\}_{n \\ge 1}$ è decrescente.</p>`,
+        subsections: [
+          {
+            subtitle: "a) $b_n$ maggiora $a_n$",
+            content: `<p>Il punto a) è immediato:</p>
+<p>$$b_n = \\left(1 + \\frac{1}{n}\\right)^{n+1} = \\left(1 + \\frac{1}{n}\\right)^n \\cdot \\left(1 + \\frac{1}{n}\\right) = a_n \\cdot \\left(1 + \\frac{1}{n}\\right)$$</p>
+<p>Poiché $a_n \\gt 0$ e $\\left(1 + \\frac{1}{n}\\right) \\gt 1$ per ogni $n \\ge 1$, si ha $b_n \\gt a_n$.</p>`
+          },
+          {
+            subtitle: "b) $\\{b_n\\}$ è decrescente",
+            content: `<p>Dobbiamo dimostrare che $b_{n-1} \\ge b_n$ per ogni $n \\ge 2$ (di nuovo, l'indice $n-1$ richiede $n \\ge 2$). Come prima, studiamo il rapporto $\\frac{b_{n-1}}{b_n}$:</p>
+<p>$$\\begin{aligned}
+\\frac{b_{n-1}}{b_n} &= \\frac{\\left(1 + \\frac{1}{n-1}\\right)^n}{\\left(1 + \\frac{1}{n}\\right)^{n+1}} = \\frac{\\left(\\frac{n}{n-1}\\right)^n}{\\left(\\frac{n+1}{n}\\right)^{n+1}} \\\\[4pt]
+&= \\left(\\frac{n}{n-1}\\right)^n \\cdot \\left(\\frac{n}{n+1}\\right)^{n+1} \\\\[4pt]
+&= \\left(\\frac{n}{n-1}\\right)^n \\cdot \\left(\\frac{n}{n+1}\\right)^n \\cdot \\left(\\frac{n}{n+1}\\right) \\\\[4pt]
+&= \\left(\\frac{n^2}{n^2-1}\\right)^n \\cdot \\frac{n}{n+1} = \\left(1 + \\frac{1}{n^2-1}\\right)^n \\cdot \\frac{n}{n+1}
+\\end{aligned}$$</p>
+<p>Applichiamo nuovamente la disuguaglianza di Bernoulli con $h = \\frac{1}{n^2-1} \\gt 0$ (ben definito e positivo perché $n \\ge 2$):</p>
+<p>$$\\left(1 + \\frac{1}{n^2-1}\\right)^n \\ge 1 + \\frac{n}{n^2-1}$$</p>
+<p>Quindi</p>
+<p>$$\\begin{aligned}
+\\frac{b_{n-1}}{b_n} &\\ge \\left(1 + \\frac{n}{n^2-1}\\right) \\cdot \\frac{n}{n+1} = \\left(\\frac{n^2-1+n}{n^2-1}\\right) \\cdot \\frac{n}{n+1} \\\\[4pt]
+&= \\frac{n^2+n-1}{(n-1)(n+1)} \\cdot \\frac{n}{n+1} = \\frac{n(n^2+n-1)}{(n-1)(n+1)^2} \\\\[4pt]
+&= \\frac{n^3+n^2-n}{n^3+n^2-n-1}
+\\end{aligned}$$</p>
+<p>Poiché il numeratore è strettamente maggiore del denominatore (differiscono di $1$) e il denominatore è positivo per $n \\ge 2$, la frazione è maggiore di $1$. Dunque $b_{n-1} \\gt b_n$ per ogni $n \\ge 2$, e $\\{b_n\\}_{n \\ge 1}$ è (strettamente) decrescente.</p>`
+          },
+          {
+            subtitle: "Conclusione: $a_n \\lt 4$",
+            content: `<p>Abbiamo dimostrato che $\\{a_n\\}_{n \\ge 1}$ è crescente, che $\\{b_n\\}_{n \\ge 1}$ è decrescente e che $a_n \\lt b_n$ per ogni $n \\ge 1$. Questo implica, per ogni $n \\ge 1$,</p>
+<p>$$a_n \\lt b_n \\le b_{n-1} \\le \\dots \\le b_1$$</p>
+<p>In particolare $a_n \\lt b_1$ per ogni $n \\ge 1$, e</p>
+<p>$$b_1 = \\left(1 + \\frac{1}{1}\\right)^{1+1} = 2^2 = 4 .$$</p>
+<p>Quindi $a_n \\lt 4$ per ogni $n \\ge 1$: la successione $\\{a_n\\}_{n \\ge 1}$ è crescente e limitata superiormente (da $4$). Per il teorema di regolarità delle successioni monotone, $\\{a_n\\}$ <strong>ammette limite finito</strong>.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Successione ausiliaria", latex: "b_n = \\left(1 + \\frac{1}{n}\\right)^{n+1}" },
+          { label: "Legame con $a_n$", latex: "b_n = a_n \\cdot \\left(1 + \\frac{1}{n}\\right) \\gt a_n" },
+          { label: "Maggiorante numerico", latex: "a_n \\lt b_n \\le b_1 = 4" }
+        ]
+      },
+
+      {
+        id: "s17-rilettura-bn",
+        type: "note_box",
+        title: "Rilettura — una seconda stima, più semplice, del rapporto $b_{n-1}/b_n$",
+        icon: "🔁",
+        content: `<p><strong>Attenzione all'ordine logico:</strong> la convergenza di $a_n$ è <em>già dimostrata</em> dai due passi precedenti. Quanto segue non è un risultato ancora da provare, ma una <strong>variante di calcolo</strong> dello stesso Passo 2(b), più rapida da ricordare e da riprodurre all'esame.</p>
+<p>Ripartiamo dall'identità già ottenuta:</p>
+<p>$$\\frac{b_{n-1}}{b_n} = \\left(1 + \\frac{1}{n^2-1}\\right)^n \\cdot \\frac{n}{n+1}$$</p>
+<p>ricordando come si arriva alla base: $\\dfrac{n^2}{n^2-1} = \\dfrac{n^2-1+1}{n^2-1} = 1 + \\dfrac{1}{n^2-1}$.</p>
+<p>Applicata Bernoulli nella forma $(1+x)^k \\ge 1+kx$ con $x = \\frac{1}{n^2-1} \\gt 0$ e $k = n \\in \\mathbb{N}$, si ottiene</p>
+<p>$$\\frac{b_{n-1}}{b_n} \\ge \\left(1 + \\frac{n}{n^2-1}\\right) \\cdot \\frac{n}{n+1}$$</p>
+<p>Invece di sviluppare la frazione cubica, basta osservare che per $n \\ge 2$</p>
+<p>$$n^2 \\gt n^2-1 \\ \\Rightarrow \\ \\frac{n}{n^2-1} \\gt \\frac{n}{n^2} = \\frac{1}{n}$$</p>
+<p>e quindi minorare direttamente:</p>
+<p>$$\\begin{aligned}
+\\frac{b_{n-1}}{b_n} &\\ge \\left(1 + \\frac{n}{n^2-1}\\right) \\cdot \\frac{n}{n+1} \\\\[4pt]
+&\\gt \\left(1 + \\frac{1}{n}\\right) \\cdot \\frac{n}{n+1} \\\\[4pt]
+&= \\left(\\frac{n+1}{n}\\right) \\cdot \\left(\\frac{n}{n+1}\\right) = 1
+\\end{aligned}$$</p>
+<p>Si conclude di nuovo $b_{n-1} \\gt b_n$: la successione $b_n$ è strettamente decrescente, e con $a_n \\lt b_n \\le b_1 = 4$ si ritrova la limitatezza superiore di $a_n$. Le due versioni sono equivalenti: questa evita completamente il calcolo con i polinomi di terzo grado.</p>`
+      },
+
+      {
+        id: "s17-definizione-e",
+        type: "section",
+        title: "Definizione del numero di Nepero",
+        icon: "✨",
+        content: `<p>Il limite finito appena ottenuto definisce uno dei numeri più importanti della matematica. Si definisce <strong>numero di Nepero</strong>, e si indica con la lettera $e$, il limite della successione $a_n = \\left(1 + \\frac{1}{n}\\right)^n$, $n \\ge 1$:</p>
+<p>$$e := \\lim_{n \\to +\\infty} \\left(1 + \\frac{1}{n}\\right)^n = \\sup_{n \\ge 1} \\left\\{ \\left(1 + \\frac{1}{n}\\right)^n \\right\\}$$</p>
+<p>Equivalentemente, nella forma di teorema: <em>la successione $a_n = \\left(1+\\frac1n\\right)^n$ è convergente; il suo limite è un numero reale, che viene denotato con la lettera $e$.</em></p>`,
+        subsections: [
+          {
+            subtitle: "Confronto incrociato fra $a_n$ e $b_m$",
+            content: `<p>Dai due passi della dimostrazione segue un fatto più forte del semplice $a_n \\lt b_n$: vale</p>
+<p>$$a_n \\lt b_m \\qquad \\text{per ogni } n, m \\ge 1 .$$</p>
+<p>Infatti basta distinguere due casi, usando la monotonia delle due successioni:</p>
+<ul>
+  <li>se $n \\le m$, allora $a_n \\le a_m$ (perché $\\{a_n\\}$ è crescente) e $a_m \\lt b_m$, dunque $a_n \\lt b_m$;</li>
+  <li>se $n \\gt m$, allora $a_n \\lt b_n$ e $b_n \\le b_m$ (perché $\\{b_n\\}$ è decrescente), dunque $a_n \\lt b_m$.</li>
+</ul>
+<p>In altre parole, <em>ogni</em> termine di $\\{b_m\\}$ è un maggiorante dell'intera successione $\\{a_n\\}$, e quindi</p>
+<p>$$e = \\sup_{n \\ge 1} \\{a_n\\} \\le b_m \\qquad \\text{per ogni } m \\ge 1 .$$</p>
+<p>Scegliendo $m$ grande si ottengono stime di $e$ dall'alto via via migliori.</p>`
+          },
+          {
+            subtitle: "Le stime $2 \\lt e \\lt 3$",
+            content: `<p>Il numero $e$ è irrazionale e trascendente, con valore approssimato $e \\approx 2.71828\\dots$. Dalla dimostrazione precedente possiamo dedurre che $2 \\lt e \\lt 3$.</p>
+<p><strong>$e \\gt 2$</strong>: poiché $e = \\sup_{n \\ge 1}\\{a_n\\}$, l'estremo superiore è un maggiorante e quindi $e \\ge a_n$ per ogni $n \\ge 1$. Non basta usare $a_1 = (1+1)^1 = 2$, perché nel Passo 1 abbiamo dimostrato solo la disuguaglianza <em>debole</em> $a_n \\ge a_{n-1}$ e quindi otterremmo soltanto $e \\ge 2$. Usiamo invece il termine di indice $2$:</p>
+<p>$$a_2 = \\left(1 + \\frac{1}{2}\\right)^2 = \\left(\\frac{3}{2}\\right)^2 = \\frac{9}{4} = 2{,}25 ,$$</p>
+<p>da cui $e \\ge a_2 = \\frac{9}{4} \\gt 2$.</p>
+<p><strong>$e \\lt 3$</strong>: per il confronto incrociato $e \\le b_m$ per ogni $m \\ge 1$; in particolare $e \\le b_5$. Calcoliamo esplicitamente</p>
+<p>$$b_5 = \\left(1 + \\frac{1}{5}\\right)^{5+1} = \\left(\\frac{6}{5}\\right)^6 = \\frac{6^6}{5^6} = \\frac{46656}{15625} .$$</p>
+<p>Poiché</p>
+<p>$$3 = \\frac{3 \\cdot 15625}{15625} = \\frac{46875}{15625} \\qquad \\text{e} \\qquad 46656 \\lt 46875 ,$$</p>
+<p>si ha $b_5 = \\frac{46656}{15625} \\lt 3$ (in effetti $b_5 \\approx 2{,}986$). Dunque $e \\le b_5 \\lt 3$.</p>
+<p>Mettendo insieme le due stime:</p>
+<p>$$2 \\lt \\frac{9}{4} \\le e \\le \\frac{46656}{15625} \\lt 3 ,$$</p>
+<p>cioè $2 \\lt e \\lt 3$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Numero di Nepero", latex: "e := \\lim_{n \\to +\\infty} \\left(1 + \\frac{1}{n}\\right)^n" },
+          { label: "Confronto incrociato", latex: "a_n \\lt b_m \\quad \\forall n,m \\ge 1 \\ \\Rightarrow \\ e \\le b_m" }
+        ]
+      },
+
+      {
+        id: "s17-alert-bernoulli",
+        type: "alert_box",
+        title: "Il cuore tecnico della dimostrazione",
+        icon: "⚠️",
+        content: `<p>I passaggi algebrici, in particolare l'applicazione della disuguaglianza di Bernoulli, sono il <strong>cuore tecnico</strong> della dimostrazione. È fondamentale eseguirli con attenzione per non commettere errori.</p>
+<p>Due punti su cui si sbaglia più spesso:</p>
+<ul>
+  <li>la condizione di validità $h \\gt -1$ (nel Passo 1 è $h = -\\frac{1}{n^2}$, negativo ma $\\gt -1$);</li>
+  <li>il vincolo sull'indice: le disuguaglianze sui rapporti richiedono $n \\ge 2$, perché compaiono i termini di indice $n-1$ e la quantità $n^2-1$ al denominatore.</li>
+</ul>`
+      },
+
+      {
+        id: "s17-limite-1-meno",
+        type: "section",
+        title: "Il limite di $(1 - 1/n)^n$",
+        icon: "🔻",
+        content: `<p>Un limite strettamente collegato a quello che definisce $e$ è il seguente:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n}\\right)^n = \\frac{1}{e}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Per calcolare questo limite manipoliamo l'espressione in modo da ricondurla a una forma nota. Supponiamo $n \\ge 2$: ciò è lecito, perché il limite per $n \\to \\infty$ non dipende da un numero finito di termini, e garantisce $n-1 \\neq 0$, così che tutte le frazioni con denominatore $n-1$ siano ben definite.</p>
+<p>$$\\begin{aligned}
+\\left(1 - \\frac{1}{n}\\right)^n &= \\left(\\frac{n-1}{n}\\right)^n = \\left(\\frac{1}{\\frac{n}{n-1}}\\right)^n \\\\[4pt]
+&= \\frac{1^n}{\\left(\\frac{n}{n-1}\\right)^n} = \\frac{1}{\\left(\\frac{n}{n-1}\\right)^n}
+\\end{aligned}$$</p>
+<p>Ora lavoriamo sul denominatore. Possiamo riscrivere la frazione $\\frac{n}{n-1}$ aggiungendo e togliendo $1$ al numeratore:</p>
+<p>$$\\frac{n}{n-1} = \\frac{n-1+1}{n-1} = \\frac{n-1}{n-1} + \\frac{1}{n-1} = 1 + \\frac{1}{n-1}$$</p>
+<p>Sostituendo nel denominatore:</p>
+<p>$$\\left(\\frac{n}{n-1}\\right)^n = \\left(1 + \\frac{1}{n-1}\\right)^n$$</p>
+<p>Questa espressione assomiglia molto alla definizione di $e$: per renderla identica l'esponente dovrebbe essere $n-1$. Possiamo ottenerlo scrivendo $n = (n-1) + 1$:</p>
+<p>$$\\left(1 + \\frac{1}{n-1}\\right)^n = \\left(1 + \\frac{1}{n-1}\\right)^{n-1} \\cdot \\left(1 + \\frac{1}{n-1}\\right)^1$$</p>`
+          },
+          {
+            subtitle: "I due fattori",
+            content: `<p>Calcoliamo il limite del denominatore analizzando i due fattori separatamente.</p>
+<ul>
+  <li>Per il primo fattore, ponendo $m = n-1$, quando $n \\to \\infty$ anche $m \\to \\infty$. Quindi
+  <p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n-1}\\right)^{n-1} = \\lim_{m \\to \\infty} \\left(1 + \\frac{1}{m}\\right)^m = e$$</p></li>
+  <li>Per il secondo fattore il calcolo è immediato:
+  <p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n-1}\\right) = 1 + 0 = 1$$</p></li>
+</ul>
+<p>Il limite del denominatore è quindi $e \\cdot 1 = e$. Tornando al limite originale:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n}\\right)^n = \\frac{1}{\\lim_{n \\to \\infty} \\left(\\frac{n}{n-1}\\right)^n} = \\frac{1}{e}$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limite reciproco", latex: "\\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n}\\right)^n = \\frac{1}{e}" }
+        ]
+      },
+
+      {
+        id: "s17-generalizzazione",
+        type: "section",
+        title: "Generalizzazione del limite notevole",
+        icon: "🧩",
+        content: `<p>Il risultato appena visto può essere generalizzato. Sia $a_n$ una successione tale che $\\lim_{n \\to \\infty} a_n = \\pm \\infty$ (in particolare $a_n \\neq 0$ definitivamente, così che i quozienti $1/a_n$ siano ben definiti). Allora:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{a_n}\\right)^{a_n} = e$$</p>
+<p>Inoltre, se $\\lim_{n \\to \\infty} a_n = +\\infty$, allora:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 - \\frac{1}{a_n}\\right)^{a_n} = \\frac{1}{e}$$</p>
+<p>Questa generalizzazione è estremamente utile per risolvere limiti che si presentano in <strong>forme indeterminate del tipo $1^\\infty$</strong>. L'idea chiave è ricondurre l'espressione alla forma $\\left(1 + \\frac{1}{\\text{qualcosa}}\\right)^{\\text{stesso qualcosa}}$, dove "qualcosa" tende a $\\pm\\infty$.</p>`,
+        formulas: [
+          { label: "Limite notevole generalizzato", latex: "\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{a_n}\\right)^{a_n} = e, \\qquad a_n \\to \\pm\\infty" }
+        ]
+      },
+
+      {
+        id: "s17-es-svolto-quadratico",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Calcolo di un limite con esponente quadratico",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare il seguente limite:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n^2}\\right)^{2n^2}$$</p>`,
+        steps: [
+          `<strong>Identificazione della forma.</strong> Il limite si presenta nella forma indeterminata $1^\\infty$. La base è del tipo $1 + \\frac{1}{a_n}$ con $a_n = n^2$.`,
+          `<strong>Verifica delle ipotesi.</strong> La successione $a_n = n^2$ è non nulla per ogni $n \\ge 1$ e tende a $+\\infty$ per $n \\to \\infty$. Possiamo quindi applicare il limite notevole generalizzato.`,
+          `<strong>Manipolazione algebrica.</strong> Vogliamo che l'esponente sia uguale ad $a_n = n^2$. Usando le proprietà delle potenze:
+<p>$$\\left(1 + \\frac{1}{n^2}\\right)^{2n^2} = \\left[ \\left(1 + \\frac{1}{n^2}\\right)^{n^2} \\right]^2$$</p>`,
+          `<strong>Calcolo del limite.</strong> La base dentro la parentesi quadra tende a $e$:
+<p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n^2}\\right)^{n^2} = e$$</p>
+Di conseguenza, poiché l'esponente esterno è la costante $2$ e la funzione $t \\mapsto t^2$ è continua, l'intero limite vale
+<p>$$\\lim_{n \\to \\infty} \\left[ \\left(1 + \\frac{1}{n^2}\\right)^{n^2} \\right]^2 = e^2$$</p>`
+        ]
+      },
+
+      {
+        id: "s17-es-svolto-coefficienti",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Calcolo di un limite con coefficienti",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare il seguente limite:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{6}{n}\\right)^{n+1}$$</p>`,
+        steps: [
+          `<strong>Riconduzione alla forma standard.</strong> La base non è nella forma $1 + \\frac{1}{a_n}$. Per ottenerla, riscriviamo il termine $\\frac{6}{n}$ come $\\frac{1}{n/6}$:
+<p>$$1 + \\frac{6}{n} = 1 + \\frac{1}{\\frac{n}{6}}$$</p>
+In questo caso la nostra successione è $a_n = n/6$, non nulla per ogni $n \\ge 1$ e tendente a $+\\infty$.`,
+          `<strong>Manipolazione dell'esponente.</strong> Per applicare il limite notevole l'esponente deve essere $a_n = n/6$, mentre l'esponente attuale è $n+1$. Usiamo la proprietà delle potenze $(x^a)^b = x^{ab}$ per "forzare" la comparsa dell'esponente desiderato:
+<p>$$\\left(1 + \\frac{1}{n/6}\\right)^{n+1} = \\left[ \\left(1 + \\frac{1}{n/6}\\right)^{n/6} \\right]^{\\frac{n+1}{n/6}}$$</p>`,
+          `<strong>Limite della base.</strong> Posto $u_n = \\left(1 + \\frac{1}{n/6}\\right)^{n/6}$, per il limite notevole generalizzato
+<p>$$\\lim_{n \\to \\infty} u_n = e$$</p>`,
+          `<strong>Limite dell'esponente.</strong> Posto $v_n = \\dfrac{n+1}{n/6}$,
+<p>$$\\lim_{n \\to \\infty} \\frac{n+1}{n/6} = \\lim_{n \\to \\infty} \\frac{6(n+1)}{n} = \\lim_{n \\to \\infty} \\frac{6n+6}{n} = 6$$</p>`,
+          `<strong>Conclusione (base ed esponente entrambi variabili).</strong> Qui non basta "sostituire" i due limiti: l'espressione è $u_n^{v_n}$ con <em>entrambi</em> i fattori dipendenti da $n$. La regola da richiamare è la continuità della funzione $(u,v) \\mapsto u^v$ sul dominio $u \\gt 0$: poiché $u_n \\gt 0$ per ogni $n$, $u_n \\to e \\gt 0$ e $v_n \\to 6$, si ha $u_n^{v_n} \\to e^6$. Dunque
+<p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{6}{n}\\right)^{n+1} = e^6$$</p>`
+        ]
+      },
+
+      {
+        id: "s17-asintotico-opiccolo",
+        type: "section",
+        title: "Asintotico e o-piccolo: il linguaggio del confronto",
+        icon: "🔍",
+        content: `<p>Dal limite fondamentale del numero di Nepero discendono altri limiti notevoli di grande importanza, specialmente per lo studio di funzioni. Prima di enunciarli, fissiamo con precisione il linguaggio che useremo per confrontare fra loro successioni infinitesime.</p>
+<p>Siano $(u_n)$, $(v_n)$, $(r_n)$ e $(b_n)$ successioni reali, con $v_n \\neq 0$ e $b_n \\neq 0$ definitivamente (cioè per tutti gli $n$ abbastanza grandi).</p>
+<ul>
+  <li>Diciamo che $u_n$ è <strong>asintotico</strong> a $v_n$, e scriviamo $u_n \\sim v_n$, se
+  <p>$$\\lim_{n \\to \\infty} \\frac{u_n}{v_n} = 1$$</p></li>
+  <li>Diciamo che $r_n$ è <strong>o-piccolo</strong> di $b_n$, e scriviamo $r_n = o(b_n)$, se
+  <p>$$\\lim_{n \\to \\infty} \\frac{r_n}{b_n} = 0$$</p></li>
+</ul>
+<p>Intuitivamente, $u_n \\sim v_n$ significa che le due successioni hanno lo stesso comportamento dominante, mentre $r_n = o(b_n)$ significa che $r_n$ è trascurabile rispetto a $b_n$. Si noti che l'ipotesi di non annullamento definitivo dei denominatori è <strong>indispensabile</strong> perché i quozienti abbiano senso.</p>`,
+        formulas: [
+          { label: "Asintotico", latex: "u_n \\sim v_n \\iff \\lim_{n \\to \\infty} \\frac{u_n}{v_n} = 1" },
+          { label: "o-piccolo", latex: "r_n = o(b_n) \\iff \\lim_{n \\to \\infty} \\frac{r_n}{b_n} = 0" }
+        ]
+      },
+
+      {
+        id: "s17-limite-log",
+        type: "section",
+        title: "Limite notevole del logaritmo",
+        icon: "📊",
+        content: `<p>Sia $b_n$ una successione reale, non nulla definitivamente, tale che $\\lim_{n \\to \\infty} b_n = 0$. Poiché $b_n \\to 0$, si ha anche $1 + b_n \\gt 0$ definitivamente, quindi $\\log(1+b_n)$ è ben definito per $n$ grande (qui e nel seguito $\\log$ denota il <strong>logaritmo naturale</strong>, cioè in base $e$: in una base $a \\neq e$ il limite vale $1/\\log a$ e non $1$). Allora:</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{\\log(1 + b_n)}{b_n} = 1$$</p>`,
+        subsections: [
+          {
+            subtitle: "Passo 1 — il caso modello $b_n = 1/n$",
+            content: `<p>Partiamo dal limite che definisce $e$:</p>
+<p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n = e$$</p>
+<p>Poiché la funzione logaritmo è continua, possiamo portare il limite all'interno dell'argomento del logaritmo:</p>
+<p>$$\\log\\left(\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n\\right) = \\lim_{n \\to \\infty} \\log\\left(\\left(1 + \\frac{1}{n}\\right)^n\\right) = \\log(e) = 1$$</p>
+<p>Utilizzando la proprietà dei logaritmi $\\log(a^b) = b \\log(a)$, otteniamo</p>
+<p>$$\\lim_{n \\to \\infty} n \\log\\left(1 + \\frac{1}{n}\\right) = 1$$</p>
+<p>che è equivalente a</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{\\log\\left(1 + \\frac{1}{n}\\right)}{\\frac{1}{n}} = 1$$</p>`
+          },
+          {
+            subtitle: "Passo 2 — il caso generale",
+            content: `<p>Sia ora $b_n \\to 0$ con $b_n \\neq 0$ definitivamente. L'idea è di porre $a_n = 1/b_n$ e di usare la proposizione generalizzata, ma occorre un minimo di attenzione: se $b_n$ cambia segno infinite volte (per esempio $b_n = (-1)^n/n$), la successione $1/b_n$ non tende né a $+\\infty$ né a $-\\infty$, e dunque la proposizione precedente non è applicabile direttamente a tutta la successione.</p>
+<p>Procediamo allora <strong>separando i segni</strong>. A meno di scartare un numero finito di termini, possiamo supporre $b_n \\neq 0$ e $1 + b_n \\gt 0$ per ogni $n$. Consideriamo i due insiemi di indici</p>
+<p>$$P = \\{ n : b_n \\gt 0 \\}, \\qquad N = \\{ n : b_n \\lt 0 \\}$$</p>
+<p>che costituiscono una partizione degli indici. Almeno uno dei due è infinito; per ciascuno dei due che sia infinito, ragioniamo sulla corrispondente sottosuccessione.</p>
+<ul>
+  <li>Se $P$ è infinito, lungo gli indici di $P$ si ha $b_n \\to 0^+$, quindi $a_n = 1/b_n \\to +\\infty$.</li>
+  <li>Se $N$ è infinito, lungo gli indici di $N$ si ha $b_n \\to 0^-$, quindi $a_n = 1/b_n \\to -\\infty$.</li>
+</ul>
+<p>In entrambi i casi $a_n \\to \\pm\\infty$ e dunque, per la proposizione generalizzata,</p>
+<p>$$\\left(1 + \\frac{1}{a_n}\\right)^{a_n} = (1 + b_n)^{1/b_n} \\longrightarrow e$$</p>
+<p>lungo ciascuna delle due (eventuali) sottosuccessioni. Poiché il limite ottenuto è lo stesso ($e$) su entrambe le parti, e le due parti esauriscono tutti gli indici, si conclude che</p>
+<p>$$\\lim_{n \\to \\infty} (1 + b_n)^{1/b_n} = e$$</p>
+<p>anche quando il segno di $b_n$ alterna infinite volte. Applicando il logaritmo, che è continuo in $e \\gt 0$, si ottiene</p>
+<p>$$\\lim_{n \\to \\infty} \\log\\left( (1 + b_n)^{1/b_n} \\right) = \\lim_{n \\to \\infty} \\frac{\\log(1 + b_n)}{b_n} = \\log(e) = 1$$</p>
+<p>come volevamo.</p>`
+          },
+          {
+            subtitle: "Significato asintotico",
+            content: `<p>Questo limite ci dice che per $b_n$ che tende a zero (e non nulla definitivamente), $\\log(1+b_n)$ si comporta in modo molto simile a $b_n$ stesso. Nel linguaggio della definizione precedente:</p>
+<p>$$\\log(1+b_n) \\sim b_n \\quad \\text{per } b_n \\to 0$$</p>
+<p>Equivalentemente, in notazione di o-piccolo:</p>
+<p>$$\\log(1+b_n) = b_n + o(b_n)$$</p>
+<p>Verifichiamo che le due scritture dicono la stessa cosa: posto $r_n = \\log(1+b_n) - b_n$, si ha</p>
+<p>$$\\frac{r_n}{b_n} = \\frac{\\log(1+b_n) - b_n}{b_n} = \\frac{\\log(1+b_n)}{b_n} - 1 \\longrightarrow 1 - 1 = 0$$</p>
+<p>dunque $r_n = o(b_n)$, che è esattamente l'affermazione $\\log(1+b_n) = b_n + o(b_n)$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limite notevole logaritmico", latex: "\\lim_{n \\to \\infty} \\frac{\\log(1 + b_n)}{b_n} = 1, \\qquad b_n \\to 0" },
+          { label: "Forma asintotica", latex: "\\log(1+b_n) = b_n + o(b_n)" }
+        ]
+      },
+
+      {
+        id: "s17-es-svolto-log",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Applicazione del limite notevole logaritmico",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare il limite:</p>
+<p>$$\\lim_{n \\to \\infty} n \\log\\left(1 + \\frac{3}{n}\\right)$$</p>`,
+        steps: [
+          `<strong>Individuazione della successione infinitesima.</strong> Poniamo $b_n = \\dfrac{3}{n}$. Si ha $b_n \\neq 0$ per ogni $n \\ge 1$ e $b_n \\to 0$ per $n \\to \\infty$; inoltre $1 + b_n \\gt 0$ per ogni $n \\ge 1$. Le ipotesi del limite notevole sono soddisfatte.`,
+          `<strong>Riscrittura dell'espressione.</strong> Moltiplichiamo e dividiamo per $b_n = 3/n$ in modo da far comparire il quoziente del limite notevole:
+<p>$$n \\log\\left(1 + \\frac{3}{n}\\right) = 3 \\cdot \\frac{\\log\\left(1 + \\frac{3}{n}\\right)}{\\frac{3}{n}}$$</p>
+Infatti $3 \\cdot \\dfrac{1}{3/n} = n$.`,
+          `<strong>Applicazione del limite notevole.</strong>
+<p>$$\\lim_{n \\to \\infty} \\frac{\\log\\left(1 + \\frac{3}{n}\\right)}{\\frac{3}{n}} = \\lim_{n \\to \\infty} \\frac{\\log(1 + b_n)}{b_n} = 1$$</p>`,
+          `<strong>Conclusione.</strong>
+<p>$$\\lim_{n \\to \\infty} n \\log\\left(1 + \\frac{3}{n}\\right) = 3 \\cdot 1 = 3$$</p>`
+        ]
+      },
+
+      {
+        id: "s17-limite-exp",
+        type: "section",
+        title: "Limite notevole dell'esponenziale",
+        icon: "🚀",
+        content: `<p>Sia $b_n$ una successione reale, non nulla definitivamente, tale che $\\lim_{n \\to \\infty} b_n = 0$. Allora:</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{e^{b_n} - 1}{b_n} = 1$$</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione (per riconduzione al caso logaritmico)",
+            content: `<p>Possiamo dimostrare questo limite utilizzando il precedente. Sia $b_n$ una successione che tende a $0$, con $b_n \\neq 0$ definitivamente. Poniamo</p>
+<p>$$y_n = e^{b_n} - 1$$</p>
+<p>Quando $n \\to \\infty$, $b_n \\to 0$, quindi $e^{b_n} \\to e^0 = 1$, e di conseguenza $y_n \\to 0$. Osserviamo inoltre che, essendo l'esponenziale strettamente crescente (quindi iniettiva), da $b_n \\neq 0$ segue $e^{b_n} \\neq 1$, cioè $y_n \\neq 0$: anche $y_n$ è dunque non nulla definitivamente, e si ha $1 + y_n = e^{b_n} \\gt 0$. Le ipotesi del limite notevole del logaritmo sono soddisfatte da $y_n$.</p>
+<p>Dalla posizione fatta ricaviamo $b_n$:</p>
+<p>$$e^{b_n} = 1 + y_n \\ \\Rightarrow \\ b_n = \\log(1 + y_n)$$</p>
+<p>Sostituiamo queste espressioni nel limite che vogliamo calcolare:</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{e^{b_n} - 1}{b_n} = \\lim_{n \\to \\infty} \\frac{y_n}{\\log(1 + y_n)}$$</p>
+<p>Poiché anche $y_n \\to 0$ con $y_n \\neq 0$ definitivamente, questo limite è il reciproco del limite notevole del logaritmo:</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{y_n}{\\log(1 + y_n)} = \\lim_{n \\to \\infty} \\frac{1}{\\frac{\\log(1 + y_n)}{y_n}} = \\frac{1}{1} = 1$$</p>`
+          },
+          {
+            subtitle: "Significato asintotico",
+            content: `<p>Analogamente al caso del logaritmo, questo risultato implica che per $b_n$ "piccolo" (cioè tendente a zero, e non nullo definitivamente) la funzione $e^{b_n}-1$ è approssimabile con $b_n$:</p>
+<p>$$e^{b_n} - 1 \\sim b_n \\quad \\text{per } b_n \\to 0$$</p>
+<p>In notazione di o-piccolo:</p>
+<p>$$e^{b_n} - 1 = b_n + o(b_n)$$</p>
+<p>Anche qui la verifica è immediata: posto $r_n = e^{b_n} - 1 - b_n$, si ha</p>
+<p>$$\\frac{r_n}{b_n} = \\frac{e^{b_n}-1}{b_n} - 1 \\longrightarrow 1 - 1 = 0$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limite notevole esponenziale", latex: "\\lim_{n \\to \\infty} \\frac{e^{b_n} - 1}{b_n} = 1, \\qquad b_n \\to 0" },
+          { label: "Forma asintotica", latex: "e^{b_n} - 1 = b_n + o(b_n)" }
+        ]
+      },
+
+      {
+        id: "s17-riepilogo",
+        type: "note_box",
+        title: "Riepilogo dei limiti notevoli",
+        icon: "📒",
+        content: `<p>I limiti notevoli visti finora sono strumenti fondamentali per il calcolo dei limiti. Li riassumiamo qui nelle loro forme più comuni, <strong>con le ipotesi complete</strong>.</p>
+<ul>
+  <li>Sia $a_n$ una successione non nulla definitivamente con $\\lim_{n \\to \\infty} a_n = \\pm \\infty$:
+  <p>$$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{a_n}\\right)^{a_n} = e$$</p></li>
+  <li>Sia $b_n$ una successione reale, non nulla definitivamente, con $\\lim_{n \\to \\infty} b_n = 0$ (cosicché $1 + b_n \\gt 0$ definitivamente e $\\log(1+b_n)$ è ben definito per $n$ grande):
+  <p>$$\\lim_{n \\to \\infty} \\frac{\\log(1 + b_n)}{b_n} = 1$$</p>
+  <p>$$\\lim_{n \\to \\infty} \\frac{e^{b_n} - 1}{b_n} = 1$$</p></li>
+</ul>
+<p>L'ipotesi "$b_n \\neq 0$ definitivamente" <strong>non è un dettaglio formale</strong>: senza di essa (si pensi a $b_n = 0$ per ogni $n$) i quozienti non sarebbero nemmeno definiti. Queste formule sono la base per risolvere molte forme indeterminate.</p>`,
+        table_compare: {
+          headers: ["Limite notevole", "Ipotesi", "Valore", "Forma asintotica"],
+          rows: [
+            ["$\\left(1+\\frac{1}{a_n}\\right)^{a_n}$", "$a_n \\to \\pm\\infty$, $a_n \\neq 0$ def.", "$e$", "—"],
+            ["$\\left(1-\\frac{1}{a_n}\\right)^{a_n}$", "$a_n \\to +\\infty$", "$\\frac{1}{e}$", "—"],
+            ["$\\frac{\\log(1+b_n)}{b_n}$", "$b_n \\to 0$, $b_n \\neq 0$ def.", "$1$", "$\\log(1+b_n)=b_n+o(b_n)$"],
+            ["$\\frac{e^{b_n}-1}{b_n}$", "$b_n \\to 0$, $b_n \\neq 0$ def.", "$1$", "$e^{b_n}-1=b_n+o(b_n)$"]
+          ]
+        }
+      },
+
+      {
+        id: "s17-es-svolto-exp",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Applicazione del limite notevole esponenziale",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare il limite:</p>
+<p>$$\\lim_{n \\to \\infty} n\\left(\\sqrt[n]{e} - 1\\right)$$</p>`,
+        steps: [
+          `<strong>Riscrivere l'espressione.</strong> La radice $n$-esima può essere scritta come una potenza: $\\sqrt[n]{e} = e^{1/n}$, dunque
+<p>$$n\\left(e^{1/n} - 1\\right) = \\frac{e^{1/n} - 1}{\\frac{1}{n}}$$</p>`,
+          `<strong>Riconoscere il limite notevole.</strong> L'espressione ottenuta è esattamente nella forma $\\dfrac{e^{b_n}-1}{b_n}$, con $b_n = 1/n$.`,
+          `<strong>Verifica delle ipotesi.</strong> Per $n \\to \\infty$ la successione $b_n = 1/n$ tende a $0$ ed è non nulla per ogni $n \\ge 1$: le condizioni per applicare il limite notevole sono soddisfatte.`,
+          `<strong>Conclusione.</strong>
+<p>$$\\lim_{n \\to \\infty} \\frac{e^{1/n} - 1}{\\frac{1}{n}} = 1$$</p>`
+        ]
+      },
+
+      {
+        id: "s17-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s17-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare il teorema di regolarità delle successioni monotone e dimostrarlo nel caso di una successione crescente, distinguendo il caso $\\sup_n a_n$ finito dal caso $\\sup_n a_n = +\\infty$. Spiegare inoltre perché per una successione crescente non ha senso chiedersi <em>se</em> il limite esista.</p>`,
+        solution: `<p><strong>Enunciato.</strong> Ogni successione monotona $\\{a_n\\}$ è regolare; in particolare se $\\{a_n\\}$ è crescente allora $\\lim_{n\\to+\\infty}a_n=\\sup_{n}a_n$, se è decrescente allora $\\lim_{n\\to+\\infty}a_n=\\inf_{n}a_n$.</p>
+<p><strong>Dimostrazione (caso crescente).</strong> Sia $L=\\sup_n a_n$.</p>
+<p><em>Caso $L\\in\\mathbb{R}$.</em> Per definizione di estremo superiore: (i) $a_n\\le L$ per ogni $n$; (ii) per ogni $\\varepsilon\\gt 0$ esiste $\\nu$ con $a_\\nu\\gt L-\\varepsilon$ (altrimenti $L-\\varepsilon$ sarebbe un maggiorante più piccolo di $L$). Per la monotonia, per ogni $n\\ge\\nu$ si ha $L-\\varepsilon\\lt a_\\nu\\le a_n\\le L$, quindi $|a_n-L|\\lt\\varepsilon$ per ogni $n\\ge\\nu$: dunque $a_n\\to L$.</p>
+<p><em>Caso $L=+\\infty$.</em> Allora per ogni $M\\in\\mathbb{R}$ esiste $\\nu$ con $a_\\nu\\gt M$ (altrimenti $M$ sarebbe un maggiorante e $L$ sarebbe finito); per monotonia $a_n\\ge a_\\nu\\gt M$ per ogni $n\\ge\\nu$, cioè $a_n\\to+\\infty$.</p>
+<p><strong>Perché il limite esiste sempre.</strong> Una successione crescente $\\{a_n\\}_{n\\in\\mathbb{N}}$ è automaticamente limitata inferiormente, perché $a_0\\le a_n$ per ogni $n$ (quindi $a_0=\\min_n a_n$). L'unica cosa che può mancare è la limitatezza superiore, e in entrambi i casi il teorema fornisce un limite: finito e uguale a $\\sup_n a_n$ se la successione è limitata superiormente, uguale a $+\\infty$ altrimenti.</p>
+<p><strong>Esempi.</strong> $c_n=1-\\frac1n$ è crescente e $c_n\\lt 1$, con $\\lim c_n=\\sup_n c_n=1$ (valore mai assunto: il $\\sup$ non è un massimo); $d_n=n$ è crescente e non limitata, con $\\lim d_n=+\\infty$.</p>`
+      },
+
+      {
+        id: "s17-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia il teorema di regolarità (convergenza) delle successioni monotone e spiega perché, per dimostrare che $a_n=\\left(1+\\frac{1}{n}\\right)^n$ converge, è sufficiente esibire una successione $b_n$ decrescente con $b_n\\ge a_n$ per ogni $n$.</p>`,
+        solution: `<p><strong>Teorema.</strong> Se $\\{c_n\\}$ è monotona crescente, allora $\\lim_{n\\to\\infty}c_n=\\sup_{n}c_n$; quindi se $\\{c_n\\}$ è limitata superiormente il limite è un numero reale finito (ed è l'estremo superiore), mentre se non è limitata superiormente $c_n\\to+\\infty$. Simmetricamente, se $\\{c_n\\}$ è decrescente allora $\\lim_{n\\to\\infty}c_n=\\inf_n c_n$. In ogni caso una successione monotona è regolare (ammette limite finito o infinito).</p>
+<p><strong>Applicazione.</strong> $a_n=\\left(1+\\frac{1}{n}\\right)^n$ è crescente, dunque è automaticamente limitata inferiormente da $a_1=2$ e per avere la convergenza (limite finito) resta solo da provare che è limitata superiormente.</p>
+<p>Se esiste $b_n$ decrescente con $a_n\\le b_n$ per ogni $n\\ge 1$, allora per ogni $n$ vale</p>
+<p>$$a_n\\le b_n\\le b_1,$$</p>
+<p>perché $b_n$ decrescente implica $b_n\\le b_1$. Il numero $b_1$ è quindi un maggiorante di $\\{a_n\\}$: $a_n$ è crescente e limitata superiormente, dunque per il teorema converge e $\\lim_{n\\to\\infty}a_n=\\sup_n a_n\\in\\mathbb{R}$. Tale limite si denota con $e$.</p>`
+      },
+
+      {
+        id: "s17-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia i due limiti notevoli $\\lim_{n \\to \\infty} \\frac{\\log(1+b_n)}{b_n}$ e $\\lim_{n \\to \\infty} \\frac{e^{b_n}-1}{b_n}$ con le ipotesi complete sulla successione $(b_n)$, e discuti il ruolo di ciascuna ipotesi.</p>`,
+        solution: `<p><strong>Enunciato.</strong> Sia $(b_n)$ una successione reale con $b_n \\neq 0$ definitivamente e $\\lim_{n \\to \\infty} b_n = 0$. Allora</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{\\log(1+b_n)}{b_n} = 1 \\qquad \\text{e} \\qquad \\lim_{n \\to \\infty} \\frac{e^{b_n}-1}{b_n} = 1,$$</p>
+<p>dove $\\log$ è il logaritmo naturale.</p>
+<p><strong>Ruolo delle ipotesi.</strong></p>
+<ul>
+  <li>(i) $b_n \\neq 0$ definitivamente serve affinché i quozienti abbiano senso: se, ad esempio, $b_n = 0$ per ogni $n$, i rapporti non sono nemmeno definiti.</li>
+  <li>(ii) $b_n \\to 0$ è ciò che rende i rapporti forme indeterminate $\\frac{0}{0}$ con valore $1$: se per esempio $b_n \\to 1$, allora $\\frac{\\log(1+b_n)}{b_n} \\to \\log 2 \\neq 1$ e $\\frac{e^{b_n}-1}{b_n} \\to e-1 \\neq 1$.</li>
+  <li>(iii) la buona definizione di $\\log(1+b_n)$ non è un'ipotesi in più ma una conseguenza: da $b_n \\to 0$ segue $1+b_n \\gt 0$ definitivamente.</li>
+  <li>(iv) la base del logaritmo deve essere $e$, altrimenti il valore del limite è $1/\\log a$.</li>
+</ul>
+<p>Equivalentemente, i due limiti si scrivono in forma asintotica: $\\log(1+b_n) \\sim b_n$ e $e^{b_n}-1 \\sim b_n$, cioè $\\log(1+b_n) = b_n + o(b_n)$ e $e^{b_n}-1 = b_n + o(b_n)$.</p>`
+      },
+
+      {
+        id: "s17-ex-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dimostrare per induzione la disuguaglianza di Bernoulli: per ogni $h\\gt -1$ e ogni $n\\in\\mathbb{N}$ vale $(1+h)^n\\ge 1+nh$. Indicare dove viene usata l'ipotesi $h\\gt -1$ e verificare che per $n\\ge 2$ e $h\\neq 0$ la disuguaglianza è stretta.</p>`,
+        solution: `<p><strong>Base.</strong> Per $n=0$: $(1+h)^0=1\\ge 1+0\\cdot h=1$ (vale l'uguaglianza). Per $n=1$: $(1+h)^1=1+h$ (uguaglianza).</p>
+<p><strong>Passo induttivo.</strong> Supponiamo $(1+h)^n\\ge 1+nh$. Poiché $h\\gt -1$ si ha $1+h\\gt 0$, quindi moltiplicando entrambi i membri per $1+h$ la disuguaglianza non cambia verso:</p>
+<p>$$(1+h)^{n+1}=(1+h)^n(1+h)\\ge (1+nh)(1+h)=1+(n+1)h+nh^2\\ge 1+(n+1)h,$$</p>
+<p>perché $nh^2\\ge 0$. Per il principio di induzione la tesi vale per ogni $n\\in\\mathbb{N}$.</p>
+<p><strong>Ruolo di $h\\gt -1$.</strong> Serve esattamente nel passo induttivo: se fosse $1+h\\lt 0$ la moltiplicazione invertirebbe il verso della disuguaglianza e la dimostrazione cadrebbe.</p>
+<p><strong>Stretta disuguaglianza.</strong> Se $h\\neq 0$ e $n\\ge 2$, nel passo induttivo con $n\\ge 1$ il termine $nh^2$ è strettamente positivo, quindi $(1+h)^{n+1}\\gt 1+(n+1)h$; partendo da $n=1$ (uguaglianza) si ottiene $(1+h)^n\\gt 1+nh$ per ogni $n\\ge 2$, $h\\neq 0$.</p>
+<p><strong>Uso nella lezione.</strong> Con $h=-\\frac{1}{n^2}$ si ottiene $\\left(1-\\frac{1}{n^2}\\right)^n\\ge 1-\\frac1n$, da cui $\\frac{a_n}{a_{n-1}}\\ge 1$; con $h=\\frac{1}{n^2-1}\\gt 0$ si ottiene $\\left(1+\\frac{1}{n^2-1}\\right)^n\\ge 1+\\frac{n}{n^2-1}$, da cui $\\frac{b_{n-1}}{b_n}\\gt 1$.</p>`
+      },
+
+      {
+        id: "s17-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Studiare la monotonia e la limitatezza della successione $x_n=\\dfrac{2n+1}{n+2}$, $n\\ge 1$, determinarne l'estremo superiore e calcolarne il limite giustificandolo con il teorema di regolarità delle successioni monotone. Dire se l'estremo superiore è un massimo.</p>`,
+        solution: `<p><strong>Monotonia.</strong> Per ogni $n\\ge1$:</p>
+<p>$$\\begin{aligned}
+x_{n+1}-x_n &= \\frac{2n+3}{n+3}-\\frac{2n+1}{n+2} \\\\[4pt]
+&= \\frac{(2n+3)(n+2)-(2n+1)(n+3)}{(n+3)(n+2)} \\\\[4pt]
+&= \\frac{(2n^2+7n+6)-(2n^2+7n+3)}{(n+2)(n+3)} \\\\[4pt]
+&= \\frac{3}{(n+2)(n+3)} \\gt 0 ,
+\\end{aligned}$$</p>
+<p>quindi $\\{x_n\\}$ è strettamente crescente (ed è limitata inferiormente da $x_1=1$).</p>
+<p><strong>Limitatezza superiore.</strong></p>
+<p>$$2-x_n=\\frac{2(n+2)-(2n+1)}{n+2}=\\frac{3}{n+2}\\gt 0 ,$$</p>
+<p>dunque $x_n\\lt 2$ per ogni $n\\ge1$: il numero $2$ è un maggiorante.</p>
+<p><strong>Estremo superiore.</strong> Nessun $M\\lt 2$ è maggiorante: $x_n\\gt M$ equivale a $\\frac{3}{n+2}\\lt 2-M$, cioè $n\\gt\\frac{3}{2-M}-2$, e un tale $n$ esiste sempre. Quindi $\\sup_{n\\ge1}x_n=2$.</p>
+<p><strong>Limite.</strong> La successione è crescente, quindi per il teorema di regolarità</p>
+<p>$$\\lim_{n\\to+\\infty}x_n=\\sup_{n\\ge1}x_n=2 .$$</p>
+<p><strong>Massimo.</strong> Il valore $2$ non viene mai assunto (sarebbe $3=0$), quindi il $\\sup$ non è un massimo: $\\max_{n\\ge1}x_n$ non esiste.</p>`
+      },
+
+      {
+        id: "s17-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Usando la disuguaglianza di Bernoulli, dimostra che $\\left(1+\\frac{1}{n}\\right)^n\\ge 2$ per ogni $n\\ge 1$ e, insieme alla stima ottenuta con $b_n$, concludi che $2\\le e\\le 4$.</p>`,
+        solution: `<p>Applichiamo Bernoulli $(1+x)^k\\ge 1+kx$ con $x=\\frac{1}{n}\\gt 0$ (quindi $x\\ge-1$) e $k=n\\in\\mathbb{N}$:</p>
+<p>$$a_n=\\left(1+\\frac{1}{n}\\right)^n\\ge 1+n\\cdot\\frac{1}{n}=2 .$$</p>
+<p>Per il teorema del confronto per i limiti (passaggio al limite nelle disuguaglianze), da $a_n\\ge 2$ per ogni $n$ segue $e=\\lim_{n\\to\\infty}a_n\\ge 2$.</p>
+<p>D'altra parte, per ogni $n\\ge1$ vale</p>
+<p>$$a_n\\lt b_n\\le b_1=\\left(1+\\frac{1}{1}\\right)^{1+1}=4 ,$$</p>
+<p>da cui $e=\\lim_{n\\to\\infty}a_n\\le 4$. Quindi $2\\le e\\le 4$ (in realtà, essendo $a_n$ strettamente crescente e $b_n$ strettamente decrescente, $2\\lt e\\lt 4$; il valore vero è $e\\simeq 2{,}718$).</p>`
+      },
+
+      {
+        id: "s17-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcola $\\lim_{n \\to \\infty}\\left(1+\\frac{2}{n}\\right)^{3n}$.</p>`,
+        solution: `<p>Il limite è nella forma indeterminata $1^{\\infty}$.</p>
+<p><strong>Riscrittura della base.</strong></p>
+<p>$$1+\\frac{2}{n} = 1+\\frac{1}{n/2},$$</p>
+<p>dunque $a_n = \\frac{n}{2}$, che è non nulla per ogni $n \\ge 1$ e tende a $+\\infty$: le ipotesi del limite notevole generalizzato sono soddisfatte.</p>
+<p><strong>Riscrittura della potenza.</strong> Forziamo la comparsa dell'esponente $a_n$:</p>
+<p>$$\\left(1+\\frac{1}{n/2}\\right)^{3n} = \\left[\\left(1+\\frac{1}{n/2}\\right)^{n/2}\\right]^{\\frac{3n}{n/2}}$$</p>
+<p><strong>Calcolo dell'esponente.</strong></p>
+<p>$$\\frac{3n}{n/2} = 6 \\qquad \\text{per ogni } n \\ge 1$$</p>
+<p>(esponente costante: non c'è alcun limite da calcolare).</p>
+<p><strong>Conclusione.</strong> Poiché $\\left(1+\\frac{1}{n/2}\\right)^{n/2} \\to e$ e la funzione $t \\mapsto t^6$ è continua, si conclude</p>
+<p>$$\\lim_{n \\to \\infty}\\left(1+\\frac{2}{n}\\right)^{3n} = e^6 .$$</p>`
+      },
+
+      {
+        id: "s17-ex-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Usando soltanto le disuguaglianze $e\\ge a_n=\\left(1+\\frac1n\\right)^n$ e $e\\le b_m=\\left(1+\\frac1m\\right)^{m+1}$ (valide per ogni $n,m\\ge1$), dimostrare con calcoli esatti su frazioni che $\\dfrac{12}{5}\\lt e\\lt\\dfrac{59}{20}$, cioè $2{,}4\\lt e\\lt 2{,}95$. <em>(Suggerimento: usare $n=4$ e $m=6$.)</em></p>`,
+        solution: `<p><strong>Stima dal basso.</strong> Poiché $e=\\sup_{n\\ge1}a_n$ è un maggiorante di $\\{a_n\\}$, si ha $e\\ge a_4$ e</p>
+<p>$$a_4=\\left(1+\\frac14\\right)^4=\\left(\\frac54\\right)^4=\\frac{625}{256}.$$</p>
+<p>Confronto con $\\frac{12}{5}$: $\\frac{625}{256}\\gt\\frac{12}{5}\\iff 5\\cdot625\\gt12\\cdot256\\iff 3125\\gt3072$, vero. Dunque</p>
+<p>$$e\\ge\\frac{625}{256}\\gt\\frac{12}{5}=2{,}4 .$$</p>
+<p><strong>Stima dall'alto.</strong> Ogni $b_m$ è un maggiorante di $\\{a_n\\}$, quindi $e\\le b_6$ e</p>
+<p>$$b_6=\\left(1+\\frac16\\right)^{6+1}=\\left(\\frac76\\right)^7=\\frac{7^7}{6^7}=\\frac{823543}{279936}.$$</p>
+<p>Confronto con $\\frac{59}{20}$: $\\frac{823543}{279936}\\lt\\frac{59}{20}\\iff 20\\cdot823543\\lt59\\cdot279936\\iff 16\\,470\\,860\\lt16\\,516\\,224$, vero. Dunque</p>
+<p>$$e\\le\\frac{823543}{279936}\\lt\\frac{59}{20}=2{,}95 .$$</p>
+<p><strong>Conclusione.</strong> $2{,}4\\lt\\frac{625}{256}\\le e\\le\\frac{823543}{279936}\\lt 2{,}95$, in accordo con $e\\approx 2{,}71828$.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Enuncia il teorema di regolarità delle successioni monotone.",
+        back: "Ogni successione monotona ammette limite (finito o infinito), cioè è regolare. Se $\\{a_n\\}$ è crescente, $\\lim_{n \\to +\\infty} a_n = \\sup_{n \\in \\mathbb{N}}\\{a_n\\}$; se è decrescente, $\\lim_{n \\to +\\infty} a_n = \\inf_{n \\in \\mathbb{N}}\\{a_n\\}$."
+      },
+      {
+        type: "domanda",
+        front: "Perché una successione crescente è automaticamente limitata inferiormente?",
+        back: "Perché per definizione $a_n \\le a_{n+1}$ per ogni $n$, dunque $a_0 \\le a_1 \\le \\dots \\le a_n$: il primo termine $a_0$ è il minimo e quindi un minorante di tutta la successione, $a_0 \\le a_n$ per ogni $n \\in \\mathbb{N}$. Una successione crescente può invece essere o non essere limitata superiormente: è questo a decidere se il limite sia finito o $+\\infty$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Come si dimostra che $a_n = \\left(1+\\frac{1}{n}\\right)^n$ è crescente?",
+        back: "Si studia il rapporto per $n \\ge 2$: con manipolazioni algebriche si ottiene $\\frac{a_n}{a_{n-1}} = \\left(1-\\frac{1}{n^2}\\right)^n \\cdot \\frac{n}{n-1}$. Poi si applica Bernoulli con $h = -\\frac{1}{n^2} \\gt -1$: $\\left(1-\\frac{1}{n^2}\\right)^n \\ge 1-\\frac{1}{n}$, da cui $\\frac{a_n}{a_{n-1}} \\ge \\left(\\frac{n-1}{n}\\right)\\cdot\\left(\\frac{n}{n-1}\\right) = 1$, cioè $a_n \\ge a_{n-1}$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Qual è l'idea per dimostrare che $a_n = \\left(1+\\frac1n\\right)^n$ è limitata superiormente?",
+        back: "Si costruisce la successione ausiliaria $b_n = \\left(1+\\frac{1}{n}\\right)^{n+1}$, che soddisfa due proprietà: (1) $b_n = a_n\\left(1+\\frac1n\\right) \\gt a_n$; (2) $\\{b_n\\}$ è decrescente (si prova con Bernoulli su $\\frac{b_{n-1}}{b_n} = \\left(1+\\frac{1}{n^2-1}\\right)^n\\cdot\\frac{n}{n+1} \\gt 1$). Allora $a_n \\lt b_n \\le b_1 = 2^2 = 4$ per ogni $n \\ge 1$: $a_n$ è crescente e limitata superiormente, dunque converge."
+      },
+      {
+        type: "formula",
+        front: "Enuncia la disuguaglianza di Bernoulli e dove viene usata nella costruzione di $e$.",
+        back: "Per ogni $h \\gt -1$ e ogni $n \\in \\mathbb{N}$ vale $(1+h)^n \\ge 1+nh$. Si usa due volte: con $h = -\\frac{1}{n^2}$ per provare che $a_n$ è crescente, e con $h = \\frac{1}{n^2-1} \\gt 0$ per provare che $b_n$ è decrescente."
+      },
+      {
+        type: "tranello",
+        front: "Perché per dimostrare $e \\gt 2$ non basta usare $a_1 = 2$?",
+        back: "Perché nel Passo 1 si è dimostrata solo la disuguaglianza <em>debole</em> $a_n \\ge a_{n-1}$: da $e \\ge a_1 = 2$ si ottiene solo $e \\ge 2$, non la disuguaglianza stretta. Si usa invece $a_2 = \\left(\\frac32\\right)^2 = \\frac94 = 2{,}25$, da cui $e \\ge \\frac94 \\gt 2$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Come si ottiene la stima $e \\lt 3$?",
+        back: "Dal confronto incrociato $a_n \\lt b_m$ per ogni $n,m \\ge 1$ segue $e = \\sup_n\\{a_n\\} \\le b_m$ per ogni $m$. Con $m=5$: $b_5 = \\left(\\frac65\\right)^6 = \\frac{46656}{15625}$ e, poiché $3 = \\frac{46875}{15625}$ con $46656 \\lt 46875$, si ha $e \\le b_5 \\lt 3$."
+      },
+      {
+        type: "domanda",
+        front: "Perché ogni termine $b_m$ è un maggiorante dell'intera successione $\\{a_n\\}$?",
+        back: "Si distinguono due casi usando la monotonia: se $n \\le m$, allora $a_n \\le a_m \\lt b_m$ (crescenza di $a_n$); se $n \\gt m$, allora $a_n \\lt b_n \\le b_m$ (decrescenza di $b_n$). In entrambi i casi $a_n \\lt b_m$, quindi $e = \\sup_n\\{a_n\\} \\le b_m$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\lim_{n\\to\\infty}\\left(1-\\frac1n\\right)^n = \\frac1e$.",
+        back: "Per $n \\ge 2$: $\\left(1-\\frac1n\\right)^n = \\left(\\frac{n-1}{n}\\right)^n = \\frac{1}{\\left(\\frac{n}{n-1}\\right)^n}$. Poi $\\frac{n}{n-1} = 1+\\frac{1}{n-1}$, quindi il denominatore è $\\left(1+\\frac{1}{n-1}\\right)^{n-1}\\cdot\\left(1+\\frac{1}{n-1}\\right)$. Con $m = n-1$ il primo fattore tende a $e$ e il secondo a $1$: il denominatore tende a $e$ e il limite è $\\frac1e$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia il limite notevole generalizzato per $e$ e le sue ipotesi.",
+        back: "Se $a_n \\to \\pm\\infty$ (in particolare $a_n \\neq 0$ definitivamente, così che $1/a_n$ sia ben definito), allora $\\lim_{n\\to\\infty}\\left(1+\\frac{1}{a_n}\\right)^{a_n} = e$. Se inoltre $a_n \\to +\\infty$, allora $\\lim_{n\\to\\infty}\\left(1-\\frac{1}{a_n}\\right)^{a_n} = \\frac1e$. È lo strumento base per le forme indeterminate $1^\\infty$."
+      },
+      {
+        type: "tranello",
+        front: "Nel calcolo di $\\lim_{n\\to\\infty}\\left(1+\\frac6n\\right)^{n+1}$ si trova base $\\to e$ ed esponente $\\to 6$: si può concludere subito $e^6$?",
+        back: "Serve una giustificazione: l'espressione è $u_n^{v_n}$ con base <em>ed</em> esponente variabili. Posti $u_n = \\left(1+\\frac{1}{n/6}\\right)^{n/6}$ e $v_n = \\frac{n+1}{n/6}$, si ha $u_n \\gt 0$, $u_n \\to e \\gt 0$ e $v_n \\to 6$; per la continuità di $(u,v)\\mapsto u^v$ sul dominio $u \\gt 0$ segue $u_n^{v_n} \\to e^6$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci $u_n \\sim v_n$ e $r_n = o(b_n)$.",
+        back: "Con $v_n \\neq 0$ e $b_n \\neq 0$ definitivamente: $u_n \\sim v_n$ (asintotico) se $\\lim_{n\\to\\infty}\\frac{u_n}{v_n} = 1$; $r_n = o(b_n)$ (o-piccolo) se $\\lim_{n\\to\\infty}\\frac{r_n}{b_n} = 0$. Il primo dice che le due successioni hanno lo stesso comportamento dominante, il secondo che $r_n$ è trascurabile rispetto a $b_n$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra $\\lim_{n\\to\\infty}\\frac{\\log(1+b_n)}{b_n} = 1$ per $b_n \\to 0$, $b_n \\neq 0$ definitivamente.",
+        back: "Caso modello $b_n = 1/n$: dalla continuità del logaritmo, $\\lim n\\log\\left(1+\\frac1n\\right) = \\log e = 1$. Caso generale: posto $a_n = 1/b_n$, si separano gli indici in $P=\\{b_n \\gt 0\\}$ e $N=\\{b_n \\lt 0\\}$; su $P$ si ha $a_n \\to +\\infty$, su $N$ $a_n \\to -\\infty$, e in entrambi i casi $(1+b_n)^{1/b_n}\\to e$. Poiché il limite è lo stesso sulle due parti che esauriscono gli indici, $(1+b_n)^{1/b_n}\\to e$; applicando il logaritmo (continuo in $e \\gt 0$) si ottiene la tesi."
+      },
+      {
+        type: "dimostrazione",
+        front: "Come si deduce $\\lim_{n\\to\\infty}\\frac{e^{b_n}-1}{b_n} = 1$ dal limite notevole del logaritmo?",
+        back: "Si pone $y_n = e^{b_n}-1$. Allora $y_n \\to 0$; inoltre, essendo l'esponenziale iniettiva, da $b_n \\neq 0$ segue $y_n \\neq 0$, e $1+y_n = e^{b_n} \\gt 0$. Da $e^{b_n} = 1+y_n$ si ha $b_n = \\log(1+y_n)$, quindi $\\frac{e^{b_n}-1}{b_n} = \\frac{y_n}{\\log(1+y_n)}$, che è il reciproco del limite notevole del logaritmo e tende a $1$."
+      },
+      {
+        type: "tranello",
+        front: "Perché l'ipotesi «$b_n \\neq 0$ definitivamente» nei limiti notevoli non è un dettaglio formale?",
+        back: "Perché senza di essa i quozienti non sono nemmeno definiti: si pensi a $b_n = 0$ per ogni $n$, per cui $\\frac{\\log(1+b_n)}{b_n}$ e $\\frac{e^{b_n}-1}{b_n}$ non hanno senso. Invece la condizione $1+b_n \\gt 0$ non va aggiunta come ipotesi: è una conseguenza di $b_n \\to 0$."
+      },
+      {
+        type: "tranello",
+        front: "Il limite $\\lim_{n\\to\\infty}\\frac{\\log_a(1+b_n)}{b_n}$ vale $1$ per qualunque base $a$?",
+        back: "No. Il valore $1$ si ha solo per il logaritmo naturale (base $e$). In una base $a \\neq e$ il limite vale $\\frac{1}{\\log a}$, dove $\\log$ è il logaritmo naturale."
+      },
+      {
+        type: "formula",
+        front: "Scrivi le forme asintotiche e in o-piccolo dei due limiti notevoli per $b_n \\to 0$.",
+        back: "$\\log(1+b_n) \\sim b_n$ e $e^{b_n}-1 \\sim b_n$, equivalentemente $\\log(1+b_n) = b_n + o(b_n)$ e $e^{b_n}-1 = b_n + o(b_n)$. La verifica è immediata: posto $r_n$ la differenza, $\\frac{r_n}{b_n} = \\frac{\\log(1+b_n)}{b_n}-1 \\to 0$ (e analogamente per l'esponenziale)."
+      }
+    ]
+};
+
