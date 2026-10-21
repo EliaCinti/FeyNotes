@@ -1,0 +1,858 @@
+const LESSON = {
+    id: "L18", date: "Lezione 18 — 21 Ott 2026",
+    title: "Confronto tra infiniti e infinitesimi",
+    abstract: "Gerarchia degli infiniti, criterio del rapporto, principio di sostituzione degli infinitesimi e degli infiniti, algebra degli o-piccoli e confronto logaritmo vs potenza.",
+
+    sections: [
+      {
+        id: "s18-richiami",
+        type: "section",
+        title: "Richiami dalla lezione precedente",
+        icon: "🔁",
+        content: `<p>In questa lezione approfondiamo il comportamento delle successioni e delle funzioni che tendono a zero (<strong>infinitesimi</strong>) o a infinito, introducendo una gerarchia per confrontare la loro "velocità" di convergenza o divergenza.</p>
+        <p>Ricordiamo due importanti equivalenze asintotiche per una successione infinitesima $a_n \\to 0$:</p>
+        <ul>
+          <li>$\\log(1+a_n) = a_n(1+o(1))$, ovvero $\\log(1+a_n) \\sim a_n$;</li>
+          <li>$e^{a_n} - 1 = a_n(1+o(1))$, ovvero $e^{a_n} - 1 \\sim a_n$.</li>
+        </ul>`,
+        subsections: [
+          {
+            subtitle: "Non sono uguaglianze esatte",
+            content: `<p>È fondamentale capire che <strong>non si tratta di uguaglianze esatte</strong>. Per esempio, scrivere $\\log(1+a_n) = a_n$ è un errore. L'espressione corretta è</p>
+            <p>$$\\log(1+a_n) = a_n + o(a_n)$$</p>
+            <p>La differenza tra $\\log(1+a_n)$ e $a_n$ è un infinitesimo di ordine superiore ad $a_n$, cioè una quantità che tende a zero più velocemente di $a_n$.</p>`
+          }
+        ],
+        extra_content: `<p>Abbiamo anche accennato al confronto tra infiniti, per esempio tra $n^n$ e $n!$: abbiamo intuito che $n^n$ cresce molto più velocemente di $n!$. Ora formalizziamo questi concetti per costruire una vera e propria <strong>gerarchia degli infiniti</strong>.</p>`
+      },
+
+      {
+        id: "s18-ordine-infinito",
+        type: "section",
+        title: "Ordine di infinito",
+        icon: "📈",
+        content: `<p>Quando due successioni $a_n$ e $b_n$ tendono entrambe a infinito, possiamo chiederci quale delle due "cresce più velocemente". Questo concetto viene formalizzato attraverso la nozione di <strong>ordine di infinito</strong>.</p>
+        <p><strong>Definizione.</strong> Siano $a_n$ e $b_n$ due successioni tali che $\\lim_{n \\to \\infty} |a_n| = +\\infty$ e $\\lim_{n \\to \\infty} |b_n| = +\\infty$ (in particolare entrambe sono definitivamente non nulle, quindi i rapporti che seguono sono ben definiti definitivamente).</p>`,
+        subsections: [
+          {
+            subtitle: "Ordine superiore",
+            content: `<p>Diremo che <strong>$a_n$ ha ordine di infinito superiore a $b_n$</strong> se</p>
+            <p>$$\\lim_{n \\to \\infty} \\left| \\frac{a_n}{b_n} \\right| = +\\infty$$</p>
+            <p>In questo caso scriveremo $b_n \\ll a_n$. Equivalentemente, si ha $\\lim_{n \\to \\infty} \\left| \\frac{b_n}{a_n} \\right| = 0$.</p>`
+          },
+          {
+            subtitle: "Stesso ordine di infinito",
+            content: `<p>Diremo che <strong>$a_n$ e $b_n$ hanno lo stesso ordine di infinito</strong> se</p>
+            <p>$$\\lim_{n \\to \\infty} \\left| \\frac{a_n}{b_n} \\right| = l \\in \\mathbb{R}, \\quad l \\gt 0$$</p>
+            <p>In questo caso scriveremo $a_n \\approx b_n$.</p>`
+          },
+          {
+            subtitle: "Legame con l'equivalenza asintotica",
+            content: `<p>Il caso in cui il limite del rapporto è $1$ corrisponde alla nozione di <strong>equivalenza asintotica</strong>, già introdotta: se $\\lim_{n \\to \\infty} \\frac{a_n}{b_n} = 1$ scriviamo $a_n \\sim b_n$. L'equivalenza asintotica è un caso particolare di avere lo stesso ordine di infinito.</p>
+            <p><strong>Attenzione alla precisazione:</strong> la definizione di stesso ordine usa il <em>valore assoluto</em> del rapporto, mentre per l'equivalenza asintotica deve tendere a $1$ il rapporto <strong>senza</strong> valore assoluto. Non confondere $\\left|\\frac{a_n}{b_n}\\right| \\to 1$ con $a_n \\sim b_n$: con $a_n = -n$ e $b_n = n$ si ha $\\left|\\frac{a_n}{b_n}\\right| = 1$ (dunque stesso ordine di infinito), ma $\\frac{a_n}{b_n} = -1 \\neq 1$, quindi <strong>non</strong> vale $a_n \\sim b_n$.</p>`
+          },
+          {
+            subtitle: "Esempio con polinomi",
+            content: `<p>Confrontiamo $a_n = n^5 + n^3 - 24$ e $b_n = n^6 - n^2 + 1$. Intuitivamente $b_n$ cresce più velocemente perché il suo grado è maggiore. Verifichiamolo raccogliendo il termine dominante in numeratore e denominatore:</p>
+            <p>$$\\frac{b_n}{a_n} = \\frac{n^6(1 - 1/n^4 + 1/n^6)}{n^5(1 + 1/n^2 - 24/n^5)} = n \\cdot \\frac{1 - 1/n^4 + 1/n^6}{1 + 1/n^2 - 24/n^5}$$</p>
+            <p>Il fattore razionale tende a $\\frac{1}{1} = 1$ ed è <strong>definitivamente positivo</strong>, mentre il fattore $n$ diverge: dunque</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{b_n}{a_n} = +\\infty$$</p>
+            <p>Poiché il limite è $+\\infty$, concludiamo che $b_n$ ha ordine di infinito superiore ad $a_n$, cioè $a_n \\ll b_n$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Ordine superiore", latex: "b_n \\ll a_n \\iff \\lim_{n \\to \\infty} \\left| \\frac{a_n}{b_n} \\right| = +\\infty" },
+          { label: "Stesso ordine", latex: "a_n \\approx b_n \\iff \\lim_{n \\to \\infty} \\left| \\frac{a_n}{b_n} \\right| = l \\in (0, +\\infty)" },
+          { label: "Equivalenza asintotica", latex: "a_n \\sim b_n \\iff \\lim_{n \\to \\infty} \\frac{a_n}{b_n} = 1" }
+        ]
+      },
+
+      {
+        id: "s18-criterio-rapporto",
+        type: "section",
+        title: "Criterio del rapporto per successioni",
+        icon: "⚖️",
+        content: `<p>Per stabilire una gerarchia tra i principali tipi di successioni divergenti, ci serviamo di un utile criterio basato sul rapporto tra termini consecutivi.</p>
+        <p><strong>Proposizione (criterio del rapporto).</strong> Sia $a_n$ una successione tale che $a_n \\gt 0$ definitivamente. Se esiste il limite, finito oppure uguale a $+\\infty$,</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = l$$</p>
+        <p>allora:</p>
+        <ul>
+          <li>se $l \\gt 1$, si ha $\\lim_{n \\to \\infty} a_n = +\\infty$;</li>
+          <li>se $0 \\le l \\lt 1$, si ha $\\lim_{n \\to \\infty} a_n = 0$.</li>
+        </ul>
+        <p>Se $l = 1$ il criterio <strong>non fornisce alcuna informazione</strong>.</p>
+        <p>La dimostrazione è stata omessa dal professore: verrà presentata nelle lezioni successive. In questa lezione lo utilizziamo come strumento di calcolo.</p>`,
+        formulas: [
+          { label: "Criterio del rapporto", latex: "\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = l \\gt 1 \\Rightarrow a_n \\to +\\infty" }
+        ]
+      },
+
+      {
+        id: "s18-confronti",
+        type: "section",
+        title: "I confronti fondamentali",
+        icon: "🏁",
+        content: `<p>Vediamo ora come si confrontano le principali famiglie di infiniti, applicando sistematicamente il criterio del rapporto.</p>`,
+        subsections: [
+          {
+            subtitle: "Potenze vs Esponenziali",
+            content: `<p>Consideriamo il confronto tra $n^a$ e $b^n$, con $a \\in \\mathbb{R}$ e $b \\gt 1$. Vogliamo dimostrare che l'esponenziale "vince" sulla potenza. Poniamo $a_n = \\frac{b^n}{n^a}$ e applichiamo il criterio del rapporto:</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = \\lim_{n \\to \\infty} \\frac{b^{n+1}/(n+1)^a}{b^n/n^a} = \\lim_{n \\to \\infty} \\frac{b^{n+1}}{b^n} \\cdot \\frac{n^a}{(n+1)^a}$$</p>
+            <p>$$= \\lim_{n \\to \\infty} b \\cdot \\left(\\frac{n}{n+1}\\right)^a = b \\cdot 1^a = b$$</p>
+            <p>Poiché per ipotesi $b \\gt 1$, il criterio del rapporto dà $\\lim_{n \\to \\infty} \\frac{b^n}{n^a} = +\\infty$. Questo significa che $n^a \\ll b^n$ per ogni $a \\gt 0$ e $b \\gt 1$; per $a \\le 0$ la successione $n^a$ non è un infinito, ma resta vero che $\\lim_{n \\to \\infty} \\frac{b^n}{n^a} = +\\infty$.</p>`
+          },
+          {
+            subtitle: "Esponenziali vs Fattoriali",
+            content: `<p>Confrontiamo $b^n$ con $n!$, per $b \\gt 1$. Poniamo $a_n = \\frac{n!}{b^n}$:</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = \\lim_{n \\to \\infty} \\frac{(n+1)!/b^{n+1}}{n!/b^n} = \\lim_{n \\to \\infty} \\frac{(n+1)!}{n!} \\cdot \\frac{b^n}{b^{n+1}} = \\lim_{n \\to \\infty} \\frac{n+1}{b} = +\\infty$$</p>
+            <p>Poiché il limite è $+\\infty$ (quindi maggiore di $1$), concludiamo che $\\lim_{n \\to \\infty} \\frac{n!}{b^n} = +\\infty$, cioè $b^n \\ll n!$ per ogni $b \\gt 1$.</p>`
+          },
+          {
+            subtitle: "Fattoriali vs Super-esponenziali",
+            content: `<p>Confrontiamo $n!$ con $n^n$. Poniamo $a_n = \\frac{n^n}{n!}$:</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = \\lim_{n \\to \\infty} \\frac{(n+1)^{n+1}/(n+1)!}{n^n/n!} = \\lim_{n \\to \\infty} \\frac{(n+1)^{n+1}}{n^n} \\cdot \\frac{n!}{(n+1)!}$$</p>
+            <p>$$= \\lim_{n \\to \\infty} \\frac{(n+1)^n \\cdot (n+1)}{n^n} \\cdot \\frac{1}{n+1} = \\lim_{n \\to \\infty} \\left(\\frac{n+1}{n}\\right)^n = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n = e$$</p>
+            <p>Poiché $e = 2{,}718\\ldots \\gt 1$, il criterio del rapporto implica $\\lim_{n \\to \\infty} \\frac{n^n}{n!} = +\\infty$, cioè $n! \\ll n^n$.</p>`
+          },
+          {
+            subtitle: "Logaritmi vs Potenze",
+            content: `<p>Il confronto tra $\\log_b(n)$ e $n^a$ (con $b \\gt 1$, $a \\gt 0$) mostra che il logaritmo cresce più lentamente di ogni potenza positiva di $n$: nella scala di infiniti che stiamo costruendo (logaritmi, potenze, esponenziali, fattoriali, $n^n$) il logaritmo occupa il gradino più basso.</p>
+            <p><strong>Da notare:</strong> questa affermazione va intesa relativamente alle famiglie considerate. Esistono infiniti ancora più lenti, per esempio $\\log(\\log n)$, che diverge ma più lentamente di $\\log n$.</p>
+            <p><strong>Proposizione.</strong> Se $a_n \\to +\\infty$, allora per ogni $b \\gt 1$ e $\\beta \\gt 0$ si ha</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{\\log_b(a_n)}{a_n^\\beta} = 0$$</p>
+            <p>In particolare, per $a_n = n$, si ha $\\log_b(n) \\ll n^\\beta$ per ogni $\\beta \\gt 0$.</p>
+            <p>La dimostrazione è rinviata: il risultato verrà dimostrato in forma più generale nel teorema <em>Logaritmo vs Potenza</em>. Il professore nota intanto che, in questi confronti, il logaritmo "perde sempre".</p>`
+          }
+        ],
+        formulas: [
+          { label: "Potenza vs esponenziale", latex: "n^a \\ll b^n \\quad (a \\gt 0,\\ b \\gt 1)" },
+          { label: "Esponenziale vs fattoriale", latex: "b^n \\ll n! \\quad (b \\gt 1)" },
+          { label: "Fattoriale vs n^n", latex: "n! \\ll n^n" }
+        ]
+      },
+
+      {
+        id: "s18-scala-infiniti",
+        type: "note_box",
+        title: "La scala degli infiniti",
+        icon: "🪜",
+        content: `<p>I risultati precedenti permettono di stabilire una gerarchia chiara tra le principali famiglie di successioni divergenti. Per ogni $a \\gt 0$, $\\beta \\gt 0$, $b \\gt 1$:</p>
+        <p>$$(\\log_b n)^\\beta \\ll n^a \\ll b^n \\ll n! \\ll n^n$$</p>
+        <p>Questa gerarchia è uno strumento fondamentale per il calcolo dei limiti. <strong>Va però usata con la consapevolezza che essa confronta soltanto le famiglie elencate</strong>: non afferma che non esistano infiniti intermedi o più lenti di $\\log n$.</p>`,
+        formulas: [
+          { label: "Scala degli infiniti", latex: "(\\log_b n)^\\beta \\ll n^a \\ll b^n \\ll n! \\ll n^n" }
+        ]
+      },
+
+      {
+        id: "s18-corollario-radice",
+        type: "section",
+        title: "Corollario: limite della radice n-esima",
+        icon: "√",
+        content: `<p>Un utile corollario del criterio del rapporto riguarda il calcolo del limite della radice $n$-esima di una successione.</p>
+        <p><strong>Corollario.</strong> Sia $a_n \\gt 0$ una successione. Se esiste $\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = l$ (finito o infinito), allora esiste anche $\\lim_{n \\to \\infty} \\sqrt[n]{a_n}$ e vale $l$:</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = l \\Rightarrow \\lim_{n \\to \\infty} \\sqrt[n]{a_n} = l$$</p>
+        <p>La dimostrazione è una conseguenza del teorema di Cesàro: omessa in aula, verrà presentata nelle lezioni successive.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempi di applicazione",
+            content: `<ul>
+              <li><strong>$\\lim_{n \\to \\infty} \\sqrt[n]{n}$</strong>: sia $a_n = n$. Allora $\\frac{a_{n+1}}{a_n} = \\frac{n+1}{n} \\to 1$, quindi $\\lim_{n \\to \\infty} \\sqrt[n]{n} = 1$. Un modo alternativo è scrivere $\\sqrt[n]{n} = n^{1/n} = e^{\\frac{\\log n}{n}}$: poiché $\\log n \\ll n$, l'esponente tende a $0$ e il limite è $e^0 = 1$.</li>
+              <li><strong>$\\lim_{n \\to \\infty} \\sqrt[n]{n!}$</strong>: sia $a_n = n!$. Allora $\\frac{a_{n+1}}{a_n} = \\frac{(n+1)!}{n!} = n+1 \\to +\\infty$, quindi $\\lim_{n \\to \\infty} \\sqrt[n]{n!} = +\\infty$.</li>
+              <li><strong>$\\lim_{n \\to \\infty} \\frac{\\sqrt[n]{n!}}{n}$</strong>: questo limite è legato alla formula di Stirling. Lo calcoliamo con il corollario applicato ad $a_n = \\frac{n!}{n^n}$, per cui abbiamo già visto che $\\frac{a_{n+1}}{a_n} \\to \\frac{1}{e}$. Quindi
+              <p>$$\\lim_{n \\to \\infty} \\sqrt[n]{\\frac{n!}{n^n}} = \\lim_{n \\to \\infty} \\frac{\\sqrt[n]{n!}}{\\sqrt[n]{n^n}} = \\lim_{n \\to \\infty} \\frac{\\sqrt[n]{n!}}{n} = \\frac{1}{e}$$</p>
+              </li>
+            </ul>`
+          }
+        ]
+      },
+
+      {
+        id: "s18-sostituzione-infinitesimi",
+        type: "section",
+        title: "Principio di sostituzione degli infinitesimi",
+        icon: "🔄",
+        content: `<p>Il concetto di equivalenza asintotica è molto potente perché permette di semplificare il calcolo di limiti di <strong>quozienti</strong>.</p>
+        <p><strong>Teorema.</strong> Siano $f, g, f_1, g_1$ quattro funzioni definite in un intorno di $x_0$ (con $x_0$ punto di accumulazione del dominio, eventualmente $\\pm\\infty$) e con $f_1$, $g$, $g_1$ diverse da zero in un intorno bucato di $x_0$. Se:</p>
+        <ul>
+          <li>$\\lim_{x \\to x_0} f(x) = \\lim_{x \\to x_0} f_1(x) = 0$;</li>
+          <li>$\\lim_{x \\to x_0} g(x) = \\lim_{x \\to x_0} g_1(x) = 0$;</li>
+          <li>$f(x) \\sim f_1(x)$ e $g(x) \\sim g_1(x)$ per $x \\to x_0$;</li>
+        </ul>
+        <p>allora i limiti $\\lim_{x \\to x_0} \\frac{f(x)}{g(x)}$ e $\\lim_{x \\to x_0} \\frac{f_1(x)}{g_1(x)}$ o esistono entrambi e sono uguali, o non esiste nessuno dei due. Nel primo caso vale</p>
+        <p>$$\\lim_{x \\to x_0} \\frac{f(x)}{g(x)} = \\lim_{x \\to x_0} \\frac{f_1(x)}{g_1(x)}$$</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Per definizione di equivalenza asintotica, $\\lim_{x \\to x_0} \\frac{f(x)}{f_1(x)} = 1$ e $\\lim_{x \\to x_0} \\frac{g(x)}{g_1(x)} = 1$.</p>
+            <p>Osserviamo anzitutto che, in un intorno bucato di $x_0$, vale l'identità</p>
+            <p>$$\\frac{f(x)}{g(x)} = \\frac{f_1(x)}{g_1(x)} \\cdot \\left( \\frac{f(x)}{f_1(x)} \\cdot \\frac{g_1(x)}{g(x)} \\right)$$</p>
+            <p>dove il fattore tra parentesi tende a $1$. Poiché un prodotto in cui un fattore tende a $1$ ammette limite se e solo se lo ammette l'altro fattore, i due limiti esistono o non esistono simultaneamente e, quando esistono, coincidono. Nel caso in cui il limite esista, il calcolo si scrive così:</p>
+            <p>$$\\lim_{x \\to x_0} \\frac{f(x)}{g(x)} = \\lim_{x \\to x_0} \\left( \\frac{f(x)}{f_1(x)} \\cdot \\frac{f_1(x)}{g_1(x)} \\cdot \\frac{g_1(x)}{g(x)} \\right)$$</p>
+            <p>$$= \\left( \\lim_{x \\to x_0} \\frac{f(x)}{f_1(x)} \\right) \\cdot \\left( \\lim_{x \\to x_0} \\frac{f_1(x)}{g_1(x)} \\right) \\cdot \\left( \\lim_{x \\to x_0} \\frac{g_1(x)}{g(x)} \\right) = 1 \\cdot \\lim_{x \\to x_0} \\frac{f_1(x)}{g_1(x)} \\cdot \\frac{1}{1}$$</p>`
+          },
+          {
+            subtitle: "Esempio 1",
+            content: `<p>Calcolare $\\lim_{x \\to 0} \\frac{e^x - 1}{\\sin x}$. Per $x \\to 0$ sappiamo che $e^x - 1 \\sim x$ e $\\sin x \\sim x$. Sostituendo:</p>
+            <p>$$\\lim_{x \\to 0} \\frac{e^x - 1}{\\sin x} = \\lim_{x \\to 0} \\frac{x}{x} = 1$$</p>`
+          },
+          {
+            subtitle: "Esempio 2",
+            content: `<p>Calcolare $\\lim_{x \\to 0} \\frac{1 - \\cos x}{\\log(1+x^2)}$. Per $x \\to 0$ sappiamo che $1 - \\cos x \\sim \\frac{x^2}{2}$. Inoltre, ponendo $y = x^2$, per $x \\to 0$ si ha $y \\to 0$ e $\\log(1+y) \\sim y$, dunque $\\log(1+x^2) \\sim x^2$. Quindi</p>
+            <p>$$\\lim_{x \\to 0} \\frac{1 - \\cos x}{\\log(1+x^2)} = \\lim_{x \\to 0} \\frac{x^2/2}{x^2} = \\frac{1}{2}$$</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s18-errore-somme",
+        type: "alert_box",
+        title: "Errore comune: sostituzione in somme e differenze",
+        icon: "⚠️",
+        content: `<p><strong>Attenzione!</strong> Il principio di sostituzione vale solo per <strong>prodotti e quozienti</strong>. Non è in generale valido per somme o differenze.</p>
+        <p>Consideriamo $\\lim_{x \\to 0} \\frac{x - \\sin x}{x^3}$. Se sostituissimo ingenuamente $\\sin x$ con $x$, otterremmo</p>
+        <p>$$\\lim_{x \\to 0} \\frac{x - x}{x^3} = \\lim_{x \\to 0} \\frac{0}{x^3} = 0 \\quad \\text{(SBAGLIATO!)}$$</p>
+        <p>Il risultato corretto, ottenibile con il teorema di de l'Hôpital o con gli sviluppi di Taylor, è $\\frac{1}{6}$.</p>
+        <p>L'errore nasce dal fatto che la sostituzione $f \\sim f_1$ ignora la "parte restante" $f - f_1$. In un quoziente questo errore viene "assorbito" e diventa trascurabile, ma <strong>in una differenza può diventare il termine dominante</strong>. In questo caso $x$ e $\\sin x$ sono molto vicini e la loro differenza è un infinitesimo dello stesso ordine di $x^3$, non un infinitesimo di ordine superiore: sostituire $\\sin x$ con $x$ annulla questa informazione cruciale.</p>`
+      },
+
+      {
+        id: "s18-sostituzione-infiniti",
+        type: "section",
+        title: "Principio di sostituzione degli infiniti",
+        icon: "♾️",
+        content: `<p>Un principio analogo vale per gli infiniti.</p>
+        <p><strong>Teorema.</strong> Siano $f, g, f_1, g_1$ funzioni definite in un intorno bucato di $x_0$ e tali che</p>
+        <p>$$\\lim_{x \\to x_0} |f(x)| = \\lim_{x \\to x_0} |f_1(x)| = \\lim_{x \\to x_0} |g(x)| = \\lim_{x \\to x_0} |g_1(x)| = +\\infty$$</p>
+        <p>(in particolare $f_1$, $g$, $g_1$ sono diverse da zero in un intorno bucato di $x_0$). Se $f \\sim f_1$ e $g \\sim g_1$ per $x \\to x_0$, allora i limiti $\\lim_{x \\to x_0} \\frac{f(x)}{g(x)}$ e $\\lim_{x \\to x_0} \\frac{f_1(x)}{g_1(x)}$ o esistono entrambi (finiti o infiniti) e coincidono, oppure non esiste nessuno dei due.</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>È identica a quella per gli infinitesimi: si parte dall'identità, valida in un intorno bucato di $x_0$,</p>
+            <p>$$\\frac{f(x)}{g(x)} = \\frac{f_1(x)}{g_1(x)} \\cdot \\left( \\frac{f(x)}{f_1(x)} \\cdot \\frac{g_1(x)}{g(x)} \\right)$$</p>
+            <p>dove il fattore tra parentesi tende a $1$. Poiché moltiplicare per un fattore che tende a $1$ non altera l'esistenza né il valore del limite, i due limiti esistono o non esistono simultaneamente e, quando esistono, sono uguali.</p>`
+          },
+          {
+            subtitle: "L'esistenza del limite non è garantita",
+            content: `<p>Si noti che l'ipotesi di divergenza delle quattro funzioni <strong>non garantisce di per sé che il quoziente ammetta limite</strong>: per esempio, con $f(x) = x(2+\\sin x)$ e $g(x) = x$ per $x \\to +\\infty$, il rapporto $f/g$ non ha limite. L'enunciato corretto afferma dunque soltanto che i due limiti hanno lo stesso destino: esistono insieme e coincidono, oppure non esistono entrambi.</p>`
+          },
+          {
+            subtitle: "Esempio",
+            content: `<p>Calcolare $\\lim_{n \\to \\infty} \\frac{n^3 + 2n - 1}{\\sqrt{n^6 + n^2}}$. Per $n \\to \\infty$:</p>
+            <ul>
+              <li>Numeratore: $n^3 + 2n - 1 \\sim n^3$;</li>
+              <li>Denominatore: $\\sqrt{n^6 + n^2} = \\sqrt{n^6(1 + 1/n^4)} = n^3 \\sqrt{1 + 1/n^4} \\sim n^3$.</li>
+            </ul>
+            <p>Sostituendo:</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{n^3 + 2n - 1}{\\sqrt{n^6 + n^2}} = \\lim_{n \\to \\infty} \\frac{n^3}{n^3} = 1$$</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s18-differenze-infiniti",
+        type: "alert_box",
+        title: "Attenzione alle differenze di infiniti",
+        icon: "🚫",
+        content: `<p>Anche per gli infiniti la sostituzione <strong>non vale per le differenze</strong>. Consideriamo $\\lim_{n \\to \\infty} (\\sqrt{n^2+n} - n)$. Sostituendo $\\sqrt{n^2+n} \\sim \\sqrt{n^2} = n$ si otterrebbe $\\lim (n-n) = 0$, che è sbagliato.</p>
+        <p>Il calcolo corretto si fa razionalizzando:</p>
+        <p>$$\\sqrt{n^2+n} - n = \\frac{(\\sqrt{n^2+n} - n)(\\sqrt{n^2+n} + n)}{\\sqrt{n^2+n} + n} = \\frac{n^2+n - n^2}{\\sqrt{n^2(1+1/n)} + n} = \\frac{n}{n\\sqrt{1+1/n} + n}$$</p>
+        <p>Ora <strong>prima</strong> semplifichiamo il fattore $n$, eliminando così la forma indeterminata, e <strong>poi</strong> passiamo al limite:</p>
+        <p>$$\\frac{n}{n\\left(\\sqrt{1+\\frac{1}{n}} + 1\\right)} = \\frac{1}{\\sqrt{1+\\frac{1}{n}} + 1} \\longrightarrow \\frac{1}{\\sqrt{1}+1} = \\frac{1}{2}$$</p>
+        <p>Il risultato corretto è $\\frac{1}{2}$. La sostituzione fallisce perché la differenza tra i due infiniti non è trascurabile.</p>`
+      },
+
+      {
+        id: "s18-gestire-somme",
+        type: "note_box",
+        title: "Come gestire somme e differenze",
+        icon: "🧰",
+        content: `<p>Un primo passo corretto, nel trattare somme e differenze, è <strong>raccogliere il termine dominante</strong> (la "parte principale"): è ciò che abbiamo sempre fatto con i polinomi e le funzioni razionali, dove nessuna cancellazione avviene.</p>
+        <p>Questo però non basta sempre, come mostrano gli esempi appena visti: occorre sempre <strong>controllare se i contributi principali si cancellano</strong>. In caso di cancellazione, il raccoglimento del termine dominante produce un $0$ privo di informazione e bisogna procedere diversamente:</p>
+        <ul>
+          <li>conservare termini di ordine successivo, cioè sviluppare le funzioni con un resto più fine (per esempio $\\sin x = x - \\frac{x^3}{6} + o(x^3)$ invece del solo $\\sin x \\sim x$);</li>
+          <li>oppure riscrivere l'espressione con un'<strong>identità esatta</strong>, come la razionalizzazione nel caso $\\sqrt{n^2+n} - n$, o le proprietà dei logaritmi nel caso $\\log(n+1) - \\log n = \\log\\left(1+\\frac{1}{n}\\right)$.</li>
+        </ul>
+        <p>In sintesi: raccogliere il termine dominante è sicuro quando i termini principali <em>non</em> si annullano; quando si annullano, servono informazioni di ordine superiore.</p>`
+      },
+
+      {
+        id: "s18-algebra-o-piccoli",
+        type: "section",
+        title: "Algebra degli o-piccoli",
+        icon: "🔤",
+        content: `<p>Per manipolare correttamente le espressioni asintotiche, specialmente nelle somme e differenze, è utile conoscere le proprietà algebriche del simbolo di Landau "o-piccolo".</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione di o-piccolo",
+            content: `<p><strong>Definizione.</strong> Fissiamo una volta per tutte il punto $x_0$ (eventualmente $\\pm\\infty$) a cui si riferiscono tutti i limiti di questa sezione, e sia $f$ diversa da zero in un intorno bucato di $x_0$ (così che il rapporto sia ben definito). Scrivere $h = o(f)$ per $x \\to x_0$ significa, per definizione,</p>
+            <p>$$\\lim_{x \\to x_0} \\frac{h(x)}{f(x)} = 0$$</p>
+            <p>Questa definizione, con il punto limite fissato e l'ipotesi di non nullità di $f$, è il riferimento per tutta l'algebra che segue.</p>`
+          },
+          {
+            subtitle: "Come leggere le uguaglianze con gli o-piccoli",
+            content: `<p>La scrittura $o(f)$ <strong>non denota una funzione precisa</strong>, ma <em>una qualunque</em> funzione trascurabile rispetto a $f$. Di conseguenza:</p>
+            <ul>
+              <li>ogni occorrenza del simbolo $o(\\cdot)$ in una formula indica un resto potenzialmente diverso dagli altri;</li>
+              <li>le uguaglianze che seguono si leggono <strong>da sinistra a destra</strong> e <strong>non</strong> sono reversibili: $A = o(f)$ va inteso come "ogni funzione della forma $A$ è un $o(f)$".</li>
+            </ul>`
+          },
+          {
+            subtitle: "Le cinque regole",
+            content: `<p><strong>Proposizione.</strong> Siano $f, g$ funzioni definite in un intorno di $x_0$ e diverse da zero in un intorno bucato di $x_0$. Allora, per $x \\to x_0$, valgono le seguenti regole, dove ogni simbolo $o(\\cdot)$ denota un resto (eventualmente diverso ad ogni occorrenza) con la proprietà indicata:</p>
+            <ol>
+              <li>$o(f) + o(f) = o(f)$;</li>
+              <li>$c \\cdot o(f) = o(f)$ per ogni costante $c \\neq 0$;</li>
+              <li>$f \\cdot o(g) = o(f \\cdot g)$;</li>
+              <li>$o(f) \\cdot o(g) = o(f \\cdot g)$;</li>
+              <li>$o\\big(f + o(f)\\big) = o(f)$.</li>
+            </ol>`
+          },
+          {
+            subtitle: "Dimostrazione delle regole",
+            content: `<p>Tutti i limiti sono per $x \\to x_0$ e tutti i rapporti scritti sono ben definiti in un intorno bucato di $x_0$ grazie alle ipotesi di non nullità su $f$ e $g$.</p>
+            <p><strong>(1)</strong> Siano $h_1 = o(f)$ e $h_2 = o(f)$, cioè $\\lim \\frac{h_1}{f} = 0$ e $\\lim \\frac{h_2}{f} = 0$. Per l'algebra dei limiti</p>
+            <p>$$\\lim \\frac{h_1+h_2}{f} = \\lim \\frac{h_1}{f} + \\lim \\frac{h_2}{f} = 0+0=0$$</p>
+            <p><strong>(2)</strong> Se $h = o(f)$ e $c \\neq 0$ è costante, allora $\\lim \\frac{c\\,h}{f} = c \\lim \\frac{h}{f} = c \\cdot 0 = 0$, dunque $c\\,h = o(f)$.</p>
+            <p><strong>(3)</strong> Sia $h = o(g)$. Poiché $f \\neq 0$ in un intorno bucato di $x_0$, possiamo semplificare:</p>
+            <p>$$\\lim \\frac{f \\cdot h}{f \\cdot g} = \\lim \\frac{h}{g} = 0$$</p>
+            <p><strong>(4)</strong> Siano $h_1 = o(f)$ e $h_2 = o(g)$. Allora</p>
+            <p>$$\\lim \\frac{h_1 h_2}{f g} = \\left(\\lim \\frac{h_1}{f}\\right)\\left(\\lim \\frac{h_2}{g}\\right) = 0 \\cdot 0 = 0$$</p>
+            <p><strong>(5)</strong> Sia $g_0 = o(f)$ e sia $h = o(f+g_0)$ (si assume $f + g_0 \\neq 0$ in un intorno bucato di $x_0$, cosa automaticamente vera appena $f$ non è nulla, poiché $f+g_0 = f(1+g_0/f)$ e $1+g_0/f \\to 1$). Allora</p>
+            <p>$$\\lim_{x \\to x_0} \\frac{h}{f} = \\lim_{x \\to x_0} \\frac{h}{f+g_0} \\cdot \\frac{f+g_0}{f} = \\left(\\lim \\frac{h}{f+g_0}\\right) \\cdot \\left(\\lim \\left(1 + \\frac{g_0}{f}\\right)\\right) = 0 \\cdot (1+0) = 0$$</p>`
+          },
+          {
+            subtitle: "Un resto più fine è anche un resto più grossolano",
+            content: `<p>Siano $0 \\lt \\alpha \\lt \\beta$ e sia $h = o(|x|^\\beta)$ per $x \\to 0$. Allora $h = o(|x|^\\alpha)$. (Se si lavora con potenze a esponente reale arbitrario e si vuole un limite bilatero, è necessario usare $|x|^\\alpha$ e $|x|^\\beta$, perché $x^{\\beta}$ con $\\beta$ non intero non è definito per $x \\lt 0$; in alternativa si enuncia tutto per $x \\to 0^+$.)</p>
+            <p>Per esempio, con $\\beta = 3$ e $\\alpha = 2$ (esponenti interi, nessun problema di dominio): se $h = o(x^3)$, allora</p>
+            <p>$$\\frac{h(x)}{x^2} = \\frac{h(x)}{x^3} \\cdot x \\overset{x \\to 0}{\\longrightarrow} 0 \\cdot 0 = 0$$</p>
+            <p>dunque $h = o(x^2)$. La scrittura abbreviata $o(x^3) = o(x^2)$ significa esattamente questo: <em>ogni</em> resto $o(x^3)$ è anche un $o(x^2)$.</p>
+            <p><strong>Non è un'uguaglianza reversibile:</strong> $o(x^2)$ in generale <em>non</em> è un $o(x^3)$. Basta prendere $h(x) = |x|^{5/2}$ (il valore assoluto serve per avere la funzione definita anche per $x \\lt 0$): si ha $\\frac{|x|^{5/2}}{x^2} = |x|^{1/2} \\to 0$ ma $\\frac{|x|^{5/2}}{x^3}$ non tende a $0$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Definizione di o-piccolo", latex: "h = o(f) \\text{ per } x \\to x_0 \\iff \\lim_{x \\to x_0} \\frac{h(x)}{f(x)} = 0" },
+          { label: "Somma di resti", latex: "o(f) + o(f) = o(f)" },
+          { label: "Prodotto per funzione", latex: "f \\cdot o(g) = o(f \\cdot g)" },
+          { label: "Assorbimento", latex: "o\\big(f + o(f)\\big) = o(f)" }
+        ]
+      },
+
+      {
+        id: "s18-esempio-sviluppi",
+        type: "section",
+        title: "Esempio: differenza di infinitesimi con gli sviluppi",
+        icon: "🧮",
+        content: `<p>Usiamo gli sviluppi notevoli e l'algebra degli o-piccoli per calcolare $\\lim_{x \\to 0} \\frac{\\log(1+x) - \\sin x}{x^2}$.</p>
+        <p>Sappiamo che per $x \\to 0$:</p>
+        <ul>
+          <li>$\\log(1+x) = x - \\frac{x^2}{2} + o(x^2)$;</li>
+          <li>$\\sin x = x - \\frac{x^3}{6} + o(x^3)$.</li>
+        </ul>
+        <p>Sostituiamo nel limite:</p>
+        <p>$$\\lim_{x \\to 0} \\frac{\\left(x - \\frac{x^2}{2} + o(x^2)\\right) - \\left(x - \\frac{x^3}{6} + o(x^3)\\right)}{x^2}$$</p>
+        <p>Semplifichiamo il numeratore (ricordando che i due simboli $o$ denotano resti diversi):</p>
+        <p>$$x - \\frac{x^2}{2} + o(x^2) - x + \\frac{x^3}{6} - o(x^3) = -\\frac{x^2}{2} + \\frac{x^3}{6} + o(x^2) + o(x^3)$$</p>
+        <p>dove abbiamo usato che $-o(x^3)$ è ancora un $o(x^3)$ (proprietà (2) con $c=-1$). Ora, per $x \\to 0$:</p>
+        <ul>
+          <li>$\\frac{x^3}{6} = o(x^2)$, poiché $\\lim_{x \\to 0} \\frac{x^3/6}{x^2} = \\lim_{x \\to 0} \\frac{x}{6} = 0$;</li>
+          <li>ogni $o(x^3)$ è anche un $o(x^2)$: se $h = o(x^3)$, allora $\\frac{h}{x^2} = \\frac{h}{x^3}\\cdot x \\to 0$.</li>
+        </ul>
+        <p>Usando la proprietà (1), $o(x^2)+o(x^2)=o(x^2)$, il numeratore diventa</p>
+        <p>$$-\\frac{x^2}{2} + o(x^2) + o(x^2) + o(x^2) = -\\frac{x^2}{2} + o(x^2)$$</p>
+        <p>Il limite diventa quindi</p>
+        <p>$$\\lim_{x \\to 0} \\frac{-\\frac{x^2}{2} + o(x^2)}{x^2} = \\lim_{x \\to 0} \\left(-\\frac{1}{2} + \\frac{o(x^2)}{x^2}\\right) = -\\frac{1}{2} + 0 = -\\frac{1}{2}$$</p>
+        <p>Questo approccio, che sarà formalizzato con i polinomi di Taylor, è il <strong>metodo più robusto</strong> per risolvere forme indeterminate che coinvolgono differenze di infinitesimi: la cancellazione del termine $x$ viene gestita correttamente perché abbiamo conservato i termini di ordine successivo.</p>`
+      },
+
+      {
+        id: "s18-riepilogo-gerarchia",
+        type: "section",
+        title: "Riepilogo e generalizzazione: esponenziale vs potenza",
+        icon: "📊",
+        content: `<p>Ricordiamo brevemente i risultati principali sul confronto tra funzioni infinite per $n \\to +\\infty$.</p>
+        <p><strong>Esponenziale vs Potenza.</strong> L'esponenziale vince sulla potenza. Se $b \\gt 1$ e $\\alpha \\in \\mathbb{R}$, allora</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{b^n}{n^\\alpha} = +\\infty$$</p>
+        <p>Se invece la base è $b \\in (0,1)$, l'esponenziale $b^n$ tende a zero e quindi perde contro qualunque potenza che diverge.</p>`,
+        subsections: [
+          {
+            subtitle: "Generalizzazione ad argomenti qualunque",
+            content: `<p>Questo principio si può generalizzare. Invece di avere semplicemente $n$ come argomento, possiamo avere una qualsiasi successione $a_n$ che tende a $+\\infty$: il confronto tra $b^{a_n}$ e $(a_n)^\\alpha$ segue la stessa logica e, se $b \\gt 1$, l'esponenziale $b^{a_n}$ è un infinito di ordine superiore.</p>
+            <p>Si noti però che, per poter sostituire ad $n$ una successione $a_n$ con valori <em>reali</em> (e non necessariamente interi), occorre prima sapere che il confronto vale per il <strong>parametro reale</strong> $t \\to +\\infty$. Questo punto delicato è giustificato dal lemma seguente.</p>`
+          },
+          {
+            subtitle: "Lemma: estensione al parametro reale",
+            content: `<p><strong>Lemma.</strong> Sia $B \\gt 1$ e $\\beta \\in \\mathbb{R}$. Allora</p>
+            <p>$$\\lim_{t \\to +\\infty} \\frac{B^t}{t^\\beta} = +\\infty$$</p>
+            <p>dove ora $t$ varia tra i numeri reali.</p>
+            <p><strong>Dimostrazione.</strong> Dal criterio del rapporto sappiamo già che $\\lim_{m \\to \\infty} \\frac{B^m}{m^\\beta} = +\\infty$ lungo gli <em>interi</em> $m$. Estendiamo il risultato confrontando $t$ con la sua parte intera $m = \\lfloor t \\rfloor$, così che $m \\le t \\lt m+1$ e $m \\to +\\infty$ quando $t \\to +\\infty$.</p>
+            <p>Se $\\beta \\le 0$, per $t \\ge 1$ si ha $t^\\beta \\le 1$, dunque $\\frac{B^t}{t^\\beta} \\ge B^t \\to +\\infty$ e la tesi segue.</p>
+            <p>Se $\\beta \\gt 0$, per $t \\ge 1$ valgono le due stime $B^t \\ge B^m$ (perché $B \\gt 1$ e $t \\ge m$) e $t^\\beta \\le (m+1)^\\beta$ (perché $t \\lt m+1$ e la potenza con esponente positivo è crescente). Quindi</p>
+            <p>$$\\frac{B^t}{t^\\beta} \\ \\ge \\ \\frac{B^m}{(m+1)^\\beta} \\ = \\ \\frac{1}{B} \\cdot \\frac{B^{m+1}}{(m+1)^\\beta}$$</p>
+            <p>L'ultima quantità tende a $+\\infty$ per $m \\to \\infty$, essendo (a meno della costante $1/B$) il limite lungo gli interi già noto. Per il teorema del confronto si conclude che $\\frac{B^t}{t^\\beta} \\to +\\infty$ per $t \\to +\\infty$.</p>`
+          },
+          {
+            subtitle: "Conseguenza",
+            content: `<p>Grazie al lemma, se $a_n \\to +\\infty$ è una successione qualunque (anche a valori reali), componendo con il limite appena dimostrato si ottiene</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{B^{a_n}}{(a_n)^\\beta} = +\\infty$$</p>
+            <p>Questo è esattamente il passaggio che useremo con $t = \\log_B n$ e con $t = n^\\alpha$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Esponenziale vs potenza (reale)", latex: "\\lim_{t \\to +\\infty} \\frac{B^t}{t^\\beta} = +\\infty \\quad (B \\gt 1,\\ \\beta \\in \\mathbb{R})" }
+        ]
+      },
+
+      {
+        id: "s18-esempi-gerarchia",
+        type: "section",
+        title: "Esempi di applicazione della gerarchia",
+        icon: "✏️",
+        content: `<p>Vediamo alcuni esempi per consolidare questi concetti.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio: esponenziali in competizione",
+            content: `<p>Calcolare $\\lim_{n \\to \\infty} \\frac{3^n + n^8}{2^{2n} + n^2}$.</p>
+            <p>Al numeratore, tra $3^n$ e $n^8$, il termine dominante è l'esponenziale $3^n$. Al denominatore osserviamo che $2^{2n} = (2^2)^n = 4^n$; tra $4^n$ e $n^2$ domina $4^n$.</p>
+            <p>Mettiamo in evidenza i termini dominanti (qui nessuna cancellazione avviene, perché tutti i termini sono positivi):</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{3^n\\left(1 + \\frac{n^8}{3^n}\\right)}{4^n\\left(1 + \\frac{n^2}{4^n}\\right)} = \\lim_{n \\to \\infty} \\left(\\frac{3}{4}\\right)^n \\frac{1 + \\frac{n^8}{3^n}}{1 + \\frac{n^2}{4^n}}$$</p>
+            <p>Poiché l'esponenziale vince sulla potenza, $\\lim_{n \\to \\infty} \\frac{n^8}{3^n} = 0$ e $\\lim_{n \\to \\infty} \\frac{n^2}{4^n} = 0$: questi termini sono degli $o(1)$. Il limite diventa</p>
+            <p>$$\\lim_{n \\to \\infty} \\left(\\frac{3}{4}\\right)^n \\frac{1+o(1)}{1+o(1)} = 0 \\cdot \\frac{1}{1} = 0$$</p>
+            <p>poiché la base $\\frac{3}{4}$ è minore di $1$.</p>`
+          },
+          {
+            subtitle: "Esempio: cambio di variabile",
+            content: `<p>Calcolare $\\lim_{n \\to \\infty} \\frac{e^{n^4}}{n^6+1}$.</p>
+            <p>Il confronto è tra $e^{n^4}$ e $n^6$: intuitivamente l'esponenziale è un infinito di ordine molto superiore. Formalmente ci riconduciamo a un confronto noto. Sia $m = n^4$: quando $n \\to \\infty$ anche $m \\to \\infty$, e poiché $n = m^{1/4}$ si ha $n^6 = (m^{1/4})^6 = m^{3/2}$. Il limite (considerando i termini dominanti) diventa</p>
+            <p>$$\\lim_{m \\to \\infty} \\frac{e^m}{m^{3/2}} = +\\infty$$</p>
+            <p>Questo è il confronto esponenziale contro potenza con base $e \\gt 1$ ed esponente $\\beta = 3/2$. <strong>Da notare:</strong> il confronto già dimostrato con il criterio del rapporto vale per esponente reale qualunque, in particolare per $\\beta = 3/2$, e quindi vale anche lungo la sottosuccessione di indici interi $m = n^4$. (La necessità del lemma sul parametro reale si presenterà invece quando la <em>variabile</em> sostituita non è intera, come con $t = \\log_B n$.)</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s18-trappola-esponente",
+        type: "alert_box",
+        title: "Attenzione all'applicazione delle regole",
+        icon: "🪤",
+        content: `<p>È fondamentale applicare le regole di confronto <strong>agli argomenti corretti</strong>. Consideriamo</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{e^{\\log n}}{n^4}$$</p>
+        <p>Un'applicazione superficiale della regola "esponenziale batte potenza" porterebbe a un risultato errato. In questo caso l'esponenziale si semplifica:</p>
+        <p>$$e^{\\log n} = n$$</p>
+        <p>Quindi il limite è in realtà</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{n}{n^4} = \\lim_{n \\to \\infty} \\frac{1}{n^3} = 0$$</p>
+        <p>Questo dimostra che <strong>l'esponente della funzione esponenziale è cruciale</strong> per determinarne l'ordine di infinito.</p>`
+      },
+
+      {
+        id: "s18-log-vs-potenza",
+        type: "section",
+        title: "Teorema: Logaritmo vs Potenza",
+        icon: "📉",
+        content: `<p>Stabiliamo ora formalmente il confronto tra la crescita logaritmica e quella polinomiale.</p>
+        <p><strong>Teorema.</strong> Per ogni $b \\gt 1$, $\\beta \\in \\mathbb{R}$ e $\\alpha \\gt 0$ si ha</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{(\\log_b n)^\\beta}{n^\\alpha} = 0$$</p>
+        <p>In altre parole, se $\\beta \\gt 0$ ogni potenza $n^\\alpha$ con $\\alpha \\gt 0$ è un infinito di ordine superiore a $(\\log_b n)^\\beta$; se invece $\\beta \\le 0$ la successione $(\\log_b n)^\\beta$ non è nemmeno infinita e il rapporto tende a $0$ a maggior ragione.</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione — punto di partenza",
+            content: `<p>La dimostrazione si basa sulla riduzione a un confronto noto (potenza vs esponenziale). Partiamo dal risultato del lemma di estensione al parametro reale: per $B \\gt 1$ e $\\beta \\in \\mathbb{R}$,</p>
+            <p>$$\\lim_{t \\to +\\infty} \\frac{B^t}{t^\\beta} = +\\infty$$</p>
+            <p>dove ora $t$ è una variabile <em>reale</em>. È proprio questa versione che ci serve, perché le quantità che sostituiremo a $t$ non sono in generale numeri interi.</p>`
+          },
+          {
+            subtitle: "Passo 1: il caso α = 1",
+            content: `<p>Applichiamo il limite precedente con $t = \\log_B n$, che tende a $+\\infty$ per $n \\to \\infty$ ed è in generale un numero reale non intero. Poiché $B^{\\log_B n} = n$, otteniamo</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{B^{\\log_B n}}{(\\log_B n)^\\beta} = \\lim_{n \\to \\infty} \\frac{n}{(\\log_B n)^\\beta} = +\\infty$$</p>
+            <p>e dunque, passando ai reciproci,</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{(\\log_B n)^\\beta}{n} = 0$$</p>
+            <p>che è il teorema per $\\alpha = 1$.</p>`
+          },
+          {
+            subtitle: "Passo 2: il caso α > 0 generale",
+            content: `<p>Ripetiamo l'argomento del Passo 1 con $t = \\log_B(n^\\alpha) = \\alpha \\log_B n$, che tende anch'esso a $+\\infty$ (e di nuovo è un reale qualunque). Poiché $B^{\\log_B(n^\\alpha)} = n^\\alpha$,</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{n^\\alpha}{\\big(\\log_B (n^\\alpha)\\big)^\\beta} = +\\infty \\qquad \\Longrightarrow \\qquad \\lim_{n \\to \\infty} \\frac{\\big(\\log_B (n^\\alpha)\\big)^\\beta}{n^\\alpha} = 0$$</p>
+            <p>Usando le proprietà dei logaritmi, $\\log_B(n^\\alpha) = \\alpha \\log_B n$, da cui</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{(\\alpha \\log_B n)^\\beta}{n^\\alpha} = \\lim_{n \\to \\infty} \\frac{\\alpha^\\beta (\\log_B n)^\\beta}{n^\\alpha} = 0$$</p>
+            <p>Poiché $\\alpha^\\beta$ è una costante positiva, questo implica</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{(\\log_B n)^\\beta}{n^\\alpha} = 0$$</p>
+            <p>La base $B$ del logaritmo può essere cambiata in una qualsiasi base $b \\gt 1$ usando la formula del cambiamento di base, $\\log_b n = \\frac{\\log_B n}{\\log_B b}$, che introduce solo un fattore costante.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Logaritmo vs potenza", latex: "\\lim_{n \\to \\infty} \\frac{(\\log_b n)^\\beta}{n^\\alpha} = 0 \\quad (b \\gt 1,\\ \\alpha \\gt 0)" }
+        ]
+      },
+
+      {
+        id: "s18-fattoriale-nn",
+        type: "section",
+        title: "Fattoriale vs Super-esponenziale: dimostrazione completa",
+        icon: "🔢",
+        content: `<p>L'ultimo gradino della nostra gerarchia confronta il fattoriale con la funzione $n^n$.</p>
+        <p><strong>Proposizione.</strong> Il fattoriale è un infinito di ordine inferiore rispetto a $n^n$:</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{n!}{n^n} = 0$$</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Utilizziamo il criterio del rapporto per le successioni, valido per successioni a termini strettamente positivi. Sia $a_n = \\frac{n!}{n^n}$, che soddisfa $a_n \\gt 0$ per ogni $n \\ge 1$:</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = \\lim_{n \\to \\infty} \\frac{(n+1)! / (n+1)^{n+1}}{n! / n^n} = \\lim_{n \\to \\infty} \\frac{(n+1)!}{n!} \\cdot \\frac{n^n}{(n+1)^{n+1}}$$</p>
+            <p>$$= \\lim_{n \\to \\infty} (n+1) \\cdot \\frac{n^n}{(n+1)^n (n+1)} = \\lim_{n \\to \\infty} \\frac{n^n}{(n+1)^n} = \\lim_{n \\to \\infty} \\left(\\frac{n}{n+1}\\right)^n$$</p>
+            <p>$$= \\lim_{n \\to \\infty} \\left(\\frac{n+1-1}{n+1}\\right)^n = \\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n+1}\\right)^n$$</p>
+            <p>Questo è un limite notevole. Riconduciamolo al limite di Nepero:</p>
+            <p>$$\\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n+1}\\right)^{n+1-1} = \\lim_{n \\to \\infty} \\left(1 - \\frac{1}{n+1}\\right)^{n+1} \\cdot \\left(1 - \\frac{1}{n+1}\\right)^{-1}$$</p>
+            <p>Il primo fattore tende a $e^{-1}$, mentre il secondo tende a $1^{-1}=1$. Quindi il limite del rapporto è $L = e^{-1} = \\frac{1}{e}$.</p>
+            <p>Poiché $L = \\frac{1}{e} \\lt 1$, per il criterio del rapporto la successione $a_n$ converge a $0$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s18-limiti-notevoli",
+        type: "section",
+        title: "Altri limiti notevoli di successioni",
+        icon: "⭐",
+        content: `<p>La gerarchia degli infiniti ci permette di calcolare rapidamente alcuni limiti notevoli.</p>`,
+        subsections: [
+          {
+            subtitle: "Limite di ⁿ√n",
+            content: `<p>Riscriviamo l'espressione usando l'esponenziale:</p>
+            <p>$$\\sqrt[n]{n} = n^{1/n} = e^{\\log(n^{1/n})} = e^{\\frac{1}{n}\\log n}$$</p>
+            <p>Per calcolare il limite studiamo l'esponente: $\\lim_{n \\to \\infty} \\frac{\\log n}{n}$ è un confronto tra logaritmo e potenza (con $\\alpha=1$) e sappiamo che il limite è $0$. Quindi</p>
+            <p>$$\\lim_{n \\to \\infty} e^{\\frac{\\log n}{n}} = e^0 = 1$$</p>`
+          },
+          {
+            subtitle: "Limite di ⁿ√(n!)",
+            content: `<p>Usiamo la conseguenza del criterio del rapporto (spesso chiamata teorema di Cesàro o criterio radice-rapporto): se $a_n \\gt 0$ e $\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = L$ con $L \\in [0,+\\infty]$ (dunque anche $L=+\\infty$), allora anche $\\lim_{n \\to \\infty} \\sqrt[n]{a_n} = L$.</p>
+            <p>Poniamo $a_n = n!$:</p>
+            <p>$$\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n} = \\lim_{n \\to \\infty} \\frac{(n+1)!}{n!} = \\lim_{n \\to \\infty} (n+1) = +\\infty$$</p>
+            <p>Poiché il limite del rapporto è $+\\infty$, anche il limite della radice $n$-esima è $+\\infty$:</p>
+            <p>$$\\lim_{n \\to \\infty} \\sqrt[n]{n!} = +\\infty$$</p>`
+          },
+          {
+            subtitle: "Una forma indeterminata 1^∞",
+            content: `<p>Calcolare $\\lim_{n \\to \\infty} \\left(\\frac{n^2+1}{n^2-1}\\right)^{n^3}$. Questa è una forma indeterminata del tipo $1^\\infty$; usiamo la forma esponenziale:</p>
+            <p>$$\\left(\\frac{n^2+1}{n^2-1}\\right)^{n^3} = e^{n^3 \\log\\left(\\frac{n^2+1}{n^2-1}\\right)}$$</p>
+            <p>Studiamo l'esponente, manipolando l'argomento del logaritmo con un'<strong>identità esatta</strong> per ricondurci al limite notevole $\\log(1+x) \\sim x$:</p>
+            <p>$$n^3 \\log\\left(\\frac{n^2-1+2}{n^2-1}\\right) = n^3 \\log\\left(1 + \\frac{2}{n^2-1}\\right)$$</p>
+            <p>Poiché $\\frac{2}{n^2-1} \\to 0$ per $n \\to \\infty$, possiamo usare l'equivalenza asintotica $\\log\\left(1 + \\frac{2}{n^2-1}\\right) \\sim \\frac{2}{n^2-1}$. L'esponente è quindi asintotico a</p>
+            <p>$$n^3 \\cdot \\frac{2}{n^2-1} = \\frac{2n^3}{n^2-1} \\longrightarrow +\\infty$$</p>
+            <p>Di conseguenza, per continuità dell'esponenziale, il limite originale è $e^{+\\infty} = +\\infty$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s18-es-svolto-1",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Confronto tra ordini di infinito",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\frac{n! + 2^n}{3^n + n^n}$.</p>`,
+        steps: [
+          `<strong>Analisi del numeratore:</strong> tra $n!$ e $2^n$, il termine dominante è $n!$ (ricordiamo $b^n \\ll n!$).`,
+          `<strong>Analisi del denominatore:</strong> tra $3^n$ e $n^n$, il termine dominante è $n^n$ (ricordiamo $b^n \\ll n! \\ll n^n$).`,
+          `<strong>Calcolo:</strong> mettiamo in evidenza i termini dominanti; essendo tutti i termini positivi, non vi sono cancellazioni e il raccoglimento è sicuro:
+          <p>$$\\lim_{n \\to \\infty} \\frac{n!\\left(1 + \\frac{2^n}{n!}\\right)}{n^n\\left(1 + \\frac{3^n}{n^n}\\right)} = \\lim_{n \\to \\infty} \\frac{n!}{n^n} \\cdot \\frac{1 + o(1)}{1 + o(1)}$$</p>`,
+          `Sappiamo dalla gerarchia degli infiniti che $\\lim_{n \\to \\infty} \\frac{n!}{n^n} = 0$.`,
+          `<strong>Risultato:</strong> il limite è $0$.`
+        ]
+      },
+
+      {
+        id: "s18-es-svolto-2",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Logaritmo e potenza",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\frac{\\log(n^2+1)}{n}$.</p>`,
+        steps: [
+          `<strong>Identità esatta per il numeratore:</strong> non sostituiamo "dentro" il logaritmo (l'equivalenza asintotica non si conserva in generale sotto composizione), ma usiamo un'identità esatta:
+          <p>$$\\log(n^2+1) = \\log\\left(n^2\\left(1+\\frac{1}{n^2}\\right)\\right) = 2\\log n + \\log\\left(1+\\frac{1}{n^2}\\right)$$</p>`,
+          `<strong>Verifica dell'equivalenza:</strong> dividendo per $2\\log n$ (non nullo per $n \\ge 2$):
+          <p>$$\\frac{\\log(n^2+1)}{2\\log n} = 1 + \\frac{\\log\\left(1+\\frac{1}{n^2}\\right)}{2\\log n} \\overset{n \\to \\infty}{\\longrightarrow} 1 + \\frac{0}{+\\infty} = 1$$</p>
+          poiché $\\log\\left(1+\\frac{1}{n^2}\\right) \\to 0$ e $\\log n \\to +\\infty$. Dunque $\\log(n^2+1) \\sim 2\\log n$, ma ora l'equivalenza è stata <em>dimostrata</em> e non postulata.`,
+          `<strong>Calcolo:</strong> numeratore e denominatore sono infiniti, quindi per il principio di sostituzione degli infiniti
+          <p>$$\\lim_{n \\to \\infty} \\frac{\\log(n^2+1)}{n} = \\lim_{n \\to \\infty} \\frac{2\\log n}{n}$$</p>
+          Questo è il confronto fondamentale tra logaritmo e potenza (con $\\alpha=1$) e sappiamo che il risultato è $0$.`,
+          `<strong>Risultato:</strong> il limite è $0$.`,
+          `<strong>Osservazione importante:</strong> in generale $a_n \\sim b_n$ <strong>non</strong> implica $\\varphi(a_n) \\sim \\varphi(b_n)$ per una funzione $\\varphi$ qualunque: per esempio $n+1 \\sim n$ ma $e^{n+1}/e^{n} = e \\neq 1$. Per il logaritmo la sostituzione risulta lecita (quando l'argomento tende a $+\\infty$), ma va giustificata, come abbiamo fatto sopra, con le proprietà di $\\log$.`
+        ]
+      },
+
+      {
+        id: "s18-es-svolto-3",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Logaritmo del fattoriale",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\frac{\\log(n!)}{n^2}$.</p>`,
+        steps: [
+          `<strong>Stima del numeratore:</strong> questo limite è più complesso. Possiamo stimare $\\log(n!)$ dall'alto: poiché $n! = 1 \\cdot 2 \\cdot \\ldots \\cdot n \\lt n \\cdot n \\cdot \\ldots \\cdot n = n^n$, abbiamo
+          <p>$$\\log(n!) \\lt \\log(n^n) = n \\log n$$</p>`,
+          `<strong>Teorema del confronto:</strong> poiché $\\log(n!) \\gt 0$ per $n \\gt 1$, possiamo usare il teorema dei carabinieri:
+          <p>$$0 \\lt \\frac{\\log(n!)}{n^2} \\lt \\frac{n \\log n}{n^2} = \\frac{\\log n}{n}$$</p>`,
+          `<strong>Calcolo:</strong> sappiamo che $\\lim_{n \\to \\infty} \\frac{\\log n}{n} = 0$.`,
+          `<strong>Risultato:</strong> per il teorema dei carabinieri, anche il limite della nostra successione è $0$.`,
+          `<strong>Nota:</strong> una stima più precisa per $\\log(n!)$ è data dalla formula di Stirling: $\\log(n!) \\sim n \\log n - n$. Usando questa, il risultato è immediato.`
+        ]
+      },
+
+      {
+        id: "s18-es-svolto-4",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Potenza vs Esponenziale",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\frac{n^2 2^n + n^3}{3^n}$.</p>`,
+        steps: [
+          `<strong>Analisi del numeratore:</strong> tra $n^2 2^n$ e $n^3$, il termine dominante è $n^2 2^n$, poiché $\\frac{n^3}{n^2 2^n} = \\frac{n}{2^n} \\to 0$ (l'esponenziale $2^n$ cresce più velocemente di qualsiasi potenza di $n$). Non ci sono cancellazioni, dunque il raccoglimento del termine dominante è lecito:
+          <p>$$n^2 2^n + n^3 = n^2 2^n\\left(1 + \\frac{n}{2^n}\\right) \\sim n^2 2^n$$</p>`,
+          `<strong>Calcolo:</strong> il limite è asintotico a
+          <p>$$\\lim_{n \\to \\infty} \\frac{n^2 2^n}{3^n} = \\lim_{n \\to \\infty} n^2 \\left(\\frac{2}{3}\\right)^n$$</p>`,
+          `Questo è un confronto tra una potenza ($n^2$) e un esponenziale con base minore di $1$ ($(2/3)^n$). L'esponenziale tende a zero molto più velocemente di quanto la potenza tenda a infinito: infatti $n^2 (2/3)^n = \\frac{n^2}{(3/2)^n} \\to 0$ per il confronto potenza-esponenziale con base $3/2 \\gt 1$.`,
+          `<strong>Risultato:</strong> il limite è $0$.`
+        ]
+      },
+
+      {
+        id: "s18-es-svolto-5",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Forme indeterminate con radici e logaritmi",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\frac{n - \\sqrt{n^2-1}}{\\log(n+1) - \\log n}$.</p>`,
+        steps: [
+          `<strong>Analisi del numeratore:</strong> è una forma indeterminata $[\\infty - \\infty]$ con cancellazione dei termini principali, quindi non basta raccogliere il termine dominante: usiamo l'identità esatta della razionalizzazione.
+          <p>$$n - \\sqrt{n^2-1} = \\frac{(n - \\sqrt{n^2-1})(n + \\sqrt{n^2-1})}{n + \\sqrt{n^2-1}} = \\frac{n^2 - (n^2-1)}{n + \\sqrt{n^2-1}} = \\frac{1}{n + \\sqrt{n^2-1}}$$</p>
+          Per $n \\to \\infty$, $\\sqrt{n^2-1} \\sim \\sqrt{n^2} = n$ (qui la sostituzione è lecita perché si trova a denominatore di una <em>somma di termini positivi</em>, dove non avvengono cancellazioni). Quindi il numeratore è asintotico a $\\frac{1}{n+n} = \\frac{1}{2n}$.`,
+          `<strong>Analisi del denominatore:</strong> è una forma $[\\infty - \\infty]$, di nuovo con cancellazione. Usiamo le proprietà dei logaritmi, che forniscono un'identità esatta:
+          <p>$$\\log(n+1) - \\log n = \\log\\left(\\frac{n+1}{n}\\right) = \\log\\left(1 + \\frac{1}{n}\\right)$$</p>
+          Per $n \\to \\infty$, $\\frac{1}{n} \\to 0$, quindi possiamo usare l'equivalenza asintotica $\\log(1+x) \\sim x$: il denominatore è asintotico a $\\frac{1}{n}$.`,
+          `<strong>Calcolo:</strong> numeratore e denominatore sono ora infinitesimi, quindi applichiamo il principio di sostituzione degli infinitesimi:
+          <p>$$\\lim_{n \\to \\infty} \\frac{1/(2n)}{1/n} = \\lim_{n \\to \\infty} \\frac{1}{2n} \\cdot n = \\frac{1}{2}$$</p>`,
+          `<strong>Risultato:</strong> il limite è $\\frac{1}{2}$.`
+        ]
+      },
+
+      {
+        id: "s18-box-integrazione",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "🧩",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s18-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dare la definizione di "$a_n$ ha ordine di infinito superiore a $b_n$" e di "$a_n$ e $b_n$ hanno lo stesso ordine di infinito". Mostrare poi che $a_n \\sim b_n$ implica $a_n \\approx b_n$, e che l'implicazione inversa è falsa.</p>`,
+        solution: `<p>Siano $a_n$, $b_n$ con $\\lim_{n \\to \\infty}|a_n| = \\lim_{n \\to \\infty}|b_n| = +\\infty$. Si dice che $a_n$ ha ordine di infinito superiore a $b_n$, e si scrive $b_n \\ll a_n$, se $\\lim_{n \\to \\infty}\\left|\\frac{a_n}{b_n}\\right| = +\\infty$ (equivalentemente $\\lim_{n \\to \\infty}\\left|\\frac{b_n}{a_n}\\right| = 0$).</p>
+        <p>Si dice invece che hanno lo stesso ordine di infinito, e si scrive $a_n \\approx b_n$, se $\\lim_{n \\to \\infty}\\left|\\frac{a_n}{b_n}\\right| = l$ con $l$ finito e $l \\gt 0$.</p>
+        <p>Se $a_n \\sim b_n$, cioè $\\lim_{n \\to \\infty}\\frac{a_n}{b_n} = 1$, allora per continuità del valore assoluto $\\lim_{n \\to \\infty}\\left|\\frac{a_n}{b_n}\\right| = 1$, che è finito e non nullo: dunque $a_n \\approx b_n$. L'equivalenza asintotica è quindi un caso particolare dello stesso ordine di infinito.</p>
+        <p>Il viceversa è falso: con $a_n = n$ e $b_n = 2n$ si ha $\\frac{a_n}{b_n} = \\frac{1}{2} \\to \\frac{1}{2} \\in (0,+\\infty)$, quindi $a_n \\approx b_n$, ma $\\lim_{n \\to \\infty}\\frac{a_n}{b_n} = \\frac{1}{2} \\neq 1$, cioè $a_n \\not\\sim b_n$.</p>`
+      },
+
+      {
+        id: "s18-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Ordinare le successioni $\\log n$, $n^3$, $2^n$, $n!$, $n^n$ in ordine crescente di ordine di infinito, giustificando ogni confronto con i risultati della gerarchia degli infiniti.</p>`,
+        solution: `<p>L'ordinamento è</p>
+        <p>$$\\log n \\ll n^3 \\ll 2^n \\ll n! \\ll n^n$$</p>
+        <p><strong>$\\log n \\ll n^3$:</strong> per il teorema logaritmo vs potenza con $b=e$, $\\beta=1$, $\\alpha=3 \\gt 0$ si ha $\\lim_{n\\to\\infty} \\frac{\\log n}{n^3}=0$.</p>
+        <p><strong>$n^3 \\ll 2^n$:</strong> per il confronto esponenziale vs potenza con $b=2 \\gt 1$ e $\\alpha=3$ si ha $\\lim_{n\\to\\infty}\\frac{2^n}{n^3}=+\\infty$, cioè $\\lim_{n\\to\\infty}\\frac{n^3}{2^n}=0$.</p>
+        <p><strong>$2^n \\ll n!$:</strong> posto $a_n=\\frac{2^n}{n!} \\gt 0$, si ha $\\frac{a_{n+1}}{a_n}=\\frac{2^{n+1}}{(n+1)!}\\cdot\\frac{n!}{2^n}=\\frac{2}{n+1}\\to 0 \\lt 1$, dunque per il criterio del rapporto $a_n\\to 0$.</p>
+        <p><strong>$n! \\ll n^n$:</strong> è la proposizione dimostrata in lezione, $\\lim_{n\\to\\infty}\\frac{n!}{n^n}=0$.</p>
+        <p>Poiché la relazione $\\ll$ è transitiva (se $a_n/b_n\\to 0$ e $b_n/c_n\\to 0$ con tutti i termini positivi e divergenti, allora $a_n/c_n\\to 0$), la catena fornisce l'ordinamento richiesto.</p>`
+      },
+
+      {
+        id: "s18-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare il criterio del rapporto per successioni e usarlo per dimostrare che $b^n \\ll n!$ per ogni $b \\gt 1$.</p>`,
+        solution: `<p><strong>Criterio del rapporto:</strong> se $a_n \\gt 0$ definitivamente ed esiste $\\lim_{n \\to \\infty}\\frac{a_{n+1}}{a_n} = l$ (finito o $+\\infty$), allora: se $l \\gt 1$ si ha $\\lim_{n \\to \\infty} a_n = +\\infty$; se $0 \\le l \\lt 1$ si ha $\\lim_{n \\to \\infty} a_n = 0$. (Per $l = 1$ il criterio non dà informazioni.)</p>
+        <p><strong>Applicazione:</strong> fissato $b \\gt 1$, poniamo $a_n = \\frac{n!}{b^n} \\gt 0$ per ogni $n$. Allora</p>
+        <p>$$\\frac{a_{n+1}}{a_n} = \\frac{(n+1)!}{b^{n+1}} \\cdot \\frac{b^n}{n!} = \\frac{n+1}{b} \\overset{n \\to \\infty}{\\longrightarrow} +\\infty$$</p>
+        <p>Poiché il limite del rapporto è $+\\infty \\gt 1$, il criterio dà $\\lim_{n \\to \\infty} a_n = \\lim_{n \\to \\infty}\\frac{n!}{b^n} = +\\infty$. Per definizione di ordine di infinito (entrambe le successioni divergono) ciò significa esattamente $b^n \\ll n!$.</p>
+        <p>Si noti che l'ipotesi $b \\gt 1$ serve solo a garantire che $b^n$ sia un infinito: la stima $\\frac{n!}{b^n}\\to+\\infty$ vale per ogni $b \\gt 0$.</p>`
+      },
+
+      {
+        id: "s18-ex-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enunciare il criterio del rapporto per successioni a termini positivi e usarlo per dimostrare che $\\lim_{n\\to\\infty}\\frac{n!}{n^n}=0$.</p>`,
+        solution: `<p><strong>Criterio del rapporto:</strong> sia $a_n \\gt 0$ per ogni $n$ e supponiamo che esista $L=\\lim_{n\\to\\infty}\\frac{a_{n+1}}{a_n}$. Se $L \\lt 1$ allora $\\lim_{n\\to\\infty}a_n=0$; se $L \\gt 1$ (anche $L=+\\infty$) allora $\\lim_{n\\to\\infty}a_n=+\\infty$. Se $L=1$ il criterio non dà informazioni.</p>
+        <p><strong>Applicazione:</strong> sia $a_n=\\frac{n!}{n^n} \\gt 0$. Allora</p>
+        <p>$$\\frac{a_{n+1}}{a_n}=\\frac{(n+1)!}{(n+1)^{n+1}}\\cdot\\frac{n^n}{n!}=(n+1)\\cdot\\frac{n^n}{(n+1)^n(n+1)}=\\frac{n^n}{(n+1)^n}=\\left(\\frac{n}{n+1}\\right)^n$$</p>
+        <p>Poiché $\\frac{n}{n+1}=1-\\frac{1}{n+1}$, si ha</p>
+        <p>$$\\left(1-\\frac{1}{n+1}\\right)^n=\\left(1-\\frac{1}{n+1}\\right)^{n+1}\\cdot\\left(1-\\frac{1}{n+1}\\right)^{-1}\\longrightarrow e^{-1}\\cdot 1=\\frac{1}{e}$$</p>
+        <p>Quindi $L=\\frac{1}{e} \\lt 1$ e per il criterio del rapporto $\\lim_{n\\to\\infty}\\frac{n!}{n^n}=0$, cioè $n!$ è un infinito di ordine inferiore a $n^n$.</p>`
+      },
+
+      {
+        id: "s18-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\frac{n^3 + 2^n}{n^5 + n!}$.</p>`,
+        solution: `<p>Usiamo la scala degli infiniti $(\\log_b n)^\\beta \\ll n^a \\ll b^n \\ll n! \\ll n^n$.</p>
+        <p>Al numeratore $n^3 \\ll 2^n$, quindi raccogliendo il termine dominante (tutti i termini sono positivi, dunque non vi sono cancellazioni)</p>
+        <p>$$n^3 + 2^n = 2^n\\left(1 + \\frac{n^3}{2^n}\\right) \\sim 2^n, \\qquad n \\to \\infty$$</p>
+        <p>perché $\\frac{n^3}{2^n} \\to 0$. Al denominatore $n^5 \\ll n!$, quindi</p>
+        <p>$$n^5 + n! = n!\\left(1 + \\frac{n^5}{n!}\\right) \\sim n!$$</p>
+        <p>Numeratore e denominatore sono infiniti, dunque per il principio di sostituzione degli infiniti</p>
+        <p>$$\\lim_{n \\to \\infty} \\frac{n^3 + 2^n}{n^5 + n!} = \\lim_{n \\to \\infty} \\frac{2^n}{n!} = 0$$</p>
+        <p>dove l'ultimo limite è $0$ perché $2^n \\ll n!$. Il limite richiesto è quindi $0$.</p>`
+      },
+
+      {
+        id: "s18-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare $\\displaystyle\\lim_{n\\to\\infty}\\frac{3^{2n}+n^5}{4^n+n\\log n}$.</p>`,
+        solution: `<p>Al numeratore $3^{2n}=(3^2)^n=9^n$; tra $9^n$ e $n^5$ domina l'esponenziale, perché $\\lim_{n\\to\\infty}\\frac{n^5}{9^n}=0$ (esponenziale con base $9 \\gt 1$ contro potenza).</p>
+        <p>Al denominatore, tra $4^n$ e $n\\log n$ domina $4^n$: infatti $0 \\lt n\\log n \\lt n^2$ per $n\\ge 2$ e $\\lim_{n\\to\\infty}\\frac{n^2}{4^n}=0$, quindi $\\frac{n\\log n}{4^n}\\to 0$ per confronto.</p>
+        <p>Mettiamo in evidenza i termini dominanti (tutti i termini sono positivi, quindi nessuna cancellazione):</p>
+        <p>$$\\frac{9^n\\left(1+\\frac{n^5}{9^n}\\right)}{4^n\\left(1+\\frac{n\\log n}{4^n}\\right)}=\\left(\\frac{9}{4}\\right)^n\\cdot\\frac{1+o(1)}{1+o(1)}$$</p>
+        <p>Poiché $\\frac{9}{4} \\gt 1$ si ha $\\left(\\frac{9}{4}\\right)^n\\to+\\infty$ e il secondo fattore tende a $1$, dunque</p>
+        <p>$$\\lim_{n\\to\\infty}\\frac{3^{2n}+n^5}{4^n+n\\log n}=+\\infty$$</p>`
+      },
+
+      {
+        id: "s18-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to \\infty} \\sqrt[n]{\\frac{(2n)!}{n!\\, n^n}}$ usando il corollario sul criterio del rapporto.</p>`,
+        solution: `<p>Poniamo $a_n = \\frac{(2n)!}{n!\\, n^n} \\gt 0$. Per il corollario, se esiste $\\lim_{n \\to \\infty}\\frac{a_{n+1}}{a_n} = l$ allora $\\lim_{n \\to \\infty}\\sqrt[n]{a_n} = l$. Calcoliamo il rapporto:</p>
+        <p>$$\\frac{a_{n+1}}{a_n} = \\frac{(2n+2)!}{(n+1)!\\,(n+1)^{n+1}} \\cdot \\frac{n!\\, n^n}{(2n)!} = \\frac{(2n+2)!}{(2n)!} \\cdot \\frac{n!}{(n+1)!} \\cdot \\frac{n^n}{(n+1)^{n+1}}$$</p>
+        <p>Ora $\\frac{(2n+2)!}{(2n)!} = (2n+1)(2n+2)$, $\\frac{n!}{(n+1)!} = \\frac{1}{n+1}$ e $\\frac{n^n}{(n+1)^{n+1}} = \\frac{1}{n+1}\\left(\\frac{n}{n+1}\\right)^n$. Dunque</p>
+        <p>$$\\frac{a_{n+1}}{a_n} = \\frac{(2n+1)\\cdot 2(n+1)}{(n+1)^2}\\left(\\frac{n}{n+1}\\right)^n = \\frac{2(2n+1)}{n+1}\\cdot\\frac{1}{\\left(1+\\frac{1}{n}\\right)^n}$$</p>
+        <p>Poiché $\\frac{2(2n+1)}{n+1} \\to 4$ e $\\left(1+\\frac{1}{n}\\right)^n \\to e$, si ottiene</p>
+        <p>$$\\lim_{n \\to \\infty}\\frac{a_{n+1}}{a_n} = \\frac{4}{e}$$</p>
+        <p>Per il corollario $\\displaystyle \\lim_{n \\to \\infty} \\sqrt[n]{\\frac{(2n)!}{n!\\, n^n}} = \\frac{4}{e}$. Si noti che $\\frac{4}{e} \\simeq 1{,}47 \\gt 1$, coerentemente col fatto che $a_n \\to +\\infty$.</p>`
+      },
+
+      {
+        id: "s18-ex-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare $\\displaystyle\\lim_{n\\to\\infty}\\left(\\frac{n^2+3n}{n^2+1}\\right)^{n}$.</p>`,
+        solution: `<p>La base tende a $1$ e l'esponente a $+\\infty$: forma indeterminata $1^\\infty$. Passiamo alla forma esponenziale:</p>
+        <p>$$\\left(\\frac{n^2+3n}{n^2+1}\\right)^{n}=e^{\\,n\\log\\left(\\frac{n^2+3n}{n^2+1}\\right)}$$</p>
+        <p>Scriviamo l'argomento del logaritmo come $1+$ infinitesimo, usando un'identità esatta:</p>
+        <p>$$\\frac{n^2+3n}{n^2+1}=\\frac{(n^2+1)+(3n-1)}{n^2+1}=1+\\frac{3n-1}{n^2+1},\\qquad x_n:=\\frac{3n-1}{n^2+1}\\to 0$$</p>
+        <p>Poiché $x_n\\to 0$, vale l'equivalenza asintotica $\\log(1+x_n)\\sim x_n$, dunque l'esponente è asintotico a</p>
+        <p>$$n\\,x_n=\\frac{n(3n-1)}{n^2+1}=\\frac{3n^2-n}{n^2+1}=\\frac{3-\\frac{1}{n}}{1+\\frac{1}{n^2}}\\longrightarrow 3$$</p>
+        <p>Per la continuità dell'esponenziale,</p>
+        <p>$$\\lim_{n\\to\\infty}\\left(\\frac{n^2+3n}{n^2+1}\\right)^{n}=e^{3}$$</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Quando si dice che $a_n$ ha ordine di infinito superiore a $b_n$?",
+        back: "Se $\\lim_{n \\to \\infty} |a_n| = \\lim_{n \\to \\infty} |b_n| = +\\infty$ e $\\lim_{n \\to \\infty} \\left|\\frac{a_n}{b_n}\\right| = +\\infty$ (equivalentemente $\\left|\\frac{b_n}{a_n}\\right| \\to 0$). Si scrive $b_n \\ll a_n$. Le due successioni sono definitivamente non nulle, quindi i rapporti sono ben definiti definitivamente."
+      },
+      {
+        type: "tranello",
+        front: "Se $\\left|\\frac{a_n}{b_n}\\right| \\to 1$, posso concludere $a_n \\sim b_n$?",
+        back: "No. Per l'equivalenza asintotica deve tendere a $1$ il rapporto <strong>senza</strong> valore assoluto: $\\frac{a_n}{b_n} \\to 1$. Controesempio: $a_n = -n$, $b_n = n$. Si ha $\\left|\\frac{a_n}{b_n}\\right| = 1$ (stesso ordine di infinito, $a_n \\approx b_n$), ma $\\frac{a_n}{b_n} = -1 \\neq 1$, quindi $a_n \\not\\sim b_n$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia la scala degli infiniti.",
+        back: "Per ogni $a \\gt 0$, $\\beta \\gt 0$, $b \\gt 1$: $$(\\log_b n)^\\beta \\ll n^a \\ll b^n \\ll n! \\ll n^n$$ Attenzione: la scala confronta soltanto queste famiglie; non afferma che non esistano infiniti intermedi o più lenti di $\\log n$ (per esempio $\\log(\\log n)$)."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra con il criterio del rapporto che $n! \\ll n^n$.",
+        back: "Sia $a_n = \\frac{n!}{n^n} \\gt 0$. Allora $\\frac{a_{n+1}}{a_n} = (n+1)\\cdot\\frac{n^n}{(n+1)^n(n+1)} = \\left(\\frac{n}{n+1}\\right)^n = \\left(1-\\frac{1}{n+1}\\right)^n$. Scrivendo $\\left(1-\\frac{1}{n+1}\\right)^{n+1}\\cdot\\left(1-\\frac{1}{n+1}\\right)^{-1} \\to e^{-1}\\cdot 1 = \\frac{1}{e}$. Poiché $\\frac{1}{e} \\lt 1$, il criterio dà $a_n \\to 0$, cioè $n! \\ll n^n$."
+      },
+      {
+        type: "domanda",
+        front: "Enuncia il criterio del rapporto per successioni. Quando non dà informazioni?",
+        back: "Sia $a_n \\gt 0$ definitivamente ed esista $\\lim_{n \\to \\infty}\\frac{a_{n+1}}{a_n} = l$ (finito o $+\\infty$). Se $l \\gt 1$ allora $a_n \\to +\\infty$; se $0 \\le l \\lt 1$ allora $a_n \\to 0$. Se $l = 1$ il criterio <strong>non fornisce alcuna informazione</strong>. La dimostrazione è stata omessa in aula e rinviata."
+      },
+      {
+        type: "domanda",
+        front: "Enuncia il principio di sostituzione degli infinitesimi. Per quali operazioni vale?",
+        back: "Se $f, f_1, g, g_1 \\to 0$ per $x \\to x_0$ (con $f_1, g, g_1 \\neq 0$ in un intorno bucato), $f \\sim f_1$ e $g \\sim g_1$, allora i limiti di $\\frac{f}{g}$ e $\\frac{f_1}{g_1}$ o esistono entrambi e coincidono, o non esistono entrambi. Vale <strong>solo per prodotti e quozienti</strong>, NON per somme e differenze."
+      },
+      {
+        type: "tranello",
+        front: "Perché $\\lim_{x \\to 0}\\frac{x - \\sin x}{x^3}$ non si può calcolare sostituendo $\\sin x$ con $x$?",
+        back: "Sostituendo si otterrebbe $\\lim \\frac{x-x}{x^3} = 0$, SBAGLIATO: il risultato corretto è $\\frac{1}{6}$. La sostituzione $f \\sim f_1$ ignora la parte restante $f - f_1$: in un quoziente è trascurabile, ma in una differenza può diventare il termine dominante. Qui $x - \\sin x$ è un infinitesimo dello stesso ordine di $x^3$, non di ordine superiore."
+      },
+      {
+        type: "tranello",
+        front: "Quanto vale $\\lim_{n\\to\\infty}(\\sqrt{n^2+n}-n)$? Dove sbaglia chi sostituisce $\\sqrt{n^2+n} \\sim n$?",
+        back: "Vale $\\frac{1}{2}$, non $0$. Razionalizzando: $\\frac{n}{n\\sqrt{1+1/n}+n}$; si semplifica <strong>prima</strong> il fattore $n$ ottenendo $\\frac{1}{\\sqrt{1+1/n}+1}$ (eliminando così la forma indeterminata) e <strong>poi</strong> si passa al limite, ottenendo $\\frac{1}{2}$. Sostituire direttamente dà $n-n=0$ perché la differenza dei due infiniti non è trascurabile."
+      },
+      {
+        type: "definizione",
+        front: "Che significa $h = o(f)$ per $x \\to x_0$?",
+        back: "Fissato il punto limite $x_0$ (eventualmente $\\pm\\infty$) e supposta $f$ diversa da zero in un intorno bucato di $x_0$: $h = o(f)$ significa $\\lim_{x \\to x_0}\\frac{h(x)}{f(x)} = 0$. Il simbolo $o(f)$ non denota una funzione precisa ma <em>una qualunque</em> funzione trascurabile rispetto a $f$; le uguaglianze si leggono da sinistra a destra e non sono reversibili."
+      },
+      {
+        type: "formula",
+        front: "Elenca le cinque regole dell'algebra degli o-piccoli.",
+        back: "(1) $o(f)+o(f)=o(f)$; (2) $c\\cdot o(f)=o(f)$ per $c \\neq 0$; (3) $f\\cdot o(g)=o(fg)$; (4) $o(f)\\cdot o(g)=o(fg)$; (5) $o(f+o(f))=o(f)$. Ogni occorrenza di $o(\\cdot)$ denota un resto potenzialmente diverso."
+      },
+      {
+        type: "domanda",
+        front: "È vero che $o(x^3) = o(x^2)$ per $x \\to 0$? E il viceversa?",
+        back: "Sì nel senso: ogni resto $o(x^3)$ è anche un $o(x^2)$, poiché $\\frac{h}{x^2} = \\frac{h}{x^3}\\cdot x \\to 0$. Il viceversa è falso: $o(x^2)$ in generale non è $o(x^3)$. Controesempio $h(x)=|x|^{5/2}$ (con il modulo per avere la funzione definita anche per $x \\lt 0$): $\\frac{|x|^{5/2}}{x^2} = |x|^{1/2}\\to 0$ ma $\\frac{|x|^{5/2}}{x^3}$ non tende a $0$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Come si dimostra $\\lim_{n\\to\\infty}\\frac{(\\log_b n)^\\beta}{n^\\alpha}=0$ per $\\alpha \\gt 0$?",
+        back: "Si parte dal lemma per parametro reale $\\lim_{t\\to+\\infty}\\frac{B^t}{t^\\beta}=+\\infty$ (serve la versione reale perché le quantità sostituite non sono intere). <strong>Passo 1</strong> ($\\alpha=1$): con $t=\\log_B n$ e $B^{\\log_B n}=n$ si ha $\\frac{n}{(\\log_B n)^\\beta}\\to+\\infty$, da cui ai reciproci la tesi. <strong>Passo 2</strong>: con $t=\\log_B(n^\\alpha)=\\alpha\\log_B n$ si ottiene $\\frac{\\alpha^\\beta(\\log_B n)^\\beta}{n^\\alpha}\\to 0$; essendo $\\alpha^\\beta$ costante positiva segue la tesi. Il cambiamento di base introduce solo un fattore costante."
+      },
+      {
+        type: "tranello",
+        front: "Quanto vale $\\lim_{n\\to\\infty}\\frac{e^{\\log n}}{n^4}$?",
+        back: "Vale $0$. Applicare meccanicamente \"esponenziale batte potenza\" è un errore: qui $e^{\\log n} = n$, quindi il limite è $\\lim \\frac{n}{n^4} = \\lim \\frac{1}{n^3} = 0$. <strong>L'esponente della funzione esponenziale è cruciale</strong> per determinarne l'ordine di infinito."
+      },
+      {
+        type: "tranello",
+        front: "Da $a_n \\sim b_n$ segue $\\varphi(a_n) \\sim \\varphi(b_n)$?",
+        back: "No, in generale l'equivalenza asintotica non si conserva sotto composizione. Controesempio: $n+1 \\sim n$ ma $\\frac{e^{n+1}}{e^n} = e \\neq 1$. Per il logaritmo la sostituzione risulta lecita (quando l'argomento tende a $+\\infty$), ma va giustificata con le proprietà di $\\log$, come nel caso $\\log(n^2+1) = 2\\log n + \\log(1+1/n^2) \\sim 2\\log n$."
+      },
+      {
+        type: "domanda",
+        front: "Qual è la strategia corretta per trattare somme e differenze di infiniti/infinitesimi?",
+        back: "Primo passo: raccogliere il termine dominante — sicuro quando i termini principali <strong>non</strong> si cancellano (polinomi, somme di termini positivi). Se invece si cancellano, il raccoglimento dà un $0$ privo di informazione e bisogna: (a) conservare termini di ordine successivo (es. $\\sin x = x - \\frac{x^3}{6}+o(x^3)$), oppure (b) usare un'<strong>identità esatta</strong> (razionalizzazione, proprietà dei logaritmi: $\\log(n+1)-\\log n = \\log(1+\\frac1n)$)."
+      },
+      {
+        type: "formula",
+        front: "Enuncia il corollario radice-rapporto e usalo per $\\sqrt[n]{n!}$ e $\\frac{\\sqrt[n]{n!}}{n}$.",
+        back: "Se $a_n \\gt 0$ e $\\lim\\frac{a_{n+1}}{a_n}=l$ (finito o infinito), allora $\\lim\\sqrt[n]{a_n}=l$. Con $a_n=n!$: $\\frac{a_{n+1}}{a_n}=n+1\\to+\\infty$, dunque $\\sqrt[n]{n!}\\to+\\infty$. Con $a_n=\\frac{n!}{n^n}$: il rapporto tende a $\\frac1e$, dunque $\\sqrt[n]{\\frac{n!}{n^n}}=\\frac{\\sqrt[n]{n!}}{n}\\to\\frac1e$. La dimostrazione (via teorema di Cesàro) è stata omessa."
+      },
+      {
+        type: "domanda",
+        front: "L'ipotesi che le quattro funzioni divergano garantisce che il quoziente abbia limite?",
+        back: "No. Con $f(x)=x(2+\\sin x)$ e $g(x)=x$ per $x\\to+\\infty$ entrambe divergono ma $f/g$ non ha limite. L'enunciato corretto del principio di sostituzione degli infiniti afferma solo che i due limiti hanno lo <strong>stesso destino</strong>: esistono insieme e coincidono, oppure non esistono entrambi."
+      }
+    ]
+};
+
