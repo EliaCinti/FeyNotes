@@ -1023,7 +1023,7 @@ const LESSON = {
 <use xlink:href="#fisica-L10-p01-glyph-2-4" x="133.356827" y="52.765269"/>
 </g>
 </svg>
-<figcaption>Ascensore: peso e reazione del pavimento</figcaption></figure>`
+<figcaption><strong class="figure-caption-title">Ascensore: peso e reazione del pavimento</strong><span class="figure-explanation">Il peso agisce verso il basso e la reazione del pavimento verso l’alto. Nell’esempio l’accelerazione è diretta verso l’alto: per questo la freccia della reazione è più lunga di quella del peso, coerentemente con $R_N-mg=ma_y$.</span></figcaption></figure>`
       },
 
       /* ---- I 5 casi ---- */
@@ -1293,7 +1293,7 @@ const LESSON = {
 <use xlink:href="#fisica-L10-p02-glyph-0-7" x="145.89526" y="181.087673"/>
 </g>
 </svg>
-<figcaption>Piano inclinato senza attrito: scomposizione del peso</figcaption></figure>`
+<figcaption><strong class="figure-caption-title">Piano inclinato senza attrito: scomposizione del peso</strong><span class="figure-explanation">Il peso si scompone in una componente parallela al piano, che accelera il corpo, e una perpendicolare, bilanciata dalla normale. Le frecce tratteggiate mostrano queste due componenti. Poiché l’asse $y$ punta verso l’esterno, la componente $P_y=-mg\\cos\\theta$ è negativa.</span></figcaption></figure>`
       },
 
       {
@@ -1531,7 +1531,7 @@ const LESSON = {
 <use xlink:href="#fisica-L10-p03-glyph-0-8" x="145.89526" y="181.087673"/>
 </g>
 </svg>
-<figcaption>Piano inclinato con attrito: le forze durante la discesa</figcaption></figure>`
+<figcaption><strong class="figure-caption-title">Piano inclinato con attrito: le forze durante la discesa</strong><span class="figure-explanation">Durante la discesa, l’attrito è diretto verso l’alto lungo il piano. L’accelerazione lungo $x$ dipende dalla differenza tra la componente del peso $mg\\sin\\theta$ e l’attrito $\\mu_dR_N$. La normale bilancia la componente perpendicolare del peso.</span></figcaption></figure>`
       },
 
       {
@@ -2909,7 +2909,7 @@ const LESSON = {
 <use xlink:href="#fisica-L10-p04-glyph-1-0" x="92.589892" y="224.716258"/>
 </g>
 </svg>
-<figcaption>Cassa tirata con una fune: equilibrio delle quattro forze</figcaption></figure>`
+<figcaption><strong class="figure-caption-title">Cassa tirata con una fune: equilibrio delle quattro forze</strong><span class="figure-explanation">La componente verticale della trazione sostiene parte del peso, quindi $R_N&lt;mg$. Nel moto uniforme la trazione orizzontale e l’attrito si bilanciano: $F\\cos\\theta=F_A$. Anche la risultante verticale è nulla, perciò $R_N+F\\sin\\theta=mg$.</span></figcaption></figure>`
       },
 
       {

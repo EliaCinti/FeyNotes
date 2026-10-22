@@ -139,6 +139,11 @@ function renderLesson(lesson) {
   });
 }
 
+function isFigureOnlySection(sec) {
+  return sec.type === 'section' && !String(sec.title || '').trim() && !sec.icon &&
+    /^\s*<figure\b[\s\S]*<\/figure>\s*$/.test(sec.content || '');
+}
+
 function renderSection(sec) {
   let h = '';
   const id = sec.id || '';
@@ -231,7 +236,9 @@ function renderSection(sec) {
 
     default: // "section"
       h += `<div class="content-section" id="${id}">`;
-      h += `<h2><span class="sec-icon">${sec.icon || '📌'}</span>${sec.title}</h2>`;
+      if (!isFigureOnlySection(sec)) {
+        h += `<h2><span class="sec-icon">${sec.icon || '📌'}</span>${sec.title}</h2>`;
+      }
 
       if (sec.content) h += sec.content;
 
@@ -386,6 +393,7 @@ function buildSidebar(lesson) {
   let lastWasExerciseGroup = false;
   for (const sec of lesson.sections) {
     if (sec.type === 'integrazione_box') continue;
+    if (isFigureOnlySection(sec)) continue;
 
     if (sec.type === 'esercizio') {
       if (!lastWasExerciseGroup && sec.id) {

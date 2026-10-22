@@ -377,6 +377,8 @@ a:hover { color: var(--accent); }
 .figura { margin: 1.4rem auto; max-width: 640px; color: var(--text-secondary); }
 .figura svg { width: 100%; height: auto; display: block; }
 .figura figcaption { text-align: center; font-size: .85rem; margin-top: .4rem; }
+.figura .figure-caption-title { display: block; font-weight: 600; }
+.figura .figure-explanation { display: block; margin: .7rem auto 0; max-width: 70ch; text-align: left; font-size: .95rem; line-height: 1.7; }
 .exercise h2 .ex-badge { font-size: .65rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
   border: 1px solid var(--border); border-radius: 999px; padding: .1rem .5rem; margin-left: .4rem; vertical-align: middle; color: var(--text-muted); }
 .ex-badge--integrazione { border-color: #d97706; color: #d97706; }
