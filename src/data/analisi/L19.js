@@ -1,0 +1,6073 @@
+const LESSON = {
+    id: "L19", date: "Lezione 19 — 22 Ott 2026",
+    title: "Sottosuccessioni, Teorema di Bolzano-Weierstrass e Formula di Stirling",
+    abstract: "Estrarre sottosuccessioni per dimostrare che un limite non esiste, costruire sottosuccessioni monotone con la tecnica dei picchi (Bolzano-Weierstrass), usare la formula di Stirling per i limiti con fattoriali e introdurre i punti di accumulazione come ponte verso i limiti di funzione.",
+
+    sections: [
+      {
+        id: "s01-guida",
+        type: "section",
+        title: "Guida alla lezione",
+        icon: "🧭",
+        content: `<p>In questa lezione seguiamo un percorso in tre tappe:</p>
+<ol>
+<li>introduciamo le <strong>sottosuccessioni</strong>, cioè le successioni ottenute "estraendo" alcuni termini da una successione data;</li>
+<li>dimostriamo che il limite, se esiste, si trasmette a tutte le sottosuccessioni, e ne ricaviamo un criterio molto comodo per dimostrare che una successione <strong>non</strong> ha limite;</li>
+<li>dimostriamo il Teorema di Bolzano-Weierstrass: ogni successione limitata ammette una sottosuccessione convergente a un limite finito.</li>
+</ol>
+<p>Nella seconda parte della lezione introduciamo la <strong>formula di Stirling</strong> per il comportamento asintotico del fattoriale e i <strong>punti di accumulazione</strong>, che serviranno per definire il limite di funzione.</p>`
+      },
+
+      {
+        id: "s02-intro-sottosuccessioni",
+        type: "section",
+        title: "Introduzione alle sottosuccessioni",
+        icon: "🔍",
+        content: `<p>Iniziamo con una domanda su un esempio già incontrato. Consideriamo la successione $a_n = (-1)^n$. Sappiamo che è una successione limitata, ma il suo limite non esiste. <strong>Perché non esiste il limite?</strong></p>
+<p>Intuitivamente, la ragione è che la successione continua a "saltare" tra i valori $1$ e $-1$ senza mai stabilizzarsi:</p>
+<p>$$a_n = \\begin{cases} 1 & \\text{se } n \\text{ è pari} \\\\ -1 & \\text{se } n \\text{ è dispari} \\end{cases}$$</p>
+<p>Per formalizzare questa idea possiamo usare il concetto di <strong>sottosuccessione</strong>: l'idea è di "estrarre" dalla successione originale delle nuove successioni, scegliendo solo alcuni indici.</p>`,
+        subsections: [
+          {
+            subtitle: "Prima scelta degli indici: gli indici pari",
+            content: `<p>Consideriamo solo gli indici pari, cioè $n = 2k$ per $k \\in \\mathbb{N}$. La successione che otteniamo, che chiamiamo $b_k$, è</p>
+<p>$$b_k = a_{2k} = (-1)^{2k} = 1$$</p>
+<p>Questa è una successione costantemente uguale a $1$, e il suo limite è chiaramente $1$:</p>
+<p>$$\\lim_{k \\to +\\infty} b_k = \\lim_{k \\to +\\infty} a_{2k} = 1$$</p>`
+          },
+          {
+            subtitle: "Seconda scelta degli indici: gli indici dispari",
+            content: `<p>Ora consideriamo solo gli indici dispari, cioè $n = 2k+1$ per $k \\in \\mathbb{N}$. La successione che otteniamo, che chiamiamo $c_k$, è</p>
+<p>$$c_k = a_{2k+1} = (-1)^{2k+1} = -1$$</p>
+<p>Questa è una successione costantemente uguale a $-1$, e il suo limite è $-1$:</p>
+<p>$$\\lim_{k \\to +\\infty} c_k = \\lim_{k \\to +\\infty} a_{2k+1} = -1$$</p>`
+          },
+          {
+            subtitle: "Conclusione provvisoria",
+            content: `<p>I due "pezzi" estratti dalla stessa successione hanno limiti diversi: $1$ e $-1$. Vedremo fra poco (Corollario del Teorema sul limite delle sottosuccessioni) che questo basta per concludere rigorosamente che $\\lim_{n \\to +\\infty}(-1)^n$ non esiste.</p>
+<figure class="figura" data-id="analisi1_lez19a_g1"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez19a_g1-figure_1">
+  <g id="analisi1_lez19a_g1-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez19a_g1-axes_1">
+   <g id="analisi1_lez19a_g1-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez19a_g1-matplotlib.axis_1">
+    <g id="analisi1_lez19a_g1-xtick_1">
+     <g id="analisi1_lez19a_g1-line2d_1">
+      <path d="M 70.690909 364 
+L 70.690909 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_2">
+      <defs>
+       <path id="analisi1_lez19a_g1-m51a7f079e1" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="70.690909" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_1">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(67.633253 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-17" d="M 845 2234 
+Q 845 2400 848 2601 
+Q 851 2803 880 3004 
+Q 909 3206 963 3398 
+Q 1018 3590 1123 3734 
+Q 1229 3878 1389 3968 
+Q 1549 4058 1779 4058 
+Q 2010 4058 2170 3968 
+Q 2330 3878 2435 3734 
+Q 2541 3590 2595 3398 
+Q 2650 3206 2678 3004 
+Q 2707 2803 2710 2601 
+Q 2714 2400 2714 2234 
+Q 2714 1978 2698 1661 
+Q 2682 1344 2595 1065 
+Q 2509 787 2317 595 
+Q 2125 403 1779 403 
+Q 1434 403 1242 595 
+Q 1050 787 963 1065 
+Q 877 1344 861 1661 
+Q 845 1978 845 2234 
+z
+M 269 2227 
+Q 269 1978 281 1709 
+Q 294 1440 345 1184 
+Q 397 928 493 701 
+Q 589 474 755 301 
+Q 922 128 1174 29 
+Q 1427 -70 1779 -70 
+Q 2138 -70 2387 29 
+Q 2637 128 2803 301 
+Q 2970 474 3066 701 
+Q 3162 928 3213 1184 
+Q 3264 1440 3277 1709 
+Q 3290 1978 3290 2227 
+Q 3290 2477 3277 2745 
+Q 3264 3014 3213 3270 
+Q 3162 3526 3066 3756 
+Q 2970 3987 2803 4160 
+Q 2637 4333 2384 4435 
+Q 2131 4538 1779 4538 
+Q 1427 4538 1174 4435 
+Q 922 4333 755 4160 
+Q 589 3987 493 3756 
+Q 397 3526 345 3270 
+Q 294 3014 281 2745 
+Q 269 2477 269 2227 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_2">
+     <g id="analisi1_lez19a_g1-line2d_3">
+      <path d="M 122.472727 364 
+L 122.472727 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="122.472727" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_2">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(119.415071 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-18" d="M 2278 0 
+L 2278 4538 
+L 1862 4538 
+Q 1818 4282 1696 4115 
+Q 1574 3949 1398 3853 
+Q 1222 3757 1004 3721 
+Q 787 3686 557 3686 
+L 557 3251 
+L 1734 3251 
+L 1734 0 
+L 2278 0 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_3">
+     <g id="analisi1_lez19a_g1-line2d_5">
+      <path d="M 174.254545 364 
+L 174.254545 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="174.254545" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_3">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(171.196889 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-19" d="M 282 2931 
+L 826 2931 
+Q 819 3136 867 3337 
+Q 915 3539 1024 3699 
+Q 1133 3859 1302 3958 
+Q 1472 4058 1709 4058 
+Q 1888 4058 2048 4000 
+Q 2208 3942 2326 3833 
+Q 2445 3725 2515 3574 
+Q 2586 3424 2586 3238 
+Q 2586 3002 2512 2822 
+Q 2438 2643 2294 2489 
+Q 2150 2336 1932 2185 
+Q 1715 2035 1427 1856 
+Q 1190 1715 972 1555 
+Q 755 1395 582 1184 
+Q 410 973 298 688 
+Q 186 403 154 0 
+L 3117 0 
+L 3117 480 
+L 787 480 
+Q 826 691 950 854 
+Q 1075 1018 1251 1158 
+Q 1427 1299 1638 1424 
+Q 1850 1549 2061 1677 
+Q 2272 1811 2470 1958 
+Q 2669 2106 2822 2288 
+Q 2976 2470 3069 2700 
+Q 3162 2931 3162 3232 
+Q 3162 3552 3050 3795 
+Q 2938 4038 2746 4201 
+Q 2554 4365 2294 4451 
+Q 2035 4538 1741 4538 
+Q 1382 4538 1100 4416 
+Q 819 4294 630 4080 
+Q 442 3866 352 3571 
+Q 262 3277 282 2931 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_4">
+     <g id="analisi1_lez19a_g1-line2d_7">
+      <path d="M 226.036364 364 
+L 226.036364 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="226.036364" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_4">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(222.978707 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-1a" d="M 1395 2592 
+L 1395 2131 
+Q 1549 2150 1722 2150 
+Q 1926 2150 2102 2096 
+Q 2278 2042 2406 1930 
+Q 2534 1818 2611 1654 
+Q 2688 1491 2688 1280 
+Q 2688 1075 2608 912 
+Q 2528 749 2393 637 
+Q 2259 525 2080 464 
+Q 1901 403 1702 403 
+Q 1235 403 992 681 
+Q 749 960 736 1402 
+L 192 1402 
+Q 186 1050 291 774 
+Q 397 499 595 310 
+Q 794 122 1075 26 
+Q 1357 -70 1702 -70 
+Q 2022 -70 2307 16 
+Q 2592 102 2803 275 
+Q 3014 448 3139 707 
+Q 3264 966 3264 1306 
+Q 3264 1715 3062 2016 
+Q 2861 2317 2445 2406 
+L 2445 2419 
+Q 2714 2541 2893 2777 
+Q 3072 3014 3072 3322 
+Q 3072 3635 2966 3865 
+Q 2861 4096 2675 4243 
+Q 2490 4390 2237 4464 
+Q 1984 4538 1690 4538 
+Q 1350 4538 1091 4429 
+Q 832 4320 659 4128 
+Q 486 3936 393 3667 
+Q 301 3398 288 3072 
+L 832 3072 
+Q 832 3270 883 3449 
+Q 934 3629 1040 3763 
+Q 1146 3898 1309 3978 
+Q 1472 4058 1690 4058 
+Q 2035 4058 2265 3875 
+Q 2496 3693 2496 3328 
+Q 2496 3149 2425 3008 
+Q 2355 2867 2236 2774 
+Q 2118 2682 1961 2634 
+Q 1805 2586 1632 2586 
+L 1517 2586 
+Q 1485 2586 1453 2586 
+Q 1427 2586 1395 2592 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-1a"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_5">
+     <g id="analisi1_lez19a_g1-line2d_9">
+      <path d="M 277.818182 364 
+L 277.818182 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="277.818182" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_5">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(274.760526 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-1b" d="M 2170 1542 
+L 646 1542 
+L 2157 3763 
+L 2170 3763 
+L 2170 1542 
+z
+M 2682 1542 
+L 2682 4538 
+L 2246 4538 
+L 179 1587 
+L 179 1062 
+L 2170 1062 
+L 2170 0 
+L 2682 0 
+L 2682 1062 
+L 3296 1062 
+L 3296 1542 
+L 2682 1542 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-1b"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_6">
+     <g id="analisi1_lez19a_g1-line2d_11">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_6">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(326.542344 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-1c" d="M 3008 3981 
+L 3008 4461 
+L 768 4461 
+L 346 2106 
+L 813 2080 
+Q 973 2272 1181 2390 
+Q 1389 2509 1658 2509 
+Q 1888 2509 2077 2432 
+Q 2266 2355 2400 2217 
+Q 2534 2080 2608 1891 
+Q 2682 1702 2682 1478 
+Q 2682 1210 2605 1008 
+Q 2528 806 2397 672 
+Q 2266 538 2090 470 
+Q 1914 403 1722 403 
+Q 1517 403 1347 464 
+Q 1178 525 1053 637 
+Q 928 749 854 899 
+Q 781 1050 768 1222 
+L 224 1222 
+Q 230 915 345 672 
+Q 461 429 659 265 
+Q 858 102 1117 16 
+Q 1376 -70 1670 -70 
+Q 2067 -70 2364 54 
+Q 2662 179 2860 390 
+Q 3059 602 3158 874 
+Q 3258 1146 3258 1434 
+Q 3258 1824 3142 2115 
+Q 3027 2406 2828 2601 
+Q 2630 2797 2361 2893 
+Q 2093 2989 1792 2989 
+Q 1562 2989 1328 2909 
+Q 1094 2829 947 2662 
+L 934 2675 
+L 1178 3981 
+L 3008 3981 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-1c"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_7">
+     <g id="analisi1_lez19a_g1-line2d_13">
+      <path d="M 381.381818 364 
+L 381.381818 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="381.381818" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_7">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(378.324162 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-1d" d="M 2650 3379 
+L 3194 3379 
+Q 3142 3942 2809 4240 
+Q 2477 4538 1914 4538 
+Q 1427 4538 1107 4333 
+Q 787 4128 595 3789 
+Q 403 3450 323 3011 
+Q 243 2573 243 2106 
+Q 243 1747 297 1363 
+Q 352 979 518 659 
+Q 685 339 992 134 
+Q 1299 -70 1805 -70 
+Q 2234 -70 2525 74 
+Q 2816 218 2992 438 
+Q 3168 659 3245 928 
+Q 3322 1197 3322 1446 
+Q 3322 1760 3226 2029 
+Q 3130 2298 2954 2496 
+Q 2778 2694 2518 2806 
+Q 2259 2918 1933 2918 
+Q 1562 2918 1277 2777 
+Q 992 2637 800 2323 
+L 787 2336 
+Q 794 2598 838 2899 
+Q 883 3200 1001 3459 
+Q 1120 3718 1331 3888 
+Q 1542 4058 1888 4058 
+Q 2214 4058 2412 3872 
+Q 2611 3686 2650 3379 
+z
+M 1830 2438 
+Q 2061 2438 2233 2355 
+Q 2406 2272 2521 2134 
+Q 2637 1997 2691 1808 
+Q 2746 1619 2746 1408 
+Q 2746 1210 2685 1027 
+Q 2624 845 2509 704 
+Q 2394 563 2224 483 
+Q 2054 403 1830 403 
+Q 1606 403 1430 483 
+Q 1254 563 1136 697 
+Q 1018 832 954 1017 
+Q 890 1203 890 1414 
+Q 890 1626 950 1814 
+Q 1011 2003 1132 2140 
+Q 1254 2278 1427 2358 
+Q 1600 2438 1830 2438 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-1d"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_8">
+     <g id="analisi1_lez19a_g1-line2d_15">
+      <path d="M 433.163636 364 
+L 433.163636 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="433.163636" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_8">
+      <!-- 7 -->
+      <g style="fill: currentColor" transform="translate(430.10598 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-1e" d="M 3258 3994 
+L 3258 4461 
+L 320 4461 
+L 320 3949 
+L 2701 3949 
+Q 2342 3571 2032 3123 
+Q 1722 2675 1485 2172 
+Q 1248 1670 1097 1123 
+Q 947 576 909 0 
+L 1517 0 
+Q 1549 531 1696 1094 
+Q 1843 1658 2076 2189 
+Q 2310 2720 2611 3187 
+Q 2912 3654 3258 3994 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-1e"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_9">
+     <g id="analisi1_lez19a_g1-line2d_17">
+      <path d="M 484.945455 364 
+L 484.945455 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="484.945455" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_9">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(481.887798 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-1f" d="M 992 3360 
+Q 992 3533 1056 3661 
+Q 1120 3789 1225 3878 
+Q 1331 3968 1478 4013 
+Q 1626 4058 1786 4058 
+Q 2118 4058 2332 3882 
+Q 2547 3706 2547 3360 
+Q 2547 3014 2336 2822 
+Q 2125 2630 1798 2630 
+Q 1632 2630 1485 2675 
+Q 1338 2720 1229 2809 
+Q 1120 2899 1056 3036 
+Q 992 3174 992 3360 
+z
+M 416 3379 
+Q 416 3072 589 2813 
+Q 762 2554 1050 2438 
+Q 666 2304 461 2006 
+Q 256 1709 256 1306 
+Q 256 960 374 701 
+Q 493 442 701 269 
+Q 909 96 1190 13 
+Q 1472 -70 1798 -70 
+Q 2112 -70 2387 19 
+Q 2662 109 2864 285 
+Q 3066 461 3184 717 
+Q 3302 973 3302 1306 
+Q 3302 1728 3104 2019 
+Q 2906 2310 2496 2438 
+Q 2784 2566 2953 2819 
+Q 3123 3072 3123 3379 
+Q 3123 3597 3046 3805 
+Q 2970 4013 2806 4176 
+Q 2643 4339 2380 4438 
+Q 2118 4538 1747 4538 
+Q 1485 4538 1245 4461 
+Q 1005 4384 819 4237 
+Q 634 4090 525 3875 
+Q 416 3661 416 3379 
+z
+M 832 1280 
+Q 832 1478 905 1638 
+Q 979 1798 1110 1913 
+Q 1242 2029 1418 2089 
+Q 1594 2150 1792 2150 
+Q 1984 2150 2153 2083 
+Q 2323 2016 2451 1901 
+Q 2579 1786 2652 1629 
+Q 2726 1472 2726 1286 
+Q 2726 1094 2659 934 
+Q 2592 774 2467 656 
+Q 2342 538 2172 470 
+Q 2003 403 1798 403 
+Q 1376 403 1104 636 
+Q 832 870 832 1280 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-1f"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_10">
+     <g id="analisi1_lez19a_g1-line2d_19">
+      <path d="M 536.727273 364 
+L 536.727273 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="536.727273" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_10">
+      <!-- 9 -->
+      <g style="fill: currentColor" transform="translate(533.669616 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-20" d="M 858 1094 
+L 314 1094 
+Q 365 506 742 218 
+Q 1120 -70 1690 -70 
+Q 2515 -70 2889 560 
+Q 3264 1190 3264 2368 
+Q 3264 3014 3139 3433 
+Q 3014 3853 2803 4096 
+Q 2592 4339 2310 4438 
+Q 2029 4538 1709 4538 
+Q 1382 4538 1107 4429 
+Q 832 4320 633 4125 
+Q 435 3930 326 3658 
+Q 218 3386 218 3059 
+Q 218 2726 310 2444 
+Q 403 2163 585 1964 
+Q 768 1766 1037 1654 
+Q 1306 1542 1651 1542 
+Q 1984 1542 2265 1712 
+Q 2547 1882 2701 2170 
+L 2714 2157 
+Q 2688 1267 2438 835 
+Q 2189 403 1690 403 
+Q 1363 403 1126 582 
+Q 890 762 858 1094 
+z
+M 2618 3021 
+Q 2618 2822 2554 2640 
+Q 2490 2458 2368 2320 
+Q 2246 2182 2073 2102 
+Q 1901 2022 1690 2022 
+Q 1491 2022 1328 2102 
+Q 1165 2182 1046 2316 
+Q 928 2451 861 2624 
+Q 794 2797 794 2982 
+Q 794 3194 842 3386 
+Q 890 3578 995 3728 
+Q 1101 3878 1270 3968 
+Q 1440 4058 1683 4058 
+Q 1914 4058 2086 3974 
+Q 2259 3891 2377 3747 
+Q 2496 3603 2557 3417 
+Q 2618 3232 2618 3021 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-20"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-xtick_11">
+     <g id="analisi1_lez19a_g1-line2d_21">
+      <path d="M 588.509091 364 
+L 588.509091 24 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-m51a7f079e1" x="588.509091" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_11">
+      <!-- 10 -->
+      <g style="fill: currentColor" transform="translate(582.393778 210.972) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-17" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-matplotlib.axis_2">
+    <g id="analisi1_lez19a_g1-ytick_1">
+     <g id="analisi1_lez19a_g1-line2d_23">
+      <path d="M 44.8 307.333333 
+L 614.4 307.333333 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_24">
+      <defs>
+       <path id="analisi1_lez19a_g1-mddbcc856a4" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-mddbcc856a4" x="70.690909" y="307.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_12">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(53.795909 312.569333) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g1-HelveticaNeue-14" d="M 320 2035 
+L 320 1523 
+L 2170 1523 
+L 2170 2035 
+L 320 2035 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-14"/>
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-18" transform="translate(38.90625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-ytick_2">
+     <g id="analisi1_lez19a_g1-line2d_25">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-mddbcc856a4" x="70.690909" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_13">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(58.075597 199.236) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g1-ytick_3">
+     <g id="analisi1_lez19a_g1-line2d_27">
+      <path d="M 44.8 80.666667 
+L 614.4 80.666667 
+" clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g1-line2d_28">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g1-mddbcc856a4" x="70.690909" y="80.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g1-text_14">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(58.075597 85.902667) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez19a_g1-HelveticaNeue-18"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_29">
+    <defs>
+     <path id="analisi1_lez19a_g1-m365f962dd2" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19a_g1-m365f962dd2" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_30">
+    <defs>
+     <path id="analisi1_lez19a_g1-md111d50679" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19a_g1-md111d50679" x="70.690909" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-patch_3">
+    <path d="M 70.690909 364 
+L 70.690909 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19a_g1-patch_4">
+    <path d="M 44.8 194 
+L 614.4 194 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19a_g1-text_15">
+    <g style="fill: currentColor" transform="translate(76.690909 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19a_g1-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-13" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_16">
+    <g style="fill: currentColor" transform="translate(128.472727 301.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-14" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_17">
+    <g style="fill: currentColor" transform="translate(180.254545 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-15" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_18">
+    <g style="fill: currentColor" transform="translate(232.036364 301.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-16" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_19">
+    <g style="fill: currentColor" transform="translate(283.818182 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-17" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_20">
+    <g style="fill: currentColor" transform="translate(335.6 301.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-18" d="M 691 4666 
+L 3169 4666 
+L 3169 4134 
+L 1269 4134 
+L 1269 2991 
+Q 1406 3038 1543 3061 
+Q 1681 3084 1819 3084 
+Q 2600 3084 3056 2656 
+Q 3513 2228 3513 1497 
+Q 3513 744 3044 326 
+Q 2575 -91 1722 -91 
+Q 1428 -91 1123 -41 
+Q 819 9 494 109 
+L 494 744 
+Q 775 591 1075 516 
+Q 1375 441 1709 441 
+Q 2250 441 2565 725 
+Q 2881 1009 2881 1497 
+Q 2881 1984 2565 2268 
+Q 2250 2553 1709 2553 
+Q 1456 2553 1204 2497 
+Q 953 2441 691 2322 
+L 691 4666 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-18" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_21">
+    <g style="fill: currentColor" transform="translate(387.381818 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-19" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_22">
+    <g style="fill: currentColor" transform="translate(439.163636 301.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-1a" d="M 525 4666 
+L 3525 4666 
+L 3525 4397 
+L 1831 0 
+L 1172 0 
+L 2766 4134 
+L 525 4134 
+L 525 4666 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-1a" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_23">
+    <g style="fill: currentColor" transform="translate(490.945455 74.666667) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-1b" d="M 2034 2216 
+Q 1584 2216 1326 1975 
+Q 1069 1734 1069 1313 
+Q 1069 891 1326 650 
+Q 1584 409 2034 409 
+Q 2484 409 2743 651 
+Q 3003 894 3003 1313 
+Q 3003 1734 2745 1975 
+Q 2488 2216 2034 2216 
+z
+M 1403 2484 
+Q 997 2584 770 2862 
+Q 544 3141 544 3541 
+Q 544 4100 942 4425 
+Q 1341 4750 2034 4750 
+Q 2731 4750 3128 4425 
+Q 3525 4100 3525 3541 
+Q 3525 3141 3298 2862 
+Q 3072 2584 2669 2484 
+Q 3125 2378 3379 2068 
+Q 3634 1759 3634 1313 
+Q 3634 634 3220 271 
+Q 2806 -91 2034 -91 
+Q 1263 -91 848 271 
+Q 434 634 434 1313 
+Q 434 1759 690 2068 
+Q 947 2378 1403 2484 
+z
+M 1172 3481 
+Q 1172 3119 1398 2916 
+Q 1625 2713 2034 2713 
+Q 2441 2713 2670 2916 
+Q 2900 3119 2900 3481 
+Q 2900 3844 2670 4047 
+Q 2441 4250 2034 4250 
+Q 1625 4250 1398 4047 
+Q 1172 3844 1172 3481 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-1b" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_24">
+    <g style="fill: currentColor" transform="translate(542.727273 301.333333) scale(0.11 -0.11)">
+     <defs>
+      <path id="analisi1_lez19a_g1-DejaVuSans-1c" d="M 703 97 
+L 703 672 
+Q 941 559 1184 500 
+Q 1428 441 1663 441 
+Q 2288 441 2617 861 
+Q 2947 1281 2994 2138 
+Q 2813 1869 2534 1725 
+Q 2256 1581 1919 1581 
+Q 1219 1581 811 2004 
+Q 403 2428 403 3163 
+Q 403 3881 828 4315 
+Q 1253 4750 1959 4750 
+Q 2769 4750 3195 4129 
+Q 3622 3509 3622 2328 
+Q 3622 1225 3098 567 
+Q 2575 -91 1691 -91 
+Q 1453 -91 1209 -44 
+Q 966 3 703 97 
+z
+M 1959 2075 
+Q 2384 2075 2632 2365 
+Q 2881 2656 2881 3163 
+Q 2881 3666 2632 3958 
+Q 2384 4250 1959 4250 
+Q 1534 4250 1286 3958 
+Q 1038 3666 1038 3163 
+Q 1038 2656 1286 2365 
+Q 1534 2075 1959 2075 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-1c" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-text_25">
+    <g style="fill: currentColor" transform="translate(594.509091 74.666667) scale(0.11 -0.11)">
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-14" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19a_g1-DejaVuSans-13" transform="translate(105.81543 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_31">
+    <defs>
+     <path id="analisi1_lez19a_g1-m273bc48642" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="70.690909" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_32">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="122.472727" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_33">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="174.254545" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_34">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="226.036364" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_35">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="277.818182" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_36">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="329.6" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_37">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="381.381818" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_38">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="433.163636" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_39">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="484.945455" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_40">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="536.727273" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g1-line2d_41">
+    <g clip-path="url(#analisi1_lez19a_g1-pb5e75870bc)">
+     <use xlink:href="#analisi1_lez19a_g1-m273bc48642" x="588.509091" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez19a_g1-pb5e75870bc">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg><figcaption><span class="figure-caption-title">Successione alternata: $a_n=(-1)^n$</span><span class="figure-explanation">L’asse orizzontale indica l’indice $n$, quello verticale il valore $a_n$. I termini di indice pari valgono $1$, quelli di indice dispari $-1$: le due sottosuccessioni hanno limiti diversi e la successione non ammette limite. I punti restano separati perché gli indici sono discreti.</span></figcaption></figure>
+<p>Abbiamo trovato due "pezzi" della successione di partenza che si comportano in modo molto diverso: una converge a $1$, l'altra a $-1$. Questi "pezzi" sono chiamati <strong>sottosuccessioni</strong>. Il fatto che convergano a limiti diversi è la ragione formale per cui la successione originale non può convergere.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s03-definizione-sottosuccessione",
+        type: "section",
+        title: "Definizione di sottosuccessione",
+        icon: "📐",
+        content: `<p><strong>Definizione (Sottosuccessione).</strong> Data una successione $\\{a_n\\}_{n \\in \\mathbb{N}}$, una sua <strong>sottosuccessione</strong> (o successione estratta) è una successione della forma $\\{a_{k_n}\\}_{n \\in \\mathbb{N}}$, dove $\\{k_n\\}_{n \\in \\mathbb{N}}$ è una successione <strong>strettamente crescente</strong> di numeri naturali:</p>
+<p>$$b_n = a_{k_n} \\quad \\text{con } k_n \\in \\mathbb{N}, \\quad k_{n+1} \\gt k_n \\quad \\forall n \\in \\mathbb{N}$$</p>
+<p>La condizione che la successione di indici $k_n$ sia strettamente crescente è <strong>fondamentale</strong>: significa che stiamo "pescando" elementi dalla successione originale andando sempre in avanti, senza mai tornare indietro. Poiché $k_n$ è una successione di interi strettamente crescente, si ha $\\lim_{n \\to +\\infty} k_n = +\\infty$.</p>`,
+        formulas: [
+          { label: "Sottosuccessione", latex: "b_n = a_{k_n}, \\qquad k_{n+1} \\gt k_n \\ \\ \\forall n" },
+          { label: "Conseguenza automatica", latex: "k_n \\geq n \\ \\Rightarrow \\ \\lim_{n \\to +\\infty} k_n = +\\infty" }
+        ],
+        extra_content: `<p>Tornando all'esempio $a_n = (-1)^n$:</p>
+<ul>
+<li>la sottosuccessione dei termini pari $b_n = a_{2n}$ corrisponde alla scelta $k_n = 2n$. La successione $\\{2n\\}_{n \\in \\mathbb{N}} = \\{0, 2, 4, 6, \\dots\\}$ è strettamente crescente;</li>
+<li>la sottosuccessione dei termini dispari $c_n = a_{2n+1}$ corrisponde alla scelta $k_n = 2n+1$. La successione $\\{2n+1\\}_{n \\in \\mathbb{N}} = \\{1, 3, 5, 7, \\dots\\}$ è strettamente crescente.</li>
+</ul>`
+      },
+
+      {
+        id: "s04-retta-estesa",
+        type: "section",
+        title: "Retta reale estesa: ammettere limite vs convergere",
+        icon: "♾️",
+        content: `<p><strong>Definizione (Retta reale estesa).</strong> Chiamiamo <strong>insieme dei numeri reali estesi</strong> l'insieme</p>
+<p>$$\\mathbb{R}^* = \\mathbb{R} \\cup \\{-\\infty, +\\infty\\}.$$</p>
+<p>Scrivere $\\lim_{n \\to +\\infty} a_n = L$ con $L \\in \\mathbb{R}^*$ significa dire che la successione <strong>ammette limite, eventualmente infinito</strong>. Diremo invece che la successione <strong>converge</strong> (o che ha limite finito) solo quando $L \\in \\mathbb{R}$, cioè quando $L \\neq \\pm\\infty$.</p>
+<p>La distinzione fra le due locuzioni è importante e la useremo in modo rigoroso:</p>
+<ul>
+<li><em>ammette limite in $\\mathbb{R}^*$</em>: il limite esiste, ma può valere $+\\infty$ o $-\\infty$ (ad esempio $a_n = n$ ammette limite $+\\infty$);</li>
+<li><em>converge</em>: il limite esiste <strong>ed è un numero reale</strong> (ad esempio $a_n = 1/n$ converge a $0$).</li>
+</ul>
+<p>Il Teorema di Bolzano-Weierstrass, che vedremo più avanti, parla di <em>convergenza</em>, quindi di limite finito.</p>`
+      },
+
+      {
+        id: "s05-intorni-integrazione",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p>La dimostrazione del teorema che segue è scritta "per ogni intorno $U$ di $L$", con $L \\in \\mathbb{R}^*$: conviene avere sotto mano quali siano gli <strong>intorni fondamentali</strong> dei punti di $\\mathbb{R}^*$, altrimenti il caso $L = \\pm\\infty$ resta oscuro.</p>
+<ul>
+<li>$L \\in \\mathbb{R}$ finito: gli intorni fondamentali sono gli intervalli $(L-\\varepsilon,\\, L+\\varepsilon)$ con $\\varepsilon \\gt 0$;</li>
+<li>$L = +\\infty$: gli intorni fondamentali sono gli insiemi $(M,\\, +\\infty]$ con $M \\in \\mathbb{R}$;</li>
+<li>$L = -\\infty$: gli intorni fondamentali sono gli insiemi $[-\\infty,\\, M)$ con $M \\in \\mathbb{R}$.</li>
+</ul>
+<p>Con questa convenzione la scrittura unica "$a_n \\in U$ definitivamente" significa, nei tre casi, rispettivamente $|a_n - L| \\lt \\varepsilon$, $a_n \\gt M$, $a_n \\lt M$ definitivamente.</p>`
+      },
+
+      {
+        id: "s06-teorema-sottosuccessioni",
+        type: "section",
+        title: "Teorema sul limite delle sottosuccessioni",
+        icon: "📜",
+        content: `<p><strong>Teorema.</strong> Se una successione $\\{a_n\\}$ ammette limite $L \\in \\mathbb{R}^* = \\mathbb{R} \\cup \\{-\\infty,+\\infty\\}$, allora <strong>ogni</strong> sua sottosuccessione $\\{a_{k_n}\\}$ ammette lo stesso limite $L$:</p>
+<p>$$\\lim_{n \\to +\\infty} a_n = L \\ \\Rightarrow \\ \\lim_{n \\to +\\infty} a_{k_n} = L$$</p>
+<p>per ogni successione di indici $k_n$ strettamente crescente. In particolare, se $\\{a_n\\}$ converge a $L \\in \\mathbb{R}$, ogni sua sottosuccessione converge allo stesso numero reale $L$.</p>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>L'ipotesi è che $\\lim_{n \\to +\\infty} a_n = L$. Per definizione di limite, questo significa che per ogni intorno $U$ di $L$ (intorno nel senso di $\\mathbb{R}^*$, così che l'enunciato copra anche i casi $L = \\pm\\infty$) esiste un indice $N_U \\in \\mathbb{N}$ tale che per ogni $n \\gt N_U$ si ha $a_n \\in U$. In altre parole, la successione entra <strong>definitivamente</strong> nell'intorno $U$.</p>
+<p>Consideriamo ora una qualunque sottosuccessione $a_{k_n}$, con $k_n$ strettamente crescente. Poiché $k_n$ è una successione di interi strettamente crescente, essa tende a $+\\infty$. Quindi, in corrispondenza dell'indice $N_U$ di prima, esisterà un indice $M_U \\in \\mathbb{N}$ tale che per ogni $n \\gt M_U$ si ha $k_n \\gt N_U$.</p>
+<p>Ma se $k_n \\gt N_U$, allora per l'ipotesi su $a_n$ il termine $a_{k_n}$ deve appartenere all'intorno $U$.</p>
+<p>Ricapitolando: per ogni intorno $U$ di $L$ abbiamo trovato un indice $M_U$ tale che per ogni $n \\gt M_U$ si ha $a_{k_n} \\in U$. Questa è esattamente la definizione di $\\lim_{n \\to +\\infty} a_{k_n} = L$. $\\blacksquare$</p>`
+          },
+          {
+            subtitle: "Corollario (criterio di non esistenza del limite)",
+            content: `<p><strong>Corollario.</strong> Se una successione ammette due sottosuccessioni che hanno limiti diversi in $\\mathbb{R}^*$, allora la successione di partenza non ammette limite (né finito né infinito).</p>
+<p><em>Dimostrazione.</em> È la contronominale del teorema precedente: se la successione avesse limite $L \\in \\mathbb{R}^*$, tutte le sue sottosuccessioni dovrebbero avere lo stesso limite $L$, contro l'ipotesi che due di esse abbiano limiti distinti. $\\blacksquare$</p>
+<p>Questo corollario permette di dimostrare in modo rigoroso che $a_n = (-1)^n$ non ha limite. Abbiamo infatti trovato:</p>
+<ul>
+<li>una sottosuccessione ($a_{2n}$) che converge a $1$;</li>
+<li>una sottosuccessione ($a_{2n+1}$) che converge a $-1$.</li>
+</ul>
+<p>Poiché $1 \\neq -1$, il limite della successione originale non può esistere.</p>`
+          }
+        ],
+        extra_content: `<p><strong>Strategia operativa.</strong> Il corollario fornisce una ricetta pratica per mostrare che una successione non ha limite: si cercano <strong>due</strong> scelte di indici (due formule per $k_n$, entrambe strettamente crescenti) lungo le quali la successione si semplifichi e tenda a valori diversi. Non serve trovarne di più: due bastano.</p>`
+      },
+
+      {
+        id: "s07-es-coseno",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Studio del limite di $a_n = \\cos(n\\pi/2)$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Studiare il limite della successione $a_n = \\cos\\left(n \\dfrac{\\pi}{2}\\right)$.</p>`,
+        steps: [
+          `<strong>Passo 1: capire l'andamento.</strong> Calcoliamo i primi termini: $a_0 = \\cos(0) = 1$, $a_1 = \\cos(\\pi/2) = 0$, $a_2 = \\cos(\\pi) = -1$, $a_3 = \\cos(3\\pi/2) = 0$, $a_4 = \\cos(2\\pi) = 1$, $a_5 = \\cos(5\\pi/2) = \\cos(\\pi/2) = 0$. La successione è periodica di periodo $4$ e i suoi valori si ripetono ciclicamente: $1, 0, -1, 0, 1, 0, -1, 0, \\dots$
+<figure class="figura" data-id="analisi1_lez19a_g2"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="640pt" height="400pt" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez19a_g2-figure_1">
+  <g id="analisi1_lez19a_g2-patch_1">
+   <path d="M 0 400 
+L 640 400 
+L 640 0 
+L 0 0 
+L 0 400 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez19a_g2-axes_1">
+   <g id="analisi1_lez19a_g2-patch_2">
+    <path d="M 44.8 364 
+L 614.4 364 
+L 614.4 24 
+L 44.8 24 
+L 44.8 364 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez19a_g2-matplotlib.axis_1">
+    <g id="analisi1_lez19a_g2-xtick_1">
+     <g id="analisi1_lez19a_g2-line2d_1">
+      <path d="M 70.690909 364 
+L 70.690909 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_2">
+      <defs>
+       <path id="analisi1_lez19a_g2-m9622c790c4" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="70.690909" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_1">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(67.633253 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-17" d="M 845 2234 
+Q 845 2400 848 2601 
+Q 851 2803 880 3004 
+Q 909 3206 963 3398 
+Q 1018 3590 1123 3734 
+Q 1229 3878 1389 3968 
+Q 1549 4058 1779 4058 
+Q 2010 4058 2170 3968 
+Q 2330 3878 2435 3734 
+Q 2541 3590 2595 3398 
+Q 2650 3206 2678 3004 
+Q 2707 2803 2710 2601 
+Q 2714 2400 2714 2234 
+Q 2714 1978 2698 1661 
+Q 2682 1344 2595 1065 
+Q 2509 787 2317 595 
+Q 2125 403 1779 403 
+Q 1434 403 1242 595 
+Q 1050 787 963 1065 
+Q 877 1344 861 1661 
+Q 845 1978 845 2234 
+z
+M 269 2227 
+Q 269 1978 281 1709 
+Q 294 1440 345 1184 
+Q 397 928 493 701 
+Q 589 474 755 301 
+Q 922 128 1174 29 
+Q 1427 -70 1779 -70 
+Q 2138 -70 2387 29 
+Q 2637 128 2803 301 
+Q 2970 474 3066 701 
+Q 3162 928 3213 1184 
+Q 3264 1440 3277 1709 
+Q 3290 1978 3290 2227 
+Q 3290 2477 3277 2745 
+Q 3264 3014 3213 3270 
+Q 3162 3526 3066 3756 
+Q 2970 3987 2803 4160 
+Q 2637 4333 2384 4435 
+Q 2131 4538 1779 4538 
+Q 1427 4538 1174 4435 
+Q 922 4333 755 4160 
+Q 589 3987 493 3756 
+Q 397 3526 345 3270 
+Q 294 3014 281 2745 
+Q 269 2477 269 2227 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_2">
+     <g id="analisi1_lez19a_g2-line2d_3">
+      <path d="M 122.472727 364 
+L 122.472727 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="122.472727" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_2">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(119.415071 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-18" d="M 2278 0 
+L 2278 4538 
+L 1862 4538 
+Q 1818 4282 1696 4115 
+Q 1574 3949 1398 3853 
+Q 1222 3757 1004 3721 
+Q 787 3686 557 3686 
+L 557 3251 
+L 1734 3251 
+L 1734 0 
+L 2278 0 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_3">
+     <g id="analisi1_lez19a_g2-line2d_5">
+      <path d="M 174.254545 364 
+L 174.254545 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="174.254545" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_3">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(171.196889 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-19" d="M 282 2931 
+L 826 2931 
+Q 819 3136 867 3337 
+Q 915 3539 1024 3699 
+Q 1133 3859 1302 3958 
+Q 1472 4058 1709 4058 
+Q 1888 4058 2048 4000 
+Q 2208 3942 2326 3833 
+Q 2445 3725 2515 3574 
+Q 2586 3424 2586 3238 
+Q 2586 3002 2512 2822 
+Q 2438 2643 2294 2489 
+Q 2150 2336 1932 2185 
+Q 1715 2035 1427 1856 
+Q 1190 1715 972 1555 
+Q 755 1395 582 1184 
+Q 410 973 298 688 
+Q 186 403 154 0 
+L 3117 0 
+L 3117 480 
+L 787 480 
+Q 826 691 950 854 
+Q 1075 1018 1251 1158 
+Q 1427 1299 1638 1424 
+Q 1850 1549 2061 1677 
+Q 2272 1811 2470 1958 
+Q 2669 2106 2822 2288 
+Q 2976 2470 3069 2700 
+Q 3162 2931 3162 3232 
+Q 3162 3552 3050 3795 
+Q 2938 4038 2746 4201 
+Q 2554 4365 2294 4451 
+Q 2035 4538 1741 4538 
+Q 1382 4538 1100 4416 
+Q 819 4294 630 4080 
+Q 442 3866 352 3571 
+Q 262 3277 282 2931 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_4">
+     <g id="analisi1_lez19a_g2-line2d_7">
+      <path d="M 226.036364 364 
+L 226.036364 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="226.036364" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_4">
+      <!-- 3 -->
+      <g style="fill: currentColor" transform="translate(222.978707 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-1a" d="M 1395 2592 
+L 1395 2131 
+Q 1549 2150 1722 2150 
+Q 1926 2150 2102 2096 
+Q 2278 2042 2406 1930 
+Q 2534 1818 2611 1654 
+Q 2688 1491 2688 1280 
+Q 2688 1075 2608 912 
+Q 2528 749 2393 637 
+Q 2259 525 2080 464 
+Q 1901 403 1702 403 
+Q 1235 403 992 681 
+Q 749 960 736 1402 
+L 192 1402 
+Q 186 1050 291 774 
+Q 397 499 595 310 
+Q 794 122 1075 26 
+Q 1357 -70 1702 -70 
+Q 2022 -70 2307 16 
+Q 2592 102 2803 275 
+Q 3014 448 3139 707 
+Q 3264 966 3264 1306 
+Q 3264 1715 3062 2016 
+Q 2861 2317 2445 2406 
+L 2445 2419 
+Q 2714 2541 2893 2777 
+Q 3072 3014 3072 3322 
+Q 3072 3635 2966 3865 
+Q 2861 4096 2675 4243 
+Q 2490 4390 2237 4464 
+Q 1984 4538 1690 4538 
+Q 1350 4538 1091 4429 
+Q 832 4320 659 4128 
+Q 486 3936 393 3667 
+Q 301 3398 288 3072 
+L 832 3072 
+Q 832 3270 883 3449 
+Q 934 3629 1040 3763 
+Q 1146 3898 1309 3978 
+Q 1472 4058 1690 4058 
+Q 2035 4058 2265 3875 
+Q 2496 3693 2496 3328 
+Q 2496 3149 2425 3008 
+Q 2355 2867 2236 2774 
+Q 2118 2682 1961 2634 
+Q 1805 2586 1632 2586 
+L 1517 2586 
+Q 1485 2586 1453 2586 
+Q 1427 2586 1395 2592 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-1a"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_5">
+     <g id="analisi1_lez19a_g2-line2d_9">
+      <path d="M 277.818182 364 
+L 277.818182 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="277.818182" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_5">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(274.760526 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-1b" d="M 2170 1542 
+L 646 1542 
+L 2157 3763 
+L 2170 3763 
+L 2170 1542 
+z
+M 2682 1542 
+L 2682 4538 
+L 2246 4538 
+L 179 1587 
+L 179 1062 
+L 2170 1062 
+L 2170 0 
+L 2682 0 
+L 2682 1062 
+L 3296 1062 
+L 3296 1542 
+L 2682 1542 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-1b"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_6">
+     <g id="analisi1_lez19a_g2-line2d_11">
+      <path d="M 329.6 364 
+L 329.6 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="329.6" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_6">
+      <!-- 5 -->
+      <g style="fill: currentColor" transform="translate(326.542344 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-1c" d="M 3008 3981 
+L 3008 4461 
+L 768 4461 
+L 346 2106 
+L 813 2080 
+Q 973 2272 1181 2390 
+Q 1389 2509 1658 2509 
+Q 1888 2509 2077 2432 
+Q 2266 2355 2400 2217 
+Q 2534 2080 2608 1891 
+Q 2682 1702 2682 1478 
+Q 2682 1210 2605 1008 
+Q 2528 806 2397 672 
+Q 2266 538 2090 470 
+Q 1914 403 1722 403 
+Q 1517 403 1347 464 
+Q 1178 525 1053 637 
+Q 928 749 854 899 
+Q 781 1050 768 1222 
+L 224 1222 
+Q 230 915 345 672 
+Q 461 429 659 265 
+Q 858 102 1117 16 
+Q 1376 -70 1670 -70 
+Q 2067 -70 2364 54 
+Q 2662 179 2860 390 
+Q 3059 602 3158 874 
+Q 3258 1146 3258 1434 
+Q 3258 1824 3142 2115 
+Q 3027 2406 2828 2601 
+Q 2630 2797 2361 2893 
+Q 2093 2989 1792 2989 
+Q 1562 2989 1328 2909 
+Q 1094 2829 947 2662 
+L 934 2675 
+L 1178 3981 
+L 3008 3981 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-1c"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_7">
+     <g id="analisi1_lez19a_g2-line2d_13">
+      <path d="M 381.381818 364 
+L 381.381818 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="381.381818" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_7">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(378.324162 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-1d" d="M 2650 3379 
+L 3194 3379 
+Q 3142 3942 2809 4240 
+Q 2477 4538 1914 4538 
+Q 1427 4538 1107 4333 
+Q 787 4128 595 3789 
+Q 403 3450 323 3011 
+Q 243 2573 243 2106 
+Q 243 1747 297 1363 
+Q 352 979 518 659 
+Q 685 339 992 134 
+Q 1299 -70 1805 -70 
+Q 2234 -70 2525 74 
+Q 2816 218 2992 438 
+Q 3168 659 3245 928 
+Q 3322 1197 3322 1446 
+Q 3322 1760 3226 2029 
+Q 3130 2298 2954 2496 
+Q 2778 2694 2518 2806 
+Q 2259 2918 1933 2918 
+Q 1562 2918 1277 2777 
+Q 992 2637 800 2323 
+L 787 2336 
+Q 794 2598 838 2899 
+Q 883 3200 1001 3459 
+Q 1120 3718 1331 3888 
+Q 1542 4058 1888 4058 
+Q 2214 4058 2412 3872 
+Q 2611 3686 2650 3379 
+z
+M 1830 2438 
+Q 2061 2438 2233 2355 
+Q 2406 2272 2521 2134 
+Q 2637 1997 2691 1808 
+Q 2746 1619 2746 1408 
+Q 2746 1210 2685 1027 
+Q 2624 845 2509 704 
+Q 2394 563 2224 483 
+Q 2054 403 1830 403 
+Q 1606 403 1430 483 
+Q 1254 563 1136 697 
+Q 1018 832 954 1017 
+Q 890 1203 890 1414 
+Q 890 1626 950 1814 
+Q 1011 2003 1132 2140 
+Q 1254 2278 1427 2358 
+Q 1600 2438 1830 2438 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-1d"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_8">
+     <g id="analisi1_lez19a_g2-line2d_15">
+      <path d="M 433.163636 364 
+L 433.163636 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="433.163636" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_8">
+      <!-- 7 -->
+      <g style="fill: currentColor" transform="translate(430.10598 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-1e" d="M 3258 3994 
+L 3258 4461 
+L 320 4461 
+L 320 3949 
+L 2701 3949 
+Q 2342 3571 2032 3123 
+Q 1722 2675 1485 2172 
+Q 1248 1670 1097 1123 
+Q 947 576 909 0 
+L 1517 0 
+Q 1549 531 1696 1094 
+Q 1843 1658 2076 2189 
+Q 2310 2720 2611 3187 
+Q 2912 3654 3258 3994 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-1e"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_9">
+     <g id="analisi1_lez19a_g2-line2d_17">
+      <path d="M 484.945455 364 
+L 484.945455 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="484.945455" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_9">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(481.887798 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-1f" d="M 992 3360 
+Q 992 3533 1056 3661 
+Q 1120 3789 1225 3878 
+Q 1331 3968 1478 4013 
+Q 1626 4058 1786 4058 
+Q 2118 4058 2332 3882 
+Q 2547 3706 2547 3360 
+Q 2547 3014 2336 2822 
+Q 2125 2630 1798 2630 
+Q 1632 2630 1485 2675 
+Q 1338 2720 1229 2809 
+Q 1120 2899 1056 3036 
+Q 992 3174 992 3360 
+z
+M 416 3379 
+Q 416 3072 589 2813 
+Q 762 2554 1050 2438 
+Q 666 2304 461 2006 
+Q 256 1709 256 1306 
+Q 256 960 374 701 
+Q 493 442 701 269 
+Q 909 96 1190 13 
+Q 1472 -70 1798 -70 
+Q 2112 -70 2387 19 
+Q 2662 109 2864 285 
+Q 3066 461 3184 717 
+Q 3302 973 3302 1306 
+Q 3302 1728 3104 2019 
+Q 2906 2310 2496 2438 
+Q 2784 2566 2953 2819 
+Q 3123 3072 3123 3379 
+Q 3123 3597 3046 3805 
+Q 2970 4013 2806 4176 
+Q 2643 4339 2380 4438 
+Q 2118 4538 1747 4538 
+Q 1485 4538 1245 4461 
+Q 1005 4384 819 4237 
+Q 634 4090 525 3875 
+Q 416 3661 416 3379 
+z
+M 832 1280 
+Q 832 1478 905 1638 
+Q 979 1798 1110 1913 
+Q 1242 2029 1418 2089 
+Q 1594 2150 1792 2150 
+Q 1984 2150 2153 2083 
+Q 2323 2016 2451 1901 
+Q 2579 1786 2652 1629 
+Q 2726 1472 2726 1286 
+Q 2726 1094 2659 934 
+Q 2592 774 2467 656 
+Q 2342 538 2172 470 
+Q 2003 403 1798 403 
+Q 1376 403 1104 636 
+Q 832 870 832 1280 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-1f"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_10">
+     <g id="analisi1_lez19a_g2-line2d_19">
+      <path d="M 536.727273 364 
+L 536.727273 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="536.727273" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_10">
+      <!-- 9 -->
+      <g style="fill: currentColor" transform="translate(533.669616 210.972) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-20" d="M 858 1094 
+L 314 1094 
+Q 365 506 742 218 
+Q 1120 -70 1690 -70 
+Q 2515 -70 2889 560 
+Q 3264 1190 3264 2368 
+Q 3264 3014 3139 3433 
+Q 3014 3853 2803 4096 
+Q 2592 4339 2310 4438 
+Q 2029 4538 1709 4538 
+Q 1382 4538 1107 4429 
+Q 832 4320 633 4125 
+Q 435 3930 326 3658 
+Q 218 3386 218 3059 
+Q 218 2726 310 2444 
+Q 403 2163 585 1964 
+Q 768 1766 1037 1654 
+Q 1306 1542 1651 1542 
+Q 1984 1542 2265 1712 
+Q 2547 1882 2701 2170 
+L 2714 2157 
+Q 2688 1267 2438 835 
+Q 2189 403 1690 403 
+Q 1363 403 1126 582 
+Q 890 762 858 1094 
+z
+M 2618 3021 
+Q 2618 2822 2554 2640 
+Q 2490 2458 2368 2320 
+Q 2246 2182 2073 2102 
+Q 1901 2022 1690 2022 
+Q 1491 2022 1328 2102 
+Q 1165 2182 1046 2316 
+Q 928 2451 861 2624 
+Q 794 2797 794 2982 
+Q 794 3194 842 3386 
+Q 890 3578 995 3728 
+Q 1101 3878 1270 3968 
+Q 1440 4058 1683 4058 
+Q 1914 4058 2086 3974 
+Q 2259 3891 2377 3747 
+Q 2496 3603 2557 3417 
+Q 2618 3232 2618 3021 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-20"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-xtick_11">
+     <g id="analisi1_lez19a_g2-line2d_21">
+      <path d="M 588.509091 364 
+L 588.509091 24 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_22">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-m9622c790c4" x="588.509091" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_11">
+      <!-- 10 -->
+      <g style="fill: currentColor" transform="translate(582.393778 210.972) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-17" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-matplotlib.axis_2">
+    <g id="analisi1_lez19a_g2-ytick_1">
+     <g id="analisi1_lez19a_g2-line2d_23">
+      <path d="M 44.8 307.333333 
+L 614.4 307.333333 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_24">
+      <defs>
+       <path id="analisi1_lez19a_g2-mdf959e8acb" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-mdf959e8acb" x="70.690909" y="307.333333" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_12">
+      <!-- -1 -->
+      <g style="fill: currentColor" transform="translate(53.795909 312.569333) scale(0.11 -0.11)">
+       <defs>
+        <path id="analisi1_lez19a_g2-HelveticaNeue-14" d="M 320 2035 
+L 320 1523 
+L 2170 1523 
+L 2170 2035 
+L 320 2035 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-14"/>
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-18" transform="translate(38.90625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-ytick_2">
+     <g id="analisi1_lez19a_g2-line2d_25">
+      <path d="M 44.8 194 
+L 614.4 194 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-mdf959e8acb" x="70.690909" y="194" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_13">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(58.075597 199.236) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19a_g2-ytick_3">
+     <g id="analisi1_lez19a_g2-line2d_27">
+      <path d="M 44.8 80.666667 
+L 614.4 80.666667 
+" clip-path="url(#analisi1_lez19a_g2-p27637bf05b)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19a_g2-line2d_28">
+      <g>
+       <use xlink:href="#analisi1_lez19a_g2-mdf959e8acb" x="70.690909" y="80.666667" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19a_g2-text_14">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(58.075597 85.902667) scale(0.11 -0.11)">
+       <use xlink:href="#analisi1_lez19a_g2-HelveticaNeue-18"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_29">
+    <defs>
+     <path id="analisi1_lez19a_g2-m5f00b2ec2e" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19a_g2-m5f00b2ec2e" x="614.4" y="194" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_30">
+    <defs>
+     <path id="analisi1_lez19a_g2-mdbd1b83892" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19a_g2-mdbd1b83892" x="70.690909" y="24" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-patch_3">
+    <path d="M 70.690909 364 
+L 70.690909 24 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19a_g2-patch_4">
+    <path d="M 44.8 194 
+L 614.4 194 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_31">
+    <defs>
+     <path id="analisi1_lez19a_g2-mec38244761" d="M 0 2.75 
+C 0.729309 2.75 1.428845 2.460243 1.944544 1.944544 
+C 2.460243 1.428845 2.75 0.729309 2.75 0 
+C 2.75 -0.729309 2.460243 -1.428845 1.944544 -1.944544 
+C 1.428845 -2.460243 0.729309 -2.75 0 -2.75 
+C -0.729309 -2.75 -1.428845 -2.460243 -1.944544 -1.944544 
+C -2.460243 -1.428845 -2.75 -0.729309 -2.75 0 
+C -2.75 0.729309 -2.460243 1.428845 -1.944544 1.944544 
+C -1.428845 2.460243 -0.729309 2.75 0 2.75 
+z
+" style="stroke: #7c4dff"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="70.690909" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_32">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="122.472727" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_33">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="174.254545" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_34">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="226.036364" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_35">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="277.818182" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_36">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="329.6" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_37">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="381.381818" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_38">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="433.163636" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_39">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="484.945455" y="80.666667" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_40">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="536.727273" y="194" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19a_g2-line2d_41">
+    <g clip-path="url(#analisi1_lez19a_g2-p27637bf05b)">
+     <use xlink:href="#analisi1_lez19a_g2-mec38244761" x="588.509091" y="307.333333" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez19a_g2-p27637bf05b">
+   <rect x="44.8" y="24" width="569.6" height="340"/>
+  </clipPath>
+ </defs>
+</svg><figcaption><span class="figure-caption-title">Successione periodica: $a_n=\\cos(n\\pi/2)$</span><span class="figure-explanation">Ai successivi indici $n$ i valori si ripetono nel ciclo $1,0,-1,0$. Le sottosuccessioni con indici $4k$, $4k+1$ e $4k+2$ valgono rispettivamente $1$, $0$ e $-1$: bastano due limiti diversi per escludere il limite della successione. I punti non sono collegati.</span></figcaption></figure>`,
+          `<strong>Passo 2a: indici multipli di 4.</strong> Scegliamo $k_n = 4n$: $$a_{4n} = \\cos\\left(4n \\frac{\\pi}{2}\\right) = \\cos(2n\\pi) = 1 \\quad \\forall n \\in \\mathbb{N}$$ Questa sottosuccessione converge a $1$.`,
+          `<strong>Passo 2b: indici dispari.</strong> Scegliamo $k_n = 2n+1$: $$a_{2n+1} = \\cos\\left((2n+1) \\frac{\\pi}{2}\\right) = 0 \\quad \\forall n \\in \\mathbb{N}$$ Questa sottosuccessione converge a $0$.`,
+          `<strong>Passo 2c: indici della forma $4n+2$.</strong> Scegliamo $k_n = 4n+2$: $$a_{4n+2} = \\cos\\left((4n+2) \\frac{\\pi}{2}\\right) = \\cos(2n\\pi + \\pi) = \\cos(\\pi) = -1 \\quad \\forall n \\in \\mathbb{N}$$ Questa sottosuccessione converge a $-1$. Si noti che le tre successioni di indici $4n$, $2n+1$ e $4n+2$ sono tutte strettamente crescenti, quindi si tratta effettivamente di sottosuccessioni.`,
+          `<strong>Passo 3: applicare il corollario.</strong> Abbiamo trovato tre sottosuccessioni che convergono a tre limiti diversi: $1$, $0$ e $-1$. Basta trovarne due con limiti diversi (per esempio $a_{4n} \\to 1$ e $a_{4n+2} \\to -1$, con $1 \\neq -1$) per concludere, grazie al Corollario, che il limite della successione originale <strong>non esiste</strong>.`
+        ]
+      },
+
+      {
+        id: "s08-bw-domanda",
+        type: "section",
+        title: "Verso Bolzano-Weierstrass: la domanda giusta",
+        icon: "❓",
+        content: `<p>Abbiamo visto che se una successione non ha limite, possiamo talvolta trovare sottosuccessioni che invece convergono. Viene naturale porsi una domanda, che formuliamo con attenzione:</p>
+<blockquote><em>data una successione qualunque, è sempre possibile estrarne una sottosuccessione convergente, cioè con limite <strong>finito</strong>?</em></blockquote>
+<p>La risposta in generale è <strong>no</strong>. Se prendiamo $a_n = n$, allora $\\lim_{n \\to +\\infty} a_n = +\\infty$ e dunque, per il teorema sul limite delle sottosuccessioni, <strong>ogni</strong> sua sottosuccessione tende a $+\\infty$: la successione ammette limite in $\\mathbb{R}^*$, ma nessuna sua sottosuccessione converge a un valore finito.</p>
+<p>Tuttavia, se aggiungiamo un'ipotesi (la <strong>limitatezza</strong>), la risposta diventa affermativa. Questo è il contenuto di uno dei teoremi più importanti dell'analisi.</p>`
+      },
+
+      {
+        id: "s09-bw-enunciato",
+        type: "section",
+        title: "Teorema di Bolzano-Weierstrass: enunciato e nozione di picco",
+        icon: "🏔️",
+        content: `<p><strong>Teorema (Bolzano-Weierstrass).</strong> Ogni successione <strong>limitata</strong> di numeri reali ammette (almeno) una sottosuccessione <strong>convergente</strong>, cioè con limite finito.</p>
+<p>Più precisamente: sia $\\{a_n\\}_{n \\in \\mathbb{N}}$ una successione di numeri reali e supponiamo che esista $M \\gt 0$ tale che $|a_n| \\le M$ per ogni $n \\in \\mathbb{N}$ (ipotesi). Allora esistono una sottosuccessione $\\{a_{k_j}\\}_{j \\geq 1}$ e un numero $L \\in \\mathbb{R}$ tali che $a_{k_j} \\to L$ per $j \\to +\\infty$ (conclusione).</p>
+<p>Questo teorema è fondamentale: ci garantisce che, anche se una successione limitata si comporta in modo "caotico" (come $a_n = (-1)^n$ o $a_n = \\cos(n\\pi/2)$), possiamo sempre "zoomare" su una sua parte — una sottosuccessione — che si comporta bene e converge a un limite finito.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione di picco",
+            content: `<p><strong>Definizione (Picco di una successione).</strong> Sia $\\{a_n\\}_{n \\in \\mathbb{N}}$ una successione. Un indice $n \\in \\mathbb{N}$ si dice <strong>picco</strong> per la successione se tutti i termini che lo seguono sono strettamente più piccoli:</p>
+<p>$$n \\text{ è un picco} \\iff a_m \\lt a_n \\quad \\forall m \\gt n$$</p>
+<p>Un picco è un <em>indice</em>, non un valore della successione: corrisponde a un termine strettamente più grande di tutti i termini che lo seguono. Di contro, un indice $n$ <em>non</em> è un picco se esiste almeno un indice $m \\gt n$ tale che $a_m \\ge a_n$.</p>
+<p>Si noti che la disuguaglianza nella definizione è <strong>stretta</strong>: questo ha una conseguenza importante in presenza di valori ripetuti. Se un valore si ripresenta più avanti nella successione, cioè se esiste $m \\gt n$ con $a_m = a_n$, allora $n$ <em>non</em> è un picco, perché la condizione $a_m \\lt a_n$ fallisce proprio per quell'indice $m$.</p>`
+          },
+          {
+            subtitle: "Esempio 1 — una successione in cui ogni indice è un picco",
+            content: `<p>Consideriamo $a_n = \\dfrac{1}{n+1}$ per $n \\in \\mathbb{N}$, ossia la successione $1, \\tfrac{1}{2}, \\tfrac{1}{3}, \\tfrac{1}{4}, \\dots$</p>
+<p>Fissiamo un indice $n$ e prendiamo un qualunque $m \\gt n$. Allora $m + 1 \\gt n+1 \\gt 0$, dunque</p>
+<p>$$a_m = \\frac{1}{m+1} \\lt \\frac{1}{n+1} = a_n .$$</p>
+<p>La condizione della definizione è verificata per <em>ogni</em> $m \\gt n$, quindi $n$ è un picco. Poiché $n$ era arbitrario, <strong>ogni</strong> indice è un picco e i picchi sono infiniti: siamo nel <strong>Caso 1</strong> della dimostrazione. La sottosuccessione costruita sugli indici dei picchi è in questo caso la successione stessa, strettamente decrescente e limitata inferiormente da $0$, dunque convergente (a $0$).</p>`
+          },
+          {
+            subtitle: "Esempio 2 — una successione in cui nessun indice è un picco",
+            content: `<p>Consideriamo $a_n = (-1)^n$ per $n \\in \\mathbb{N}$, ossia $1, -1, 1, -1, \\dots$</p>
+<p>Fissiamo un indice $n$ e scegliamo $m = n + 2 \\gt n$. Allora $a_m = (-1)^{n+2} = (-1)^n = a_n$, quindi $a_m \\ge a_n$: la condizione $a_m \\lt a_n$ <em>non</em> vale per ogni $m \\gt n$. Dunque $n$ non è un picco. Poiché $n$ era arbitrario, <strong>nessun</strong> indice è un picco: i picchi sono in numero finito (zero) e siamo nel <strong>Caso 2</strong>.</p>
+<p>Vediamo in concreto l'estrazione del Caso 2. Non essendoci picchi, la costruzione può partire da un qualunque indice: scegliamo $k_1 = 0$ (nella notazione della dimostrazione ciò corrisponde alla convenzione $N_{max} = -1$, da cui $k_1 = N_{max} + 1 = 0$). Poiché $k_1 = 0$ non è un picco, esiste $k_2 \\gt k_1$ con $a_{k_2} \\ge a_{k_1}$: la scelta fornita dal ragionamento precedente è $k_2 = k_1 + 2 = 2$, e infatti $a_2 = 1 \\ge 1 = a_0$. Iterando si ottiene</p>
+<p>$$k_1 = 0, \\quad k_2 = 2, \\quad k_3 = 4, \\quad \\dots, \\quad k_j = 2(j-1),$$</p>
+<p>cioè gli indici <em>pari</em>. La sottosuccessione corrispondente è $a_{k_j} = (-1)^{2(j-1)} = 1$ per ogni $j$, ossia la sottosuccessione <em>costante</em> uguale a $1$: non decrescente in senso lato e convergente a $1$. Qui le disuguaglianze del Caso 2 sono tutte uguaglianze: ecco perché nel Caso 2 si ottiene la monotonia in senso lato e non in senso stretto.</p>`
+          },
+          {
+            subtitle: "Esempio 3 — un caso senza picchi ma strettamente crescente",
+            content: `<p>Sia $a_n = -\\dfrac{1}{n}$ per $n \\geq 1$. Nessun indice è un picco, perché la successione è strettamente crescente e quindi dopo ogni termine ce ne sono di più grandi. Siamo nel Caso 2: partendo da $k_1 = 1$ possiamo prendere $k_2 = 2$, $k_3 = 3, \\dots$ ottenendo una sottosuccessione non decrescente, limitata superiormente da $0$, dunque convergente (a $0$).</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s10-bw-dimostrazione",
+        type: "section",
+        title: "Dimostrazione del Teorema di Bolzano-Weierstrass",
+        icon: "🧩",
+        content: `<p>Sia $\\{a_n\\}$ una successione limitata. L'idea della dimostrazione è di costruire una sottosuccessione <strong>monotona</strong>: una volta ottenuta, la limitatezza e il teorema sulle successioni monotone limitate garantiranno la convergenza.</p>
+<p>Per il numero di picchi di una successione ci sono solo due possibilità: l'insieme dei picchi è <strong>infinito</strong>, oppure è <strong>finito</strong> (eventualmente vuoto). Le due possibilità sono mutuamente esclusive e coprono tutti i casi, quindi è sufficiente trattarle separatamente.</p>`,
+        subsections: [
+          {
+            subtitle: "Caso 1 — infiniti picchi",
+            content: `<p>Siano $k_1 \\lt k_2 \\lt k_3 \\lt \\dots$ gli indici dei picchi, ordinati in modo crescente, e consideriamo la sottosuccessione $\\{a_{k_j}\\}_{j \\geq 1}$.</p>
+<ul>
+<li>$k_1$ è un picco, quindi $a_m \\lt a_{k_1}$ per ogni $m \\gt k_1$; in particolare, poiché $k_2 \\gt k_1$, vale $a_{k_2} \\lt a_{k_1}$.</li>
+<li>$k_2$ è un picco, quindi $a_m \\lt a_{k_2}$ per ogni $m \\gt k_2$; in particolare $a_{k_3} \\lt a_{k_2}$.</li>
+<li>In generale, poiché $k_j$ è un picco e $k_{j+1} \\gt k_j$, si ha $a_{k_{j+1}} \\lt a_{k_j}$.</li>
+</ul>
+<p>Otteniamo quindi la catena</p>
+<p>$$a_{k_1} \\gt a_{k_2} \\gt a_{k_3} \\gt \\dots \\gt a_{k_j} \\gt \\dots$$</p>
+<p>La sottosuccessione $\\{a_{k_j}\\}$ è dunque <strong>strettamente decrescente</strong> (si confronti con l'esempio $a_n = 1/(n+1)$). Poiché $\\{a_n\\}$ è limitata per ipotesi, anche $\\{a_{k_j}\\}$ è limitata, in particolare inferiormente. Per il teorema sulla convergenza delle successioni monotone, una successione decrescente e limitata inferiormente ammette limite finito (il suo estremo inferiore). Dunque $\\{a_{k_j}\\}$ è una sottosuccessione convergente.</p>
+<p><em>Esempio illustrativo aggiunto.</em> Consideriamo $a_n=1+1/(n+1)$ per $n$ pari e $a_n=-1/2$ per $n$ dispari. La successione è limitata: $-1/2\\le a_n\\le 2$.</p><figure class="figura" data-id="analisi1_lez19_bw_infiniti"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="740pt" height="430pt" viewBox="0 0 740 430" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez19_bw_infiniti-figure_1">
+  <g id="analisi1_lez19_bw_infiniti-patch_1">
+   <path d="M 0 430 
+L 740 430 
+L 740 0 
+L 0 0 
+L 0 430 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez19_bw_infiniti-axes_1">
+   <g id="analisi1_lez19_bw_infiniti-patch_2">
+    <path d="M 55.5 378.4 
+L 695.6 378.4 
+L 695.6 73.1 
+L 55.5 73.1 
+L 55.5 378.4 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-matplotlib.axis_1">
+    <g id="analisi1_lez19_bw_infiniti-xtick_1">
+     <g id="analisi1_lez19_bw_infiniti-line2d_1">
+      <path d="M 80.119231 378.4 
+L 80.119231 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_2">
+      <defs>
+       <path id="analisi1_lez19_bw_infiniti-mcebadf370d" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="80.119231" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_1">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(76.505637 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-17" d="M 845 2234 
+Q 845 2400 848 2601 
+Q 851 2803 880 3004 
+Q 909 3206 963 3398 
+Q 1018 3590 1123 3734 
+Q 1229 3878 1389 3968 
+Q 1549 4058 1779 4058 
+Q 2010 4058 2170 3968 
+Q 2330 3878 2435 3734 
+Q 2541 3590 2595 3398 
+Q 2650 3206 2678 3004 
+Q 2707 2803 2710 2601 
+Q 2714 2400 2714 2234 
+Q 2714 1978 2698 1661 
+Q 2682 1344 2595 1065 
+Q 2509 787 2317 595 
+Q 2125 403 1779 403 
+Q 1434 403 1242 595 
+Q 1050 787 963 1065 
+Q 877 1344 861 1661 
+Q 845 1978 845 2234 
+z
+M 269 2227 
+Q 269 1978 281 1709 
+Q 294 1440 345 1184 
+Q 397 928 493 701 
+Q 589 474 755 301 
+Q 922 128 1174 29 
+Q 1427 -70 1779 -70 
+Q 2138 -70 2387 29 
+Q 2637 128 2803 301 
+Q 2970 474 3066 701 
+Q 3162 928 3213 1184 
+Q 3264 1440 3277 1709 
+Q 3290 1978 3290 2227 
+Q 3290 2477 3277 2745 
+Q 3264 3014 3213 3270 
+Q 3162 3526 3066 3756 
+Q 2970 3987 2803 4160 
+Q 2637 4333 2384 4435 
+Q 2131 4538 1779 4538 
+Q 1427 4538 1174 4435 
+Q 922 4333 755 4160 
+Q 589 3987 493 3756 
+Q 397 3526 345 3270 
+Q 294 3014 281 2745 
+Q 269 2477 269 2227 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_2">
+     <g id="analisi1_lez19_bw_infiniti-line2d_3">
+      <path d="M 141.667308 378.4 
+L 141.667308 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="141.667308" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(138.053714 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-19" d="M 282 2931 
+L 826 2931 
+Q 819 3136 867 3337 
+Q 915 3539 1024 3699 
+Q 1133 3859 1302 3958 
+Q 1472 4058 1709 4058 
+Q 1888 4058 2048 4000 
+Q 2208 3942 2326 3833 
+Q 2445 3725 2515 3574 
+Q 2586 3424 2586 3238 
+Q 2586 3002 2512 2822 
+Q 2438 2643 2294 2489 
+Q 2150 2336 1932 2185 
+Q 1715 2035 1427 1856 
+Q 1190 1715 972 1555 
+Q 755 1395 582 1184 
+Q 410 973 298 688 
+Q 186 403 154 0 
+L 3117 0 
+L 3117 480 
+L 787 480 
+Q 826 691 950 854 
+Q 1075 1018 1251 1158 
+Q 1427 1299 1638 1424 
+Q 1850 1549 2061 1677 
+Q 2272 1811 2470 1958 
+Q 2669 2106 2822 2288 
+Q 2976 2470 3069 2700 
+Q 3162 2931 3162 3232 
+Q 3162 3552 3050 3795 
+Q 2938 4038 2746 4201 
+Q 2554 4365 2294 4451 
+Q 2035 4538 1741 4538 
+Q 1382 4538 1100 4416 
+Q 819 4294 630 4080 
+Q 442 3866 352 3571 
+Q 262 3277 282 2931 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_3">
+     <g id="analisi1_lez19_bw_infiniti-line2d_5">
+      <path d="M 203.215385 378.4 
+L 203.215385 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="203.215385" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_3">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(199.601791 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-1b" d="M 2170 1542 
+L 646 1542 
+L 2157 3763 
+L 2170 3763 
+L 2170 1542 
+z
+M 2682 1542 
+L 2682 4538 
+L 2246 4538 
+L 179 1587 
+L 179 1062 
+L 2170 1062 
+L 2170 0 
+L 2682 0 
+L 2682 1062 
+L 3296 1062 
+L 3296 1542 
+L 2682 1542 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1b"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_4">
+     <g id="analisi1_lez19_bw_infiniti-line2d_7">
+      <path d="M 264.763462 378.4 
+L 264.763462 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="264.763462" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_4">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(261.149868 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-1d" d="M 2650 3379 
+L 3194 3379 
+Q 3142 3942 2809 4240 
+Q 2477 4538 1914 4538 
+Q 1427 4538 1107 4333 
+Q 787 4128 595 3789 
+Q 403 3450 323 3011 
+Q 243 2573 243 2106 
+Q 243 1747 297 1363 
+Q 352 979 518 659 
+Q 685 339 992 134 
+Q 1299 -70 1805 -70 
+Q 2234 -70 2525 74 
+Q 2816 218 2992 438 
+Q 3168 659 3245 928 
+Q 3322 1197 3322 1446 
+Q 3322 1760 3226 2029 
+Q 3130 2298 2954 2496 
+Q 2778 2694 2518 2806 
+Q 2259 2918 1933 2918 
+Q 1562 2918 1277 2777 
+Q 992 2637 800 2323 
+L 787 2336 
+Q 794 2598 838 2899 
+Q 883 3200 1001 3459 
+Q 1120 3718 1331 3888 
+Q 1542 4058 1888 4058 
+Q 2214 4058 2412 3872 
+Q 2611 3686 2650 3379 
+z
+M 1830 2438 
+Q 2061 2438 2233 2355 
+Q 2406 2272 2521 2134 
+Q 2637 1997 2691 1808 
+Q 2746 1619 2746 1408 
+Q 2746 1210 2685 1027 
+Q 2624 845 2509 704 
+Q 2394 563 2224 483 
+Q 2054 403 1830 403 
+Q 1606 403 1430 483 
+Q 1254 563 1136 697 
+Q 1018 832 954 1017 
+Q 890 1203 890 1414 
+Q 890 1626 950 1814 
+Q 1011 2003 1132 2140 
+Q 1254 2278 1427 2358 
+Q 1600 2438 1830 2438 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1d"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_5">
+     <g id="analisi1_lez19_bw_infiniti-line2d_9">
+      <path d="M 326.311538 378.4 
+L 326.311538 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="326.311538" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_5">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(322.697945 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-1f" d="M 992 3360 
+Q 992 3533 1056 3661 
+Q 1120 3789 1225 3878 
+Q 1331 3968 1478 4013 
+Q 1626 4058 1786 4058 
+Q 2118 4058 2332 3882 
+Q 2547 3706 2547 3360 
+Q 2547 3014 2336 2822 
+Q 2125 2630 1798 2630 
+Q 1632 2630 1485 2675 
+Q 1338 2720 1229 2809 
+Q 1120 2899 1056 3036 
+Q 992 3174 992 3360 
+z
+M 416 3379 
+Q 416 3072 589 2813 
+Q 762 2554 1050 2438 
+Q 666 2304 461 2006 
+Q 256 1709 256 1306 
+Q 256 960 374 701 
+Q 493 442 701 269 
+Q 909 96 1190 13 
+Q 1472 -70 1798 -70 
+Q 2112 -70 2387 19 
+Q 2662 109 2864 285 
+Q 3066 461 3184 717 
+Q 3302 973 3302 1306 
+Q 3302 1728 3104 2019 
+Q 2906 2310 2496 2438 
+Q 2784 2566 2953 2819 
+Q 3123 3072 3123 3379 
+Q 3123 3597 3046 3805 
+Q 2970 4013 2806 4176 
+Q 2643 4339 2380 4438 
+Q 2118 4538 1747 4538 
+Q 1485 4538 1245 4461 
+Q 1005 4384 819 4237 
+Q 634 4090 525 3875 
+Q 416 3661 416 3379 
+z
+M 832 1280 
+Q 832 1478 905 1638 
+Q 979 1798 1110 1913 
+Q 1242 2029 1418 2089 
+Q 1594 2150 1792 2150 
+Q 1984 2150 2153 2083 
+Q 2323 2016 2451 1901 
+Q 2579 1786 2652 1629 
+Q 2726 1472 2726 1286 
+Q 2726 1094 2659 934 
+Q 2592 774 2467 656 
+Q 2342 538 2172 470 
+Q 2003 403 1798 403 
+Q 1376 403 1104 636 
+Q 832 870 832 1280 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1f"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_6">
+     <g id="analisi1_lez19_bw_infiniti-line2d_11">
+      <path d="M 387.859615 378.4 
+L 387.859615 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="387.859615" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_6">
+      <!-- 10 -->
+      <g style="fill: currentColor" transform="translate(380.632428 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-18" d="M 2278 0 
+L 2278 4538 
+L 1862 4538 
+Q 1818 4282 1696 4115 
+Q 1574 3949 1398 3853 
+Q 1222 3757 1004 3721 
+Q 787 3686 557 3686 
+L 557 3251 
+L 1734 3251 
+L 1734 0 
+L 2278 0 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-17" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_7">
+     <g id="analisi1_lez19_bw_infiniti-line2d_13">
+      <path d="M 449.407692 378.4 
+L 449.407692 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="449.407692" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_7">
+      <!-- 12 -->
+      <g style="fill: currentColor" transform="translate(442.180505 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-19" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_8">
+     <g id="analisi1_lez19_bw_infiniti-line2d_15">
+      <path d="M 510.955769 378.4 
+L 510.955769 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="510.955769" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_8">
+      <!-- 14 -->
+      <g style="fill: currentColor" transform="translate(503.728582 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1b" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_9">
+     <g id="analisi1_lez19_bw_infiniti-line2d_17">
+      <path d="M 572.503846 378.4 
+L 572.503846 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="572.503846" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_9">
+      <!-- 16 -->
+      <g style="fill: currentColor" transform="translate(565.276659 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1d" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-xtick_10">
+     <g id="analisi1_lez19_bw_infiniti-line2d_19">
+      <path d="M 634.051923 378.4 
+L 634.051923 73.1 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-mcebadf370d" x="634.051923" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_10">
+      <!-- 18 -->
+      <g style="fill: currentColor" transform="translate(626.824736 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1f" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-matplotlib.axis_2">
+    <g id="analisi1_lez19_bw_infiniti-ytick_1">
+     <g id="analisi1_lez19_bw_infiniti-line2d_21">
+      <path d="M 55.5 348.370492 
+L 695.6 348.370492 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_22">
+      <defs>
+       <path id="analisi1_lez19_bw_infiniti-m0939d173af" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-m0939d173af" x="80.119231" y="348.370492" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_11">
+      <!-- -0.5 -->
+      <g style="fill: currentColor" transform="translate(50.49345 354.558492) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-14" d="M 320 2035 
+L 320 1523 
+L 2170 1523 
+L 2170 2035 
+L 320 2035 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-15" d="M 531 710 
+L 531 0 
+L 1242 0 
+L 1242 710 
+L 531 710 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-1c" d="M 3008 3981 
+L 3008 4461 
+L 768 4461 
+L 346 2106 
+L 813 2080 
+Q 973 2272 1181 2390 
+Q 1389 2509 1658 2509 
+Q 1888 2509 2077 2432 
+Q 2266 2355 2400 2217 
+Q 2534 2080 2608 1891 
+Q 2682 1702 2682 1478 
+Q 2682 1210 2605 1008 
+Q 2528 806 2397 672 
+Q 2266 538 2090 470 
+Q 1914 403 1722 403 
+Q 1517 403 1347 464 
+Q 1178 525 1053 637 
+Q 928 749 854 899 
+Q 781 1050 768 1222 
+L 224 1222 
+Q 230 915 345 672 
+Q 461 429 659 265 
+Q 858 102 1117 16 
+Q 1376 -70 1670 -70 
+Q 2067 -70 2364 54 
+Q 2662 179 2860 390 
+Q 3059 602 3158 874 
+Q 3258 1146 3258 1434 
+Q 3258 1824 3142 2115 
+Q 3027 2406 2828 2601 
+Q 2630 2797 2361 2893 
+Q 2093 2989 1792 2989 
+Q 1562 2989 1328 2909 
+Q 1094 2829 947 2662 
+L 934 2675 
+L 1178 3981 
+L 3008 3981 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-14"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-17" transform="translate(38.90625 0)"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-15" transform="translate(94.5 0)"/>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-1c" transform="translate(122.296875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-ytick_2">
+     <g id="analisi1_lez19_bw_infiniti-line2d_23">
+      <path d="M 55.5 298.321311 
+L 695.6 298.321311 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-m0939d173af" x="80.119231" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_12">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(66.392043 304.509311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-ytick_3">
+     <g id="analisi1_lez19_bw_infiniti-line2d_25">
+      <path d="M 55.5 198.222951 
+L 695.6 198.222951 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-m0939d173af" x="80.119231" y="198.222951" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_13">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(66.392043 204.410951) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-ytick_4">
+     <g id="analisi1_lez19_bw_infiniti-line2d_27">
+      <path d="M 55.5 98.12459 
+L 695.6 98.12459 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-line2d_28">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_infiniti-m0939d173af" x="80.119231" y="98.12459" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_infiniti-text_14">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(66.392043 104.31259) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-19"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-line2d_29">
+    <defs>
+     <path id="analisi1_lez19_bw_infiniti-mb3813fc669" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mb3813fc669" x="695.6" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-line2d_30">
+    <defs>
+     <path id="analisi1_lez19_bw_infiniti-m0a3f667f51" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m0a3f667f51" x="80.119231" y="73.1" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-line2d_31">
+    <path d="M 55.5 198.222951 
+L 695.6 198.222951 
+" clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 1.5"/>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-patch_3">
+    <path d="M 80.119231 378.4 
+L 80.119231 73.1 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-patch_4">
+    <path d="M 55.5 298.321311 
+L 695.6 298.321311 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_15">
+    <g style="fill: #7c4dff" transform="translate(61.139231 86.12459) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" d="M 1172 4863 
+L 1747 4863 
+L 1197 2028 
+L 3169 3500 
+L 3916 3500 
+L 1716 1825 
+L 3322 0 
+L 2625 0 
+L 1131 1709 
+L 800 0 
+L 225 0 
+L 1172 4863 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-13" d="M 2034 4250 
+Q 1547 4250 1301 3770 
+Q 1056 3291 1056 2328 
+Q 1056 1369 1301 889 
+Q 1547 409 2034 409 
+Q 2525 409 2770 889 
+Q 3016 1369 3016 2328 
+Q 3016 3291 2770 3770 
+Q 2525 4250 2034 4250 
+z
+M 2034 4750 
+Q 2819 4750 3233 4129 
+Q 3647 3509 3647 2328 
+Q 3647 1150 3233 529 
+Q 2819 -91 2034 -91 
+Q 1250 -91 836 529 
+Q 422 1150 422 2328 
+Q 422 3509 836 4129 
+Q 1250 4750 2034 4750 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-14" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-13" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_16">
+    <g style="fill: #7c4dff" transform="translate(122.687308 141.856831) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-15" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-15" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_17">
+    <g style="fill: #7c4dff" transform="translate(184.235385 166.203279) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-16" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-17" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_18">
+    <g style="fill: #7c4dff" transform="translate(245.783462 160.923185) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-17" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-19" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_19">
+    <g style="fill: #7c4dff" transform="translate(387.859615 136.161967) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-21" d="M 678 3150 
+L 678 3719 
+L 4684 2266 
+L 4684 1747 
+L 678 294 
+L 678 863 
+L 3897 2003 
+L 678 3150 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-d79" d="M 737 2388 
+L 1397 2388 
+L 1397 1594 
+L 737 1594 
+L 737 2388 
+z
+M 2868 2388 
+L 3528 2388 
+L 3528 1594 
+L 2868 1594 
+L 2868 2388 
+z
+M 5000 2388 
+L 5660 2388 
+L 5660 1594 
+L 5000 1594 
+L 5000 2388 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-44" transform="translate(0 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(61.279297 -14.109326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-14" transform="translate(101.816406 -24.609292) scale(0.49)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-21" transform="translate(157.122559 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-44" transform="translate(260.394043 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(321.67334 -14.109326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-15" transform="translate(362.210449 -24.609292) scale(0.49)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-21" transform="translate(417.516602 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-44" transform="translate(520.788086 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-4e" transform="translate(582.067383 -14.109326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-16" transform="translate(622.604492 -24.609292) scale(0.49)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-21" transform="translate(677.910645 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-d79" transform="translate(781.182129 0.890625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_20">
+    <g style="fill: #7c4dff" transform="translate(667.903365 176.201311) scale(0.17 -0.17)">
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-d79" transform="translate(0 0.6875)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_21">
+    <g style="fill: currentColor" transform="translate(711.6025 299.022) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-51" d="M 3566 2113 
+L 3156 0 
+L 2578 0 
+L 2988 2091 
+Q 3016 2238 3031 2350 
+Q 3047 2463 3047 2528 
+Q 3047 2791 2881 2937 
+Q 2716 3084 2419 3084 
+Q 1956 3084 1622 2776 
+Q 1288 2469 1184 1941 
+L 800 0 
+L 225 0 
+L 903 3500 
+L 1478 3500 
+L 1363 2950 
+Q 1603 3253 1940 3418 
+Q 2278 3584 2650 3584 
+Q 3113 3584 3367 3334 
+Q 3622 3084 3622 2631 
+Q 3622 2519 3608 2391 
+Q 3594 2263 3566 2113 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-51"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-text_22">
+    <g style="fill: currentColor" transform="translate(86.2248 59.3615) scale(0.13 -0.13)">
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-DejaVuSans-Oblique-51" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-line2d_32">
+    <defs>
+     <path id="analisi1_lez19_bw_infiniti-mabcb99090f" d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" style="stroke: #8b95a5"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)">
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="110.893269" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="172.441346" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="233.989423" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="295.5375" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="357.085577" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="418.633654" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="480.181731" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="541.729808" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="603.277885" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-legend_1">
+    <g id="analisi1_lez19_bw_infiniti-line2d_33">
+     <g>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-mabcb99090f" x="80.2" y="29.657" style="fill: #8b95a5; stroke: #8b95a5"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-text_23">
+     <!-- Altri termini -->
+     <g style="fill: currentColor" transform="translate(103.6 34.207) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-28" d="M 1286 1888 
+L 2061 4019 
+L 2074 4019 
+L 2835 1888 
+L 1286 1888 
+z
+M 1741 4570 
+L -38 0 
+L 582 0 
+L 1094 1376 
+L 3027 1376 
+L 3526 0 
+L 4198 0 
+L 2413 4570 
+L 1741 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-53" d="M 442 4570 
+L 442 0 
+L 986 0 
+L 986 4570 
+L 442 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-5b" d="M 1165 3309 
+L 1165 4301 
+L 621 4301 
+L 621 3309 
+L 58 3309 
+L 58 2829 
+L 621 2829 
+L 621 723 
+Q 621 493 665 352 
+Q 710 211 803 134 
+Q 896 58 1046 29 
+Q 1197 0 1408 0 
+L 1824 0 
+L 1824 480 
+L 1574 480 
+Q 1446 480 1366 489 
+Q 1286 499 1241 531 
+Q 1197 563 1181 620 
+Q 1165 678 1165 774 
+L 1165 2829 
+L 1824 2829 
+L 1824 3309 
+L 1165 3309 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-59" d="M 390 3309 
+L 390 0 
+L 934 0 
+L 934 1472 
+Q 934 1792 998 2038 
+Q 1062 2285 1203 2457 
+Q 1344 2630 1574 2720 
+Q 1805 2810 2131 2810 
+L 2131 3386 
+Q 1690 3398 1402 3206 
+Q 1114 3014 915 2611 
+L 902 2611 
+L 902 3309 
+L 390 3309 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-50" d="M 986 3904 
+L 986 4570 
+L 442 4570 
+L 442 3904 
+L 986 3904 
+z
+M 442 3309 
+L 442 0 
+L 986 0 
+L 986 3309 
+L 442 3309 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-3" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-4c" d="M 2707 1971 
+L 806 1971 
+Q 819 2163 889 2332 
+Q 960 2502 1081 2630 
+Q 1203 2758 1372 2832 
+Q 1542 2906 1754 2906 
+Q 1958 2906 2128 2832 
+Q 2298 2758 2422 2633 
+Q 2547 2509 2620 2336 
+Q 2694 2163 2707 1971 
+z
+M 3232 1050 
+L 2694 1050 
+Q 2624 723 2403 563 
+Q 2182 403 1837 403 
+Q 1568 403 1369 492 
+Q 1171 582 1043 732 
+Q 915 883 857 1078 
+Q 800 1274 806 1491 
+L 3283 1491 
+Q 3296 1792 3229 2125 
+Q 3162 2458 2986 2739 
+Q 2810 3021 2518 3203 
+Q 2227 3386 1786 3386 
+Q 1446 3386 1161 3258 
+Q 877 3130 669 2899 
+Q 461 2669 345 2355 
+Q 230 2042 230 1664 
+Q 243 1286 342 966 
+Q 442 646 640 416 
+Q 838 186 1129 58 
+Q 1421 -70 1818 -70 
+Q 2381 -70 2752 211 
+Q 3123 493 3232 1050 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-54" d="M 410 3309 
+L 410 0 
+L 954 0 
+L 954 2061 
+Q 954 2157 1002 2301 
+Q 1050 2445 1155 2579 
+Q 1261 2714 1430 2810 
+Q 1600 2906 1837 2906 
+Q 2022 2906 2140 2851 
+Q 2259 2797 2329 2697 
+Q 2400 2598 2429 2464 
+Q 2458 2330 2458 2170 
+L 2458 0 
+L 3002 0 
+L 3002 2061 
+Q 3002 2445 3232 2675 
+Q 3462 2906 3866 2906 
+Q 4064 2906 4189 2848 
+Q 4314 2790 4384 2691 
+Q 4454 2592 4480 2457 
+Q 4506 2323 4506 2170 
+L 4506 0 
+L 5050 0 
+L 5050 2426 
+Q 5050 2682 4970 2864 
+Q 4890 3046 4746 3161 
+Q 4602 3277 4400 3331 
+Q 4198 3386 3949 3386 
+Q 3622 3386 3350 3238 
+Q 3078 3091 2912 2822 
+Q 2810 3130 2560 3258 
+Q 2310 3386 2003 3386 
+Q 1306 3386 934 2822 
+L 922 2822 
+L 922 3309 
+L 410 3309 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-55" d="M 410 3309 
+L 410 0 
+L 954 0 
+L 954 1869 
+Q 954 2093 1014 2281 
+Q 1075 2470 1196 2611 
+Q 1318 2752 1500 2829 
+Q 1683 2906 1933 2906 
+Q 2246 2906 2425 2726 
+Q 2605 2547 2605 2240 
+L 2605 0 
+L 3149 0 
+L 3149 2176 
+Q 3149 2445 3094 2665 
+Q 3040 2886 2905 3046 
+Q 2771 3206 2553 3296 
+Q 2336 3386 2010 3386 
+Q 1274 3386 934 2784 
+L 922 2784 
+L 922 3309 
+L 410 3309 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-28"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-53" transform="translate(64.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-5b" transform="translate(87 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-59" transform="translate(118.5 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(151.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-3" transform="translate(174 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-5b" transform="translate(201.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4c" transform="translate(233.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-59" transform="translate(287 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-54" transform="translate(320.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(405.59375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-55" transform="translate(427.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(483.390625 0)"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-line2d_34">
+     <defs>
+      <path id="analisi1_lez19_bw_infiniti-m8d943e6d8b" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #7c4dff"/>
+     </defs>
+     <g>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="208.327187" y="29.657" style="fill: #7c4dff; stroke: #7c4dff"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-text_24">
+     <!-- Picchi scelti -->
+     <g style="fill: currentColor" transform="translate(231.727187 34.207) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-37" d="M 1107 2381 
+L 1107 4058 
+L 2298 4058 
+Q 2816 4058 3056 3843 
+Q 3296 3629 3296 3219 
+Q 3296 2810 3056 2592 
+Q 2816 2374 2298 2381 
+L 1107 2381 
+z
+M 499 4570 
+L 499 0 
+L 1107 0 
+L 1107 1869 
+L 2502 1869 
+Q 3194 1862 3549 2220 
+Q 3904 2579 3904 3219 
+Q 3904 3859 3549 4214 
+Q 3194 4570 2502 4570 
+L 499 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-4a" d="M 2656 2246 
+L 3219 2246 
+Q 3187 2541 3065 2755 
+Q 2944 2970 2755 3110 
+Q 2566 3251 2320 3318 
+Q 2074 3386 1792 3386 
+Q 1402 3386 1107 3248 
+Q 813 3110 617 2870 
+Q 422 2630 326 2307 
+Q 230 1984 230 1613 
+Q 230 1242 329 931 
+Q 429 621 624 397 
+Q 819 173 1110 51 
+Q 1402 -70 1779 -70 
+Q 2413 -70 2781 262 
+Q 3149 595 3238 1210 
+L 2682 1210 
+Q 2630 826 2403 614 
+Q 2176 403 1773 403 
+Q 1517 403 1331 505 
+Q 1146 608 1030 777 
+Q 915 947 860 1164 
+Q 806 1382 806 1613 
+Q 806 1862 857 2096 
+Q 909 2330 1027 2509 
+Q 1146 2688 1344 2797 
+Q 1542 2906 1837 2906 
+Q 2182 2906 2387 2733 
+Q 2592 2560 2656 2246 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-4f" d="M 410 4570 
+L 410 0 
+L 954 0 
+L 954 1869 
+Q 954 2093 1014 2281 
+Q 1075 2470 1196 2611 
+Q 1318 2752 1500 2829 
+Q 1683 2906 1933 2906 
+Q 2246 2906 2425 2726 
+Q 2605 2547 2605 2240 
+L 2605 0 
+L 3149 0 
+L 3149 2176 
+Q 3149 2445 3094 2665 
+Q 3040 2886 2905 3046 
+Q 2771 3206 2553 3296 
+Q 2336 3386 2010 3386 
+Q 1862 3386 1705 3354 
+Q 1549 3322 1405 3254 
+Q 1261 3187 1145 3081 
+Q 1030 2976 966 2822 
+L 954 2822 
+L 954 4570 
+L 410 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-5a" d="M 742 1043 
+L 198 1043 
+Q 211 736 326 521 
+Q 442 307 634 176 
+Q 826 45 1075 -12 
+Q 1325 -70 1600 -70 
+Q 1850 -70 2102 -22 
+Q 2355 26 2556 147 
+Q 2758 269 2883 467 
+Q 3008 666 3008 966 
+Q 3008 1203 2915 1363 
+Q 2822 1523 2672 1628 
+Q 2522 1734 2326 1798 
+Q 2131 1862 1926 1907 
+Q 1734 1952 1542 1993 
+Q 1350 2035 1196 2096 
+Q 1043 2157 944 2249 
+Q 845 2342 845 2483 
+Q 845 2611 909 2691 
+Q 973 2771 1075 2819 
+Q 1178 2867 1302 2886 
+Q 1427 2906 1549 2906 
+Q 1683 2906 1814 2877 
+Q 1946 2848 2054 2784 
+Q 2163 2720 2233 2614 
+Q 2304 2509 2317 2349 
+L 2861 2349 
+Q 2842 2650 2733 2851 
+Q 2624 3053 2441 3171 
+Q 2259 3290 2022 3338 
+Q 1786 3386 1504 3386 
+Q 1286 3386 1065 3331 
+Q 845 3277 669 3165 
+Q 493 3053 381 2873 
+Q 269 2694 269 2445 
+Q 269 2125 429 1945 
+Q 589 1766 829 1667 
+Q 1069 1568 1350 1513 
+Q 1632 1459 1872 1392 
+Q 2112 1325 2272 1216 
+Q 2432 1107 2432 896 
+Q 2432 742 2355 643 
+Q 2278 544 2160 493 
+Q 2042 442 1901 422 
+Q 1760 403 1632 403 
+Q 1466 403 1309 435 
+Q 1152 467 1027 540 
+Q 902 614 825 739 
+Q 749 864 742 1043 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-37"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(64.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4a" transform="translate(87 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4a" transform="translate(140.703125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4f" transform="translate(194.40625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(250 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-3" transform="translate(272.203125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-5a" transform="translate(300 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4a" transform="translate(350 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4c" transform="translate(403.703125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-53" transform="translate(457.40625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-5b" transform="translate(479.609375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(511.109375 0)"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-line2d_35">
+     <path d="M 327.057813 29.657 
+L 340.057813 29.657 
+L 353.057813 29.657 
+" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 1.5"/>
+    </g>
+    <g id="analisi1_lez19_bw_infiniti-text_25">
+     <!-- Limite L = 1 -->
+     <g style="fill: currentColor" transform="translate(363.457812 34.207) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-33" d="M 499 4570 
+L 499 0 
+L 3526 0 
+L 3526 512 
+L 1107 512 
+L 1107 4570 
+L 499 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_infiniti-HelveticaNeue-24" d="M 307 1190 
+L 307 755 
+L 3533 755 
+L 3533 1190 
+L 307 1190 
+z
+M 3533 2048 
+L 3533 2483 
+L 307 2483 
+L 307 2048 
+L 3533 2048 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-33"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(55.59375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-54" transform="translate(77.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-50" transform="translate(163.09375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-5b" transform="translate(185.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-4c" transform="translate(216.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-3" transform="translate(270.5 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-33" transform="translate(298.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-3" transform="translate(353.890625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-24" transform="translate(381.6875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-3" transform="translate(441.6875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_infiniti-HelveticaNeue-18" transform="translate(469.484375 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_infiniti-line2d_36">
+    <g clip-path="url(#analisi1_lez19_bw_infiniti-p3aa70954c6)">
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="80.119231" y="98.12459" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="141.667308" y="164.856831" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="203.215385" y="178.203279" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="264.763462" y="183.923185" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="326.311538" y="187.100911" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="387.859615" y="189.1231" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="449.407692" y="190.523077" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="510.955769" y="191.549727" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="572.503846" y="192.334812" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_infiniti-m8d943e6d8b" x="634.051923" y="192.954616" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez19_bw_infiniti-p3aa70954c6">
+   <rect x="55.5" y="73.1" width="640.1" height="305.3"/>
+  </clipPath>
+ </defs>
+</svg><figcaption><span class="figure-caption-title">Infiniti picchi: una sottosuccessione decrescente</span><span class="figure-explanation">I punti viola sono i termini di indice pari: ognuno è maggiore di tutti i termini che lo seguono, quindi i picchi sono infiniti. Scegliendo $k_j=2(j-1)$, con $j\\ge1$, si ha $a_{k_j}=1+1/(2j-1)\\searrow1$: la sottosuccessione è strettamente decrescente e limitata inferiormente. Il tratteggio indica il limite $L=1$; i punti grigi restano fuori dall’estrazione.</span></figcaption></figure>
+`
+          },
+          {
+            subtitle: "Caso 2 — numero finito di picchi (eventualmente zero)",
+            content: `<p>Se i picchi sono in numero finito, sia $N_{max}$ il più grande fra i loro indici (se non ci sono picchi si pone $N_{max} = 0$, oppure convenzionalmente $N_{max} = -1$ se si vuole partire da $k_1 = 0$). Scegliamo come primo indice</p>
+<p>$$k_1 = N_{max} + 1 .$$</p>
+<p>Per costruzione, <strong>nessun</strong> indice $m \\geq k_1$ è un picco. Costruiamo ora la sottosuccessione per ricorrenza.</p>
+<ul>
+<li>L'indice $k_1$ non è un picco: ciò significa che la condizione "$a_m \\lt a_{k_1}$ per ogni $m \\gt k_1$" è <strong>falsa</strong>. Negando il quantificatore universale, esiste quindi almeno un indice $k_2 \\gt k_1$ tale che $a_{k_2} \\geq a_{k_1}$.</li>
+<li>Anche $k_2$ non è un picco, poiché $k_2 \\gt k_1 \\gt N_{max}$; quindi con lo stesso argomento esiste $k_3 \\gt k_2$ con $a_{k_3} \\geq a_{k_2}$.</li>
+<li>Iterando, costruiamo indici $k_1 \\lt k_2 \\lt k_3 \\lt \\dots$ tali che $$a_{k_1} \\le a_{k_2} \\le a_{k_3} \\le \\dots \\le a_{k_j} \\le \\dots$$</li>
+</ul>
+<p>La successione di indici $\\{k_j\\}$ è strettamente crescente per costruzione, dunque $\\{a_{k_j}\\}$ è effettivamente una sottosuccessione di $\\{a_n\\}$, ed è <strong>non decrescente</strong>. Le disuguaglianze sono in senso lato perché la negazione della condizione di picco fornisce $a_m \\ge a_n$, con possibile uguaglianza, come si vede nell'esempio $a_n = (-1)^n$, dove si ottiene una sottosuccessione costante.</p>
+<p>Poiché $\\{a_n\\}$ è limitata, in particolare superiormente, lo è anche $\\{a_{k_j}\\}$. Applicando di nuovo il teorema sulle successioni monotone e limitate, la sottosuccessione non decrescente e limitata superiormente ammette limite finito (il suo estremo superiore). Anche in questo caso abbiamo dunque trovato una sottosuccessione convergente.</p>
+
+<p><em>Esempio illustrativo aggiunto.</em> Poniamo $a_0=2$, $a_1=3/2$; per $n\\ge2$ pari, $a_n=1-1/(n-1)$, e per $n\\ge3$ dispari, $a_n=-1/(n-1)$. Anche qui $-1/2\\le a_n\\le2$.</p><figure class="figura" data-id="analisi1_lez19_bw_finiti"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="740pt" height="430pt" viewBox="0 0 740 430" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="analisi1_lez19_bw_finiti-figure_1">
+  <g id="analisi1_lez19_bw_finiti-patch_1">
+   <path d="M 0 430 
+L 740 430 
+L 740 0 
+L 0 0 
+L 0 430 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="analisi1_lez19_bw_finiti-axes_1">
+   <g id="analisi1_lez19_bw_finiti-patch_2">
+    <path d="M 55.5 378.4 
+L 695.6 378.4 
+L 695.6 73.1 
+L 55.5 73.1 
+L 55.5 378.4 
+z
+" style="fill: none"/>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-matplotlib.axis_1">
+    <g id="analisi1_lez19_bw_finiti-xtick_1">
+     <g id="analisi1_lez19_bw_finiti-line2d_1">
+      <path d="M 80.119231 378.4 
+L 80.119231 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_2">
+      <defs>
+       <path id="analisi1_lez19_bw_finiti-m5fa619b603" d="M 0 0 
+L 0 3 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="80.119231" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_1">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(76.505637 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-17" d="M 845 2234 
+Q 845 2400 848 2601 
+Q 851 2803 880 3004 
+Q 909 3206 963 3398 
+Q 1018 3590 1123 3734 
+Q 1229 3878 1389 3968 
+Q 1549 4058 1779 4058 
+Q 2010 4058 2170 3968 
+Q 2330 3878 2435 3734 
+Q 2541 3590 2595 3398 
+Q 2650 3206 2678 3004 
+Q 2707 2803 2710 2601 
+Q 2714 2400 2714 2234 
+Q 2714 1978 2698 1661 
+Q 2682 1344 2595 1065 
+Q 2509 787 2317 595 
+Q 2125 403 1779 403 
+Q 1434 403 1242 595 
+Q 1050 787 963 1065 
+Q 877 1344 861 1661 
+Q 845 1978 845 2234 
+z
+M 269 2227 
+Q 269 1978 281 1709 
+Q 294 1440 345 1184 
+Q 397 928 493 701 
+Q 589 474 755 301 
+Q 922 128 1174 29 
+Q 1427 -70 1779 -70 
+Q 2138 -70 2387 29 
+Q 2637 128 2803 301 
+Q 2970 474 3066 701 
+Q 3162 928 3213 1184 
+Q 3264 1440 3277 1709 
+Q 3290 1978 3290 2227 
+Q 3290 2477 3277 2745 
+Q 3264 3014 3213 3270 
+Q 3162 3526 3066 3756 
+Q 2970 3987 2803 4160 
+Q 2637 4333 2384 4435 
+Q 2131 4538 1779 4538 
+Q 1427 4538 1174 4435 
+Q 922 4333 755 4160 
+Q 589 3987 493 3756 
+Q 397 3526 345 3270 
+Q 294 3014 281 2745 
+Q 269 2477 269 2227 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_2">
+     <g id="analisi1_lez19_bw_finiti-line2d_3">
+      <path d="M 141.667308 378.4 
+L 141.667308 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_4">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="141.667308" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_2">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(138.053714 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-19" d="M 282 2931 
+L 826 2931 
+Q 819 3136 867 3337 
+Q 915 3539 1024 3699 
+Q 1133 3859 1302 3958 
+Q 1472 4058 1709 4058 
+Q 1888 4058 2048 4000 
+Q 2208 3942 2326 3833 
+Q 2445 3725 2515 3574 
+Q 2586 3424 2586 3238 
+Q 2586 3002 2512 2822 
+Q 2438 2643 2294 2489 
+Q 2150 2336 1932 2185 
+Q 1715 2035 1427 1856 
+Q 1190 1715 972 1555 
+Q 755 1395 582 1184 
+Q 410 973 298 688 
+Q 186 403 154 0 
+L 3117 0 
+L 3117 480 
+L 787 480 
+Q 826 691 950 854 
+Q 1075 1018 1251 1158 
+Q 1427 1299 1638 1424 
+Q 1850 1549 2061 1677 
+Q 2272 1811 2470 1958 
+Q 2669 2106 2822 2288 
+Q 2976 2470 3069 2700 
+Q 3162 2931 3162 3232 
+Q 3162 3552 3050 3795 
+Q 2938 4038 2746 4201 
+Q 2554 4365 2294 4451 
+Q 2035 4538 1741 4538 
+Q 1382 4538 1100 4416 
+Q 819 4294 630 4080 
+Q 442 3866 352 3571 
+Q 262 3277 282 2931 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-19"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_3">
+     <g id="analisi1_lez19_bw_finiti-line2d_5">
+      <path d="M 203.215385 378.4 
+L 203.215385 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_6">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="203.215385" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_3">
+      <!-- 4 -->
+      <g style="fill: currentColor" transform="translate(199.601791 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-1b" d="M 2170 1542 
+L 646 1542 
+L 2157 3763 
+L 2170 3763 
+L 2170 1542 
+z
+M 2682 1542 
+L 2682 4538 
+L 2246 4538 
+L 179 1587 
+L 179 1062 
+L 2170 1062 
+L 2170 0 
+L 2682 0 
+L 2682 1062 
+L 3296 1062 
+L 3296 1542 
+L 2682 1542 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1b"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_4">
+     <g id="analisi1_lez19_bw_finiti-line2d_7">
+      <path d="M 264.763462 378.4 
+L 264.763462 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_8">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="264.763462" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_4">
+      <!-- 6 -->
+      <g style="fill: currentColor" transform="translate(261.149868 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-1d" d="M 2650 3379 
+L 3194 3379 
+Q 3142 3942 2809 4240 
+Q 2477 4538 1914 4538 
+Q 1427 4538 1107 4333 
+Q 787 4128 595 3789 
+Q 403 3450 323 3011 
+Q 243 2573 243 2106 
+Q 243 1747 297 1363 
+Q 352 979 518 659 
+Q 685 339 992 134 
+Q 1299 -70 1805 -70 
+Q 2234 -70 2525 74 
+Q 2816 218 2992 438 
+Q 3168 659 3245 928 
+Q 3322 1197 3322 1446 
+Q 3322 1760 3226 2029 
+Q 3130 2298 2954 2496 
+Q 2778 2694 2518 2806 
+Q 2259 2918 1933 2918 
+Q 1562 2918 1277 2777 
+Q 992 2637 800 2323 
+L 787 2336 
+Q 794 2598 838 2899 
+Q 883 3200 1001 3459 
+Q 1120 3718 1331 3888 
+Q 1542 4058 1888 4058 
+Q 2214 4058 2412 3872 
+Q 2611 3686 2650 3379 
+z
+M 1830 2438 
+Q 2061 2438 2233 2355 
+Q 2406 2272 2521 2134 
+Q 2637 1997 2691 1808 
+Q 2746 1619 2746 1408 
+Q 2746 1210 2685 1027 
+Q 2624 845 2509 704 
+Q 2394 563 2224 483 
+Q 2054 403 1830 403 
+Q 1606 403 1430 483 
+Q 1254 563 1136 697 
+Q 1018 832 954 1017 
+Q 890 1203 890 1414 
+Q 890 1626 950 1814 
+Q 1011 2003 1132 2140 
+Q 1254 2278 1427 2358 
+Q 1600 2438 1830 2438 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1d"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_5">
+     <g id="analisi1_lez19_bw_finiti-line2d_9">
+      <path d="M 326.311538 378.4 
+L 326.311538 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_10">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="326.311538" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_5">
+      <!-- 8 -->
+      <g style="fill: currentColor" transform="translate(322.697945 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-1f" d="M 992 3360 
+Q 992 3533 1056 3661 
+Q 1120 3789 1225 3878 
+Q 1331 3968 1478 4013 
+Q 1626 4058 1786 4058 
+Q 2118 4058 2332 3882 
+Q 2547 3706 2547 3360 
+Q 2547 3014 2336 2822 
+Q 2125 2630 1798 2630 
+Q 1632 2630 1485 2675 
+Q 1338 2720 1229 2809 
+Q 1120 2899 1056 3036 
+Q 992 3174 992 3360 
+z
+M 416 3379 
+Q 416 3072 589 2813 
+Q 762 2554 1050 2438 
+Q 666 2304 461 2006 
+Q 256 1709 256 1306 
+Q 256 960 374 701 
+Q 493 442 701 269 
+Q 909 96 1190 13 
+Q 1472 -70 1798 -70 
+Q 2112 -70 2387 19 
+Q 2662 109 2864 285 
+Q 3066 461 3184 717 
+Q 3302 973 3302 1306 
+Q 3302 1728 3104 2019 
+Q 2906 2310 2496 2438 
+Q 2784 2566 2953 2819 
+Q 3123 3072 3123 3379 
+Q 3123 3597 3046 3805 
+Q 2970 4013 2806 4176 
+Q 2643 4339 2380 4438 
+Q 2118 4538 1747 4538 
+Q 1485 4538 1245 4461 
+Q 1005 4384 819 4237 
+Q 634 4090 525 3875 
+Q 416 3661 416 3379 
+z
+M 832 1280 
+Q 832 1478 905 1638 
+Q 979 1798 1110 1913 
+Q 1242 2029 1418 2089 
+Q 1594 2150 1792 2150 
+Q 1984 2150 2153 2083 
+Q 2323 2016 2451 1901 
+Q 2579 1786 2652 1629 
+Q 2726 1472 2726 1286 
+Q 2726 1094 2659 934 
+Q 2592 774 2467 656 
+Q 2342 538 2172 470 
+Q 2003 403 1798 403 
+Q 1376 403 1104 636 
+Q 832 870 832 1280 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1f"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_6">
+     <g id="analisi1_lez19_bw_finiti-line2d_11">
+      <path d="M 387.859615 378.4 
+L 387.859615 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_12">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="387.859615" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_6">
+      <!-- 10 -->
+      <g style="fill: currentColor" transform="translate(380.632428 317.197311) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-18" d="M 2278 0 
+L 2278 4538 
+L 1862 4538 
+Q 1818 4282 1696 4115 
+Q 1574 3949 1398 3853 
+Q 1222 3757 1004 3721 
+Q 787 3686 557 3686 
+L 557 3251 
+L 1734 3251 
+L 1734 0 
+L 2278 0 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-17" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_7">
+     <g id="analisi1_lez19_bw_finiti-line2d_13">
+      <path d="M 449.407692 378.4 
+L 449.407692 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_14">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="449.407692" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_7">
+      <!-- 12 -->
+      <g style="fill: currentColor" transform="translate(442.180505 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-19" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_8">
+     <g id="analisi1_lez19_bw_finiti-line2d_15">
+      <path d="M 510.955769 378.4 
+L 510.955769 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_16">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="510.955769" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_8">
+      <!-- 14 -->
+      <g style="fill: currentColor" transform="translate(503.728582 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1b" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_9">
+     <g id="analisi1_lez19_bw_finiti-line2d_17">
+      <path d="M 572.503846 378.4 
+L 572.503846 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_18">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="572.503846" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_9">
+      <!-- 16 -->
+      <g style="fill: currentColor" transform="translate(565.276659 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1d" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-xtick_10">
+     <g id="analisi1_lez19_bw_finiti-line2d_19">
+      <path d="M 634.051923 378.4 
+L 634.051923 73.1 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_20">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-m5fa619b603" x="634.051923" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_10">
+      <!-- 18 -->
+      <g style="fill: currentColor" transform="translate(626.824736 317.197311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1f" transform="translate(55.59375 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-matplotlib.axis_2">
+    <g id="analisi1_lez19_bw_finiti-ytick_1">
+     <g id="analisi1_lez19_bw_finiti-line2d_21">
+      <path d="M 55.5 348.370492 
+L 695.6 348.370492 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_22">
+      <defs>
+       <path id="analisi1_lez19_bw_finiti-me59c9aa6d9" d="M 0 0 
+L -3 0 
+" style="stroke: currentColor; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-me59c9aa6d9" x="80.119231" y="348.370492" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_11">
+      <!-- -0.5 -->
+      <g style="fill: currentColor" transform="translate(50.49345 354.558492) scale(0.13 -0.13)">
+       <defs>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-14" d="M 320 2035 
+L 320 1523 
+L 2170 1523 
+L 2170 2035 
+L 320 2035 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-15" d="M 531 710 
+L 531 0 
+L 1242 0 
+L 1242 710 
+L 531 710 
+z
+" transform="scale(0.015625)"/>
+        <path id="analisi1_lez19_bw_finiti-HelveticaNeue-1c" d="M 3008 3981 
+L 3008 4461 
+L 768 4461 
+L 346 2106 
+L 813 2080 
+Q 973 2272 1181 2390 
+Q 1389 2509 1658 2509 
+Q 1888 2509 2077 2432 
+Q 2266 2355 2400 2217 
+Q 2534 2080 2608 1891 
+Q 2682 1702 2682 1478 
+Q 2682 1210 2605 1008 
+Q 2528 806 2397 672 
+Q 2266 538 2090 470 
+Q 1914 403 1722 403 
+Q 1517 403 1347 464 
+Q 1178 525 1053 637 
+Q 928 749 854 899 
+Q 781 1050 768 1222 
+L 224 1222 
+Q 230 915 345 672 
+Q 461 429 659 265 
+Q 858 102 1117 16 
+Q 1376 -70 1670 -70 
+Q 2067 -70 2364 54 
+Q 2662 179 2860 390 
+Q 3059 602 3158 874 
+Q 3258 1146 3258 1434 
+Q 3258 1824 3142 2115 
+Q 3027 2406 2828 2601 
+Q 2630 2797 2361 2893 
+Q 2093 2989 1792 2989 
+Q 1562 2989 1328 2909 
+Q 1094 2829 947 2662 
+L 934 2675 
+L 1178 3981 
+L 3008 3981 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-14"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-17" transform="translate(38.90625 0)"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-15" transform="translate(94.5 0)"/>
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-1c" transform="translate(122.296875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-ytick_2">
+     <g id="analisi1_lez19_bw_finiti-line2d_23">
+      <path d="M 55.5 298.321311 
+L 695.6 298.321311 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_24">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-me59c9aa6d9" x="80.119231" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_12">
+      <!-- 0 -->
+      <g style="fill: currentColor" transform="translate(66.392043 304.509311) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-17"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-ytick_3">
+     <g id="analisi1_lez19_bw_finiti-line2d_25">
+      <path d="M 55.5 198.222951 
+L 695.6 198.222951 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_26">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-me59c9aa6d9" x="80.119231" y="198.222951" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_13">
+      <!-- 1 -->
+      <g style="fill: currentColor" transform="translate(66.392043 204.410951) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18"/>
+      </g>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-ytick_4">
+     <g id="analisi1_lez19_bw_finiti-line2d_27">
+      <path d="M 55.5 98.12459 
+L 695.6 98.12459 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke: #9aa4b2; stroke-opacity: 0.3; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-line2d_28">
+      <g>
+       <use xlink:href="#analisi1_lez19_bw_finiti-me59c9aa6d9" x="80.119231" y="98.12459" style="fill: currentColor; stroke: currentColor; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="analisi1_lez19_bw_finiti-text_14">
+      <!-- 2 -->
+      <g style="fill: currentColor" transform="translate(66.392043 104.31259) scale(0.13 -0.13)">
+       <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-19"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-line2d_29">
+    <defs>
+     <path id="analisi1_lez19_bw_finiti-mc925f8effd" d="M 3 0 
+L -3 -3 
+L -3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19_bw_finiti-mc925f8effd" x="695.6" y="298.321311" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-line2d_30">
+    <defs>
+     <path id="analisi1_lez19_bw_finiti-maf078d6970" d="M 0 -3 
+L -3 3 
+L 3 3 
+z
+" style="stroke: currentColor; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#analisi1_lez19_bw_finiti-maf078d6970" x="80.119231" y="73.1" style="fill: currentColor; stroke: currentColor; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-line2d_31">
+    <path d="M 55.5 198.222951 
+L 695.6 198.222951 
+" clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 1.5"/>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-patch_3">
+    <path d="M 80.119231 378.4 
+L 80.119231 73.1 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-patch_4">
+    <path d="M 55.5 298.321311 
+L 695.6 298.321311 
+" style="fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_15">
+    <g style="fill: #7c4dff" transform="translate(122.687308 322.321311) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" d="M 1172 4863 
+L 1747 4863 
+L 1197 2028 
+L 3169 3500 
+L 3916 3500 
+L 1716 1825 
+L 3322 0 
+L 2625 0 
+L 1131 1709 
+L 800 0 
+L 225 0 
+L 1172 4863 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-14" d="M 794 531 
+L 1825 531 
+L 1825 4091 
+L 703 3866 
+L 703 4441 
+L 1819 4666 
+L 2450 4666 
+L 2450 531 
+L 3481 531 
+L 3481 0 
+L 794 0 
+L 794 531 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-20" d="M 678 2906 
+L 4684 2906 
+L 4684 2381 
+L 678 2381 
+L 678 2906 
+z
+M 678 1631 
+L 4684 1631 
+L 4684 1100 
+L 678 1100 
+L 678 1631 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-15" d="M 1228 531 
+L 3431 531 
+L 3431 0 
+L 469 0 
+L 469 531 
+Q 828 903 1448 1529 
+Q 2069 2156 2228 2338 
+Q 2531 2678 2651 2914 
+Q 2772 3150 2772 3378 
+Q 2772 3750 2511 3984 
+Q 2250 4219 1831 4219 
+Q 1534 4219 1204 4116 
+Q 875 4013 500 3803 
+L 500 4441 
+Q 881 4594 1212 4672 
+Q 1544 4750 1819 4750 
+Q 2544 4750 2975 4387 
+Q 3406 4025 3406 3419 
+Q 3406 3131 3298 2873 
+Q 3191 2616 2906 2266 
+Q 2828 2175 2409 1742 
+Q 1991 1309 1228 531 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-14" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-15" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_16">
+    <g style="fill: #7c4dff" transform="translate(184.235385 267.589071) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-17" d="M 2419 4116 
+L 825 1625 
+L 2419 1625 
+L 2419 4116 
+z
+M 2253 4666 
+L 3047 4666 
+L 3047 1625 
+L 3713 1625 
+L 3713 1100 
+L 3047 1100 
+L 3047 0 
+L 2419 0 
+L 2419 1100 
+L 313 1100 
+L 313 1709 
+L 2253 4666 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-15" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-17" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_17">
+    <g style="fill: #7c4dff" transform="translate(245.783462 242.242623) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-16" d="M 2597 2516 
+Q 3050 2419 3304 2112 
+Q 3559 1806 3559 1356 
+Q 3559 666 3084 287 
+Q 2609 -91 1734 -91 
+Q 1441 -91 1130 -33 
+Q 819 25 488 141 
+L 488 750 
+Q 750 597 1062 519 
+Q 1375 441 1716 441 
+Q 2309 441 2620 675 
+Q 2931 909 2931 1356 
+Q 2931 1769 2642 2001 
+Q 2353 2234 1838 2234 
+L 1294 2234 
+L 1294 2753 
+L 1863 2753 
+Q 2328 2753 2575 2939 
+Q 2822 3125 2822 3475 
+Q 2822 3834 2567 4026 
+Q 2313 4219 1838 4219 
+Q 1578 4219 1281 4162 
+Q 984 4106 628 3988 
+L 628 4550 
+Q 988 4650 1302 4700 
+Q 1616 4750 1894 4750 
+Q 2613 4750 3031 4423 
+Q 3450 4097 3450 3541 
+Q 3450 3153 3228 2886 
+Q 3006 2619 2597 2516 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-19" d="M 2113 2584 
+Q 1688 2584 1439 2293 
+Q 1191 2003 1191 1497 
+Q 1191 994 1439 701 
+Q 1688 409 2113 409 
+Q 2538 409 2786 701 
+Q 3034 994 3034 1497 
+Q 3034 2003 2786 2293 
+Q 2538 2584 2113 2584 
+z
+M 3366 4563 
+L 3366 3988 
+Q 3128 4100 2886 4159 
+Q 2644 4219 2406 4219 
+Q 1781 4219 1451 3797 
+Q 1122 3375 1075 2522 
+Q 1259 2794 1537 2939 
+Q 1816 3084 2150 3084 
+Q 2853 3084 3261 2657 
+Q 3669 2231 3669 1497 
+Q 3669 778 3244 343 
+Q 2819 -91 2113 -91 
+Q 1303 -91 875 529 
+Q 447 1150 447 2328 
+Q 447 3434 972 4092 
+Q 1497 4750 2381 4750 
+Q 2619 4750 2861 4703 
+Q 3103 4656 3366 4563 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-16" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-19" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_18">
+    <g style="fill: #7c4dff" transform="translate(307.331538 248.522717) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-1b" d="M 2034 2216 
+Q 1584 2216 1326 1975 
+Q 1069 1734 1069 1313 
+Q 1069 891 1326 650 
+Q 1584 409 2034 409 
+Q 2484 409 2743 651 
+Q 3003 894 3003 1313 
+Q 3003 1734 2745 1975 
+Q 2488 2216 2034 2216 
+z
+M 1403 2484 
+Q 997 2584 770 2862 
+Q 544 3141 544 3541 
+Q 544 4100 942 4425 
+Q 1341 4750 2034 4750 
+Q 2731 4750 3128 4425 
+Q 3525 4100 3525 3541 
+Q 3525 3141 3298 2862 
+Q 3072 2584 2669 2484 
+Q 3125 2378 3379 2068 
+Q 3634 1759 3634 1313 
+Q 3634 634 3220 271 
+Q 2806 -91 2034 -91 
+Q 1263 -91 848 271 
+Q 434 634 434 1313 
+Q 434 1759 690 2068 
+Q 947 2378 1403 2484 
+z
+M 1172 3481 
+Q 1172 3119 1398 2916 
+Q 1625 2713 2034 2713 
+Q 2441 2713 2670 2916 
+Q 2900 3119 2900 3481 
+Q 2900 3844 2670 4047 
+Q 2441 4250 2034 4250 
+Q 1625 4250 1398 4047 
+Q 1172 3844 1172 3481 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(0 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-17" transform="translate(57.910156 -14.984326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-20" transform="translate(124.663086 0.015625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-1b" transform="translate(227.93457 0.015625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-patch_5">
+    <path d="M 238.810875 118.361612 
+Q 175.826054 133.040697 113.930087 147.466017 
+" style="fill: none; stroke: #d97706; stroke-linecap: round"/>
+    <path d="M 119.584505 148.81789 
+L 113.930087 147.466017 
+L 118.404236 143.753606 
+" style="fill: none; stroke: #d97706; stroke-linecap: round"/>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_19">
+    <!-- ultimo picco: n = 1 -->
+    <g style="fill: #d97706" transform="translate(227.834615 113.139344) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-5c" d="M 3149 0 
+L 3149 3309 
+L 2605 3309 
+L 2605 1440 
+Q 2605 1216 2544 1027 
+Q 2483 838 2361 697 
+Q 2240 557 2057 480 
+Q 1875 403 1626 403 
+Q 1312 403 1133 582 
+Q 954 762 954 1069 
+L 954 3309 
+L 410 3309 
+L 410 1133 
+Q 410 864 464 643 
+Q 518 422 652 262 
+Q 787 102 1004 16 
+Q 1222 -70 1549 -70 
+Q 1914 -70 2182 74 
+Q 2451 218 2624 525 
+L 2637 525 
+L 2637 0 
+L 3149 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-53" d="M 442 4570 
+L 442 0 
+L 986 0 
+L 986 4570 
+L 442 4570 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-5b" d="M 1165 3309 
+L 1165 4301 
+L 621 4301 
+L 621 3309 
+L 58 3309 
+L 58 2829 
+L 621 2829 
+L 621 723 
+Q 621 493 665 352 
+Q 710 211 803 134 
+Q 896 58 1046 29 
+Q 1197 0 1408 0 
+L 1824 0 
+L 1824 480 
+L 1574 480 
+Q 1446 480 1366 489 
+Q 1286 499 1241 531 
+Q 1197 563 1181 620 
+Q 1165 678 1165 774 
+L 1165 2829 
+L 1824 2829 
+L 1824 3309 
+L 1165 3309 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-50" d="M 986 3904 
+L 986 4570 
+L 442 4570 
+L 442 3904 
+L 986 3904 
+z
+M 442 3309 
+L 442 0 
+L 986 0 
+L 986 3309 
+L 442 3309 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-54" d="M 410 3309 
+L 410 0 
+L 954 0 
+L 954 2061 
+Q 954 2157 1002 2301 
+Q 1050 2445 1155 2579 
+Q 1261 2714 1430 2810 
+Q 1600 2906 1837 2906 
+Q 2022 2906 2140 2851 
+Q 2259 2797 2329 2697 
+Q 2400 2598 2429 2464 
+Q 2458 2330 2458 2170 
+L 2458 0 
+L 3002 0 
+L 3002 2061 
+Q 3002 2445 3232 2675 
+Q 3462 2906 3866 2906 
+Q 4064 2906 4189 2848 
+Q 4314 2790 4384 2691 
+Q 4454 2592 4480 2457 
+Q 4506 2323 4506 2170 
+L 4506 0 
+L 5050 0 
+L 5050 2426 
+Q 5050 2682 4970 2864 
+Q 4890 3046 4746 3161 
+Q 4602 3277 4400 3331 
+Q 4198 3386 3949 3386 
+Q 3622 3386 3350 3238 
+Q 3078 3091 2912 2822 
+Q 2810 3130 2560 3258 
+Q 2310 3386 2003 3386 
+Q 1306 3386 934 2822 
+L 922 2822 
+L 922 3309 
+L 410 3309 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-56" d="M 806 1651 
+Q 806 1952 886 2185 
+Q 966 2419 1107 2579 
+Q 1248 2739 1437 2822 
+Q 1626 2906 1837 2906 
+Q 2048 2906 2237 2822 
+Q 2426 2739 2566 2579 
+Q 2707 2419 2787 2185 
+Q 2867 1952 2867 1651 
+Q 2867 1350 2787 1116 
+Q 2707 883 2566 726 
+Q 2426 570 2237 486 
+Q 2048 403 1837 403 
+Q 1626 403 1437 486 
+Q 1248 570 1107 726 
+Q 966 883 886 1116 
+Q 806 1350 806 1651 
+z
+M 230 1651 
+Q 230 1286 332 972 
+Q 435 659 640 425 
+Q 845 192 1145 61 
+Q 1446 -70 1837 -70 
+Q 2234 -70 2531 61 
+Q 2829 192 3033 425 
+Q 3238 659 3340 972 
+Q 3443 1286 3443 1651 
+Q 3443 2016 3340 2333 
+Q 3238 2650 3033 2883 
+Q 2829 3117 2531 3251 
+Q 2234 3386 1837 3386 
+Q 1446 3386 1145 3251 
+Q 845 3117 640 2883 
+Q 435 2650 332 2333 
+Q 230 2016 230 1651 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-57" d="M 429 3309 
+L 429 -1261 
+L 973 -1261 
+L 973 442 
+L 986 442 
+Q 1075 294 1206 195 
+Q 1338 96 1485 38 
+Q 1632 -19 1782 -44 
+Q 1933 -70 2054 -70 
+Q 2432 -70 2717 64 
+Q 3002 198 3190 432 
+Q 3379 666 3472 979 
+Q 3565 1293 3565 1645 
+Q 3565 1997 3469 2310 
+Q 3373 2624 3184 2864 
+Q 2995 3104 2710 3245 
+Q 2426 3386 2042 3386 
+Q 1696 3386 1408 3261 
+Q 1120 3136 986 2861 
+L 973 2861 
+L 973 3309 
+L 429 3309 
+z
+M 2989 1683 
+Q 2989 1440 2937 1209 
+Q 2886 979 2771 800 
+Q 2656 621 2467 512 
+Q 2278 403 1997 403 
+Q 1715 403 1516 508 
+Q 1318 614 1193 787 
+Q 1069 960 1011 1187 
+Q 954 1414 954 1658 
+Q 954 1888 1008 2112 
+Q 1062 2336 1184 2512 
+Q 1306 2688 1498 2797 
+Q 1690 2906 1965 2906 
+Q 2227 2906 2422 2803 
+Q 2618 2701 2742 2528 
+Q 2867 2355 2928 2134 
+Q 2989 1914 2989 1683 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-4a" d="M 2656 2246 
+L 3219 2246 
+Q 3187 2541 3065 2755 
+Q 2944 2970 2755 3110 
+Q 2566 3251 2320 3318 
+Q 2074 3386 1792 3386 
+Q 1402 3386 1107 3248 
+Q 813 3110 617 2870 
+Q 422 2630 326 2307 
+Q 230 1984 230 1613 
+Q 230 1242 329 931 
+Q 429 621 624 397 
+Q 819 173 1110 51 
+Q 1402 -70 1779 -70 
+Q 2413 -70 2781 262 
+Q 3149 595 3238 1210 
+L 2682 1210 
+Q 2630 826 2403 614 
+Q 2176 403 1773 403 
+Q 1517 403 1331 505 
+Q 1146 608 1030 777 
+Q 915 947 860 1164 
+Q 806 1382 806 1613 
+Q 806 1862 857 2096 
+Q 909 2330 1027 2509 
+Q 1146 2688 1344 2797 
+Q 1542 2906 1837 2906 
+Q 2182 2906 2387 2733 
+Q 2592 2560 2656 2246 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-21" d="M 1242 2598 
+L 1242 3309 
+L 531 3309 
+L 531 2598 
+L 1242 2598 
+z
+M 531 710 
+L 531 0 
+L 1242 0 
+L 1242 710 
+L 531 710 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-55" d="M 410 3309 
+L 410 0 
+L 954 0 
+L 954 1869 
+Q 954 2093 1014 2281 
+Q 1075 2470 1196 2611 
+Q 1318 2752 1500 2829 
+Q 1683 2906 1933 2906 
+Q 2246 2906 2425 2726 
+Q 2605 2547 2605 2240 
+L 2605 0 
+L 3149 0 
+L 3149 2176 
+Q 3149 2445 3094 2665 
+Q 3040 2886 2905 3046 
+Q 2771 3206 2553 3296 
+Q 2336 3386 2010 3386 
+Q 1274 3386 934 2784 
+L 922 2784 
+L 922 3309 
+L 410 3309 
+z
+" transform="scale(0.015625)"/>
+      <path id="analisi1_lez19_bw_finiti-HelveticaNeue-24" d="M 307 1190 
+L 307 755 
+L 3533 755 
+L 3533 1190 
+L 307 1190 
+z
+M 3533 2048 
+L 3533 2483 
+L 307 2483 
+L 307 2048 
+L 3533 2048 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5c"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-53" transform="translate(55.59375 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(77.796875 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(109.296875 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-54" transform="translate(131.5 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-56" transform="translate(216.796875 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(274.203125 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-57" transform="translate(302 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(361.296875 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(383.5 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(437.203125 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-56" transform="translate(490.90625 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-21" transform="translate(548.3125 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(576.109375 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-55" transform="translate(603.90625 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(659.5 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-24" transform="translate(687.296875 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(747.296875 0)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18" transform="translate(775.09375 0)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_20">
+    <g style="fill: #7c4dff" transform="translate(667.903365 185.210164) scale(0.17 -0.17)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-d79" d="M 737 2388 
+L 1397 2388 
+L 1397 1594 
+L 737 1594 
+L 737 2388 
+z
+M 2868 2388 
+L 3528 2388 
+L 3528 1594 
+L 2868 1594 
+L 2868 2388 
+z
+M 5000 2388 
+L 5660 2388 
+L 5660 1594 
+L 5000 1594 
+L 5000 2388 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-d79" transform="translate(0 0.6875)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_21">
+    <g style="fill: currentColor" transform="translate(711.6025 299.022) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-Oblique-51" d="M 3566 2113 
+L 3156 0 
+L 2578 0 
+L 2988 2091 
+Q 3016 2238 3031 2350 
+Q 3047 2463 3047 2528 
+Q 3047 2791 2881 2937 
+Q 2716 3084 2419 3084 
+Q 1956 3084 1622 2776 
+Q 1288 2469 1184 1941 
+L 800 0 
+L 225 0 
+L 903 3500 
+L 1478 3500 
+L 1363 2950 
+Q 1603 3253 1940 3418 
+Q 2278 3584 2650 3584 
+Q 3113 3584 3367 3334 
+Q 3622 3084 3622 2631 
+Q 3622 2519 3608 2391 
+Q 3594 2263 3566 2113 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-51"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_22">
+    <g style="fill: currentColor" transform="translate(86.2248 59.3615) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-Oblique-44" d="M 3438 1997 
+L 3047 0 
+L 2472 0 
+L 2578 531 
+Q 2325 219 2001 64 
+Q 1678 -91 1281 -91 
+Q 834 -91 548 182 
+Q 263 456 263 884 
+Q 263 1497 752 1853 
+Q 1241 2209 2100 2209 
+L 2900 2209 
+L 2931 2363 
+Q 2938 2388 2941 2417 
+Q 2944 2447 2944 2509 
+Q 2944 2788 2717 2942 
+Q 2491 3097 2081 3097 
+Q 1800 3097 1504 3025 
+Q 1209 2953 897 2809 
+L 997 3341 
+Q 1322 3463 1633 3523 
+Q 1944 3584 2234 3584 
+Q 2853 3584 3176 3315 
+Q 3500 3047 3500 2534 
+Q 3500 2431 3484 2292 
+Q 3469 2153 3438 1997 
+z
+M 2816 1759 
+L 2241 1759 
+Q 1534 1759 1195 1570 
+Q 856 1381 856 984 
+Q 856 709 1029 553 
+Q 1203 397 1509 397 
+Q 1978 397 2328 733 
+Q 2678 1069 2791 1631 
+L 2816 1759 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-44"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-51" transform="translate(61.279297 -14.999951) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-text_23">
+    <g style="fill: #7c4dff" transform="translate(326.311538 270.29377) scale(0.13 -0.13)">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-DejaVuSans-1f" d="M 4684 3150 
+L 1459 2003 
+L 4684 863 
+L 4684 294 
+L 678 1747 
+L 678 2266 
+L 4684 3719 
+L 4684 3150 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-44" transform="translate(0 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(61.279297 -14.109326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-14" transform="translate(101.816406 -24.609292) scale(0.49)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-1f" transform="translate(157.122559 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-44" transform="translate(260.394043 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(321.67334 -14.109326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-15" transform="translate(362.210449 -24.609292) scale(0.49)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-1f" transform="translate(417.516602 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-44" transform="translate(520.788086 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-Oblique-4e" transform="translate(582.067383 -14.109326) scale(0.7)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-16" transform="translate(622.604492 -24.609292) scale(0.49)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-1f" transform="translate(677.910645 0.890625)"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-DejaVuSans-d79" transform="translate(781.182129 0.890625)"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-line2d_32">
+    <defs>
+     <path id="analisi1_lez19_bw_finiti-m9a163f24b7" d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" style="stroke: #8b95a5"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)">
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="172.441346" y="348.370492" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="233.989423" y="323.345902" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="295.5375" y="315.004372" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="357.085577" y="310.833607" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="418.633654" y="308.331148" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="480.181731" y="306.662842" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="541.729808" y="305.471194" style="fill: #8b95a5; stroke: #8b95a5"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="603.277885" y="304.577459" style="fill: #8b95a5; stroke: #8b95a5"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-line2d_33">
+    <defs>
+     <path id="analisi1_lez19_bw_finiti-m97277a4a3a" d="M -0 4.949747 
+L 4.949747 0 
+L 0 -4.949747 
+L -4.949747 -0 
+z
+" style="stroke: #d97706; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)">
+     <use xlink:href="#analisi1_lez19_bw_finiti-m97277a4a3a" x="80.119231" y="98.12459" style="fill: #d97706; stroke: #d97706; stroke-linejoin: miter"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m97277a4a3a" x="110.893269" y="148.17377" style="fill: #d97706; stroke: #d97706; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-legend_1">
+    <g id="analisi1_lez19_bw_finiti-line2d_34">
+     <g>
+      <use xlink:href="#analisi1_lez19_bw_finiti-m9a163f24b7" x="80.2" y="8.012" style="fill: #8b95a5; stroke: #8b95a5"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-text_24">
+     <!-- Altri termini -->
+     <g style="fill: currentColor" transform="translate(103.6 12.562) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-28" d="M 1286 1888 
+L 2061 4019 
+L 2074 4019 
+L 2835 1888 
+L 1286 1888 
+z
+M 1741 4570 
+L -38 0 
+L 582 0 
+L 1094 1376 
+L 3027 1376 
+L 3526 0 
+L 4198 0 
+L 2413 4570 
+L 1741 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-59" d="M 390 3309 
+L 390 0 
+L 934 0 
+L 934 1472 
+Q 934 1792 998 2038 
+Q 1062 2285 1203 2457 
+Q 1344 2630 1574 2720 
+Q 1805 2810 2131 2810 
+L 2131 3386 
+Q 1690 3398 1402 3206 
+Q 1114 3014 915 2611 
+L 902 2611 
+L 902 3309 
+L 390 3309 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-4c" d="M 2707 1971 
+L 806 1971 
+Q 819 2163 889 2332 
+Q 960 2502 1081 2630 
+Q 1203 2758 1372 2832 
+Q 1542 2906 1754 2906 
+Q 1958 2906 2128 2832 
+Q 2298 2758 2422 2633 
+Q 2547 2509 2620 2336 
+Q 2694 2163 2707 1971 
+z
+M 3232 1050 
+L 2694 1050 
+Q 2624 723 2403 563 
+Q 2182 403 1837 403 
+Q 1568 403 1369 492 
+Q 1171 582 1043 732 
+Q 915 883 857 1078 
+Q 800 1274 806 1491 
+L 3283 1491 
+Q 3296 1792 3229 2125 
+Q 3162 2458 2986 2739 
+Q 2810 3021 2518 3203 
+Q 2227 3386 1786 3386 
+Q 1446 3386 1161 3258 
+Q 877 3130 669 2899 
+Q 461 2669 345 2355 
+Q 230 2042 230 1664 
+Q 243 1286 342 966 
+Q 442 646 640 416 
+Q 838 186 1129 58 
+Q 1421 -70 1818 -70 
+Q 2381 -70 2752 211 
+Q 3123 493 3232 1050 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-28"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-53" transform="translate(64.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(87 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-59" transform="translate(118.5 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(151.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(174 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(201.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4c" transform="translate(233.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-59" transform="translate(287 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-54" transform="translate(320.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(405.59375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-55" transform="translate(427.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(483.390625 0)"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-line2d_35">
+     <g>
+      <use xlink:href="#analisi1_lez19_bw_finiti-m97277a4a3a" x="80.2" y="29.657" style="fill: #d97706; stroke: #d97706; stroke-linejoin: miter"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-text_25">
+     <!-- I soli due picchi -->
+     <g style="fill: currentColor" transform="translate(103.6 34.207) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-30" d="M 525 4570 
+L 525 0 
+L 1133 0 
+L 1133 4570 
+L 525 4570 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-5a" d="M 742 1043 
+L 198 1043 
+Q 211 736 326 521 
+Q 442 307 634 176 
+Q 826 45 1075 -12 
+Q 1325 -70 1600 -70 
+Q 1850 -70 2102 -22 
+Q 2355 26 2556 147 
+Q 2758 269 2883 467 
+Q 3008 666 3008 966 
+Q 3008 1203 2915 1363 
+Q 2822 1523 2672 1628 
+Q 2522 1734 2326 1798 
+Q 2131 1862 1926 1907 
+Q 1734 1952 1542 1993 
+Q 1350 2035 1196 2096 
+Q 1043 2157 944 2249 
+Q 845 2342 845 2483 
+Q 845 2611 909 2691 
+Q 973 2771 1075 2819 
+Q 1178 2867 1302 2886 
+Q 1427 2906 1549 2906 
+Q 1683 2906 1814 2877 
+Q 1946 2848 2054 2784 
+Q 2163 2720 2233 2614 
+Q 2304 2509 2317 2349 
+L 2861 2349 
+Q 2842 2650 2733 2851 
+Q 2624 3053 2441 3171 
+Q 2259 3290 2022 3338 
+Q 1786 3386 1504 3386 
+Q 1286 3386 1065 3331 
+Q 845 3277 669 3165 
+Q 493 3053 381 2873 
+Q 269 2694 269 2445 
+Q 269 2125 429 1945 
+Q 589 1766 829 1667 
+Q 1069 1568 1350 1513 
+Q 1632 1459 1872 1392 
+Q 2112 1325 2272 1216 
+Q 2432 1107 2432 896 
+Q 2432 742 2355 643 
+Q 2278 544 2160 493 
+Q 2042 442 1901 422 
+Q 1760 403 1632 403 
+Q 1466 403 1309 435 
+Q 1152 467 1027 540 
+Q 902 614 825 739 
+Q 749 864 742 1043 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-4b" d="M 806 1626 
+Q 806 1869 857 2099 
+Q 909 2330 1024 2509 
+Q 1139 2688 1331 2797 
+Q 1523 2906 1798 2906 
+Q 2080 2906 2278 2800 
+Q 2477 2694 2601 2521 
+Q 2726 2349 2784 2121 
+Q 2842 1894 2842 1651 
+Q 2842 1421 2787 1197 
+Q 2733 973 2611 797 
+Q 2490 621 2298 512 
+Q 2106 403 1830 403 
+Q 1568 403 1373 505 
+Q 1178 608 1053 781 
+Q 928 954 867 1174 
+Q 806 1395 806 1626 
+z
+M 3366 0 
+L 3366 4570 
+L 2822 4570 
+L 2822 2867 
+L 2810 2867 
+Q 2720 3014 2589 3113 
+Q 2458 3213 2310 3273 
+Q 2163 3334 2016 3360 
+Q 1869 3386 1741 3386 
+Q 1363 3386 1078 3248 
+Q 794 3110 605 2876 
+Q 416 2643 323 2329 
+Q 230 2016 230 1664 
+Q 230 1312 326 998 
+Q 422 685 611 448 
+Q 800 211 1085 70 
+Q 1370 -70 1754 -70 
+Q 2099 -70 2387 51 
+Q 2675 173 2810 448 
+L 2822 448 
+L 2822 0 
+L 3366 0 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-4f" d="M 410 4570 
+L 410 0 
+L 954 0 
+L 954 1869 
+Q 954 2093 1014 2281 
+Q 1075 2470 1196 2611 
+Q 1318 2752 1500 2829 
+Q 1683 2906 1933 2906 
+Q 2246 2906 2425 2726 
+Q 2605 2547 2605 2240 
+L 2605 0 
+L 3149 0 
+L 3149 2176 
+Q 3149 2445 3094 2665 
+Q 3040 2886 2905 3046 
+Q 2771 3206 2553 3296 
+Q 2336 3386 2010 3386 
+Q 1862 3386 1705 3354 
+Q 1549 3322 1405 3254 
+Q 1261 3187 1145 3081 
+Q 1030 2976 966 2822 
+L 954 2822 
+L 954 4570 
+L 410 4570 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-30"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(25.90625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5a" transform="translate(53.703125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-56" transform="translate(103.703125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-53" transform="translate(161.109375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(183.3125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(205.515625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4b" transform="translate(233.3125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5c" transform="translate(292.609375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4c" transform="translate(348.203125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(401.90625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-57" transform="translate(429.703125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(489 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(511.203125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(564.90625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4f" transform="translate(618.609375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(674.203125 0)"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-line2d_36">
+     <defs>
+      <path id="analisi1_lez19_bw_finiti-m5786918cb5" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #7c4dff"/>
+     </defs>
+     <g>
+      <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="233.132812" y="8.012" style="fill: #7c4dff; stroke: #7c4dff"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-text_26">
+     <!-- Sottosuccessione scelta -->
+     <g style="fill: currentColor" transform="translate(256.532812 12.562) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-3a" d="M 3142 3232 
+L 3718 3232 
+Q 3706 3610 3574 3882 
+Q 3443 4154 3216 4333 
+Q 2989 4512 2688 4595 
+Q 2387 4678 2035 4678 
+Q 1722 4678 1424 4598 
+Q 1126 4518 892 4355 
+Q 659 4192 518 3939 
+Q 378 3686 378 3341 
+Q 378 3027 502 2819 
+Q 627 2611 835 2480 
+Q 1043 2349 1305 2269 
+Q 1568 2189 1840 2128 
+Q 2112 2067 2374 2009 
+Q 2637 1952 2845 1859 
+Q 3053 1766 3177 1619 
+Q 3302 1472 3302 1235 
+Q 3302 986 3200 826 
+Q 3098 666 2931 573 
+Q 2765 480 2557 441 
+Q 2349 403 2144 403 
+Q 1888 403 1645 467 
+Q 1402 531 1219 665 
+Q 1037 800 925 1008 
+Q 813 1216 813 1504 
+L 237 1504 
+Q 237 1088 387 784 
+Q 538 480 797 285 
+Q 1056 90 1398 -6 
+Q 1741 -102 2125 -102 
+Q 2438 -102 2755 -28 
+Q 3072 45 3328 208 
+Q 3584 371 3747 630 
+Q 3910 890 3910 1254 
+Q 3910 1594 3785 1818 
+Q 3661 2042 3453 2189 
+Q 3245 2336 2982 2422 
+Q 2720 2509 2448 2573 
+Q 2176 2637 1913 2691 
+Q 1651 2746 1443 2829 
+Q 1235 2912 1110 3043 
+Q 986 3174 986 3386 
+Q 986 3610 1072 3760 
+Q 1158 3910 1302 4000 
+Q 1446 4090 1632 4128 
+Q 1818 4166 2010 4166 
+Q 2483 4166 2787 3945 
+Q 3091 3725 3142 3232 
+z
+" transform="scale(0.015625)"/>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-48" d="M 3341 13 
+Q 3200 -70 2950 -70 
+Q 2739 -70 2614 48 
+Q 2490 166 2490 435 
+Q 2266 166 1968 48 
+Q 1670 -70 1325 -70 
+Q 1101 -70 899 -19 
+Q 698 32 550 141 
+Q 403 250 316 426 
+Q 230 602 230 851 
+Q 230 1133 326 1312 
+Q 422 1491 579 1603 
+Q 736 1715 937 1772 
+Q 1139 1830 1350 1869 
+Q 1574 1914 1776 1936 
+Q 1978 1958 2131 2000 
+Q 2285 2042 2374 2122 
+Q 2464 2202 2464 2355 
+Q 2464 2534 2397 2643 
+Q 2330 2752 2224 2809 
+Q 2118 2867 1987 2886 
+Q 1856 2906 1728 2906 
+Q 1382 2906 1152 2774 
+Q 922 2643 902 2278 
+L 358 2278 
+Q 371 2586 486 2797 
+Q 602 3008 794 3139 
+Q 986 3270 1232 3328 
+Q 1478 3386 1760 3386 
+Q 1984 3386 2205 3354 
+Q 2426 3322 2605 3222 
+Q 2784 3123 2893 2944 
+Q 3002 2765 3002 2477 
+L 3002 774 
+Q 3002 582 3024 492 
+Q 3046 403 3174 403 
+Q 3245 403 3341 435 
+L 3341 13 
+z
+M 2458 1709 
+Q 2355 1632 2188 1597 
+Q 2022 1562 1840 1539 
+Q 1658 1517 1472 1488 
+Q 1286 1459 1139 1395 
+Q 992 1331 899 1212 
+Q 806 1094 806 890 
+Q 806 755 860 662 
+Q 915 570 1001 512 
+Q 1088 454 1203 428 
+Q 1318 403 1446 403 
+Q 1715 403 1907 476 
+Q 2099 550 2220 662 
+Q 2342 774 2400 905 
+Q 2458 1037 2458 1152 
+L 2458 1709 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3a"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-56" transform="translate(64.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(122.203125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(153.703125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-56" transform="translate(185.203125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5a" transform="translate(242.609375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5c" transform="translate(292.609375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(348.203125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(401.90625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4c" transform="translate(455.609375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5a" transform="translate(509.3125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5a" transform="translate(559.3125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(609.3125 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-56" transform="translate(631.515625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-55" transform="translate(688.921875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4c" transform="translate(744.515625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(798.21875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5a" transform="translate(826.015625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4a" transform="translate(876.015625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4c" transform="translate(929.71875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-53" transform="translate(983.421875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(1005.625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-48" transform="translate(1037.125 0)"/>
+     </g>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-line2d_37">
+     <path d="M 220.132812 29.657 
+L 233.132812 29.657 
+L 246.132812 29.657 
+" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #2f9e8f; stroke-width: 1.5"/>
+    </g>
+    <g id="analisi1_lez19_bw_finiti-text_27">
+     <!-- Limite L = 1 -->
+     <g style="fill: currentColor" transform="translate(256.532812 34.207) scale(0.13 -0.13)">
+      <defs>
+       <path id="analisi1_lez19_bw_finiti-HelveticaNeue-33" d="M 499 4570 
+L 499 0 
+L 3526 0 
+L 3526 512 
+L 1107 512 
+L 1107 4570 
+L 499 4570 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-33"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(55.59375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-54" transform="translate(77.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-50" transform="translate(163.09375 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-5b" transform="translate(185.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-4c" transform="translate(216.796875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(270.5 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-33" transform="translate(298.296875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(353.890625 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-24" transform="translate(381.6875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-3" transform="translate(441.6875 0)"/>
+      <use xlink:href="#analisi1_lez19_bw_finiti-HelveticaNeue-18" transform="translate(469.484375 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="analisi1_lez19_bw_finiti-line2d_38">
+    <g clip-path="url(#analisi1_lez19_bw_finiti-p41c8696713)">
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="141.667308" y="298.321311" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="203.215385" y="231.589071" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="264.763462" y="218.242623" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="326.311538" y="212.522717" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="387.859615" y="209.344991" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="449.407692" y="207.322802" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="510.955769" y="205.922825" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="572.503846" y="204.896175" style="fill: #7c4dff; stroke: #7c4dff"/>
+     <use xlink:href="#analisi1_lez19_bw_finiti-m5786918cb5" x="634.051923" y="204.11109" style="fill: #7c4dff; stroke: #7c4dff"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="analisi1_lez19_bw_finiti-p41c8696713">
+   <rect x="55.5" y="73.1" width="640.1" height="305.3"/>
+  </clipPath>
+ </defs>
+</svg><figcaption><span class="figure-caption-title">Picchi finiti: estrazione dopo l’ultimo picco</span><span class="figure-explanation">I rombi arancioni sono gli unici picchi, agli indici $0$ e $1$: dopo l’ultimo scegliamo $k_1=2$, poi $k_j=2j$. I termini viola soddisfano $a_{k_j}=1-1/(2j-1)\\nearrow1$: sono crescenti e limitati superiormente da $1$, dunque convergono. In generale il caso dei picchi finiti garantisce una sottosuccessione <strong>non decrescente</strong>, che può anche essere costante; la crescenza stretta è una proprietà di questo esempio.</span></figcaption></figure>
+<p>Poiché i due casi esauriscono tutte le possibilità, in ogni situazione abbiamo costruito una sottosuccessione monotona e limitata, dunque convergente. Il teorema è dimostrato. $\\blacksquare$</p>`
+          }
+        ],
+        extra_content: `<p><strong>Quale ipotesi fa convergere?</strong> La scelta tramite picchi non richiede limitatezza: produce una sottosuccessione monotona. Nel primo caso basta che l’estratta decrescente sia limitata inferiormente; nel secondo, che l’estratta non decrescente sia limitata superiormente. L’ipotesi di Bolzano-Weierstrass — la successione iniziale è limitata — assicura entrambi i requisiti. È la sottosuccessione a convergere: la successione intera può continuare a oscillare.</p>
+<p><strong>Lo schema della dimostrazione in una riga.</strong> La dimostrazione produce sempre una sottosuccessione <strong>monotona</strong>: strettamente decrescente se i picchi sono infiniti, non decrescente se sono finiti. In entrambi i casi la conclusione segue dal teorema "monotona $+$ limitata $\\Rightarrow$ convergente".</p>`
+      },
+
+      {
+        id: "s11-indici-integrazione",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><strong>Convenzione sugli indici.</strong> Nel Caso 2 la costruzione parte da $k_1 = N_{max}+1$: le estrazioni così costruite sono dunque indicizzate da $j \\geq 1$ e le disuguaglianze vanno lette come $a_{k_{j+1}} \\geq a_{k_j}$ per ogni $j \\geq 1$. Se invece si preferisce indicizzare le sottosuccessioni a partire da $0$ (coerentemente con la convenzione $0 \\in \\mathbb{N}$ usata altrove, ad esempio nell'induzione su $k_n \\geq n$ che parte da $k_0$), basta far partire tutte le costruzioni da $k_0 = N_{max}+1$. L'importante è usare in modo coerente un solo dominio di indici all'interno della stessa dimostrazione.</p>`
+      },
+
+      {
+        id: "s12-corollario-monotona",
+        type: "section",
+        title: "Corollario: ogni successione reale ha una sottosuccessione monotona",
+        icon: "📈",
+        content: `<p><strong>Corollario.</strong> Ogni successione di numeri reali ammette una sottosuccessione monotona.</p>
+<p><em>Dimostrazione.</em> L'osservazione chiave è la seguente: nella dimostrazione del Teorema di Bolzano-Weierstrass l'ipotesi di limitatezza <em>non</em> viene usata per costruire la sottosuccessione monotona, ma soltanto nel passaggio finale, per dedurre dalla monotonia la convergenza. La dicotomia "infiniti picchi / numero finito di picchi" e le due costruzioni associate hanno senso per una qualunque successione reale. Più in dettaglio, data una successione reale arbitraria $\\{a_n\\}$:</p>
+<ul>
+<li>se la successione ha infiniti picchi, siano $k_1 \\lt k_2 \\lt k_3 \\lt \\dots$ i loro indici. Esattamente come nel Caso 1 (dove non si è usata la limitatezza), la definizione di picco dà $a_{k_1} \\gt a_{k_2} \\gt a_{k_3} \\gt \\dots$, cioè una sottosuccessione strettamente decrescente, dunque monotona;</li>
+<li>se la successione ha un numero finito di picchi, sia $N_{max}$ l'indice dell'ultimo picco (o $N_{max} = 0$ se non vi sono picchi). Esattamente come nel Caso 2 (dove, di nuovo, non si è usata la limitatezza), partendo da $k_1 = N_{max} + 1$ si costruisce per ricorrenza $k_1 \\lt k_2 \\lt k_3 \\lt \\dots$ con $a_{k_1} \\le a_{k_2} \\le a_{k_3} \\le \\dots$, cioè una sottosuccessione non decrescente, dunque monotona.</li>
+</ul>
+<p>Poiché i due casi sono esaustivi per <em>qualunque</em> successione reale, in ogni caso si ottiene una sottosuccessione monotona. Questo copre tutte le possibilità: successioni limitate, illimitate superiormente, illimitate inferiormente e illimitate in entrambi i sensi. In particolare non occorre trattare separatamente il caso di una successione limitata superiormente ma illimitata inferiormente: la costruzione mediante picchi si applica senza modifiche.</p>
+<p>La limitatezza interviene soltanto nel Teorema di Bolzano-Weierstrass, dove serve per concludere, tramite il teorema sulle successioni monotone, che la sottosuccessione monotona così ottenuta ha limite <em>finito</em>. Senza limitatezza la sottosuccessione resta monotona, ma il suo limite (che per monotonia esiste sempre in $\\mathbb{R} \\cup \\{\\pm\\infty\\}$) può essere $+\\infty$ o $-\\infty$. $\\blacksquare$</p>`,
+        subsections: [
+          {
+            subtitle: "Costruzione diretta nel caso illimitato",
+            content: `<p>Nel caso di una successione non limitata superiormente si può anche procedere direttamente, senza passare dai picchi: per ricorrenza si scelgono indici $k_1 \\lt k_2 \\lt \\dots$ con</p>
+<p>$$a_{k_{j+1}} \\gt \\max\\{a_{k_j},\\, j+1\\},$$</p>
+<p>ottenendo una sottosuccessione strettamente crescente con $a_{k_j} \\to +\\infty$. Simmetricamente, se la successione non è limitata inferiormente si ottiene una sottosuccessione strettamente decrescente con $a_{k_j} \\to -\\infty$.</p>
+<p><em>Integrazione (non detta dal docente).</em> Il passaggio che rende lecita questa ricorrenza è il seguente: <strong>ogni coda di una successione illimitata superiormente è ancora illimitata superiormente</strong>. Se infatti la coda $\\{a_m\\}_{m \\gt k_j}$ fosse limitata superiormente da un certo $C$, allora, poiché i termini $a_0, \\dots, a_{k_j}$ sono in numero finito e ammettono quindi un massimo $D$, l'intera successione sarebbe limitata superiormente da $\\max\\{C, D\\}$ — contro l'ipotesi. Dunque dopo l'indice già scelto si trova sempre un termine maggiore di $\\max\\{a_{k_j},\\, j+1\\}$, e la costruzione non si blocca mai.</p>
+<p>L'argomento tramite picchi ha però il vantaggio di essere unico e di non richiedere alcuna distinzione di casi sulla limitatezza.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s13-alert-limitatezza",
+        type: "alert_box",
+        title: "L'ipotesi di limitatezza non si può togliere",
+        icon: "⚠️",
+        content: `<p>L'esempio $a_n = n$ mostra che la limitatezza è <strong>essenziale</strong>: senza di essa la tesi è falsa, perché ogni sottosuccessione di $a_n = n$ tende a $+\\infty$.</p>
+<p>Attenzione anche a due letture sbagliate dell'enunciato:</p>
+<ul>
+<li>il teorema <strong>non</strong> dice che la successione converge, ma solo che <em>esiste</em> una sottosuccessione convergente;</li>
+<li>la sottosuccessione convergente <strong>non è unica</strong>: $(-1)^n$ ha due sottosuccessioni convergenti a limiti diversi, pur non avendo limite.</li>
+</ul>
+<p>Inoltre la limitatezza è <strong>sufficiente ma non necessaria</strong>: esistono successioni illimitate con sottosuccessioni convergenti (si veda l'esercizio su $a_n = n^{(-1)^n}$).</p>`
+      },
+
+      {
+        id: "s14-riepilogo-sottosuccessioni",
+        type: "note_box",
+        title: "Cosa portarsi a casa (prima parte)",
+        icon: "🎒",
+        content: `<ol>
+<li><strong>Definizione:</strong> una sottosuccessione si ottiene scegliendo indici $k_n$ strettamente crescenti; automaticamente $k_n \\to +\\infty$.</li>
+<li><strong>Teorema:</strong> se $\\lim a_n = L \\in \\mathbb{R}^*$, ogni sottosuccessione ha lo stesso limite $L$.</li>
+<li><strong>Criterio pratico:</strong> due sottosuccessioni con limiti diversi $\\Rightarrow$ il limite non esiste. È lo strumento con cui abbiamo trattato $(-1)^n$ e $\\cos(n\\pi/2)$.</li>
+<li><strong>Bolzano-Weierstrass:</strong> limitata $\\Rightarrow$ esiste una sottosuccessione con limite finito. L'ipotesi di limitatezza è indispensabile ($a_n = n$).</li>
+<li><strong>Sottoprodotto:</strong> <em>ogni</em> successione reale (anche non limitata) ammette una sottosuccessione monotona.</li>
+</ol>`
+      },
+
+      {
+        id: "s15-stirling",
+        type: "section",
+        title: "Formula di Stirling",
+        icon: "🌀",
+        content: `<p>Per concludere lo studio delle successioni introduciamo uno strumento molto potente per l'analisi asintotica di espressioni che coinvolgono il fattoriale.</p>
+<p><strong>Proposizione (Formula di Stirling).</strong> Per $n \\to +\\infty$ vale la seguente equivalenza asintotica per il fattoriale:</p>
+<p>$$n! \\sim \\sqrt{2\\pi n} \\left(\\frac{n}{e}\\right)^n$$</p>
+<p>Ciò significa che il rapporto tra i due termini tende a $1$:</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{n!}{\\sqrt{2\\pi n} \\left(\\frac{n}{e}\\right)^n} = 1$$</p>`,
+        quote: {
+          text: "Questa formula ci dice come si comporta il fattoriale. Si comporta come $n^n$, corretto da un po' di roba. È più lento di $n^n$ per via del fattore $(1/e)^n$, ma cresce molto più velocemente di un esponenziale come $a^n$.",
+          src: "Nota del Prof."
+        },
+        formulas: [
+          { label: "Stirling (forma asintotica)", latex: "n! \\sim \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n" },
+          { label: "Stirling (forma con resto)", latex: "n! = \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n e^{\\lambda_n}, \\qquad \\lambda_n \\sim \\frac{1}{12n}" }
+        ],
+        subsections: [
+          {
+            subtitle: "Forma più precisa",
+            content: `<p>Una versione più accurata della formula, accennata dal professore, è</p>
+<p>$$n! = \\sqrt{2\\pi n} \\left(\\frac{n}{e}\\right)^n e^{\\lambda_n}$$</p>
+<p>dove $\\lambda_n$ è un termine correttivo tale che $\\lambda_n \\sim \\dfrac{1}{12n}$. Questo mostra che il fattore $e^{\\lambda_n}$ tende a $1$ molto rapidamente, rendendo l'approssimazione asintotica molto efficace.</p>`
+          },
+          {
+            subtitle: "Come si usa correttamente un'equivalenza asintotica",
+            content: `<p>L'equivalenza $n! \\sim \\sqrt{2\\pi n}\\,(n/e)^n$ autorizza la sostituzione dell'una espressione con l'altra nel calcolo di limiti di <strong>prodotti</strong> e <strong>quozienti</strong>, ma non è una regola valida indiscriminatamente.</p>
+<p>Scrivendo $a_n \\sim b_n$ nella forma $a_n = b_n(1 + \\varepsilon_n)$ con $\\varepsilon_n \\to 0$, si vede subito che in un quoziente il fattore $(1+\\varepsilon_n)$ tende a $1$ e non altera il limite; in una <strong>differenza</strong>, invece, l'errore $b_n \\varepsilon_n$ può essere dello stesso ordine del risultato e la sostituzione può condurre a conclusioni errate (è il tipico fenomeno di cancellazione). Nell'esercizio che segue espliciteremo il fattore $(1+\\varepsilon_n)$, così da rendere trasparente perché la sostituzione sia lecita in quel caso specifico.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s16-es-stirling-1",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Uso della Formula di Stirling",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare il limite</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{(2n)!}{n^n}$$</p>`,
+        steps: [
+          `<strong>Applichiamo la formula di Stirling al termine $(2n)!$.</strong> Sostituendo $n$ con $2n$ nella formula otteniamo l'equivalente asintotico $$(2n)! \\sim \\sqrt{2\\pi (2n)} \\left(\\frac{2n}{e}\\right)^{2n} = \\sqrt{4\\pi n} \\left(\\frac{2n}{e}\\right)^{2n}$$`,
+          `<strong>Rendiamo esplicita la sostituzione asintotica.</strong> Scriviamo l'equivalenza nella forma con resto: $$(2n)! = \\sqrt{4\\pi n} \\left(\\frac{2n}{e}\\right)^{2n} (1 + \\varepsilon_n), \\qquad \\varepsilon_n \\to 0 .$$ Dividendo entrambi i membri per $n^n$ si ottiene l'identità esatta $$\\frac{(2n)!}{n^n} = \\underbrace{\\frac{\\sqrt{4\\pi n} \\left(\\frac{2n}{e}\\right)^{2n}}{n^n}}_{=: \\; b_n} \\cdot (1 + \\varepsilon_n),$$ cioè $\\dfrac{(2n)!/n^n}{b_n} = 1 + \\varepsilon_n \\longrightarrow 1$. Dunque, se mostriamo che $b_n \\to +\\infty$, poiché $(1+\\varepsilon_n) \\to 1 \\gt 0$, anche l'espressione originale tende a $+\\infty$. È in questo senso preciso (prodotto di un fattore divergente per un fattore che tende a $1$) che la sostituzione è lecita qui, e non per una regola generale.`,
+          `<strong>Semplifichiamo l'espressione $b_n$.</strong> $$\\begin{aligned} b_n = \\frac{\\sqrt{4\\pi n} \\left(\\frac{2n}{e}\\right)^{2n}}{n^n} &= \\sqrt{4\\pi n}\\, \\frac{(2n)^{2n}}{e^{2n} \\cdot n^n} = \\sqrt{4\\pi n}\\, \\frac{2^{2n} \\cdot n^{2n}}{e^{2n} \\cdot n^n} \\\\ &= \\sqrt{4\\pi n}\\, \\frac{4^n \\cdot n^{2n-n}}{e^{2n}} = \\sqrt{4\\pi n}\\, \\frac{4^n n^n}{e^{2n}} \\\\ &= \\sqrt{4\\pi n} \\left(\\frac{4n}{e^2}\\right)^n \\end{aligned}$$`,
+          `<strong>Calcoliamo il limite di $b_n$.</strong> Analizziamo i fattori per $n \\to \\infty$: $\\sqrt{4\\pi n} \\to +\\infty$; la base della potenza $\\frac{4n}{e^2}$ tende a $+\\infty$, in particolare per $n$ abbastanza grande si ha $\\frac{4n}{e^2} \\gt 2$, dunque $\\left(\\frac{4n}{e^2}\\right)^n \\gt 2^n \\to +\\infty$. Il prodotto di termini che tendono a infinito diverge: $$\\lim_{n \\to \\infty} \\underbrace{\\sqrt{4\\pi n}}_{\\to +\\infty} \\cdot \\underbrace{\\left(\\frac{4n}{e^2}\\right)^n}_{\\to +\\infty} = +\\infty$$`,
+          `<strong>Conclusione.</strong> Poiché $b_n \\to +\\infty$ e $1 + \\varepsilon_n \\to 1$, dall'identità $\\dfrac{(2n)!}{n^n} = b_n(1+\\varepsilon_n)$ segue $$\\lim_{n \\to \\infty} \\frac{(2n)!}{n^n} = +\\infty .$$ Questo mostra che $(2n)!$ cresce molto più rapidamente di $n^n$.`
+        ]
+      },
+
+      {
+        id: "s17-stirling-proposti-prof",
+        type: "note_box",
+        title: "Esercizi proposti dal professore su Stirling",
+        icon: "📝",
+        content: `<p>Il professore suggerisce di utilizzare la formula di Stirling per esercitarsi nell'analisi del comportamento asintotico di altre espressioni, ad esempio:</p>
+<ul>
+<li>$\\displaystyle \\lim_{n \\to \\infty} \\frac{(2n)!}{n! \\cdot n^n}$</li>
+<li>$\\displaystyle \\lim_{n \\to \\infty} \\frac{(2n)!}{(n!)^2}$ (che corrisponde al coefficiente binomiale centrale $\\binom{2n}{n}$)</li>
+</ul>
+<p>In entrambi i casi si tratta di quozienti di prodotti di fattoriali e potenze: la sostituzione asintotica è quindi lecita con la stessa giustificazione vista nell'esercizio svolto, esplicitando se si vuole i fattori del tipo $(1 + \\varepsilon_n)$, che tendono a $1$ e non influenzano il limite.</p>`
+      },
+
+      {
+        id: "s18-crescita-fattoriali",
+        type: "section",
+        title: "Osservazione sulla crescita di $(2n)!$ rispetto a $n^n$",
+        icon: "📊",
+        content: `<p>A commento del risultato $\\lim_{n \\to \\infty} \\dfrac{(2n)!}{n^n} = +\\infty$, il professore sottolinea come questo non sia un risultato ovvio. Sebbene si sappia che $n!$ cresce più lentamente di $n^n$ (infatti $\\lim_{n \\to \\infty} \\frac{n!}{n^n} = 0$), il termine $(2n)!$ ha una crescita molto più rapida, tanto da "vincere" su $n^n$ e far divergere il rapporto. Questo evidenzia come la manipolazione dei fattoriali richieda attenzione.</p>`
+      },
+
+      {
+        id: "s19-es-stirling-2",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Uso della formula di Stirling (2)",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare il limite</p>
+<p>$$\\lim_{n \\to \\infty} \\frac{(n!)^2}{(2n)!}$$</p>`,
+        steps: [
+          `<strong>Numeratore.</strong> Utilizziamo $n! \\sim \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n$: $$(n!)^2 \\sim \\left[ \\sqrt{2\\pi n} \\left(\\frac{n}{e}\\right)^n \\right]^2 = 2\\pi n \\left(\\frac{n}{e}\\right)^{2n}$$`,
+          `<strong>Denominatore.</strong> Per $(2n)!$ sostituiamo $n$ con $2n$: $$(2n)! \\sim \\sqrt{2\\pi (2n)} \\left(\\frac{2n}{e}\\right)^{2n} = \\sqrt{4\\pi n} \\left(\\frac{2n}{e}\\right)^{2n} = 2\\sqrt{\\pi n} \\left(\\frac{2n}{e}\\right)^{2n}$$`,
+          `<strong>Rapporto.</strong> $$\\begin{aligned} \\lim_{n \\to \\infty} \\frac{(n!)^2}{(2n)!} &= \\lim_{n \\to \\infty} \\frac{2\\pi n \\left(\\frac{n}{e}\\right)^{2n}}{2\\sqrt{\\pi n} \\left(\\frac{2n}{e}\\right)^{2n}} = \\lim_{n \\to \\infty} \\frac{\\pi n}{\\sqrt{\\pi n}} \\cdot \\frac{\\left(\\frac{n}{e}\\right)^{2n}}{\\left(\\frac{2n}{e}\\right)^{2n}} \\\\ &= \\lim_{n \\to \\infty} \\sqrt{\\pi n} \\cdot \\left(\\frac{n/e}{2n/e}\\right)^{2n} = \\lim_{n \\to \\infty} \\sqrt{\\pi n} \\cdot \\left(\\frac{1}{2}\\right)^{2n} = \\lim_{n \\to \\infty} \\frac{\\sqrt{\\pi n}}{4^n} \\end{aligned}$$`,
+          `<strong>Conclusione.</strong> Si tratta di una forma $\\frac{\\infty}{\\infty}$, ma al denominatore abbiamo l'esponenziale $4^n$, che è un infinito di ordine superiore rispetto a $\\sqrt{n}$. Pertanto $$\\lim_{n \\to \\infty} \\frac{\\sqrt{\\pi n}}{4^n} = 0 \\qquad \\Rightarrow \\qquad \\lim_{n \\to \\infty} \\frac{(n!)^2}{(2n)!} = 0 .$$`
+        ]
+      },
+
+      {
+        id: "s20-nota-trascrizione",
+        type: "note_box",
+        title: "Nota sulla trascrizione",
+        icon: "🗒️",
+        content: `<p>Il professore propone a inizio lezione alcuni esercizi sui limiti di successioni. La discussione di uno di questi risulta tuttavia frammentaria e di difficile ricostruzione, in parte a causa di apparenti errori nella valutazione della gerarchia degli infiniti, che vengono poi implicitamente corretti.</p>
+<p><strong>La traccia originale non è ricostruibile</strong>: quello che resta a disposizione è l'espressione $(4/e^2)^n \\cdot n\\ln(n)$ su cui si concentra la discussione. La trattiamo qui sotto come esercizio autonomo, senza inventare il problema da cui proveniva.</p>`
+      },
+
+      {
+        id: "s21-es-gerarchia",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Limite di $(4/e^2)^n \\cdot n\\ln n$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare</p>
+<p>$$\\lim_{n \\to \\infty} \\left(\\frac{4}{e^2}\\right)^n n\\ln(n)$$</p>
+<p>(espressione discussa a lezione; la traccia di partenza da cui è stata ricavata non è ricostruibile dalla trascrizione).</p>`,
+        steps: [
+          `<strong>Individuiamo la forma indeterminata.</strong> Il termine $(4/e^2)^n$ è un esponenziale di base $a = 4/e^2$ (base costante, esponente variabile). Poiché $e \\approx 2{,}718$, si ha $e^2 \\approx 7{,}389$ e quindi $a \\approx 4/7{,}389 \\lt 1$: dunque $\\lim_{n \\to \\infty} (4/e^2)^n = 0$. Il termine $n\\ln(n)$ tende invece a $+\\infty$. Siamo quindi di fronte alla forma indeterminata $0 \\cdot \\infty$.`,
+          `<strong>Riscriviamo il prodotto come rapporto.</strong> Portiamo l'esponenziale al denominatore: $$\\left(\\frac{4}{e^2}\\right)^n \\cdot n\\ln(n) = \\frac{n\\ln(n)}{\\left(\\frac{e^2}{4}\\right)^n}$$`,
+          `<strong>Applichiamo la gerarchia degli infiniti.</strong> Una funzione esponenziale $b^n$ con base $b \\gt 1$ cresce più rapidamente di qualsiasi potenza $n^p$ e di qualsiasi prodotto del tipo $n^p (\\ln n)^q$. Qui la base al denominatore è $e^2/4 \\approx 1{,}847 \\gt 1$, dunque l'esponenziale al denominatore è un infinito di ordine superiore rispetto al numeratore.`,
+          `<strong>Conclusione.</strong> $$\\lim_{n \\to \\infty} \\left(\\frac{4}{e^2}\\right)^n n\\ln(n) = 0$$ A lezione il professore aveva inizialmente affermato che $n\\ln(n)$ cresce più rapidamente di una potenza $a^n$ (con $a \\gt 1$), concludendo erroneamente che il limite fosse $+\\infty$; ha poi corretto il tiro chiarendo che $(4/e^2)^n$ è un esponenziale e confrontandolo con la crescita di $n\\ln(n)$. Il limite corretto è $0$.`
+        ]
+      },
+
+      {
+        id: "s22-verso-funzioni",
+        type: "section",
+        title: "Dai limiti di successioni ai limiti di funzioni",
+        icon: "🌉",
+        content: `<p>Fino ad ora abbiamo studiato il comportamento delle successioni, che sono funzioni definite sull'insieme dei numeri naturali $\\mathbb{N}$. L'unico comportamento al limite che abbiamo potuto analizzare è per $n \\to \\infty$. Questo perché $+\\infty$ è l'unico "punto" attorno al quale i numeri naturali si "addensano".</p>
+<p><strong>Perché solo $n \\to \\infty$ per le successioni?</strong> Il concetto di limite si basa sull'idea di avvicinarsi arbitrariamente a un punto. Per le successioni, definite su $\\mathbb{N}$, non ha senso studiare il limite per $n \\to 3$, perché non esistono infiniti numeri naturali "vicini" a $3$: possiamo trovare un intorno di $3$, come $(2{,}5;\\, 3{,}5)$, che contiene un solo numero naturale. Al contrario, per ogni $M \\in \\mathbb{R}$ l'intorno di $+\\infty$ dato da $(M, +\\infty]$ contiene sempre infiniti numeri naturali: questo permette di definire un comportamento al limite per $n \\to \\infty$.</p>
+<p>Per estendere il concetto di limite alle funzioni definite su sottoinsiemi di $\\mathbb{R}$, dobbiamo formalizzare questa idea di "punti attorno ai quali un insieme si addensa". Questi punti sono chiamati <strong>punti di accumulazione</strong>.</p>`
+      },
+
+      {
+        id: "s23-punti-accumulazione",
+        type: "section",
+        title: "Punti di accumulazione e punti isolati",
+        icon: "🎯",
+        content: `<p><strong>Definizione (Punto di accumulazione).</strong> Sia $A \\subseteq \\mathbb{R}^*$ un insieme e sia $x_0 \\in \\mathbb{R}^*$. Si dice che $x_0$ è un <strong>punto di accumulazione</strong> per $A$ se ogni intorno $U$ di $x_0$ contiene infiniti punti di $A$.</p>
+<p>Un punto di accumulazione $x_0$ di un insieme $A$ <strong>non deve necessariamente appartenere ad $A$</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio: l'insieme dei numeri naturali",
+            content: `<p>Sia $A = \\mathbb{N} \\subseteq \\mathbb{R}^*$.</p>
+<ul>
+<li>L'unico punto di accumulazione per $\\mathbb{N}$ è $+\\infty$: ogni intorno di $+\\infty$, della forma $(M, +\\infty]$, contiene infiniti numeri naturali.</li>
+<li>Nessun numero finito $x_0 \\in \\mathbb{R}$ è punto di accumulazione per $\\mathbb{N}$. Ad esempio, per $x_0 = 3$ l'intorno $U = (2{,}5;\\, 3{,}5)$ contiene un solo punto di $\\mathbb{N}$ (il numero $3$), non infiniti. Lo stesso vale per qualsiasi altro numero finito.</li>
+</ul>`
+          },
+          {
+            subtitle: "Esempio: un intervallo aperto",
+            content: `<p>Siano $a, b \\in \\mathbb{R}$ con $a \\lt b$ e sia $A = (a, b)$. L'insieme dei punti di accumulazione di $A$ è l'intervallo chiuso $[a, b]$.</p>
+<ul>
+<li><strong>Punti interni:</strong> ogni punto $x \\in (a, b)$ è di accumulazione. Infatti, se $U$ è un qualunque intorno di $x$, allora $U$ contiene un intervallo $(x-\\varepsilon, x+\\varepsilon)$ con $0 \\lt \\varepsilon \\lt \\min\\{x-a,\\, b-x\\}$, interamente contenuto in $(a,b)$. Dunque ogni intorno di $x$ contiene infiniti punti di $A$.</li>
+<li><strong>Estremi dell'intervallo:</strong> anche $a$ e $b$ sono punti di accumulazione, pur non appartenendo ad $A$. Per $a$: ogni suo intorno $(a-\\varepsilon, a+\\varepsilon)$ ha intersezione non vuota con $A$, data da $(a, a+\\varepsilon)$ se $\\varepsilon \\lt b-a$, e questo intervallo contiene infiniti punti di $A$. Analogamente per $b$.</li>
+</ul>`
+          },
+          {
+            subtitle: "Punti isolati",
+            content: `<p><strong>Definizione (Punto isolato).</strong> Un punto $x_0 \\in A$ che non è di accumulazione per $A$ si dice <strong>punto isolato</strong> di $A$. Ciò significa che esiste almeno un intorno di $x_0$ che non contiene altri punti di $A$ al di fuori di $x_0$ stesso.</p>
+<p>Consideriamo l'insieme $A = [1, 5] \\cup \\{7\\}$.</p>
+<ul>
+<li>L'insieme dei punti di accumulazione di $A$ è l'intervallo chiuso $[1, 5]$.</li>
+<li>Il punto $7$ appartiene ad $A$, ma non è punto di accumulazione: scegliendo l'intorno $U = (6{,}5;\\, 7{,}5)$ si ha $U \\cap A = \\{7\\}$, che non contiene infiniti punti di $A$.</li>
+<li>Essendo $7 \\in A$ e non essendo di accumulazione, $7$ è un <strong>punto isolato</strong> di $A$.</li>
+</ul>
+<figure class="figura" data-id="analisi1_lez19c_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="analisi1_lez19c_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="275.822pt" height="66.823pt" viewBox="0 0 275.822 66.823" version="1.2"><style>#analisi1_lez19c_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez19c_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez19c_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez19c_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez19c_d1 [fill="rgb(0%,0%,100%)"],#analisi1_lez19c_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez19c_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez19c_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez19c_d1 [stroke="rgb(0%,0%,100%)"],#analisi1_lez19c_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez19c_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez19c_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez19c_d1 [fill="rgb(100%,0%,0%)"],#analisi1_lez19c_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez19c_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez19c_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez19c_d1 [stroke="rgb(100%,0%,0%)"],#analisi1_lez19c_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez19c_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez19c_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph0-1">
+<path style="stroke:none;" d="M 4.921875 -1.421875 C 4.921875 -1.515625 4.84375 -1.515625 4.8125 -1.515625 C 4.71875 -1.515625 4.703125 -1.484375 4.6875 -1.40625 C 4.359375 -0.34375 3.671875 -0.109375 3.359375 -0.109375 C 2.96875 -0.109375 2.8125 -0.421875 2.8125 -0.765625 C 2.8125 -0.984375 2.875 -1.203125 2.984375 -1.640625 L 3.3125 -3 C 3.375 -3.265625 3.609375 -4.171875 4.296875 -4.171875 C 4.359375 -4.171875 4.59375 -4.171875 4.796875 -4.046875 C 4.515625 -4 4.328125 -3.75 4.328125 -3.515625 C 4.328125 -3.34375 4.4375 -3.15625 4.703125 -3.15625 C 4.921875 -3.15625 5.234375 -3.34375 5.234375 -3.734375 C 5.234375 -4.25 4.65625 -4.390625 4.3125 -4.390625 C 3.734375 -4.390625 3.390625 -3.859375 3.265625 -3.640625 C 3.015625 -4.296875 2.484375 -4.390625 2.203125 -4.390625 C 1.15625 -4.390625 0.59375 -3.109375 0.59375 -2.859375 C 0.59375 -2.765625 0.71875 -2.765625 0.71875 -2.765625 C 0.796875 -2.765625 0.828125 -2.78125 0.84375 -2.875 C 1.1875 -3.921875 1.84375 -4.171875 2.171875 -4.171875 C 2.359375 -4.171875 2.71875 -4.078125 2.71875 -3.515625 C 2.71875 -3.203125 2.546875 -2.53125 2.171875 -1.140625 C 2.015625 -0.53125 1.671875 -0.109375 1.234375 -0.109375 C 1.171875 -0.109375 0.9375 -0.109375 0.734375 -0.234375 C 0.984375 -0.28125 1.203125 -0.5 1.203125 -0.78125 C 1.203125 -1.046875 0.984375 -1.125 0.828125 -1.125 C 0.53125 -1.125 0.28125 -0.859375 0.28125 -0.546875 C 0.28125 -0.09375 0.78125 0.109375 1.21875 0.109375 C 1.875 0.109375 2.234375 -0.59375 2.265625 -0.640625 C 2.390625 -0.28125 2.75 0.109375 3.34375 0.109375 C 4.359375 0.109375 4.921875 -1.171875 4.921875 -1.421875 Z M 4.921875 -1.421875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph0-2">
+<path style="stroke:none;" d="M 2.015625 -0.015625 C 2.015625 -0.671875 1.765625 -1.046875 1.375 -1.046875 C 1.046875 -1.046875 0.859375 -0.8125 0.859375 -0.53125 C 0.859375 -0.265625 1.046875 0 1.375 0 C 1.5 0 1.625 -0.046875 1.734375 -0.125 C 1.765625 -0.15625 1.78125 -0.15625 1.78125 -0.15625 C 1.78125 -0.15625 1.796875 -0.15625 1.796875 -0.015625 C 1.796875 0.71875 1.453125 1.328125 1.125 1.65625 C 1.015625 1.765625 1.015625 1.78125 1.015625 1.8125 C 1.015625 1.875 1.0625 1.921875 1.109375 1.921875 C 1.21875 1.921875 2.015625 1.15625 2.015625 -0.015625 Z M 2.015625 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph1-1">
+<path style="stroke:none;" d="M 4.15625 0 L 4.15625 -0.3125 L 3.84375 -0.3125 C 2.953125 -0.3125 2.921875 -0.421875 2.921875 -0.78125 L 2.921875 -6.359375 C 2.921875 -6.59375 2.921875 -6.625 2.6875 -6.625 C 2.078125 -5.984375 1.203125 -5.984375 0.890625 -5.984375 L 0.890625 -5.671875 C 1.078125 -5.671875 1.671875 -5.671875 2.1875 -5.9375 L 2.1875 -0.78125 C 2.1875 -0.421875 2.15625 -0.3125 1.265625 -0.3125 L 0.9375 -0.3125 L 0.9375 0 C 1.296875 -0.03125 2.15625 -0.03125 2.546875 -0.03125 C 2.953125 -0.03125 3.8125 -0.03125 4.15625 0 Z M 4.15625 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph1-2">
+<path style="stroke:none;" d="M 4.46875 -2 C 4.46875 -3.1875 3.640625 -4.171875 2.578125 -4.171875 C 2.09375 -4.171875 1.671875 -4.015625 1.3125 -3.671875 L 1.3125 -5.609375 C 1.515625 -5.546875 1.84375 -5.46875 2.15625 -5.46875 C 3.375 -5.46875 4.078125 -6.375 4.078125 -6.515625 C 4.078125 -6.5625 4.046875 -6.625 3.96875 -6.625 C 3.96875 -6.625 3.9375 -6.625 3.890625 -6.59375 C 3.703125 -6.5 3.203125 -6.296875 2.546875 -6.296875 C 2.140625 -6.296875 1.6875 -6.375 1.21875 -6.578125 C 1.140625 -6.609375 1.109375 -6.609375 1.109375 -6.609375 C 1 -6.609375 1 -6.53125 1 -6.375 L 1 -3.421875 C 1 -3.25 1 -3.171875 1.140625 -3.171875 C 1.21875 -3.171875 1.234375 -3.203125 1.265625 -3.265625 C 1.375 -3.421875 1.75 -3.953125 2.546875 -3.953125 C 3.078125 -3.953125 3.3125 -3.5 3.40625 -3.3125 C 3.5625 -2.953125 3.578125 -2.5625 3.578125 -2.0625 C 3.578125 -1.71875 3.578125 -1.125 3.34375 -0.703125 C 3.09375 -0.3125 2.734375 -0.0625 2.28125 -0.0625 C 1.546875 -0.0625 0.984375 -0.59375 0.8125 -1.171875 C 0.84375 -1.15625 0.875 -1.15625 0.984375 -1.15625 C 1.3125 -1.15625 1.484375 -1.40625 1.484375 -1.640625 C 1.484375 -1.875 1.3125 -2.125 0.984375 -2.125 C 0.84375 -2.125 0.5 -2.0625 0.5 -1.59375 C 0.5 -0.75 1.1875 0.21875 2.296875 0.21875 C 3.453125 0.21875 4.46875 -0.734375 4.46875 -2 Z M 4.46875 -2 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph1-3">
+<path style="stroke:none;" d="M 4.8125 -6.40625 L 2.40625 -6.40625 C 1.1875 -6.40625 1.171875 -6.53125 1.140625 -6.71875 L 0.890625 -6.71875 L 0.5625 -4.671875 L 0.8125 -4.671875 C 0.828125 -4.828125 0.921875 -5.453125 1.046875 -5.578125 C 1.125 -5.640625 1.890625 -5.640625 2.03125 -5.640625 L 4.078125 -5.640625 L 2.96875 -4.0625 C 2.078125 -2.71875 1.75 -1.34375 1.75 -0.328125 C 1.75 -0.234375 1.75 0.21875 2.203125 0.21875 C 2.65625 0.21875 2.65625 -0.234375 2.65625 -0.328125 L 2.65625 -0.828125 C 2.65625 -1.375 2.6875 -1.921875 2.765625 -2.46875 C 2.8125 -2.6875 2.953125 -3.546875 3.390625 -4.15625 L 4.734375 -6.046875 C 4.8125 -6.171875 4.8125 -6.1875 4.8125 -6.40625 Z M 4.8125 -6.40625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph1-4">
+<path style="stroke:none;" d="M 2.53125 2.484375 L 2.53125 2.09375 L 1.5625 2.09375 L 1.5625 -7.0625 L 2.53125 -7.0625 L 2.53125 -7.453125 L 1.171875 -7.453125 L 1.171875 2.484375 Z M 2.53125 2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph1-5">
+<path style="stroke:none;" d="M 1.578125 2.484375 L 1.578125 -7.453125 L 0.21875 -7.453125 L 0.21875 -7.0625 L 1.1875 -7.0625 L 1.1875 2.09375 L 0.21875 2.09375 L 0.21875 2.484375 Z M 1.578125 2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-1">
+<path style="stroke:none;" d="M 6.203125 -4.9375 C 6.203125 -5.90625 5.21875 -6.78125 3.859375 -6.78125 L 0.34375 -6.78125 L 0.34375 -6.484375 L 0.59375 -6.484375 C 1.34375 -6.484375 1.375 -6.375 1.375 -6.015625 L 1.375 -0.78125 C 1.375 -0.421875 1.34375 -0.3125 0.59375 -0.3125 L 0.34375 -0.3125 L 0.34375 0 C 0.703125 -0.03125 1.4375 -0.03125 1.8125 -0.03125 C 2.1875 -0.03125 2.9375 -0.03125 3.28125 0 L 3.28125 -0.3125 L 3.046875 -0.3125 C 2.28125 -0.3125 2.25 -0.421875 2.25 -0.78125 L 2.25 -3.140625 L 3.9375 -3.140625 C 5.125 -3.140625 6.203125 -3.9375 6.203125 -4.9375 Z M 5.171875 -4.9375 C 5.171875 -4.46875 5.171875 -3.40625 3.59375 -3.40625 L 2.21875 -3.40625 L 2.21875 -6.078125 C 2.21875 -6.40625 2.25 -6.484375 2.71875 -6.484375 L 3.59375 -6.484375 C 5.171875 -6.484375 5.171875 -5.421875 5.171875 -4.9375 Z M 5.171875 -4.9375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-2">
+<path style="stroke:none;" d="M 5.3125 0 L 5.3125 -0.3125 C 4.625 -0.3125 4.546875 -0.375 4.546875 -0.859375 L 4.546875 -4.390625 L 3.078125 -4.28125 L 3.078125 -3.96875 C 3.78125 -3.96875 3.859375 -3.90625 3.859375 -3.421875 L 3.859375 -1.65625 C 3.859375 -0.78125 3.375 -0.109375 2.65625 -0.109375 C 1.8125 -0.109375 1.78125 -0.578125 1.78125 -1.09375 L 1.78125 -4.390625 L 0.3125 -4.28125 L 0.3125 -3.96875 C 1.09375 -3.96875 1.09375 -3.9375 1.09375 -3.0625 L 1.09375 -1.5625 C 1.09375 -0.796875 1.09375 0.109375 2.609375 0.109375 C 3.15625 0.109375 3.59375 -0.171875 3.890625 -0.78125 L 3.890625 0.109375 Z M 5.3125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-3">
+<path style="stroke:none;" d="M 5.3125 0 L 5.3125 -0.3125 C 4.796875 -0.3125 4.546875 -0.3125 4.546875 -0.609375 L 4.546875 -2.5 C 4.546875 -3.359375 4.546875 -3.671875 4.234375 -4.03125 C 4.09375 -4.1875 3.765625 -4.390625 3.1875 -4.390625 C 2.46875 -4.390625 2 -3.96875 1.71875 -3.34375 L 1.71875 -4.390625 L 0.3125 -4.28125 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.421875 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.890625 -0.3125 1.78125 -0.3125 1.78125 -0.75 L 1.78125 -2.578125 C 1.78125 -3.625 2.484375 -4.171875 3.125 -4.171875 C 3.75 -4.171875 3.859375 -3.640625 3.859375 -3.078125 L 3.859375 -0.75 C 3.859375 -0.3125 3.75 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.203125 -0.03125 Z M 5.3125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-4">
+<path style="stroke:none;" d="M 3.296875 -1.234375 L 3.296875 -1.796875 L 3.046875 -1.796875 L 3.046875 -1.25 C 3.046875 -0.515625 2.75 -0.140625 2.390625 -0.140625 C 1.71875 -0.140625 1.71875 -1.046875 1.71875 -1.21875 L 1.71875 -3.96875 L 3.140625 -3.96875 L 3.140625 -4.28125 L 1.71875 -4.28125 L 1.71875 -6.109375 L 1.46875 -6.109375 C 1.453125 -5.296875 1.15625 -4.234375 0.1875 -4.1875 L 0.1875 -3.96875 L 1.03125 -3.96875 L 1.03125 -1.234375 C 1.03125 -0.015625 1.953125 0.109375 2.3125 0.109375 C 3.015625 0.109375 3.296875 -0.59375 3.296875 -1.234375 Z M 3.296875 -1.234375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-5">
+<path style="stroke:none;" d="M 4.6875 -2.125 C 4.6875 -3.40625 3.6875 -4.453125 2.484375 -4.453125 C 1.25 -4.453125 0.28125 -3.375 0.28125 -2.125 C 0.28125 -0.84375 1.3125 0.109375 2.46875 0.109375 C 3.671875 0.109375 4.6875 -0.859375 4.6875 -2.125 Z M 3.859375 -2.203125 C 3.859375 -1.84375 3.859375 -1.3125 3.640625 -0.875 C 3.421875 -0.421875 2.984375 -0.140625 2.484375 -0.140625 C 2.0625 -0.140625 1.625 -0.34375 1.34375 -0.8125 C 1.109375 -1.25 1.109375 -1.84375 1.109375 -2.203125 C 1.109375 -2.59375 1.109375 -3.125 1.34375 -3.5625 C 1.609375 -4.03125 2.078125 -4.234375 2.46875 -4.234375 C 2.90625 -4.234375 3.34375 -4.015625 3.59375 -3.59375 C 3.859375 -3.15625 3.859375 -2.578125 3.859375 -2.203125 Z M 3.859375 -2.203125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-6">
+<path style="stroke:none;" d="M 2.453125 0 L 2.453125 -0.3125 C 1.796875 -0.3125 1.765625 -0.359375 1.765625 -0.75 L 1.765625 -4.390625 L 0.375 -4.28125 L 0.375 -3.96875 C 1.015625 -3.96875 1.109375 -3.921875 1.109375 -3.421875 L 1.109375 -0.75 C 1.109375 -0.3125 1 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 C 1.765625 -0.03125 2.109375 -0.015625 2.453125 0 Z M 1.90625 -6 C 1.90625 -6.265625 1.671875 -6.53125 1.375 -6.53125 C 1.046875 -6.53125 0.84375 -6.25 0.84375 -6 C 0.84375 -5.734375 1.078125 -5.46875 1.375 -5.46875 C 1.703125 -5.46875 1.90625 -5.75 1.90625 -6 Z M 1.90625 -6 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-7">
+<path style="stroke:none;" d="M 3.578125 -1.265625 C 3.578125 -1.796875 3.28125 -2.09375 3.15625 -2.21875 C 2.828125 -2.53125 2.4375 -2.609375 2.03125 -2.6875 C 1.46875 -2.796875 0.8125 -2.9375 0.8125 -3.515625 C 0.8125 -3.859375 1.0625 -4.265625 1.921875 -4.265625 C 3.015625 -4.265625 3.0625 -3.375 3.078125 -3.0625 C 3.09375 -2.96875 3.203125 -2.96875 3.203125 -2.96875 C 3.328125 -2.96875 3.328125 -3.015625 3.328125 -3.203125 L 3.328125 -4.21875 C 3.328125 -4.375 3.328125 -4.453125 3.21875 -4.453125 C 3.171875 -4.453125 3.15625 -4.453125 3.015625 -4.328125 C 2.984375 -4.296875 2.890625 -4.203125 2.859375 -4.171875 C 2.46875 -4.453125 2.0625 -4.453125 1.921875 -4.453125 C 0.703125 -4.453125 0.328125 -3.78125 0.328125 -3.234375 C 0.328125 -2.875 0.484375 -2.609375 0.75 -2.390625 C 1.078125 -2.125 1.34375 -2.0625 2.0625 -1.921875 C 2.28125 -1.890625 3.09375 -1.734375 3.09375 -1.015625 C 3.09375 -0.5 2.75 -0.109375 1.984375 -0.109375 C 1.140625 -0.109375 0.78125 -0.671875 0.59375 -1.515625 C 0.5625 -1.65625 0.5625 -1.6875 0.453125 -1.6875 C 0.328125 -1.6875 0.328125 -1.625 0.328125 -1.4375 L 0.328125 -0.125 C 0.328125 0.046875 0.328125 0.109375 0.4375 0.109375 C 0.484375 0.109375 0.5 0.09375 0.6875 -0.09375 C 0.703125 -0.109375 0.703125 -0.125 0.890625 -0.3125 C 1.328125 0.09375 1.765625 0.109375 1.984375 0.109375 C 3.125 0.109375 3.578125 -0.5625 3.578125 -1.265625 Z M 3.578125 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-8">
+<path style="stroke:none;" d="M 2.53125 0 L 2.53125 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -6.890625 L 0.328125 -6.78125 L 0.328125 -6.484375 C 1.03125 -6.484375 1.109375 -6.40625 1.109375 -5.921875 L 1.109375 -0.75 C 1.109375 -0.3125 1 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.4375 -0.03125 Z M 2.53125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-9">
+<path style="stroke:none;" d="M 4.796875 -0.890625 L 4.796875 -1.4375 L 4.546875 -1.4375 L 4.546875 -0.890625 C 4.546875 -0.3125 4.296875 -0.25 4.1875 -0.25 C 3.859375 -0.25 3.828125 -0.703125 3.828125 -0.75 L 3.828125 -2.734375 C 3.828125 -3.15625 3.828125 -3.53125 3.46875 -3.90625 C 3.078125 -4.296875 2.578125 -4.453125 2.109375 -4.453125 C 1.296875 -4.453125 0.609375 -3.984375 0.609375 -3.328125 C 0.609375 -3.03125 0.8125 -2.859375 1.0625 -2.859375 C 1.34375 -2.859375 1.515625 -3.0625 1.515625 -3.3125 C 1.515625 -3.4375 1.46875 -3.765625 1.015625 -3.78125 C 1.28125 -4.125 1.765625 -4.234375 2.09375 -4.234375 C 2.578125 -4.234375 3.140625 -3.84375 3.140625 -2.96875 L 3.140625 -2.59375 C 2.640625 -2.5625 1.9375 -2.53125 1.3125 -2.234375 C 0.5625 -1.890625 0.3125 -1.375 0.3125 -0.9375 C 0.3125 -0.140625 1.28125 0.109375 1.90625 0.109375 C 2.5625 0.109375 3.015625 -0.28125 3.203125 -0.75 C 3.25 -0.359375 3.515625 0.0625 3.984375 0.0625 C 4.1875 0.0625 4.796875 -0.078125 4.796875 -0.890625 Z M 3.140625 -1.390625 C 3.140625 -0.453125 2.421875 -0.109375 1.984375 -0.109375 C 1.484375 -0.109375 1.078125 -0.453125 1.078125 -0.953125 C 1.078125 -1.5 1.5 -2.328125 3.140625 -2.390625 Z M 3.140625 -1.390625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-10">
+<path style="stroke:none;" d="M 5.234375 0 L 5.234375 -0.3125 C 4.546875 -0.3125 4.46875 -0.375 4.46875 -0.859375 L 4.46875 -6.890625 L 3.03125 -6.78125 L 3.03125 -6.484375 C 3.734375 -6.484375 3.8125 -6.40625 3.8125 -5.921875 L 3.8125 -3.78125 C 3.515625 -4.140625 3.09375 -4.390625 2.546875 -4.390625 C 1.375 -4.390625 0.34375 -3.421875 0.34375 -2.140625 C 0.34375 -0.875 1.3125 0.109375 2.4375 0.109375 C 3.078125 0.109375 3.53125 -0.234375 3.78125 -0.546875 L 3.78125 0.109375 Z M 3.78125 -1.171875 C 3.78125 -1 3.78125 -0.96875 3.671875 -0.8125 C 3.375 -0.328125 2.921875 -0.109375 2.5 -0.109375 C 2.046875 -0.109375 1.6875 -0.375 1.453125 -0.75 C 1.1875 -1.15625 1.15625 -1.71875 1.15625 -2.125 C 1.15625 -2.5 1.1875 -3.09375 1.46875 -3.53125 C 1.671875 -3.84375 2.0625 -4.171875 2.59375 -4.171875 C 2.9375 -4.171875 3.359375 -4.03125 3.671875 -3.578125 C 3.78125 -3.40625 3.78125 -3.390625 3.78125 -3.203125 Z M 3.78125 -1.171875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-11">
+<path style="stroke:none;" d="M 4.125 -1.1875 C 4.125 -1.28125 4.03125 -1.28125 4 -1.28125 C 3.90625 -1.28125 3.890625 -1.25 3.859375 -1.1875 C 3.578125 -0.265625 2.9375 -0.140625 2.5625 -0.140625 C 2.03125 -0.140625 1.15625 -0.5625 1.15625 -2.171875 C 1.15625 -3.78125 1.984375 -4.203125 2.5 -4.203125 C 2.59375 -4.203125 3.21875 -4.1875 3.5625 -3.828125 C 3.15625 -3.8125 3.09375 -3.515625 3.09375 -3.375 C 3.09375 -3.125 3.28125 -2.921875 3.5625 -2.921875 C 3.8125 -2.921875 4.015625 -3.09375 4.015625 -3.390625 C 4.015625 -4.0625 3.265625 -4.453125 2.5 -4.453125 C 1.25 -4.453125 0.34375 -3.375 0.34375 -2.140625 C 0.34375 -0.875 1.328125 0.109375 2.46875 0.109375 C 3.8125 0.109375 4.125 -1.078125 4.125 -1.1875 Z M 4.125 -1.1875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-12">
+<path style="stroke:none;" d="M 8.078125 0 L 8.078125 -0.3125 C 7.5625 -0.3125 7.3125 -0.3125 7.296875 -0.609375 L 7.296875 -2.5 C 7.296875 -3.359375 7.296875 -3.671875 7 -4.03125 C 6.859375 -4.1875 6.53125 -4.390625 5.953125 -4.390625 C 5.125 -4.390625 4.6875 -3.796875 4.515625 -3.421875 C 4.375 -4.28125 3.640625 -4.390625 3.1875 -4.390625 C 2.46875 -4.390625 2 -3.96875 1.71875 -3.34375 L 1.71875 -4.390625 L 0.3125 -4.28125 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.421875 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.890625 -0.3125 1.78125 -0.3125 1.78125 -0.75 L 1.78125 -2.578125 C 1.78125 -3.625 2.484375 -4.171875 3.125 -4.171875 C 3.75 -4.171875 3.859375 -3.640625 3.859375 -3.078125 L 3.859375 -0.75 C 3.859375 -0.3125 3.75 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.203125 -0.03125 L 5.3125 0 L 5.3125 -0.3125 C 4.65625 -0.3125 4.546875 -0.3125 4.546875 -0.75 L 4.546875 -2.578125 C 4.546875 -3.625 5.25 -4.171875 5.890625 -4.171875 C 6.515625 -4.171875 6.625 -3.640625 6.625 -3.078125 L 6.625 -0.75 C 6.625 -0.3125 6.515625 -0.3125 5.84375 -0.3125 L 5.84375 0 L 6.96875 -0.03125 Z M 8.078125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-13">
+<path style="stroke:none;" d="M 3.984375 -1.859375 L 3.734375 -1.859375 C 3.640625 -0.6875 3.4375 -0.25 2.28125 -0.25 L 1.109375 -0.25 L 3.875 -3.984375 C 3.96875 -4.09375 3.96875 -4.109375 3.96875 -4.15625 C 3.96875 -4.28125 3.890625 -4.28125 3.703125 -4.28125 L 0.53125 -4.28125 L 0.421875 -2.6875 L 0.671875 -2.6875 C 0.71875 -3.703125 0.921875 -4.0625 2 -4.0625 L 3.140625 -4.0625 L 0.375 -0.3125 C 0.28125 -0.203125 0.28125 -0.1875 0.28125 -0.140625 C 0.28125 0 0.34375 0 0.53125 0 L 3.8125 0 Z M 3.984375 -1.859375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-14">
+<path style="stroke:none;" d="M 4.125 -1.1875 C 4.125 -1.28125 4.046875 -1.296875 4 -1.296875 C 3.90625 -1.296875 3.890625 -1.25 3.859375 -1.15625 C 3.515625 -0.140625 2.625 -0.140625 2.53125 -0.140625 C 2.03125 -0.140625 1.625 -0.4375 1.40625 -0.8125 C 1.109375 -1.28125 1.109375 -1.9375 1.109375 -2.296875 L 3.875 -2.296875 C 4.09375 -2.296875 4.125 -2.296875 4.125 -2.5 C 4.125 -3.484375 3.59375 -4.453125 2.34375 -4.453125 C 1.1875 -4.453125 0.28125 -3.421875 0.28125 -2.1875 C 0.28125 -0.859375 1.328125 0.109375 2.46875 0.109375 C 3.671875 0.109375 4.125 -1 4.125 -1.1875 Z M 3.46875 -2.5 L 1.109375 -2.5 C 1.171875 -3.984375 2 -4.234375 2.34375 -4.234375 C 3.375 -4.234375 3.46875 -2.890625 3.46875 -2.5 Z M 3.46875 -2.5 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez19c_d1-glyph2-15">
+<path style="stroke:none;" d="M 1.90625 -3.75 C 1.90625 -4.046875 1.671875 -4.28125 1.375 -4.28125 C 1.09375 -4.28125 0.859375 -4.046875 0.859375 -3.75 C 0.859375 -3.46875 1.09375 -3.234375 1.375 -3.234375 C 1.671875 -3.234375 1.90625 -3.46875 1.90625 -3.75 Z M 1.90625 -0.53125 C 1.90625 -0.8125 1.671875 -1.046875 1.375 -1.046875 C 1.09375 -1.046875 0.859375 -0.8125 0.859375 -0.53125 C 0.859375 -0.234375 1.09375 0 1.375 0 C 1.671875 0 1.90625 -0.234375 1.90625 -0.53125 Z M 1.90625 -0.53125 "/>
+</symbol>
+</g>
+</defs>
+<g id="analisi1_lez19c_d1-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000706707 -0.000583497 L 254.724415 -0.000583497 " transform="matrix(0.997358,0,0,-0.997358,4.448514,23.296293)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.073665 2.392457 C -1.693755 0.955066 -0.851687 0.277495 -0.00178539 -0.000583497 C -0.851687 -0.278662 -1.693755 -0.956233 -2.073665 -2.389708 " transform="matrix(0.997358,0,0,-0.997358,258.697093,23.296293)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph0-1" x="262.403246" y="25.435626"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.345118 2.835033 L 28.345118 -2.8362 " transform="matrix(0.997358,0,0,-0.997358,4.448514,23.296293)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-1" x="30.236208" y="35.890933"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 141.734513 2.835033 L 141.734513 -2.8362 " transform="matrix(0.997358,0,0,-0.997358,4.448514,23.296293)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-2" x="143.322666" y="35.890933"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 198.427252 2.835033 L 198.427252 -2.8362 " transform="matrix(0.997358,0,0,-0.997358,4.448514,23.296293)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-3" x="199.865895" y="35.890933"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 28.345118 -0.000583497 L 141.734513 -0.000583497 " transform="matrix(0.997358,0,0,-0.997358,4.448514,23.296293)"/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 34.707031 23.296875 C 34.707031 22.199219 33.816406 21.308594 32.71875 21.308594 C 31.621094 21.308594 30.734375 22.199219 30.734375 23.296875 C 30.734375 24.394531 31.621094 25.285156 32.71875 25.285156 C 33.816406 25.285156 34.707031 24.394531 34.707031 23.296875 Z M 34.707031 23.296875 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 147.796875 23.296875 C 147.796875 22.199219 146.90625 21.308594 145.808594 21.308594 C 144.710938 21.308594 143.820312 22.199219 143.820312 23.296875 C 143.820312 24.394531 144.710938 25.285156 145.808594 25.285156 C 146.90625 25.285156 147.796875 24.394531 147.796875 23.296875 Z M 147.796875 23.296875 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 204.339844 23.296875 C 204.339844 22.199219 203.449219 21.308594 202.351562 21.308594 C 201.253906 21.308594 200.363281 22.199219 200.363281 23.296875 C 200.363281 24.394531 201.253906 25.285156 202.351562 25.285156 C 203.449219 25.285156 204.339844 24.394531 204.339844 23.296875 Z M 204.339844 23.296875 "/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-1" x="173.409971" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-2" x="180.172604" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-3" x="185.693201" y="14.131568"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-4" x="190.935583" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-5" x="194.799803" y="14.131568"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-6" x="203.076725" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-7" x="205.837023" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-5" x="209.756886" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-8" x="214.725027" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-9" x="217.485326" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-4" x="222.453466" y="14.131568"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-5" x="226.317686" y="14.131568"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-1" x="24.85945" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-2" x="31.622082" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-3" x="37.14268" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-4" x="42.385062" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-6" x="46.249282" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-10" x="52.318362" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-6" x="57.83896" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-9" x="63.917976" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-11" x="68.886117" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-11" x="73.302794" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-2" x="77.71947" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-12" x="83.240068" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-2" x="91.241755" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-8" x="96.762353" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-9" x="99.522652" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-13" x="104.490792" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-6" x="108.907469" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-5" x="111.667768" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-3" x="116.635908" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-14" x="122.156506" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph2-15" x="126.573183" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-4" x="133.745035" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-1" x="136.555015" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph0-2" x="141.522434" y="56.876347"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-2" x="145.938736" y="56.876347"/>
+  <use xlink:href="#analisi1_lez19c_d1-glyph1-5" x="150.906877" y="56.876347"/>
+</g>
+</g>
+</svg></figure>
+<p>Nella figura, il segmento $[1,5]$ raccoglie i punti di accumulazione di $A$, mentre il punto $7$, staccato dagli altri, è il punto isolato.</p>`
+          }
+        ],
+        extra_content: `<p>Il concetto di punto di accumulazione sarà fondamentale per definire il limite di una funzione $f(x)$ per $x$ che tende a $x_0$: potremo farlo <strong>solo se $x_0$ è un punto di accumulazione per il dominio della funzione</strong>.</p>`
+      },
+
+      {
+        id: "s24-box-esercizi",
+        type: "integrazione_box",
+        title: "Esercizi proposti",
+        icon: "🧮",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s25-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dai la definizione di sottosuccessione di $\\{a_n\\}_{n \\in \\mathbb{N}}$ e dimostra che, se $\\{k_n\\}$ è la successione degli indici, allora $k_n \\geq n$ per ogni $n$ e quindi $\\lim_{n \\to +\\infty} k_n = +\\infty$. Spiega in quale punto della dimostrazione del teorema sul limite delle sottosuccessioni si usa questo fatto.</p>`,
+        solution: `<p>Una sottosuccessione di $\\{a_n\\}_{n \\in \\mathbb{N}}$ è una successione della forma $b_n = a_{k_n}$, dove $\\{k_n\\}_{n \\in \\mathbb{N}}$ è una successione di numeri naturali strettamente crescente, cioè $k_{n+1} \\gt k_n$ per ogni $n \\in \\mathbb{N}$.</p>
+<p>Dimostriamo per induzione che $k_n \\geq n$. Per $n = 0$: $k_0 \\in \\mathbb{N}$, dunque $k_0 \\geq 0$. Passo induttivo: se $k_n \\geq n$, allora $k_{n+1} \\gt k_n \\geq n$; poiché $k_{n+1}$ e $n$ sono interi, da $k_{n+1} \\gt n$ segue $k_{n+1} \\geq n+1$. Quindi $k_n \\geq n$ per ogni $n$ e, per confronto, $\\lim_{n \\to +\\infty} k_n = +\\infty$.</p>
+<p>Questo fatto si usa nel passaggio centrale della dimostrazione del teorema: fissato un intorno $U$ di $L$ e il corrispondente indice $N_U$ tale che $a_n \\in U$ per ogni $n \\gt N_U$, poiché $k_n \\to +\\infty$ esiste $M_U$ tale che $k_n \\gt N_U$ per ogni $n \\gt M_U$ (basta $M_U = N_U$, dato che $k_n \\geq n$); allora $a_{k_n} \\in U$ per ogni $n \\gt M_U$, cioè $a_{k_n} \\to L$.</p>`
+      },
+
+      {
+        id: "s26-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Dare la definizione di picco di una successione $\\{a_n\\}_{n \\in \\mathbb{N}}$ e scriverne esplicitamente la negazione. Determinare poi l'insieme dei picchi della successione $a_n = \\dfrac{(-1)^n}{n+1}$ e stabilire in quale dei due casi della dimostrazione del Teorema di Bolzano-Weierstrass ci si trova, esibendo la sottosuccessione monotona corrispondente e il suo limite.</p>`,
+        solution: `<p>Un indice $n \\in \\mathbb{N}$ si dice picco per $\\{a_n\\}$ se $a_m \\lt a_n$ per ogni $m \\gt n$ (disuguaglianza stretta). La negazione è: $n$ non è un picco se esiste almeno un indice $m \\gt n$ tale che $a_m \\ge a_n$.</p>
+<p>Per $a_n = \\dfrac{(-1)^n}{n+1}$ i primi termini sono $1, -\\tfrac{1}{2}, \\tfrac{1}{3}, -\\tfrac{1}{4}, \\tfrac{1}{5}, \\dots$</p>
+<p>Se $n$ è pari, $a_n = \\frac{1}{n+1} \\gt 0$. Preso un qualunque $m \\gt n$: se $m$ è pari, $a_m = \\frac{1}{m+1} \\lt \\frac{1}{n+1} = a_n$ perché $m+1 \\gt n+1 \\gt 0$; se $m$ è dispari, $a_m = -\\frac{1}{m+1} \\lt 0 \\lt a_n$. Dunque $a_m \\lt a_n$ per ogni $m \\gt n$ e ogni indice pari è un picco.</p>
+<p>Se $n$ è dispari, $a_n = -\\frac{1}{n+1} \\lt 0$, mentre per $m = n+1 \\gt n$ (pari) si ha $a_m = \\frac{1}{n+2} \\gt 0 \\gt a_n$, cioè $a_m \\ge a_n$: quindi nessun indice dispari è un picco.</p>
+<p>L'insieme dei picchi è perciò $\\{n \\in \\mathbb{N} : n \\text{ pari}\\}$, che è infinito: siamo nel <strong>Caso 1</strong>. Gli indici dei picchi ordinati sono $k_j = 2(j-1)$ (con $j \\geq 1$) e la sottosuccessione corrispondente è $a_{k_j} = \\frac{1}{2(j-1)+1} = \\frac{1}{2j-1}$, strettamente decrescente e limitata inferiormente da $0$, dunque convergente: $a_{k_j} \\to 0$ per $j \\to +\\infty$.</p>`
+      },
+
+      {
+        id: "s27-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia la definizione di punto di accumulazione di un insieme $A \\subseteq \\mathbb{R}^*$ e quella di punto isolato. Stabilisci poi se le seguenti affermazioni sono vere o false, giustificando con un esempio: (a) un punto di accumulazione di $A$ appartiene sempre ad $A$; (b) ogni punto di $A$ è di accumulazione per $A$.</p>`,
+        solution: `<p><strong>Definizioni.</strong> Sia $A \\subseteq \\mathbb{R}^*$ e sia $x_0 \\in \\mathbb{R}^*$. Si dice che $x_0$ è punto di accumulazione per $A$ se ogni intorno $U$ di $x_0$ contiene infiniti punti di $A$ (equivalentemente: ogni intorno di $x_0$ contiene almeno un punto di $A$ diverso da $x_0$). Un punto $x_0 \\in A$ che non è di accumulazione per $A$ si dice punto isolato di $A$; ciò equivale a dire che esiste un intorno $U$ di $x_0$ tale che $U \\cap A = \\{x_0\\}$.</p>
+<p><strong>(a) Falsa.</strong> Se $A = (0,1)$, il punto $x_0 = 0$ è di accumulazione per $A$ (ogni intorno $(-\\varepsilon, \\varepsilon)$ contiene l'intervallo $(0, \\min\\{\\varepsilon, 1\\})$, che ha infiniti punti di $A$) ma $0 \\notin A$. Analogamente $+\\infty$ è di accumulazione per $\\mathbb{N}$ pur non essendo un numero naturale.</p>
+<p><strong>(b) Falsa.</strong> Se $A = [1,5] \\cup \\{7\\}$, il punto $7$ appartiene ad $A$ ma l'intorno $U = (6{,}5;\\, 7{,}5)$ soddisfa $U \\cap A = \\{7\\}$, quindi $7$ non è di accumulazione: è un punto isolato di $A$. L'insieme dei punti di accumulazione di $A$ è $[1,5]$.</p>
+<p>Quindi appartenenza ad $A$ ed essere di accumulazione per $A$ sono proprietà del tutto indipendenti.</p>`
+      },
+
+      {
+        id: "s28-ex-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        content: `<p>Enuncia il teorema sul limite delle sottosuccessioni e dimostralo nel caso $L \\in \\mathbb{R}$ usando la definizione con $\\varepsilon$. Deduci il corollario sulla non esistenza del limite e applicalo a $a_n = (-1)^n$.</p>`,
+        solution: `<p><strong>Teorema.</strong> Se $\\lim_{n \\to +\\infty} a_n = L \\in \\mathbb{R}^* = \\mathbb{R} \\cup \\{-\\infty, +\\infty\\}$, allora per ogni successione di indici $\\{k_n\\}$ strettamente crescente si ha $\\lim_{n \\to +\\infty} a_{k_n} = L$.</p>
+<p><strong>Dimostrazione nel caso $L \\in \\mathbb{R}$.</strong> Sia $\\varepsilon \\gt 0$. Per ipotesi esiste $N \\in \\mathbb{N}$ tale che $|a_n - L| \\lt \\varepsilon$ per ogni $n \\gt N$. Poiché $k_n \\geq n$ (gli indici sono interi strettamente crescenti), per ogni $n \\gt N$ si ha $k_n \\geq n \\gt N$, dunque $|a_{k_n} - L| \\lt \\varepsilon$. Essendo $\\varepsilon \\gt 0$ arbitrario, $a_{k_n} \\to L$.</p>
+<p><strong>Corollario.</strong> Se $\\{a_n\\}$ ammette due sottosuccessioni con limiti diversi in $\\mathbb{R}^*$, allora $\\{a_n\\}$ non ammette limite (né finito né infinito). Infatti è la contrapposta: se esistesse $L \\in \\mathbb{R}^*$ con $a_n \\to L$, ogni sottosuccessione avrebbe limite $L$, e due sottosuccessioni non potrebbero avere limiti distinti.</p>
+<p><strong>Applicazione.</strong> Per $a_n = (-1)^n$ si ha $a_{2n} = (-1)^{2n} = 1 \\to 1$ e $a_{2n+1} = (-1)^{2n+1} = -1 \\to -1$; le successioni di indici $2n$ e $2n+1$ sono strettamente crescenti e $1 \\neq -1$, dunque $\\lim_{n \\to +\\infty} (-1)^n$ non esiste.</p>`
+      },
+
+      {
+        id: "s29-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Dimostrare che la successione $a_n = (-1)^n \\dfrac{n}{n+1}$ non ammette limite in $\\mathbb{R}^*$.</p>`,
+        solution: `<p>Usiamo il criterio delle sottosuccessioni.</p>
+<p>Indici pari, $k_n = 2n$ (successione strettamente crescente): $$a_{2n} = (-1)^{2n} \\frac{2n}{2n+1} = \\frac{2n}{2n+1} = \\frac{1}{1 + \\frac{1}{2n}} \\to 1 .$$</p>
+<p>Indici dispari, $k_n = 2n+1$ (anch'essa strettamente crescente): $$a_{2n+1} = (-1)^{2n+1} \\frac{2n+1}{2n+2} = -\\frac{2n+1}{2n+2} \\to -1 .$$</p>
+<p>Abbiamo quindi due sottosuccessioni di $\\{a_n\\}$ con limiti $1$ e $-1$, e $1 \\neq -1$. Per il corollario del teorema sul limite delle sottosuccessioni, $\\{a_n\\}$ non ammette limite in $\\mathbb{R}^*$.</p>
+<p>Osserviamo che $|a_n| = \\frac{n}{n+1} \\leq 1$, quindi la successione è limitata: coerentemente con Bolzano-Weierstrass essa possiede sottosuccessioni convergenti (quelle trovate), pur non avendo limite.</p>`
+      },
+
+      {
+        id: "s30-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare, usando la formula di Stirling, $\\displaystyle \\lim_{n \\to \\infty} \\frac{n!}{n^n}$.</p>`,
+        solution: `<p>Per la formula di Stirling $n! \\sim \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n$, cioè</p>
+<p>$$n! = \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n (1+\\varepsilon_n), \\qquad \\varepsilon_n \\to 0 .$$</p>
+<p>Dividendo per $n^n$ si ottiene l'identità esatta</p>
+<p>$$\\frac{n!}{n^n} = \\frac{\\sqrt{2\\pi n}\\, n^n}{e^n\\, n^n}(1+\\varepsilon_n) = \\underbrace{\\frac{\\sqrt{2\\pi n}}{e^n}}_{=:b_n}(1+\\varepsilon_n).$$</p>
+<p>Si tratta di un quoziente di prodotti di potenze e fattoriali, quindi la sostituzione asintotica è lecita: basta studiare $b_n$ e ricordare che $1+\\varepsilon_n \\to 1$.</p>
+<p>Poiché l'esponenziale $e^n$ cresce più rapidamente di qualunque potenza di $n$, si ha $b_n = \\frac{\\sqrt{2\\pi n}}{e^n} \\to 0$. Infatti, scrivendo $b_n = \\sqrt{2\\pi}\\, \\frac{n^{1/2}}{e^n}$ e usando $\\lim_{n \\to \\infty} \\frac{n^\\alpha}{e^n} = 0$ per ogni $\\alpha \\gt 0$, segue $b_n \\to 0$.</p>
+<p>Dunque $$\\lim_{n \\to \\infty} \\frac{n!}{n^n} = \\lim_{n \\to \\infty} b_n (1+\\varepsilon_n) = 0 \\cdot 1 = 0 .$$</p>
+<p>Quindi $n^n$ cresce più rapidamente di $n!$, coerentemente con il fattore $(1/e)^n$ presente nella formula di Stirling.</p>`
+      },
+
+      {
+        id: "s31-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Calcolare $\\displaystyle \\lim_{n \\to +\\infty} \\left(\\frac{2}{e}\\right)^n n^5 \\ln n$.</p>`,
+        solution: `<p>La base è $\\frac{2}{e} \\approx \\frac{2}{2{,}718} \\approx 0{,}736 \\lt 1$, quindi $\\left(\\frac{2}{e}\\right)^n \\to 0$, mentre $n^5 \\ln n \\to +\\infty$: si tratta di una forma indeterminata $0 \\cdot \\infty$.</p>
+<p>Riscriviamo il prodotto come un rapporto portando l'esponenziale al denominatore:</p>
+<p>$$\\left(\\frac{2}{e}\\right)^n n^5 \\ln n = \\frac{n^5 \\ln n}{\\left(\\frac{e}{2}\\right)^n}.$$</p>
+<p>Al denominatore compare un esponenziale di base $\\frac{e}{2} \\approx 1{,}359 \\gt 1$. Per la gerarchia degli infiniti, un esponenziale $b^n$ con $b \\gt 1$ è un infinito di ordine superiore rispetto a qualunque prodotto del tipo $n^p (\\ln n)^q$ (qui $p = 5$, $q = 1$). Quindi il rapporto tende a $0$ e</p>
+<p>$$\\lim_{n \\to +\\infty} \\left(\\frac{2}{e}\\right)^n n^5 \\ln n = 0 .$$</p>
+<p><em>Osservazione:</em> il risultato non dipende dagli esponenti $5$ e $1$; cambierebbe solo se la base fosse $\\ge 1$, caso in cui il limite sarebbe $+\\infty$.</p>`
+      },
+
+      {
+        id: "s32-ex-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        content: `<p>Sia $a_n = n^{(-1)^n}$ per $n \\geq 1$. Stabilire se la successione ammette limite in $\\mathbb{R}^* = \\mathbb{R} \\cup \\{-\\infty, +\\infty\\}$, se è limitata, e se ammette sottosuccessioni convergenti. Commentare il risultato alla luce del Teorema di Bolzano-Weierstrass.</p>`,
+        solution: `<p>Distinguiamo la parità di $n$: se $n$ è pari, $(-1)^n = 1$ e $a_n = n$; se $n$ è dispari, $(-1)^n = -1$ e $a_n = \\frac{1}{n}$. Dunque i primi termini sono $a_1 = 1$, $a_2 = 2$, $a_3 = \\frac{1}{3}$, $a_4 = 4$, $a_5 = \\frac{1}{5}, \\dots$</p>
+<p>Sottosuccessione degli indici pari, $k_n = 2n$ (strettamente crescente): $a_{2n} = 2n \\to +\\infty$. Sottosuccessione degli indici dispari, $k_n = 2n+1$ (strettamente crescente): $a_{2n+1} = \\dfrac{1}{2n+1} \\to 0$.</p>
+<p>I due limiti sono $+\\infty$ e $0$, diversi in $\\mathbb{R}^*$: per il corollario del teorema sul limite delle sottosuccessioni il limite di $\\{a_n\\}$ non esiste.</p>
+<p>La successione non è limitata superiormente, perché $a_{2n} = 2n$ supera ogni costante $M$ (basta $n \\gt M/2$); è invece limitata inferiormente da $0$. Nonostante ciò essa ammette la sottosuccessione convergente $a_{2n+1} \\to 0$: ciò non contraddice nulla, perché la limitatezza nel Teorema di Bolzano-Weierstrass è una condizione <strong>sufficiente e non necessaria</strong> per l'esistenza di una sottosuccessione convergente. Il controesempio che mostra la necessità dell'ipotesi è invece $a_n = n$, le cui sottosuccessioni tendono tutte a $+\\infty$.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Che cos'è una sottosuccessione di $\\{a_n\\}_{n \\in \\mathbb{N}}$?",
+        back: "È una successione della forma $b_n = a_{k_n}$, dove $\\{k_n\\}$ è una successione di numeri naturali <strong>strettamente crescente</strong> ($k_{n+1} \\gt k_n$ per ogni $n$). Da ciò segue automaticamente $k_n \\geq n$ e quindi $k_n \\to +\\infty$: si \"pescano\" termini andando sempre in avanti, senza mai tornare indietro."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che se $\\lim_n a_n = L \\in \\mathbb{R}^*$, allora ogni sottosuccessione tende a $L$.",
+        back: "Sia $U$ un intorno di $L$ (in $\\mathbb{R}^*$). Per ipotesi esiste $N_U$ con $a_n \\in U$ per ogni $n \\gt N_U$. Poiché $k_n$ è una successione di interi strettamente crescente, $k_n \\to +\\infty$: esiste $M_U$ tale che $k_n \\gt N_U$ per ogni $n \\gt M_U$ (basta $M_U = N_U$, dato che $k_n \\geq n$). Allora $a_{k_n} \\in U$ per ogni $n \\gt M_U$, cioè $a_{k_n} \\to L$."
+      },
+      {
+        type: "domanda",
+        front: "Qual è il criterio pratico per dimostrare che una successione NON ha limite?",
+        back: "Si esibiscono <strong>due</strong> sottosuccessioni (due scelte di indici strettamente crescenti) con limiti diversi in $\\mathbb{R}^*$. Per la contronominale del teorema sul limite delle sottosuccessioni, la successione non può ammettere limite. Esempio: $(-1)^n$ con $a_{2n} \\to 1$ e $a_{2n+1} \\to -1$."
+      },
+      {
+        type: "definizione",
+        front: "Che differenza c'è fra «ammettere limite in $\\mathbb{R}^*$» e «convergere»?",
+        back: "$\\mathbb{R}^* = \\mathbb{R} \\cup \\{-\\infty,+\\infty\\}$. <em>Ammettere limite in $\\mathbb{R}^*$</em> significa che il limite esiste, eventualmente infinito (es. $a_n = n$ ha limite $+\\infty$). <em>Convergere</em> significa che il limite esiste <strong>ed è un numero reale</strong> (es. $a_n = 1/n \\to 0$). Bolzano-Weierstrass parla di convergenza, quindi di limite finito."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è un picco di una successione? E cosa significa che un indice non è un picco?",
+        back: "Un indice $n$ è un <strong>picco</strong> se $a_m \\lt a_n$ per ogni $m \\gt n$ (disuguaglianza stretta): il termine è strettamente maggiore di tutti quelli che lo seguono. Il picco è un <em>indice</em>, non un valore. Negazione: $n$ non è un picco se esiste almeno un $m \\gt n$ con $a_m \\ge a_n$. Attenzione ai valori ripetuti: se $a_m = a_n$ per qualche $m \\gt n$, allora $n$ non è un picco."
+      },
+      {
+        type: "dimostrazione",
+        front: "Enuncia e dimostra il Teorema di Bolzano-Weierstrass.",
+        back: "Ogni successione <strong>limitata</strong> di reali ammette una sottosuccessione convergente. Dimostrazione per casi sui picchi.<br><strong>Caso 1 (infiniti picchi):</strong> siano $k_1 \\lt k_2 \\lt \\dots$ i loro indici; poiché ogni $k_j$ è un picco e $k_{j+1} \\gt k_j$, si ha $a_{k_{j+1}} \\lt a_{k_j}$: la sottosuccessione è strettamente decrescente e limitata inferiormente, quindi converge.<br><strong>Caso 2 (picchi in numero finito):</strong> sia $N_{max}$ l'ultimo indice di picco e $k_1 = N_{max}+1$; nessun $m \\geq k_1$ è un picco, quindi esiste $k_2 \\gt k_1$ con $a_{k_2} \\geq a_{k_1}$, e iterando si ottiene una sottosuccessione non decrescente, limitata superiormente, quindi convergente.<br>I due casi sono esaustivi."
+      },
+      {
+        type: "tranello",
+        front: "Bolzano-Weierstrass: perché l'ipotesi di limitatezza non si può togliere, e la limitatezza è necessaria?",
+        back: "Non si può togliere: $a_n = n$ ha limite $+\\infty$, quindi <strong>ogni</strong> sua sottosuccessione tende a $+\\infty$ e nessuna converge. Ma la limitatezza è <strong>sufficiente, non necessaria</strong>: $a_n = n^{(-1)^n}$ è illimitata superiormente eppure $a_{2n+1} = 1/(2n+1) \\to 0$ converge. Altro errore comune: credere che il teorema dica che la successione converge, o che la sottosuccessione convergente sia unica — $(-1)^n$ ne ha due con limiti diversi."
+      },
+      {
+        type: "domanda",
+        front: "Perché dalla dimostrazione di Bolzano-Weierstrass segue che ogni successione reale ha una sottosuccessione monotona?",
+        back: "Perché l'ipotesi di limitatezza non viene mai usata per <em>costruire</em> la sottosuccessione, ma solo nel passaggio finale per dedurre dalla monotonia la convergenza. La dicotomia «infiniti picchi / numero finito di picchi» e le due costruzioni associate valgono per qualunque successione reale: nel primo caso si ottiene una sottosuccessione strettamente decrescente, nel secondo una non decrescente. Senza limitatezza la sottosuccessione resta monotona, ma il suo limite può essere $\\pm\\infty$."
+      },
+      {
+        type: "formula",
+        front: "Enuncia la formula di Stirling e la sua forma con termine correttivo.",
+        back: "Per $n \\to +\\infty$: $$n! \\sim \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n,$$ cioè $\\lim_n \\frac{n!}{\\sqrt{2\\pi n}(n/e)^n} = 1$. Forma più precisa: $n! = \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n e^{\\lambda_n}$ con $\\lambda_n \\sim \\frac{1}{12n}$. Il fattoriale si comporta come $n^n$ corretto dal fattore $(1/e)^n$: più lento di $n^n$, molto più veloce di un esponenziale $a^n$."
+      },
+      {
+        type: "tranello",
+        front: "Quando è lecito sostituire $n!$ con $\\sqrt{2\\pi n}(n/e)^n$ dentro un limite?",
+        back: "Solo in <strong>prodotti e quozienti</strong>. Scrivendo $a_n = b_n(1+\\varepsilon_n)$ con $\\varepsilon_n \\to 0$, in un quoziente il fattore $(1+\\varepsilon_n) \\to 1$ non altera il limite. In una <strong>differenza</strong>, invece, l'errore $b_n\\varepsilon_n$ può essere dello stesso ordine del risultato (fenomeno di cancellazione) e la sostituzione può dare conclusioni errate."
+      },
+      {
+        type: "dimostrazione",
+        front: "Calcola $\\lim_{n \\to \\infty} \\frac{(2n)!}{n^n}$ con Stirling.",
+        back: "Da $(2n)! = \\sqrt{4\\pi n}\\left(\\frac{2n}{e}\\right)^{2n}(1+\\varepsilon_n)$ si ha $\\frac{(2n)!}{n^n} = b_n(1+\\varepsilon_n)$ con $$b_n = \\frac{\\sqrt{4\\pi n}(2n/e)^{2n}}{n^n} = \\sqrt{4\\pi n}\\,\\frac{4^n n^n}{e^{2n}} = \\sqrt{4\\pi n}\\left(\\frac{4n}{e^2}\\right)^n .$$ Per $n$ grande $\\frac{4n}{e^2} \\gt 2$, dunque $\\left(\\frac{4n}{e^2}\\right)^n \\gt 2^n \\to +\\infty$; anche $\\sqrt{4\\pi n} \\to +\\infty$. Quindi $b_n \\to +\\infty$ e, poiché $1+\\varepsilon_n \\to 1$, il limite è $+\\infty$."
+      },
+      {
+        type: "definizione",
+        front: "Che cos'è un punto di accumulazione? E un punto isolato?",
+        back: "Sia $A \\subseteq \\mathbb{R}^*$ e $x_0 \\in \\mathbb{R}^*$: $x_0$ è <strong>punto di accumulazione</strong> per $A$ se ogni intorno $U$ di $x_0$ contiene infiniti punti di $A$. Non è richiesto che $x_0 \\in A$ (es. $0$ per $A = (0,1)$, oppure $+\\infty$ per $\\mathbb{N}$). Un punto $x_0 \\in A$ che <em>non</em> è di accumulazione si dice <strong>isolato</strong>: esiste un intorno $U$ con $U \\cap A = \\{x_0\\}$ (es. $7$ in $A = [1,5] \\cup \\{7\\}$)."
+      },
+      {
+        type: "domanda",
+        front: "Perché per le successioni si studia solo il limite per $n \\to \\infty$?",
+        back: "Perché le successioni sono funzioni definite su $\\mathbb{N}$, e $+\\infty$ è l'unico punto di accumulazione di $\\mathbb{N}$ in $\\mathbb{R}^*$: ogni intorno $(M,+\\infty]$ contiene infiniti naturali, mentre un intorno di un numero finito, come $(2{,}5;\\,3{,}5)$ per $x_0 = 3$, contiene al più un naturale. Il limite di $f(x)$ per $x \\to x_0$ si potrà definire solo se $x_0$ è punto di accumulazione del dominio."
+      }
+    ]
+};
+
