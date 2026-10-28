@@ -1,0 +1,1288 @@
+const LESSON = {
+    id: "L22", date: "Lezione 22 — 28 Ott 2026",
+    title: "Funzioni Monotone, Funzione Composta e Limiti Notevoli",
+    abstract: "Limiti laterali delle funzioni monotone (sup/inf), teorema sul limite della funzione composta con tutte le sue ipotesi, numero di Nepero per variabile reale e la famiglia completa dei limiti notevoli, con sviluppi asintotici e molti esercizi svolti.",
+
+    sections: [
+      {
+        id: "s22-convenzioni",
+        type: "note_box",
+        title: "Convenzioni e notazioni usate in questo capitolo",
+        icon: "📝",
+        content: `<p>Per evitare ambiguità fissiamo subito la notazione.</p>
+        <ul>
+          <li>Scriviamo $\\R^* = \\R \\cup \\{-\\infty, +\\infty\\}$ (<strong>retta reale estesa</strong>). Dire che un limite esiste "in $\\R^*$" significa che esso può essere un numero reale oppure $+\\infty$ o $-\\infty$: si parla in tal caso di esistenza <em>in senso esteso</em>. <strong>Attenzione</strong>: qui $\\R^*$ <em>non</em> indica i reali non nulli.</li>
+          <li>Un <strong>intorno di $+\\infty$</strong> è un insieme della forma $(M, +\\infty)$ con $M \\in \\R$; un <strong>intorno di $-\\infty$</strong> è un insieme della forma $(-\\infty, -M)$ con $M \\in \\R$. Un intorno di $l \\in \\R$ è, come di consueto, un insieme della forma $(l-\\varepsilon, l+\\varepsilon)$ con $\\varepsilon \\gt 0$.</li>
+          <li>Con "<strong>intorno puntato di $x_0$</strong>" intendiamo $V \\setminus \\{x_0\\}$, dove $V$ è un intorno di $x_0$.</li>
+        </ul>
+        <p>Con questa convenzione, tutti gli enunciati che seguono coprono anche i casi di limite infinito.</p>`
+      },
+
+      {
+        id: "s22-accumulazione-unilateri",
+        type: "section",
+        title: "Punti di accumulazione unilateri",
+        icon: "📍",
+        content: `<p>Iniziamo definendo i punti di accumulazione da sinistra e da destra, cruciali per analizzare il comportamento delle funzioni in prossimità di un punto.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione",
+            content: `<p>Sia $A \\subseteq \\R$ un insieme e $x_0 \\in \\R$ un punto di accumulazione per $A$.</p>
+            <ul>
+              <li>$x_0$ è detto <strong>punto di accumulazione sinistro</strong> per $A$ se per ogni intorno del tipo $(b, x_0)$ con $b \\lt x_0$, l'intersezione $(b, x_0) \\cap A$ contiene infiniti punti.</li>
+              <li>$x_0$ è detto <strong>punto di accumulazione destro</strong> per $A$ se per ogni intorno del tipo $(x_0, b)$ con $b \\gt x_0$, l'intersezione $(x_0, b) \\cap A$ contiene infiniti punti.</li>
+            </ul>`
+          },
+          {
+            subtitle: "Esempio",
+            content: `<p>Dato un intervallo $(a, b)$, il punto $a$ è un punto di accumulazione destro, mentre il punto $b$ è un punto di accumulazione sinistro. Tutti i punti $x_0$ con $a \\lt x_0 \\lt b$ sono sia punti di accumulazione sinistri che destri.</p>`
+          },
+          {
+            subtitle: "Osservazione",
+            content: `<p>Un punto di accumulazione $x_0$ può essere sinistro, destro o entrambi. <strong>Se è un punto di accumulazione, è almeno uno dei due.</strong></p>`
+          }
+        ]
+      },
+
+      {
+        id: "s22-teorema-ponte-nota",
+        type: "note_box",
+        title: "Criterio successionale (Teorema Ponte)",
+        icon: "🌉",
+        content: `<p>Siano $f : A \\to \\R$, $x_0$ punto di accumulazione per $A$ e $l \\in \\R^*$. Allora</p>
+        <p>$$\\lim_{x \\to x_0} f(x) = l \\quad \\Longleftrightarrow \\quad \\text{per \\emph{ogni} successione } (x_n) \\subseteq A \\setminus \\{x_0\\} \\text{ con } x_n \\to x_0 \\text{ si ha } f(x_n) \\to l.$$</p>
+        <p>La richiesta è su <strong>tutte</strong> le successioni ammissibili: la convergenza lungo una sola successione particolare (per esempio lungo i soli valori interi) <strong>non basta</strong> a concludere nulla sul limite della funzione. Ne terremo conto quando estenderemo il limite di Nepero alla variabile reale.</p>`
+      },
+
+      {
+        id: "s22-limite-monotone",
+        type: "section",
+        title: "Limite per funzioni monotone",
+        icon: "📈",
+        content: `<p>Sia $f: A \\to \\R$ una funzione <strong>monotona</strong> e sia $x_0$ un punto di accumulazione per $A$. I limiti seguenti <strong>esistono sempre</strong>, eventualmente in senso esteso (cioè in $\\R^*$).</p>`,
+        subsections: [
+          {
+            subtitle: "Caso 1: $f$ crescente",
+            content: `<p>Se $x_0$ è un punto di accumulazione sinistro, allora esiste il limite sinistro e vale:</p>
+            <p>$$\\lim_{x \\to x_0^-} f(x) = \\sup \\{ f(x) \\mid x \\in A,\\ x \\lt x_0 \\}$$</p>
+            <p>Se $x_0$ è un punto di accumulazione destro, allora esiste il limite destro e vale:</p>
+            <p>$$\\lim_{x \\to x_0^+} f(x) = \\inf \\{ f(x) \\mid x \\in A,\\ x \\gt x_0 \\}$$</p>`
+          },
+          {
+            subtitle: "Caso 2: $f$ decrescente",
+            content: `<p>Se $x_0$ è un punto di accumulazione sinistro, allora esiste il limite sinistro e vale:</p>
+            <p>$$\\lim_{x \\to x_0^-} f(x) = \\inf \\{ f(x) \\mid x \\in A,\\ x \\lt x_0 \\}$$</p>
+            <p>Se $x_0$ è un punto di accumulazione destro, allora esiste il limite destro e vale:</p>
+            <p>$$\\lim_{x \\to x_0^+} f(x) = \\sup \\{ f(x) \\mid x \\in A,\\ x \\gt x_0 \\}$$</p>`
+          },
+          {
+            subtitle: "Dimostrazione — impostazione",
+            content: `<p>Dimostriamo in dettaglio il primo caso: $f$ crescente e $x_0$ punto di accumulazione sinistro. Gli altri tre casi si ottengono con argomenti del tutto analoghi (scambiando $\\sup$ con $\\inf$, oppure sostituendo $f$ con $-f$ per passare dal caso crescente a quello decrescente).</p>
+            <p>Poniamo</p>
+            <p>$$L = \\sup \\{ f(x) \\mid x \\in A,\\ x \\lt x_0 \\} \\in \\R \\cup \\{+\\infty\\},$$</p>
+            <p>dove l'insieme è non vuoto proprio perché $x_0$ è punto di accumulazione sinistro. <strong>Non sappiamo a priori se $L$ sia finito</strong>: distinguiamo quindi i due casi, senza presupporre la finitezza del limite.</p>`
+          },
+          {
+            subtitle: "Caso $L \\in \\R$ (estremo superiore finito)",
+            content: `<p>Sia $\\varepsilon \\gt 0$. Per la caratterizzazione dell'estremo superiore, $L - \\varepsilon$ non è un maggiorante dell'insieme, dunque esiste $a \\in A$ con $a \\lt x_0$ tale che</p>
+            <p>$$L - \\varepsilon \\lt f(a) \\le L.$$</p>
+            <p>Sia ora $x \\in A$ con $a \\lt x \\lt x_0$. Poiché $f$ è crescente e $x \\gt a$, si ha $f(x) \\ge f(a) \\gt L - \\varepsilon$; d'altra parte $f(x) \\le L$ perché $L$ è un maggiorante. Quindi</p>
+            <p>$$\\forall x \\in (a, x_0) \\cap A: \\qquad L - \\varepsilon \\lt f(x) \\le L \\lt L + \\varepsilon.$$</p>
+            <p>L'insieme $(a, x_0)$ è un intorno sinistro di $x_0$: abbiamo trovato, per ogni $\\varepsilon \\gt 0$, un intorno sinistro su cui $|f(x) - L| \\lt \\varepsilon$. Per definizione di limite sinistro, $\\lim_{x \\to x_0^-} f(x) = L$.</p>`
+          },
+          {
+            subtitle: "Caso $L = +\\infty$",
+            content: `<p>Sia $M \\in \\R$ una soglia arbitraria. Poiché l'insieme dei valori non è superiormente limitato, esiste $a \\in A$ con $a \\lt x_0$ tale che $f(a) \\gt M$. Per la crescenza, per ogni $x \\in A$ con $a \\lt x \\lt x_0$ si ha $f(x) \\ge f(a) \\gt M$. Dunque $f(x) \\gt M$ su tutto l'intorno sinistro $(a, x_0)$, cioè $\\lim_{x \\to x_0^-} f(x) = +\\infty$, come richiesto (limite esistente in senso esteso).</p>`
+          },
+          {
+            subtitle: "Lettura con il Teorema Ponte",
+            content: `<p>Lo stesso risultato si può rileggere con il criterio successionale, <strong>applicando direttamente all'intera successione le stime appena ottenute</strong> (non serve estrarre sottosuccessioni).</p>
+            <p>Sia $(x_n) \\subseteq A$ con $x_n \\lt x_0$ e $x_n \\to x_0$. Nel caso $L \\in \\R$: fissato $\\varepsilon \\gt 0$, abbiamo trovato $a \\lt x_0$ tale che $L - \\varepsilon \\lt f(x) \\le L$ per ogni $x \\in (a, x_0) \\cap A$. Poiché $x_n \\to x_0$ e $x_n \\lt x_0$, <strong>definitivamente</strong> si ha $a \\lt x_n \\lt x_0$, dunque definitivamente $L - \\varepsilon \\lt f(x_n) \\le L$: ciò significa $f(x_n) \\to L$.</p>
+            <p>Nel caso $L = +\\infty$: fissato $M$, esiste $a \\lt x_0$ con $f(x) \\gt M$ su $(a,x_0) \\cap A$; definitivamente $a \\lt x_n \\lt x_0$ e quindi $f(x_n) \\gt M$, cioè $f(x_n) \\to +\\infty$.</p>
+            <p><strong>Da notare:</strong> il valore limite è lo stesso $L$ <em>per ogni</em> scelta della successione, come richiesto dal Teorema Ponte.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Crescente, limite sinistro", latex: "\\lim_{x \\to x_0^-} f(x) = \\sup \\{ f(x) \\mid x \\in A,\\ x \\lt x_0 \\}" },
+          { label: "Crescente, limite destro", latex: "\\lim_{x \\to x_0^+} f(x) = \\inf \\{ f(x) \\mid x \\in A,\\ x \\gt x_0 \\}" },
+          { label: "Decrescente, limite sinistro", latex: "\\lim_{x \\to x_0^-} f(x) = \\inf \\{ f(x) \\mid x \\in A,\\ x \\lt x_0 \\}" },
+          { label: "Decrescente, limite destro", latex: "\\lim_{x \\to x_0^+} f(x) = \\sup \\{ f(x) \\mid x \\in A,\\ x \\gt x_0 \\}" }
+        ]
+      },
+
+      {
+        id: "s22-esempio-salto",
+        type: "alert_box",
+        title: "Monotonia ⇒ limiti LATERALI, non limite bilatero",
+        icon: "⚠️",
+        content: `<p>Sia $f : \\R \\to \\R$ definita da</p>
+        <p>$$f(x) = \\begin{cases} x, & x \\lt 0, \\\\ x + 1, & x \\ge 0. \\end{cases}$$</p>
+        <p>La funzione è crescente su tutto $\\R$. Prendiamo $x_0 = 0$, che è punto di accumulazione sia sinistro sia destro. Applicando la proposizione:</p>
+        <p>$$\\lim_{x \\to 0^-} f(x) = \\sup \\{ x \\mid x \\lt 0 \\} = 0, \\qquad \\lim_{x \\to 0^+} f(x) = \\inf \\{ x+1 \\mid x \\gt 0 \\} = 1.$$</p>
+        <p>Entrambi i limiti laterali esistono e sono finiti, ma <strong>sono diversi</strong>: dunque $\\lim_{x \\to 0} f(x)$ <strong>non esiste</strong>. Si noti inoltre che $f(0) = 1 \\neq 0$: il limite sinistro non coincide con il valore della funzione, e $x_0 = 0$ è un <strong>punto di salto</strong>.</p>
+        <p>Questo esempio mostra che la monotonia garantisce l'esistenza dei limiti <em>laterali</em>, non quella del limite bilatero.</p>`
+      },
+
+      {
+        id: "s22-composta",
+        type: "section",
+        title: "Limite della Funzione Composta",
+        icon: "🔗",
+        content: `<p>Un teorema fondamentale per il calcolo dei limiti è quello relativo alla composizione di funzioni. Questo teorema <strong>giustifica la tecnica del "cambio di variabile"</strong> che spesso si usa negli esercizi.</p>`,
+        subsections: [
+          {
+            subtitle: "Enunciato",
+            content: `<p>Siano $g: A \\to \\R$ e $f: B \\to \\R$ due funzioni, con $A, B \\subseteq \\R$. Sia $x_0$ un punto di accumulazione per $A$. Supponiamo che:</p>
+            <ul>
+              <li><strong>(H0)</strong> $g(A) \\subseteq B$, così che la composizione $f \\circ g$ è definita su $A$. (È sufficiente la versione locale: esiste un intorno puntato di $x_0$ tale che $g(x) \\in B$ per ogni $x$ in esso appartenente ad $A$; in tal caso $f \\circ g$ è definita <em>definitivamente</em> per $x \\to x_0$, che è quanto serve per parlare del suo limite.)</li>
+              <li><strong>(H1)</strong> Esista il limite $\\lim_{x \\to x_0} g(x) = l$, con $l \\in \\R^*$.</li>
+              <li><strong>(H2)</strong> $l$ sia un punto di accumulazione per $B$ ed esista il limite $\\lim_{y \\to l} f(y) = k$, con $k \\in \\R^*$.</li>
+              <li><strong>(H3)</strong> Esista un intorno di $x_0$ tale che $g(x) \\neq l$ per ogni $x$ in tale intorno, con $x \\neq x_0$.</li>
+            </ul>
+            <p>Allora esiste il limite della funzione composta $f \\circ g$ e vale:</p>
+            <p>$$\\lim_{x \\to x_0} f(g(x)) = k$$</p>`
+          },
+          {
+            subtitle: "Perché serve (H0)",
+            content: `<p>L'ipotesi (H0) <strong>non è una conseguenza delle altre</strong>: sapere che $g(x) \\to l$ e che $f$ ha limite in $l$ non garantisce che i valori assunti da $g$ stiano nel dominio $B$ di $f$.</p>
+            <p>Per esempio, con $g(x) = -x^2$ e $f = \\sqrt{\\,\\cdot\\,}$ definita su $B = [0,+\\infty)$, si ha $g(x) \\to 0$ per $x \\to 0$ e $l=0$ è punto di accumulazione per $B$, ma $f(g(x))$ non è definita per alcun $x \\neq 0$. Senza (H0) la scrittura $f(g(x))$ potrebbe essere <strong>priva di significato</strong>.</p>`
+          },
+          {
+            subtitle: "Dimostrazione",
+            content: `<p>Dobbiamo dimostrare che per ogni intorno $W$ di $k$ esiste un intorno $V$ di $x_0$ tale che $f(g(x)) \\in W$ per ogni $x \\in V \\cap A$ con $x \\neq x_0$.</p>
+            <p><strong>Passo 1 (si usa (H2)).</strong> Fissiamo un intorno $W$ di $k$. Poiché $\\lim_{y \\to l} f(y) = k$, esiste un intorno $U$ di $l$ tale che</p>
+            <p>$$\\forall y \\in U \\cap B,\\ y \\neq l \\Rightarrow f(y) \\in W.$$</p>
+            <p><strong>Passo 2 (si usa (H1)).</strong> Poiché $\\lim_{x \\to x_0} g(x) = l$, in corrispondenza dell'intorno $U$ appena trovato esiste un intorno $V_1$ di $x_0$ tale che</p>
+            <p>$$\\forall x \\in V_1 \\cap A,\\ x \\neq x_0 \\Rightarrow g(x) \\in U.$$</p>
+            <p><strong>Passo 3 (si usa (H3)).</strong> Esiste un intorno $V_2$ di $x_0$ tale che $g(x) \\neq l$ per ogni $x \\in V_2 \\cap A$ con $x \\neq x_0$. Poniamo $V = V_1 \\cap V_2$, che è ancora un intorno di $x_0$ (eventualmente intersecato con l'intorno fornito da (H0) nella sua versione locale).</p>
+            <p><strong>Passo 4 (conclusione).</strong> Sia $x \\in V \\cap A$ con $x \\neq x_0$. Allora: $g(x) \\in U$ (Passo 2); $g(x) \\neq l$ (Passo 3); $g(x) \\in B$ per (H0). Posto $y = g(x)$, abbiamo $y \\in U \\cap B$ e $y \\neq l$: per il Passo 1 questo implica $f(y) = f(g(x)) \\in W$.</p>
+            <p>Abbiamo così mostrato che per ogni intorno $W$ di $k$ esiste un intorno $V$ di $x_0$ tale che $f(g(x)) \\in W$ per ogni $x \\in V \\cap A$, $x \\neq x_0$: questa è esattamente la definizione di $\\lim_{x \\to x_0} f(g(x)) = k$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Limite della composta", latex: "\\lim_{x \\to x_0} f(g(x)) = k \\quad \\text{con } g(x) \\to l,\\ f(y) \\to k" }
+        ]
+      },
+
+      {
+        id: "s22-h3-cruciale",
+        type: "alert_box",
+        title: "Sulla condizione $g(x) \\neq l$",
+        icon: "🚨",
+        content: `<p>L'ipotesi <strong>(H3)</strong>, ovvero $g(x) \\neq l$ in un intorno puntato di $x_0$, è <strong>cruciale</strong>. Essa garantisce che, quando applichiamo la definizione di limite per $f$, l'argomento $y = g(x)$ sia diverso da $l$: la definizione di $\\lim_{y\\to l} f(y)$ <strong>non dice nulla sul valore $f(l)$</strong>.</p>
+        <p>Tuttavia, questa condizione <strong>può essere omessa se la funzione esterna $f$ è continua in $l$</strong>, cioè se $l \\in B$ e $\\lim_{y \\to l} f(y) = f(l) = k$. In questo caso la conclusione $f(y) \\in W$ vale anche quando $y = l$, e la dimostrazione funziona ugualmente.</p>`
+      },
+
+      {
+        id: "s22-esempi-composta",
+        type: "section",
+        title: "Esempi di applicazione: cambio di variabile",
+        icon: "🧮",
+        content: `<p>Vediamo come il teorema della funzione composta si usa in pratica.</p>`,
+        subsections: [
+          {
+            subtitle: "Esempio 1 — $\\lim_{x \\to 0^+} e^{1/x}$",
+            content: `<p>Consideriamo $g(x) = \\frac{1}{x}$ (funzione interna), definita su $A = (0,+\\infty)$, e $f(y) = e^y$ (funzione esterna), definita su $B = \\R$. L'ipotesi (H0) è immediata: $g(A) \\subseteq \\R = B$.</p>
+            <p>Limite della funzione interna:</p>
+            <p>$$\\lim_{x \\to 0^+} g(x) = \\lim_{x \\to 0^+} \\frac{1}{x} = +\\infty \\quad \\Rightarrow \\quad l = +\\infty$$</p>
+            <p>Limite della funzione esterna per $y \\to l$:</p>
+            <p>$$\\lim_{y \\to +\\infty} e^y = +\\infty \\quad \\Rightarrow \\quad k = +\\infty$$</p>
+            <p>In particolare (H3) è <strong>automatica</strong>, perché $l = +\\infty$ non è un valore reale e dunque $g(x) \\neq l$ per ogni $x$. Concludiamo:</p>
+            <p>$$\\lim_{x \\to 0^+} e^{1/x} = +\\infty$$</p>`
+          },
+          {
+            subtitle: "Esempio 2 — cambio di variabile con logaritmo",
+            content: `<p>Calcoliamo $\\lim_{x \\to +\\infty} \\log_{1/3}\\left(\\frac{x^3+x+1}{x^3+2x-1}\\right)$. Poniamo</p>
+            <p>$$y = g(x) = \\frac{x^3+x+1}{x^3+2x-1}$$</p>
+            <p>La funzione esterna è $f(y) = \\log_{1/3}(y)$, definita su $B = (0,+\\infty)$. Per $x$ abbastanza grande numeratore e denominatore sono positivi, dunque $g(x) \\gt 0$: l'ipotesi (H0) vale nella sua <strong>versione locale</strong>.</p>
+            <p>$$l = \\lim_{x \\to +\\infty} \\frac{x^3+x+1}{x^3+2x-1} = \\lim_{x \\to +\\infty} \\frac{x^3(1 + 1/x^2 + 1/x^3)}{x^3(1 + 2/x^2 - 1/x^3)} = 1$$</p>
+            <p>$$k = \\lim_{y \\to 1} \\log_{1/3}(y) = \\log_{1/3}(1) = 0$$</p>
+            <p>Qui l'ipotesi (H3) <strong>non è necessaria</strong>, perché $f(y) = \\log_{1/3} y$ è continua in $y = 1$. Poiché le ipotesi del teorema sono soddisfatte, il limite della funzione composta è $k = 0$.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s22-asintotico",
+        type: "section",
+        title: "Linguaggio asintotico: $\\sim$ e \"o piccolo\"",
+        icon: "〰️",
+        content: `<p>Prima di affrontare i limiti notevoli, introduciamo il linguaggio asintotico che useremo nelle dimostrazioni e nelle applicazioni.</p>
+        <p>Siano $u, v$ due funzioni definite in un intorno puntato di $x_0 \\in \\R^*$ e supponiamo che $v(x) \\neq 0$ per $x$ in tale intorno puntato (condizione <strong>necessaria</strong> perché il rapporto $u/v$ sia definito).</p>
+        <ul>
+          <li>$u$ è <strong>asintoticamente equivalente</strong> a $v$ per $x \\to x_0$, e scriviamo $u(x) \\sim v(x)$, se $\\lim_{x \\to x_0} \\frac{u(x)}{v(x)} = 1$.</li>
+          <li>$u$ è <strong>o piccolo</strong> di $v$ per $x \\to x_0$, e scriviamo $u(x) = o(v(x))$, se $\\lim_{x \\to x_0} \\frac{u(x)}{v(x)} = 0$.</li>
+        </ul>`,
+        formulas: [
+          { label: "Equivalenza asintotica", latex: "u(x) \\sim v(x) \\iff \\lim_{x \\to x_0} \\frac{u(x)}{v(x)} = 1" },
+          { label: "o piccolo", latex: "u(x) = o(v(x)) \\iff \\lim_{x \\to x_0} \\frac{u(x)}{v(x)} = 0" }
+        ],
+        extra_content: `<p><strong>Attenzione all'ipotesi $v \\neq 0$.</strong> La condizione $v(x) \\neq 0$ in un intorno puntato di $x_0$ non è un dettaglio formale: se $v$ è identicamente nulla il rapporto $u/v$ non ha senso e la scrittura $u \\sim v$ non è definita. Ne terremo conto nella dimostrazione del limite notevole (4), dove il caso $\\alpha = 0$ va trattato separatamente.</p>`
+      },
+
+      {
+        id: "s22-nepero-reale",
+        type: "section",
+        title: "Il limite di Nepero per variabile reale",
+        icon: "🔢",
+        content: `<p>Ricordiamo la definizione di $e$ tramite successioni:</p>
+        <p>$$\\lim_{n \\to +\\infty} \\left(1 + \\frac{1}{n}\\right)^n = e.$$</p>
+        <p>Vogliamo dedurre da qui il corrispondente limite per variabile <strong>reale</strong>:</p>
+        <p>$$\\lim_{x \\to +\\infty} \\left(1 + \\frac{1}{x}\\right)^x = e.$$</p>
+        <p><strong>Attenzione</strong>: non basta invocare il Teorema Ponte osservando che lungo $x = n$ il limite vale $e$. Il criterio successionale richiede il comportamento lungo <em>ogni</em> successione $x_n \\to +\\infty$, mentre la successione $(1+1/n)^n$ copre soltanto i valori interi. L'estensione si ottiene invece con un <strong>confronto</strong>.</p>`,
+        subsections: [
+          {
+            subtitle: "La stima con la parte intera",
+            content: `<p>Sia $x \\ge 1$ e poniamo $n = \\lfloor x \\rfloor$, così che $n \\le x \\lt n+1$ e $n \\to +\\infty$ quando $x \\to +\\infty$. Da $n \\le x \\lt n+1$ segue</p>
+            <p>$$\\frac{1}{n+1} \\lt \\frac{1}{x} \\le \\frac{1}{n} \\quad \\Longrightarrow \\quad 1 + \\frac{1}{n+1} \\lt 1 + \\frac{1}{x} \\le 1 + \\frac{1}{n},$$</p>
+            <p>e poiché la base è maggiore di $1$ e l'esponente soddisfa $n \\le x \\lt n+1$,</p>
+            <p>$$\\left(1 + \\frac{1}{n+1}\\right)^{n} \\le \\left(1 + \\frac{1}{x}\\right)^{x} \\le \\left(1 + \\frac{1}{n}\\right)^{n+1}.$$</p>`
+          },
+          {
+            subtitle: "I due estremi tendono entrambi a $e$",
+            content: `<p>$$\\left(1 + \\frac{1}{n+1}\\right)^{n} = \\frac{\\left(1 + \\frac{1}{n+1}\\right)^{n+1}}{1 + \\frac{1}{n+1}} \\overset{n \\to +\\infty}{\\longrightarrow} \\frac{e}{1} = e$$</p>
+            <p>$$\\left(1 + \\frac{1}{n}\\right)^{n+1} = \\left(1 + \\frac{1}{n}\\right)^{n}\\left(1 + \\frac{1}{n}\\right) \\overset{n \\to +\\infty}{\\longrightarrow} e \\cdot 1 = e$$</p>
+            <p>Entrambi gli estremi tendono a $e$; per il <strong>Teorema del Confronto</strong> (applicato alla variabile reale $x$, con $n = \\lfloor x \\rfloor \\to +\\infty$) si conclude</p>
+            <p>$$\\lim_{x \\to +\\infty} \\left(1 + \\frac{1}{x}\\right)^{x} = e.$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Nepero, variabile reale", latex: "\\lim_{x \\to +\\infty} \\left(1 + \\frac{1}{x}\\right)^{x} = e" }
+        ]
+      },
+
+      {
+        id: "s22-limiti-notevoli",
+        type: "section",
+        title: "I sette limiti notevoli",
+        icon: "⭐",
+        content: `<p>Valgono i seguenti limiti fondamentali.</p>
+        <p>$$\\text{(1)}\\ \\lim_{x \\to 0} (1+x)^{1/x} = e \\qquad \\text{(2)}\\ \\lim_{x \\to 0} \\frac{\\ln(1+x)}{x} = 1 \\qquad \\text{(3)}\\ \\lim_{x \\to 0} \\frac{e^x - 1}{x} = 1$$</p>
+        <p>$$\\text{(4)}\\ \\lim_{x \\to 0} \\frac{(1+x)^\\alpha - 1}{x} = \\alpha \\quad \\forall \\alpha \\in \\R \\qquad \\text{(5)}\\ \\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$$</p>
+        <p>$$\\text{(6)}\\ \\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\frac{1}{2} \\qquad \\text{(7)}\\ \\lim_{x \\to 0} \\frac{\\tan(x)}{x} = 1$$</p>`,
+        subsections: [
+          {
+            subtitle: "(1) $\\lim_{x \\to 0} (1+x)^{1/x} = e$",
+            content: `<p>Operiamo un cambio di variabile, lecito per il teorema sul limite della funzione composta: poniamo $y = g(x) = 1/x$, che per $x \\neq 0$ non assume mai valori "uguali a $\\pm\\infty$", così che l'ipotesi (H3) è automatica.</p>
+            <p><em>Limite destro.</em> Se $x \\to 0^+$, allora $y \\to +\\infty$ e, per quanto visto sopra, $\\lim_{y \\to +\\infty} \\left(1 + \\frac{1}{y}\\right)^y = e$.</p>
+            <p><em>Limite sinistro.</em> Se $x \\to 0^-$, allora $y \\to -\\infty$. Completiamo con un secondo cambio di variabile: poniamo $t = -y - 1$, così che $y = -t-1$ e $t \\to +\\infty$ quando $y \\to -\\infty$. Allora</p>
+            <p>$$1 + \\frac{1}{y} = 1 - \\frac{1}{t+1} = \\frac{t}{t+1},$$</p>
+            <p>$$\\left(1 + \\frac{1}{y}\\right)^{y} = \\left(\\frac{t}{t+1}\\right)^{-t-1} = \\left(\\frac{t+1}{t}\\right)^{t+1} = \\left(1 + \\frac{1}{t}\\right)^{t}\\left(1 + \\frac{1}{t}\\right).$$</p>
+            <p>Per $t \\to +\\infty$ il primo fattore tende a $e$ e il secondo a $1$, quindi $\\lim_{y \\to -\\infty} (1 + 1/y)^{y} = e$.</p>
+            <p>Poiché limite destro e limite sinistro coincidono ed entrambi valgono $e$, il limite bilatero per $x \\to 0$ è $e$.</p>`
+          },
+          {
+            subtitle: "(2) $\\lim_{x \\to 0} \\frac{\\ln(1+x)}{x} = 1$",
+            content: `<p>Usando le proprietà dei logaritmi e la continuità della funzione logaritmo (che consente di scambiare limite e logaritmo, per il teorema della funzione composta con $f$ continua):</p>
+            <p>$$\\lim_{x \\to 0} \\frac{\\ln(1+x)}{x} = \\lim_{x \\to 0} \\ln\\left((1+x)^{1/x}\\right) = \\ln\\left(\\lim_{x \\to 0} (1+x)^{1/x}\\right) = \\ln(e) = 1$$</p>`
+          },
+          {
+            subtitle: "(3) $\\lim_{x \\to 0} \\frac{e^x - 1}{x} = 1$",
+            content: `<p>Poniamo $y = e^x - 1$. Quando $x \\to 0$, si ha $y \\to e^0 - 1 = 0$; inoltre $y \\neq 0$ per $x \\neq 0$, perché l'esponenziale è iniettiva: <strong>l'ipotesi (H3) è verificata</strong>.</p>
+            <p>Ricaviamo $x$ in funzione di $y$: $e^x = 1+y \\Rightarrow x = \\ln(1+y)$. Sostituendo:</p>
+            <p>$$\\lim_{x \\to 0} \\frac{e^x - 1}{x} = \\lim_{y \\to 0} \\frac{y}{\\ln(1+y)} = \\lim_{y \\to 0} \\frac{1}{\\frac{\\ln(1+y)}{y}} = \\frac{1}{1} = 1$$</p>
+            <p>dove l'ultimo passaggio usa (2) e il fatto che il limite del denominatore è $1 \\neq 0$.</p>`
+          },
+          {
+            subtitle: "(4) $\\lim_{x \\to 0} \\frac{(1+x)^\\alpha - 1}{x} = \\alpha$",
+            content: `<p>Dobbiamo distinguere due casi.</p>
+            <p><em>Caso $\\alpha = 0$.</em> Si ha $(1+x)^0 - 1 = 0$ per ogni $x \\gt -1$, dunque il rapporto è identicamente nullo per $x \\neq 0$ e</p>
+            <p>$$\\lim_{x \\to 0} \\frac{(1+x)^0 - 1}{x} = 0 = \\alpha.$$</p>
+            <p>(Si noti che in questo caso <strong>non</strong> si può parlare di equivalenza asintotica: entrambi i membri sarebbero identicamente nulli e il rapporto che definisce il simbolo $\\sim$ non sarebbe definito.)</p>
+            <p><em>Caso $\\alpha \\neq 0$.</em> Usiamo l'identità $(1+x)^\\alpha = e^{\\ln((1+x)^\\alpha)} = e^{\\alpha \\ln(1+x)}$ e poniamo $u(x) = \\alpha \\ln(1+x)$. Per $x \\to 0$ si ha $u(x) \\to \\alpha \\ln 1 = 0$, e inoltre $u(x) \\neq 0$ per $x \\neq 0$ in un intorno di $0$ (poiché $\\alpha \\neq 0$ e $\\ln(1+x) = 0$ solo per $x = 0$). Possiamo quindi fattorizzare, per $x \\neq 0$ in tale intorno:</p>
+            <p>$$\\frac{(1+x)^\\alpha - 1}{x} = \\frac{e^{u(x)} - 1}{u(x)} \\cdot \\alpha \\cdot \\frac{\\ln(1+x)}{x},$$</p>
+            <p>dove si è usato $u(x)/x = \\alpha \\ln(1+x)/x$. Il primo fattore tende a $1$ applicando il limite notevole (3) con il teorema della funzione composta (funzione interna $u$, che soddisfa (H1) e (H3) come appena verificato); il terzo fattore tende a $1$ per (2). Per il teorema sul prodotto dei limiti:</p>
+            <p>$$\\lim_{x \\to 0} \\frac{(1+x)^\\alpha - 1}{x} = 1 \\cdot \\alpha \\cdot 1 = \\alpha.$$</p>
+            <p>In entrambi i casi il limite vale $\\alpha$, come enunciato.</p>`
+          },
+          {
+            subtitle: "(5) $\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$ — dimostrazione geometrica",
+            content: `<p>La dimostrazione si basa su considerazioni geometriche sulla circonferenza goniometrica. Per $x \\in (0, \\pi/2)$ l'area del settore circolare di ampiezza $x$ è compresa tra le aree di due triangoli:</p>
+            <p>$$\\text{Area}(\\triangle OAP) \\le \\text{Area}(\\text{settore } OAP) \\le \\text{Area}(\\triangle OAQ)$$</p>
+            <p>dove $O$ è l'origine, $A=(1,0)$, $P=(\\cos x, \\sin x)$ e $Q=(1, \\tan x)$. Le aree sono rispettivamente $\\frac{1}{2}\\sin x$, $\\frac{1}{2}x$ e $\\frac{1}{2}\\tan x$.</p>
+            <figure class="figura" data-id="analisi1_lez22a_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="analisi1_lez22a_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="195.034pt" height="184.206pt" viewBox="0 0 195.034 184.206" version="1.2"><style>#analisi1_lez22a_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez22a_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez22a_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez22a_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez22a_d1 [fill="rgb(89.99939%,89.99939%,89.99939%)"],#analisi1_lez22a_d1 [style*="fill:rgb(89.99939%,89.99939%,89.99939%)"]{fill:#333333!important}[data-mode="light"] #analisi1_lez22a_d1 [fill="rgb(89.99939%,89.99939%,89.99939%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="fill:rgb(89.99939%,89.99939%,89.99939%)"]{fill:#e5e5e5!important}#analisi1_lez22a_d1 [fill="rgb(84.999084%,84.999084%,100%)"],#analisi1_lez22a_d1 [style*="fill:rgb(84.999084%,84.999084%,100%)"]{fill:#141452!important}[data-mode="light"] #analisi1_lez22a_d1 [fill="rgb(84.999084%,84.999084%,100%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="fill:rgb(84.999084%,84.999084%,100%)"]{fill:#d9d9ff!important}#analisi1_lez22a_d1 [stroke="rgb(84.999084%,84.999084%,100%)"],#analisi1_lez22a_d1 [style*="stroke:rgb(84.999084%,84.999084%,100%)"]{stroke:#d9d9ff!important}[data-mode="light"] #analisi1_lez22a_d1 [stroke="rgb(84.999084%,84.999084%,100%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="stroke:rgb(84.999084%,84.999084%,100%)"]{stroke:#d9d9ff!important}#analisi1_lez22a_d1 [fill="rgb(100%,75%,75%)"],#analisi1_lez22a_d1 [style*="fill:rgb(100%,75%,75%)"]{fill:#521414!important}[data-mode="light"] #analisi1_lez22a_d1 [fill="rgb(100%,75%,75%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="fill:rgb(100%,75%,75%)"]{fill:#ffbfbf!important}#analisi1_lez22a_d1 [stroke="rgb(100%,75%,75%)"],#analisi1_lez22a_d1 [style*="stroke:rgb(100%,75%,75%)"]{stroke:#ffbfbf!important}[data-mode="light"] #analisi1_lez22a_d1 [stroke="rgb(100%,75%,75%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="stroke:rgb(100%,75%,75%)"]{stroke:#ffbfbf!important}#analisi1_lez22a_d1 [fill="rgb(0%,0%,100%)"],#analisi1_lez22a_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #analisi1_lez22a_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#analisi1_lez22a_d1 [stroke="rgb(0%,0%,100%)"],#analisi1_lez22a_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #analisi1_lez22a_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#analisi1_lez22a_d1 [fill="rgb(100%,0%,0%)"],#analisi1_lez22a_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #analisi1_lez22a_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#analisi1_lez22a_d1 [stroke="rgb(100%,0%,0%)"],#analisi1_lez22a_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #analisi1_lez22a_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #analisi1_lez22a_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-1">
+<path style="stroke:none;" d="M 4.90625 -1.421875 C 4.90625 -1.515625 4.828125 -1.515625 4.796875 -1.515625 C 4.703125 -1.515625 4.6875 -1.46875 4.671875 -1.40625 C 4.34375 -0.34375 3.671875 -0.109375 3.34375 -0.109375 C 2.96875 -0.109375 2.796875 -0.421875 2.796875 -0.765625 C 2.796875 -0.984375 2.859375 -1.203125 2.96875 -1.640625 L 3.3125 -2.984375 C 3.375 -3.25 3.59375 -4.15625 4.296875 -4.15625 C 4.34375 -4.15625 4.578125 -4.15625 4.78125 -4.03125 C 4.5 -3.984375 4.3125 -3.734375 4.3125 -3.5 C 4.3125 -3.34375 4.421875 -3.15625 4.6875 -3.15625 C 4.90625 -3.15625 5.21875 -3.328125 5.21875 -3.71875 C 5.21875 -4.234375 4.640625 -4.375 4.296875 -4.375 C 3.71875 -4.375 3.375 -3.859375 3.265625 -3.625 C 3.015625 -4.28125 2.484375 -4.375 2.1875 -4.375 C 1.15625 -4.375 0.59375 -3.09375 0.59375 -2.859375 C 0.59375 -2.75 0.71875 -2.75 0.71875 -2.75 C 0.796875 -2.75 0.828125 -2.78125 0.84375 -2.859375 C 1.171875 -3.90625 1.828125 -4.15625 2.171875 -4.15625 C 2.359375 -4.15625 2.703125 -4.078125 2.703125 -3.5 C 2.703125 -3.1875 2.53125 -2.53125 2.171875 -1.140625 C 2.015625 -0.53125 1.671875 -0.109375 1.234375 -0.109375 C 1.171875 -0.109375 0.9375 -0.109375 0.734375 -0.234375 C 0.984375 -0.28125 1.203125 -0.5 1.203125 -0.765625 C 1.203125 -1.046875 0.984375 -1.125 0.828125 -1.125 C 0.53125 -1.125 0.28125 -0.859375 0.28125 -0.546875 C 0.28125 -0.09375 0.78125 0.109375 1.21875 0.109375 C 1.875 0.109375 2.234375 -0.578125 2.265625 -0.640625 C 2.375 -0.28125 2.734375 0.109375 3.328125 0.109375 C 4.34375 0.109375 4.90625 -1.171875 4.90625 -1.421875 Z M 4.90625 -1.421875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-2">
+<path style="stroke:none;" d="M 4.8125 -3.78125 C 4.859375 -3.90625 4.859375 -3.9375 4.859375 -4 C 4.859375 -4.1875 4.71875 -4.265625 4.5625 -4.265625 C 4.46875 -4.265625 4.3125 -4.203125 4.21875 -4.0625 C 4.203125 -4.015625 4.125 -3.703125 4.078125 -3.53125 L 3.890625 -2.734375 L 3.4375 -0.953125 C 3.390625 -0.796875 2.96875 -0.109375 2.3125 -0.109375 C 1.8125 -0.109375 1.703125 -0.546875 1.703125 -0.90625 C 1.703125 -1.359375 1.875 -1.984375 2.203125 -2.859375 C 2.375 -3.265625 2.40625 -3.375 2.40625 -3.5625 C 2.40625 -4.015625 2.09375 -4.375 1.59375 -4.375 C 0.65625 -4.375 0.28125 -2.9375 0.28125 -2.859375 C 0.28125 -2.75 0.40625 -2.75 0.40625 -2.75 C 0.5 -2.75 0.515625 -2.78125 0.5625 -2.9375 C 0.828125 -3.859375 1.234375 -4.15625 1.5625 -4.15625 C 1.640625 -4.15625 1.8125 -4.15625 1.8125 -3.84375 C 1.8125 -3.59375 1.71875 -3.34375 1.640625 -3.15625 C 1.25 -2.09375 1.0625 -1.53125 1.0625 -1.0625 C 1.0625 -0.1875 1.6875 0.109375 2.28125 0.109375 C 2.671875 0.109375 3 -0.0625 3.28125 -0.34375 C 3.15625 0.171875 3.03125 0.65625 2.640625 1.1875 C 2.375 1.53125 2 1.8125 1.546875 1.8125 C 1.40625 1.8125 0.953125 1.78125 0.796875 1.390625 C 0.953125 1.390625 1.078125 1.390625 1.21875 1.28125 C 1.3125 1.1875 1.421875 1.0625 1.421875 0.875 C 1.421875 0.5625 1.15625 0.53125 1.046875 0.53125 C 0.828125 0.53125 0.5 0.6875 0.5 1.171875 C 0.5 1.671875 0.9375 2.03125 1.546875 2.03125 C 2.5625 2.03125 3.59375 1.125 3.859375 0.015625 Z M 4.8125 -3.78125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-3">
+<path style="stroke:none;" d="M 7.328125 -4.3125 C 7.328125 -5.90625 6.28125 -6.984375 4.796875 -6.984375 C 2.671875 -6.984375 0.484375 -4.734375 0.484375 -2.421875 C 0.484375 -0.78125 1.59375 0.21875 3.015625 0.21875 C 5.125 0.21875 7.328125 -1.953125 7.328125 -4.3125 Z M 6.453125 -4.703125 C 6.453125 -4 6.1875 -2.453125 5.203125 -1.234375 C 4.71875 -0.625 3.90625 -0.046875 3.078125 -0.046875 C 2.09375 -0.046875 1.40625 -0.84375 1.40625 -2.15625 C 1.40625 -2.578125 1.546875 -4.03125 2.3125 -5.1875 C 2.984375 -6.21875 3.96875 -6.734375 4.75 -6.734375 C 5.5625 -6.734375 6.453125 -6.1875 6.453125 -4.703125 Z M 6.453125 -4.703125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-4">
+<path style="stroke:none;" d="M 7.140625 -0.203125 C 7.140625 -0.3125 7.046875 -0.3125 6.921875 -0.3125 C 6.296875 -0.3125 6.296875 -0.375 6.265625 -0.65625 L 5.671875 -6.859375 C 5.640625 -7.046875 5.640625 -7.09375 5.484375 -7.09375 C 5.3125 -7.09375 5.28125 -7.03125 5.21875 -6.921875 L 1.765625 -1.140625 C 1.375 -0.46875 0.984375 -0.34375 0.5625 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.46875 0 C 0.75 0 1.046875 -0.03125 1.328125 -0.03125 C 1.65625 -0.03125 2 0 2.3125 0 C 2.375 0 2.5 0 2.5 -0.1875 C 2.5 -0.296875 2.421875 -0.3125 2.34375 -0.3125 C 2.125 -0.328125 1.875 -0.40625 1.875 -0.65625 C 1.875 -0.765625 1.9375 -0.875 2.015625 -1.015625 C 2.09375 -1.140625 2.09375 -1.140625 2.78125 -2.28125 L 5.265625 -2.28125 C 5.28125 -2.078125 5.421875 -0.734375 5.421875 -0.640625 C 5.421875 -0.34375 4.90625 -0.3125 4.703125 -0.3125 C 4.5625 -0.3125 4.46875 -0.3125 4.46875 -0.109375 C 4.46875 0 4.609375 0 4.609375 0 C 5.015625 0 5.4375 -0.03125 5.84375 -0.03125 C 6.09375 -0.03125 6.71875 0 6.96875 0 C 7.03125 0 7.140625 0 7.140625 -0.203125 Z M 5.234375 -2.59375 L 2.96875 -2.59375 L 4.90625 -5.859375 Z M 5.234375 -2.59375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-5">
+<path style="stroke:none;" d="M 2.015625 -0.015625 C 2.015625 -0.65625 1.765625 -1.046875 1.375 -1.046875 C 1.046875 -1.046875 0.859375 -0.796875 0.859375 -0.53125 C 0.859375 -0.25 1.046875 0 1.375 0 C 1.5 0 1.625 -0.046875 1.71875 -0.125 C 1.75 -0.15625 1.765625 -0.15625 1.765625 -0.15625 C 1.765625 -0.15625 1.796875 -0.15625 1.796875 -0.015625 C 1.796875 0.71875 1.453125 1.3125 1.125 1.640625 C 1.015625 1.75 1.015625 1.765625 1.015625 1.796875 C 1.015625 1.875 1.0625 1.90625 1.109375 1.90625 C 1.21875 1.90625 2.015625 1.15625 2.015625 -0.015625 Z M 2.015625 -0.015625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-6">
+<path style="stroke:none;" d="M 6.421875 0 C 6.421875 -0.0625 6.359375 -0.09375 6.3125 -0.09375 C 6.234375 -0.09375 6.21875 -0.046875 6.203125 0.015625 C 5.96875 0.71875 5.390625 0.953125 5.046875 0.953125 C 4.59375 0.953125 4.4375 0.6875 4.34375 -0.0625 C 5.875 -0.640625 7.328125 -2.40625 7.328125 -4.3125 C 7.328125 -5.90625 6.28125 -6.984375 4.796875 -6.984375 C 2.671875 -6.984375 0.484375 -4.734375 0.484375 -2.421875 C 0.484375 -0.78125 1.59375 0.21875 3.015625 0.21875 C 3.265625 0.21875 3.609375 0.171875 4 0.0625 C 3.953125 0.6875 3.953125 0.703125 3.953125 0.828125 C 3.953125 1.15625 3.953125 1.921875 4.78125 1.921875 C 5.953125 1.921875 6.421875 0.109375 6.421875 0 Z M 6.453125 -4.640625 C 6.453125 -3.640625 5.953125 -1.328125 4.296875 -0.390625 C 4.234375 -0.75 4.140625 -1.46875 3.421875 -1.46875 C 2.890625 -1.46875 2.40625 -0.96875 2.40625 -0.453125 C 2.40625 -0.25 2.46875 -0.140625 2.46875 -0.140625 C 1.6875 -0.453125 1.359375 -1.21875 1.359375 -2.109375 C 1.359375 -2.796875 1.609375 -4.203125 2.375 -5.265625 C 3.09375 -6.28125 4.015625 -6.734375 4.75 -6.734375 C 5.734375 -6.734375 6.453125 -5.96875 6.453125 -4.640625 Z M 4.015625 -0.40625 C 4.015625 -0.25 4.015625 -0.25 3.90625 -0.203125 C 3.65625 -0.09375 3.359375 -0.03125 3.078125 -0.03125 C 2.9375 -0.03125 2.625 -0.03125 2.625 -0.453125 C 2.625 -0.859375 3 -1.25 3.421875 -1.25 C 3.828125 -1.25 4.015625 -1.015625 4.015625 -0.40625 Z M 4.015625 -0.40625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-7">
+<path style="stroke:none;" d="M 7.46875 -5.265625 C 7.46875 -6.03125 6.8125 -6.765625 5.515625 -6.765625 L 2.3125 -6.765625 C 2.125 -6.765625 2.015625 -6.765625 2.015625 -6.578125 C 2.015625 -6.453125 2.09375 -6.453125 2.296875 -6.453125 C 2.421875 -6.453125 2.609375 -6.453125 2.71875 -6.4375 C 2.875 -6.421875 2.9375 -6.390625 2.9375 -6.28125 C 2.9375 -6.234375 2.9375 -6.21875 2.90625 -6.09375 L 1.578125 -0.765625 C 1.46875 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.390625 -0.3125 0.390625 -0.125 C 0.390625 0 0.515625 0 0.546875 0 L 1.796875 -0.03125 L 2.4375 -0.015625 C 2.65625 -0.015625 2.875 0 3.078125 0 C 3.15625 0 3.28125 0 3.28125 -0.203125 C 3.28125 -0.3125 3.1875 -0.3125 3 -0.3125 C 2.640625 -0.3125 2.359375 -0.3125 2.359375 -0.484375 C 2.359375 -0.546875 2.375 -0.59375 2.390625 -0.65625 L 3 -3.125 L 4.6875 -3.125 C 6.09375 -3.125 7.46875 -4.15625 7.46875 -5.265625 Z M 6.546875 -5.515625 C 6.546875 -5.125 6.34375 -4.265625 5.96875 -3.90625 C 5.46875 -3.46875 4.875 -3.390625 4.4375 -3.390625 L 3.046875 -3.390625 L 3.71875 -6.078125 C 3.796875 -6.421875 3.828125 -6.453125 4.25 -6.453125 L 5.203125 -6.453125 C 6.015625 -6.453125 6.546875 -6.1875 6.546875 -5.515625 Z M 6.546875 -5.515625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph0-8">
+<path style="stroke:none;" d="M 6.875 0.203125 C 6.875 0.09375 6.8125 0.046875 6.6875 -0.015625 L 1.484375 -2.484375 L 6.6875 -4.9375 C 6.8125 -5 6.875 -5.046875 6.875 -5.15625 C 6.875 -5.265625 6.78125 -5.34375 6.671875 -5.34375 C 6.640625 -5.34375 6.625 -5.34375 6.5 -5.28125 L 1.015625 -2.6875 C 0.90625 -2.640625 0.828125 -2.59375 0.828125 -2.484375 C 0.828125 -2.359375 0.90625 -2.3125 1.015625 -2.265625 L 6.5 0.328125 C 6.625 0.390625 6.640625 0.390625 6.671875 0.390625 C 6.78125 0.390625 6.875 0.3125 6.875 0.203125 Z M 6.875 0.203125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-1">
+<path style="stroke:none;" d="M 3.5625 -1.265625 C 3.5625 -1.796875 3.265625 -2.09375 3.15625 -2.203125 C 2.828125 -2.53125 2.4375 -2.609375 2.015625 -2.6875 C 1.46875 -2.796875 0.796875 -2.921875 0.796875 -3.5 C 0.796875 -3.84375 1.0625 -4.25 1.90625 -4.25 C 3 -4.25 3.046875 -3.359375 3.078125 -3.046875 C 3.078125 -2.96875 3.1875 -2.96875 3.1875 -2.96875 C 3.3125 -2.96875 3.3125 -3.015625 3.3125 -3.203125 L 3.3125 -4.203125 C 3.3125 -4.375 3.3125 -4.4375 3.203125 -4.4375 C 3.15625 -4.4375 3.140625 -4.4375 3.015625 -4.3125 C 2.984375 -4.28125 2.875 -4.1875 2.84375 -4.15625 C 2.46875 -4.4375 2.0625 -4.4375 1.90625 -4.4375 C 0.703125 -4.4375 0.328125 -3.78125 0.328125 -3.21875 C 0.328125 -2.875 0.484375 -2.59375 0.75 -2.375 C 1.0625 -2.125 1.34375 -2.0625 2.0625 -1.921875 C 2.28125 -1.875 3.09375 -1.71875 3.09375 -1.015625 C 3.09375 -0.5 2.75 -0.109375 1.96875 -0.109375 C 1.140625 -0.109375 0.78125 -0.671875 0.59375 -1.515625 C 0.5625 -1.640625 0.5625 -1.6875 0.453125 -1.6875 C 0.328125 -1.6875 0.328125 -1.609375 0.328125 -1.4375 L 0.328125 -0.125 C 0.328125 0.046875 0.328125 0.109375 0.4375 0.109375 C 0.484375 0.109375 0.5 0.09375 0.6875 -0.09375 C 0.703125 -0.109375 0.703125 -0.125 0.875 -0.3125 C 1.3125 0.09375 1.765625 0.109375 1.96875 0.109375 C 3.109375 0.109375 3.5625 -0.5625 3.5625 -1.265625 Z M 3.5625 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-2">
+<path style="stroke:none;" d="M 2.453125 0 L 2.453125 -0.3125 C 1.796875 -0.3125 1.75 -0.359375 1.75 -0.75 L 1.75 -4.375 L 0.359375 -4.265625 L 0.359375 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.421875 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 C 1.765625 -0.03125 2.109375 -0.015625 2.453125 0 Z M 1.90625 -5.984375 C 1.90625 -6.25 1.671875 -6.515625 1.375 -6.515625 C 1.046875 -6.515625 0.84375 -6.234375 0.84375 -5.984375 C 0.84375 -5.71875 1.0625 -5.453125 1.359375 -5.453125 C 1.703125 -5.453125 1.90625 -5.734375 1.90625 -5.984375 Z M 1.90625 -5.984375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-3">
+<path style="stroke:none;" d="M 5.296875 0 L 5.296875 -0.3125 C 4.78125 -0.3125 4.53125 -0.3125 4.53125 -0.609375 L 4.53125 -2.5 C 4.53125 -3.34375 4.53125 -3.65625 4.21875 -4.015625 C 4.078125 -4.1875 3.75 -4.375 3.1875 -4.375 C 2.453125 -4.375 1.984375 -3.953125 1.71875 -3.34375 L 1.71875 -4.375 L 0.3125 -4.265625 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.890625 1.09375 -3.40625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.875 -0.3125 1.765625 -0.3125 1.765625 -0.75 L 1.765625 -2.578125 C 1.765625 -3.609375 2.484375 -4.15625 3.109375 -4.15625 C 3.734375 -4.15625 3.84375 -3.625 3.84375 -3.0625 L 3.84375 -0.75 C 3.84375 -0.3125 3.734375 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.1875 -0.03125 Z M 5.296875 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-4">
+<path style="stroke:none;" d="M 3.28125 -1.234375 L 3.28125 -1.796875 L 3.046875 -1.796875 L 3.046875 -1.25 C 3.046875 -0.515625 2.75 -0.140625 2.375 -0.140625 C 1.71875 -0.140625 1.71875 -1.046875 1.71875 -1.203125 L 1.71875 -3.96875 L 3.125 -3.96875 L 3.125 -4.265625 L 1.71875 -4.265625 L 1.71875 -6.09375 L 1.46875 -6.09375 C 1.453125 -5.28125 1.15625 -4.21875 0.1875 -4.1875 L 0.1875 -3.96875 L 1.03125 -3.96875 L 1.03125 -1.234375 C 1.03125 -0.015625 1.953125 0.109375 2.3125 0.109375 C 3.015625 0.109375 3.28125 -0.59375 3.28125 -1.234375 Z M 3.28125 -1.234375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-5">
+<path style="stroke:none;" d="M 4.78125 -0.875 L 4.78125 -1.4375 L 4.53125 -1.4375 L 4.53125 -0.875 C 4.53125 -0.3125 4.296875 -0.25 4.1875 -0.25 C 3.859375 -0.25 3.8125 -0.6875 3.8125 -0.75 L 3.8125 -2.71875 C 3.8125 -3.140625 3.8125 -3.53125 3.453125 -3.890625 C 3.078125 -4.28125 2.578125 -4.4375 2.09375 -4.4375 C 1.28125 -4.4375 0.609375 -3.96875 0.609375 -3.3125 C 0.609375 -3.015625 0.796875 -2.859375 1.0625 -2.859375 C 1.34375 -2.859375 1.515625 -3.046875 1.515625 -3.3125 C 1.515625 -3.421875 1.46875 -3.75 1.015625 -3.765625 C 1.28125 -4.109375 1.765625 -4.21875 2.078125 -4.21875 C 2.5625 -4.21875 3.125 -3.828125 3.125 -2.953125 L 3.125 -2.578125 C 2.625 -2.5625 1.9375 -2.53125 1.3125 -2.234375 C 0.5625 -1.890625 0.3125 -1.375 0.3125 -0.9375 C 0.3125 -0.140625 1.28125 0.109375 1.90625 0.109375 C 2.5625 0.109375 3.015625 -0.28125 3.203125 -0.75 C 3.234375 -0.359375 3.5 0.0625 3.96875 0.0625 C 4.1875 0.0625 4.78125 -0.078125 4.78125 -0.875 Z M 3.125 -1.390625 C 3.125 -0.453125 2.421875 -0.109375 1.96875 -0.109375 C 1.484375 -0.109375 1.078125 -0.453125 1.078125 -0.953125 C 1.078125 -1.5 1.5 -2.3125 3.125 -2.375 Z M 3.125 -1.390625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-6">
+<path style="stroke:none;" d="M 7.140625 -3.4375 C 7.140625 -3.640625 6.953125 -3.640625 6.8125 -3.640625 L 0.875 -3.640625 C 0.75 -3.640625 0.5625 -3.640625 0.5625 -3.4375 C 0.5625 -3.234375 0.75 -3.234375 0.890625 -3.234375 L 6.8125 -3.234375 C 6.953125 -3.234375 7.140625 -3.234375 7.140625 -3.4375 Z M 7.140625 -1.515625 C 7.140625 -1.71875 6.953125 -1.71875 6.8125 -1.71875 L 0.890625 -1.71875 C 0.75 -1.71875 0.5625 -1.71875 0.5625 -1.515625 C 0.5625 -1.3125 0.75 -1.3125 0.875 -1.3125 L 6.8125 -1.3125 C 6.953125 -1.3125 7.140625 -1.3125 7.140625 -1.515625 Z M 7.140625 -1.515625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-7">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.953125 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.921875 3.15625 -7.15625 C 3.28125 -7.28125 3.28125 -7.296875 3.28125 -7.328125 C 3.28125 -7.40625 3.234375 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.75 1.609375 -5.5 C 1.09375 -4.40625 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.234375 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-8">
+<path style="stroke:none;" d="M 4.15625 0 L 4.15625 -0.3125 L 3.828125 -0.3125 C 2.9375 -0.3125 2.90625 -0.421875 2.90625 -0.78125 L 2.90625 -6.34375 C 2.90625 -6.578125 2.90625 -6.59375 2.6875 -6.59375 C 2.078125 -5.96875 1.203125 -5.96875 0.875 -5.96875 L 0.875 -5.65625 C 1.078125 -5.65625 1.671875 -5.65625 2.171875 -5.90625 L 2.171875 -0.78125 C 2.171875 -0.421875 2.15625 -0.3125 1.265625 -0.3125 L 0.9375 -0.3125 L 0.9375 0 C 1.28125 -0.03125 2.15625 -0.03125 2.546875 -0.03125 C 2.9375 -0.03125 3.796875 -0.03125 4.15625 0 Z M 4.15625 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-9">
+<path style="stroke:none;" d="M 4.5625 -3.171875 C 4.5625 -3.96875 4.5 -4.75 4.15625 -5.484375 C 3.703125 -6.4375 2.890625 -6.59375 2.484375 -6.59375 C 1.875 -6.59375 1.15625 -6.34375 0.75 -5.421875 C 0.4375 -4.734375 0.390625 -3.96875 0.390625 -3.171875 C 0.390625 -2.421875 0.421875 -1.53125 0.828125 -0.78125 C 1.265625 0.015625 1.984375 0.21875 2.46875 0.21875 C 3 0.21875 3.75 0.015625 4.1875 -0.9375 C 4.5 -1.609375 4.5625 -2.390625 4.5625 -3.171875 Z M 3.734375 -3.28125 C 3.734375 -2.546875 3.734375 -1.875 3.625 -1.234375 C 3.484375 -0.296875 2.90625 0 2.46875 0 C 2.078125 0 1.5 -0.25 1.3125 -1.203125 C 1.203125 -1.796875 1.203125 -2.703125 1.203125 -3.28125 C 1.203125 -3.921875 1.203125 -4.578125 1.28125 -5.109375 C 1.46875 -6.296875 2.21875 -6.375 2.46875 -6.375 C 2.796875 -6.375 3.453125 -6.203125 3.640625 -5.21875 C 3.734375 -4.671875 3.734375 -3.90625 3.734375 -3.28125 Z M 3.734375 -3.28125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-10">
+<path style="stroke:none;" d="M 2.859375 -2.484375 C 2.859375 -3.25 2.75 -4.453125 2.203125 -5.5625 C 1.609375 -6.78125 0.765625 -7.4375 0.65625 -7.4375 C 0.609375 -7.4375 0.5625 -7.390625 0.5625 -7.328125 C 0.5625 -7.296875 0.5625 -7.28125 0.75 -7.109375 C 1.71875 -6.125 2.28125 -4.546875 2.28125 -2.484375 C 2.28125 -0.78125 1.921875 0.953125 0.6875 2.203125 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.65625 2.484375 C 0.765625 2.484375 1.65625 1.796875 2.234375 0.546875 C 2.75 -0.546875 2.859375 -1.640625 2.859375 -2.484375 Z M 2.859375 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-11">
+<path style="stroke:none;" d="M 4.109375 -1.171875 C 4.109375 -1.28125 4.015625 -1.28125 3.984375 -1.28125 C 3.890625 -1.28125 3.875 -1.234375 3.859375 -1.171875 C 3.5625 -0.25 2.921875 -0.140625 2.5625 -0.140625 C 2.03125 -0.140625 1.15625 -0.5625 1.15625 -2.15625 C 1.15625 -3.78125 1.96875 -4.1875 2.5 -4.1875 C 2.578125 -4.1875 3.203125 -4.1875 3.5625 -3.828125 C 3.15625 -3.796875 3.09375 -3.5 3.09375 -3.375 C 3.09375 -3.109375 3.265625 -2.90625 3.546875 -2.90625 C 3.796875 -2.90625 4 -3.078125 4 -3.375 C 4 -4.046875 3.25 -4.4375 2.484375 -4.4375 C 1.25 -4.4375 0.34375 -3.375 0.34375 -2.140625 C 0.34375 -0.875 1.3125 0.109375 2.46875 0.109375 C 3.796875 0.109375 4.109375 -1.078125 4.109375 -1.171875 Z M 4.109375 -1.171875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph1-12">
+<path style="stroke:none;" d="M 4.671875 -2.125 C 4.671875 -3.390625 3.671875 -4.4375 2.484375 -4.4375 C 1.234375 -4.4375 0.28125 -3.359375 0.28125 -2.125 C 0.28125 -0.84375 1.3125 0.109375 2.46875 0.109375 C 3.671875 0.109375 4.671875 -0.859375 4.671875 -2.125 Z M 3.84375 -2.203125 C 3.84375 -1.84375 3.84375 -1.3125 3.625 -0.875 C 3.40625 -0.421875 2.96875 -0.140625 2.484375 -0.140625 C 2.046875 -0.140625 1.609375 -0.34375 1.34375 -0.796875 C 1.09375 -1.234375 1.09375 -1.84375 1.09375 -2.203125 C 1.09375 -2.578125 1.09375 -3.125 1.34375 -3.5625 C 1.609375 -4.015625 2.078125 -4.21875 2.46875 -4.21875 C 2.90625 -4.21875 3.328125 -4 3.59375 -3.578125 C 3.84375 -3.15625 3.84375 -2.578125 3.84375 -2.203125 Z M 3.84375 -2.203125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph2-1">
+<path style="stroke:none;" d="M 4.78125 -0.875 L 4.78125 -1.4375 L 4.53125 -1.4375 L 4.53125 -0.875 C 4.53125 -0.3125 4.296875 -0.25 4.1875 -0.25 C 3.859375 -0.25 3.8125 -0.6875 3.8125 -0.75 L 3.8125 -2.71875 C 3.8125 -3.140625 3.8125 -3.53125 3.453125 -3.890625 C 3.078125 -4.28125 2.578125 -4.4375 2.09375 -4.4375 C 1.28125 -4.4375 0.609375 -3.96875 0.609375 -3.3125 C 0.609375 -3.015625 0.796875 -2.859375 1.0625 -2.859375 C 1.34375 -2.859375 1.515625 -3.046875 1.515625 -3.3125 C 1.515625 -3.421875 1.46875 -3.75 1.015625 -3.765625 C 1.28125 -4.109375 1.765625 -4.21875 2.078125 -4.21875 C 2.5625 -4.21875 3.125 -3.828125 3.125 -2.953125 L 3.125 -2.578125 C 2.625 -2.5625 1.9375 -2.53125 1.3125 -2.234375 C 0.5625 -1.890625 0.3125 -1.375 0.3125 -0.9375 C 0.3125 -0.140625 1.28125 0.109375 1.90625 0.109375 C 2.5625 0.109375 3.015625 -0.28125 3.203125 -0.75 C 3.234375 -0.359375 3.5 0.0625 3.96875 0.0625 C 4.1875 0.0625 4.78125 -0.078125 4.78125 -0.875 Z M 3.125 -1.390625 C 3.125 -0.453125 2.421875 -0.109375 1.96875 -0.109375 C 1.484375 -0.109375 1.078125 -0.453125 1.078125 -0.953125 C 1.078125 -1.5 1.5 -2.3125 3.125 -2.375 Z M 3.125 -1.390625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph2-2">
+<path style="stroke:none;" d="M 3.609375 -3.78125 C 3.609375 -4.09375 3.296875 -4.375 2.875 -4.375 C 2.15625 -4.375 1.796875 -3.71875 1.65625 -3.28125 L 1.65625 -4.375 L 0.28125 -4.265625 L 0.28125 -3.96875 C 0.96875 -3.96875 1.046875 -3.890625 1.046875 -3.40625 L 1.046875 -0.75 C 1.046875 -0.3125 0.9375 -0.3125 0.28125 -0.3125 L 0.28125 0 L 1.40625 -0.03125 C 1.796875 -0.03125 2.265625 -0.03125 2.671875 0 L 2.671875 -0.3125 L 2.453125 -0.3125 C 1.71875 -0.3125 1.703125 -0.421875 1.703125 -0.765625 L 1.703125 -2.296875 C 1.703125 -3.28125 2.125 -4.15625 2.875 -4.15625 C 2.9375 -4.15625 2.96875 -4.15625 2.984375 -4.15625 C 2.953125 -4.140625 2.75 -4.015625 2.75 -3.765625 C 2.75 -3.484375 2.96875 -3.34375 3.1875 -3.34375 C 3.359375 -3.34375 3.609375 -3.453125 3.609375 -3.78125 Z M 3.609375 -3.78125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph2-3">
+<path style="stroke:none;" d="M 4.109375 -1.171875 C 4.109375 -1.28125 4.03125 -1.296875 3.984375 -1.296875 C 3.890625 -1.296875 3.875 -1.234375 3.859375 -1.15625 C 3.5 -0.140625 2.609375 -0.140625 2.515625 -0.140625 C 2.015625 -0.140625 1.625 -0.4375 1.390625 -0.796875 C 1.09375 -1.28125 1.09375 -1.9375 1.09375 -2.28125 L 3.859375 -2.28125 C 4.078125 -2.28125 4.109375 -2.28125 4.109375 -2.5 C 4.109375 -3.484375 3.578125 -4.4375 2.34375 -4.4375 C 1.1875 -4.4375 0.28125 -3.421875 0.28125 -2.171875 C 0.28125 -0.859375 1.3125 0.109375 2.453125 0.109375 C 3.671875 0.109375 4.109375 -0.984375 4.109375 -1.171875 Z M 3.453125 -2.5 L 1.109375 -2.5 C 1.171875 -3.96875 2 -4.21875 2.34375 -4.21875 C 3.359375 -4.21875 3.453125 -2.875 3.453125 -2.5 Z M 3.453125 -2.5 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph2-4">
+<path style="stroke:none;" d="M 1.90625 -3.75 C 1.90625 -4.03125 1.671875 -4.265625 1.375 -4.265625 C 1.09375 -4.265625 0.859375 -4.03125 0.859375 -3.75 C 0.859375 -3.453125 1.09375 -3.21875 1.375 -3.21875 C 1.671875 -3.21875 1.90625 -3.453125 1.90625 -3.75 Z M 1.90625 -0.53125 C 1.90625 -0.8125 1.671875 -1.046875 1.375 -1.046875 C 1.09375 -1.046875 0.859375 -0.8125 0.859375 -0.53125 C 0.859375 -0.234375 1.09375 0 1.375 0 C 1.671875 0 1.90625 -0.234375 1.90625 -0.53125 Z M 1.90625 -0.53125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph3-1">
+<path style="stroke:none;" d="M 3.28125 0 L 3.28125 -0.25 L 3.015625 -0.25 C 2.328125 -0.25 2.328125 -0.34375 2.328125 -0.5625 L 2.328125 -4.40625 C 2.328125 -4.59375 2.3125 -4.609375 2.109375 -4.609375 C 1.671875 -4.171875 1.046875 -4.15625 0.75 -4.15625 L 0.75 -3.90625 C 0.921875 -3.90625 1.375 -3.90625 1.765625 -4.109375 L 1.765625 -0.5625 C 1.765625 -0.34375 1.765625 -0.25 1.0625 -0.25 L 0.8125 -0.25 L 0.8125 0 L 2.046875 -0.03125 Z M 3.28125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22a_d1-glyph3-2">
+<path style="stroke:none;" d="M 3.5 -1.265625 L 3.265625 -1.265625 C 3.25 -1.109375 3.171875 -0.703125 3.09375 -0.625 C 3.03125 -0.59375 2.5 -0.59375 2.40625 -0.59375 L 1.125 -0.59375 C 1.859375 -1.234375 2.09375 -1.421875 2.515625 -1.75 C 3.03125 -2.171875 3.5 -2.59375 3.5 -3.25 C 3.5 -4.09375 2.765625 -4.609375 1.875 -4.609375 C 1.015625 -4.609375 0.4375 -4 0.4375 -3.359375 C 0.4375 -3.015625 0.734375 -2.96875 0.8125 -2.96875 C 0.96875 -2.96875 1.171875 -3.09375 1.171875 -3.34375 C 1.171875 -3.46875 1.125 -3.71875 0.765625 -3.71875 C 0.984375 -4.203125 1.453125 -4.359375 1.78125 -4.359375 C 2.46875 -4.359375 2.828125 -3.8125 2.828125 -3.25 C 2.828125 -2.65625 2.40625 -2.171875 2.171875 -1.921875 L 0.5 -0.265625 C 0.4375 -0.203125 0.4375 -0.1875 0.4375 0 L 3.296875 0 Z M 3.5 -1.265625 "/>
+</symbol>
+</g>
+</defs>
+<g id="analisi1_lez22a_d1-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -25.511313 -0.000596799 L 145.758584 -0.000596799 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.212699 -0.000596799 L 0.64433 1.345883 L 1.818084 -0.000596799 L 0.64433 -1.347077 Z M 4.212699 -0.000596799 " transform="matrix(0.995071,0,0,-0.995071,172.878376,131.265031)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="181.137827" y="133.398464"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00114575 -25.513056 L 0.00114575 111.741539 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.215219 -0.00114575 L 0.642925 1.345334 L 1.816678 -0.00114575 L 0.642925 -1.347626 Z M 4.215219 -0.00114575 " transform="matrix(0,-0.995071,-0.995071,0,29.549641,21.784287)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-2" x="26.941559" y="11.596746"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(89.99939%,89.99939%,89.99939%);fill-opacity:1;" d="M 29.550781 131.265625 L 114.167969 131.265625 L 114.167969 72.011719 Z M 29.550781 131.265625 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(84.999084%,84.999084%,100%);fill-opacity:1;" d="M 29.550781 131.265625 L 114.167969 131.265625 C 114.167969 113.902344 108.824219 96.949219 98.867188 82.726562 Z M 29.550781 131.265625 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,75%,75%);fill-opacity:1;" d="M 29.550781 131.265625 L 98.867188 82.730469 L 114.167969 131.265625 Z M 29.550781 131.265625 "/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M 85.041366 -0.000596799 C 85.041366 46.965253 46.966995 85.039624 0.00114575 85.039624 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00114575 -0.000596799 L 85.037441 59.546793 L 85.037441 -0.000596799 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 85.041366 -0.000596799 C 85.041366 17.448684 79.667223 34.485778 69.660875 48.778879 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.00114575 -0.000596799 L 69.660875 48.774953 L 85.037441 -0.000596799 Z M 0.00114575 -0.000596799 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:2.98883,2.98883;stroke-miterlimit:10;" d="M 69.660875 48.774953 L 69.660875 -0.000596799 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-1" x="75.803546" y="108.999313"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-2" x="79.714422" y="108.999313"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-3" x="82.468391" y="108.999313"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="89.698724" y="108.999313"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-4" x="117.672172" y="104.768269"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-5" x="121.527531" y="104.768269"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-3" x="126.484281" y="104.768269"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="133.715708" y="104.768269"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 17.006835 -0.000596799 C 17.006835 3.489259 15.935146 6.896678 13.933092 9.754513 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="51.82332" y="123.254706"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 31.335938 131.265625 C 31.335938 130.28125 30.535156 129.480469 29.550781 129.480469 C 28.5625 129.480469 27.765625 130.28125 27.765625 131.265625 C 27.765625 132.25 28.5625 133.050781 29.550781 133.050781 C 30.535156 133.050781 31.335938 132.25 31.335938 131.265625 Z M 31.335938 131.265625 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-3" x="18.210802" y="141.541134"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 115.953125 131.265625 C 115.953125 130.28125 115.15625 129.480469 114.167969 129.480469 C 113.183594 129.480469 112.386719 130.28125 112.386719 131.265625 C 112.386719 132.25 113.183594 133.050781 114.167969 133.050781 C 115.15625 133.050781 115.953125 132.25 115.953125 131.265625 Z M 115.953125 131.265625 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-4" x="117.671177" y="142.201861"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-6" x="127.859713" y="142.201861"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-7" x="138.326385" y="142.201861"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-8" x="142.181745" y="142.201861"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-5" x="147.136237" y="142.201861"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-9" x="151.542413" y="142.201861"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-10" x="156.499162" y="142.201861"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 115.953125 72.011719 C 115.953125 71.027344 115.15625 70.230469 114.167969 70.230469 C 113.183594 70.230469 112.386719 71.027344 112.386719 72.011719 C 112.386719 73 113.183594 73.796875 114.167969 73.796875 C 115.15625 73.796875 115.953125 73 115.953125 72.011719 Z M 115.953125 72.011719 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-6" x="117.671177" y="74.492226"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-6" x="128.261722" y="74.492226"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-7" x="138.728394" y="74.492226"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-8" x="142.583753" y="74.492226"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-5" x="147.538246" y="74.492226"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-4" x="151.944422" y="74.492226"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-5" x="155.799782" y="74.492226"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-3" x="160.756531" y="74.492226"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="167.987959" y="74.492226"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-10" x="173.653895" y="74.492226"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 100.652344 82.730469 C 100.652344 81.742188 99.851562 80.945312 98.867188 80.945312 C 97.878906 80.945312 97.082031 81.742188 97.082031 82.730469 C 97.082031 83.714844 97.878906 84.511719 98.867188 84.511719 C 99.851562 84.511719 100.652344 83.714844 100.652344 82.730469 Z M 100.652344 82.730469 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-7" x="43.708512" y="37.276554"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-6" x="54.203531" y="37.276554"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-7" x="64.670203" y="37.276554"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-11" x="68.525562" y="37.276554"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-12" x="72.932112" y="37.276554"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-1" x="77.888862" y="37.276554"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="83.44868" y="37.276554"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-5" x="89.114245" y="37.276554"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-1" x="93.520793" y="37.276554"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-2" x="97.431668" y="37.276554"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-3" x="100.185638" y="37.276554"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="107.415971" y="37.276554"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-10" x="113.081907" y="37.276554"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(50%,50%,50%);stroke-opacity:1;stroke-miterlimit:10;" d="M 61.228691 90.994755 L 70.58339 51.876175 " transform="matrix(0.995071,0,0,-0.995071,29.549641,131.265031)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph2-1" x="30.23624" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph2-2" x="35.19299" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph2-3" x="39.076107" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph2-3" x="43.482657" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph2-4" x="47.889207" y="172.668958"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph3-1" x="56.237457" y="168.765293"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000828476 -0.00117676 L 3.969608 -0.00117676 " transform="matrix(0.995071,0,0,-0.995071,56.237457,170.190235)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph3-2" x="56.237457" y="176.087029"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-1" x="63.030809" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-2" x="66.941685" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-3" x="69.695655" y="172.668958"/>
+</g>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="76.925987" y="172.668958"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-8" x="85.347504" y="172.668958"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph3-1" x="96.999563" y="168.765293"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000439308 -0.00117676 L 3.969218 -0.00117676 " transform="matrix(0.995071,0,0,-0.995071,96.999563,170.190235)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph3-2" x="96.999563" y="176.087029"/>
+</g>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="102.141097" y="172.668958"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-8" x="110.562614" y="172.668958"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph3-1" x="122.214673" y="168.765293"/>
+</g>
+<path style="fill:none;stroke-width:0.398;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0.000171739 -0.00117676 L 3.972876 -0.00117676 " transform="matrix(0.995071,0,0,-0.995071,122.214673,170.190235)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph3-2" x="122.214673" y="176.087029"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-4" x="129.008025" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-5" x="132.863385" y="172.668958"/>
+  <use xlink:href="#analisi1_lez22a_d1-glyph1-3" x="137.820134" y="172.668958"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22a_d1-glyph0-1" x="145.050567" y="172.668958"/>
+</g>
+</g>
+</svg></figure>
+            <p>$$\\frac{1}{2}\\sin x \\le \\frac{1}{2}x \\le \\frac{1}{2}\\tan x \\quad \\Rightarrow \\quad \\sin x \\le x \\le \\frac{\\sin x}{\\cos x}$$</p>
+            <p>Dividendo per $\\sin x \\gt 0$:</p>
+            <p>$$1 \\le \\frac{x}{\\sin x} \\le \\frac{1}{\\cos x}$$</p>
+            <p>Per $x \\to 0^+$, $\\cos x \\to 1$, quindi $\\frac{1}{\\cos x} \\to 1$. Per il Teorema del Confronto (o dei Carabinieri), anche $\\frac{x}{\\sin x} \\to 1$. Passando al reciproco, $\\frac{\\sin x}{x} \\to 1$. Per $x \\to 0^-$ si osserva che la funzione $x \\mapsto \\sin(x)/x$ è pari, dunque il limite sinistro coincide con il destro e il limite bilatero vale $1$.</p>`
+          },
+          {
+            subtitle: "(6) $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\frac{1}{2}$",
+            content: `<p>Moltiplichiamo numeratore e denominatore per $1+\\cos(x)$ (lecito, perché $1 + \\cos x \\to 2 \\neq 0$):</p>
+            <p>$$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\lim_{x \\to 0} \\frac{(1 - \\cos x)(1 + \\cos x)}{x^2(1 + \\cos x)} = \\lim_{x \\to 0} \\frac{1 - \\cos^2 x}{x^2(1 + \\cos x)}$$</p>
+            <p>$$= \\lim_{x \\to 0} \\frac{\\sin^2 x}{x^2(1 + \\cos x)} = \\lim_{x \\to 0} \\left(\\frac{\\sin x}{x}\\right)^2 \\cdot \\frac{1}{1 + \\cos x} = 1^2 \\cdot \\frac{1}{1+1} = \\frac{1}{2}$$</p>`
+          },
+          {
+            subtitle: "(7) $\\lim_{x \\to 0} \\frac{\\tan(x)}{x} = 1$",
+            content: `<p>$$\\lim_{x \\to 0} \\frac{\\tan x}{x} = \\lim_{x \\to 0} \\frac{\\sin x}{x \\cos x} = \\lim_{x \\to 0} \\frac{\\sin x}{x} \\cdot \\frac{1}{\\cos x} = 1 \\cdot \\frac{1}{1} = 1$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "(1) Nepero in 0", latex: "\\lim_{x \\to 0} (1+x)^{1/x} = e" },
+          { label: "(2) Logaritmo", latex: "\\lim_{x \\to 0} \\frac{\\ln(1+x)}{x} = 1" },
+          { label: "(3) Esponenziale", latex: "\\lim_{x \\to 0} \\frac{e^x - 1}{x} = 1" },
+          { label: "(4) Potenza", latex: "\\lim_{x \\to 0} \\frac{(1+x)^\\alpha - 1}{x} = \\alpha" },
+          { label: "(5) Seno", latex: "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1" },
+          { label: "(6) Coseno", latex: "\\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = \\frac{1}{2}" },
+          { label: "(7) Tangente", latex: "\\lim_{x \\to 0} \\frac{\\tan x}{x} = 1" }
+        ]
+      },
+
+      {
+        id: "s22-sviluppi",
+        type: "section",
+        title: "Corollario: sviluppi asintotici per $x \\to 0$",
+        icon: "📐",
+        content: `<p>Dai limiti notevoli precedenti seguono i seguenti sviluppi asintotici per $x \\to 0$, nel senso della definizione di "o piccolo" data sopra:</p>
+        <p>$$\\ln(1+x) = x + o(x), \\qquad e^x - 1 = x + o(x), \\qquad \\cos(x) = 1 - \\frac{1}{2}x^2 + o(x^2)$$</p>`,
+        subsections: [
+          {
+            subtitle: "Come si leggono questi sviluppi",
+            content: `<p>La scrittura $\\ln(1+x) = x + o(x)$ significa esattamente</p>
+            <p>$$\\lim_{x \\to 0} \\frac{\\ln(1+x) - x}{x} = 0,$$</p>
+            <p>che è equivalente al limite notevole (2): infatti $\\frac{\\ln(1+x)-x}{x} = \\frac{\\ln(1+x)}{x} - 1 \\to 1 - 1 = 0$. Analogamente $e^x - 1 = x + o(x)$ è la riscrittura di (3), e $\\cos x = 1 - \\frac{1}{2}x^2 + o(x^2)$ quella di (6).</p>
+            <p>Equivalentemente, in forma asintotica:</p>
+            <p>$$\\ln(1+x) \\sim x, \\quad e^x - 1 \\sim x, \\quad 1 - \\cos x \\sim \\tfrac{1}{2}x^2, \\quad \\sin x \\sim x, \\quad \\tan x \\sim x \\qquad (x \\to 0)$$</p>
+            <p>tutte scritture lecite perché i secondi membri sono non nulli in un intorno puntato di $0$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Logaritmo", latex: "\\ln(1+x) = x + o(x)" },
+          { label: "Esponenziale", latex: "e^x - 1 = x + o(x)" },
+          { label: "Coseno", latex: "\\cos(x) = 1 - \\tfrac{1}{2}x^2 + o(x^2)" },
+          { label: "Binomio", latex: "(1+x)^\\alpha = 1 + \\alpha x + o(x)" }
+        ]
+      },
+
+      {
+        id: "s22-strategia",
+        type: "note_box",
+        title: "Strategia operativa: come riconoscere un limite notevole",
+        icon: "🎯",
+        content: `<p>I limiti notevoli diventano utili quando si impara a <em>riconoscerli</em> dentro espressioni nuove. La strategia è sempre la stessa: <strong>individuare in ogni fattore un "blocco" che tenda a $0$, e moltiplicare e dividere per quel blocco</strong> in modo da ricostruire esattamente la forma di un limite notevole.</p>
+        <p>Riassumendo le due tecniche di questa lezione:</p>
+        <ul>
+          <li><strong>Cambio di variabile diretto</strong> (come negli esercizi su $\\arcsin$ e $\\arctan$): si sostituisce la variabile per ricondurre l'espressione a un limite notevole già noto. Va sempre controllata l'ipotesi $g(x) \\neq l$ oppure la continuità della funzione esterna.</li>
+          <li><strong>Normalizzazione per fattori</strong> (come negli esercizi svolti): si moltiplica e divide per l'argomento infinitesimo di ciascuna funzione elementare, in modo da far comparire i rapporti notevoli, e si raccolgono le costanti residue.</li>
+        </ul>`
+      },
+
+      {
+        id: "s22-es-combinare",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Combinare due limiti notevoli",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{e^{2x} - 1}{\\sin(3x)}$.</p>`,
+        steps: [
+          `Numeratore e denominatore tendono entrambi a $0$: siamo di fronte a una <strong>forma indeterminata $0/0$</strong>. I "blocchi" infinitesimi naturali sono $2x$ (argomento dell'esponenziale) e $3x$ (argomento del seno).`,
+          `Moltiplichiamo e dividiamo in modo da farli comparire: per $x \\neq 0$ abbastanza piccolo (così che $\\sin(3x) \\neq 0$) possiamo scrivere $$\\frac{e^{2x} - 1}{\\sin(3x)} = \\frac{e^{2x} - 1}{2x} \\cdot \\frac{2x}{3x} \\cdot \\frac{3x}{\\sin(3x)}.$$`,
+          `Primo fattore: $\\dfrac{e^{2x}-1}{2x} \\to 1$. È il limite notevole (3) con il cambio di variabile $u = 2x$, che tende a $0$ ed è diverso da $0$ per $x \\neq 0$ (ipotesi (H3) soddisfatta).`,
+          `Secondo fattore: $\\dfrac{2x}{3x} = \\dfrac{2}{3}$ per ogni $x \\neq 0$. È una costante.`,
+          `Terzo fattore: $\\dfrac{3x}{\\sin(3x)} \\to 1$. È il reciproco del limite notevole (5) con $u = 3x \\to 0$, $u \\neq 0$ per $x \\neq 0$.`,
+          `Per il teorema sul prodotto dei limiti: $$\\lim_{x \\to 0} \\frac{e^{2x} - 1}{\\sin(3x)} = 1 \\cdot \\frac{2}{3} \\cdot 1 = \\frac{2}{3}.$$`,
+          `<strong>Morale.</strong> Davanti a una forma $0/0$ costruita con esponenziali, logaritmi e funzioni trigonometriche, si normalizza ogni fattore dividendolo per il proprio argomento infinitesimo. <strong>Da notare:</strong> qui i coefficienti "di troppo" si raccolgono in una costante solo perché numeratore e denominatore sono infinitesimi <em>dello stesso ordine</em> (entrambi $\\sim$ a un multiplo di $x$). In generale, se gli ordini sono diversi, dopo la normalizzazione restano potenze della variabile e il risultato può essere $0$ o $\\pm\\infty$; e se c'è una differenza al numeratore (come in $\\sin x - \\tan x$, che vedremo più avanti) occorre prima <strong>fattorizzare</strong> la differenza, perché i singoli addendi si cancellano al primo ordine.`
+        ]
+      },
+
+      {
+        id: "s22-es-sviluppi",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Uso degli sviluppi asintotici",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x \\ln(1+x)}$.</p>`,
+        steps: [
+          `Usiamo il corollario sugli sviluppi asintotici. Per $x \\to 0$: $$1 - \\cos x = \\frac{1}{2}x^2 + o(x^2), \\qquad \\ln(1+x) = x + o(x).$$`,
+          `Conviene riscrivere il rapporto <strong>normalizzando numeratore e denominatore rispetto a $x^2$</strong>: per $x \\neq 0$ piccolo (così che $\\ln(1+x) \\neq 0$), $$\\frac{1 - \\cos(x)}{x \\ln(1+x)} = \\frac{\\dfrac{1-\\cos x}{x^2}}{\\dfrac{\\ln(1+x)}{x}}.$$`,
+          `Il numeratore tende a $\\tfrac12$ per il limite notevole (6), il denominatore tende a $1$ per il limite notevole (2).`,
+          `Poiché il limite del denominatore è diverso da $0$, possiamo applicare il teorema sul quoziente dei limiti: $$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x \\ln(1+x)} = \\frac{1/2}{1} = \\frac{1}{2}.$$`,
+          `Equivalentemente, in linguaggio asintotico: $1 - \\cos x \\sim \\tfrac12 x^2$ e $x\\ln(1+x) \\sim x^2$, quindi il rapporto è asintotico a $\\tfrac{1}{2}x^2 / x^2 = \\tfrac12$.`
+        ]
+      },
+
+      {
+        id: "s22-es-prof-arcsin",
+        type: "note_box",
+        title: "Esercizi lasciati dal professore (con hint)",
+        icon: "📌",
+        content: `<p>Verificare i seguenti limiti notevoli, utilizzando un opportuno cambio di variabile e i limiti già dimostrati:</p>
+        <p>$$\\text{(a)}\\ \\lim_{x \\to 0} \\frac{\\arcsin(x)}{x} = 1 \\qquad \\text{(b)}\\ \\lim_{x \\to 0} \\frac{\\arctan(x)}{x} = 1$$</p>
+        <p><strong>Hint.</strong> Per il primo limite, porre $y = \\arcsin(x)$, da cui $x = \\sin(y)$. Notare che se $x \\to 0$, anche $y \\to 0$, e che $y \\neq 0$ per $x \\neq 0$ perché $\\arcsin$ è iniettiva (dunque l'ipotesi (H3) del teorema della funzione composta è soddisfatta). Il limite diventa $\\lim_{y \\to 0} \\frac{y}{\\sin(y)} = 1$. Un procedimento analogo vale per l'arcotangente, ponendo $y = \\arctan(x)$ e $x = \\tan(y)$.</p>`
+      },
+
+      {
+        id: "s22-ripasso-intro",
+        type: "note_box",
+        title: "Seconda parte: ripasso e approfondimento dei limiti trigonometrici",
+        icon: "🔁",
+        content: `<p>Quanto segue è un <strong>ripasso ragionato</strong> della parte trigonometrica, già vista sopra, presentata in forma più dettagliata e con un'attenzione particolare al passaggio geometrico $x \\le \\tan(x)$ e all'estensione agli $x$ negativi. Le dimostrazioni di seno, coseno, tangente e potenza vengono ripercorse; <strong>la novità rispetto alla prima parte è la batteria di esercizi di riepilogo</strong> che chiude il capitolo.</p>`
+      },
+
+      {
+        id: "s22-seno-dettaglio",
+        type: "section",
+        title: "Il limite notevole del seno: la catena di disuguaglianze in dettaglio",
+        icon: "📏",
+        content: `<p><strong>Enunciato (limite notevole del seno).</strong></p>
+        <p>$$\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$$</p>
+        <p>Consideriamo la circonferenza goniometrica e un angolo $x$ nel primo quadrante, misurato in radianti.</p>
+        <figure class="figura" data-id="analisi1_lez22b_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="analisi1_lez22b_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="190.782pt" height="177.142pt" viewBox="0 0 190.782 177.142" version="1.2"><style>#analisi1_lez22b_d1 [fill="rgb(0%,0%,0%)"],#analisi1_lez22b_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#analisi1_lez22b_d1 [stroke="rgb(0%,0%,0%)"],#analisi1_lez22b_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#analisi1_lez22b_d1 [fill="rgb(87.998962%,87.998962%,87.998962%)"],#analisi1_lez22b_d1 [style*="fill:rgb(87.998962%,87.998962%,87.998962%)"]{fill:#333333!important}[data-mode="light"] #analisi1_lez22b_d1 [fill="rgb(87.998962%,87.998962%,87.998962%)"],[data-mode="light"] #analisi1_lez22b_d1 [style*="fill:rgb(87.998962%,87.998962%,87.998962%)"]{fill:#e0e0e0!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-1">
+<path style="stroke:none;" d="M 4.921875 -1.421875 C 4.921875 -1.515625 4.828125 -1.515625 4.796875 -1.515625 C 4.71875 -1.515625 4.6875 -1.484375 4.671875 -1.40625 C 4.34375 -0.34375 3.671875 -0.109375 3.359375 -0.109375 C 2.96875 -0.109375 2.8125 -0.421875 2.8125 -0.765625 C 2.8125 -0.984375 2.875 -1.203125 2.96875 -1.640625 L 3.3125 -3 C 3.375 -3.25 3.609375 -4.171875 4.296875 -4.171875 C 4.34375 -4.171875 4.578125 -4.171875 4.796875 -4.03125 C 4.515625 -3.984375 4.3125 -3.734375 4.3125 -3.5 C 4.3125 -3.34375 4.421875 -3.15625 4.6875 -3.15625 C 4.90625 -3.15625 5.234375 -3.328125 5.234375 -3.734375 C 5.234375 -4.25 4.640625 -4.390625 4.3125 -4.390625 C 3.734375 -4.390625 3.390625 -3.859375 3.265625 -3.625 C 3.015625 -4.28125 2.484375 -4.390625 2.1875 -4.390625 C 1.15625 -4.390625 0.59375 -3.109375 0.59375 -2.859375 C 0.59375 -2.765625 0.71875 -2.765625 0.71875 -2.765625 C 0.796875 -2.765625 0.828125 -2.78125 0.84375 -2.875 C 1.1875 -3.921875 1.828125 -4.171875 2.171875 -4.171875 C 2.359375 -4.171875 2.703125 -4.078125 2.703125 -3.5 C 2.703125 -3.1875 2.546875 -2.53125 2.171875 -1.140625 C 2.015625 -0.53125 1.671875 -0.109375 1.234375 -0.109375 C 1.171875 -0.109375 0.9375 -0.109375 0.734375 -0.234375 C 0.984375 -0.28125 1.203125 -0.5 1.203125 -0.78125 C 1.203125 -1.046875 0.984375 -1.125 0.828125 -1.125 C 0.53125 -1.125 0.28125 -0.859375 0.28125 -0.546875 C 0.28125 -0.09375 0.78125 0.109375 1.21875 0.109375 C 1.875 0.109375 2.234375 -0.578125 2.265625 -0.640625 C 2.375 -0.28125 2.734375 0.109375 3.328125 0.109375 C 4.359375 0.109375 4.921875 -1.171875 4.921875 -1.421875 Z M 4.921875 -1.421875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-2">
+<path style="stroke:none;" d="M 4.828125 -3.78125 C 4.859375 -3.921875 4.859375 -3.9375 4.859375 -4.015625 C 4.859375 -4.1875 4.71875 -4.28125 4.578125 -4.28125 C 4.46875 -4.28125 4.3125 -4.21875 4.234375 -4.0625 C 4.203125 -4.015625 4.125 -3.703125 4.09375 -3.53125 L 3.890625 -2.734375 L 3.4375 -0.953125 C 3.40625 -0.796875 2.96875 -0.109375 2.328125 -0.109375 C 1.8125 -0.109375 1.703125 -0.546875 1.703125 -0.90625 C 1.703125 -1.375 1.875 -1.984375 2.21875 -2.859375 C 2.375 -3.265625 2.40625 -3.375 2.40625 -3.578125 C 2.40625 -4.015625 2.09375 -4.390625 1.59375 -4.390625 C 0.65625 -4.390625 0.28125 -2.953125 0.28125 -2.859375 C 0.28125 -2.765625 0.40625 -2.765625 0.40625 -2.765625 C 0.5 -2.765625 0.515625 -2.78125 0.5625 -2.9375 C 0.828125 -3.875 1.234375 -4.171875 1.5625 -4.171875 C 1.640625 -4.171875 1.8125 -4.171875 1.8125 -3.84375 C 1.8125 -3.609375 1.71875 -3.34375 1.640625 -3.15625 C 1.25 -2.109375 1.078125 -1.53125 1.078125 -1.078125 C 1.078125 -0.1875 1.703125 0.109375 2.28125 0.109375 C 2.671875 0.109375 3 -0.0625 3.28125 -0.34375 C 3.15625 0.171875 3.03125 0.671875 2.640625 1.1875 C 2.375 1.53125 2 1.8125 1.546875 1.8125 C 1.40625 1.8125 0.96875 1.78125 0.796875 1.40625 C 0.953125 1.40625 1.078125 1.40625 1.21875 1.28125 C 1.3125 1.1875 1.421875 1.0625 1.421875 0.875 C 1.421875 0.5625 1.15625 0.53125 1.046875 0.53125 C 0.828125 0.53125 0.5 0.6875 0.5 1.171875 C 0.5 1.671875 0.9375 2.03125 1.546875 2.03125 C 2.5625 2.03125 3.59375 1.125 3.875 0.015625 Z M 4.828125 -3.78125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-3">
+<path style="stroke:none;" d="M 7.484375 -5.28125 C 7.484375 -6.046875 6.828125 -6.78125 5.53125 -6.78125 L 2.3125 -6.78125 C 2.125 -6.78125 2.015625 -6.78125 2.015625 -6.59375 C 2.015625 -6.46875 2.109375 -6.46875 2.296875 -6.46875 C 2.4375 -6.46875 2.609375 -6.453125 2.734375 -6.453125 C 2.890625 -6.421875 2.953125 -6.40625 2.953125 -6.296875 C 2.953125 -6.25 2.9375 -6.21875 2.90625 -6.109375 L 1.578125 -0.78125 C 1.484375 -0.390625 1.453125 -0.3125 0.671875 -0.3125 C 0.5 -0.3125 0.390625 -0.3125 0.390625 -0.125 C 0.390625 0 0.515625 0 0.546875 0 L 1.8125 -0.03125 L 2.4375 -0.015625 C 2.65625 -0.015625 2.875 0 3.078125 0 C 3.15625 0 3.28125 0 3.28125 -0.203125 C 3.28125 -0.3125 3.1875 -0.3125 3 -0.3125 C 2.640625 -0.3125 2.359375 -0.3125 2.359375 -0.484375 C 2.359375 -0.546875 2.375 -0.59375 2.390625 -0.65625 L 3 -3.140625 L 4.6875 -3.140625 C 6.109375 -3.140625 7.484375 -4.171875 7.484375 -5.28125 Z M 6.5625 -5.515625 C 6.5625 -5.125 6.359375 -4.28125 5.96875 -3.921875 C 5.484375 -3.46875 4.875 -3.390625 4.4375 -3.390625 L 3.046875 -3.390625 L 3.71875 -6.09375 C 3.8125 -6.4375 3.828125 -6.46875 4.25 -6.46875 L 5.203125 -6.46875 C 6.03125 -6.46875 6.5625 -6.203125 6.5625 -5.515625 Z M 6.5625 -5.515625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-4">
+<path style="stroke:none;" d="M 6.4375 0 C 6.4375 -0.0625 6.375 -0.09375 6.328125 -0.09375 C 6.25 -0.09375 6.234375 -0.046875 6.21875 0.015625 C 5.96875 0.71875 5.390625 0.96875 5.046875 0.96875 C 4.59375 0.96875 4.4375 0.6875 4.34375 -0.0625 C 5.890625 -0.640625 7.34375 -2.40625 7.34375 -4.328125 C 7.34375 -5.921875 6.296875 -7 4.8125 -7 C 2.671875 -7 0.484375 -4.75 0.484375 -2.4375 C 0.484375 -0.78125 1.59375 0.21875 3.03125 0.21875 C 3.28125 0.21875 3.609375 0.171875 4 0.0625 C 3.953125 0.6875 3.953125 0.703125 3.953125 0.828125 C 3.953125 1.15625 3.953125 1.921875 4.78125 1.921875 C 5.96875 1.921875 6.4375 0.109375 6.4375 0 Z M 6.46875 -4.640625 C 6.46875 -3.65625 5.96875 -1.328125 4.296875 -0.390625 C 4.25 -0.75 4.140625 -1.46875 3.421875 -1.46875 C 2.890625 -1.46875 2.40625 -0.96875 2.40625 -0.453125 C 2.40625 -0.265625 2.46875 -0.140625 2.46875 -0.140625 C 1.703125 -0.453125 1.359375 -1.21875 1.359375 -2.109375 C 1.359375 -2.796875 1.625 -4.203125 2.375 -5.28125 C 3.09375 -6.296875 4.03125 -6.75 4.75 -6.75 C 5.75 -6.75 6.46875 -5.96875 6.46875 -4.640625 Z M 4.03125 -0.40625 C 4.03125 -0.265625 4.015625 -0.25 3.921875 -0.203125 C 3.65625 -0.09375 3.359375 -0.03125 3.078125 -0.03125 C 2.953125 -0.03125 2.625 -0.03125 2.625 -0.453125 C 2.625 -0.859375 3 -1.25 3.421875 -1.25 C 3.84375 -1.25 4.03125 -1.015625 4.03125 -0.40625 Z M 4.03125 -0.40625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-5">
+<path style="stroke:none;" d="M 7.125 -0.203125 C 7.125 -0.3125 7.03125 -0.3125 6.84375 -0.3125 C 6.484375 -0.3125 6.203125 -0.3125 6.203125 -0.484375 C 6.203125 -0.546875 6.21875 -0.59375 6.234375 -0.65625 L 7.578125 -6.015625 C 7.65625 -6.375 7.671875 -6.46875 8.40625 -6.46875 C 8.65625 -6.46875 8.734375 -6.46875 8.734375 -6.671875 C 8.734375 -6.78125 8.625 -6.78125 8.609375 -6.78125 L 7.328125 -6.75 L 6.046875 -6.78125 C 5.96875 -6.78125 5.859375 -6.78125 5.859375 -6.578125 C 5.859375 -6.46875 5.953125 -6.46875 6.140625 -6.46875 C 6.140625 -6.46875 6.34375 -6.46875 6.515625 -6.453125 C 6.703125 -6.421875 6.78125 -6.421875 6.78125 -6.296875 C 6.78125 -6.25 6.78125 -6.234375 6.75 -6.109375 L 6.15625 -3.6875 L 3.125 -3.6875 L 3.703125 -6.015625 C 3.796875 -6.375 3.828125 -6.46875 4.546875 -6.46875 C 4.796875 -6.46875 4.875 -6.46875 4.875 -6.671875 C 4.875 -6.78125 4.765625 -6.78125 4.75 -6.78125 L 3.46875 -6.75 L 2.1875 -6.78125 C 2.109375 -6.78125 2 -6.78125 2 -6.578125 C 2 -6.46875 2.09375 -6.46875 2.28125 -6.46875 C 2.28125 -6.46875 2.484375 -6.46875 2.65625 -6.453125 C 2.84375 -6.421875 2.921875 -6.421875 2.921875 -6.296875 C 2.921875 -6.25 2.921875 -6.21875 2.890625 -6.109375 L 1.5625 -0.78125 C 1.453125 -0.390625 1.4375 -0.3125 0.65625 -0.3125 C 0.46875 -0.3125 0.390625 -0.3125 0.390625 -0.109375 C 0.390625 0 0.53125 0 0.53125 0 L 1.78125 -0.03125 L 2.421875 -0.015625 C 2.640625 -0.015625 2.859375 0 3.0625 0 C 3.140625 0 3.265625 0 3.265625 -0.203125 C 3.265625 -0.3125 3.171875 -0.3125 2.984375 -0.3125 C 2.625 -0.3125 2.34375 -0.3125 2.34375 -0.484375 C 2.34375 -0.546875 2.359375 -0.59375 2.375 -0.65625 L 3.046875 -3.375 L 6.078125 -3.375 L 5.390625 -0.640625 C 5.28125 -0.3125 5.09375 -0.3125 4.484375 -0.3125 C 4.328125 -0.3125 4.25 -0.3125 4.25 -0.109375 C 4.25 0 4.390625 0 4.390625 0 L 5.640625 -0.03125 L 6.28125 -0.015625 C 6.5 -0.015625 6.71875 0 6.921875 0 C 7 0 7.125 0 7.125 -0.203125 Z M 7.125 -0.203125 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-6">
+<path style="stroke:none;" d="M 7.15625 -0.203125 C 7.15625 -0.3125 7.046875 -0.3125 6.921875 -0.3125 C 6.3125 -0.3125 6.3125 -0.375 6.28125 -0.671875 L 5.671875 -6.859375 C 5.65625 -7.0625 5.65625 -7.109375 5.484375 -7.109375 C 5.328125 -7.109375 5.28125 -7.03125 5.234375 -6.9375 L 1.78125 -1.140625 C 1.375 -0.46875 0.984375 -0.34375 0.5625 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.46875 0 C 0.75 0 1.046875 -0.03125 1.328125 -0.03125 C 1.65625 -0.03125 2 0 2.328125 0 C 2.375 0 2.515625 0 2.515625 -0.1875 C 2.515625 -0.296875 2.421875 -0.3125 2.34375 -0.3125 C 2.125 -0.328125 1.890625 -0.40625 1.890625 -0.65625 C 1.890625 -0.78125 1.9375 -0.890625 2.03125 -1.015625 C 2.09375 -1.140625 2.109375 -1.140625 2.78125 -2.296875 L 5.265625 -2.296875 C 5.28125 -2.078125 5.421875 -0.734375 5.421875 -0.640625 C 5.421875 -0.34375 4.90625 -0.3125 4.71875 -0.3125 C 4.578125 -0.3125 4.46875 -0.3125 4.46875 -0.109375 C 4.46875 0 4.609375 0 4.609375 0 C 5.015625 0 5.453125 -0.03125 5.859375 -0.03125 C 6.109375 -0.03125 6.734375 0 6.96875 0 C 7.03125 0 7.15625 0 7.15625 -0.203125 Z M 5.234375 -2.59375 L 2.96875 -2.59375 L 4.921875 -5.875 Z M 5.234375 -2.59375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph0-7">
+<path style="stroke:none;" d="M 7.34375 -4.328125 C 7.34375 -5.921875 6.296875 -7 4.8125 -7 C 2.671875 -7 0.484375 -4.75 0.484375 -2.4375 C 0.484375 -0.78125 1.59375 0.21875 3.03125 0.21875 C 5.125 0.21875 7.34375 -1.953125 7.34375 -4.328125 Z M 6.453125 -4.71875 C 6.453125 -4 6.1875 -2.453125 5.203125 -1.234375 C 4.734375 -0.625 3.921875 -0.046875 3.078125 -0.046875 C 2.109375 -0.046875 1.40625 -0.84375 1.40625 -2.15625 C 1.40625 -2.59375 1.546875 -4.03125 2.3125 -5.203125 C 3 -6.234375 3.96875 -6.75 4.75 -6.75 C 5.5625 -6.75 6.453125 -6.1875 6.453125 -4.71875 Z M 6.453125 -4.71875 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-1">
+<path style="stroke:none;" d="M 3.578125 -1.265625 C 3.578125 -1.796875 3.28125 -2.09375 3.15625 -2.21875 C 2.828125 -2.53125 2.4375 -2.609375 2.03125 -2.6875 C 1.46875 -2.796875 0.796875 -2.921875 0.796875 -3.5 C 0.796875 -3.84375 1.0625 -4.25 1.921875 -4.25 C 3 -4.25 3.0625 -3.359375 3.078125 -3.0625 C 3.078125 -2.96875 3.1875 -2.96875 3.1875 -2.96875 C 3.328125 -2.96875 3.328125 -3.015625 3.328125 -3.203125 L 3.328125 -4.203125 C 3.328125 -4.375 3.328125 -4.4375 3.21875 -4.4375 C 3.171875 -4.4375 3.140625 -4.4375 3.015625 -4.328125 C 2.984375 -4.28125 2.890625 -4.203125 2.84375 -4.171875 C 2.46875 -4.4375 2.0625 -4.4375 1.921875 -4.4375 C 0.703125 -4.4375 0.328125 -3.78125 0.328125 -3.21875 C 0.328125 -2.875 0.484375 -2.59375 0.75 -2.375 C 1.078125 -2.125 1.34375 -2.0625 2.0625 -1.921875 C 2.28125 -1.890625 3.09375 -1.71875 3.09375 -1.015625 C 3.09375 -0.5 2.75 -0.109375 1.96875 -0.109375 C 1.140625 -0.109375 0.78125 -0.671875 0.59375 -1.515625 C 0.5625 -1.640625 0.5625 -1.6875 0.453125 -1.6875 C 0.328125 -1.6875 0.328125 -1.625 0.328125 -1.4375 L 0.328125 -0.125 C 0.328125 0.046875 0.328125 0.109375 0.4375 0.109375 C 0.484375 0.109375 0.5 0.09375 0.6875 -0.09375 C 0.703125 -0.109375 0.703125 -0.125 0.890625 -0.3125 C 1.3125 0.09375 1.765625 0.109375 1.96875 0.109375 C 3.109375 0.109375 3.578125 -0.5625 3.578125 -1.265625 Z M 3.578125 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-2">
+<path style="stroke:none;" d="M 2.453125 0 L 2.453125 -0.3125 C 1.796875 -0.3125 1.75 -0.359375 1.75 -0.75 L 1.75 -4.390625 L 0.359375 -4.28125 L 0.359375 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.421875 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 C 1.765625 -0.03125 2.109375 -0.015625 2.453125 0 Z M 1.90625 -6 C 1.90625 -6.265625 1.671875 -6.515625 1.375 -6.515625 C 1.046875 -6.515625 0.84375 -6.234375 0.84375 -6 C 0.84375 -5.71875 1.078125 -5.46875 1.375 -5.46875 C 1.703125 -5.46875 1.90625 -5.75 1.90625 -6 Z M 1.90625 -6 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-3">
+<path style="stroke:none;" d="M 5.3125 0 L 5.3125 -0.3125 C 4.796875 -0.3125 4.546875 -0.3125 4.53125 -0.609375 L 4.53125 -2.5 C 4.53125 -3.359375 4.53125 -3.65625 4.234375 -4.015625 C 4.09375 -4.1875 3.765625 -4.390625 3.1875 -4.390625 C 2.453125 -4.390625 2 -3.953125 1.71875 -3.34375 L 1.71875 -4.390625 L 0.3125 -4.28125 L 0.3125 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.40625 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.3125 -0.3125 L 0.3125 0 L 1.4375 -0.03125 L 2.546875 0 L 2.546875 -0.3125 C 1.890625 -0.3125 1.78125 -0.3125 1.78125 -0.75 L 1.78125 -2.578125 C 1.78125 -3.609375 2.484375 -4.171875 3.109375 -4.171875 C 3.734375 -4.171875 3.84375 -3.625 3.84375 -3.0625 L 3.84375 -0.75 C 3.84375 -0.3125 3.734375 -0.3125 3.078125 -0.3125 L 3.078125 0 L 4.203125 -0.03125 Z M 5.3125 0 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-4">
+<path style="stroke:none;" d="M 3.28125 2.375 C 3.28125 2.34375 3.28125 2.328125 3.109375 2.15625 C 1.875 0.90625 1.5625 -0.96875 1.5625 -2.484375 C 1.5625 -4.203125 1.9375 -5.9375 3.15625 -7.171875 C 3.28125 -7.296875 3.28125 -7.3125 3.28125 -7.34375 C 3.28125 -7.40625 3.25 -7.4375 3.1875 -7.4375 C 3.078125 -7.4375 2.1875 -6.765625 1.609375 -5.5 C 1.09375 -4.421875 0.984375 -3.3125 0.984375 -2.484375 C 0.984375 -1.703125 1.09375 -0.5 1.640625 0.609375 C 2.234375 1.828125 3.078125 2.484375 3.1875 2.484375 C 3.25 2.484375 3.28125 2.453125 3.28125 2.375 Z M 3.28125 2.375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-5">
+<path style="stroke:none;" d="M 2.875 -2.484375 C 2.875 -3.25 2.765625 -4.453125 2.21875 -5.578125 C 1.625 -6.796875 0.765625 -7.4375 0.671875 -7.4375 C 0.609375 -7.4375 0.5625 -7.40625 0.5625 -7.34375 C 0.5625 -7.3125 0.5625 -7.296875 0.75 -7.109375 C 1.71875 -6.125 2.296875 -4.546875 2.296875 -2.484375 C 2.296875 -0.78125 1.921875 0.96875 0.6875 2.21875 C 0.5625 2.328125 0.5625 2.34375 0.5625 2.375 C 0.5625 2.4375 0.609375 2.484375 0.671875 2.484375 C 0.765625 2.484375 1.65625 1.8125 2.25 0.546875 C 2.75 -0.546875 2.875 -1.640625 2.875 -2.484375 Z M 2.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-6">
+<path style="stroke:none;" d="M 3.296875 -1.234375 L 3.296875 -1.796875 L 3.046875 -1.796875 L 3.046875 -1.25 C 3.046875 -0.515625 2.75 -0.140625 2.375 -0.140625 C 1.71875 -0.140625 1.71875 -1.046875 1.71875 -1.203125 L 1.71875 -3.96875 L 3.140625 -3.96875 L 3.140625 -4.28125 L 1.71875 -4.28125 L 1.71875 -6.109375 L 1.46875 -6.109375 C 1.453125 -5.28125 1.15625 -4.234375 0.1875 -4.1875 L 0.1875 -3.96875 L 1.03125 -3.96875 L 1.03125 -1.234375 C 1.03125 -0.015625 1.953125 0.109375 2.3125 0.109375 C 3.015625 0.109375 3.296875 -0.59375 3.296875 -1.234375 Z M 3.296875 -1.234375 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-7">
+<path style="stroke:none;" d="M 4.796875 -0.890625 L 4.796875 -1.4375 L 4.546875 -1.4375 L 4.546875 -0.890625 C 4.546875 -0.3125 4.296875 -0.25 4.1875 -0.25 C 3.859375 -0.25 3.8125 -0.6875 3.8125 -0.75 L 3.8125 -2.734375 C 3.8125 -3.140625 3.8125 -3.53125 3.46875 -3.90625 C 3.078125 -4.28125 2.578125 -4.4375 2.109375 -4.4375 C 1.296875 -4.4375 0.609375 -3.984375 0.609375 -3.328125 C 0.609375 -3.03125 0.796875 -2.859375 1.0625 -2.859375 C 1.34375 -2.859375 1.515625 -3.0625 1.515625 -3.3125 C 1.515625 -3.4375 1.46875 -3.765625 1.015625 -3.765625 C 1.28125 -4.125 1.765625 -4.234375 2.078125 -4.234375 C 2.5625 -4.234375 3.140625 -3.84375 3.140625 -2.953125 L 3.140625 -2.59375 C 2.625 -2.5625 1.9375 -2.53125 1.3125 -2.234375 C 0.5625 -1.890625 0.3125 -1.375 0.3125 -0.9375 C 0.3125 -0.140625 1.28125 0.109375 1.90625 0.109375 C 2.5625 0.109375 3.015625 -0.28125 3.203125 -0.75 C 3.25 -0.359375 3.515625 0.0625 3.984375 0.0625 C 4.1875 0.0625 4.796875 -0.078125 4.796875 -0.890625 Z M 3.140625 -1.390625 C 3.140625 -0.453125 2.421875 -0.109375 1.96875 -0.109375 C 1.484375 -0.109375 1.078125 -0.453125 1.078125 -0.953125 C 1.078125 -1.5 1.5 -2.328125 3.140625 -2.375 Z M 3.140625 -1.390625 "/>
+</symbol>
+<symbol overflow="visible" id="analisi1_lez22b_d1-glyph1-8">
+<path style="stroke:none;" d="M 4.15625 0 L 4.15625 -0.3125 L 3.84375 -0.3125 C 2.953125 -0.3125 2.921875 -0.421875 2.921875 -0.78125 L 2.921875 -6.34375 C 2.921875 -6.59375 2.921875 -6.609375 2.6875 -6.609375 C 2.078125 -5.96875 1.203125 -5.96875 0.890625 -5.96875 L 0.890625 -5.671875 C 1.078125 -5.671875 1.671875 -5.671875 2.1875 -5.921875 L 2.1875 -0.78125 C 2.1875 -0.421875 2.15625 -0.3125 1.265625 -0.3125 L 0.9375 -0.3125 L 0.9375 0 C 1.296875 -0.03125 2.15625 -0.03125 2.546875 -0.03125 C 2.953125 -0.03125 3.8125 -0.03125 4.15625 0 Z M 4.15625 0 "/>
+</symbol>
+</g>
+<clipPath id="analisi1_lez22b_d1-clip1">
+  <path d="M 0.351562 25 L 152 25 L 152 176.289062 L 0.351562 176.289062 Z M 0.351562 25 "/>
+</clipPath>
+</defs>
+<g id="analisi1_lez22b_d1-surface1">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -14.174303 -0.00167697 L 98.815646 -0.00167697 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.07123 2.392677 C -1.694414 0.956065 -0.850502 0.27701 0.00125996 -0.00167697 C -0.850502 -0.280364 -1.694414 -0.955493 -2.07123 -2.392106 " transform="matrix(0.99518,0,0,-0.99518,173.576871,101.599894)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-1" x="177.277377" y="103.733559"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000513571 -14.171541 L -0.000513571 84.640693 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -2.072783 2.390942 C -1.692041 0.958255 -0.84813 0.279201 -0.00029304 0.000513571 C -0.84813 -0.278174 -1.692041 -0.957228 -2.072783 -2.389915 " transform="matrix(0,-0.99518,-0.99518,0,75.039574,17.167677)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-2" x="72.431207" y="11.539109"/>
+</g>
+<g clip-path="url(#analisi1_lez22b_d1-clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 70.868434 -0.00167697 C 70.868434 39.14012 39.137359 70.867271 -0.000513571 70.867271 C -39.138386 70.867271 -70.865536 39.14012 -70.865536 -0.00167697 C -70.865536 -39.139549 -39.138386 -70.8667 -0.000513571 -70.8667 C 39.137359 -70.8667 70.868434 -39.139549 70.868434 -0.00167697 Z M 70.868434 -0.00167697 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(87.998962%,87.998962%,87.998962%);fill-opacity:1;" d="M 75.039062 101.601562 L 145.566406 101.601562 C 145.566406 85.019531 139.71875 68.964844 129.066406 56.265625 Z M 75.039062 101.601562 "/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000513571 -0.00167697 L 70.868434 -0.00167697 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000513571 -0.00167697 L 70.868434 59.468577 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 70.868434 -0.00167697 L 70.868434 59.468577 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 54.28459 45.553848 L 54.28459 -0.00167697 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000513571 -0.00167697 L 54.28459 45.553848 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-1" x="95.97318" y="90.477764"/>
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-2" x="99.884481" y="90.477764"/>
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-3" x="102.638751" y="90.477764"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-4" x="108.216693" y="90.477764"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-1" x="112.073199" y="90.477764"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-5" x="117.739752" y="90.477764"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-6" x="152.041609" y="74.488211"/>
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-7" x="155.897388" y="74.488211"/>
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-3" x="160.854677" y="74.488211"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-4" x="166.432619" y="74.488211"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-1" x="170.29022" y="74.488211"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-5" x="175.956774" y="74.488211"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph1-8" x="95.592026" y="72.46302"/>
+</g>
+<path style="fill:none;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 14.173276 -0.00167697 C 14.173276 3.330793 12.99965 6.557282 10.856507 9.108643 " transform="matrix(0.99518,0,0,-0.99518,75.039574,101.599894)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-1" x="92.883147" y="96.20801"/>
+</g>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 76.328125 101.601562 C 76.328125 100.886719 75.75 100.3125 75.039062 100.3125 C 74.328125 100.3125 73.75 100.886719 73.75 101.601562 C 73.75 102.3125 74.328125 102.890625 75.039062 102.890625 C 75.75 102.890625 76.328125 102.3125 76.328125 101.601562 Z M 76.328125 101.601562 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 130.351562 56.265625 C 130.351562 55.554688 129.777344 54.976562 129.0625 54.976562 C 128.351562 54.976562 127.777344 55.554688 127.777344 56.265625 C 127.777344 56.980469 128.351562 57.554688 129.0625 57.554688 C 129.777344 57.554688 130.351562 56.980469 130.351562 56.265625 Z M 130.351562 56.265625 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 146.855469 101.601562 C 146.855469 100.886719 146.277344 100.3125 145.566406 100.3125 C 144.851562 100.3125 144.277344 100.886719 144.277344 101.601562 C 144.277344 102.3125 144.851562 102.890625 145.566406 102.890625 C 146.277344 102.890625 146.855469 102.3125 146.855469 101.601562 Z M 146.855469 101.601562 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 130.351562 101.601562 C 130.351562 100.886719 129.777344 100.3125 129.0625 100.3125 C 128.351562 100.3125 127.777344 100.886719 127.777344 101.601562 C 127.777344 102.3125 128.351562 102.890625 129.0625 102.890625 C 129.777344 102.890625 130.351562 102.3125 130.351562 101.601562 Z M 130.351562 101.601562 "/>
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 146.855469 42.417969 C 146.855469 41.707031 146.277344 41.128906 145.566406 41.128906 C 144.851562 41.128906 144.277344 41.707031 144.277344 42.417969 C 144.277344 43.132812 144.851562 43.707031 145.566406 43.707031 C 146.277344 43.707031 146.855469 43.132812 146.855469 42.417969 Z M 146.855469 42.417969 "/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-3" x="117.117765" y="52.06283"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-4" x="149.768618" y="36.28724"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-5" x="124.540811" y="115.842907"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-6" x="149.768618" y="112.578717"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#analisi1_lez22b_d1-glyph0-7" x="62.997898" y="112.578717"/>
+</g>
+</g>
+</svg></figure>`,
+        subsections: [
+          {
+            subtitle: "Dimostrazione — passo 1: $x \\le \\tan(x)$",
+            content: `<p>Vogliamo dimostrare che $x \\le \\tan(x)$ per $x \\in [0, \\pi/2)$. Vediamola così: chi è $x/2$? È l'<strong>area del settore circolare</strong> delimitato dall'arco di circonferenza che sottende l'angolo $x$.</p>
+            <p>E chi è $\\tan(x)/2$? È l'<strong>area del triangolo rettangolo più grande</strong>, di base $1$ e altezza $\\tan(x)$.</p>
+            <p>Dato che il settore circolare è contenuto all'interno del triangolo, la sua area deve essere minore o uguale:</p>
+            <p>$$\\frac{x}{2} \\le \\frac{\\tan(x)}{2} \\quad \\Rightarrow \\quad x \\le \\tan(x), \\qquad x \\in [0, \\pi/2).$$</p>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 2: la catena completa",
+            content: `<p>Mettendo insieme le due disuguaglianze (ricordando che $\\sin(x) \\lt x$ su $(0,\\pi/2)$), per $x \\in (0, \\pi/2)$ abbiamo:</p>
+            <p>$$\\sin(x) \\lt x \\le \\tan(x)$$</p>
+            <p>Poiché $\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$ e per $x \\in (0, \\pi/2)$ si ha $\\sin(x) \\gt 0$, possiamo dividere tutta la catena per $\\sin(x)$:</p>
+            <p>$$1 \\lt \\frac{x}{\\sin(x)} \\le \\frac{1}{\\cos(x)}$$</p>
+            <p>Passando ai reciproci (tutti i termini sono positivi), invertiamo il verso delle disuguaglianze:</p>
+            <p>$$\\cos(x) \\le \\frac{\\sin(x)}{x} \\lt 1$$</p>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 3: estensione agli $x$ negativi",
+            content: `<p>Questa relazione è stata dimostrata per $x \\in (0, \\pi/2)$. Cosa succede se $x \\in (-\\pi/2, 0)$? Poniamo $x = -y$, con $y \\in (0, \\pi/2)$. Le funzioni in gioco sono <strong>pari</strong>:</p>
+            <ul>
+              <li>$\\frac{\\sin(x)}{x} = \\frac{\\sin(-y)}{-y} = \\frac{-\\sin(y)}{-y} = \\frac{\\sin(y)}{y}$</li>
+              <li>$\\cos(x) = \\cos(-y) = \\cos(y)$</li>
+            </ul>
+            <p>Dato che le funzioni sono le stesse, la disuguaglianza vale anche per $x \\in (-\\pi/2, 0)$. Quindi, per ogni $x \\in (-\\pi/2, \\pi/2) \\setminus \\{0\\}$:</p>
+            <p>$$\\cos(x) \\le \\frac{\\sin(x)}{x} \\lt 1$$</p>`
+          },
+          {
+            subtitle: "Dimostrazione — passo 4: conclusione con il Teorema del Confronto",
+            content: `<p>Calcoliamo i limiti degli estremi per $x \\to 0$:</p>
+            <p>$$\\lim_{x \\to 0} \\cos(x) = 1 \\quad \\text{e} \\quad \\lim_{x \\to 0} 1 = 1$$</p>
+            <p>Poiché la funzione $\\frac{\\sin(x)}{x}$ è compresa tra due funzioni che tendono allo stesso limite $1$, per il <strong>Teorema del Confronto (dei Carabinieri)</strong> anche lei deve tendere a $1$. $\\square$</p>`
+          },
+          {
+            subtitle: "Osservazione — lettura asintotica",
+            content: `<p>Questo risultato ci dice che, per $x$ vicino a $0$, la funzione $\\sin(x)$ si comporta in modo molto simile alla funzione $x$. In termini di "o piccolo":</p>
+            <p>$$\\frac{\\sin(x)}{x} = 1 + o(1) \\quad \\text{per } x \\to 0$$</p>
+            <p>che è equivalente a:</p>
+            <p>$$\\sin(x) = x(1 + o(1)) = x + o(x) \\quad \\text{per } x \\to 0$$</p>
+            <p>Questa è una proprietà fondamentale che useremo per semplificare i calcoli di limiti con forme indeterminate. Quando calcoliamo limiti per $x \\to 0$, potremo sostituire $\\sin(x)$ con $x$, <strong>a patto di gestire correttamente gli ordini di infinitesimo</strong>.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s22-coseno-tangente-potenza",
+        type: "section",
+        title: "Coseno, tangente e potenza: ordini di infinitesimo",
+        icon: "📊",
+        content: `<p>Dal limite notevole del seno possiamo derivarne molti altri.</p>`,
+        subsections: [
+          {
+            subtitle: "Limite notevole del coseno",
+            content: `<p>$$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\frac{1}{2}$$</p>
+            <p><em>Dimostrazione.</em> Per risolvere la forma indeterminata $\\frac{0}{0}$, moltiplichiamo e dividiamo per $1+\\cos(x)$:</p>
+            <p>$$\\lim_{x \\to 0} \\frac{(1 - \\cos x)(1 + \\cos x)}{x^2(1 + \\cos x)} = \\lim_{x \\to 0} \\frac{1 - \\cos^2 x}{x^2(1 + \\cos x)} = \\lim_{x \\to 0} \\frac{\\sin^2 x}{x^2(1 + \\cos x)} = \\lim_{x \\to 0} \\left( \\frac{\\sin x}{x} \\right)^2 \\cdot \\frac{1}{1 + \\cos x}$$</p>
+            <p>I due fattori: $\\left(\\frac{\\sin x}{x}\\right)^2 \\to 1^2 = 1$ e $\\frac{1}{1+\\cos x} \\to \\frac{1}{1+1} = \\frac12$. Il limite complessivo è $1 \\cdot \\frac12 = \\frac12$. $\\square$</p>`
+          },
+          {
+            subtitle: "Conseguenza: ordine di infinitesimo di $1-\\cos x$",
+            content: `<p>Dal limite segue un'informazione preziosa sul comportamento di $\\cos(x)$ per $x$ vicino a $0$:</p>
+            <p>$$\\frac{1 - \\cos x}{x^2} = \\frac{1}{2} + o(1) \\quad \\Rightarrow \\quad 1 - \\cos x = \\frac{1}{2}x^2(1+o(1)) = \\frac{1}{2}x^2 + o(x^2)$$</p>
+            <p>Da cui l'approssimazione del coseno per $x \\to 0$:</p>
+            <p>$$\\cos(x) = 1 - \\frac{1}{2}x^2 + o(x^2)$$</p>
+            <p>Questo è l'inizio dello sviluppo di Taylor per il coseno. Notiamo che <strong>$1-\\cos(x)$ è un infinitesimo di ordine 2</strong>.</p>`
+          },
+          {
+            subtitle: "Limite notevole della tangente",
+            content: `<p>$$\\lim_{x \\to 0} \\frac{\\tan(x)}{x} = \\lim_{x \\to 0} \\frac{\\sin(x)}{x \\cos(x)} = \\lim_{x \\to 0} \\frac{\\sin(x)}{x} \\cdot \\frac{1}{\\cos(x)} = 1 \\cdot \\frac{1}{1} = 1$$</p>
+            <p>Di conseguenza, per $x \\to 0$, abbiamo $\\tan(x) = x + o(x)$.</p>`
+          },
+          {
+            subtitle: "Limite notevole della potenza",
+            content: `<p>Per ogni $a \\in \\R$ vale $\\displaystyle \\lim_{x \\to 0} \\frac{(1+x)^a - 1}{x} = a$.</p>
+            <p><em>Dimostrazione.</em> Riscriviamo la potenza usando esponenziale e logaritmo: $(1+x)^a = e^{\\ln((1+x)^a)} = e^{a \\ln(1+x)}$. Il limite diventa $\\lim_{x \\to 0} \\frac{e^{a \\ln(1+x)} - 1}{x}$.</p>
+            <p>Supponiamo $a \\neq 0$: per $a = 0$ il numeratore è identicamente nullo e il limite vale $0 = a$, quindi la tesi è banale. Poniamo $y = a \\ln(1+x)$. Quando $x \\to 0$, $\\ln(1+x) \\to 0$, e quindi anche $y \\to 0$; inoltre, per $x \\neq 0$ in un intorno di $0$ si ha $\\ln(1+x) \\neq 0$ e dunque $y \\neq 0$, <strong>come richiesto dal teorema del limite della funzione composta</strong>.</p>
+            <p>Moltiplichiamo e dividiamo per $y$:</p>
+            <p>$$\\lim_{x \\to 0} \\frac{e^{a \\ln(1+x)} - 1}{a \\ln(1+x)} \\cdot \\frac{a \\ln(1+x)}{x}$$</p>
+            <p>Il primo fattore è esattamente il limite notevole dell'esponenziale e tende a $1$. Il secondo fattore è $\\lim_{x \\to 0} a \\cdot \\frac{\\ln(1+x)}{x} = a \\cdot 1 = a$. Quindi il limite complessivo è $1 \\cdot a = a$. $\\square$</p>
+            <p>Questo porta all'<strong>approssimazione binomiale</strong> per $x \\to 0$:</p>
+            <p>$$(1+x)^a - 1 = a x + o(x) \\quad \\Rightarrow \\quad (1+x)^a = 1 + ax + o(x)$$</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s22-es-arcsin",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — Limite notevole dell'arcoseno",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{\\arcsin(x)}{x}$.</p>`,
+        steps: [
+          `Effettuiamo un cambio di variabile. Poniamo $y = \\arcsin(x)$, da cui $x = \\sin(y)$.`,
+          `Quando $x \\to 0$, anche $y = \\arcsin(x) \\to \\arcsin(0) = 0$.`,
+          `Poiché la funzione arcoseno è iniettiva, se $x \\neq 0$ allora anche $y \\neq 0$. Questo soddisfa l'ipotesi (H3) del teorema del limite della funzione composta.`,
+          `Sostituendo nel limite otteniamo: $$\\lim_{x \\to 0} \\frac{\\arcsin(x)}{x} = \\lim_{y \\to 0} \\frac{y}{\\sin(y)} = \\lim_{y \\to 0} \\frac{1}{\\frac{\\sin(y)}{y}} = \\frac{1}{1} = 1$$`
+        ]
+      },
+
+      {
+        id: "s22-prop-arctan",
+        type: "note_box",
+        title: "Esercizio proposto — arcotangente",
+        icon: "📌",
+        content: `<p>Verificare che $\\displaystyle \\lim_{x \\to 0} \\frac{\\arctan(x)}{x} = 1$.</p>
+        <p><strong>Hint.</strong> Si procede in modo analogo all'esercizio precedente, ponendo $y = \\arctan(x)$.</p>`
+      },
+
+      {
+        id: "s22-es-sin-tan",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $\\lim_{x \\to 0} \\frac{\\sin(x) - \\tan(x)}{x^3}$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin(x) - \\tan(x)}{x^3}$. <strong>Attenzione:</strong> qui sostituire separatamente $\\sin x \\sim x$ e $\\tan x \\sim x$ porterebbe a $0/0$ privo di informazione — i due termini si cancellano al primo ordine. Occorre <strong>fattorizzare</strong> la differenza.</p>`,
+        steps: [
+          `La forma è $\\frac{0}{0}$. Riscriviamo la differenza al numeratore raccogliendo $\\sin(x)$: $$\\sin(x) - \\tan(x) = \\sin(x) - \\frac{\\sin(x)}{\\cos(x)} = \\sin(x) \\left(1 - \\frac{1}{\\cos(x)}\\right) = \\sin(x) \\frac{\\cos(x)-1}{\\cos(x)}$$`,
+          `Sostituiamo nel limite: $$\\lim_{x \\to 0} \\frac{\\sin(x)(\\cos(x)-1)}{x^3 \\cos(x)}$$`,
+          `Riorganizziamo i termini per far emergere i limiti notevoli (si usa $x^3 = x \\cdot x^2$): $$\\lim_{x \\to 0} \\left( \\frac{\\sin(x)}{x} \\right) \\cdot \\left( \\frac{\\cos(x)-1}{x^2} \\right) \\cdot \\left( \\frac{1}{\\cos(x)} \\right)$$`,
+          `Calcoliamo i limiti dei singoli fattori: $\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$; $\\lim_{x \\to 0} \\frac{\\cos(x)-1}{x^2} = -\\lim_{x \\to 0} \\frac{1-\\cos(x)}{x^2} = -\\frac{1}{2}$; $\\lim_{x \\to 0} \\frac{1}{\\cos(x)} = 1$.`,
+          `Il risultato finale è $1 \\cdot \\left(-\\frac{1}{2}\\right) \\cdot 1 = -\\frac{1}{2}$.`
+        ]
+      },
+
+      {
+        id: "s22-prop-cos-x2",
+        type: "note_box",
+        title: "Esercizio proposto — $\\lim_{x \\to 0} \\frac{1 - \\cos(x^2)}{x^3 \\sin(x)}$",
+        icon: "📌",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(x^2)}{x^3 \\sin(x)}$.</p>
+        <p><strong>Hint per lo svolgimento.</strong> Si può procedere utilizzando gli ordini di infinitesimo. Per $x \\to 0$:</p>
+        <ul>
+          <li>$1 - \\cos(x^2) \\sim \\frac{1}{2}(x^2)^2 = \\frac{1}{2}x^4$</li>
+          <li>$x^3 \\sin(x) \\sim x^3 \\cdot x = x^4$</li>
+        </ul>
+        <p>Il limite dovrebbe quindi essere $\\frac{1}{2}$. Per una soluzione formale, moltiplicare e dividere per i termini opportuni per ricondursi ai limiti notevoli.</p>`
+      },
+
+      {
+        id: "s22-es-cos-sin2",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{\\sin^2(x)}$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(x)}{\\sin^2(x)}$.</p>`,
+        steps: [
+          `La forma è $\\frac{0}{0}$. Moltiplichiamo e dividiamo per $x^2$: $$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} \\cdot \\frac{x^2}{\\sin^2(x)}$$`,
+          `Riscriviamo il secondo fattore come quadrato: $$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} \\cdot \\left(\\frac{x}{\\sin(x)}\\right)^2$$`,
+          `I due fattori tendono a limiti noti: $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\frac{1}{2}$ e $\\lim_{x \\to 0} \\left(\\frac{x}{\\sin(x)}\\right)^2 = 1^2 = 1$.`,
+          `Il risultato è $\\frac{1}{2} \\cdot 1 = \\frac{1}{2}$.`
+        ]
+      },
+
+      {
+        id: "s22-es-misto",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $\\lim_{x \\to 0} \\frac{\\sin(x) + x^2}{\\cos(x) - 1 + x}$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin(x) + x^2}{\\cos(x) - 1 + x}$.</p>`,
+        steps: [
+          `La forma è $\\frac{0}{0}$. Per studiare il comportamento di numeratore e denominatore, <strong>dividiamo entrambi per $x$</strong>: $$\\lim_{x \\to 0} \\frac{\\frac{\\sin(x)}{x} + x}{\\frac{\\cos(x) - 1}{x} + 1}$$`,
+          `Numeratore: $\\lim_{x \\to 0} \\left(\\frac{\\sin(x)}{x} + x\\right) = 1 + 0 = 1$.`,
+          `Denominatore: il termine $\\frac{\\cos(x)-1}{x}$ può essere riscritto come $$\\frac{\\cos(x)-1}{x} = \\frac{\\cos(x)-1}{x^2} \\cdot x,$$ il cui limite è $\\left(-\\frac{1}{2}\\right) \\cdot 0 = 0$.`,
+          `Quindi il limite del denominatore è $\\lim_{x \\to 0} \\left(\\frac{\\cos(x) - 1}{x} + 1\\right) = 0 + 1 = 1$.`,
+          `Il limite complessivo è $\\frac{1}{1} = 1$.`
+        ]
+      },
+
+      {
+        id: "s22-avanzato",
+        type: "note_box",
+        title: "Un limite più avanzato",
+        icon: "🔭",
+        content: `<p>Il limite $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin(x) - x}{x^3}$ è una forma indeterminata $\\frac{0}{0}$ più complessa. Il suo risultato è $-\\frac{1}{6}$.</p>
+        <p>Questo è un limite che tipicamente si risolve con gli <strong>sviluppi di Taylor</strong>, che non abbiamo ancora introdotto. Per ora, lo prendiamo come un risultato noto.</p>`
+      },
+
+      {
+        id: "s22-es-cos-exp",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{e^{x^2} - 1}$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(x)}{e^{x^2} - 1}$.</p>`,
+        steps: [
+          `La forma è $\\frac{0}{0}$. Moltiplichiamo e dividiamo per $x^2$: $$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} \\cdot \\frac{x^2}{e^{x^2} - 1}$$`,
+          `Il primo fattore è il limite notevole del coseno e tende a $\\frac{1}{2}$.`,
+          `Per il secondo fattore, poniamo $y = x^2$. Quando $x \\to 0$, $y \\to 0$ (e $y \\neq 0$ per $x \\neq 0$). Il limite diventa $\\lim_{y \\to 0} \\frac{y}{e^y - 1}$, che è il reciproco del limite notevole dell'esponenziale, quindi tende a $1$.`,
+          `Il risultato finale è $\\frac{1}{2} \\cdot 1 = \\frac{1}{2}$.`
+        ]
+      },
+
+      {
+        id: "s22-es-cos-xexp",
+        type: "esercizio_svolto",
+        title: "Esercizio svolto — $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x(e^x - 1)}$",
+        icon: "✎",
+        source: "docente",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x(e^x - 1)}$.</p>`,
+        steps: [
+          `La forma è $\\frac{0}{0}$. Riorganizziamo i termini per usare i limiti notevoli: $$\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} \\cdot \\frac{x^2}{x(e^x - 1)} = \\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} \\cdot \\frac{x}{e^x - 1}$$`,
+          `Il primo fattore tende a $\\frac{1}{2}$ (limite notevole del coseno).`,
+          `Il secondo fattore tende a $1$ (reciproco del limite notevole dell'esponenziale).`,
+          `Il risultato è $\\frac{1}{2}$.`
+        ]
+      },
+
+      {
+        id: "s22-prop-somma",
+        type: "note_box",
+        title: "Esercizio proposto — $\\lim_{x \\to 0} \\frac{1 - \\cos(x) + \\sin(x)}{e^x - 1}$",
+        icon: "📌",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(x) + \\sin(x)}{e^x - 1}$.</p>
+        <p><strong>Hint per lo svolgimento.</strong> Si può spezzare la frazione in due parti:</p>
+        <p>$$\\frac{1 - \\cos(x)}{e^x - 1} + \\frac{\\sin(x)}{e^x - 1}$$</p>
+        <p>e calcolare i limiti dei due addendi separatamente, usando le tecniche viste negli esercizi precedenti.</p>`
+      },
+
+      {
+        id: "s22-integrazione-esercizi",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "🧩",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s22-ex-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "📝",
+        content: `<p>Dare la definizione di punto di accumulazione sinistro e di punto di accumulazione destro per un insieme $A \\subseteq \\R$. Enunciare poi il risultato sui limiti laterali di una funzione monotona nel caso $f$ crescente e stabilire, motivando la risposta con un esempio, se la monotonia di $f$ garantisce l'esistenza del limite bilatero $\\lim_{x \\to x_0} f(x)$.</p>`,
+        solution: `<p>Sia $x_0 \\in \\R$ un punto di accumulazione per $A$. Si dice che $x_0$ è punto di accumulazione <em>sinistro</em> per $A$ se per ogni $b \\lt x_0$ l'insieme $(b,x_0) \\cap A$ contiene infiniti punti; si dice punto di accumulazione <em>destro</em> se per ogni $b \\gt x_0$ l'insieme $(x_0,b) \\cap A$ contiene infiniti punti.</p>
+        <p>Se $x_0$ è punto di accumulazione per $A$, esso è almeno uno dei due: se infatti esistessero $b_1 \\lt x_0$ e $b_2 \\gt x_0$ con $(b_1,x_0)\\cap A$ e $(x_0,b_2)\\cap A$ finiti, allora $(b_1,b_2)\\cap A \\setminus \\{x_0\\}$ sarebbe finito, contro l'ipotesi.</p>
+        <p>Se $f : A \\to \\R$ è crescente, i limiti laterali esistono sempre in $\\R^* = \\R\\cup\\{\\pm\\infty\\}$ e valgono</p>
+        <p>$$\\lim_{x \\to x_0^-} f(x) = \\sup\\{f(x) \\mid x \\in A,\\ x \\lt x_0\\}$$</p>
+        <p>(se $x_0$ è punto di accumulazione sinistro) e</p>
+        <p>$$\\lim_{x \\to x_0^+} f(x) = \\inf\\{f(x) \\mid x \\in A,\\ x \\gt x_0\\}$$</p>
+        <p>(se $x_0$ è punto di accumulazione destro).</p>
+        <p>La monotonia garantisce soltanto l'esistenza dei limiti <em>laterali</em>, non del limite bilatero. <strong>Controesempio:</strong> $f(x) = x$ per $x \\lt 0$ e $f(x) = x+1$ per $x \\ge 0$ è crescente su $\\R$ e, per $x_0 = 0$,</p>
+        <p>$$\\lim_{x\\to 0^-} f(x) = \\sup\\{x \\mid x \\lt 0\\} = 0, \\qquad \\lim_{x\\to 0^+} f(x) = \\inf\\{x+1 \\mid x \\gt 0\\} = 1.$$</p>
+        <p>I due limiti laterali esistono finiti ma sono diversi, dunque $\\lim_{x\\to 0} f(x)$ non esiste: $x_0 = 0$ è un punto di salto.</p>`
+      },
+
+      {
+        id: "s22-ex-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "📝",
+        content: `<p>Enunciare e dimostrare il limite notevole $\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$, specificando le disuguaglianze geometriche utilizzate e il teorema con cui si conclude.</p>`,
+        solution: `<p><strong>Enunciato:</strong> $\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$.</p>
+        <p>Sulla circonferenza goniometrica di raggio $1$, per $x \\in (0, \\pi/2)$ (misurato in radianti) si confrontano tre aree: il triangolo $OAP$ ha area $\\frac{\\sin(x)}{2}$, il settore circolare di ampiezza $x$ ha area $\\frac{x}{2}$, il triangolo rettangolo $OAQ$ di base $1$ e altezza $\\tan(x)$ ha area $\\frac{\\tan(x)}{2}$. Poiché il primo triangolo è contenuto nel settore e il settore è contenuto nel secondo triangolo, si ottiene $\\frac{\\sin(x)}{2} \\lt \\frac{x}{2} \\le \\frac{\\tan(x)}{2}$, cioè</p>
+        <p>$$\\sin(x) \\lt x \\le \\tan(x), \\qquad x \\in (0, \\pi/2).$$</p>
+        <p>Poiché $\\sin(x) \\gt 0$ su $(0,\\pi/2)$, dividendo per $\\sin(x)$ e usando $\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$:</p>
+        <p>$$1 \\lt \\frac{x}{\\sin(x)} \\le \\frac{1}{\\cos(x)}.$$</p>
+        <p>Tutti i termini sono positivi, quindi passando ai reciproci il verso si inverte:</p>
+        <p>$$\\cos(x) \\le \\frac{\\sin(x)}{x} \\lt 1.$$</p>
+        <p>Le funzioni $\\frac{\\sin(x)}{x}$ e $\\cos(x)$ sono pari (se $x = -y$ con $y \\in (0,\\pi/2)$ allora $\\frac{\\sin(-y)}{-y} = \\frac{\\sin(y)}{y}$ e $\\cos(-y) = \\cos(y)$), dunque la stessa catena vale per ogni $x \\in (-\\pi/2, \\pi/2) \\setminus \\{0\\}$, cioè in un intorno bucato di $0$.</p>
+        <p>Infine $\\lim_{x \\to 0} \\cos(x) = 1$ e $\\lim_{x \\to 0} 1 = 1$: per il teorema del confronto (dei due carabinieri) anche la funzione compresa tende a $1$, quindi $\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$. Equivalentemente $\\sin(x) = x + o(x)$ per $x \\to 0$.</p>`
+      },
+
+      {
+        id: "s22-ex-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "📝",
+        content: `<p>Enunciare il teorema sul limite della funzione composta elencando tutte le ipotesi. Mostrare poi con un controesempio esplicito che l'ipotesi $g(x) \\neq l$ in un intorno puntato di $x_0$ non può essere soppressa, e spiegare in quale caso essa diventa superflua.</p>`,
+        solution: `<p><strong>Enunciato.</strong> Siano $g : A \\to \\R$, $f : B \\to \\R$, $x_0$ punto di accumulazione per $A$. Se</p>
+        <ul>
+          <li>(H0) $g(x) \\in B$ per ogni $x$ in un intorno puntato di $x_0$ intersecato con $A$ (così che $f\\circ g$ sia definita definitivamente),</li>
+          <li>(H1) $\\lim_{x\\to x_0} g(x) = l \\in \\R^*$,</li>
+          <li>(H2) $l$ è punto di accumulazione per $B$ ed esiste $\\lim_{y \\to l} f(y) = k \\in \\R^*$,</li>
+          <li>(H3) esiste un intorno di $x_0$ in cui $g(x) \\neq l$ per ogni $x \\neq x_0$,</li>
+        </ul>
+        <p>allora $\\lim_{x\\to x_0} f(g(x)) = k$.</p>
+        <p><strong>Controesempio senza (H3).</strong> Sia $g(x) = 0$ per ogni $x \\in \\R$ e sia $f(y) = 1$ per $y \\neq 0$, $f(0) = 0$, con $B = \\R$. Allora (H0), (H1) e (H2) valgono con $l = 0$ e $k = \\lim_{y\\to 0} f(y) = 1$, mentre (H3) fallisce perché $g(x) = 0 = l$ per ogni $x$. Si ha $f(g(x)) = f(0) = 0$ per ogni $x$, dunque</p>
+        <p>$$\\lim_{x\\to 0} f(g(x)) = 0 \\neq 1 = k:$$</p>
+        <p>la tesi è falsa. Il punto è che la definizione di $\\lim_{y\\to l} f(y)$ non dice nulla sul valore $f(l)$, mentre senza (H3) l'argomento $y = g(x)$ può valere proprio $l$.</p>
+        <p>L'ipotesi (H3) è invece <strong>superflua se $f$ è continua in $l$</strong>, cioè se $l \\in B$ e $\\lim_{y\\to l} f(y) = f(l) = k$: in tal caso l'implicazione $y \\in U \\cap B \\Rightarrow f(y) \\in W$ vale anche per $y = l$ e la dimostrazione si conclude ugualmente.</p>`
+      },
+
+      {
+        id: "s22-ex-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "📝",
+        content: `<p>Dedurre dal limite notevole del seno che $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\frac{1}{2}$; scrivere poi lo sviluppo di $\\cos(x)$ con il simbolo di $o$ piccolo per $x \\to 0$ e dire di che ordine è l'infinitesimo $1 - \\cos(x)$.</p>`,
+        solution: `<p>Il limite è nella forma indeterminata $\\frac{0}{0}$. Moltiplichiamo e dividiamo per $1 + \\cos(x)$, che per $x$ vicino a $0$ è diverso da zero:</p>
+        <p>$$\\frac{1 - \\cos(x)}{x^2} = \\frac{(1-\\cos x)(1+\\cos x)}{x^2(1+\\cos x)} = \\frac{1 - \\cos^2 x}{x^2(1+\\cos x)} = \\frac{\\sin^2 x}{x^2(1+\\cos x)} = \\left(\\frac{\\sin x}{x}\\right)^2 \\cdot \\frac{1}{1+\\cos x}.$$</p>
+        <p>Passando al limite: $\\left(\\frac{\\sin x}{x}\\right)^2 \\to 1^2 = 1$ e $\\frac{1}{1+\\cos x} \\to \\frac{1}{1+1} = \\frac{1}{2}$, quindi</p>
+        <p>$$\\lim_{x \\to 0} \\frac{1-\\cos(x)}{x^2} = 1 \\cdot \\frac{1}{2} = \\frac{1}{2}.$$</p>
+        <p>Dal limite segue $\\frac{1-\\cos(x)}{x^2} = \\frac{1}{2} + o(1)$, cioè $1 - \\cos(x) = \\frac{1}{2}x^2 + o(x^2)$ e dunque</p>
+        <p>$$\\cos(x) = 1 - \\frac{x^2}{2} + o(x^2) \\qquad (x \\to 0).$$</p>
+        <p>Poiché $\\lim_{x\\to 0} \\frac{1-\\cos(x)}{x^2} = \\frac12 \\in \\R\\setminus\\{0\\}$, l'infinitesimo $1-\\cos(x)$ ha <strong>ordine $2$</strong> rispetto all'infinitesimo campione $x$ per $x \\to 0$.</p>`
+      },
+
+      {
+        id: "s22-ex-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✏️",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{\\tan(5x)}{\\ln(1+2x)}$, giustificando l'uso dei limiti notevoli.</p>`,
+        solution: `<p>Numeratore e denominatore tendono a $0$: forma indeterminata $0/0$. Per $x \\neq 0$ abbastanza piccolo si ha $\\ln(1+2x) \\neq 0$ e $\\tan(5x)$ definita, quindi possiamo scrivere</p>
+        <p>$$\\frac{\\tan(5x)}{\\ln(1+2x)} = \\frac{\\tan(5x)}{5x} \\cdot \\frac{5x}{2x} \\cdot \\frac{2x}{\\ln(1+2x)}.$$</p>
+        <p>Il primo fattore tende a $1$: è il limite notevole $\\frac{\\tan u}{u} \\to 1$ con $u = 5x$, che tende a $0$ ed è diverso da $0$ per $x \\neq 0$ (ipotesi (H3) del teorema della funzione composta). Il secondo fattore vale costantemente $\\frac{5}{2}$. Il terzo è il reciproco del limite notevole $\\frac{\\ln(1+u)}{u} \\to 1$ con $u = 2x \\to 0$, $u \\neq 0$ per $x \\neq 0$, e tende a $1$ (il limite del denominatore è $1 \\neq 0$).</p>
+        <p>Per il teorema sul prodotto dei limiti</p>
+        <p>$$\\lim_{x \\to 0} \\frac{\\tan(5x)}{\\ln(1+2x)} = 1 \\cdot \\frac{5}{2} \\cdot 1 = \\frac{5}{2}.$$</p>`
+      },
+
+      {
+        id: "s22-ex-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✏️",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{\\tan(3x)}{\\sin(5x)}$.</p>`,
+        solution: `<p>Forma indeterminata $\\frac{0}{0}$. Moltiplichiamo e dividiamo per gli argomenti, in modo da far comparire i limiti notevoli (per $x \\neq 0$ vicino a $0$ tutti i fattori sono non nulli):</p>
+        <p>$$\\frac{\\tan(3x)}{\\sin(5x)} = \\frac{\\tan(3x)}{3x} \\cdot \\frac{5x}{\\sin(5x)} \\cdot \\frac{3x}{5x} = \\frac{\\tan(3x)}{3x} \\cdot \\frac{5x}{\\sin(5x)} \\cdot \\frac{3}{5}.$$</p>
+        <p>Con il cambio di variabile $u = 3x \\to 0$ si ha $\\frac{\\tan(3x)}{3x} \\to \\lim_{u\\to 0}\\frac{\\tan u}{u} = 1$ (e $u \\neq 0$ per $x \\neq 0$, come richiesto dal teorema sul limite della funzione composta); analogamente con $v = 5x \\to 0$ si ha $\\frac{\\sin(5x)}{5x} \\to 1$, quindi $\\frac{5x}{\\sin(5x)} \\to 1$.</p>
+        <p>In conclusione</p>
+        <p>$$\\lim_{x \\to 0} \\frac{\\tan(3x)}{\\sin(5x)} = 1 \\cdot 1 \\cdot \\frac{3}{5} = \\frac{3}{5}.$$</p>`
+      },
+
+      {
+        id: "s22-ex-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✏️",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{\\sqrt[3]{1+x^2}-1}{1-\\cos(2x)}$.</p>`,
+        solution: `<p>Si tratta di una forma $0/0$. Normalizziamo numeratore e denominatore rispetto a $x^2$.</p>
+        <p>Per il numeratore usiamo il limite notevole $\\frac{(1+u)^{\\alpha}-1}{u} \\to \\alpha$ con $\\alpha = \\frac{1}{3}$ e $u = x^2$ (che tende a $0$ ed è $\\neq 0$ per $x \\neq 0$):</p>
+        <p>$$\\frac{(1+x^2)^{1/3}-1}{x^2} \\overset{x \\to 0}{\\longrightarrow} \\frac{1}{3}.$$</p>
+        <p>Per il denominatore usiamo $\\frac{1-\\cos u}{u^2} \\to \\frac12$ con $u = 2x$, osservando che $(2x)^2 = 4x^2$:</p>
+        <p>$$\\frac{1-\\cos(2x)}{x^2} = 4 \\cdot \\frac{1-\\cos(2x)}{(2x)^2} \\overset{x \\to 0}{\\longrightarrow} 4 \\cdot \\frac{1}{2} = 2 \\neq 0.$$</p>
+        <p>Quindi, per $x \\neq 0$ piccolo,</p>
+        <p>$$\\frac{\\sqrt[3]{1+x^2}-1}{1-\\cos(2x)} = \\frac{\\dfrac{(1+x^2)^{1/3}-1}{x^2}}{\\dfrac{1-\\cos(2x)}{x^2}}$$</p>
+        <p>e, poiché il limite del denominatore è $2 \\neq 0$, per il teorema sul quoziente dei limiti</p>
+        <p>$$\\lim_{x \\to 0} \\frac{\\sqrt[3]{1+x^2}-1}{1-\\cos(2x)} = \\frac{1/3}{2} = \\frac{1}{6}.$$</p>
+        <p>In linguaggio asintotico: $\\sqrt[3]{1+x^2}-1 \\sim \\frac{1}{3}x^2$ e $1-\\cos(2x) \\sim 2x^2$, da cui il rapporto tende a $\\frac{1}{6}$.</p>`
+      },
+
+      {
+        id: "s22-ex-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✏️",
+        content: `<p>Calcolare $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos(2x)}{x\\,\\sin(3x)}$.</p>`,
+        solution: `<p>Forma indeterminata $\\frac{0}{0}$. Riconduciamoci ai limiti notevoli scrivendo numeratore e denominatore con gli argomenti giusti:</p>
+        <p>$$\\frac{1-\\cos(2x)}{x\\sin(3x)} = \\frac{1-\\cos(2x)}{(2x)^2} \\cdot \\frac{4x^2}{x\\sin(3x)} = \\frac{1-\\cos(2x)}{(2x)^2} \\cdot \\frac{3x}{\\sin(3x)} \\cdot \\frac{4}{3}.$$</p>
+        <p>Con $u = 2x \\to 0$ ($u \\neq 0$ per $x \\neq 0$): $\\frac{1-\\cos(2x)}{(2x)^2} \\to \\lim_{u \\to 0}\\frac{1-\\cos u}{u^2} = \\frac{1}{2}$. Con $v = 3x \\to 0$: $\\frac{\\sin(3x)}{3x} \\to 1$, dunque $\\frac{3x}{\\sin(3x)} \\to 1$.</p>
+        <p>Pertanto</p>
+        <p>$$\\lim_{x \\to 0} \\frac{1-\\cos(2x)}{x\\sin(3x)} = \\frac{1}{2} \\cdot 1 \\cdot \\frac{4}{3} = \\frac{2}{3}.$$</p>
+        <p><strong>Verifica con gli ordini di infinitesimo:</strong> $1-\\cos(2x) \\sim \\frac{1}{2}(2x)^2 = 2x^2$ e $x\\sin(3x) \\sim 3x^2$, da cui il rapporto tende a $\\frac{2}{3}$.</p>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "definizione",
+        front: "Che cos'è un punto di accumulazione sinistro (e destro) per un insieme $A \\subseteq \\R$?",
+        back: "Sia $x_0$ punto di accumulazione per $A$. $x_0$ è <strong>sinistro</strong> se per ogni $b \\lt x_0$ l'insieme $(b,x_0) \\cap A$ contiene infiniti punti; è <strong>destro</strong> se per ogni $b \\gt x_0$ l'insieme $(x_0,b) \\cap A$ contiene infiniti punti. Un punto di accumulazione è almeno uno dei due. Esempio: in $(a,b)$, il punto $a$ è di accumulazione destro, $b$ è sinistro, i punti interni sono entrambi."
+      },
+      {
+        type: "formula",
+        front: "Enuncia il risultato sui limiti laterali di una funzione monotona.",
+        back: "Se $f$ è <strong>crescente</strong>: $\\lim_{x \\to x_0^-} f(x) = \\sup\\{f(x) \\mid x \\in A, x \\lt x_0\\}$ e $\\lim_{x \\to x_0^+} f(x) = \\inf\\{f(x) \\mid x \\in A, x \\gt x_0\\}$. Se $f$ è <strong>decrescente</strong> si scambiano $\\sup$ e $\\inf$. I limiti esistono <strong>sempre</strong>, eventualmente in senso esteso (cioè in $\\R^* = \\R \\cup \\{\\pm\\infty\\}$)."
+      },
+      {
+        type: "tranello",
+        front: "Se $f$ è monotona, il limite $\\lim_{x \\to x_0} f(x)$ esiste sempre?",
+        back: "<strong>NO.</strong> La monotonia garantisce solo l'esistenza dei limiti <em>laterali</em>. Controesempio: $f(x) = x$ per $x \\lt 0$, $f(x) = x+1$ per $x \\ge 0$, crescente su $\\R$. In $x_0 = 0$: $\\lim_{x\\to 0^-} f = 0$ e $\\lim_{x\\to 0^+} f = 1$. Esistono finiti ma sono diversi, dunque il limite bilatero non esiste: $0$ è un punto di salto."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che se $f$ è crescente e $x_0$ è punto di accumulazione sinistro, allora $\\lim_{x \\to x_0^-} f(x) = L := \\sup\\{f(x) : x \\lt x_0\\}$.",
+        back: "<strong>Caso $L$ finito:</strong> dato $\\varepsilon \\gt 0$, $L - \\varepsilon$ non è maggiorante, quindi esiste $a \\lt x_0$ con $L - \\varepsilon \\lt f(a) \\le L$. Per crescenza, per ogni $x \\in (a, x_0) \\cap A$ vale $f(x) \\ge f(a) \\gt L - \\varepsilon$ e $f(x) \\le L$: cioè $|f(x) - L| \\lt \\varepsilon$ su un intorno sinistro.<br><strong>Caso $L = +\\infty$:</strong> dato $M$, esiste $a \\lt x_0$ con $f(a) \\gt M$; per crescenza $f(x) \\gt M$ su tutto $(a,x_0)$. Quindi il limite è $+\\infty$."
+      },
+      {
+        type: "domanda",
+        front: "Enuncia il teorema sul limite della funzione composta con TUTTE le ipotesi.",
+        back: "Siano $g: A \\to \\R$, $f: B \\to \\R$, $x_0$ punto di accumulazione per $A$. Ipotesi:<br>(H0) $g(A) \\subseteq B$ (almeno localmente vicino a $x_0$), così $f \\circ g$ è definita;<br>(H1) $\\lim_{x \\to x_0} g(x) = l \\in \\R^*$;<br>(H2) $l$ è punto di accumulazione per $B$ ed esiste $\\lim_{y \\to l} f(y) = k \\in \\R^*$;<br>(H3) $g(x) \\neq l$ in un intorno puntato di $x_0$.<br>Allora $\\lim_{x \\to x_0} f(g(x)) = k$."
+      },
+      {
+        type: "tranello",
+        front: "Perché l'ipotesi (H3) ($g(x) \\neq l$) non si può eliminare? E quando diventa superflua?",
+        back: "Perché la definizione di $\\lim_{y \\to l} f(y)$ <strong>non dice nulla su $f(l)$</strong>. Controesempio: $g \\equiv 0$ e $f(y) = 1$ per $y \\neq 0$, $f(0) = 0$. Qui $l = 0$, $k = \\lim_{y\\to 0} f(y) = 1$, ma $f(g(x)) = f(0) = 0$ per ogni $x$, quindi il limite della composta è $0 \\neq k$.<br>(H3) diventa <strong>superflua se $f$ è continua in $l$</strong>, cioè $l \\in B$ e $\\lim_{y\\to l} f(y) = f(l) = k$: allora $f(y) \\in W$ vale anche per $y = l$."
+      },
+      {
+        type: "tranello",
+        front: "Perché serve l'ipotesi (H0) nel teorema della funzione composta? Non segue dalle altre?",
+        back: "<strong>Non segue.</strong> Sapere che $g(x) \\to l$ e che $f$ ha limite in $l$ non garantisce che i valori di $g$ cadano nel dominio $B$ di $f$. Esempio: $g(x) = -x^2$, $f = \\sqrt{\\cdot}$ su $B = [0,+\\infty)$. Si ha $g(x) \\to 0$ e $l = 0$ è di accumulazione per $B$, ma $f(g(x))$ <strong>non è definita</strong> per alcun $x \\neq 0$: la scrittura sarebbe priva di significato."
+      },
+      {
+        type: "tranello",
+        front: "Perché non basta il Teorema Ponte per passare da $\\lim_n (1+1/n)^n = e$ a $\\lim_{x \\to +\\infty}(1+1/x)^x = e$?",
+        back: "Perché il criterio successionale richiede il comportamento lungo <strong>ogni</strong> successione $x_n \\to +\\infty$, mentre $(1+1/n)^n$ copre soltanto i <strong>valori interi</strong>: una sola successione non basta a concludere.<br>L'estensione si ottiene con un confronto: posto $n = \\lfloor x \\rfloor$, si ha $\\left(1+\\frac{1}{n+1}\\right)^n \\le \\left(1+\\frac{1}{x}\\right)^x \\le \\left(1+\\frac{1}{n}\\right)^{n+1}$, ed entrambi gli estremi tendono a $e$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra il limite notevole $\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$.",
+        back: "Sulla circonferenza goniometrica, per $x \\in (0,\\pi/2)$ si confrontano tre aree: triangolo $OAP$ ($\\frac12 \\sin x$) $\\subseteq$ settore ($\\frac12 x$) $\\subseteq$ triangolo $OAQ$ ($\\frac12 \\tan x$). Quindi $\\sin x \\lt x \\le \\tan x$. Dividendo per $\\sin x \\gt 0$: $1 \\lt \\frac{x}{\\sin x} \\le \\frac{1}{\\cos x}$; passando ai reciproci: $\\cos x \\le \\frac{\\sin x}{x} \\lt 1$. Le funzioni sono pari, quindi la catena vale in tutto $(-\\pi/2,\\pi/2)\\setminus\\{0\\}$. Poiché $\\cos x \\to 1$, per il <strong>Teorema del Confronto</strong> si conclude $\\frac{\\sin x}{x} \\to 1$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra che $\\lim_{x \\to 0} \\frac{1-\\cos x}{x^2} = \\frac12$ e deduci l'ordine di infinitesimo di $1 - \\cos x$.",
+        back: "Moltiplicando e dividendo per $1+\\cos x$ (lecito, tende a $2 \\neq 0$): $$\\frac{1-\\cos x}{x^2} = \\frac{1-\\cos^2 x}{x^2(1+\\cos x)} = \\left(\\frac{\\sin x}{x}\\right)^2 \\cdot \\frac{1}{1+\\cos x} \\to 1 \\cdot \\frac12 = \\frac12.$$ Segue $1 - \\cos x = \\frac12 x^2 + o(x^2)$, cioè $\\cos x = 1 - \\frac{x^2}{2} + o(x^2)$. Poiché il limite è $\\frac12 \\in \\R\\setminus\\{0\\}$, l'infinitesimo $1-\\cos x$ ha <strong>ordine 2</strong> rispetto a $x$."
+      },
+      {
+        type: "formula",
+        front: "Elenca i sette limiti notevoli visti a lezione.",
+        back: "$\\lim_{x\\to 0}(1+x)^{1/x} = e$; $\\lim_{x\\to 0}\\frac{\\ln(1+x)}{x} = 1$; $\\lim_{x\\to 0}\\frac{e^x-1}{x} = 1$; $\\lim_{x\\to 0}\\frac{(1+x)^\\alpha-1}{x} = \\alpha$; $\\lim_{x\\to 0}\\frac{\\sin x}{x} = 1$; $\\lim_{x\\to 0}\\frac{1-\\cos x}{x^2} = \\frac12$; $\\lim_{x\\to 0}\\frac{\\tan x}{x} = 1$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Dimostra $\\lim_{x \\to 0} \\frac{(1+x)^\\alpha - 1}{x} = \\alpha$, distinguendo i casi.",
+        back: "<strong>Caso $\\alpha = 0$:</strong> il numeratore è identicamente nullo, il rapporto vale $0$ per $x \\neq 0$, quindi il limite è $0 = \\alpha$. (Qui non si può parlare di equivalenza asintotica!)<br><strong>Caso $\\alpha \\neq 0$:</strong> si scrive $(1+x)^\\alpha = e^{u(x)}$ con $u(x) = \\alpha\\ln(1+x) \\to 0$, $u(x) \\neq 0$ per $x \\neq 0$ vicino a $0$. Allora $$\\frac{(1+x)^\\alpha-1}{x} = \\frac{e^{u}-1}{u} \\cdot \\alpha \\cdot \\frac{\\ln(1+x)}{x} \\to 1\\cdot\\alpha\\cdot 1 = \\alpha.$$"
+      },
+      {
+        type: "definizione",
+        front: "Definisci equivalenza asintotica $\\sim$ e \"o piccolo\". Quale ipotesi è indispensabile?",
+        back: "Siano $u,v$ definite in un intorno puntato di $x_0$ con <strong>$v(x) \\neq 0$</strong> in tale intorno (ipotesi indispensabile: senza di essa il rapporto $u/v$ non ha senso). Allora: $u \\sim v$ se $\\lim_{x\\to x_0}\\frac{u(x)}{v(x)} = 1$; $u = o(v)$ se $\\lim_{x\\to x_0}\\frac{u(x)}{v(x)} = 0$. Esempio di problema: per $\\alpha = 0$ in $(1+x)^\\alpha - 1$ entrambi i membri sono identicamente nulli e $\\sim$ non è definito."
+      },
+      {
+        type: "domanda",
+        front: "Qual è la strategia generale per calcolare una forma $0/0$ con i limiti notevoli?",
+        back: "<strong>Normalizzazione per fattori:</strong> individuare in ogni fattore il \"blocco\" infinitesimo, e moltiplicare/dividere per quel blocco per ricostruire i rapporti notevoli; le costanti residue si raccolgono. Esempio: $\\frac{e^{2x}-1}{\\sin 3x} = \\frac{e^{2x}-1}{2x}\\cdot\\frac{2x}{3x}\\cdot\\frac{3x}{\\sin 3x} \\to \\frac23$.<br><strong>Attenzione:</strong> il risultato è una costante solo se numeratore e denominatore hanno lo <em>stesso ordine</em>; e con differenze come $\\sin x - \\tan x$ bisogna prima <strong>fattorizzare</strong>, perché i termini si cancellano al primo ordine."
+      },
+      {
+        type: "tranello",
+        front: "Calcola $\\lim_{x\\to 0}\\frac{\\sin x - \\tan x}{x^3}$. Perché non si può sostituire direttamente $\\sin x \\sim x$ e $\\tan x \\sim x$?",
+        back: "Sostituendo si otterrebbe $0/x^3$, perdendo l'informazione: i due termini <strong>si cancellano al primo ordine</strong>. Bisogna fattorizzare: $$\\sin x - \\tan x = \\sin x\\left(1 - \\frac{1}{\\cos x}\\right) = \\sin x \\cdot \\frac{\\cos x - 1}{\\cos x}.$$ Allora $$\\frac{\\sin x}{x}\\cdot\\frac{\\cos x - 1}{x^2}\\cdot\\frac{1}{\\cos x} \\to 1\\cdot\\left(-\\frac12\\right)\\cdot 1 = -\\frac12.$$"
+      },
+      {
+        type: "domanda",
+        front: "Come si dimostra $\\lim_{x\\to 0}\\frac{\\arcsin x}{x} = 1$ e quale ipotesi va verificata?",
+        back: "Cambio di variabile $y = \\arcsin(x)$, da cui $x = \\sin(y)$. Per $x \\to 0$ si ha $y \\to 0$; inoltre, <strong>poiché $\\arcsin$ è iniettiva</strong>, $x \\neq 0 \\Rightarrow y \\neq 0$: è verificata l'ipotesi (H3) del teorema della funzione composta. Quindi $$\\lim_{x\\to 0}\\frac{\\arcsin x}{x} = \\lim_{y\\to 0}\\frac{y}{\\sin y} = 1.$$ Analogamente per $\\arctan$ ponendo $y = \\arctan(x)$."
+      }
+    ]
+};
+
