@@ -1,0 +1,912 @@
+const LESSON = {
+    id: "L12", date: "Lezione 12 — 30 Ott 2026",
+    title: "Energia del Campo Elettrostatico e Correnti Stazionarie",
+    abstract: "Dall'energia immagazzinata in un condensatore alla densità di energia del campo elettrostatico; poi il passaggio alle cariche in movimento: intensità di corrente, velocità di deriva, vettore densità di corrente, equazione di continuità e regime stazionario.",
+
+    sections: [
+      {
+        id: "s12-energia-condensatore",
+        type: "section",
+        title: "Energia immagazzinata in un condensatore",
+        icon: "🔋",
+        content: `<p>Riprendiamo il concetto di condensatore. Abbiamo visto diverse geometrie: sferico, a facce piane e parallele, e cilindrico. Ora vogliamo calcolare l'energia immagazzinata in un condensatore.</p>
+        <p>Immaginiamo di caricarlo attraverso un processo ideale <strong>quasistatico e privo di dissipazioni</strong>: trasferiamo la carica da un'armatura all'altra per piccole quantità $dq'$, regolando progressivamente la tensione del generatore, così che in ogni istante il sistema si possa considerare in equilibrio elettrostatico. Si tratta di due ipotesi distinte: la lentezza garantisce l'equilibrio istante per istante, l'assenza di dissipazione è un'ulteriore idealizzazione che assumiamo (non stiamo descrivendo un circuito reale con resistenze).</p>
+        <p>Durante il processo la capacità $C$ resta costante (dipende solo dalla geometria e dal dielettrico interposto), mentre la carica $q'$ presente sulle armature e la differenza di potenziale $V'$ tra di esse crescono progressivamente.</p>`,
+        subsections: [
+          {
+            subtitle: "Significato di $V'$ e segno del lavoro",
+            content: `<p>Nella scrittura $dW_{est} = V' \\, dq'$ la grandezza $V'$ è la <strong>differenza di potenziale istantanea tra le due armature</strong>, non il potenziale assoluto di un singolo conduttore. La carica $dq'$ non viene portata dall'infinito, ma viene <strong>trasferita dall'armatura negativa a quella positiva</strong>, cioè spostata contro il campo elettrico già presente.</p>
+            <p>Di conseguenza occorre distinguere due lavori di segno opposto:</p>
+            <p>$$dW_{est} = +V' \\, dq' = dU, \\qquad dW_{campo} = -V' \\, dq'$$</p>
+            <p>Il lavoro $dW_{est}$ è compiuto dall'agente esterno (il generatore) contro il campo e, in assenza di dissipazioni, si ritrova integralmente come incremento $dU$ dell'energia elettrostatica immagazzinata. Il lavoro del campo elettrico ha segno opposto. Nel seguito indichiamo con $W$ il lavoro esterno totale, che coincide con l'energia $U$ accumulata.</p>`
+          },
+          {
+            subtitle: "Integrazione del lavoro",
+            content: `<p>Il lavoro infinitesimo necessario per trasferire la carica infinitesima $dq'$ quando tra le armature c'è la differenza di potenziale $V'$ è dunque:</p>
+            <p>$$dW = V' \\, dq'$$</p>
+            <p>Per calcolare il lavoro totale $W$ necessario per caricare il condensatore da una carica nulla fino a una carica finale $Q$, dobbiamo integrare questa espressione:</p>
+            <p>$$W = \\int_0^Q V' \\, dq'$$</p>
+            <p>Sappiamo che la relazione tra carica e potenziale in un condensatore è $q' = C V'$, con $C$ costante durante tutto il processo, da cui $V' = \\frac{q'}{C}$. Sostituendo nell'integrale otteniamo:</p>
+            <p>$$W = \\int_0^Q \\frac{q'}{C} \\, dq' = \\frac{1}{C} \\int_0^Q q' \\, dq' = \\frac{1}{C} \\left[ \\frac{1}{2} (q')^2 \\right]_0^Q = \\frac{1}{2} \\frac{Q^2}{C}$$</p>`
+          },
+          {
+            subtitle: "Le tre forme equivalenti",
+            content: `<p>Questa espressione rappresenta l'energia elettrostatica immagazzinata nel condensatore. Utilizzando la relazione fondamentale $Q = CV$, possiamo esprimere l'energia in altre due forme equivalenti.</p>
+            <p>Sostituendo $Q = CV$:</p>
+            <p>$$W = \\frac{1}{2} \\frac{(CV)^2}{C} = \\frac{1}{2} C V^2$$</p>
+            <p>Sostituendo $C = Q/V$:</p>
+            <p>$$W = \\frac{1}{2} \\frac{Q^2}{Q/V} = \\frac{1}{2} Q V$$</p>`
+          }
+        ],
+        formulas: [
+          { label: "Lavoro infinitesimo di carica", latex: "dW = V' \\, dq'" },
+          { label: "Energia (forma con la carica)", latex: "W = \\frac{1}{2} \\frac{Q^2}{C}" },
+          { label: "Energia (forma con la tensione)", latex: "W = \\frac{1}{2} C V^2" },
+          { label: "Energia (forma mista)", latex: "W = \\frac{1}{2} Q V" }
+        ],
+        extra_content: `<p>Le tre formule per l'energia immagazzinata in un condensatore sono tutte equivalenti e utili in contesti diversi:</p>
+        <p>$$W = \\frac{1}{2} \\frac{Q^2}{C} = \\frac{1}{2} C V^2 = \\frac{1}{2} Q V$$</p>
+        <p>dove $Q$ è la carica su un'armatura (in valore assoluto), $V$ la differenza di potenziale tra le armature e $C$ la capacità. L'energia si misura in joule (J).</p>
+        <p><strong>Da notare:</strong> il fattore $\\tfrac{1}{2}$ nasce dal fatto che $V'$ cresce linearmente con $q'$ durante la carica: il lavoro non è $QV$ ma il valore medio $\\tfrac{1}{2}V$ moltiplicato per $Q$.</p>`
+      },
+
+      {
+        id: "s12-densita-energia",
+        type: "section",
+        title: "Densità di energia del campo elettrostatico",
+        icon: "🌐",
+        content: `<p>L'energia calcolata non è "dentro" le armature del condensatore, ma è immagazzinata nel <strong>campo elettrico</strong> presente nello spazio tra di esse. Per vedere questo, consideriamo il caso di un condensatore a facce piane e parallele.</p>
+        <p>Per un condensatore a facce piane, la differenza di potenziale $V$ tra le armature distanti $d$ è legata al campo elettrico $E$ (che assumiamo uniforme) dalla relazione $V = E d$. La capacità di tale condensatore, con armature di area $\\Sigma$ e vuoto tra di esse, è $C = \\frac{\\epsilon_0 \\Sigma}{d}$.</p>
+        <p>Sostituiamo queste due espressioni nella formula dell'energia $W = \\frac{1}{2} C V^2$:</p>
+        <p>$$W = \\frac{1}{2} \\left( \\frac{\\epsilon_0 \\Sigma}{d} \\right) (E d)^2 = \\frac{1}{2} \\frac{\\epsilon_0 \\Sigma}{d} E^2 d^2 = \\frac{1}{2} \\epsilon_0 E^2 (\\Sigma d)$$</p>
+        <p>Il termine $\\Sigma d$ rappresenta il volume $\\tau$ dello spazio tra le armature del condensatore. Quindi:</p>
+        <p>$$W = \\frac{1}{2} \\epsilon_0 E^2 \\tau$$</p>
+        <p>Questo risultato ci suggerisce di interpretare l'energia come <strong>distribuita nello spazio</strong>, con una densità che dipende solo dal campo elettrico presente punto per punto.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Densità di energia elettrostatica",
+            content: `<p>Si definisce <strong>densità di energia elettrostatica</strong> nel vuoto la grandezza locale</p>
+            <p>$$u_E(\\vec{r}) = \\frac{dW}{d\\tau} = \\frac{1}{2} \\epsilon_0 \\left| \\vec{E}(\\vec{r}) \\right|^2$$</p>
+            <p>dove $dW$ è l'energia elettrostatica contenuta nel volume infinitesimo $d\\tau$ centrato nel punto $\\vec{r}$; $\\vec{E}(\\vec{r})$ è il campo elettrico in quel punto, misurato in V/m; $\\epsilon_0 \\simeq 8{,}85 \\times 10^{-12}$ F/m è la costante dielettrica del vuoto.</p>
+            <p>L'unità di misura di $u_E$ nel Sistema Internazionale è il joule su metro cubo (J/m$^3$). Si noti che $u_E$ dipende soltanto dal <strong>modulo</strong> del campo, non dalla sua direzione.</p>
+            <p>L'energia totale immagazzinata in una regione di volume $\\tau$ si ottiene integrando la densità locale:</p>
+            <p>$$W = \\int_{\\tau} u_E \\, d\\tau = \\frac{1}{2} \\epsilon_0 \\int_{\\tau} \\left| \\vec{E} \\right|^2 d\\tau$$</p>`
+          },
+          {
+            subtitle: "Densità locale e densità media",
+            content: `<p>È essenziale distinguere due grandezze diverse:</p>
+            <ul>
+              <li>la <strong>densità locale</strong> $u_E(\\vec{r}) = dW/d\\tau = \\frac{1}{2}\\epsilon_0 |\\vec{E}(\\vec{r})|^2$, che è la definizione di validità generale;</li>
+              <li>il <strong>rapporto medio</strong> $\\dfrac{W}{\\tau}$, che è la densità di energia <em>media</em> sul volume $\\tau$.</li>
+            </ul>
+            <p>Le due grandezze coincidono in ogni punto quando la densità di energia è <strong>costante</strong> nella regione considerata, cioè (nel vuoto) quando $|\\vec{E}|$ è costante: in quel caso $W/\\tau = \\frac{1}{2}\\epsilon_0 |\\vec{E}|^2$. Un campo vettoriale <em>uniforme</em> è dunque una condizione <strong>sufficiente ma non necessaria</strong>: ciò che conta è la costanza del modulo, non quella della direzione (il condensatore piano ideale è il caso tipico).</p>
+            <p>Se invece $|\\vec{E}|$ varia da punto a punto, $W/\\tau$ non ha significato locale e per calcolare l'energia si deve usare l'integrale $W = \\int u_E \\, d\\tau$. L'esempio del condensatore sferico che segue mostra proprio questa procedura.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Densità di energia elettrostatica", latex: "u_E = \\frac{1}{2} \\epsilon_0 |\\vec{E}|^2" },
+          { label: "Energia totale per integrazione", latex: "W = \\frac{1}{2} \\epsilon_0 \\int_{\\tau} |\\vec{E}|^2 \\, d\\tau" }
+        ]
+      },
+
+      {
+        id: "s12-esempio-sferico",
+        type: "section",
+        title: "Esempio — Energia di un condensatore sferico",
+        icon: "⚪",
+        content: `<p>Calcoliamo l'energia immagazzinata in un condensatore sferico con armature di raggio $R_1$ e $R_2$ ($R_2 \\gt R_1$), caricato con cariche $+Q$ e $-Q$.</p>
+        <p>A differenza del condensatore piano, il campo elettrico <strong>non è uniforme</strong> nello spazio tra le armature. Utilizzando il teorema di Gauss con una superficie gaussiana sferica di raggio $r$ (con $R_1 \\lt r \\lt R_2$):</p>
+        <p>$$\\Phi(\\vec{E}) = E(r) \\cdot 4\\pi r^2 = \\frac{Q_{int}}{\\epsilon_0} = \\frac{Q}{\\epsilon_0}$$</p>
+        <p>Da cui si ricava:</p>
+        <p>$$E(r) = \\frac{1}{4\\pi\\epsilon_0} \\frac{Q}{r^2}$$</p>
+        <p>Poiché il modulo del campo dipende da $r$, la densità di energia $u_E(r) = \\frac{1}{2}\\epsilon_0 E(r)^2$ non è costante: il rapporto $W/\\tau$ darebbe solo un valore medio, mentre quello che ci serve è la densità locale. Per trovare l'energia totale, dobbiamo dunque <strong>integrare</strong> la densità di energia su tutto il volume compreso tra le due armature.</p>`,
+        subsections: [
+          {
+            subtitle: "Integrazione sui gusci sferici",
+            content: `<p>Consideriamo un guscio sferico infinitesimo di raggio $r$ e spessore $dr$, scelto in modo che al suo interno il campo sia praticamente costante. Il suo volume è $d\\tau = 4\\pi r^2 dr$. L'energia $dW$ contenuta in questo volume infinitesimo è:</p>
+            <p>$$dW = u_E(r) \\, d\\tau = \\frac{1}{2} \\epsilon_0 E(r)^2 (4\\pi r^2 dr)$$</p>
+            <p>Sostituiamo l'espressione del campo $E(r)$:</p>
+            <p>$$dW = \\frac{1}{2} \\epsilon_0 \\left( \\frac{Q}{4\\pi\\epsilon_0 r^2} \\right)^2 (4\\pi r^2 dr) = \\frac{1}{2} \\epsilon_0 \\frac{Q^2}{16\\pi^2\\epsilon_0^2 r^4} (4\\pi r^2 dr) = \\frac{Q^2}{8\\pi\\epsilon_0} \\frac{1}{r^2} dr$$</p>
+            <p>L'energia totale $W$ si ottiene integrando questa espressione da $R_1$ a $R_2$:</p>
+            <p>$$W = \\frac{Q^2}{8\\pi\\epsilon_0} \\int_{R_1}^{R_2} \\frac{1}{r^2} dr = \\frac{Q^2}{8\\pi\\epsilon_0} \\left[ -\\frac{1}{r} \\right]_{R_1}^{R_2} = \\frac{Q^2}{8\\pi\\epsilon_0} \\left( \\frac{1}{R_1} - \\frac{1}{R_2} \\right)$$</p>`
+          },
+          {
+            subtitle: "Verifica del risultato",
+            content: `<p>Possiamo verificare la coerenza di questo risultato con la formula $W = \\frac{1}{2}\\frac{Q^2}{C}$. La capacità di un condensatore sferico è $C = 4\\pi\\epsilon_0 \\frac{R_1 R_2}{R_2 - R_1}$.</p>
+            <p>$$W = \\frac{1}{2} \\frac{Q^2}{4\\pi\\epsilon_0 \\frac{R_1 R_2}{R_2 - R_1}} = \\frac{Q^2 (R_2 - R_1)}{8\\pi\\epsilon_0 R_1 R_2} = \\frac{Q^2}{8\\pi\\epsilon_0} \\left( \\frac{R_2}{R_1 R_2} - \\frac{R_1}{R_1 R_2} \\right) = \\frac{Q^2}{8\\pi\\epsilon_0} \\left( \\frac{1}{R_1} - \\frac{1}{R_2} \\right)$$</p>
+            <p>I risultati coincidono, confermando la validità del metodo basato sull'integrazione della densità di energia.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Energia condensatore sferico", latex: "W = \\frac{Q^2}{8\\pi\\epsilon_0} \\left( \\frac{1}{R_1} - \\frac{1}{R_2} \\right)" }
+        ]
+      },
+
+      {
+        id: "s12-correnti-stazionarie",
+        type: "section",
+        title: "Correnti elettriche stazionarie",
+        icon: "⚡",
+        content: `<p>Fino ad ora abbiamo studiato l'elettrostatica, ovvero la fisica delle cariche in quiete. Ora introduciamo il concetto di <strong>cariche in movimento</strong>, che danno origine alle correnti elettriche. Se ai capi di un conduttore applichiamo una differenza di potenziale, le cariche libere al suo interno si metteranno in moto.</p>
+        <p><strong>Due grandezze che useremo subito.</strong> Prima di enunciare la definizione di regime stazionario conviene anticiparne il significato operativo:</p>
+        <ul>
+          <li>il <strong>vettore densità di corrente</strong> $\\vec{J}$ descrive in modo <em>locale</em> il flusso di carica: il suo modulo è la corrente per unità di area attraversata e la sua direzione è quella del moto convenzionale delle cariche positive (lo definiremo rigorosamente più avanti);</li>
+          <li>la <strong>densità di carica</strong>: distinguiamo la densità dei soli portatori mobili $\\rho_{\\text{mob}} = nq$ dalla densità di carica <em>totale</em> $\\rho_{\\text{tot}}$, che include anche le cariche fisse (per esempio gli ioni del reticolo di un metallo). Nelle leggi di conservazione compare sempre $\\rho_{\\text{tot}}$.</li>
+        </ul>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Regime stazionario",
+            content: `<p>Si dice che una corrente è <strong>stazionaria</strong> quando, in ogni punto $\\vec{r}$ del conduttore, sono indipendenti dal tempo <em>sia</em> la densità di corrente <em>sia</em> la densità di carica totale:</p>
+            <p>$$\\frac{\\partial \\vec{J}(\\vec{r}, t)}{\\partial t} = 0 \\qquad \\text{e} \\qquad \\frac{\\partial \\rho_{\\text{tot}}(\\vec{r}, t)}{\\partial t} = 0$$</p>
+            <p>cosicché $\\vec{J} = \\vec{J}(\\vec{r})$ e $\\rho_{\\text{tot}} = \\rho_{\\text{tot}}(\\vec{r})$. L'indipendenza dal tempo delle distribuzioni di carica (e quindi dei campi che esse generano) fa dunque parte delle <strong>condizioni</strong> che definiscono il regime considerato, e non è una conseguenza della sola costanza di $\\vec{J}$: una densità di corrente indipendente dal tempo può infatti avere divergenza non nulla e produrre accumulo di carica. Il legame preciso tra divergenza di $\\vec{J}$ e variazione di $\\rho_{\\text{tot}}$ lo stabiliremo con l'equazione di continuità.</p>
+            <p>Imposte entrambe le condizioni, l'intensità di corrente $I$ che attraversa una qualunque superficie <strong>fissa</strong> nello spazio ha un valore costante nel tempo.</p>
+            <p>Questo regime si distingue dal caso di una <strong>corrente variabile</strong>, in cui $\\vec{J}$ (e quindi $I$) dipende esplicitamente dal tempo, come accade per esempio durante la carica o la scarica di un condensatore oppure in una corrente alternata. In questo corso, salvo avviso contrario, ci limiteremo al regime stazionario.</p>`
+          },
+          {
+            subtitle: "Definizione — Intensità di corrente elettrica",
+            content: `<p>Si definisce <strong>intensità di corrente elettrica</strong> $I$ attraverso una superficie orientata il rapporto tra la quantità di carica netta $dQ$ che attraversa la superficie e l'intervallo di tempo $dt$ impiegato:</p>
+            <p>$$I = \\frac{dQ}{dt}$$</p>
+            <p>Qui $dQ$ è la carica <strong>netta con segno</strong> trasferita attraverso la superficie, valutata rispetto al verso della normale $\\hat{n}$ scelta: ogni portatore contribuisce con il prodotto della <em>propria carica</em> per il <em>segno dell'attraversamento</em> ($+1$ se transita nel verso di $\\hat{n}$, $-1$ se nel verso opposto). Il contributo è quindi positivo per cariche positive che attraversano nel verso di $\\hat{n}$ e per cariche negative che lo attraversano in verso opposto, ed è negativo negli altri due casi (per esempio un elettrone che passa nel verso di $\\hat{n}$ dà contributo negativo). La carica si misura in coulomb (C), il tempo in secondi (s).</p>
+            <p>L'unità di misura della corrente nel Sistema Internazionale è l'<strong>ampere</strong> (A), definito come coulomb al secondo ($1 \\text{ A} = 1 \\text{ C/s}$). Il segno di $I$ dipende dunque dall'orientazione scelta: invertendo $\\hat{n}$ si inverte il segno di $I$. Questa regola dei segni è esattamente quella codificata, più avanti, dalla formula $dQ = n q \\, (\\vec{v}_d \\cdot \\hat{n}) \\, dt \\, dS$, in cui compaiono sia il segno della carica $q$ sia il segno del prodotto scalare.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Intensità di corrente", latex: "I = \\frac{dQ}{dt}" }
+        ],
+        quote: {
+          text: "È importante avere un'idea degli ordini di grandezza. Una corrente di 1 Ampere è molto intensa. La soglia di pericolosità per il corpo umano (rischio di fibrillazione ventricolare) è molto più bassa, dell'ordine di $5 \\times 10^{-2}$ A, ovvero 50 milliampere. Una corrente di 1 A può essere letale.",
+          src: "Nota del Prof."
+        }
+      },
+
+      {
+        id: "s12-verso-corrente",
+        type: "section",
+        title: "Verso della corrente e velocità di deriva",
+        icon: "🧭",
+        content: `<p>Per convenzione, il <strong>verso della corrente</strong> è definito come il verso del moto delle cariche positive.</p>
+        <p>Consideriamo un conduttore tra due punti A e B, con un potenziale $V_A \\gt V_B$:</p>
+        <ul>
+          <li>le cariche positive (se presenti e mobili) si muoveranno da A a B, cioè da potenziale maggiore a potenziale minore;</li>
+          <li>le cariche negative (es. elettroni nei metalli) si muoveranno da B ad A, da potenziale minore a potenziale maggiore.</li>
+        </ul>
+        <p>In entrambi i casi, il <strong>verso convenzionale della corrente è da A a B</strong>.</p>
+        <figure class="figura" data-id="fisica2_lez12a_d1"><?xml version="1.0" encoding="UTF-8"?>
+<svg id="fisica2_lez12a_d1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="249.147pt" height="134.163pt" viewBox="0 0 249.147 134.163" version="1.2"><style>#fisica2_lez12a_d1 [fill="rgb(0%,0%,0%)"],#fisica2_lez12a_d1 [style*="fill:rgb(0%,0%,0%)"]{fill:var(--text-primary)!important}#fisica2_lez12a_d1 [stroke="rgb(0%,0%,0%)"],#fisica2_lez12a_d1 [style*="stroke:rgb(0%,0%,0%)"]{stroke:var(--text-primary)!important}#fisica2_lez12a_d1 [fill="rgb(79.998779%,79.998779%,100%)"],#fisica2_lez12a_d1 [style*="fill:rgb(79.998779%,79.998779%,100%)"]{fill:#141452!important}[data-mode="light"] #fisica2_lez12a_d1 [fill="rgb(79.998779%,79.998779%,100%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="fill:rgb(79.998779%,79.998779%,100%)"]{fill:#ccccff!important}#fisica2_lez12a_d1 [stroke="rgb(79.998779%,79.998779%,100%)"],#fisica2_lez12a_d1 [style*="stroke:rgb(79.998779%,79.998779%,100%)"]{stroke:#ccccff!important}[data-mode="light"] #fisica2_lez12a_d1 [stroke="rgb(79.998779%,79.998779%,100%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="stroke:rgb(79.998779%,79.998779%,100%)"]{stroke:#ccccff!important}#fisica2_lez12a_d1 [fill="rgb(0%,0%,100%)"],#fisica2_lez12a_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#5c5cff!important}[data-mode="light"] #fisica2_lez12a_d1 [fill="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="fill:rgb(0%,0%,100%)"]{fill:#0000ff!important}#fisica2_lez12a_d1 [stroke="rgb(0%,0%,100%)"],#fisica2_lez12a_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#5c5cff!important}[data-mode="light"] #fisica2_lez12a_d1 [stroke="rgb(0%,0%,100%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="stroke:rgb(0%,0%,100%)"]{stroke:#0000ff!important}#fisica2_lez12a_d1 [fill="rgb(100%,79.998779%,79.998779%)"],#fisica2_lez12a_d1 [style*="fill:rgb(100%,79.998779%,79.998779%)"]{fill:#521414!important}[data-mode="light"] #fisica2_lez12a_d1 [fill="rgb(100%,79.998779%,79.998779%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="fill:rgb(100%,79.998779%,79.998779%)"]{fill:#ffcccc!important}#fisica2_lez12a_d1 [stroke="rgb(100%,79.998779%,79.998779%)"],#fisica2_lez12a_d1 [style*="stroke:rgb(100%,79.998779%,79.998779%)"]{stroke:#ffcccc!important}[data-mode="light"] #fisica2_lez12a_d1 [stroke="rgb(100%,79.998779%,79.998779%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="stroke:rgb(100%,79.998779%,79.998779%)"]{stroke:#ffcccc!important}#fisica2_lez12a_d1 [fill="rgb(100%,0%,0%)"],#fisica2_lez12a_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff5c5c!important}[data-mode="light"] #fisica2_lez12a_d1 [fill="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="fill:rgb(100%,0%,0%)"]{fill:#ff0000!important}#fisica2_lez12a_d1 [stroke="rgb(100%,0%,0%)"],#fisica2_lez12a_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff5c5c!important}[data-mode="light"] #fisica2_lez12a_d1 [stroke="rgb(100%,0%,0%)"],[data-mode="light"] #fisica2_lez12a_d1 [style*="stroke:rgb(100%,0%,0%)"]{stroke:#ff0000!important}</style>
+<defs>
+<g>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph0-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph0-1">
+<path style="stroke:none;" d="M 7.140625 -0.203125 C 7.140625 -0.3125 7.046875 -0.3125 6.921875 -0.3125 C 6.296875 -0.3125 6.296875 -0.375 6.265625 -0.65625 L 5.671875 -6.859375 C 5.640625 -7.046875 5.640625 -7.09375 5.484375 -7.09375 C 5.3125 -7.09375 5.28125 -7.03125 5.21875 -6.921875 L 1.765625 -1.140625 C 1.375 -0.46875 0.984375 -0.34375 0.5625 -0.3125 C 0.4375 -0.296875 0.34375 -0.296875 0.34375 -0.109375 C 0.34375 -0.046875 0.390625 0 0.46875 0 C 0.75 0 1.046875 -0.03125 1.328125 -0.03125 C 1.65625 -0.03125 2 0 2.3125 0 C 2.375 0 2.5 0 2.5 -0.1875 C 2.5 -0.296875 2.421875 -0.3125 2.34375 -0.3125 C 2.125 -0.328125 1.875 -0.40625 1.875 -0.65625 C 1.875 -0.765625 1.9375 -0.875 2.015625 -1.015625 C 2.09375 -1.140625 2.09375 -1.140625 2.78125 -2.28125 L 5.265625 -2.28125 C 5.28125 -2.078125 5.421875 -0.734375 5.421875 -0.640625 C 5.421875 -0.34375 4.90625 -0.3125 4.703125 -0.3125 C 4.5625 -0.3125 4.46875 -0.3125 4.46875 -0.109375 C 4.46875 0 4.609375 0 4.609375 0 C 5.015625 0 5.4375 -0.03125 5.84375 -0.03125 C 6.09375 -0.03125 6.71875 0 6.96875 0 C 7.03125 0 7.140625 0 7.140625 -0.203125 Z M 5.234375 -2.59375 L 2.96875 -2.59375 L 4.90625 -5.859375 Z M 5.234375 -2.59375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph0-2">
+<path style="stroke:none;" d="M 6.953125 -2.140625 C 6.953125 -2.859375 6.375 -3.421875 5.421875 -3.53125 C 6.453125 -3.71875 7.484375 -4.453125 7.484375 -5.40625 C 7.484375 -6.125 6.828125 -6.765625 5.640625 -6.765625 L 2.3125 -6.765625 C 2.125 -6.765625 2.03125 -6.765625 2.03125 -6.5625 C 2.03125 -6.453125 2.125 -6.453125 2.3125 -6.453125 C 2.3125 -6.453125 2.515625 -6.453125 2.6875 -6.4375 C 2.859375 -6.421875 2.953125 -6.40625 2.953125 -6.28125 C 2.953125 -6.234375 2.9375 -6.21875 2.90625 -6.09375 L 1.578125 -0.765625 C 1.484375 -0.390625 1.46875 -0.3125 0.6875 -0.3125 C 0.515625 -0.3125 0.421875 -0.3125 0.421875 -0.109375 C 0.421875 0 0.5 0 0.6875 0 L 4.21875 0 C 5.78125 0 6.953125 -1.171875 6.953125 -2.140625 Z M 6.59375 -5.4375 C 6.59375 -4.5625 5.734375 -3.625 4.53125 -3.625 L 3.078125 -3.625 L 3.6875 -6.078125 C 3.78125 -6.421875 3.796875 -6.453125 4.234375 -6.453125 L 5.515625 -6.453125 C 6.375 -6.453125 6.59375 -5.875 6.59375 -5.4375 Z M 6.03125 -2.25 C 6.03125 -1.265625 5.15625 -0.3125 3.984375 -0.3125 L 2.640625 -0.3125 C 2.5 -0.3125 2.484375 -0.3125 2.421875 -0.3125 C 2.3125 -0.328125 2.28125 -0.34375 2.28125 -0.421875 C 2.28125 -0.453125 2.28125 -0.46875 2.34375 -0.640625 L 3.015625 -3.40625 L 4.890625 -3.40625 C 5.84375 -3.40625 6.03125 -2.671875 6.03125 -2.25 Z M 6.03125 -2.25 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph0-3">
+<path style="stroke:none;" d="M 7.625 -6.640625 C 7.625 -6.71875 7.5625 -6.765625 7.484375 -6.765625 C 7.234375 -6.765625 6.9375 -6.734375 6.671875 -6.734375 C 6.34375 -6.734375 6.015625 -6.765625 5.703125 -6.765625 C 5.640625 -6.765625 5.515625 -6.765625 5.515625 -6.578125 C 5.515625 -6.46875 5.59375 -6.453125 5.671875 -6.453125 C 5.9375 -6.4375 6.125 -6.34375 6.125 -6.125 C 6.125 -5.984375 5.96875 -5.75 5.96875 -5.75 L 2.9375 -0.921875 L 2.265625 -6.15625 C 2.265625 -6.328125 2.484375 -6.453125 2.9375 -6.453125 C 3.078125 -6.453125 3.1875 -6.453125 3.1875 -6.65625 C 3.1875 -6.75 3.109375 -6.765625 3.046875 -6.765625 C 2.65625 -6.765625 2.234375 -6.734375 1.828125 -6.734375 C 1.640625 -6.734375 1.453125 -6.75 1.28125 -6.75 C 1.09375 -6.75 0.90625 -6.765625 0.75 -6.765625 C 0.671875 -6.765625 0.5625 -6.765625 0.5625 -6.578125 C 0.5625 -6.453125 0.640625 -6.453125 0.796875 -6.453125 C 1.359375 -6.453125 1.359375 -6.375 1.390625 -6.125 L 2.171875 -0.015625 C 2.203125 0.1875 2.25 0.21875 2.375 0.21875 C 2.53125 0.21875 2.578125 0.171875 2.65625 0.046875 L 6.21875 -5.640625 C 6.703125 -6.40625 7.125 -6.4375 7.484375 -6.453125 C 7.609375 -6.46875 7.625 -6.640625 7.625 -6.640625 Z M 7.625 -6.640625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph0-4">
+<path style="stroke:none;" d="M 6.875 -2.484375 C 6.875 -2.59375 6.796875 -2.640625 6.6875 -2.6875 L 1.203125 -5.28125 C 1.0625 -5.34375 1.046875 -5.34375 1.015625 -5.34375 C 0.90625 -5.34375 0.828125 -5.265625 0.828125 -5.15625 C 0.828125 -5.0625 0.875 -5 1.015625 -4.9375 L 6.21875 -2.484375 L 1.015625 -0.015625 C 0.875 0.046875 0.828125 0.109375 0.828125 0.203125 C 0.828125 0.3125 0.90625 0.390625 1.015625 0.390625 C 1.046875 0.390625 1.0625 0.390625 1.203125 0.328125 L 6.6875 -2.265625 C 6.796875 -2.3125 6.875 -2.359375 6.875 -2.484375 Z M 6.875 -2.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph0-5">
+<path style="stroke:none;" d="M 3.3125 -0.1875 C 3.3125 -0.3125 3.234375 -0.3125 3.015625 -0.3125 C 2.828125 -0.3125 2.78125 -0.3125 2.578125 -0.328125 C 2.375 -0.34375 2.34375 -0.390625 2.34375 -0.5 C 2.34375 -0.578125 2.359375 -0.65625 2.375 -0.71875 L 3.703125 -6 C 3.796875 -6.359375 3.828125 -6.453125 4.609375 -6.453125 C 4.84375 -6.453125 4.921875 -6.453125 4.921875 -6.640625 C 4.921875 -6.765625 4.8125 -6.765625 4.78125 -6.765625 L 3.46875 -6.734375 L 2.15625 -6.765625 C 2.078125 -6.765625 1.953125 -6.765625 1.953125 -6.5625 C 1.953125 -6.453125 2.046875 -6.453125 2.234375 -6.453125 C 2.640625 -6.453125 2.90625 -6.453125 2.90625 -6.265625 C 2.90625 -6.21875 2.90625 -6.203125 2.890625 -6.109375 L 1.5625 -0.765625 C 1.46875 -0.40625 1.4375 -0.3125 0.65625 -0.3125 C 0.421875 -0.3125 0.34375 -0.3125 0.34375 -0.109375 C 0.34375 0 0.453125 0 0.484375 0 L 1.78125 -0.03125 L 3.109375 0 C 3.1875 0 3.3125 0 3.3125 -0.1875 Z M 3.3125 -0.1875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph1-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph1-1">
+<path style="stroke:none;" d="M 5.625 -0.140625 C 5.625 -0.25 5.53125 -0.25 5.421875 -0.25 C 5.015625 -0.25 5.015625 -0.3125 4.984375 -0.46875 L 4.375 -4.75 C 4.359375 -4.890625 4.34375 -4.953125 4.21875 -4.953125 C 4.078125 -4.953125 4.03125 -4.890625 3.96875 -4.78125 L 1.421875 -0.828125 C 1.1875 -0.453125 0.96875 -0.28125 0.5625 -0.25 C 0.484375 -0.25 0.390625 -0.25 0.390625 -0.109375 C 0.390625 -0.03125 0.453125 0 0.5 0 C 0.671875 0 0.90625 -0.03125 1.09375 -0.03125 C 1.3125 -0.03125 1.59375 0 1.796875 0 C 1.84375 0 1.9375 0 1.9375 -0.15625 C 1.9375 -0.25 1.859375 -0.25 1.828125 -0.25 C 1.765625 -0.25 1.515625 -0.265625 1.515625 -0.453125 C 1.515625 -0.546875 1.59375 -0.65625 1.625 -0.71875 L 2.171875 -1.578125 L 4.15625 -1.578125 L 4.328125 -0.4375 C 4.296875 -0.359375 4.265625 -0.25 3.84375 -0.25 C 3.765625 -0.25 3.671875 -0.25 3.671875 -0.09375 C 3.671875 -0.0625 3.6875 0 3.78125 0 C 3.984375 0 4.46875 -0.03125 4.671875 -0.03125 L 5.078125 -0.015625 C 5.203125 -0.015625 5.359375 0 5.484375 0 C 5.578125 0 5.625 -0.0625 5.625 -0.140625 Z M 4.125 -1.828125 L 2.34375 -1.828125 L 3.796875 -4.09375 Z M 4.125 -1.828125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph1-2">
+<path style="stroke:none;" d="M 5.453125 -1.484375 C 5.453125 -1.984375 5 -2.40625 4.265625 -2.484375 C 5.109375 -2.625 5.8125 -3.15625 5.8125 -3.75 C 5.8125 -4.28125 5.265625 -4.734375 4.375 -4.734375 L 1.84375 -4.734375 C 1.71875 -4.734375 1.625 -4.734375 1.625 -4.578125 C 1.625 -4.484375 1.703125 -4.484375 1.84375 -4.484375 C 1.84375 -4.484375 1.984375 -4.484375 2.109375 -4.46875 C 2.25 -4.453125 2.265625 -4.453125 2.265625 -4.375 C 2.265625 -4.375 2.265625 -4.328125 2.234375 -4.21875 L 1.3125 -0.546875 C 1.25 -0.3125 1.234375 -0.25 0.703125 -0.25 C 0.59375 -0.25 0.5 -0.25 0.5 -0.109375 C 0.5 0 0.578125 0 0.703125 0 L 3.390625 0 C 4.5625 0 5.453125 -0.796875 5.453125 -1.484375 Z M 5.125 -3.765625 C 5.125 -3.203125 4.5 -2.5625 3.5625 -2.5625 L 2.421875 -2.5625 L 2.84375 -4.25 C 2.90625 -4.46875 2.90625 -4.484375 3.203125 -4.484375 L 4.265625 -4.484375 C 4.96875 -4.484375 5.125 -4.03125 5.125 -3.765625 Z M 4.75 -1.53125 C 4.75 -0.84375 4.046875 -0.25 3.21875 -0.25 L 2.09375 -0.25 C 1.875 -0.25 1.875 -0.25 1.875 -0.3125 C 1.875 -0.3125 1.875 -0.359375 1.90625 -0.46875 L 2.375 -2.359375 L 3.84375 -2.359375 C 4.5 -2.359375 4.75 -1.9375 4.75 -1.53125 Z M 4.75 -1.53125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph2-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph2-1">
+<path style="stroke:none;" d="M 6.59375 -2.234375 C 6.59375 -2.421875 6.4375 -2.421875 6.28125 -2.421875 L 3.75 -2.421875 L 3.75 -4.96875 C 3.75 -5.109375 3.75 -5.28125 3.546875 -5.28125 C 3.359375 -5.28125 3.359375 -5.09375 3.359375 -4.96875 L 3.359375 -2.421875 L 0.8125 -2.421875 C 0.6875 -2.421875 0.5 -2.421875 0.5 -2.234375 C 0.5 -2.046875 0.671875 -2.046875 0.8125 -2.046875 L 3.359375 -2.046875 L 3.359375 0.5 C 3.359375 0.65625 3.359375 0.8125 3.5625 0.8125 C 3.75 0.8125 3.75 0.625 3.75 0.5 L 3.75 -2.046875 L 6.28125 -2.046875 C 6.40625 -2.046875 6.59375 -2.046875 6.59375 -2.234375 Z M 6.59375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph3-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph3-1">
+<path style="stroke:none;" d="M 4.28125 -3.28125 C 4.28125 -3.90625 3.953125 -3.953125 3.875 -3.953125 C 3.65625 -3.953125 3.421875 -3.703125 3.421875 -3.5 C 3.421875 -3.359375 3.5 -3.296875 3.5625 -3.234375 C 3.796875 -3.015625 3.890625 -2.734375 3.890625 -2.5 C 3.890625 -2.109375 3.328125 -0.125 2.28125 -0.125 C 1.625 -0.125 1.625 -0.75 1.625 -0.90625 C 1.625 -1.296875 1.75 -1.75 2.0625 -2.5625 C 2.203125 -2.9375 2.234375 -3.015625 2.234375 -3.1875 C 2.234375 -3.625 1.90625 -3.9375 1.46875 -3.9375 C 0.609375 -3.9375 0.265625 -2.671875 0.265625 -2.5625 C 0.265625 -2.484375 0.328125 -2.453125 0.390625 -2.453125 C 0.484375 -2.453125 0.484375 -2.515625 0.53125 -2.625 C 0.71875 -3.28125 1.0625 -3.71875 1.4375 -3.71875 C 1.625 -3.71875 1.65625 -3.59375 1.65625 -3.421875 C 1.65625 -3.265625 1.625 -3.109375 1.546875 -2.890625 C 1.21875 -2.046875 1 -1.46875 1 -1.03125 C 1 -0.1875 1.640625 0.09375 2.25 0.09375 C 3.75 0.09375 4.28125 -2.71875 4.28125 -3.28125 Z M 4.28125 -3.28125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph4-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph4-1">
+<path style="stroke:none;" d="M 3.640625 -0.859375 C 3.640625 -0.859375 3.640625 -0.9375 3.53125 -0.9375 C 3.4375 -0.9375 3.421875 -0.890625 3.40625 -0.796875 C 3.3125 -0.4375 3.1875 -0.140625 2.953125 -0.140625 C 2.75 -0.140625 2.734375 -0.34375 2.734375 -0.4375 C 2.734375 -0.515625 2.734375 -0.53125 2.765625 -0.640625 L 3.59375 -3.9375 C 3.59375 -3.96875 3.609375 -4 3.609375 -4.03125 C 3.609375 -4.125 3.484375 -4.125 3.421875 -4.109375 L 2.75 -4.0625 C 2.65625 -4.0625 2.578125 -4.046875 2.578125 -3.90625 C 2.578125 -3.8125 2.65625 -3.8125 2.75 -3.8125 C 2.921875 -3.8125 2.96875 -3.8125 3.046875 -3.78125 C 3.03125 -3.6875 3.03125 -3.671875 3.015625 -3.59375 L 2.671875 -2.265625 C 2.59375 -2.40625 2.390625 -2.625 2.03125 -2.625 C 1.265625 -2.625 0.453125 -1.828125 0.453125 -0.953125 C 0.453125 -0.3125 0.890625 0.0625 1.40625 0.0625 C 1.796875 0.0625 2.140625 -0.21875 2.28125 -0.359375 C 2.40625 0.015625 2.796875 0.0625 2.921875 0.0625 C 3.140625 0.0625 3.296875 -0.0625 3.40625 -0.25 C 3.5625 -0.484375 3.640625 -0.828125 3.640625 -0.859375 Z M 2.3125 -0.78125 C 2.28125 -0.671875 2.28125 -0.65625 2.203125 -0.5625 C 1.875 -0.203125 1.5625 -0.140625 1.421875 -0.140625 C 1.1875 -0.140625 0.953125 -0.296875 0.953125 -0.71875 C 0.953125 -0.96875 1.078125 -1.546875 1.265625 -1.875 C 1.4375 -2.203125 1.75 -2.421875 2.03125 -2.421875 C 2.46875 -2.421875 2.59375 -1.953125 2.59375 -1.90625 L 2.578125 -1.828125 Z M 2.3125 -0.78125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph5-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph5-1">
+<path style="stroke:none;" d="M 5.078125 -1.484375 C 5.078125 -1.640625 4.921875 -1.640625 4.84375 -1.640625 L 2.921875 -1.640625 L 2.921875 -3.5625 C 2.921875 -3.640625 2.921875 -3.796875 2.765625 -3.796875 C 2.625 -3.796875 2.625 -3.640625 2.625 -3.5625 L 2.625 -1.640625 L 0.703125 -1.640625 C 0.625 -1.640625 0.46875 -1.640625 0.46875 -1.484375 C 0.46875 -1.328125 0.625 -1.328125 0.703125 -1.328125 L 2.625 -1.328125 L 2.625 0.59375 C 2.625 0.671875 2.625 0.828125 2.765625 0.828125 C 2.921875 0.828125 2.921875 0.671875 2.921875 0.59375 L 2.921875 -1.328125 L 4.84375 -1.328125 C 4.921875 -1.328125 5.078125 -1.328125 5.078125 -1.484375 Z M 5.078125 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph6-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph6-1">
+<path style="stroke:none;" d="M 6.34375 -2.234375 C 6.34375 -2.421875 6.171875 -2.421875 6.03125 -2.421875 L 1.078125 -2.421875 C 0.953125 -2.421875 0.765625 -2.421875 0.765625 -2.234375 C 0.765625 -2.046875 0.9375 -2.046875 1.078125 -2.046875 L 6.03125 -2.046875 C 6.15625 -2.046875 6.34375 -2.046875 6.34375 -2.234375 Z M 6.34375 -2.234375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph7-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph7-1">
+<path style="stroke:none;" d="M 4.96875 -1.484375 C 4.96875 -1.640625 4.828125 -1.640625 4.734375 -1.640625 L 0.96875 -1.640625 C 0.890625 -1.640625 0.75 -1.640625 0.75 -1.484375 C 0.75 -1.328125 0.890625 -1.328125 0.96875 -1.328125 L 4.734375 -1.328125 C 4.828125 -1.328125 4.96875 -1.328125 4.96875 -1.484375 Z M 4.96875 -1.484375 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-0">
+<path style="stroke:none;" d=""/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-1">
+<path style="stroke:none;" d="M 7.234375 -6.453125 L 7.234375 -6.765625 C 6.921875 -6.75 6.53125 -6.734375 6.265625 -6.734375 L 5.140625 -6.765625 L 5.140625 -6.453125 C 5.65625 -6.453125 5.859375 -6.1875 5.859375 -5.96875 C 5.859375 -5.890625 5.828125 -5.828125 5.8125 -5.765625 L 4 -0.984375 L 2.109375 -6 C 2.046875 -6.125 2.046875 -6.171875 2.046875 -6.171875 C 2.046875 -6.453125 2.609375 -6.453125 2.859375 -6.453125 L 2.859375 -6.765625 C 2.5 -6.734375 1.828125 -6.734375 1.453125 -6.734375 L 0.1875 -6.765625 L 0.1875 -6.453125 C 0.828125 -6.453125 1.015625 -6.453125 1.15625 -6.078125 L 3.453125 0 C 3.53125 0.1875 3.578125 0.21875 3.703125 0.21875 C 3.875 0.21875 3.890625 0.171875 3.9375 0.03125 L 6.15625 -5.796875 C 6.296875 -6.15625 6.5625 -6.453125 7.234375 -6.453125 Z M 7.234375 -6.453125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-2">
+<path style="stroke:none;" d="M 4.109375 -1.171875 C 4.109375 -1.28125 4.03125 -1.296875 3.984375 -1.296875 C 3.890625 -1.296875 3.875 -1.234375 3.859375 -1.15625 C 3.5 -0.140625 2.609375 -0.140625 2.515625 -0.140625 C 2.015625 -0.140625 1.625 -0.4375 1.390625 -0.796875 C 1.09375 -1.28125 1.09375 -1.9375 1.09375 -2.28125 L 3.859375 -2.28125 C 4.078125 -2.28125 4.109375 -2.28125 4.109375 -2.5 C 4.109375 -3.484375 3.578125 -4.4375 2.34375 -4.4375 C 1.1875 -4.4375 0.28125 -3.421875 0.28125 -2.171875 C 0.28125 -0.859375 1.3125 0.109375 2.453125 0.109375 C 3.671875 0.109375 4.109375 -0.984375 4.109375 -1.171875 Z M 3.453125 -2.5 L 1.109375 -2.5 C 1.171875 -3.96875 2 -4.21875 2.34375 -4.21875 C 3.359375 -4.21875 3.453125 -2.875 3.453125 -2.5 Z M 3.453125 -2.5 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-3">
+<path style="stroke:none;" d="M 3.609375 -3.78125 C 3.609375 -4.09375 3.296875 -4.375 2.875 -4.375 C 2.15625 -4.375 1.796875 -3.71875 1.65625 -3.28125 L 1.65625 -4.375 L 0.28125 -4.265625 L 0.28125 -3.96875 C 0.96875 -3.96875 1.046875 -3.890625 1.046875 -3.40625 L 1.046875 -0.75 C 1.046875 -0.3125 0.9375 -0.3125 0.28125 -0.3125 L 0.28125 0 L 1.40625 -0.03125 C 1.796875 -0.03125 2.265625 -0.03125 2.671875 0 L 2.671875 -0.3125 L 2.453125 -0.3125 C 1.71875 -0.3125 1.703125 -0.421875 1.703125 -0.765625 L 1.703125 -2.296875 C 1.703125 -3.28125 2.125 -4.15625 2.875 -4.15625 C 2.9375 -4.15625 2.96875 -4.15625 2.984375 -4.15625 C 2.953125 -4.140625 2.75 -4.015625 2.75 -3.765625 C 2.75 -3.484375 2.96875 -3.34375 3.1875 -3.34375 C 3.359375 -3.34375 3.609375 -3.453125 3.609375 -3.78125 Z M 3.609375 -3.78125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-4">
+<path style="stroke:none;" d="M 3.5625 -1.265625 C 3.5625 -1.796875 3.265625 -2.09375 3.15625 -2.203125 C 2.828125 -2.53125 2.4375 -2.609375 2.015625 -2.6875 C 1.46875 -2.796875 0.796875 -2.921875 0.796875 -3.5 C 0.796875 -3.84375 1.0625 -4.25 1.90625 -4.25 C 3 -4.25 3.046875 -3.359375 3.078125 -3.046875 C 3.078125 -2.96875 3.1875 -2.96875 3.1875 -2.96875 C 3.3125 -2.96875 3.3125 -3.015625 3.3125 -3.203125 L 3.3125 -4.203125 C 3.3125 -4.375 3.3125 -4.4375 3.203125 -4.4375 C 3.15625 -4.4375 3.140625 -4.4375 3.015625 -4.3125 C 2.984375 -4.28125 2.875 -4.1875 2.84375 -4.15625 C 2.46875 -4.4375 2.0625 -4.4375 1.90625 -4.4375 C 0.703125 -4.4375 0.328125 -3.78125 0.328125 -3.21875 C 0.328125 -2.875 0.484375 -2.59375 0.75 -2.375 C 1.0625 -2.125 1.34375 -2.0625 2.0625 -1.921875 C 2.28125 -1.875 3.09375 -1.71875 3.09375 -1.015625 C 3.09375 -0.5 2.75 -0.109375 1.96875 -0.109375 C 1.140625 -0.109375 0.78125 -0.671875 0.59375 -1.515625 C 0.5625 -1.640625 0.5625 -1.6875 0.453125 -1.6875 C 0.328125 -1.6875 0.328125 -1.609375 0.328125 -1.4375 L 0.328125 -0.125 C 0.328125 0.046875 0.328125 0.109375 0.4375 0.109375 C 0.484375 0.109375 0.5 0.09375 0.6875 -0.09375 C 0.703125 -0.109375 0.703125 -0.125 0.875 -0.3125 C 1.3125 0.09375 1.765625 0.109375 1.96875 0.109375 C 3.109375 0.109375 3.5625 -0.5625 3.5625 -1.265625 Z M 3.5625 -1.265625 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-5">
+<path style="stroke:none;" d="M 4.671875 -2.125 C 4.671875 -3.390625 3.671875 -4.4375 2.484375 -4.4375 C 1.234375 -4.4375 0.28125 -3.359375 0.28125 -2.125 C 0.28125 -0.84375 1.3125 0.109375 2.46875 0.109375 C 3.671875 0.109375 4.671875 -0.859375 4.671875 -2.125 Z M 3.84375 -2.203125 C 3.84375 -1.84375 3.84375 -1.3125 3.625 -0.875 C 3.40625 -0.421875 2.96875 -0.140625 2.484375 -0.140625 C 2.046875 -0.140625 1.609375 -0.34375 1.34375 -0.796875 C 1.09375 -1.234375 1.09375 -1.84375 1.09375 -2.203125 C 1.09375 -2.578125 1.09375 -3.125 1.34375 -3.5625 C 1.609375 -4.015625 2.078125 -4.21875 2.46875 -4.21875 C 2.90625 -4.21875 3.328125 -4 3.59375 -3.578125 C 3.84375 -3.15625 3.84375 -2.578125 3.84375 -2.203125 Z M 3.84375 -2.203125 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-6">
+<path style="stroke:none;" d="M 5.21875 0 L 5.21875 -0.3125 C 4.53125 -0.3125 4.453125 -0.375 4.453125 -0.859375 L 4.453125 -6.875 L 3.015625 -6.765625 L 3.015625 -6.453125 C 3.71875 -6.453125 3.796875 -6.390625 3.796875 -5.90625 L 3.796875 -3.765625 C 3.5 -4.125 3.078125 -4.375 2.546875 -4.375 C 1.375 -4.375 0.34375 -3.40625 0.34375 -2.125 C 0.34375 -0.875 1.3125 0.109375 2.4375 0.109375 C 3.078125 0.109375 3.515625 -0.234375 3.765625 -0.546875 L 3.765625 0.109375 Z M 3.765625 -1.171875 C 3.765625 -0.984375 3.765625 -0.96875 3.65625 -0.796875 C 3.359375 -0.328125 2.90625 -0.109375 2.484375 -0.109375 C 2.046875 -0.109375 1.6875 -0.359375 1.453125 -0.75 C 1.1875 -1.15625 1.15625 -1.71875 1.15625 -2.125 C 1.15625 -2.484375 1.171875 -3.078125 1.46875 -3.53125 C 1.671875 -3.828125 2.046875 -4.15625 2.578125 -4.15625 C 2.9375 -4.15625 3.34375 -4.015625 3.65625 -3.5625 C 3.765625 -3.390625 3.765625 -3.375 3.765625 -3.203125 Z M 3.765625 -1.171875 "/>
+</symbol>
+<symbol overflow="visible" id="fisica2_lez12a_d1-glyph8-7">
+<path style="stroke:none;" d="M 2.453125 0 L 2.453125 -0.3125 C 1.796875 -0.3125 1.75 -0.359375 1.75 -0.75 L 1.75 -4.375 L 0.359375 -4.265625 L 0.359375 -3.96875 C 1.015625 -3.96875 1.09375 -3.90625 1.09375 -3.421875 L 1.09375 -0.75 C 1.09375 -0.3125 0.984375 -0.3125 0.328125 -0.3125 L 0.328125 0 L 1.421875 -0.03125 C 1.765625 -0.03125 2.109375 -0.015625 2.453125 0 Z M 1.90625 -5.984375 C 1.90625 -6.25 1.671875 -6.515625 1.375 -6.515625 C 1.046875 -6.515625 0.84375 -6.234375 0.84375 -5.984375 C 0.84375 -5.71875 1.0625 -5.453125 1.359375 -5.453125 C 1.703125 -5.453125 1.90625 -5.734375 1.90625 -5.984375 Z M 1.90625 -5.984375 "/>
+</symbol>
+</g>
+</defs>
+<g id="fisica2_lez12a_d1-surface1">
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -0.000922721 -0.000298199 L -0.000922721 62.362916 L 198.428559 62.362916 L 198.428559 -0.000298199 Z M -0.000922721 -0.000298199 " transform="matrix(0.9938,0,0,-0.9938,25.407167,105.042672)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph0-1" x="7.609203" y="77.43789"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph0-2" x="232.684033" y="77.43789"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph0-3" x="104.996634" y="124.585749"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph1-1" x="110.771606" y="126.070487"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph0-4" x="119.971212" y="124.585749"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph0-3" x="130.42451" y="124.585749"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph1-2" x="136.197979" y="126.070487"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(79.998779%,79.998779%,100%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 36.282629 43.93617 C 36.282629 46.754425 33.998939 49.038115 31.180684 49.038115 C 28.36243 49.038115 26.07874 46.754425 26.07874 43.93617 C 26.07874 41.117916 28.36243 38.834226 31.180684 38.834226 C 33.998939 38.834226 36.282629 41.117916 36.282629 43.93617 Z M 36.282629 43.93617 " transform="matrix(0.9938,0,0,-0.9938,25.407167,105.042672)"/>
+<g style="fill:rgb(0%,0%,100%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph2-1" x="52.833066" y="63.659847"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 39.686546 43.93617 L 76.029057 43.93617 " transform="matrix(0.9938,0,0,-0.9938,25.407167,105.042672)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,100%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.532432 -0.00146959 C 3.978214 0.140033 1.529438 0.922226 0.000426903 1.77124 L 0.000426903 -1.770249 C 1.529438 -0.921235 3.978214 -0.139041 4.532432 -0.00146959 Z M 4.532432 -0.00146959 " transform="matrix(0.9938,0,0,-0.9938,100.964419,61.377446)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph3-1" x="78.815967" y="51.933007"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph4-1" x="83.264215" y="52.988422"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph5-1" x="87.081401" y="52.988422"/>
+</g>
+<path style="fill-rule:nonzero;fill:rgb(100%,79.998779%,79.998779%);fill-opacity:1;stroke-width:0.3985;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 172.348896 18.426448 C 172.348896 21.244702 170.065206 23.528392 167.246952 23.528392 C 164.428697 23.528392 162.145007 21.244702 162.145007 18.426448 C 162.145007 15.608193 164.428697 13.324503 167.246952 13.324503 C 170.065206 13.324503 172.348896 15.608193 172.348896 18.426448 Z M 172.348896 18.426448 " transform="matrix(0.9938,0,0,-0.9938,25.407167,105.042672)"/>
+<g style="fill:rgb(100%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph6-1" x="188.052475" y="88.960007"/>
+</g>
+<path style="fill:none;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 158.74109 18.426448 L 122.398579 18.426448 " transform="matrix(0.9938,0,0,-0.9938,25.407167,105.042672)"/>
+<path style="fill-rule:nonzero;fill:rgb(100%,0%,0%);fill-opacity:1;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(100%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 4.532445 -0.00121763 C 3.978228 0.136354 1.529452 0.918547 0.000440809 1.771492 L 0.000440809 -1.769997 C 1.529452 -0.920983 3.978228 -0.138789 4.532445 -0.00121763 Z M 4.532445 -0.00121763 " transform="matrix(-0.9938,0,0,0.9938,147.047313,86.731679)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph3-1" x="154.794958" y="77.286832"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph4-1" x="159.243207" y="78.342248"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph7-1" x="163.059399" y="78.342248"/>
+</g>
+<path style="fill:none;stroke-width:1.59404;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 79.370084 83.623639 L 109.690885 83.623639 " transform="matrix(0.9938,0,0,-0.9938,25.407167,105.042672)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1.59404;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 6.080074 0.000648962 C 5.333256 0.189319 2.051189 1.258447 -0.000594762 2.421911 L -0.000594762 -2.424543 C 2.051189 -1.257149 5.333256 -0.188021 6.080074 0.000648962 Z M 6.080074 0.000648962 " transform="matrix(0.9938,0,0,-0.9938,134.41856,21.938145)"/>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-1" x="102.146415" y="14.081152"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-2" x="108.75027" y="14.081152"/>
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-3" x="113.15119" y="14.081152"/>
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-4" x="117.029346" y="14.081152"/>
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-5" x="120.935224" y="14.081152"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-6" x="129.182617" y="14.081152"/>
+  <use xlink:href="#fisica2_lez12a_d1-glyph8-7" x="134.683519" y="14.081152"/>
+</g>
+<g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+  <use xlink:href="#fisica2_lez12a_d1-glyph0-5" x="140.732688" y="14.081152"/>
+</g>
+</g>
+</svg></figure>
+        <p>Nella figura, i portatori positivi derivano con velocità $v_{d+}$ da $A$ verso $B$ (nel verso del campo elettrico), mentre i portatori negativi (gli elettroni di conduzione) derivano con velocità $v_{d-}$ da $B$ verso $A$. La freccia in alto indica il verso convenzionale di $I$, da $A$ verso $B$.</p>
+        <p>Le cariche in un conduttore non si muovono in modo ordinato, ma hanno un <strong>moto caotico di agitazione termica</strong>. La presenza di un campo elettrico impone a questo moto disordinato una deriva d'insieme.</p>`,
+        subsections: [
+          {
+            subtitle: "Definizione — Velocità di deriva",
+            content: `<p>Si definisce <strong>velocità di deriva</strong> $\\vec{v}_d$ la velocità media (vettoriale) dei portatori di carica mobili all'interno del conduttore:</p>
+            <p>$$\\vec{v}_d = \\langle \\vec{v} \\rangle$$</p>
+            <p>dove la media è estesa a tutti i portatori contenuti in un volumetto macroscopicamente piccolo. L'unità di misura è il metro al secondo (m/s).</p>
+            <p>La media del moto puramente termico è nulla: $\\vec{v}_d$ è dunque interamente dovuta al campo elettrico applicato. Per i portatori positivi $\\vec{v}_d$ ha il verso di $\\vec{E}$, per quelli negativi il verso opposto. Nei metalli $|\\vec{v}_d|$ è dell'ordine di frazioni di millimetro al secondo, <strong>molto minore</strong> della velocità di agitazione termica.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s12-vettore-J",
+        type: "section",
+        title: "Vettore densità di corrente",
+        icon: "➡️",
+        content: `<p>L'intensità $I$ è una grandezza <strong>globale</strong>, riferita a un'intera superficie. Per descrivere la corrente in modo <strong>locale</strong>, punto per punto, introduciamo il vettore densità di corrente $\\vec{J}$.</p>
+        <p>Consideriamo un piccolo volume cilindrico all'interno del conduttore, con una superficie di base $dS$ e altezza $dl$. In un tempo $dt$, le cariche con velocità di deriva $\\vec{v}_d$ percorrono una distanza $dl = v_d dt$. La quantità di carica che attraversa la superficie $dS$ nell'intervallo $dt$ è quella contenuta nel volume spazzato dalle cariche.</p>`,
+        subsections: [
+          {
+            subtitle: "Volume geometrico e volume orientato",
+            content: `<p>Se la velocità $\\vec{v}_d$ non è perpendicolare alla superficie $dS$, il volume <strong>geometrico</strong> effettivamente attraversato dalle cariche nel tempo $dt$ è</p>
+            <p>$$dV_{geom} = \\left| \\vec{v}_d \\cdot \\hat{n} \\right| dt \\, dS \\;\\; \\ge 0$$</p>
+            <p>dove $\\hat{n}$ è il versore normale alla superficie: solo la componente di $\\vec{v}_d$ lungo $\\hat{n}$ contribuisce al transito, mentre la componente tangenziale fa scorrere le cariche parallelamente a $dS$ senza farle passare.</p>
+            <p>Nei calcoli è però conveniente usare il <strong>volume orientato</strong></p>
+            <p>$$dV = (\\vec{v}_d \\cdot \\hat{n}) \\, dt \\, dS$$</p>
+            <p>che può essere positivo o negativo: il suo segno registra se le cariche attraversano $dS$ nel verso di $\\hat{n}$ oppure in quello opposto. In questo modo la carica $dQ$ che ne deriva risulta automaticamente la <strong>carica netta con segno</strong> riferita alla normale scelta, coerentemente con la definizione di $I$: il risultato porta sia il segno del prodotto scalare sia il segno della carica $q$ dei portatori.</p>`
+          },
+          {
+            subtitle: "Dalla carica trasferita al vettore $\\vec{J}$",
+            content: `<p>Sia $n$ la densità dei portatori di carica (numero di portatori per unità di volume) e $q$ la carica di ciascun portatore, con il proprio segno. La carica netta $dQ$ che attraversa $dS$, riferita alla normale $\\hat{n}$, è:</p>
+            <p>$$dQ = (nq) \\, dV = n q (\\vec{v}_d \\cdot \\hat{n}) \\, dt \\, dS$$</p>
+            <p>Si vede subito che, per esempio, portatori con $q \\lt 0$ che attraversano $dS$ nel verso di $\\hat{n}$ (cioè con $\\vec{v}_d \\cdot \\hat{n} \\gt 0$) danno $dQ \\lt 0$.</p>`
+          },
+          {
+            subtitle: "Definizione — Vettore densità di corrente",
+            content: `<p>Si definisce <strong>vettore densità di corrente</strong> il campo vettoriale</p>
+            <p>$$\\vec{J} = n q \\, \\vec{v}_d = \\rho_{\\text{mob}} \\, \\vec{v}_d$$</p>
+            <p>dove $n$ è la densità numerica dei portatori mobili (misurata in m$^{-3}$), $q$ è la carica di un singolo portatore in coulomb (C) con il proprio segno, $\\rho_{\\text{mob}} = nq$ è la densità di carica volumetrica <strong>mobile</strong> in C/m$^3$, e $\\vec{v}_d$ è la velocità di deriva in m/s.</p>
+            <p>L'unità di misura di $\\vec{J}$ è l'ampere su metro quadrato (A/m$^2$).</p>
+            <p>Il legame con la corrente è locale: per una superficie orientata di normale $\\hat{n}$,</p>
+            <p>$$\\frac{dI}{dS} = \\vec{J} \\cdot \\hat{n}$$</p>
+            <p>Il modulo $|\\vec{J}|$ rappresenta dunque la corrente per unità di area <strong>perpendicolare al flusso</strong>; su una superficie orientata in modo generico conta soltanto la componente normale $\\vec{J} \\cdot \\hat{n}$.</p>`
+          },
+          {
+            subtitle: "Verso di $\\vec{J}$ e segno dei portatori",
+            content: `<p>Dalla definizione $\\vec{J} = nq\\vec{v}_d$ segue che:</p>
+            <ul>
+              <li>se $q \\gt 0$, il vettore $\\vec{J}$ ha la stessa direzione e lo stesso verso della velocità di deriva $\\vec{v}_d$;</li>
+              <li>se $q \\lt 0$ (per esempio gli elettroni di conduzione in un metallo), il verso di $\\vec{J}$ è <strong>opposto</strong> a quello della deriva dei portatori.</li>
+            </ul>
+            <p>In entrambi i casi $\\vec{J}$ ha il verso del moto convenzionale delle cariche positive, cioè il verso di $\\vec{E}$ all'interno del conduttore: la convenzione sul verso della corrente è quindi coerente con la definizione di $\\vec{J}$.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Vettore densità di corrente", latex: "\\vec{J} = n q \\, \\vec{v}_d = \\rho_{\\text{mob}} \\, \\vec{v}_d" },
+          { label: "Legame locale con la corrente", latex: "\\frac{dI}{dS} = \\vec{J} \\cdot \\hat{n}" },
+          { label: "Corrente come flusso di J", latex: "I = \\int_{\\Sigma} \\vec{J} \\cdot \\hat{n} \\, dS" }
+        ],
+        extra_content: `<p>Con questa definizione, la carica infinitesima diventa $dQ = (\\vec{J} \\cdot \\hat{n}) \\, dt \\, dS$ e l'intensità di corrente $I$ attraverso una superficie finita $\\Sigma$ è data dal <strong>flusso</strong> del vettore densità di corrente attraverso tale superficie:</p>
+        <p>$$I = \\frac{dQ}{dt} = \\int_{\\Sigma} \\vec{J} \\cdot \\hat{n} \\, dS = \\int_{\\Sigma} \\vec{J} \\cdot d\\vec{\\Sigma}$$</p>
+        <p><strong>Riassumendo i legami fra le grandezze introdotte:</strong></p>
+        <p>$$\\vec{J} = \\rho_{\\text{mob}} \\, \\vec{v}_d, \\qquad \\frac{dI}{dS} = \\vec{J} \\cdot \\hat{n}, \\qquad I = \\int_{\\Sigma} \\vec{J} \\cdot \\hat{n} \\, dS$$</p>
+        <p>La prima relazione è microscopica, la seconda locale, la terza globale: insieme collegano il moto dei singoli portatori alla corrente misurabile ai capi di un conduttore.</p>`
+      },
+
+      {
+        id: "s12-esempio-flusso-J",
+        type: "section",
+        title: "Esempio — Corrente come flusso di $\\vec{J}$ uniforme",
+        icon: "📐",
+        content: `<p>Consideriamo un filo conduttore rettilineo in cui la densità di corrente è uniforme, $\\vec{J} = J \\hat{x}$ con $J = 2{,}0 \\times 10^{6}$ A/m$^2$ diretta lungo l'asse del filo, e sia $S = 1{,}0 \\times 10^{-6}$ m$^2$ (cioè $1$ mm$^2$) l'area della sezione retta.</p>`,
+        subsections: [
+          {
+            subtitle: "(a) Superficie perpendicolare al flusso",
+            content: `<p>Se tagliamo il filo con una sezione piana perpendicolare all'asse e scegliamo la normale $\\hat{n} = \\hat{x}$ concorde con $\\vec{J}$, allora $\\vec{J} \\cdot \\hat{n} = J$ è costante su tutta la superficie e può essere portato fuori dall'integrale:</p>
+            <p>$$I = \\int_{\\Sigma} \\vec{J} \\cdot \\hat{n} \\, dS = J \\int_{\\Sigma} dS = J S$$</p>
+            <p>Numericamente:</p>
+            <p>$$I = (2{,}0 \\times 10^{6}\\ \\text{A/m}^2)(1{,}0 \\times 10^{-6}\\ \\text{m}^2) = 2{,}0\\ \\text{A}$$</p>`
+          },
+          {
+            subtitle: "(b) Superficie inclinata",
+            content: `<p>Tagliamo ora lo stesso filo con un piano obliquo e scegliamo la normale $\\hat{n}$ <strong>concorde</strong> con la corrente, cioè con un angolo $\\theta$ tra $\\hat{n}$ e $\\vec{J}$ tale che $0 \\le \\theta \\lt \\pi/2$.</p>
+            <p><strong>Perché $S' = S/\\cos\\theta$ — la proiezione geometrica.</strong> La sezione obliqua $S'$ e la sezione retta $S$ intercettano lo stesso "tubo" di filo. Proiettando la superficie obliqua sul piano perpendicolare all'asse si ottiene proprio la sezione retta, e la proiezione di un'area piana su un piano inclinato di $\\theta$ rispetto ad essa riduce l'area del fattore $\\cos\\theta$. Dunque $S = S' \\cos\\theta$, cioè la superficie obliqua è <strong>più grande</strong> della sezione retta:</p>
+            <p>$$S' = \\frac{S}{\\cos\\theta}, \\qquad 0 \\le \\theta \\lt \\frac{\\pi}{2}$$</p>
+            <div class="diagram-placeholder" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+              <p><strong>📊 Diagramma — Proiezione della sezione obliqua</strong></p>
+              <p><em>Filo cilindrico orizzontale con asse lungo $\\hat{x}$. Tratteggiata la sezione retta di area $S$ (piano perpendicolare all'asse). In grassetto la sezione obliqua di area $S'$, inclinata di un angolo $\\theta$. Dalla sezione obliqua parte il versore normale $\\hat{n}$, che forma l'angolo $\\theta$ con $\\vec{J}$ (parallelo all'asse). Frecce di proiezione mostrano che l'ombra di $S'$ sul piano perpendicolare al filo ha area $S = S'\\cos\\theta$.</em></p>
+              <p style="margin-top: 8px; font-size: 0.75rem; color: var(--accent);">[ immagine da inserire ]</p>
+            </div>
+            <p>In generale, qualunque sia l'orientazione scelta per la normale, l'area geometrica è $S' = S/\\left| \\cos\\theta \\right|$, mentre il <strong>segno</strong> del flusso resta determinato separatamente dal verso di $\\hat{n}$ (si veda il punto (c)). Il prodotto scalare introduce il fattore $\\cos\\theta$ e si ottiene</p>
+            <p>$$I = \\vec{J} \\cdot \\hat{n} \\, S' = J \\cos\\theta \\cdot \\frac{S}{\\cos\\theta} = J S$$</p>
+            <p>Si ottiene lo stesso valore $I = 2{,}0$ A: è la conferma che, in regime stazionario, la corrente che attraversa il filo <strong>non dipende</strong> da come scegliamo la superficie di taglio.</p>
+            <p>Se invece l'area inclinata considerata è $S$ (e non $S/\\cos\\theta$), la corrente che la attraversa è $I = J S \\cos\\theta$: per esempio con $\\theta = 60^\\circ$ si ha $I = 2{,}0 \\cdot \\cos 60^\\circ = 1{,}0$ A, perché tale superficie intercetta solo una parte del flusso.</p>`
+          },
+          {
+            subtitle: "(c) Ruolo del verso della normale",
+            content: `<p>Se nel caso (a) avessimo scelto $\\hat{n} = -\\hat{x}$, avremmo ottenuto</p>
+            <p>$$I = \\vec{J} \\cdot \\hat{n} \\, S = -J S = -2{,}0\\ \\text{A}$$</p>
+            <p>Il modulo è identico, ma il segno è negativo: ciò significa semplicemente che la corrente scorre nel verso opposto alla normale scelta. Il segno di $I$ non è dunque una proprietà intrinseca della corrente, ma dipende dall'orientazione assegnata alla superficie; <strong>va quindi sempre dichiarata la scelta di $\\hat{n}$ prima di interpretare il risultato</strong>.</p>`
+          }
+        ]
+      },
+
+      {
+        id: "s12-richiamo-J-specie",
+        type: "section",
+        title: "Più specie di portatori: densità parziali e totale",
+        icon: "🧪",
+        content: `<p>Il capitolo che segue si apre con un breve <strong>richiamo</strong> del vettore densità di corrente, già introdotto. La vera novità è duplice: il passaggio al caso di <strong>più specie di portatori</strong> (con la distinzione fra densità di carica parziali e totale) e la formulazione della <strong>conservazione della carica</strong> come equazione di continuità.</p>
+        <p>Per una singola popolazione di portatori, tutti di carica $q$ e con velocità di deriva media comune $\\vec{v}_d$, il vettore densità di corrente è $\\vec{J} = n q \\vec{v}_d$, dove $n$ è la densità numerica dei portatori e $q$ la loro carica con il proprio segno.</p>
+        <p>Il nome "vettore densità di corrente" si giustifica analizzando i termini della definizione: è un <strong>vettore</strong> perché è proporzionale al vettore velocità di deriva $\\vec{v}_d$ (direzione e verso sono quelli del moto delle cariche se $q \\gt 0$); è una <strong>densità</strong> perché dipende da $n$, che rappresenta la densità volumetrica dei portatori di carica e si misura in $\\text{portatori}/\\text{m}^3$.</p>`,
+        subsections: [
+          {
+            subtitle: "Richiamo del legame con la corrente",
+            content: `<p>La corrente infinitesima $dI$ che attraversa una superficie infinitesima $dS$ con versore normale $\\hat{n}$ è il prodotto scalare tra il vettore densità di corrente e il vettore superficie $d\\vec{S} = \\hat{n} \\, dS$:</p>
+            <p>$$dI = \\vec{J} \\cdot d\\vec{S} = \\vec{J} \\cdot \\hat{n} \\, dS$$</p>
+            <p>Per vedere la coerenza con $I = dQ/dt$, scriviamo direttamente la carica che attraversa l'elemento $dS$ nel tempo $dt$:</p>
+            <p>$$dQ = (\\vec{J} \\cdot \\hat{n}) \\, dS \\, dt \\qquad \\Rightarrow \\qquad dI = \\frac{dQ}{dt} = (\\vec{J} \\cdot \\hat{n}) \\, dS$$</p>
+            <p>dove $dI$ è il <strong>contributo dell'elemento di superficie $dS$</strong> alla corrente totale. Integrando su una superficie finita $\\Sigma$ si ottiene la corrente totale, cioè il <strong>flusso</strong> del campo vettoriale $\\vec{J}$ attraverso $\\Sigma$:</p>
+            <p>$$I = \\int_{\\Sigma} dI = \\int_{\\Sigma} \\vec{J} \\cdot \\hat{n} \\, dS$$</p>
+            <p>L'unità di misura di $\\vec{J}$ nel Sistema Internazionale è l'ampere su metro quadro: $[J] = [I]/[S] = \\text{A}/\\text{m}^2$.</p>`
+          },
+          {
+            subtitle: "Densità parziali e densità totale",
+            content: `<p>Per una singola specie di portatori il prodotto $n \\cdot q$ rappresenta la densità di carica associata a quella specie. Indicando con l'indice $s$ la specie considerata:</p>
+            <p>$$\\rho_s = n_s q_s \\quad \\left[ \\frac{\\text{portatori}}{\\text{m}^3} \\cdot \\frac{\\text{C}}{\\text{portatore}} = \\frac{\\text{C}}{\\text{m}^3} \\right]$$</p>
+            <p>Il contributo di quella specie si riscrive in forma compatta come $\\vec{J}_s = \\rho_s \\vec{v}_{d,s}$.</p>
+            <p>È importante distinguere con cura due oggetti diversi:</p>
+            <ul>
+              <li>la <strong>densità di carica parziale</strong> $\\rho_s = n_s q_s$ di ciascuna specie di portatori <em>mobili</em>;</li>
+              <li>la <strong>densità di carica totale</strong> $\\rho_{\\text{tot}} = \\sum_s \\rho_s + \\rho_{\\text{fissa}}$, che comprende anche le eventuali cariche <em>immobili</em> (per esempio gli ioni del reticolo cristallino di un metallo, o le cariche di background in un elettrolita).</li>
+            </ul>
+            <p>In un conduttore metallico neutro, per esempio, la densità degli elettroni di conduzione $\\rho_- = -n e$ è grandissima in modulo, ma viene compensata esattamente dalla densità positiva del reticolo, così che $\\rho_{\\text{tot}} = 0$ <strong>anche quando scorre corrente</strong>.</p>
+            <p>Nell'equazione di continuità compaiono sempre le grandezze <strong>totali</strong>:</p>
+            <p>$$\\rho \\equiv \\rho_{\\text{tot}}, \\qquad \\vec{J} \\equiv \\vec{J}_{\\text{tot}} = \\sum_s \\rho_s \\vec{v}_{d,s}$$</p>
+            <p>La relazione compatta $\\vec{J}_s = \\rho_s \\vec{v}_{d,s}$ vale per il contributo di ciascuna specie e contiene la densità di carica <strong>parziale</strong>: non può essere scritta con la densità totale. In un metallo vi è un'unica specie di portatori mobili, eppure $\\rho_{\\text{tot}} = 0$ mentre $\\vec{J} \\neq \\vec{0}$. La scrittura $\\vec{J} = \\rho_{\\text{tot}} \\vec{v}_d$ è lecita solo se tutte le cariche presenti appartengono a un'unica popolazione che si muove con la stessa velocità di deriva (nessuna carica di compensazione immobile).</p>`
+          },
+          {
+            subtitle: "Contributo di più portatori di carica",
+            content: `<p>In molti materiali conduttori, come le soluzioni elettrolitiche o i gas ionizzati, possono coesistere portatori di carica di segno opposto in movimento. Il vettore densità di corrente totale è la somma vettoriale dei contributi:</p>
+            <p>$$\\vec{J}_{\\text{tot}} = \\vec{J}_{+} + \\vec{J}_{-}$$</p>
+            <p>Se abbiamo cariche positive ($q \\gt 0$) con densità $n_+$ e velocità $\\vec{v}_{d+}$ e cariche negative ($-q$) con densità $n_-$ e velocità $\\vec{v}_{d-}$:</p>
+            <p>$$\\vec{J}_{\\text{tot}} = n_+ q \\vec{v}_{d+} + n_- (-q) \\vec{v}_{d-}$$</p>
+            <p>Se le cariche positive si muovono lungo $\\hat{x}$ e quelle negative lungo $-\\hat{x}$, entrambe contribuiscono a una corrente netta nello stesso verso. Indicando con $v_{d+}$ e $v_{d-}$ i moduli delle velocità:</p>
+            <p>$$\\vec{J}_{\\text{tot}} = (n_+ q v_{d+} + n_- q v_{d-}) \\hat{x}$$</p>
+            <p>Si noti che, mentre le due specie <strong>sommano</strong> i loro contributi alla corrente, le loro densità di carica $\\rho_+ = n_+ q$ e $\\rho_- = -n_- q$ si <strong>compensano</strong> (totalmente o in parte) nella densità totale: corrente e densità di carica totale sono grandezze <strong>indipendenti</strong>.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Densità di carica parziale", latex: "\\rho_s = n_s q_s" },
+          { label: "Densità di carica totale", latex: "\\rho_{\\text{tot}} = \\sum_s \\rho_s + \\rho_{\\text{fissa}}" },
+          { label: "Densità di corrente totale", latex: "\\vec{J}_{\\text{tot}} = \\sum_s \\rho_s \\vec{v}_{d,s}" }
+        ]
+      },
+
+      {
+        id: "s12-continuita",
+        type: "section",
+        title: "Equazione di continuità",
+        icon: "♻️",
+        content: `<p>Introduciamo ora un principio fondamentale: la <strong>conservazione della carica elettrica</strong>, che in forma di equazione locale prende il nome di equazione di continuità.</p>`,
+        subsections: [
+          {
+            subtitle: "Analogia dell'Università (nota del Prof.)",
+            content: `<blockquote><p>Cosa significa che una corrente è stazionaria? Immaginiamo l'università come un volume delimitato da una superficie chiusa (le porte dell'edificio). Per avere un sistema <em>stazionario</em> non basta che nel corso della giornata entrino ed escano tanti studenti quanti: bisogna che, <strong>in ogni istante</strong>, la portata di studenti in ingresso sia uguale alla portata di studenti in uscita e che, inoltre, le portate stesse non cambino nel tempo. Pensiamo per esempio a un flusso costante di $10$ studenti al minuto che entrano dall'ingresso principale e a un flusso costante di $10$ studenti al minuto che escono dall'uscita secondaria: in queste condizioni il numero di persone presenti nell'edificio non cambia mai.</p>
+            <p>Al contrario, il caso di una giornata tipica (ingressi concentrati la mattina, uscite concentrate la sera) <strong>non</strong> è stazionario, pur avendo bilancio netto nullo sulle $24$ ore: nel pomeriggio l'edificio è pieno, di notte è vuoto. Il solo bilancio nullo su un intervallo finito permette accumuli intermedi e dunque non garantisce la stazionarietà.</p></blockquote>
+            <p>Allo stesso modo, per una corrente elettrica, la <strong>condizione di stazionarietà</strong> richiede che in un qualsiasi volume fissato la carica che entra per unità di tempo sia uguale, istante per istante, alla carica che esce per unità di tempo, e che le grandezze locali ($\\vec{J}$ e $\\rho$) non dipendano dal tempo. Non c'è accumulo di carica in nessun momento.</p>`
+          },
+          {
+            subtitle: "Bilancio di carica e forma integrale",
+            content: `<p>Consideriamo un volume $V$ <strong>fisso</strong> nello spazio, delimitato da una superficie chiusa $S$ con versore normale $\\hat{n}$ <strong>uscente</strong>. La carica totale $Q(t)$ contenuta nel volume al tempo $t$ può variare solo se c'è un flusso netto di carica attraverso la superficie $S$.</p>
+            <p>La carica che esce dal volume nell'intervallo di tempo $[t,\\,t+\\Delta t]$ è l'<strong>integrale nel tempo</strong> del flusso uscente di $\\vec{J}$: il flusso, in generale, cambia durante l'intervallo e non può essere semplicemente moltiplicato per $\\Delta t$. Vale dunque il bilancio esatto</p>
+            <p>$$Q(t+\\Delta t) - Q(t) = - \\int_{t}^{t+\\Delta t} \\left( \\oint_S \\vec{J}(\\vec{r},\\tau) \\cdot \\hat{n} \\, dS \\right) d\\tau$$</p>
+            <p>Il segno meno indica che un flusso uscente netto positivo ($\\oint \\gt 0$) riduce la carica interna.</p>
+            <p><strong>Perché in classe si scrive la forma approssimata.</strong> Se l'intervallo $\\Delta t$ è abbastanza piccolo, il flusso si può considerare costante e pari al suo valore all'istante $t$. Si ottiene allora l'approssimazione al primo ordine</p>
+            <p>$$Q(t+\\Delta t) - Q(t) = - \\Delta t \\oint_S \\vec{J}(\\vec{r},t) \\cdot \\hat{n} \\, dS + o(\\Delta t)$$</p>
+            <p>che <strong>non</strong> è esatta su un intervallo finito, ma diventa esatta nel limite $\\Delta t \\to 0$ (è proprio il termine $o(\\Delta t)$ che si annulla più rapidamente di $\\Delta t$ quando si divide e si passa al limite).</p>
+            <p>Riorganizzando i termini e dividendo per $\\Delta t$:</p>
+            <p>$$\\frac{Q(t+\\Delta t) - Q(t)}{\\Delta t} = - \\frac{1}{\\Delta t}\\int_{t}^{t+\\Delta t} \\left( \\oint_S \\vec{J} \\cdot \\hat{n} \\, dS \\right) d\\tau$$</p>
+            <p>Passando al limite per $\\Delta t \\to 0$, il membro di sinistra diventa la derivata di $Q$ e il membro di destra il valore istantaneo del flusso, e otteniamo l'<strong>equazione di continuità in forma integrale</strong>:</p>
+            <p>$$\\frac{dQ}{dt} = - \\oint_S \\vec{J} \\cdot \\hat{n} \\, dS$$</p>
+            <p>Questa equazione afferma che la rapidità con cui varia la carica totale all'interno di un volume è uguale al flusso netto di corrente <em>entrante</em> attraverso la sua superficie.</p>`
+          },
+          {
+            subtitle: "Forma differenziale",
+            content: `<p>Per ottenere una formulazione locale, applichiamo il <strong>teorema della divergenza</strong> al termine di destra:</p>
+            <p>$$\\oint_S \\vec{J} \\cdot \\hat{n} \\, dS = \\int_V (\\nabla \\cdot \\vec{J}) \\, dV$$</p>
+            <p>La carica totale $Q$ può essere espressa come l'integrale della densità di carica totale $\\rho$ sul volume $V$: $Q(t) = \\int_V \\rho(x,y,z,t) \\, dV$. La sua derivata rispetto al tempo, <strong>poiché il volume di integrazione è fisso</strong>, diventa:</p>
+            <p>$$\\frac{dQ}{dt} = \\frac{d}{dt} \\int_V \\rho \\, dV = \\int_V \\frac{\\partial \\rho}{\\partial t} \\, dV$$</p>
+            <p>Sostituendo nell'equazione di continuità integrale:</p>
+            <p>$$\\int_V \\frac{\\partial \\rho}{\\partial t} \\, dV = - \\int_V (\\nabla \\cdot \\vec{J}) \\, dV$$</p>
+            <p>Portando tutto sotto un unico integrale:</p>
+            <p>$$\\int_V \\left( \\nabla \\cdot \\vec{J} + \\frac{\\partial \\rho}{\\partial t} \\right) dV = 0$$</p>
+            <p>Poiché questa relazione deve valere per un <strong>qualsiasi</strong> volume arbitrario $V$, l'unica possibilità è che l'integrando sia identicamente nullo in ogni punto dello spazio.</p>`
+          },
+          {
+            subtitle: "Proposizione — Equazione di continuità della carica elettrica",
+            content: `<p>Sia $V$ un volume <strong>fisso</strong> nello spazio, delimitato dalla superficie chiusa $S$ orientata con versore normale $\\hat{n}$ <strong>uscente</strong>. Siano $\\rho = \\rho_{\\text{tot}}$ la densità di carica totale e $\\vec{J} = \\vec{J}_{\\text{tot}} = \\sum_s \\rho_s \\vec{v}_{d,s}$ la densità di corrente totale. Allora:</p>
+            <p><strong>1) Forma integrale</strong></p>
+            <p>$$\\frac{dQ}{dt} = - \\oint_S \\vec{J} \\cdot \\hat{n} \\, dS, \\qquad Q(t) = \\int_V \\rho \\, dV$$</p>
+            <p><strong>2) Forma differenziale (o locale)</strong></p>
+            <p>$$\\nabla \\cdot \\vec{J} + \\frac{\\partial \\rho}{\\partial t} = 0$$</p>
+            <p>Le due forme sono equivalenti (si passa dall'una all'altra con il teorema della divergenza e l'arbitrarietà di $V$) ed esprimono entrambe la <strong>conservazione locale della carica elettrica</strong>: la carica non può né comparire né scomparire in un punto, può soltanto fluire.</p>
+            <p>Questa è una delle equazioni fondamentali dell'elettromagnetismo.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Continuità — forma integrale", latex: "\\frac{dQ}{dt} = - \\oint_S \\vec{J} \\cdot \\hat{n} \\, dS" },
+          { label: "Continuità — forma differenziale", latex: "\\nabla \\cdot \\vec{J} + \\frac{\\partial \\rho}{\\partial t} = 0" }
+        ]
+      },
+
+      {
+        id: "s12-sorgenti-pozzi",
+        type: "note_box",
+        title: "Sorgenti e pozzi — e i limiti dell'analogia idraulica",
+        icon: "🚰",
+        content: `<p>L'equazione di continuità lega la divergenza del campo $\\vec{J}$ alla variazione temporale della densità di carica $\\rho$:</p>
+        <ul>
+          <li>se in un punto $\\partial \\rho / \\partial t \\gt 0$, la densità di carica sta aumentando: questo implica $\\nabla \\cdot \\vec{J} \\lt 0$, cioè c'è un flusso netto di corrente <strong>entrante</strong> in quel punto (un "pozzo" di corrente);</li>
+          <li>se $\\partial \\rho / \\partial t \\lt 0$, la densità di carica sta diminuendo: questo implica $\\nabla \\cdot \\vec{J} \\gt 0$, cioè c'è un flusso netto di corrente <strong>uscente</strong> da quel punto (una "sorgente" di corrente).</li>
+        </ul>
+        <p>L'analogia idraulica va formulata al livello del <strong>bilancio integrale</strong>. Per un serbatoio fisso, delimitato da una superficie chiusa, vale</p>
+        <p>$$\\frac{dM}{dt} = \\Phi_{\\text{entrante}} - \\Phi_{\\text{uscente}}$$</p>
+        <p>cioè la massa d'acqua $M$ contenuta varia come differenza fra la portata entrante e quella uscente. Se il rubinetto di scarico è aperto e non entra acqua, la portata uscente è positiva e si ha $dM/dt \\lt 0$: la massa contenuta diminuisce, esattamente come la carica di un volume attraversato da un flusso netto uscente di $\\vec{J}$.</p>
+        <p><strong>Attenzione, però, a non tradurre troppo in fretta questo bilancio globale in un'affermazione locale:</strong> la diminuzione della massa totale <strong>non</strong> significa che la densità dell'acqua diminuisca in ogni punto del serbatoio. Per un liquido praticamente incomprimibile la densità locale resta costante e ciò che scende è il <em>livello</em>, cioè il volume occupato. L'enunciato locale $\\partial \\rho/\\partial t \\lt 0$ in un punto significa invece che <em>in quel punto</em> la densità diminuisce, e corrisponde a $\\nabla \\cdot \\vec{J} \\gt 0$ nello stesso punto.</p>`,
+        extra_content: `<p><strong>Perché l'analogia della neve che si scioglie va maneggiata con cura.</strong> Nell'immagine della sorgente di un fiume alimentata dalla neve che fonde intervengono <strong>due fasi diverse</strong>: la densità si riferisce alla neve, il flusso all'acqua liquida. Il bilancio della sola neve contiene allora un termine aggiuntivo di conversione di fase (neve $\\to$ acqua) e non ha la forma dell'equazione di continuità $\\nabla \\cdot \\vec{J} + \\partial \\rho/\\partial t = 0$. L'analogia è suggestiva per l'idea di "sorgente", ma non va usata come esempio quantitativo della continuità.</p>`
+      },
+
+      {
+        id: "s12-integrazione-nodo",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "➕",
+        content: `<p><strong>Esempio illustrativo: bilancio di carica in un nodo.</strong> Questo esempio numerico non è stato svolto a lezione: serve solo a mostrare come si usa in pratica l'equazione di continuità in forma integrale e come si gestiscono i segni.</p>
+        <p>Consideriamo un volume $V$ (per esempio una piccola regione di un circuito, un "nodo") attraversato da due soli conduttori: nel primo entra una corrente $I_{\\text{in}} = 3$ A, dal secondo esce una corrente $I_{\\text{out}} = 2$ A. Entrambe le correnti sono costanti nel tempo.</p>
+        <p><strong>Passo 1 — orientare la normale.</strong> Scegliamo, come nella proposizione, la normale $\\hat{n}$ <strong>uscente</strong> da $S$. Con questa scelta una corrente uscente contribuisce al flusso con segno $+$, una entrante con segno $-$.</p>
+        <p><strong>Passo 2 — calcolare il flusso netto.</strong></p>
+        <p>$$\\oint_S \\vec{J} \\cdot \\hat{n} \\, dS = I_{\\text{out}} - I_{\\text{in}} = 2 - 3 = -1 \\ \\text{A}$$</p>
+        <p>Il flusso netto è negativo: complessivamente entra più carica di quanta ne esce.</p>
+        <p><strong>Passo 3 — applicare la continuità.</strong></p>
+        <p>$$\\frac{dQ}{dt} = - \\oint_S \\vec{J} \\cdot \\hat{n} \\, dS = -(-1\\ \\text{A}) = +1 \\ \\frac{\\text{C}}{\\text{s}}$$</p>
+        <p>La carica contenuta nel volume <strong>aumenta</strong> di $1$ C ogni secondo.</p>
+        <p><strong>Passo 4 — integrare nel tempo.</strong> Poiché $dQ/dt$ è costante, in un intervallo $\\Delta t = 2$ s:</p>
+        <p>$$\\Delta Q = \\frac{dQ}{dt} \\, \\Delta t = 1 \\ \\frac{\\text{C}}{\\text{s}} \\cdot 2 \\ \\text{s} = 2 \\ \\text{C}$$</p>
+        <p><strong>Commento.</strong> Il sistema <strong>non</strong> è in regime stazionario: la carica si accumula nel volume (per esempio su un'armatura di condensatore). Il regime stazionario corrisponderebbe a $I_{\\text{in}} = I_{\\text{out}}$, cioè $dQ/dt = 0$: è esattamente la legge dei nodi di Kirchhoff, che non è altro che l'equazione di continuità applicata a un nodo in condizioni stazionarie.</p>`
+      },
+
+      {
+        id: "s12-regime-stazionario",
+        type: "section",
+        title: "Regime stazionario e solenoidalità di $\\vec{J}$",
+        icon: "🔄",
+        content: `<p>Un sistema si dice in <strong>regime stazionario</strong> quando le grandezze fisiche che lo descrivono non variano nel tempo in nessun punto dello spazio. Nel nostro contesto ciò significa</p>
+        <p>$$\\frac{\\partial \\vec{J}}{\\partial t} = 0 \\quad \\text{e} \\quad \\frac{\\partial \\rho}{\\partial t} = 0 \\qquad \\text{in ogni punto.}$$</p>
+        <p>In particolare la densità di corrente $\\vec{J}(\\vec{r})$ e la densità di carica $\\rho(\\vec{r})$ dipendono solo dalla posizione. Si tratta delle stesse due condizioni già richieste nella definizione data in precedenza.</p>
+        <p>In queste condizioni, l'equazione di continuità si semplifica notevolmente. Ponendo $\\partial \\rho / \\partial t = 0$, otteniamo:</p>
+        <p>$$\\nabla \\cdot \\vec{J} = 0$$</p>
+        <p>cioè il campo vettoriale $\\vec{J}$ è <strong>solenoidale</strong>.</p>
+        <p>In regime stazionario, inoltre, il flusso del vettore densità di corrente attraverso una qualsiasi superficie chiusa è nullo:</p>
+        <p>$$\\oint_S \\vec{J} \\cdot \\hat{n} \\, dS = \\int_V (\\nabla \\cdot \\vec{J}) \\, dV = 0$$</p>
+        <p>Ciò significa che tanta carica entra in un volume quanta ne esce, <strong>istante per istante</strong>. Non ci sono né sorgenti né pozzi di carica.</p>`,
+        subsections: [
+          {
+            subtitle: "Condizione necessaria, non sufficiente",
+            content: `<p>La relazione $\\nabla \\cdot \\vec{J} = 0$ è una <strong>conseguenza</strong> del regime stazionario, non una sua caratterizzazione completa: garantisce l'assenza di accumulo locale di carica, ma <strong>non</strong> implica che la corrente sia indipendente dal tempo.</p>
+            <p><strong>Controesempio:</strong> un campo spazialmente uniforme lungo una direzione fissa,</p>
+            <p>$$\\vec{J}(\\vec{r},t) = J_0 \\cos(\\omega t) \\, \\hat{x}$$</p>
+            <p>ha $\\nabla \\cdot \\vec{J} = 0$ in ogni istante (non dipende dalle coordinate), e quindi $\\partial \\rho/\\partial t = 0$, eppure $\\partial \\vec{J}/\\partial t \\neq 0$: la corrente oscilla nel tempo. Dunque</p>
+            <p>$$\\text{regime stazionario} \\ \\Rightarrow \\ \\nabla \\cdot \\vec{J} = 0, \\qquad \\nabla \\cdot \\vec{J} = 0 \\ \\not\\Rightarrow \\ \\text{regime stazionario}$$</p>
+            <p>Quando si parla di <strong>correnti stazionarie</strong> si intende che valgono <strong>entrambe</strong> le condizioni della definizione.</p>`
+          }
+        ],
+        formulas: [
+          { label: "Solenoidalità di J (regime stazionario)", latex: "\\nabla \\cdot \\vec{J} = 0" },
+          { label: "Flusso nullo su superficie chiusa", latex: "\\oint_S \\vec{J} \\cdot \\hat{n} \\, dS = 0" }
+        ],
+        quote: {
+          text: "La condizione di stazionarietà è un'idealizzazione, ma è un'ottima approssimazione per molti circuiti elettrici in corrente continua. Pensate all'impianto idraulico di casa: se funziona correttamente, in ogni istante la portata d'acqua che entra dal contatore è uguale a quella che esce dagli scarichi e, inoltre, le portate stesse e la distribuzione dell'acqua nelle tubature non cambiano nel tempo. Solo con entrambe le condizioni il sistema è in regime stazionario. Se si ottura uno scarico, l'acqua inizia ad accumularsi: il sistema non è più stazionario, il bilancio della regione dà $dM/dt \\gt 0$ e il flusso netto uscente diventa negativo. A quel punto, chiamate l'idraulico dicendo: «Non sono più in condizioni di stazionarietà!»",
+          src: "Nota del Prof."
+        },
+        extra_content: `<p><strong>Da notare sul controesempio idraulico:</strong> l'accumulo d'acqua nella regione si esprime correttamente come $dM/dt \\gt 0$ con flusso netto uscente negativo attraverso la superficie chiusa. Non si deve dedurre da questo che la densità locale dell'acqua aumenti punto per punto: per un liquido incomprimibile ciò che cresce è il volume occupato, non $\\rho$.</p>`
+      },
+
+      {
+        id: "s12-campo-e-corrente",
+        type: "alert_box",
+        title: "Campo elettrico e corrente di conduzione — tre precisazioni",
+        icon: "⚠️",
+        content: `<p>Che cosa "spinge" le cariche? La risposta corretta, e la più utile per i circuiti che studieremo, va formulata con attenzione.</p>
+        <p>In un <strong>conduttore ohmico</strong> la componente di corrente dovuta al campo elettrico obbedisce alla legge di Ohm in forma locale</p>
+        <p>$$\\vec{J} = \\sigma \\vec{E}$$</p>
+        <p>dove $\\sigma$ è la conduttività del materiale. Per un tratto resistivo, nelle usuali condizioni circuitali, è quindi una <strong>differenza di potenziale</strong> applicata ai suoi capi a sostenere la corrente di conduzione: integrando $\\vec{E}$ lungo il conduttore si ritrova la relazione $V = RI$ che useremo nei circuiti.</p>
+        <p>Sono però necessarie tre precisazioni, per evitare generalizzazioni scorrette:</p>
+        <ul>
+          <li><strong>Moto dei portatori $\\neq$ corrente.</strong> I portatori di carica sono sempre in <strong>moto termico</strong> disordinato, anche in assenza di qualunque campo: in quel caso la velocità <em>media</em> è nulla e non c'è corrente netta, ma le cariche non sono ferme. La corrente è un effetto collettivo, legato alla velocità di deriva $\\vec{v}_d$.</li>
+          <li><strong>Esistono correnti sostenute da altri meccanismi.</strong> Correnti di diffusione (dovute a gradienti di concentrazione dei portatori), correnti indotte da campi elettrici non conservativi (per i quali il potenziale non è nemmeno definibile) e correnti nelle pile dovute a forze di origine chimica non sono descritte dal solo schema "differenza di potenziale $\\to$ corrente".</li>
+          <li><strong>Potenziali uguali $\\neq$ campo nullo.</strong> Il fatto che due punti abbiano lo stesso potenziale non implica che il campo elettrico sia nullo lungo il percorso che li congiunge: significa soltanto che l'integrale di linea $\\int_A^B \\vec{E} \\cdot d\\vec{l}$ lungo quel percorso è nullo (la <em>circolazione</em> si riferisce invece a un cammino chiuso). Il campo può essere diverso da zero tratto per tratto.</li>
+        </ul>
+        <p>L'analogia idraulica (l'acqua scorre da una quota più alta a una più bassa) resta utile come immagine intuitiva per il tratto resistivo di un circuito in corrente continua, purché si tengano presenti questi limiti.</p>`
+      },
+
+      {
+        id: "s12-esercizi-box",
+        type: "integrazione_box",
+        title: "Integrazione — non detto dal docente",
+        icon: "📝",
+        content: `<p>Esercizi sui contenuti di questa lezione, generati dal verificatore e non svolti dal docente. Le soluzioni sono nel box sotto ogni traccia.</p>`
+      },
+
+      {
+        id: "s12-es-teoria-1",
+        type: "esercizio",
+        title: "Teoria 1 — Energia di un condensatore dal lavoro di carica",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Ricava, partendo dal lavoro infinitesimo di carica, l'energia elettrostatica immagazzinata in un condensatore di capacità $C$ portato alla carica finale $Q$. Spiega in particolare il significato della grandezza $V'$ che compare in $dW_{est}=V'\\,dq'$ e perché il lavoro del campo ha segno opposto a quello dell'agente esterno. Scrivi infine le tre forme equivalenti dell'energia.</p>`,
+        solution: `<p><strong>(i) Processo quasistatico e significato di $V'$.</strong> Si carica il condensatore trasferendo cariche infinitesime $dq'$ dall'armatura negativa a quella positiva. Assumiamo due ipotesi <em>distinte</em>: il processo è <em>quasistatico</em> (abbastanza lento perché in ogni istante il sistema sia in equilibrio elettrostatico) ed è <em>privo di dissipazioni</em> (idealizzazione aggiuntiva, non conseguenza automatica della lentezza). La grandezza $V'$ è la differenza di potenziale <strong>istantanea</strong> fra le due armature (non il potenziale assoluto di un conduttore, e la carica non viene portata dall'infinito).</p>
+        <p><strong>(ii) Segno dei due lavori.</strong> Poiché $dq'$ viene spostata contro il campo già presente,</p>
+        <p>$$dW_{est} = +V'\\,dq' = dU, \\qquad dW_{campo} = -V'\\,dq'$$</p>
+        <p>cioè i due lavori hanno somma nulla e, in assenza di dissipazioni, tutto il lavoro esterno si accumula come energia elettrostatica.</p>
+        <p><strong>(iii) Integrazione.</strong> Durante il processo $C$ resta costante (dipende solo dalla geometria e dal dielettrico), quindi $V'=q'/C$ e</p>
+        <p>$$W = \\int_0^Q V'\\,dq' = \\int_0^Q \\frac{q'}{C}\\,dq' = \\frac{1}{C}\\left[\\frac{(q')^2}{2}\\right]_0^Q = \\frac{1}{2}\\frac{Q^2}{C}$$</p>
+        <p><strong>(iv) Forme equivalenti.</strong> Usando $Q=CV$ si ottiene $W=\\frac{1}{2}\\frac{(CV)^2}{C}=\\frac{1}{2}CV^2$ e, con $C=Q/V$, $W=\\frac{1}{2}QV$. In sintesi</p>
+        <p>$$W=\\frac{1}{2}\\frac{Q^2}{C}=\\frac{1}{2}CV^2=\\frac{1}{2}QV$$</p>
+        <p>con $Q$ carica (in modulo) di un'armatura, $V$ differenza di potenziale, $W$ in joule.</p>
+        <p><strong>Commento.</strong> Il fattore $\\tfrac12$ nasce dal fatto che $V'$ cresce linearmente con $q'$ durante la carica: il lavoro non è $QV$ ma il valore medio $\\tfrac12 V$ moltiplicato per $Q$.</p>`
+      },
+
+      {
+        id: "s12-es-teoria-2",
+        type: "esercizio",
+        title: "Teoria 2 — Equazione di continuità: forme e ipotesi",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Enuncia l'equazione di continuità della carica elettrica in forma integrale e in forma differenziale, precisando le ipotesi sul volume $V$ e sull'orientazione della normale, e indica quali passaggi permettono di dedurre la forma locale da quella integrale. Specifica inoltre se $\\rho$ e $\\vec{J}$ sono densità parziali o totali.</p>`,
+        solution: `<p><strong>Ipotesi.</strong> $V$ è un volume <strong>fisso</strong> nello spazio (non deformabile e non in moto), delimitato dalla superficie chiusa $S$ orientata con versore normale $\\hat{n}$ <strong>uscente</strong>; $\\rho = \\rho_{\\text{tot}}$ è la densità di carica <strong>totale</strong> (cariche mobili più cariche fisse) e $\\vec{J} = \\vec{J}_{\\text{tot}} = \\sum_s \\rho_s \\vec{v}_{d,s}$ la densità di corrente <strong>totale</strong>.</p>
+        <p><strong>Forma integrale.</strong></p>
+        <p>$$\\frac{dQ}{dt} = -\\oint_S \\vec{J}\\cdot\\hat{n}\\,dS, \\qquad Q(t) = \\int_V \\rho\\,dV$$</p>
+        <p>Il segno meno è dovuto alla scelta di $\\hat{n}$ uscente, così che un flusso uscente positivo fa diminuire la carica interna.</p>
+        <p><strong>Forma differenziale.</strong></p>
+        <p>$$\\nabla\\cdot\\vec{J} + \\frac{\\partial \\rho}{\\partial t} = 0$$</p>
+        <p><strong>Passaggi dalla forma integrale a quella locale.</strong></p>
+        <p>1) Poiché $V$ è fisso, la derivata temporale passa sotto il segno di integrale:</p>
+        <p>$$\\frac{dQ}{dt} = \\frac{d}{dt}\\int_V \\rho\\,dV = \\int_V \\frac{\\partial\\rho}{\\partial t}\\,dV$$</p>
+        <p>2) Il teorema della divergenza trasforma il flusso in un integrale di volume (serve $\\vec{J}$ di classe $C^1$ in $V$ e $S$ regolare):</p>
+        <p>$$\\oint_S \\vec{J}\\cdot\\hat{n}\\,dS = \\int_V (\\nabla\\cdot\\vec{J})\\,dV$$</p>
+        <p>3) Sostituendo si ottiene</p>
+        <p>$$\\int_V \\left(\\nabla\\cdot\\vec{J} + \\frac{\\partial\\rho}{\\partial t}\\right)dV = 0$$</p>
+        <p>e, valendo per <strong>ogni</strong> volume $V$ con integrando continuo, l'integrando deve essere identicamente nullo.</p>
+        <p><strong>Conclusione.</strong> Le due forme sono equivalenti ed esprimono la conservazione <strong>locale</strong> della carica: la carica non può comparire né scomparire in un punto, può soltanto fluire.</p>`
+      },
+
+      {
+        id: "s12-es-teoria-3",
+        type: "esercizio",
+        title: "Teoria 3 — Densità di energia: locale e media",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Definisci la densità di energia del campo elettrostatico nel vuoto e mostra come la si ottiene dal caso del condensatore piano. Spiega poi la differenza fra densità locale $u_E(\\vec{r})$ e rapporto medio $W/\\tau$, precisando quando le due grandezze coincidono.</p>`,
+        solution: `<p>Per un condensatore piano con armature di area $\\Sigma$ a distanza $d$ nel vuoto si ha $C=\\dfrac{\\epsilon_0\\Sigma}{d}$ e, se il campo interno è uniforme, $V=Ed$. Allora</p>
+        <p>$$W=\\frac{1}{2}CV^2=\\frac{1}{2}\\frac{\\epsilon_0\\Sigma}{d}(Ed)^2=\\frac{1}{2}\\epsilon_0E^2(\\Sigma d)=\\frac{1}{2}\\epsilon_0E^2\\tau$$</p>
+        <p>dove $\\tau=\\Sigma d$ è il volume fra le armature. L'energia appare dunque distribuita nello spazio occupato dal campo, non "dentro" le armature. Si definisce allora la densità di energia elettrostatica come grandezza <strong>locale</strong></p>
+        <p>$$u_E(\\vec{r})=\\frac{dW}{d\\tau}=\\frac{1}{2}\\epsilon_0\\left|\\vec{E}(\\vec{r})\\right|^2$$</p>
+        <p>misurata in J/m$^3$ (con $E$ in V/m e $\\epsilon_0\\simeq 8{,}85\\times10^{-12}$ F/m). L'energia contenuta in una regione si ottiene integrando: $W=\\int_\\tau u_E\\,d\\tau=\\frac{1}{2}\\epsilon_0\\int_\\tau|\\vec{E}|^2\\,d\\tau$.</p>
+        <p>Il rapporto $W/\\tau$ è invece soltanto la densità <strong>media</strong> sul volume $\\tau$: ha carattere globale e non descrive il singolo punto. Le due grandezze coincidono quando $|\\vec{E}|$ è costante nella regione considerata (condensatore piano ideale, dove $W/\\tau=\\frac12\\epsilon_0E^2$). Se il campo varia da punto a punto, come nel condensatore sferico dove $E(r)\\propto 1/r^2$, $W/\\tau$ non ha significato locale e l'energia va calcolata solo con l'integrale di $u_E$.</p>`
+      },
+
+      {
+        id: "s12-es-teoria-4",
+        type: "esercizio",
+        title: "Teoria 4 — $\\nabla \\cdot \\vec{J} = 0$: necessaria ma non sufficiente",
+        kind: "teoria",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Dimostra che la condizione $\\nabla\\cdot\\vec{J} = 0$ è necessaria ma non sufficiente perché un sistema sia in regime stazionario, esibendo un controesempio esplicito.</p>`,
+        solution: `<p><strong>(i) Necessità.</strong> Se il regime è stazionario allora per definizione $\\frac{\\partial\\rho}{\\partial t} = 0$ in ogni punto; sostituendo nell'equazione di continuità $\\nabla\\cdot\\vec{J} + \\frac{\\partial\\rho}{\\partial t} = 0$ si ottiene $\\nabla\\cdot\\vec{J} = 0$, cioè $\\vec{J}$ solenoidale.</p>
+        <p><strong>(ii) Non sufficienza (controesempio).</strong> Si consideri il campo spazialmente uniforme</p>
+        <p>$$\\vec{J}(\\vec{r},t) = J_0\\cos(\\omega t)\\,\\hat{x}$$</p>
+        <p>Le sue componenti non dipendono dalle coordinate, dunque</p>
+        <p>$$\\nabla\\cdot\\vec{J} = \\frac{\\partial}{\\partial x}\\big(J_0\\cos(\\omega t)\\big) = 0 \\quad \\text{in ogni istante}, \\qquad \\frac{\\partial\\rho}{\\partial t} = -\\nabla\\cdot\\vec{J} = 0$$</p>
+        <p>cioè non c'è alcun accumulo locale di carica. Tuttavia</p>
+        <p>$$\\frac{\\partial\\vec{J}}{\\partial t} = -J_0\\omega\\sin(\\omega t)\\,\\hat{x} \\neq \\vec{0}$$</p>
+        <p>quindi la corrente dipende dal tempo e il sistema non è stazionario.</p>
+        <p><strong>(iii) Conclusione.</strong> Regime stazionario $\\Rightarrow \\nabla\\cdot\\vec{J} = 0$, ma $\\nabla\\cdot\\vec{J} = 0 \\not\\Rightarrow$ regime stazionario; parlando di <em>correnti stazionarie</em> si richiedono entrambe le condizioni $\\partial\\vec{J}/\\partial t = 0$ e $\\partial\\rho/\\partial t = 0$.</p>`
+      },
+
+      {
+        id: "s12-es-scritto-1",
+        type: "esercizio",
+        title: "Scritto 1 — Condensatore piano: energia e densità di energia",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Un condensatore a facce piane e parallele ha armature di area $\\Sigma=100\\ \\text{cm}^2$ separate da $d=1{,}0\\ \\text{mm}$ di vuoto ed è collegato a una differenza di potenziale $V=200\\ \\text{V}$. Calcolare: (a) la capacità $C$ e la carica $Q$ su un'armatura; (b) l'energia immagazzinata $W$; (c) il campo elettrico $E$ fra le armature e la densità di energia $u_E$; (d) verificare che $u_E\\,\\tau=W$, con $\\tau$ volume fra le armature. Si usi $\\epsilon_0=8{,}85\\times10^{-12}\\ \\text{F/m}$.</p>`,
+        solution: `<p><strong>(a) Capacità e carica.</strong> Con $\\Sigma=100\\ \\text{cm}^2=1{,}0\\times10^{-2}\\ \\text{m}^2$ e $d=1{,}0\\times10^{-3}\\ \\text{m}$:</p>
+        <p>$$C = \\frac{\\epsilon_0\\Sigma}{d} = \\frac{(8{,}85\\times10^{-12})(1{,}0\\times10^{-2})}{1{,}0\\times10^{-3}} = 8{,}85\\times10^{-11}\\ \\text{F} = 88{,}5\\ \\text{pF}$$</p>
+        <p>$$Q = CV = (8{,}85\\times10^{-11})(200) = 1{,}77\\times10^{-8}\\ \\text{C} = 17{,}7\\ \\text{nC}$$</p>
+        <p><strong>(b) Energia immagazzinata.</strong></p>
+        <p>$$W = \\frac{1}{2}CV^2 = \\frac{1}{2}(8{,}85\\times10^{-11})(4{,}0\\times10^{4}) = 1{,}77\\times10^{-6}\\ \\text{J} = 1{,}77\\ \\mu\\text{J}$$</p>
+        <p>Lo stesso valore si ottiene da $W=\\frac12 QV=\\frac12(1{,}77\\times10^{-8})(200)=1{,}77\\times10^{-6}$ J e da $W=\\frac12 Q^2/C$.</p>
+        <p><strong>(c) Campo e densità di energia.</strong> Il campo fra le armature è uniforme e $V=Ed$, quindi</p>
+        <p>$$E = \\frac{V}{d} = \\frac{200}{1{,}0\\times10^{-3}} = 2{,}0\\times10^{5}\\ \\text{V/m}$$</p>
+        <p>$$u_E = \\frac{1}{2}\\epsilon_0E^2 = \\frac{1}{2}(8{,}85\\times10^{-12})(4{,}0\\times10^{10}) = 0{,}177\\ \\text{J/m}^3$$</p>
+        <p><strong>(d) Verifica.</strong> Il volume è $\\tau=\\Sigma d=(1{,}0\\times10^{-2})(1{,}0\\times10^{-3})=1{,}0\\times10^{-5}\\ \\text{m}^3$, dunque</p>
+        <p>$$u_E\\,\\tau = (0{,}177)(1{,}0\\times10^{-5}) = 1{,}77\\times10^{-6}\\ \\text{J} = W$$</p>
+        <p>coerente con $W=\\frac12\\epsilon_0E^2\\tau$. Qui densità locale e densità media coincidono perché $|\\vec{E}|$ è costante nella regione fra le armature.</p>`
+      },
+
+      {
+        id: "s12-es-scritto-2",
+        type: "esercizio",
+        title: "Scritto 2 — Velocità di deriva in un filo di rame",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Un filo di rame di sezione uniforme $S = 2{,}0\\ \\text{mm}^2$ è percorso da una corrente continua $I = 10\\ \\text{A}$ distribuita uniformemente sulla sezione. La densità di elettroni di conduzione è $n = 8{,}5\\cdot 10^{28}\\ \\text{m}^{-3}$ e $e = 1{,}6\\cdot10^{-19}\\ \\text{C}$. Calcola il modulo di $\\vec{J}$, il modulo della velocità di deriva $v_d$ e il tempo che un elettrone impiega mediamente a percorrere $1\\ \\text{m}$ di filo.</p>`,
+        solution: `<p><strong>(i) Modulo della densità di corrente.</strong> Poiché $\\vec{J}$ è uniforme sulla sezione e parallelo a $\\hat{n}$, dalla definizione $I = \\int_\\Sigma \\vec{J}\\cdot\\hat{n}\\,dS$ segue $I = J S$, quindi</p>
+        <p>$$J = \\frac{I}{S} = \\frac{10\\ \\text{A}}{2{,}0\\cdot10^{-6}\\ \\text{m}^2} = 5{,}0\\cdot10^{6}\\ \\text{A/m}^2$$</p>
+        <p><strong>(ii) Velocità di deriva.</strong> Dalla relazione $\\vec{J} = \\rho_-\\vec{v}_{d,-}$ con $|\\rho_-| = n e$ si ricava</p>
+        <p>$$v_d = \\frac{J}{n e} = \\frac{5{,}0\\cdot10^{6}}{(8{,}5\\cdot10^{28})(1{,}6\\cdot10^{-19})} = \\frac{5{,}0\\cdot10^{6}}{1{,}36\\cdot10^{10}} \\simeq 3{,}7\\cdot10^{-4}\\ \\text{m/s}$$</p>
+        <p><strong>(iii) Tempo di percorrenza.</strong> Per $L = 1\\ \\text{m}$:</p>
+        <p>$$t = \\frac{L}{v_d} \\simeq \\frac{1\\ \\text{m}}{3{,}7\\cdot10^{-4}\\ \\text{m/s}} \\simeq 2{,}7\\cdot10^{3}\\ \\text{s} \\simeq 45\\ \\text{min}$$</p>
+        <p><strong>Commento.</strong> La velocità di deriva $\\vec{v}_d$ è diretta in verso opposto a $\\vec{J}$, perché i portatori sono negativi. La sua piccolezza non contrasta con la rapidità di propagazione del segnale elettrico: la corrente è un effetto collettivo sovrapposto al moto termico disordinato.</p>`
+      },
+
+      {
+        id: "s12-es-scritto-3",
+        type: "esercizio",
+        title: "Scritto 3 — Energia di una sfera conduttrice carica",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>Una sfera conduttrice isolata di raggio $R=10\\ \\text{cm}$ porta la carica $Q=2{,}0\\times10^{-8}\\ \\text{C}$. (a) Calcolare l'energia elettrostatica totale integrando la densità di energia su tutto lo spazio. (b) Verificare il risultato con $W=\\frac12 Q^2/C$, sapendo che $C=4\\pi\\epsilon_0R$. (c) Determinare quale frazione dell'energia totale è contenuta nella regione $R\\le r\\le 2R$. (d) Valutare numericamente $W$.</p>`,
+        solution: `<p><strong>(a) Integrazione della densità di energia.</strong> Per una sfera conduttrice in equilibrio il campo è nullo all'interno ($r \\lt R$), mentre per $r \\gt R$ il teorema di Gauss con superficie sferica di raggio $r$ dà $E(r)\\,4\\pi r^2=Q/\\epsilon_0$, cioè $E(r)=\\dfrac{1}{4\\pi\\epsilon_0}\\dfrac{Q}{r^2}$. Il modulo del campo non è costante, quindi occorre la densità locale</p>
+        <p>$$u_E(r)=\\frac{1}{2}\\epsilon_0E(r)^2=\\frac{1}{2}\\epsilon_0\\frac{Q^2}{16\\pi^2\\epsilon_0^2r^4}=\\frac{Q^2}{32\\pi^2\\epsilon_0 r^4}$$</p>
+        <p>Con il guscio sferico $d\\tau=4\\pi r^2dr$:</p>
+        <p>$$dW = u_E(r)\\,4\\pi r^2dr = \\frac{Q^2}{8\\pi\\epsilon_0}\\frac{dr}{r^2}$$</p>
+        <p>$$W = \\frac{Q^2}{8\\pi\\epsilon_0}\\int_R^{+\\infty}\\frac{dr}{r^2} = \\frac{Q^2}{8\\pi\\epsilon_0}\\left[-\\frac{1}{r}\\right]_R^{+\\infty} = \\frac{Q^2}{8\\pi\\epsilon_0R}$$</p>
+        <p><strong>(b) Verifica con la capacità.</strong> Con $C=4\\pi\\epsilon_0R$:</p>
+        <p>$$W=\\frac{1}{2}\\frac{Q^2}{4\\pi\\epsilon_0R}=\\frac{Q^2}{8\\pi\\epsilon_0R}$$</p>
+        <p>e i due risultati coincidono.</p>
+        <p><strong>(c) Frazione di energia nel guscio $R\\le r\\le 2R$.</strong> Limitando l'integrale a quell'intervallo:</p>
+        <p>$$W_{R\\to2R} = \\frac{Q^2}{8\\pi\\epsilon_0}\\left(\\frac{1}{R}-\\frac{1}{2R}\\right) = \\frac{Q^2}{16\\pi\\epsilon_0R} = \\frac{W}{2}$$</p>
+        <p>cioè il $50\\%$ dell'energia totale sta nel primo guscio di spessore $R$: l'energia è concentrata vicino alla superficie, dove il campo è più intenso.</p>
+        <p><strong>(d) Valutazione numerica.</strong> Con $R=0{,}10$ m e $Q=2{,}0\\times10^{-8}$ C:</p>
+        <p>$$W = \\frac{(2{,}0\\times10^{-8})^2}{8\\pi(8{,}85\\times10^{-12})(0{,}10)} = \\frac{4{,}0\\times10^{-16}}{2{,}22\\times10^{-11}} \\simeq 1{,}8\\times10^{-5}\\ \\text{J} = 18\\ \\mu\\text{J}$$</p>
+        <p><strong>Commento.</strong> Il rapporto $W/\\tau$ non avrebbe qui alcun significato locale (e il volume esterno è infinito): l'unica via corretta è l'integrazione di $u_E$.</p>`
+      },
+
+      {
+        id: "s12-es-scritto-4",
+        type: "esercizio",
+        title: "Scritto 4 — Due specie di ioni in una soluzione elettrolitica",
+        kind: "scritto",
+        source: "integrazione",
+        icon: "✎",
+        content: `<p>In una soluzione elettrolitica si muovono due specie di ioni monovalenti: ioni positivi di carica $+e$ con densità $n_+ = 2{,}0\\cdot10^{24}\\ \\text{m}^{-3}$ e velocità di deriva $v_{d+} = 3{,}0\\cdot10^{-5}\\ \\text{m/s}$ lungo $\\hat{x}$, e ioni negativi di carica $-e$ con densità $n_- = 2{,}0\\cdot10^{24}\\ \\text{m}^{-3}$ e velocità di deriva $v_{d-} = 2{,}0\\cdot10^{-5}\\ \\text{m/s}$ lungo $-\\hat{x}$. Calcola $\\vec{J}_{\\text{tot}}$, la corrente che attraversa una sezione piana $S = 0{,}50\\ \\text{cm}^2$ perpendicolare a $\\hat{x}$ e la densità di carica totale $\\rho_{\\text{tot}}$. Commenta il risultato.</p>`,
+        solution: `<p><strong>(i) Contributi delle due specie.</strong></p>
+        <p>$$\\vec{J}_+ = n_+ e\\,\\vec{v}_{d+} = n_+ e\\, v_{d+}\\hat{x}$$</p>
+        <p>$$\\vec{J}_- = n_-(-e)\\vec{v}_{d-} = n_-(-e)(-v_{d-}\\hat{x}) = +n_- e\\, v_{d-}\\hat{x}$$</p>
+        <p>Cariche di segno opposto che si muovono in versi opposti danno contributi <strong>concordi</strong>, quindi</p>
+        <p>$$\\vec{J}_{\\text{tot}} = e\\,(n_+ v_{d+} + n_- v_{d-})\\,\\hat{x}$$</p>
+        <p><strong>(ii) Valore numerico di $J_{\\text{tot}}$.</strong> Per ciascuna specie $n e = 2{,}0\\cdot10^{24}\\cdot1{,}6\\cdot10^{-19} = 3{,}2\\cdot10^{5}\\ \\text{C/m}^3$, e $v_{d+} + v_{d-} = 5{,}0\\cdot10^{-5}\\ \\text{m/s}$, da cui</p>
+        <p>$$J_{\\text{tot}} = (3{,}2\\cdot10^{5})(5{,}0\\cdot10^{-5}) = 16\\ \\text{A/m}^2$$</p>
+        <p>diretta lungo $\\hat{x}$.</p>
+        <p><strong>(iii) Corrente attraverso la sezione.</strong> Scegliamo la normale $\\hat{n} = \\hat{x}$, concorde con $\\vec{J}_{\\text{tot}}$; con questa scelta la corrente risulta positiva:</p>
+        <p>$$I = \\vec{J}_{\\text{tot}}\\cdot\\hat{n}\\,S = 16 \\cdot 0{,}50\\cdot10^{-4}\\ \\text{A} = 8{,}0\\cdot10^{-4}\\ \\text{A} = 0{,}80\\ \\text{mA}$$</p>
+        <p>(Con la scelta opposta $\\hat{n} = -\\hat{x}$ si otterrebbe lo stesso modulo con segno negativo.)</p>
+        <p><strong>(iv) Densità di carica totale.</strong> Le densità parziali sono $\\rho_+ = +3{,}2\\cdot10^{5}\\ \\text{C/m}^3$ e $\\rho_- = -3{,}2\\cdot10^{5}\\ \\text{C/m}^3$, dunque</p>
+        <p>$$\\rho_{\\text{tot}} = \\rho_+ + \\rho_- = 0$$</p>
+        <p><strong>Commento.</strong> La soluzione è globalmente neutra ($\\rho_{\\text{tot}} = 0$) e tuttavia trasporta corrente ($\\vec{J}_{\\text{tot}} \\neq \\vec{0}$): mentre i contributi alla corrente si sommano, le densità di carica si compensano. Essendo tutte le grandezze costanti nel tempo, il regime è stazionario e si ha $\\nabla\\cdot\\vec{J} = 0$.</p>`
+      },
+
+      {
+        id: "s12-oral-box",
+        type: "oral_box",
+        title: "Domande tipiche all'orale su questa lezione",
+        icon: "🎓",
+        content: `<p>Le domande più ricorrenti su questi contenuti riguardano tre nodi concettuali:</p>
+        <ul>
+          <li><strong>Il fattore $1/2$ nell'energia del condensatore:</strong> perché $W = \\frac12 QV$ e non $QV$? La risposta sta nel fatto che $V'$ cresce progressivamente durante la carica.</li>
+          <li><strong>La differenza fra densità locale e densità media di energia:</strong> saper dire quando $W/\\tau$ è lecito e quando serve l'integrale.</li>
+          <li><strong>Stazionarietà:</strong> saper distinguere "bilancio netto nullo su un intervallo finito" da "regime stazionario", e ricordare che $\\nabla \\cdot \\vec{J} = 0$ è necessaria ma non sufficiente.</li>
+        </ul>`
+      }
+    ],
+
+    oral_cards: [
+      {
+        type: "dimostrazione",
+        front: "Ricava l'energia immagazzinata in un condensatore partendo dal lavoro infinitesimo di carica.",
+        back: "Si carica il condensatore con un processo <strong>quasistatico e privo di dissipazioni</strong>, trasferendo cariche $dq'$ dall'armatura negativa a quella positiva. Il lavoro esterno infinitesimo è $dW = V'\\,dq'$, con $V'$ differenza di potenziale <em>istantanea</em> fra le armature. Poiché $C$ è costante, $V' = q'/C$ e quindi $W = \\int_0^Q \\frac{q'}{C}dq' = \\frac{1}{C}\\left[\\frac{(q')^2}{2}\\right]_0^Q = \\frac{1}{2}\\frac{Q^2}{C}$. Con $Q = CV$ si ottengono le forme equivalenti $W = \\frac12 CV^2 = \\frac12 QV$."
+      },
+      {
+        type: "tranello",
+        front: "Perché l'energia di un condensatore è $\\frac12 QV$ e non $QV$?",
+        back: "Perché la differenza di potenziale <strong>non è costante durante la carica</strong>: cresce linearmente con la carica già trasferita, $V' = q'/C$. Il lavoro totale è dunque $Q$ moltiplicato per il <em>valore medio</em> $\\frac12 V$, non per il valore finale $V$. Scrivere $W = QV$ sarebbe corretto solo se la tensione restasse costante a $V$ durante tutto il trasferimento."
+      },
+      {
+        type: "definizione",
+        front: "Definisci la densità di energia del campo elettrostatico nel vuoto e scrivi come si ottiene l'energia totale in una regione.",
+        back: "È la grandezza <strong>locale</strong> $u_E(\\vec{r}) = \\frac{dW}{d\\tau} = \\frac{1}{2}\\epsilon_0|\\vec{E}(\\vec{r})|^2$, misurata in J/m$^3$. Dipende soltanto dal <em>modulo</em> del campo, non dalla direzione. L'energia totale in una regione di volume $\\tau$ si ottiene integrando: $W = \\int_\\tau u_E\\,d\\tau = \\frac{1}{2}\\epsilon_0\\int_\\tau|\\vec{E}|^2 d\\tau$."
+      },
+      {
+        type: "tranello",
+        front: "Quando posso usare $W/\\tau$ come densità di energia e quando no?",
+        back: "$W/\\tau$ è solo la densità <strong>media</strong>. Coincide con la densità locale $u_E$ in ogni punto soltanto se $|\\vec{E}|$ è <em>costante</em> nella regione (il condensatore piano ideale è il caso tipico). Attenzione: la costanza del <strong>modulo</strong> è ciò che conta, l'uniformità vettoriale è sufficiente ma non necessaria. Se $|\\vec{E}|$ varia (es. condensatore sferico, dove $E \\propto 1/r^2$), $W/\\tau$ non ha alcun significato locale e bisogna calcolare $W = \\int u_E\\,d\\tau$."
+      },
+      {
+        type: "dimostrazione",
+        front: "Calcola l'energia di un condensatore sferico integrando la densità di energia.",
+        back: "Da Gauss, per $R_1 \\lt r \\lt R_2$: $E(r) = \\frac{1}{4\\pi\\epsilon_0}\\frac{Q}{r^2}$. Con il guscio $d\\tau = 4\\pi r^2 dr$: $dW = \\frac12\\epsilon_0 E^2 \\, 4\\pi r^2 dr = \\frac{Q^2}{8\\pi\\epsilon_0}\\frac{dr}{r^2}$. Integrando: $W = \\frac{Q^2}{8\\pi\\epsilon_0}\\left(\\frac{1}{R_1}-\\frac{1}{R_2}\\right)$. Il risultato si verifica con $W = \\frac12 Q^2/C$ e $C = 4\\pi\\epsilon_0\\frac{R_1R_2}{R_2-R_1}$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci l'intensità di corrente elettrica e spiega da cosa dipende il suo segno.",
+        back: "$I = \\frac{dQ}{dt}$, dove $dQ$ è la carica <strong>netta con segno</strong> che attraversa la superficie, valutata rispetto alla normale $\\hat{n}$ scelta: ogni portatore contribuisce col prodotto della propria carica per il segno dell'attraversamento. Unità: ampere, $1\\,\\text{A} = 1\\,\\text{C/s}$. Il segno di $I$ <strong>non è intrinseco</strong>: invertendo $\\hat{n}$ si inverte il segno di $I$. Va quindi sempre dichiarata la scelta di $\\hat{n}$."
+      },
+      {
+        type: "definizione",
+        front: "Definisci il vettore densità di corrente e il suo legame locale con la corrente.",
+        back: "$\\vec{J} = n q \\vec{v}_d = \\rho_{\\text{mob}}\\vec{v}_d$, con $n$ densità numerica dei portatori (m$^{-3}$), $q$ carica del singolo portatore con il proprio segno, $\\vec{v}_d$ velocità di deriva. Unità: A/m$^2$. Legame locale: $\\frac{dI}{dS} = \\vec{J}\\cdot\\hat{n}$; legame globale: $I = \\int_\\Sigma \\vec{J}\\cdot\\hat{n}\\,dS$ (flusso di $\\vec{J}$). Se $q \\lt 0$, $\\vec{J}$ è <strong>opposto</strong> a $\\vec{v}_d$: in ogni caso $\\vec{J}$ ha il verso del moto convenzionale delle cariche positive."
+      },
+      {
+        type: "tranello",
+        front: "In un metallo percorso da corrente, quanto vale $\\rho_{\\text{tot}}$? E si può scrivere $\\vec{J} = \\rho_{\\text{tot}}\\vec{v}_d$?",
+        back: "In un metallo neutro $\\rho_{\\text{tot}} = 0$ <strong>anche quando scorre corrente</strong>: la densità negativa degli elettroni di conduzione è esattamente compensata da quella positiva del reticolo fisso. Dunque <strong>non</strong> si può scrivere $\\vec{J} = \\rho_{\\text{tot}}\\vec{v}_d$ (darebbe $\\vec{J} = \\vec{0}$, falso). La relazione corretta usa la densità <em>parziale</em>: $\\vec{J}_s = \\rho_s \\vec{v}_{d,s}$. Corrente e densità di carica totale sono grandezze indipendenti."
+      },
+      {
+        type: "dimostrazione",
+        front: "Ricava l'equazione di continuità dalla forma integrale a quella differenziale.",
+        back: "Ipotesi: $V$ volume <strong>fisso</strong>, $S$ chiusa con $\\hat{n}$ <strong>uscente</strong>, $\\rho = \\rho_{\\text{tot}}$ e $\\vec{J} = \\vec{J}_{\\text{tot}}$. Forma integrale: $\\frac{dQ}{dt} = -\\oint_S \\vec{J}\\cdot\\hat{n}\\,dS$. Poiché $V$ è fisso: $\\frac{dQ}{dt} = \\int_V \\frac{\\partial\\rho}{\\partial t}dV$. Per il teorema della divergenza: $\\oint_S \\vec{J}\\cdot\\hat{n}\\,dS = \\int_V (\\nabla\\cdot\\vec{J})dV$. Sostituendo: $\\int_V\\left(\\nabla\\cdot\\vec{J}+\\frac{\\partial\\rho}{\\partial t}\\right)dV = 0$ per <em>ogni</em> $V$, quindi l'integrando è nullo: $\\nabla\\cdot\\vec{J}+\\frac{\\partial\\rho}{\\partial t} = 0$."
+      },
+      {
+        type: "tranello",
+        front: "$\\nabla\\cdot\\vec{J} = 0$ implica che il sistema è in regime stazionario?",
+        back: "<strong>No.</strong> È condizione <em>necessaria</em> ma non sufficiente. Controesempio: $\\vec{J}(\\vec{r},t) = J_0\\cos(\\omega t)\\hat{x}$ ha $\\nabla\\cdot\\vec{J} = 0$ in ogni istante (le componenti non dipendono dalle coordinate), quindi $\\partial\\rho/\\partial t = 0$ e non c'è accumulo locale di carica; eppure $\\partial\\vec{J}/\\partial t = -J_0\\omega\\sin(\\omega t)\\hat{x} \\neq \\vec{0}$. Il regime stazionario richiede <strong>entrambe</strong> le condizioni $\\partial\\vec{J}/\\partial t = 0$ e $\\partial\\rho/\\partial t = 0$."
+      },
+      {
+        type: "domanda",
+        front: "Perché un bilancio netto nullo su 24 ore non basta per la stazionarietà? (analogia dell'università)",
+        back: "Perché il bilancio nullo su un intervallo <em>finito</em> permette accumuli intermedi. In una giornata tipica entrano la mattina ed escono la sera tanti studenti quanti, ma nel pomeriggio l'edificio è pieno e di notte è vuoto: il sistema non è stazionario. La stazionarietà richiede che <strong>in ogni istante</strong> la portata entrante uguagli quella uscente <em>e</em> che le portate stesse non cambino nel tempo."
+      },
+      {
+        type: "tranello",
+        front: "Un serbatoio si sta svuotando: significa che $\\partial\\rho/\\partial t \\lt 0$ in ogni punto dell'acqua?",
+        back: "<strong>No.</strong> L'affermazione corretta è <em>globale</em>: $dM/dt \\lt 0$, cioè la massa contenuta diminuisce perché il flusso netto uscente è positivo. Ma per un liquido praticamente incomprimibile la <strong>densità locale resta costante</strong>: ciò che scende è il <em>livello</em>, cioè il volume occupato. L'enunciato locale $\\partial\\rho/\\partial t \\lt 0$ in un punto significa che in <em>quel punto</em> la densità diminuisce, e corrisponde a $\\nabla\\cdot\\vec{J} \\gt 0$ nello stesso punto."
+      },
+      {
+        type: "formula",
+        front: "Scrivi le formule chiave su correnti e continuità.",
+        back: "Densità di corrente: $\\vec{J} = nq\\vec{v}_d$. Legame locale: $dI/dS = \\vec{J}\\cdot\\hat{n}$. Corrente come flusso: $I = \\int_\\Sigma \\vec{J}\\cdot\\hat{n}\\,dS$. Continuità integrale: $\\frac{dQ}{dt} = -\\oint_S \\vec{J}\\cdot\\hat{n}\\,dS$. Continuità locale: $\\nabla\\cdot\\vec{J} + \\frac{\\partial\\rho}{\\partial t} = 0$. Regime stazionario: $\\nabla\\cdot\\vec{J} = 0$ e $\\oint_S \\vec{J}\\cdot\\hat{n}\\,dS = 0$."
+      },
+      {
+        type: "domanda",
+        front: "Due punti allo stesso potenziale: il campo elettrico tra loro è necessariamente nullo?",
+        back: "<strong>No.</strong> Significa soltanto che l'integrale di linea $\\int_A^B \\vec{E}\\cdot d\\vec{l}$ lungo quel percorso è nullo. Il campo può essere diverso da zero tratto per tratto, con contributi che si cancellano. (Si noti anche che la <em>circolazione</em> si riferisce a un cammino chiuso, non a un percorso tra due punti.)"
+      },
+      {
+        type: "domanda",
+        front: "In una sezione obliqua di un filo, perché la corrente che la attraversa è la stessa della sezione retta?",
+        back: "La sezione obliqua ha area maggiore, $S' = S/\\cos\\theta$ (la sua proiezione sul piano perpendicolare al filo è la sezione retta $S = S'\\cos\\theta$), ma il prodotto scalare introduce il fattore $\\cos\\theta$: $I = \\vec{J}\\cdot\\hat{n}\\,S' = J\\cos\\theta\\cdot\\frac{S}{\\cos\\theta} = JS$. I due effetti si compensano esattamente. Attenzione: se la superficie inclinata considerata ha area $S$ (non $S/\\cos\\theta$) intercetta solo parte del flusso e $I = JS\\cos\\theta$."
+      }
+    ]
+};
+
