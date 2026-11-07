@@ -94,7 +94,12 @@
   </div>
 
   <div class="fn-section fn-fade fn-d3">
-    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> derivate e studio di funzione · integrali · numeri complessi · equazioni differenziali</div>
+    <div class="fn-section-label">// derivate e studio di funzione</div>
+    <div class="fn-grid" id="derivate-grid"></div>
+  </div>
+
+  <div class="fn-section fn-fade fn-d3">
+    <div class="fn-upcoming"><span class="fn-upcoming-label">In arrivo</span> integrali · numeri complessi · equazioni differenziali</div>
   </div>
 
 
@@ -346,7 +351,7 @@ const LESSON_INDEX = [
     "date": "5 Nov 2026",
     "title": "Teorema dei Valori Intermedi e Concetto di Derivata",
     "abstract": "Dal problema di risolvere $f(x)=C$ al Teorema dei Valori Intermedi e al corollario sull'immagine di un intervallo. Poi l'ingresso nel calcolo differenziale: rapporto incrementale, retta tangente, definizione di derivata, legame con la continuità, funzione derivata e classi $C^1$, derivate elementari, algebra delle derivate e derivata della funzione inversa.",
-    "category": "limiti di funzioni",
+    "category": "derivate",
     "file": "/analisi1/lezioni/L26/"
   }
 ];
@@ -377,6 +382,7 @@ populateGrid('funzioni e successioni-grid', 'funzioni e successioni');
 populateGrid('induzione e coefficiente binomiale-grid', 'induzione e coefficiente binomiale');
 populateGrid('limiti di successioni-grid', 'limiti di successioni');
 populateGrid('limiti di funzioni-grid', 'limiti di funzioni');
+populateGrid('derivate-grid', 'derivate');
 
 document.querySelectorAll('.fn-card-title, .fn-card-abstract').forEach(el => {
   const html = el.innerHTML;
